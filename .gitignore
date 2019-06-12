@@ -1,0 +1,20 @@
+# python stuffs
+*.py[cod]
+/__pycache__/
+
+# distutils stuffs
+build
+dist
+MANIFEST
+*.egg-info
+.eggs
+
+# built stuffs
+build/
+
+# derived files
+doc/src/appendices/command-ref.rst
+
+# editor stuff
+*.swp
+*~

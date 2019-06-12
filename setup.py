@@ -17,23 +17,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import codecs
-import re
 from distutils.errors import DistutilsExecError
-from glob import glob
-from os.path import join, dirname, abspath
+from os.path import join
 from shutil import move, rmtree
-from setuptools import setup, find_namespace_packages
+from setuptools import setup
 from sphinx.setup_command import BuildDoc
 
 
 VERSION = "0.0.1"
-here = abspath(dirname(__file__))
-
-
-def read(*parts):
-    with codecs.open(join(here, *parts), 'r') as fp:
-        return fp.read()
 
 
 class MakeDocs(BuildDoc):
@@ -59,9 +50,9 @@ class MakeDocs(BuildDoc):
     def run(self):  # type: () -> None
         try:
             self.spawn(["./doc/src/custom/make-commands.sh"])
-        except DistutilsExecError as e:
+        except DistutilsExecError as exc:
             self.warn("Failed to run make-commands.sh")
-            raise e
+            raise exc
         self.do_run("html", "built-sphinx")
         self.do_run("singlehtml", "built-sphinx-single")
 
@@ -81,17 +72,19 @@ class MakeDocs(BuildDoc):
         rmtree(correct_doctrees, ignore_errors=True)
         move(self.doctree_dir, correct_doctrees)
 
+
 cmdclass = {}
 cmdclass["build_sphinx"] = MakeDocs
 
 
 install_requires = [
     'sphinx==2.0.*',
-     'cylc==8.0.*',
+    'cylc-flow==8.0a0',
 ]
 
 
 setup(
+    name='Cylc Documentation',
     version=VERSION,
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
