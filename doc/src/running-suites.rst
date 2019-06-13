@@ -1568,8 +1568,8 @@ To prevent large numbers of suites attempting to restart simultaneously the
 Suites will wait for a random period of time between zero and
 ``auto restart delay`` seconds before attempting to stop and restart.
 
-Suites that are started up in no-detach mode cannot be auto stop-restart on a
-different host - as it will still end up attached to the condemned hosts.
+Suites that are started up in no-detach mode cannot auto stop-restart on a
+different host - as it will still end up attached to the condemned host.
 Therefore, a suite in no-detach mode running on a condemned host will abort with
 a non-zero return code. The parent process should manually handle the restart of
 the suite if desired.
