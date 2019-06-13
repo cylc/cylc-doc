@@ -1,0 +1,52 @@
+# Configuration for the Travis continuous integration system
+# ==========================================================
+# 
+# Travis is a free service for running automatic tests on Github repositories.
+# This file configures Travis for Cylc, telling it how to install Cylc and run
+# the test battery.
+# 
+# Test results get posted back to Github. By default Travis will run tests on any
+# pull requests, adding a comment on the pull request page to say if the tests
+# pass or fail, it will also test any new commits, showing the test results on
+# the branch page, e.g. https://github.com/cylc/cylc-flow/branches.
+# 
+# Connecting a Cylc branch
+# ------------------------
+# 
+# To make use of Travis you will first need to create a fork of Cylc in Github.
+# Log in to https://travis-ci.org using your Github credentials, it will ask for
+# permission to see your repositories, set the status of branches (whether the
+# build passes or fails tests) and create hooks so Travis gets notified of new
+# commits.
+# 
+# Travis will create a list of all of your public Github repositories, you can
+# enable automatic tests for a repository using the switches in this list.
+# 
+# More information for Travis can be found at http://docs.travis-ci.com/user/getting-started/
+
+---
+cache: pip
+dist: xenial
+addons:
+  apt:
+    update: true  # instruct travis-ci to always run apt-get before each build
+
+language: python
+
+stages:
+- documentation
+
+env:
+  global:
+    - PATH="${TRAVIS_BUILD_DIR}/bin:$PATH"
+
+jobs:
+  include:
+
+  # build documentation
+  - stage: documentation
+    python: "3.7"
+    install:
+      - .travis/install.sh docs
+    script:
+      - python setup.py build_sphinx
