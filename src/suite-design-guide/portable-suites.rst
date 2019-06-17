@@ -126,8 +126,7 @@ override semantics). So, for instance, this graph:
    [scheduling]
        initial cycle point = 2025
        [[dependencies]]
-           [[[P1Y]]]
-               graph = "pre => model => post => niwa_archive"
+           P1Y = "pre => model => post => niwa_archive"
 
 can be written like this:
 
@@ -136,10 +135,8 @@ can be written like this:
    [scheduling]
        initial cycle point = 2025
        [[dependencies]]
-           [[[P1Y]]]
-               graph = "pre => model => post"
-           [[[P1Y]]]
-               graph = "post => niwa_archive"
+           P1Y = "pre => model => post"
+           P1Y = "post => niwa_archive"
 
 and again, the site-specific part can be taken out to a site include-file:
 
@@ -153,8 +150,7 @@ and again, the site-specific part can be taken out to a site include-file:
    [scheduling]
        initial cycle point = 2025
        [[dependencies]]
-           [[[P1Y]]]
-               graph = "pre => model => post"
+           P1Y = "pre => model => post"
    #...
    # Site-specific settings:
    {% include 'site/' ~ SITE ~ '.rc' %}
@@ -166,8 +162,7 @@ where the site include-file ``site/niwa.rc`` contains:
    # site/niwa.rc
    [scheduling]
        [[dependencies]]
-           [[[P1Y]]]
-               graph = "post => niwa_archive"
+           P1Y = "post => niwa_archive"
 
 Note that the site-file graph needs to define the dependencies of the
 site-specific tasks, and thus their points of connection to the core
@@ -328,12 +323,11 @@ and batch scheduler directives.
    [scheduling]
        initial cycle point = 2017-01-01
        [[dependencies]]
-           [[[R1]]]
-               graph = install_niwa => preproc
-           [[[P1D]]]
-               graph = """
-                   preproc & model[-P1D] => model => postproc => upload_niwa
-                   postproc => idl-1 => idl-2 => idl-3"""
+           R1 = install_niwa => preproc
+           P1D = """
+               preproc & model[-P1D] => model => postproc => upload_niwa
+               postproc => idl-1 => idl-2 => idl-3
+           """
    [runtime]
        [[root]]
            script = rose task-run -v
@@ -375,13 +369,12 @@ settings from an include-file at the end:
    [scheduling]
        initial cycle point = 2017-01-01
        [[dependencies]]
-           [[[P1D]]]
-               graph = """
-   preproc & model[-P1D] => model => postproc
+           P1D = """
+               preproc & model[-P1D] => model => postproc
    {% if HAVE_IDL %}
-       postproc => idl-1 => idl-2 => idl-3
+               postproc => idl-1 => idl-2 => idl-3
    {% endif %}
-                       """
+           """
    [runtime]
        [[root]]
            script = rose task-run -v -O '({{SITE}})'
@@ -409,10 +402,8 @@ and ``site/niwa.rc``:
    # site/niwa.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    [scheduling]
        [[dependencies]]
-           [[[R1]]]
-               graph = install_niwa => preproc
-           [[[P1D]]]
-               graph = postproc => upload_niwa
+           R1 = install_niwa => preproc
+           P1D = postproc => upload_niwa
    [runtime]
        [[HPC]]
            [[[remote]]]

@@ -1159,40 +1159,25 @@ by right clicking on the suite in the db viewer.  See
 also :ref:`ConfiguringScheduling`.
 
 
-[scheduling] ``->`` [[dependencies]] ``->`` graph
-"""""""""""""""""""""""""""""""""""""""""""""""""
+.. _GraphDescrip:
 
-The dependency graph for a completely non-cycling suites can go here.
-See also :ref:`GraphDescrip` below and :ref:`ConfiguringScheduling`, for graph
-string syntax.
-
-- *type*: string
-- *example*: (see :ref:`GraphDescrip` below)
-
-
-[scheduling] ``->`` [[dependencies]] ``->`` [[[\_\_RECURRENCE\_\_]]]
+[scheduling] ``->`` [[dependencies]] ``->`` \_\_RECURRENCE\_\_
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-``__RECURRENCE__`` section headings define the sequence of cycle points for
-which the subsequent graph section is valid. These should be specified in
+The ``__RECURRENCE__`` defines the sequence of cycle points for
+which the dependency graph is valid. These should be specified in
 our ISO 8601 derived sequence syntax, or similar for integer cycling:
 
 - *examples*:
-  - date-time cycling: ``[[[T00,T06,T12,T18]]]`` or ``[[[PT6H]]]``
-  - integer cycling (stepped by 2): ``[[[P2]]]``
+  - date-time cycling: ``T00,T06,T12,T18`` or ``PT6H``
+  - integer cycling (stepped by 2): ``P2``
 - *default*: (none)
 
 
 See :ref:`GraphTypes` for more on recurrence expressions, and how multiple
-graph sections combine.
+graphs combine.
 
-
-.. _GraphDescrip:
-
-[scheduling] ``->`` [[dependencies]] ``->`` [[[\_\_RECURRENCE\_\_]]] ``->`` graph
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-The dependency graph for a given recurrence section goes here. Syntax examples
+The value should be a dependency graph the given recurrence. Syntax examples
 follow; see also :ref:`ConfiguringScheduling` and :ref:`TriggerTypes`.
 
 - *type*: string
@@ -1217,6 +1202,17 @@ follow; see also :ref:`ConfiguringScheduling` and :ref:`TriggerTypes`.
      """
 
 - *default*: (none)
+
+
+[scheduling] ``->`` [[dependencies]] ``->`` graph
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+Implies a non-cycling suite, and same as ``R1 = ...``. The value should be a
+dependency graph.  See also :ref:`GraphDescrip` above and
+:ref:`ConfiguringScheduling`, for graph string syntax.
+
+- *type*: string
+- *example*: (see :ref:`GraphDescrip` above)
 
 
 [runtime]

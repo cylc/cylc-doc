@@ -171,8 +171,7 @@ workflow by coding tasks that run the ``cylc checkpoint`` command:
 
    [scheduling]
       [[dependencies]]
-         [[[PT6H]]]
-             graph = "pre => model => post => checkpointer"
+         PT6H = "pre => model => post => checkpointer"
    [runtime]
       # ...
       [[checkpointer]]
@@ -1229,8 +1228,7 @@ a remote suite called ``other.suite``:
 
    [scheduling]
        [[dependencies]]
-           [[[T00, T12]]]
-               graph = "my-foo<other.suite::foo> => bar"
+           T00, T12 = "my-foo<other.suite::foo> => bar"
 
 Local task ``my-foo`` will poll for the success of ``foo``
 in suite ``other.suite``, at the same cycle point, succeeding only when
@@ -1248,8 +1246,7 @@ configured if necessary under the local polling task runtime section:
 
    [scheduling]
        [[ dependencies]]
-           [[[T00,T12]]]
-               graph = "my-foo<other.suite::foo> => bar"
+           T00,T12 = "my-foo<other.suite::foo> => bar"
    [runtime]
        [[my-foo]]
            [[[suite state polling]]]
@@ -1287,10 +1284,8 @@ at ``3,9,15,21``:
 
    [scheduling]
        [[dependencies]]
-           [[[T03,T09,T15,T21]]]
-               graph = "my-dog<other.suite::dog>"
-           [[[T00,T06,T12,T18]]]
-               graph = "my-dog[-PT3H] => cat"
+           T03,T09,T15,T21 = "my-dog<other.suite::dog>"
+           T00,T06,T12,T18 = "my-dog[-PT3H] => cat"
 
 For suite-state polling, the cycle point is automatically converted to the
 cycle point format of the target suite.
