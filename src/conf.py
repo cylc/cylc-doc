@@ -44,7 +44,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'The Cylc Suite Engine'
+project = 'Cylc'
 copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
 
 # Versioning information. Sphinx advises version strictly meaning X.Y.
