@@ -23,7 +23,6 @@ VERSION = "0.0.1"
 
 INSTALL_REQUIRES = [
     'sphinx==2.0.*',
-    'cylc-flow==8.0a0',
 ]
 
 setup(

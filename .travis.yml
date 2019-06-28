@@ -37,6 +37,7 @@ env:
     - PATH="${TRAVIS_BUILD_DIR}/bin:$PATH"
 
 install:
+  - pip install git+https://github.com/cylc/cylc-flow/
   - pip install -e .
 
 script:
