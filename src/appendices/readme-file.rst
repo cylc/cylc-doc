@@ -1,7 +1,7 @@
 Cylc README File
 ================
 
-.. literalinclude:: ../../../README.md
+.. literalinclude:: ../../README.md
 
 
 .. only:: builder_html

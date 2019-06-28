@@ -27,26 +27,17 @@
 ---
 cache: pip
 dist: xenial
-addons:
-  apt:
-    update: true  # instruct travis-ci to always run apt-get before each build
 
 language: python
-
-stages:
-- documentation
+python:
+  - "3.7"
 
 env:
   global:
     - PATH="${TRAVIS_BUILD_DIR}/bin:$PATH"
 
-jobs:
-  include:
+install:
+  - pip install -e .
 
-  # build documentation
-  - stage: documentation
-    python: "3.7"
-    install:
-      - .travis/install.sh docs
-    script:
-      - python setup.py build_sphinx
+script:
+  - make html singlehtml linkcheck SPHINXOPTS='-W'

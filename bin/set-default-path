@@ -1,0 +1,56 @@
+#!/bin/bash
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set -eu
+
+CYLC_VERSION="$1"
+DEFAULT_FORMAT="$2"
+LATEST='current'
+
+
+html_redirect () {
+    SRC="$1"   # relative path from $DEST
+    DEST="$2"  # location to write redirect to
+
+    cat >"$DEST" << __HTML__
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rose Documentation</title>
+        <meta http-equiv="REFRESH" content="0;url=$SRC">
+    </head>
+    <body>
+        <p>If not automatically redirected, please click
+        <a href="$SRC">Rose Documentation</a>.</p>
+    </body>
+</html>
+__HTML__
+}
+
+
+main () {
+    cd doc/
+    # make the specified version of the documentation the default
+    rm "${LATEST}" || true
+    ln -s "${CYLC_VERSION}" "${LATEST}"
+    html_redirect "${LATEST}/index.html" "index.html"
+    # make the specified format the default
+    html_redirect "${DEFAULT_FORMAT}/index.html" "${LATEST}/index.html"
+}
+
+
+main

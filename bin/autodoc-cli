@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # THIS FILE IS PART OF THE CYLC SUITE ENGINE.
 # Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
 # 
@@ -19,7 +18,7 @@
 # Create appendices/command-ref.rst for inclusion in HTML doc.
 
 # All paths relative to 'doc/src/custom/' directory:
-COMMAND_REF_FILE="$(dirname "$0")/../appendices/command-ref.rst"
+COMMAND_REF_FILE="$(dirname "$0")/../src/appendices/command-ref.rst"
 CYLC="cylc"
 
 cat > "$COMMAND_REF_FILE" <<END

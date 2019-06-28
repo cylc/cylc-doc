@@ -10,6 +10,3 @@ values, and system defaults are documented in (:ref:`SiteRCReference`).
 
 Others, such as the preferred text editor for suite configurations,
 can be overridden by users in ``~/.cylc/flow/<CYLC_VERSION>/flow.rc``
-
-.. literalinclude:: ../../cylc/flow/etc/flow.rc.eg
-   :language: none
