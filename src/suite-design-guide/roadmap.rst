@@ -64,7 +64,7 @@ Until this problem is solved we recommend that:
 Modular Suite Design
 --------------------
 
-The `modular suite design concept <https://github.com/cylc/cylc/issues/1829>`_
+The `modular suite design concept <https://github.com/cylc/cylc-flow/issues/1829>`_
 is that we should be able to import common workflow segments at install time
 rather than duplicating them in each suite. The content of a suite module
 will be encapsulated in a protected namespace to avoid clashing with the

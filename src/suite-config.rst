@@ -2115,7 +2115,7 @@ object oriented programming languages. The result of this should be
 fairly obvious for typical use of multiple inheritance in cylc suites,
 but for detailed documentation of how the algorithm works refer to the
 `official Python documentation
-<http://www.python.org/download/releases/2.3/mro/>`_.
+<https://www.python.org/download/releases/2.3/mro/>`_.
 
 The *inherit.multi.one* example suite, listed here, makes use of
 multiple inheritance:

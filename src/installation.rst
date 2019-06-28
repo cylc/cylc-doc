@@ -83,24 +83,13 @@ With arguments, check-software provides an exit status indicating a
 collective pass (zero) or a failure of that number of packages to satisfy
 the requirements (non-zero integer).
 
-Software Bundled With Cylc
---------------------------
-
-Cylc bundles several third party packages which do not need to be installed
-separately.
-
-- `Jinja2 <http://jinja.pocoo.org/>`_ **2.10**: a full featured template
-  engine for Python, and its dependency
-  `MarkupSafe <http://www.pocoo.org/projects/markupsafe/>`_ **0.23**; both
-  BSD licensed.
-
-
 .. _InstallCylc:
 
 Installing Cylc
 ---------------
 
-Cylc releases can be downloaded from `GitHub <https://cylc.github.io/cylc>`_.
+Cylc releases can be downloaded from `GitHub
+<https://cylc.github.io/cylc-flow>`_.
 
 The wrapper script ``usr/bin/cylc`` should be installed to
 the system executable search path (e.g. ``/usr/local/bin/``) and

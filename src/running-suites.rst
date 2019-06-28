@@ -1510,7 +1510,7 @@ need to be manually set to the correct state.
    It is not safe to copy or rsync a potentially-active sqlite DB - the copy
    might end up corrupted. It is best to stop the suite before copying
    a DB, or else write a back-up utility using the
-   `official sqlite backup API <http://www.sqlite.org/backup.html>`_.
+   `official sqlite backup API <https://www.sqlite.org/backup.html>`_.
 
 
 .. _auto-stop-restart:
