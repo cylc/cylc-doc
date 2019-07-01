@@ -11,7 +11,6 @@ Appendices
    site-user-config-ref
    remote-job-management
    command-ref
-   readme-file
    dev-history-major-changes
    known-issues
    licensing

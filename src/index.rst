@@ -24,7 +24,6 @@ indefinitely.
 
 .. toctree::
    :maxdepth: 3
-   :numbered:
 
    introduction
    installation
