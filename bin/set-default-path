@@ -30,12 +30,12 @@ html_redirect () {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rose Documentation</title>
+        <title>Cylc Documentation</title>
         <meta http-equiv="REFRESH" content="0;url=$SRC">
     </head>
     <body>
         <p>If not automatically redirected, please click
-        <a href="$SRC">Rose Documentation</a>.</p>
+        <a href="$SRC">Cylc Documentation</a>.</p>
     </body>
 </html>
 __HTML__
