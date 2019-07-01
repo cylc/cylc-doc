@@ -42,3 +42,6 @@ install:
 
 script:
   - make html singlehtml linkcheck SPHINXOPTS='-W'
+
+after_failure:
+  - cat /tmp/sphinx-err*  # sphinx traceback
