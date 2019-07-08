@@ -1434,6 +1434,14 @@ sqlite interface.
    foo|1|2017-03-12T11:06:19Z|1|output completed|succeeded
    foo|1|2017-03-12T11:06:19Z|1|succeeded|
 
+The diagram shown in :numref:`fig-cylc-database` contains the database
+tables, their columns, and how the tables are related to each other.
+
+.. _fig-cylc-database:
+
+.. figure:: graphics/png/orig/cylc-database.png
+   :align: center
+
 
 .. _Disaster Recovery:
 
