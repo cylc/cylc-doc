@@ -9,7 +9,7 @@ import tempfile
 from contextlib import closing
 
 from cylc.flow.rundb import CylcSuiteDAO
-from eralchemy import render_er
+from eralchemy import render_er, main as eralchemy_main
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -54,7 +54,7 @@ def get_columns_metadata(table_name, conn):
         and pk value (0=not, 1=yes).
     """
     with closing(conn.cursor()) as cursor:
-        cursor.execute(f'PRAGMA tlable_info({table_name})')
+        cursor.execute(f'PRAGMA table_info({table_name})')
         return cursor.fetchall()
 
 
@@ -102,6 +102,17 @@ def main():
             tf_md.flush()
 
             with tempfile.NamedTemporaryFile(suffix=".dot") as tf_dot:
+                # TODO: monkey-patching not really elegant, but here we need
+                #       to change the graph beginning in the dot output, and
+                #       there is no way of doing that in eralchemy
+                eralchemy_main.GRAPH_BEGINNING = (
+                    '  graph {\n'
+                    '      node [label = "\\N", shape = plaintext];\n'
+                    '      edge [color = gray50, minlen = 2, style = dashed];\n'
+                    '      rankdir = "TB";\n'
+                    '      newrank="true"\n'
+                )
+
                 render_er(input=tf_md.name, output=tf_dot.name, mode="dot")
                 logger.info("")
 
