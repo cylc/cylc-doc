@@ -1,13 +1,36 @@
 #!/usr/bin/env python3
 
-"""Create a database diagram of Cylc's database, reading its schema, and adding
-relationships manually. The output contains a dot file, and a PNG image."""
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""database-diagram
+
+Create a database diagram of Cylc's database, reading its schema, and adding
+relationships manually.
+
+The console output should include the markdown and the dot file used,
+and a PNG image with the database diagram will be created in the working
+directory, with the name cylc-database.png."""
 
 import logging
 import sqlite3
 import tempfile
 from contextlib import closing
 
+import pygraphviz as pgv
 from cylc.flow.rundb import CylcSuiteDAO
 from eralchemy import render_er, main as eralchemy_main
 
@@ -28,18 +51,18 @@ def get_relationships():
     """
     # TODO: remove this once the relationships are in the DB, and then automate
     return [
-        "task_states *--? task_events",
-        "task_states *--? task_jobs",
-        "broadcast_states *--? broadcast_states_checkpoints",
-        "checkpoint_id *--? broadcast_states_checkpoints",
-        "checkpoint_id *--? suite_params_checkpoints",
-        "checkpoint_id *--? task_pool_checkpoints",
-        "suite_params *--? suite_params_checkpoints",
-        "task_pool *--? task_pool_checkpoints",
-        "task_pool *--? task_action_timers",
-        "task_pool ?--? task_late_flags",
-        "task_pool *--? task_outputs",
-        "task_pool ?--? task_timeout_timers"
+        ["task_states", "*--?", "task_events"],
+        ["task_states", "*--?", "task_jobs"],
+        ["broadcast_states", "*--?", "broadcast_states_checkpoints"],
+        ["checkpoint_id", "*--?", "broadcast_states_checkpoints"],
+        ["checkpoint_id", "*--?", "suite_params_checkpoints"],
+        ["checkpoint_id", "*--?", "task_pool_checkpoints"],
+        ["suite_params", "*--?", "suite_params_checkpoints"],
+        ["task_pool", "*--?", "task_pool_checkpoints"],
+        ["task_pool", "*--?", "task_action_timers"],
+        ["task_pool", "?--?", "task_late_flags"],
+        ["task_pool", "*--?", "task_outputs"],
+        ["task_pool", "?--?", "task_timeout_timers"]
     ]
 
 
@@ -58,29 +81,106 @@ def get_columns_metadata(table_name, conn):
         return cursor.fetchall()
 
 
+def is_orphan(table_name, relationships):
+    for relationship in relationships:
+        if table_name in relationship:
+            return False
+    return True
+
+
 def schema_to_markdown(db_name):
     """Return the database markdown schema.
 
     Args:
         db_name (str): database name
     Returns:
-        list: lines of a markdown file
-    :return: array with markdown lines
+        tuple: one side with lines of a markdown file, the other with
+            the orphan tables
     """
     lines = []
+    orphans = []
+    relationships = get_relationships()
     with closing(sqlite3.connect(db_name)) as conn:
         with closing(conn.cursor()) as cursor:
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
             for row in cursor:
-                lines.append(f"[{row[0]}]")
-                for column in get_columns_metadata(row[0], conn):
+                table = row[0]
+                lines.append(f"[{table}]")
+                for column in get_columns_metadata(table, conn):
                     pk = "*" if column[5] > 0 else ""  # 1 is normally PK
                     label = f"{{label: {column[2].upper()}}}"
                     line = f"\t{pk}{column[1]} {label}"
                     lines.append(line)
+
+                if is_orphan(table, relationships):
+                    orphans.append(table)
             # in the eralchemy example, relationships go at the end of the file
-            lines.extend(get_relationships())
-    return lines
+            lines.extend([" ".join(value) for value in relationships])
+    return lines, orphans
+
+
+def add_orphans_subgraph(file_name, orphans, append=None):
+    """Add a subgraph with the orphans tables, so they appear grouped
+    at the bottom of the diagram.
+
+    What this function is doing is, basically, to re-organise the current
+    content of the file, by separating some portions of the original dot file
+    in lists, and then returning them in order, so that they can be rendered.
+
+    Args:
+        file_name (str): dot file name
+        orphans (list): list of orphan tables
+        append (list): list of table names to be appended to the subgraph
+    """
+    # TODO: rather complicated, some extensibility work around eralchemy
+    #       may make it way simpler later
+    graph_beginning = []  # dot file graph beginning
+    subgraph = ["subgraph orphan {rank = sink\n"]  # subgraph
+    subgraph_append = []  # extra tables that must be appended to subgraph too
+    graph = []  # normal graph
+    relationships = []  # the relationships after the graph
+    if not append:
+        append = []
+    with open(file_name) as dot_file:
+        for line in dot_file:
+            if line.strip() == "}":
+                # we are closing the graph section ourselves later
+                continue
+            if not line.strip().startswith("\""):
+                # only lines in our dot file that start with " are tables
+                # and relationships
+                graph_beginning.append(line)
+            else:
+                if "--" in line:
+                    # relationships use -- for eralchemy
+                    relationships.append(line)
+                else:
+                    # we got a table line, just need to group orphans
+                    # and not orphans
+                    quote_left = line.index("\"", 0) + 1
+                    quote_right = line.index("\"", quote_left)
+                    table = line[quote_left:quote_right]
+                    if table in orphans:
+                        subgraph.append(line)
+                    elif table not in append:
+                        graph.append(line)
+                    else:
+                        subgraph_append.append(line)
+        subgraph_append.append("}\n")  # close the subgraph section
+        relationships.append("}\n")  # close the main graph section
+
+    # combine again everything creating a new dot file
+    return "".join(graph_beginning +
+                   subgraph +
+                   subgraph_append +
+                   graph +
+                   relationships)
+
+
+def render_dot_graph(file_name):
+    G = pgv.AGraph(file_name)
+    G.draw("cylc-database.png", prog="dot")
+
 
 def main():
     """Create Cylc public database, run diagram creation tool, and
@@ -91,7 +191,7 @@ def main():
         # is_public=False triggers the creation of tables
         CylcSuiteDAO(db_file_name=tf_db.name, is_public=False)
         logger.info(f"Cylc database created in {tf_db.name}!")
-        schema = schema_to_markdown(db_name=tf_db.name)
+        schema, orphans = schema_to_markdown(db_name=tf_db.name)
 
         # eralchemy needs a file that ends with .er to parse markdown
         with tempfile.NamedTemporaryFile(suffix=".er") as tf_md:
@@ -101,20 +201,35 @@ def main():
             tf_md.write(markdown.encode("utf-8"))
             tf_md.flush()
 
+            # this is the output of eralchemy, instead of a PNG, get a DOT file
             with tempfile.NamedTemporaryFile(suffix=".dot") as tf_dot:
                 # TODO: monkey-patching not really elegant, but here we need
                 #       to change the graph beginning in the dot output, and
                 #       there is no way of doing that in eralchemy
                 eralchemy_main.GRAPH_BEGINNING = (
-                    '  graph {\n'
-                    '      node [label = "\\N", shape = plaintext];\n'
-                    '      edge [color = gray50, minlen = 2, style = dashed];\n'
-                    '      rankdir = "TB";\n'
-                    '      newrank="true"\n'
+                    'graph {\n'
+                    '  node [label = "\\N", shape = plaintext];\n'
+                    '  edge [color = gray50, minlen = 2, style = dashed];\n'
+                    '  rankdir = "TB";\n'
+                    '  newrank="true"\n'
                 )
 
                 render_er(input=tf_md.name, output=tf_dot.name, mode="dot")
-                logger.info("")
+                tf_dot.flush()
+
+                # finally modify a little bit the DOT file, by adding a
+                # subgraph with the orphan tables, and one linking table
+                # broadcast_states, which is not orphan, but balances the graph
+                new_file = add_orphans_subgraph(tf_dot.name, orphans,
+                                                ["broadcast_states"])
+
+                logger.info("Final dot file: ")
+                logger.info(new_file)
+
+                tf_dot.truncate(0)
+                tf_dot.write(new_file.encode("utf-8"))
+
+                render_dot_graph(tf_dot.name)
 
 
 if __name__ == '__main__':
