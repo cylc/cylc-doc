@@ -38,9 +38,10 @@ env:
 
 install:
   - pip install git+https://github.com/cylc/cylc-flow/
-  - pip install -e .
+  - pip install -e .'[all]'
 
 script:
+  - pycodestyle
   - make html singlehtml linkcheck SPHINXOPTS='-W'
 
 after_failure:
