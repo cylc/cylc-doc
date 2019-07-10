@@ -195,7 +195,7 @@ URL of the cylc internet homepage, with links to documentation for the
 latest official release.
 
 - *type*: string
-- *default*: https://github.com/cylc/cylc-flow
+- *default*: https://cylc.github.com/cylc-flow/
 
 
 [document viewers]
