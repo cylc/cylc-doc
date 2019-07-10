@@ -9,11 +9,12 @@ MANIFEST
 *.egg-info
 .eggs
 
-# built stuffs
-build/
+# build stuffs
+doc/*
+!doc/joss-paper
 
 # derived files
-doc/src/appendices/command-ref.rst
+src/appendices/command-ref.rst
 
 # editor stuff
 *.swp

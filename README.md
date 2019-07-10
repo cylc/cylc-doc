@@ -1,6 +1,8 @@
-# cylc-doc
+# Cylc Documentation
 
-Documentation (User Guide, Cheat Sheets, etc.) for the Cylc Workflow Engine.
+[![Build Status](https://travis-ci.org/cylc/cylc-doc.svg?branch=master)](https://travis-ci.org/cylc/cylc-doc)
+
+Documentation for the Cylc Workflow Engine and its software ecosystem.
 
 ## Development
 
@@ -8,5 +10,12 @@ Documentation (User Guide, Cheat Sheets, etc.) for the Cylc Workflow Engine.
 $ git clone git@github.com:cylc/cylc-doc.git cylc-doc
 $ cd cylc-doc
 $ pip install -e .
-$ python setup.py build_sphinx
+$ make html
+```
+
+## Testing
+
+```console
+# note: -W tells Sphinx to fail on warnings
+$ make html linkcheck doctest SPHINXOPTS='-W'
 ```
