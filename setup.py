@@ -25,12 +25,20 @@ INSTALL_REQUIRES = [
     'sphinx==2.0.*',
 ]
 
+EXTRAS_REQUIRE = {
+    'test': [
+        'pycodestyle'
+    ]
+}
+EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
+
 setup(
-    name='Cylc Documentation',
+    name='cylc-doc',
     version=VERSION,
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     install_requires=INSTALL_REQUIRES,
+    extras_require=EXTRAS_REQUIRE,
     project_urls={
         "Documentation": "https://cylc.github.io/documentation.html",
         "Source": "https://github.com/cylc/cylc-doc",
