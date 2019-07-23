@@ -1,3 +1,9 @@
+.logo {
+    height: 110px!important;
+    /* Read the docs theme can't handle vector medium.
+     * Image will not overflow width, so just give a sensible height value. */
+}
+
 /* Correct the behaviour of the read the docs theme which greedily overides
  * sphinx's `pygments_style` option by placing its own syntax in the
  * stylesheet - https://github.com/rtfd/sphinx_rtd_theme/issues/166 */

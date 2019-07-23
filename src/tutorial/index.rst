@@ -5,7 +5,7 @@ Tutorial
 
 Cylc is a workflow engine for running suites of inter-dependent jobs.
 
-.. image:: ../img/cylc-logo.png
+.. image:: ../img/cylc-logo-colour.svg
    :width: 250px
    :align: center
 
