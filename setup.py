@@ -25,7 +25,6 @@ INSTALL_REQUIRES = [
     'sphinx==2.0.*',
     'sphinx_rtd_theme',
     'sphinxcontrib-svg2pdfconverter'
-    'hieroglyph'
 ]
 
 EXTRAS_REQUIRE = {

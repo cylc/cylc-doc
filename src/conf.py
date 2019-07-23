@@ -36,6 +36,7 @@ extensions = [
     'sphinx.ext.todo',
     # sphinx user community extensions
     'hieroglyph',
+    'sphinx_rtd_theme',
     # custom project extensions (located in ext/)
     'cylc_lang',
     'minicylc',
@@ -106,26 +107,16 @@ graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
 
 # -- Options for HTML output ----------------------------------------------
 
-# The builtin HTML theme to build upon, with customisations to it. Notably
-# customise with a white 'sticky' sidebar; make headings & links text the Cylc
-# logo colours & make code block background the logo green made much lighter.
-html_theme = "classic"
+# Theme
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    "stickysidebar": True,
-    "sidebarwidth": 250,
-    "relbarbgcolor": "black",
-    "footerbgcolor": "white",  # single-page HTML flashes this colour on scroll
-    "footertextcolor": "black",
-    "sidebarbgcolor": "white",
-    "sidebartextcolor": "black",
-    "sidebarlinkcolor": "#0000EE;",
-    "headbgcolor": "white",
-    "headtextcolor": "#FF5966",
-    "linkcolor": "#0000EE;",
-    "visitedlinkcolor": "#551A8B;",
-    "headlinkcolor": "#0000EE;",
-    "codebgcolor": "#ebf9f6",
+    'logo_only': True,
+    'navigation_depth': 4
 }
+html_logo = "graphics/png/orig/cylc-logo.png"
+html_favicon = "graphics/cylc-favicon.ico"  # sphinx specifies .ico format
+html_show_sphinx = False
+html_show_copyright = True
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
@@ -137,16 +128,8 @@ html_sidebars = {
     ],
 }
 
-# Logo and favicon to display.
-html_logo = "graphics/png/orig/cylc-logo.png"
-# sphinx specifies this should be .ico format
-html_favicon = "graphics/cylc-favicon.ico"
-
 # Disable timestamp otherwise inserted at bottom of every page.
 html_last_updated_fmt = ''
-
-# Remove "Created using Sphinx" text in footer.
-html_show_sphinx = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'cylcdoc'

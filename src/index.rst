@@ -1,29 +1,13 @@
-Cylc documentation
+Cylc Documentation
 ==================
-
-**The Cylc Suite Engine**
-
-Current release: |release|
-
-*Released Under the GNU GPL v3.0 Software License*
-
-*Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.*
-
------------
 
 Cylc ("*silk*") is a workflow engine for cycling systems - it orchestrates
 distributed suites of interdependent cycling tasks that may continue to run
 indefinitely.
 
------------
-
-
-.. only:: builder_html
-
-   **Table of Contents**:
-
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
+   :caption: Table Of Contents
 
    introduction
    installation

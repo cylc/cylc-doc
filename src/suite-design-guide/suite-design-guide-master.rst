@@ -4,15 +4,12 @@
 Suite Design Guide
 ******************
 
-**Cylc Rose Suite Design Best Practice Guide**
-
-Version 1.0 - 23 March 2017
+Cylc/Rose Suite Design Best Practice Guide.
 
 *Last updated for: Cylc-7.2.0 and Rose-2017.02.0*
 
-*Hilary Oliver, Dave Matthews, Andy Clark, and Contributors*
-
------------
+:version: 1.0 - 23 March 2017
+:author: Hilary Oliver, Dave Matthews, Andy Clark, and Contributors
 
 .. toctree::
    :maxdepth: 2
@@ -23,10 +20,3 @@ Version 1.0 - 23 March 2017
    efficiency
    portable-suites
    roadmap
-
------------
-
-
-.. only:: builder_html
-
-   .. include:: ../custom/whitespace_include

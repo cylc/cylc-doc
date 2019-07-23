@@ -24,8 +24,3 @@ cylc. It is available under the open source GPL license.
 
 - `Rose documentation <http://metomi.github.io/rose/>`_
 - `Rose source repository <https://github.com/metomi/rose>`_
-
-
-.. only:: builder_html
-
-   .. include:: custom/whitespace_include

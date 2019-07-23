@@ -14,8 +14,3 @@ Appendices
    dev-history-major-changes
    known-issues
    licensing
-
-
-.. only:: builder_html
-
-   .. include:: ../custom/whitespace_include

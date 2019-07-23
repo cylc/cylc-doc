@@ -20,8 +20,3 @@ be grouped together under sub-directories. E.g.:
 Suite names can be pre-registered with the ``cylc register`` command,
 which creates the suite run directory structure and some service files
 underneath it. Otherwise, ``cylc run`` will do this at suite start up.
-
-
-.. only:: builder_html
-
-   .. include:: custom/whitespace_include

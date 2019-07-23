@@ -1,6 +1,6 @@
 .. _Cylc Tutorial:
 
-Cylc Tutorial
+Tutorial
 =============
 
 Cylc is a workflow engine for running suites of inter-dependent jobs.
