@@ -62,6 +62,12 @@ copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
 version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
 release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
 
+intersphinx_mapping = {
+    'rose': (
+        'http://metomi.github.io/rose/doc/html', None
+    )
+}
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build']
