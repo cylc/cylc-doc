@@ -2,13 +2,24 @@
   element which gets populated with the list of avaiable versions and
   formats for the documentation by versions.js
 -->
-<div id='versions-and-formats'></div>
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+{% set ROOT_DIR = pathto('').rsplit('.html', 1)[0] + '../..' %}
+
 <script type="text/javascript">
     const CUR_FORMAT = "{{ builder }}";
     const CUR_VERSION = "{{ version }}";
     // name of page (in URL), for singlepage builds this will be `index`
     const PAGE_NAME = "{{ current_page_name }}";
-    // URL path to a root file in the current version of the documentation
-    const VERSION_PATH = "{{ pathto('') }}".split('/');
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "{{ ROOT_DIR }}";
 </script>
-<script type="text/javascript" src="../../versions.js"></script>
+
+<script
+  type="text/javascript"
+  src="{{ ROOT_DIR }}/versions.js"
+></script>

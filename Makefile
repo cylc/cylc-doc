@@ -2,7 +2,7 @@
 
 # You can set these variables from the command line:
 # e.g. $ make html CYLC_VERSION=1.2.3
-CYLC_VERSION = $(shell cylc version)
+CYLC_VERSION = $(shell cylc version | sed 's/Cylc Flow //')
 SPHINXOPTS =
 SPHINXBUILD = sphinx-build
 SOURCEDIR = src
@@ -31,6 +31,6 @@ cli:
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of availabe versions and formats
-	bin/write-version-file doc/versions.json
+	bin/write-version-file > doc/versions.json
 	# setup HTML redirects to point at this version
 	bin/set-default-path "$(CYLC_VERSION)" html

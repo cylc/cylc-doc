@@ -42,13 +42,11 @@ def get_formats():
 
 def main():
     """Write documentation versions and formats to JSON file."""
-    try:
-        filename = sys.argv[1]
-    except IndexError:
-        sys.exit(__doc__)
-    json.dump(
-        get_formats(),
-        open(filename, 'w+')
+    print(
+        json.dumps(
+            get_formats(),
+            indent=4
+        )
     )
 
 
