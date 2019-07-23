@@ -9,20 +9,12 @@ Glossary
       A Cylc suite is a directory containing a ``suite.rc`` file which contains
       :term:`graphing<graph>` representing a workflow.
 
-      See also:
-
-      * :ref:`Relationship between Cylc suites, Rose suite configurations and
-        Rosie suites <cylc-rose-rosie-suite-relationship-diagram>`
-
 
    suite directory
-      The suite directory contains all of the configuration for a suite (e.g.
-      the ``suite.rc`` file and for Rose suites the :rose:file:`rose-suite.conf`
-      file).
+      The suite directory contains all of the configuration for a suite e.g.
+      the ``suite.rc`` file.
 
-      This is the directory which is registered using ``cylc reg`` or, for Rose
-      suites, it is the one in which the :ref:`command-rose-suite-run` command
-      is executed.
+      This is the directory which is registered using ``cylc reg``.
 
       .. note::
 
@@ -32,8 +24,6 @@ Glossary
       See also:
 
       * :term:`run directory`
-      * :ref:`Rose suite installation diagram
-        <rose-suite-installation-diagram>`
 
    graph
       The graph of a :term:`suite<Cylc suite>` refers to the
@@ -412,15 +402,10 @@ Glossary
       The location of the work directory can be accessed by a :term:`job` via
       the environment variable ``CYLC_TASK_WORK_DIR``.
 
-      Any files installed by :term:`Rose apps <Rose app>` will be placed within
-      this directory.
-
       See also:
 
       * :term:`run directory`
       * :term:`share directory`
-      * :ref:`Rose suite installation diagram
-        <rose-suite-installation-diagram>`
 
    share directory
       The share directory resides within a suite's :term:`run directory`. It
@@ -562,10 +547,6 @@ Glossary
       When a :term:`suite` starts the Cylc :term:`suite server program` is
       run. This program controls the suite and is what we refer to as
       "running".
-
-      * A :term:`Cylc suite` is started using ``cylc run``.
-      * A :term:`Rose suite configuration` (or :term:`Rosie Suite`) is started
-        using :ref:`command-rose-suite-run`.
 
       A suite start can be either :term:`cold <cold start>` or :term:`warm <warm
       start>` (cold by default).
@@ -766,116 +747,3 @@ Glossary
 
       When a Cylc detects that a suite has stalled an email will be sent to the
       user. Human interaction is required to escape a stalled state.
-
-   Rose configuration
-      Rose configurations are directories containing a Rose configuration
-      file along with other optional files and directories.
-
-      The two types of Rose configuration relevant to Cylc suites are:
-
-      * :term:`Rose application configuration`
-      * :term:`Rose suite configuration`
-
-      See also:
-
-      * :ref:`Rose Configuration Format`
-      * :ref:`Rose Configuration Tutorial <tutorial-rose-configurations>`
-      * :ref:`Optional Configuration Tutorial
-        <rose-tutorial-optional-configurations>`
-
-   Rose app
-   Rose application
-   Rose application configuration
-      A Rose application configuration (or Rose app) is a directory containing
-      a :rose:file:`rose-app.conf` file along with some other optional files
-      and directories.
-
-      An application can configure:
-
-      * The command to run (:rose:conf:`rose-app.conf[command]`).
-      * Any environment variables to provide it with
-        (:rose:conf:`rose-app.conf[env]`)
-      * Input files e.g. namelists (:rose:conf:`rose-app.conf[namelist:NAME]`)
-      * Metadata for the application (:rose:file:`rose-meta.conf`).
-
-      See also:
-
-      * :ref:`Rose Applications`
-
-   application directory
-      The application directory is the folder in which the
-      :rose:file:`rose-app.conf` file is located in a :term:`Rose application
-      configuration`.
-
-   Rose built-in application
-      A Rose built-in application is a generic :term:`Rose application`
-      providing common functionality which is provided in the Rose installation.
-
-      See also:
-
-      * :ref:`Rose Built-In Applications`
-
-   Rose suite configuration
-      A Rose suite configuration is a :rose:file:`rose-suite.conf` file along
-      with other optional files and directories which configure the way in
-      which a :term:`Cylc suite` is run. E.g:
-
-      * Jinja2 variables to be passed into the ``suite.rc`` file (
-        :rose:conf:`rose-suite.conf[jinja2:suite.rc]`).
-      * Environment variables to be provided to ``cylc run`` (
-        :rose:conf:`rose-suite.conf[env]`).
-      * Installation configuration (e.g.
-        :rose:conf:`rose-suite.conf|root-dir`,
-        :rose:conf:`rose-suite.conf[file:NAME]`).
-
-      See also:
-
-      * :ref:`Rose Suites`
-
-   metadata
-   Rose metadata
-      Rose metadata provides information about settings in
-      :term:`Rose application configurations <Rose application configuration>`
-      and :term:`Rose suite configurations <Rose suite configuration>`. This
-      information is stored in a :rose:file:`rose-meta.conf` file in a
-      ``meta/`` directory alongside the configuration it applies to.
-
-      This information can include:
-
-      * Documentation and help text, e.g.
-        :rose:conf:`rose-meta.conf[SETTING]title`
-        provides a short title to describe a setting.
-      * Information about permitted values for the setting, e.g.
-        :rose:conf:`rose-meta.conf[SETTING]type` can be used to specify the
-        data type a setting requires (integer, string, boolean, etc).
-      * Settings affecting how the configurations are displayed in
-        :ref:`command-rose-config-edit` (e.g.
-        :rose:conf:`rose-meta.conf[SETTING]sort-key`).
-      * Metadata which defines how settings should behave in different states
-        (e.g. :rose:conf:`rose-meta.conf[SETTING]trigger`).
-
-      This information is used for:
-
-      * Presentation and validation in the :ref:`command-rose-config-edit`
-        GUI.
-      * Validation using the :ref:`command-rose-macro` command.
-
-      Metadata does not affect the running of an
-      :term:`application <Rose app>` or :term:`Cylc suite`.
-
-      See also:
-
-      * :ref:`Metadata`
-
-   Rosie Suite
-      A Rosie suite is a :term:`Rose suite configuration` which is managed
-      using the Rosie system.
-
-      When a suite is managed using Rosie:
-
-      * The :term:`suite directory` is added to version control.
-      * The suite is registered in a database.
-
-      See also:
-
-      * :ref:`Rosie Tutorial <tutorial-rosie>`
