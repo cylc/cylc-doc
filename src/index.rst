@@ -27,6 +27,7 @@ indefinitely.
 
    introduction
    installation
+   tutorial/index
    terminology
    workflows
    global-flow-conf

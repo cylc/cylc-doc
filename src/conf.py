@@ -71,6 +71,10 @@ pygments_style = 'manni'
 numfig = True
 numfig_secnum_depth = 0
 
+# Global configuration for graphviz diagrams.
+graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
+                     '-Nfontname=sans']
+
 
 # -- Options for HTML output ----------------------------------------------
 
