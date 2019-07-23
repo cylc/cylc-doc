@@ -25,7 +25,7 @@ from cylc.flow import __version__ as CYLC_VERSION
 needs_sphinx = '1.5.3'
 
 # Sphinx extension module names.
-sys.path.append(os.path.abspath('custom'))  # path to custom extensions.
+sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
