@@ -42,7 +42,7 @@ install:
 
 script:
   - pycodestyle
-  - make html singlehtml linkcheck SPHINXOPTS='-W'
+  - make html singlehtml slides linkcheck SPHINXOPTS='-W'
 
 after_failure:
   - cat /tmp/sphinx-err*  # sphinx traceback

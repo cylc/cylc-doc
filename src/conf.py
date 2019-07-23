@@ -104,6 +104,12 @@ graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
+# -- Options for Slides output ----------------------------------------------
+
+slide_theme = 'single-level'
+slide_link_to_html = True
+slide_theme_options = {'custom_css': 'css/slides-custom.css'}
+
 
 # -- Options for HTML output ----------------------------------------------
 
