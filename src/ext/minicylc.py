@@ -250,5 +250,5 @@ def setup(app):
                  text=(text_visit_graphviz, None),
                  man=(man_visit_graphviz, None))
     app.add_directive('minicylc', MiniCylcDirective)
-    app.add_javascript('js/minicylc.js')
+    app.add_js_file('js/minicylc.js')
     return {'version': sphinx.__display_version__, 'parallel_read_safe': True}

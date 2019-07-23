@@ -76,4 +76,4 @@ def setup(app):
     app.add_directive('practical', Practical)
     app.add_directive('practical-extension', PracticalExtension)
     app.add_directive('spoiler', Spoiler)
-    app.add_javascript('js/spoiler.js')  # self-hiding node.
+    app.add_js_file('js/spoiler.js')  # self-hiding node.

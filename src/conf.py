@@ -117,6 +117,12 @@ html_logo = "graphics/png/orig/cylc-logo.png"
 html_favicon = "graphics/cylc-favicon.ico"  # sphinx specifies .ico format
 html_show_sphinx = False
 html_show_copyright = True
+html_js_files = [
+    'js/cylc.js'
+]
+html_css_files = [
+    'css/cylc.css'
+]
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
@@ -127,6 +133,8 @@ html_sidebars = {
         'versions.html'
     ],
 }
+
+html_static_path = ['_static']
 
 # Disable timestamp otherwise inserted at bottom of every page.
 html_last_updated_fmt = ''
