@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from distutils.spawn import find_executable as which
 import sys
 import os
 from cylc.flow import __version__ as CYLC_VERSION
@@ -44,6 +45,24 @@ extensions = [
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
+
+# Select best available SVG image converter.
+for svg_converter, extension in [
+        ('rsvg', 'sphinxcontrib.rsvgconverter'),
+        ('inkscape', 'sphinxcontrib.inkscapeconverter')]:
+    if which(svg_converter):
+        try:
+            __import__(extension)
+        except (AssertionError, ImportError):
+            # converter or extension not available
+            pass
+        else:
+            extensions.append(extension)
+            break
+else:
+    # no extensions or converters available, fall-back to default
+    # vector graphics will be converted to bitmaps in all documents
+    extensions.append('sphinx.ext.imgconverter')
 
 # Add any paths that contain templates.
 templates_path = ['_templates']
@@ -80,6 +99,7 @@ numfig = True
 numfig_secnum_depth = 0
 
 # Global configuration for graphviz diagrams.
+graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
