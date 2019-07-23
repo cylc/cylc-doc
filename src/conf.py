@@ -27,11 +27,20 @@ needs_sphinx = '1.5.3'
 # Sphinx extension module names.
 sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
+    # sphinx built-in extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    # sphinx user community extensions
+    'hieroglyph',
+    # custom project extensions (located in ext/)
     'cylc_lang',
+    'minicylc',
+    'practical',
+    'sub_lang',
+    'hieroglyph_patch'  # https://github.com/nyergler/hieroglyph/issues/148
 ]
 
 # Add any paths that contain templates.
