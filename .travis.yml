@@ -39,9 +39,11 @@ env:
 install:
   - pip install git+https://github.com/cylc/cylc-flow/
   - pip install -e .'[all]'
+  - npm install -g eslint
 
 script:
   - pycodestyle
+  - eslint .
   - make html singlehtml slides linkcheck SPHINXOPTS='-W'
 
 after_failure:
