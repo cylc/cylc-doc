@@ -113,8 +113,8 @@ html_theme_options = {
     'logo_only': True,
     'navigation_depth': 4
 }
-html_logo = "graphics/png/orig/cylc-logo.png"
-html_favicon = "graphics/cylc-favicon.ico"  # sphinx specifies .ico format
+html_logo = "img/cylc-logo.png"
+html_favicon = "img/cylc-favicon.ico"  # sphinx specifies .ico format
 html_show_sphinx = False
 html_show_copyright = True
 html_js_files = [
@@ -161,7 +161,7 @@ latex_documents = [
 ]
 
 # Image file to place at the top of the title page.
-latex_logo = "graphics/png/orig/cylc-logo.png"
+latex_logo = "img/cylc-logo.png"
 
 # If true, show URL addresses after external links.
 latex_show_urls = "footnote"

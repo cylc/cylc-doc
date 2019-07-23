@@ -278,7 +278,7 @@ use default task runtime properties such as ``script``).
 
       .. _fig-dep-eg-1:
 
-      .. figure:: graphics/png/orig/dep-eg-1.png
+      .. figure:: img/dep-eg-1.png
          :align: center
 
    .. container:: caption
@@ -483,7 +483,7 @@ successors (once they're all finished the suite just exits). The integer
 
       .. _fig-test1:
 
-      .. figure:: graphics/png/orig/test1.png
+      .. figure:: img/test1.png
          :align: center
 
    .. container:: caption
@@ -515,7 +515,7 @@ shows a small suite of cycling tasks.
 
       .. _fig-test2:
 
-      .. figure:: graphics/png/orig/test2.png
+      .. figure:: img/test2.png
          :align: center
 
    .. container:: caption
@@ -908,7 +908,7 @@ For example, we can write our suite like :numref:`fig-test4`.
 
       .. _fig-test4:
 
-      .. figure:: graphics/png/orig/test4.png
+      .. figure:: img/test4.png
          :align: center
 
    .. container:: caption
@@ -957,7 +957,7 @@ that has one-off dependencies with other task sets at different cycles.
 
       .. _fig-test5:
 
-      .. figure:: graphics/png/orig/test5.png
+      .. figure:: img/test5.png
          :align: center
 
    .. container:: caption
@@ -1114,7 +1114,7 @@ An Integer Cycling Example
 
 .. _fig-integer-pipeline:
 
-.. figure:: graphics/png/orig/pipe-pub.png
+.. figure:: img/pipe-pub.png
    :align: center
 
 The following suite definition, graphed in :numref:`fig-integer-pipeline`,
@@ -1308,7 +1308,7 @@ used, as shown in :numref:`fig-conditional`
 
       .. _fig-conditional:
 
-      .. figure:: graphics/png/orig/conditional-triggers.png
+      .. figure:: img/conditional-triggers.png
          :align: center
 
    .. container:: caption
@@ -1353,7 +1353,7 @@ you toggle them on with *View* ``->`` *Options* ``->``
 
       .. _fig-suicide:
 
-      .. figure:: graphics/png/orig/suicide.png
+      .. figure:: img/suicide.png
          :align: center
 
    .. container:: caption
@@ -2009,7 +2009,7 @@ cycle point:
 
 .. _ghost-node-screenshot:
 
-.. figure:: graphics/png/orig/ghost-node-example.png
+.. figure:: img/ghost-node-example.png
    :align: center
 
    Screenshot of ``cylc graph`` showing one task as a "ghost node".
@@ -2647,7 +2647,7 @@ Here's a more complex graph using two parameters (``[runtime]`` omitted):
 
 .. _fig-params-1:
 
-.. figure:: graphics/png/orig/params1.png
+.. figure:: img/params1.png
    :align: center
 
    Parameter expansion example.
@@ -3023,12 +3023,12 @@ workflow will be visible at all times as the suite runs.
    Create sub-figures if possible: for now hacked as separate figures with
    link and caption on final displayed figure.
 
-.. figure:: graphics/png/orig/eg2-static.png
+.. figure:: img/eg2-static.png
    :align: center
 
 .. _fig-eg2:
 
-.. figure:: graphics/png/orig/eg2-dynamic.png
+.. figure:: img/eg2-dynamic.png
    :align: center
 
    Parameterized (top) and cycling (bottom) versions of the same
@@ -3157,7 +3157,7 @@ with standard programming techniques.
 
 .. _fig-jinja2-ensemble:
 
-.. figure:: graphics/png/orig/jinja2-ensemble-graph.png
+.. figure:: img/jinja2-ensemble-graph.png
    :align: center
 
    The Jinja2 ensemble example suite graph.
@@ -3207,7 +3207,7 @@ with the New York City task family expanded, in
 
 .. _fig-jinja2-cities:
 
-.. figure:: graphics/png/orig/jinja2-suite-graph.png
+.. figure:: img/jinja2-suite-graph.png
    :align: center
 
    The Jinja2 cities example suite graph, with the

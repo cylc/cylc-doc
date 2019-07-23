@@ -152,9 +152,9 @@ For families with ``M`` and ``N`` members respectively, this
 reduces the number of dependencies from ``M*N`` to ``M+N``
 without affecting the scheduling.
 
-.. image:: ../graphics/png/orig/fam-to-fam-1.png
+.. image:: ../img/fam-to-fam-1.png
 
-.. image:: ../graphics/png/orig/fam-to-fam-2.png
+.. image:: ../img/fam-to-fam-2.png
 
 
 .. _Task Families And Visualization:
@@ -238,7 +238,7 @@ like this:
 Unfortunately this makes a mess of the suite definition, particularly the
 scheduling graph, and it gets worse with nested loops over multiple parameters.
 
-.. image:: ../graphics/png/orig/param-1.png
+.. image:: ../img/param-1.png
 
 
 .. _SDG Parameterized Tasks:
@@ -284,7 +284,7 @@ values: ``chunk<p-1> => chunk<p>``.  Here's a multi-parameter example:
    [runtime]
        [[sim<run,m>]]
 
-.. image:: ../graphics/png/orig/param-2.png
+.. image:: ../img/param-2.png
 
 If family members are defined by suite parameters, then parameterized
 trigger expressions are equivalent to family ``:<state>-all`` triggers.

@@ -15,7 +15,7 @@ div.uberpage {
     color:white;
     margin:0 auto;
     width:700px;
-    background-image:url(graphics/png/orig/niwa-colour-small.png);
+    background-image:url(img/niwa-colour-small.png);
     background-repeat:no-repeat;
     background-position: bottom right;
 }
@@ -23,7 +23,7 @@ div.uberpage {
 div.page {
     color:#00b3fd;
     background:white;
-    background-image:url(graphics/png/orig/cylc-logo.png);
+    background-image:url(img/cylc-logo.png);
     background-repeat:no-repeat;
     background-position: top right;
     margin:0 auto;
