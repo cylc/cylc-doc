@@ -28,7 +28,7 @@ indefinitely.
    introduction
    installation
    tutorial/index
-   terminology
+   glossary
    workflows
    global-flow-conf
    suite-name-reg
