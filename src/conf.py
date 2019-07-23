@@ -93,7 +93,7 @@ intersphinx_mapping = {
 exclude_patterns = ['_build']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'manni'
+pygments_style = 'autumn'
 
 # Enable automatic numbering of any captioned figures, tables & code blocks.
 numfig = True
