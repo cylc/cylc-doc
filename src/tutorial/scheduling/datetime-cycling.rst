@@ -1,6 +1,3 @@
-.. include:: ../../../hyperlinks.rst
-   :start-line: 1
-
 .. _nowcasting: https://www.metoffice.gov.uk/research/weather/research-to-operations/convective-scale-data-assimilation-and-nowcasting
 
 .. _tutorial-datetime-cycling:

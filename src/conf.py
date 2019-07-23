@@ -43,6 +43,8 @@ extensions = [
     'hieroglyph_patch'  # https://github.com/nyergler/hieroglyph/issues/148
 ]
 
+rst_epilog = open('hyperlinks.rst.include', 'r').read()
+
 # Add any paths that contain templates.
 templates_path = ['_templates']
 

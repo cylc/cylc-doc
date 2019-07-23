@@ -87,8 +87,7 @@ Suite.rc files are an extended-INI format with section nesting.
 
 Embedded template processor expressions may also be used in the file, to
 programatically generate the final suite configuration seen by
-cylc. Currently the `Jinja2 <http://jinja.pocoo.org/docs>`_ and
-`EmPy <http://www.alcyone.com/software/empy>`_ template processors are
+cylc. Currently the `Jinja2`_ and `EmPy`_ template processors are
 supported; see :ref:`Jinja` and :ref:`EmPylabel` for examples. In the future
 cylc may provide a plug-in interface to allow use of other template
 engines too.

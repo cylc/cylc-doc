@@ -1,9 +1,3 @@
-.. include:: ../../../hyperlinks.rst
-  :start-line: 1
-
-.. _DataPoint: https://www.metoffice.gov.uk/datapoint
-
-
 .. _tutorial-cylc-runtime-configuration:
 
 Runtime Configuration

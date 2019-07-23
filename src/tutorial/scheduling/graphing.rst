@@ -1,6 +1,3 @@
-.. include:: ../../../hyperlinks.rst
-
-
 .. _tutorial-cylc-graphing:
 
 Graphing

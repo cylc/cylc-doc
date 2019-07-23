@@ -1,6 +1,3 @@
-.. include:: ../../../hyperlinks.rst
-   :start-line: 1
-
 .. _tutorial-cylc-clock-trigger:
 
 Clock Triggered Tasks
