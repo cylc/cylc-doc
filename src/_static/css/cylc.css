@@ -4,7 +4,7 @@
      * Image will not overflow width, so just give a sensible height value. */
 }
 
-/* Correct the behaviour of the read the docs theme which greedily overides
+/* Correct the behaviour of the read the docs theme which greedily overrides
  * sphinx's `pygments_style` option by placing its own syntax in the
  * stylesheet - https://github.com/rtfd/sphinx_rtd_theme/issues/166 */
 .highlight * {
@@ -44,7 +44,7 @@
     line-height:1;
     text-decoration:inherit;
     font-size:14px;
-    vertical-align:-15%
+    vertical-align:-15%;
     -webkit-font-smoothing:antialiased
 }
 .rst-content p.admonition-title .headerlink:after,
@@ -67,7 +67,6 @@
     -moz-osx-font-smoothing:grayscale;
     display:none;
     visibility:hidden;
-    font-size:14px;
     color:#fcfcfc;
     text-decoration:inherit
 }
@@ -131,7 +130,7 @@
 }
 
 /* Extension to Pygments to insert the "added" and "unchanged" characters in
- * a "diff" code block using CSS so that they aren't included when coppied as
+ * a "diff" code block using CSS so that they aren't included when copied as
  * text. */
 .highlight-diff .gi:before {
     content: '+';

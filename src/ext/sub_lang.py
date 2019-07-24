@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# -----------------------------------------------------------------------------
 # Copyright (C) 2012-2019 British Crown (Met Office) & Contributors.
 #
 # This file is part of Rose, a framework for meteorological suites.
@@ -24,7 +22,7 @@ from pygments.token import Text, String, Comment
 
 
 class SubstitutionLexer(RegexLexer):
-    """Pygments lexer for highlighting <subsitutions> in code e.g. paths."""
+    """Pygments lexer for highlighting <substitutions> in code e.g. paths."""
     name = 'Substitution'
     aliases = []
     filenames = []

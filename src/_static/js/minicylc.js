@@ -10,7 +10,7 @@ var minicylc_default_theme = {
     'succeed_stroke': 'black'
 }
 
-// Demo colour theme for demmonstrating workflow logic.
+// Demo colour theme for demonstrating workflow logic.
 var minicylc_demo_theme = {
     'succeed_fill': '#aabbff',
     'succeed_stroke': 'black'
@@ -66,8 +66,8 @@ class MiniCylc {
         /**
          * Associate task/dependency names with SVG nodes.
          *
-         * Associations stored as dicionaries this.nodes and this.edges.
-         * @param svg The <svg> element containg the workflow.
+         * Associations stored as dictionaries this.nodes and this.edges.
+         * @param svg The <svg> element containing the workflow.
          */
         var nodes = {};
         var edges = {};
@@ -243,7 +243,7 @@ class MiniCylc {
     _main_loop(itt) {
         /*
          * The main loop - runs the simulation and handles restyling of nodes.
-         * Note function calls itself reccursively.
+         * Note function calls itself recursively.
          */
         var exit = false;
 
