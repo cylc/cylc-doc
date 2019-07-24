@@ -63,7 +63,6 @@ Paste the following code into a ``suite.rc`` file:
            [[[events]]]
                mail events = failed
        [[bell]]
-           env-script = eval $(rose task-env)
            script = printf 'bong%.0s\n' $(seq 1 $(cylc cyclepoint --print-hour))
 
 Change the initial cycle point to 00:00 this morning (e.g. if it was
