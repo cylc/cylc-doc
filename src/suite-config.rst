@@ -2280,6 +2280,9 @@ The task job script may export the following environment variables:
    CYLC_VERSION                    # Version of cylc installation used
 
    CYLC_CYCLING_MODE               # Cycling mode, e.g. gregorian
+   ISODATETIMECALENDAR             # Calendar mode for the `isodatetime` command,
+                                   # defined with the value of CYLC_CYCLING_MODE
+                                   # when in any date-time cycling mode
    CYLC_SUITE_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_SUITE_INITIAL_CYCLE_POINT  # Initial cycle point
    CYLC_SUITE_NAME                 # Suite name
@@ -2304,6 +2307,9 @@ The task job script may export the following environment variables:
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
                                    # e.g. 20110511T1800Z/t1/01
    CYLC_TASK_CYCLE_POINT           # Cycle point, e.g. 20110511T1800Z
+   ISODATETIMEREF                  # Reference time for the `isodatetime` command,
+                                   # defined with the value of CYLC_TASK_CYCLE_POINT
+                                   # when in any date-time cycling mode
    CYLC_TASK_NAME                  # Job's task name, e.g. t1
    CYLC_TASK_SUBMIT_NUMBER         # Job's submit number, e.g. 1,
                                    # increments with every submit
