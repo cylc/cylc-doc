@@ -12,7 +12,6 @@ indefinitely.
    introduction
    installation
    tutorial/index
-   glossary
    workflows
    global-flow-conf
    suite-name-reg
@@ -28,3 +27,5 @@ indefinitely.
    appendices/appendices-master
 
    suite-design-guide/suite-design-guide-master
+
+   glossary

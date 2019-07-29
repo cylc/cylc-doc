@@ -138,3 +138,9 @@
 .highlight-diff .gn:before {
     content: ' ';
 }
+
+/* scrolling */
+.wy-nav-size {
+    overflow-x: hidden!important;
+    overflow-y: hidden!important;
+}

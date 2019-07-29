@@ -1,13 +1,7 @@
 .. _Cylc Tutorial:
 
 Tutorial
-=============
-
-Cylc is a workflow engine for running suites of inter-dependent jobs.
-
-.. image:: ../img/cylc-logo-colour.svg
-   :width: 250px
-   :align: center
+========
 
 This section will cover the Cylc framework and writing basic Cylc suites.
 
