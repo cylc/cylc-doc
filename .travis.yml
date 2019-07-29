@@ -37,12 +37,15 @@ env:
     - PATH="${TRAVIS_BUILD_DIR}/bin:$PATH"
 
 install:
+  - sudo apt-get install -y graphviz
   - pip install git+https://github.com/cylc/cylc-flow/
   - pip install -e .'[all]'
+  - npm install -g eslint
 
 script:
   - pycodestyle
-  - make html singlehtml linkcheck SPHINXOPTS='-W'
+  - eslint .
+  - make html singlehtml slides linkcheck SPHINXOPTS='-W'
 
 after_failure:
   - cat /tmp/sphinx-err*  # sphinx traceback

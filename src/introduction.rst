@@ -77,7 +77,7 @@ upstream tasks.
 
 .. _fig-dep-one:
 
-.. figure:: graphics/png/orig/dep-one-cycle.png
+.. figure:: img/dep-one-cycle.svg
    :align: center
 
    A single cycle point dependency graph for a simple suite.
@@ -89,7 +89,7 @@ upstream tasks.
 
 .. _fig-time-one:
 
-.. figure:: graphics/png/orig/timeline-one.png
+.. figure:: img/timeline-one.svg
    :align: center
 
    A single cycle point job schedule for real time operation.
@@ -110,7 +110,7 @@ diagrams.
 
 .. _fig-dep-two-linked:
 
-.. figure:: graphics/png/orig/dep-two-cycles-linked.png
+.. figure:: img/dep-two-cycles-linked.svg
    :align: center
 
    What if the external driving data is available early? If the external
@@ -119,7 +119,7 @@ diagrams.
 
 .. _fig-overlap:
 
-.. figure:: graphics/png/orig/timeline-one-c.png
+.. figure:: img/timeline-one-c.svg
    :align: center
 
    Attempted overlap of consecutive single-cycle-point job
@@ -130,7 +130,7 @@ diagrams.
 
 .. _fig-job-no-overlap:
 
-.. figure:: graphics/png/orig/timeline-one-a.png
+.. figure:: img/timeline-one-a.svg
    :align: center
 
    The only safe multi-cycle-point job schedule? The best that can be done
@@ -199,7 +199,7 @@ contention or task failures) won't result in dependency violations.
 
 .. _fig-dep-multi:
 
-.. figure:: graphics/png/orig/dep-multi-cycle.png
+.. figure:: img/dep-multi-cycle.svg
    :align: center
 
    The complete multi-cycle-point dependency graph.
@@ -210,7 +210,7 @@ contention or task failures) won't result in dependency violations.
 
 .. _fig-optimal-two:
 
-.. figure:: graphics/png/orig/timeline-two-cycles-optimal.png
+.. figure:: img/timeline-two-cycles-optimal.svg
    :align: center
 
    The optimal two-cycle-point job schedule. The optimal two cycle job
@@ -230,7 +230,7 @@ with dependency violations.
 
 .. _fig-time-three:
 
-.. figure:: graphics/png/orig/timeline-three.png
+.. figure:: img/timeline-three.svg
    :align: center
 
    Comparison of job schedules after a delay. Job
@@ -243,7 +243,7 @@ with dependency violations.
 
 .. _fig-time-two:
 
-.. figure:: graphics/png/orig/timeline-two.png
+.. figure:: img/timeline-two.svg
    :align: center
 
    Optimal job schedule when all external data is
@@ -297,7 +297,7 @@ The Cylc Scheduling Algorithm
 
 .. _fig-task-pool:
 
-.. figure:: graphics/png/orig/task-pool.png
+.. figure:: img/task-pool.svg
    :align: center
 
    The cylc task pool. How cylc sees a suite, in contrast to the

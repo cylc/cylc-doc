@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from distutils.spawn import find_executable as which
 import sys
 import os
 from cylc.flow import __version__ as CYLC_VERSION
@@ -25,14 +26,44 @@ from cylc.flow import __version__ as CYLC_VERSION
 needs_sphinx = '1.5.3'
 
 # Sphinx extension module names.
-sys.path.append(os.path.abspath('custom'))  # path to custom extensions.
+sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
+    # sphinx built-in extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    # sphinx user community extensions
+    'hieroglyph',
+    'sphinx_rtd_theme',
+    # custom project extensions (located in ext/)
     'cylc_lang',
+    'minicylc',
+    'practical',
+    'sub_lang',
+    'hieroglyph_patch'  # https://github.com/nyergler/hieroglyph/issues/148
 ]
+
+rst_epilog = open('hyperlinks.rst.include', 'r').read()
+
+# Select best available SVG image converter.
+for svg_converter, extension in [
+        ('rsvg', 'sphinxcontrib.rsvgconverter'),
+        ('inkscape', 'sphinxcontrib.inkscapeconverter')]:
+    if which(svg_converter):
+        try:
+            __import__(extension)
+        except (AssertionError, ImportError):
+            # converter or extension not available
+            pass
+        else:
+            extensions.append(extension)
+            break
+else:
+    # no extensions or converters available, fall-back to default
+    # vector graphics will be converted to bitmaps in all documents
+    extensions.append('sphinx.ext.imgconverter')
 
 # Add any paths that contain templates.
 templates_path = ['_templates']
@@ -51,40 +82,53 @@ copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
 version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
 release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
 
+intersphinx_mapping = {
+    'rose': (
+        'http://metomi.github.io/rose/doc/html', None
+    )
+}
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'manni'
+pygments_style = 'autumn'
 
 # Enable automatic numbering of any captioned figures, tables & code blocks.
 numfig = True
 numfig_secnum_depth = 0
 
+# Global configuration for graphviz diagrams.
+graphviz_output_format = 'svg'
+graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
+                     '-Nfontname=sans']
+
+# -- Options for Slides output ----------------------------------------------
+
+slide_theme = 'single-level'
+slide_link_to_html = True
+slide_theme_options = {'custom_css': 'css/slides-custom.css'}
+
 
 # -- Options for HTML output ----------------------------------------------
 
-# The builtin HTML theme to build upon, with customisations to it. Notably
-# customise with a white 'sticky' sidebar; make headings & links text the Cylc
-# logo colours & make code block background the logo green made much lighter.
-html_theme = "classic"
+# Theme
+html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
-    "stickysidebar": True,
-    "sidebarwidth": 250,
-    "relbarbgcolor": "black",
-    "footerbgcolor": "white",  # single-page HTML flashes this colour on scroll
-    "footertextcolor": "black",
-    "sidebarbgcolor": "white",
-    "sidebartextcolor": "black",
-    "sidebarlinkcolor": "#0000EE;",
-    "headbgcolor": "white",
-    "headtextcolor": "#FF5966",
-    "linkcolor": "#0000EE;",
-    "visitedlinkcolor": "#551A8B;",
-    "headlinkcolor": "#0000EE;",
-    "codebgcolor": "#ebf9f6",
+    'logo_only': True,
+    'navigation_depth': 4
 }
+html_logo = "img/cylc-logo-white.svg"
+html_favicon = "img/cylc-favicon.ico"  # sphinx specifies .ico format
+html_show_sphinx = False
+html_show_copyright = True
+html_js_files = [
+    'js/cylc.js'
+]
+html_css_files = [
+    'css/cylc.css'
+]
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
@@ -96,16 +140,10 @@ html_sidebars = {
     ],
 }
 
-# Logo and favicon to display.
-html_logo = "graphics/png/orig/cylc-logo.png"
-# sphinx specifies this should be .ico format
-html_favicon = "graphics/cylc-favicon.ico"
+html_static_path = ['_static']
 
 # Disable timestamp otherwise inserted at bottom of every page.
 html_last_updated_fmt = ''
-
-# Remove "Created using Sphinx" text in footer.
-html_show_sphinx = False
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'cylcdoc'
@@ -129,7 +167,7 @@ latex_documents = [
 ]
 
 # Image file to place at the top of the title page.
-latex_logo = "graphics/png/orig/cylc-logo.png"
+latex_logo = "img/cylc-logo-greyscale.svg"
 
 # If true, show URL addresses after external links.
 latex_show_urls = "footnote"

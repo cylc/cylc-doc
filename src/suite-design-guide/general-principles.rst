@@ -705,7 +705,7 @@ path from the workflow:
 
    .. container:: image
 
-      .. figure:: ../graphics/png/orig/failure-recovery.png
+      .. figure:: ../img/failure-recovery.png
          :align: center
 
    .. container:: caption
