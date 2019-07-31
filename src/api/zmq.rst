@@ -33,7 +33,7 @@ Privilege Levels
 Cylc protects its network interface with configurable privilege levels which
 can be used to allocate different levels of control to different users.
 
-.. autoclass:: cylc.flow.network.Priv
+.. autoclass:: cylc.flow.network.authorisation.Priv
    :members:
 
 
