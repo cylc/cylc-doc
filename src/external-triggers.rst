@@ -77,8 +77,7 @@ cycle point value by one hour:
        [[xtriggers]]
            clock_1 = wall_clock(offset=PT1H):PT10S
        [[dependencies]]
-           [[[P1D]]]
-               graph = "@clock_1 => foo"
+           P1D = "@clock_1 => foo"
    [runtime]
        [[foo]]
            script = run-foo.sh
@@ -104,9 +103,8 @@ the ``[xtriggers]`` section:
    [scheduling]
        initial cycle point = 2018-01-01
        [[dependencies]]
-           [[[P1D]]]
-               # zero-offset clock trigger:
-               graph = "@wall_clock => foo"
+            # zero-offset clock trigger:
+           P1D = "@wall_clock => foo"
    [runtime]
        [[foo]]
            script = run-foo.sh
@@ -317,8 +315,7 @@ Here's an example echo trigger suite:
        [[xtriggers]]
            echo_1 = echo(hello, 99, qux=True, point=%(point)s, foo=10)
        [[dependencies]]
-           [[[PT1H]]]
-               graph = "@echo_1 => foo"
+           PT1H = "@echo_1 => foo"
    [runtime]
        [[foo]]
            script = exit 1
@@ -434,8 +431,7 @@ scheduling section:
        [[special tasks]]
            external-trigger = get-data("new sat X data avail")
        [[dependencies]]
-           [[[P1]]]
-               graph = get-data => conv-data => products
+           P1 = get-data => conv-data => products
 
 Then, each time a new dataset arrives the external detection system should
 notify the suite like this:
@@ -475,8 +471,7 @@ message:
        [[special tasks]]
            external-trigger = get-data("data arrived for $CYLC_TASK_CYCLE_POINT")
        [[dependencies]]
-           [[[T00]]]
-               graph = init-process => get-data => post-process
+           T00 = init-process => get-data => post-process
 
 Once the variable-length waiting is finished, an external detection system
 should notify the suite like this:

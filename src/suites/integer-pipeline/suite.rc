@@ -2,8 +2,7 @@
     cycling mode = integer
     initial cycle point = 1
     [[dependencies]]
-        [[[R/^/P1]]]
-            graph = """
+        R/^/P1 = """
                 A => B => C
                 A[-P1] => A
                 B[-P1] => B

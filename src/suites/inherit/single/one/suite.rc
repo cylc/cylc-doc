@@ -7,8 +7,7 @@
     initial cycle point = 20110101T06
     final cycle point = 20110102T00
     [[dependencies]]
-        [[[T00]]]
-            graph = """foo => OBS
+        T00 = """foo => OBS
                  OBS:succeed-all => bar"""
 [runtime]
     [[root]] # base namespace for all tasks (defines suite-wide defaults)

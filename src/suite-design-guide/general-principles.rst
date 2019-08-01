@@ -268,8 +268,7 @@ submission until the expected data arrival time:
            # Trigger 5 min after wall-clock time is equal to cycle point.
            clock-trigger = get-data(PT5M)
        [[dependencies]]
-           [[[T00]]]
-               graph = get-data => process-data
+           T00 = get-data => process-data
 
 Clock-triggered tasks typically have to handle late data arrival. Task
 execution *retry delays* can be used to simply retrigger the task at
@@ -360,8 +359,7 @@ that can be active (i.e. submitted or running) at the same time:
                limit = 2
                members = BIG_JOBS
        [[dependencies]]
-           [[[T00]]]
-               graph = pre => BIG_JOBS
+           T00 = pre => BIG_JOBS
    [runtime]
        [[BIG_JOBS]]
        [[foo, bar, baz, ...]]
@@ -571,8 +569,7 @@ effect delete the work directories of tasks other than its intended target.
    [scheduling]
        initial cycle point = 2018
        [[dependencies]]
-           [[[P1Y]]]
-               graph = write_data => read_data
+           P1Y = write_data => read_data
    [runtime]
        [[WORKSPACE]]
            work sub-directory = $CYLC_TASK_CYCLE_POINT/datadir
@@ -600,10 +597,8 @@ graph:
    [scheduling]
        initial cycle point = 2020-01-01T00
        [[dependencies]]
-           [[[T00]]]
-               graph = pre => long_fc => post
-           [[[T12]]]
-               graph = pre => short_fc => post
+           T00 = pre => long_fc => post
+           T12 = pre => short_fc => post
    [runtime]
        [[MODEL]]
            script = run-model.sh

@@ -257,13 +257,13 @@ vary depending on the particular cycle point:
        initial cycle point = 20200401
        final cycle point = 20200405
        [[dependencies]]
-           [[[T00,T06,T12,T18]]] # validity (hours)
-               graph = """
-   A => B & C   # B and C trigger off A
-   A[-PT6H] => A  # Model A restart trigger
-                       """
-           [[[T06,T18]]] # hours
-               graph = "C => X"
+           # validity (hours)
+           T00,T06,T12,T18 = """
+               A => B & C   # B and C trigger off A
+               A[-PT6H] => A  # Model A restart trigger
+           """
+           # hours
+           T06,T18 = "C => X"
 
 :numref:`fig-dep-eg-1` shows the complete suite.rc listing alongside
 the suite graph. This is a complete, valid, runnable suite (it will
@@ -295,13 +295,13 @@ use default task runtime properties such as ``script``).
              initial cycle point = 20200401
              final cycle point = 20200405
              [[dependencies]]
-                 [[[T00,T06,T12,T18]]] # validity (hours)
-                     graph = """
-         A => B & C   # B and C trigger off A
-         A[-PT6H] => A  # Model A restart trigger
-                             """
-                 [[[T06,T18]]] # hours
-                     graph = "C => X"
+                 # validity (hours)
+                 T00,T06,T12,T18 = """
+                     A => B & C     # B and C trigger off A
+                     A[-PT6H] => A  # Model A restart trigger
+                 """
+                 # hours
+                 T06,T18 = "C => X"
          [visualization]
              initial cycle point = 20200401
              final cycle point = 20200401T06
@@ -340,8 +340,7 @@ graph section. For example this graph:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T12]]]
-               graph = "A => B"
+           T00,T12 = "A => B"
 
 implies that B triggers off A for cycle points in which the hour matches ``00``
 or ``12``.
@@ -353,8 +352,7 @@ left side of a pair:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T12]]]
-               graph = "A[-PT12H] => B"
+           T00,T12 = "A[-PT12H] => B"
 
 This means B[time] triggers off A[time-PT12H] (12 hours before) for cycle
 points with hours matching ``00`` or ``12``. ``time`` is implicit because
@@ -371,8 +369,7 @@ possible to combine multiple offsets within a cycle point offset e.g.
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T12]]]
-               graph = "A[-P1D-PT12H] => B"
+           T00,T12 = "A[-P1D-PT12H] => B"
 
 This means that B[Time] triggers off A[time-P1D-PT12H] (1 day and 12 hours
 before).
@@ -529,8 +526,7 @@ shows a small suite of cycling tasks.
          # (no dependence between cycle points)
          [scheduling]
              [[dependencies]]
-                 [[[T00,T12]]]
-                     graph = "foo => bar & baz => qux"
+                 T00,T12 = "foo => bar & baz => qux"
 
 
 Graph Section Headings
@@ -544,8 +540,7 @@ example in the following scenario:
 
    [scheduling]
        [[dependencies]]
-           [[[ T06 ]]]  # A graph section heading
-               graph = foo => bar
+           T06 = foo => bar
 
 ``T06`` means "Run every day starting at 06:00 after the
 initial cycle point". Cylc allows you to start (or end) at any particular
@@ -588,12 +583,12 @@ with example graph headings for each form being:
 
 .. code-block:: cylc
 
-   [[[ R5/T00 ]]]           # Run 5 times at 00:00 every day
-   [[[ R//PT1H ]]]          # Run every hour (Note the R// is redundant)
-   [[[ 20000101T00Z/P1D ]]] # Run every day starting at 00:00 1st Jan 2000
-   [[[ R1 ]]]               # Run once at the initial cycle point
-   [[[ R1/20000101T00Z ]]]  # Run once at 00:00 1st Jan 2000
-   [[[ P1Y ]]]              # Run every year
+   R5/T00           # Run 5 times at 00:00 every day
+   R//PT1H          # Run every hour (Note the R// is redundant)
+   20000101T00Z/P1D # Run every day starting at 00:00 1st Jan 2000
+   R1               # Run once at the initial cycle point
+   R1/20000101T00Z  # Run once at 00:00 1st Jan 2000
+   P1Y              # Run every year
 
 .. note::
 
@@ -642,13 +637,13 @@ So, for example, you can write:
 
 .. code-block:: cylc
 
-   [[[ R1//+P0D ]]]  # Run once at the final cycle point
-   [[[ R5/P1D ]]]    # Run 5 times, every 1 day, ending at the final
-                     # cycle point
-   [[[ P2W/T00 ]]]   # Run every 2 weeks ending at 00:00 following
-                     # the final cycle point
-   [[[ R//T00 ]]]    # Run every 1 day ending at 00:00 following the
-                     # final cycle point
+   R1//+P0D  # Run once at the final cycle point
+   R5/P1D    # Run 5 times, every 1 day, ending at the final
+             # cycle point
+   P2W/T00   # Run every 2 weeks ending at 00:00 following
+             # the final cycle point
+   R//T00    # Run every 1 day ending at 00:00 following the
+             # final cycle point
 
 
 .. _referencing-the-initial-and-final-cycle-points:
@@ -661,15 +656,15 @@ initial and final cycle points. Using this shorthand you can write:
 
 .. code-block:: cylc
 
-   [[[ R1/^+PT12H ]]]  # Repeat once 12 hours after the initial cycle point
-                       # R[limit]/[date-time]
-                       # Equivalent to [[[ R1/+PT12H ]]]
-   [[[ R1/$ ]]]        # Repeat once at the final cycle point
-                       # R[limit]/[date-time]
-                       # Equivalent to [[[ R1//+P0D ]]]
-   [[[ $-P2D/PT3H ]]]  # Repeat 3 hourly starting two days before the
-                       # [date-time]/[interval]
-                       # final cycle point
+   R1/^+PT12H  # Repeat once 12 hours after the initial cycle point
+               # R[limit]/[date-time]
+               # Equivalent to R1/+PT12H
+   R1/$        # Repeat once at the final cycle point
+               # R[limit]/[date-time]
+               # Equivalent to R1//+P0D
+   $-P2D/PT3H  # Repeat 3 hourly starting two days before the
+               # [date-time]/[interval]
+               # final cycle point
 
 .. note::
 
@@ -678,9 +673,9 @@ initial and final cycle points. Using this shorthand you can write:
 
    .. code-block:: cylc
 
-      [[[ R1/P0Y ]]]      # R[limit]/[interval]
-      [[[ R1/P0Y/$ ]]]    # R[limit]/[interval]/[date-time]
-      [[[ R1/$ ]]]        # R[limit]/[date-time]
+      R1/P0Y       # R[limit]/[interval]
+      R1/P0Y/$     # R[limit]/[interval]/[date-time]
+      R1/$         # R[limit]/[date-time]
 
 
 .. _excluding-dates:
@@ -689,18 +684,18 @@ Excluding Dates
 """""""""""""""
 
 Date-times can be excluded from a recurrence by an exclamation mark for
-example ``[[[ PT1D!20000101 ]]]`` means run daily except on the
+example ``PT1D!20000101`` means run daily except on the
 first of January 2000.
 
 This syntax can be used to exclude one or multiple date-times from a
 recurrence. Multiple date-times are excluded using the syntax
-``[[[ PT1D!(20000101,20000102,...) ]]]``. All date-times listed within
+``PT1D!(20000101,20000102,...)``. All date-times listed within
 the parentheses after the exclamation mark will be excluded.
 
 .. note::
 
    The ``^`` and ``$`` symbols (shorthand for the initial
-   and final cycle points) are both date-times so ``[[[ T12!$-PT1D ]]]``
+   and final cycle points) are both date-times so ``T12!$-PT1D``
    is valid.
 
 If using a run limit in combination with an exclusion, the heading might not
@@ -713,8 +708,7 @@ suite ``foo`` will only run once as its second run has been excluded.
        initial cycle point = 20000101T00Z
        final cycle point = 20000105T00Z
        [[dependencies]]
-           [[[ R2/P1D!20000102 ]]]
-               graph = foo
+           R2/P1D!20000102 = foo
 
 
 Advanced exclusion syntax
@@ -729,43 +723,42 @@ For example, partial date-times can be excluded using the syntax:
 
 .. code-block:: cylc
 
-   [[[ PT1H ! T12 ]]]          # Run hourly but not at 12:00 from the initial
-                               # cycle point.
-   [[[ T-00 ! (T00, T06, T12, T18) ]]]   # Run hourly but not at 00:00, 06:00,
-                                         # 12:00, 18:00.
-   [[[ PT5M ! T-15 ]]]         # Run 5-minutely but not at 15 minutes past the
-                               # hour from the initial cycle point.
-   [[[ T00 ! W-1T00 ]]]        # Run daily at 00:00 except on Mondays.
+   PT1H ! T12                   # Run hourly but not at 12:00 from the initial
+                                # cycle point.
+   T-00 ! (T00, T06, T12, T18)  # Run hourly but not at 00:00, 06:00,
+                                # 12:00, 18:00.
+   PT5M ! T-15                  # Run 5-minutely but not at 15 minutes past the
+                                # hour from the initial cycle point.
+   T00 ! W-1T00                 # Run daily at 00:00 except on Mondays.
 
 It is also valid to use sequences for exclusions. For example:
 
 .. code-block:: cylc
 
-   [[[ PT1H ! PT6H ]]]         # Run hourly from the initial cycle point but
-                               # not 6-hourly from the initial cycle point.
-   [[[ T-00 ! PT6H ]]]         # Run hourly on the hour but not 6-hourly
-                               # on the hour.
-       # Same as [[[ T-00 ! T-00/PT6H ]]] (T-00 context is implied)
-       # Same as [[[ T-00 ! (T00, T06, T12, T18) ]]]
-       # Same as [[[ PT1H ! (T00, T06, T12, T18) ]]] Initial cycle point dependent
+   PT1H ! PT6H         # Run hourly from the initial cycle point but
+                       # not 6-hourly from the initial cycle point.
+   T-00 ! PT6H         # Run hourly on the hour but not 6-hourly on the hour.
+   # Same as T-00 ! T-00/PT6H (T-00 context is implied)
+   # Same as T-00 ! (T00, T06, T12, T18)
+   # Same as PT1H ! (T00, T06, T12, T18) Initial cycle point dependent
 
-   [[[ T12 ! T12/P15D ]]]      # Run daily at 12:00 except every 15th day.
+   T12 ! T12/P15D      # Run daily at 12:00 except every 15th day.
 
-   [[[ R/^/P1H ! R5/20000101T00/P1D ]]]    # Any valid recurrence may be used to
-                                           # determine exclusions. This example
-                                           # translates to: Repeat every hour from
-                                           # the initial cycle point, but exclude
-                                           # 00:00 for 5 days from the 1st January
-                                           # 2000.
+   R/^/P1H ! R5/20000101T00/P1D    # Any valid recurrence may be used to
+                                   # determine exclusions. This example
+                                   # translates to: Repeat every hour from
+                                   # the initial cycle point, but exclude
+                                   # 00:00 for 5 days from the 1st January
+                                   # 2000.
 
 You can combine exclusion sequences and single point exclusions within a
 comma separated list enclosed in parentheses:
 
 .. code-block:: cylc
 
-   [[[ T-00 ! (20000101T07, PT2H) ]]]      # Run hourly on the hour but not at 07:00
-                                           # on the 1st Jan, 2000 and not 2-hourly
-                                           # on the hour.
+   T-00 ! (20000101T07, PT2H)  # Run hourly on the hour but not at 07:00
+                               # on the 1st Jan, 2000 and not 2-hourly
+                               # on the hour.
 
 
 .. _HowMultipleGraphStringsCombine:
@@ -785,11 +778,9 @@ a duplicate prerequisite for task C:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T06,T12,T18]]]
-               graph = "A => B => C"
-           [[[T06,T18]]]
-               graph = "B => C => X"
-               # duplicate prerequisite: B => C already defined at T06, T18
+           T00,T06,T12,T18 = "A => B => C"
+           T06,T18 = "B => C => X"
+           # duplicate prerequisite: B => C already defined at T06, T18
 
 This does not affect scheduling, but for the sake of clarity and brevity
 the graph should be written like this:
@@ -798,11 +789,9 @@ the graph should be written like this:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T06,T12,T18]]]
-               graph = "A => B => C"
-           [[[T06,T18]]]
-               # X triggers off C only at 6 and 18 hours
-               graph = "C => X"
+           T00,T06,T12,T18 = "A => B => C"
+           # X triggers off C only at 6 and 18 hours
+           T06,T18 = "C => X"
 
 
 .. _AdvancedCycling:
@@ -814,33 +803,28 @@ The following examples show the various ways of writing graph headings in cylc.
 
 .. code-block:: cylc
 
-   [[[ R1 ]]]         # Run once at the initial cycle point
-   [[[ P1D ]]]        # Run every day starting at the initial cycle point
-   [[[ PT5M ]]]       # Run every 5 minutes starting at the initial cycle
-                      # point
-   [[[ T00/P2W ]]]    # Run every 2 weeks starting at 00:00 after the
-                      # initial cycle point
-   [[[ +P5D/P1M ]]]   # Run every month, starting 5 days after the initial
-                      # cycle point
-   [[[ R1/T06 ]]]     # Run once at 06:00 after the initial cycle point
-   [[[ R1/P0Y ]]]     # Run once at the final cycle point
-   [[[ R1/$ ]]]       # Run once at the final cycle point (alternative
-                      # form)
-   [[[ R1/$-P3D ]]]   # Run once three days before the final cycle point
-   [[[ R3/T0830 ]]]   # Run 3 times, every day at 08:30 after the initial
-                      # cycle point
-   [[[ R3/01T00 ]]]   # Run 3 times, every month at 00:00 on the first
-                      # of the month after the initial cycle point
-   [[[ R5/W-1/P1M ]]] # Run 5 times, every month starting on Monday
-                      # following the initial cycle point
-   [[[ T00!^ ]]]      # Run at the first occurrence of T00 that isn't the
-                      # initial cycle point
-   [[[ PT1D!20000101 ]]]  # Run every day days excluding 1st Jan 2000
-   [[[ 20140201T06/P1D ]]]    # Run every day starting at 20140201T06
-   [[[ R1/min(T00,T06,T12,T18) ]]]  # Run once at the first instance
-                                    # of either T00, T06, T12 or T18
-                                    # starting at the initial cycle
-                                    # point
+   R1         # Run once at the initial cycle point
+   P1D        # Run every day starting at the initial cycle point
+   PT5M       # Run every 5 minutes starting at the initial cycle point
+   T00/P2W    # Run every 2 weeks starting at 00:00 after the
+              # initial cycle point
+   +P5D/P1M   # Run every month, starting 5 days after the initial cycle point
+   R1/T06     # Run once at 06:00 after the initial cycle point
+   R1/P0Y     # Run once at the final cycle point
+   R1/$       # Run once at the final cycle point (alternative form)
+   R1/$-P3D   # Run once three days before the final cycle point
+   R3/T0830   # Run 3 times, every day at 08:30 after the initial cycle point
+   R3/01T00   # Run 3 times, every month at 00:00 on the first
+              # of the month after the initial cycle point
+   R5/W-1/P1M # Run 5 times, every month starting on Monday
+              # following the initial cycle point
+   T00!^      # Run at the first occurrence of T00 that isn't the
+              # initial cycle point
+   PT1D!20000101  # Run every day days excluding 1st Jan 2000
+   20140201T06/P1D    # Run every day starting at 20140201T06
+   R1/min(T00,T06,T12,T18)  # Run once at the first instance
+                            # of either T00, T06, T12 or T18
+                            # starting at the initial cycle point
 
 
 .. _AdvancedStartingUp:
@@ -859,10 +843,8 @@ using the ``R1`` notation. For example:
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
        [[dependencies]]
-           [[[R1]]]
-               graph = "prep => foo"
-           [[[T00]]]
-               graph = "foo[-P1D] => foo => bar"
+           R1 = "prep => foo"
+           T00 = "foo[-P1D] => foo => bar"
 
 In the example above, ``R1`` implies ``R1/20130808T00``, so
 ``prep`` only runs once at that cycle point (the initial cycle point).
@@ -883,12 +865,9 @@ Let's suppose that we add the following section to the suite example above:
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
        [[dependencies]]
-           [[[R1]]]
-               graph = "prep => foo"
-           [[[T00]]]
-               graph = "foo[-P1D] => foo => bar"
-           [[[T12]]]
-               graph = "baz[-P1D] => baz => qux"
+           R1 = "prep => foo"
+           T00 = "foo[-P1D] => foo => bar"
+           T12 = "baz[-P1D] => baz => qux"
 
 We'll also say that there should be a starting dependence between
 ``prep`` and our new task ``baz`` - but we still want to have
@@ -923,18 +902,13 @@ For example, we can write our suite like :numref:`fig-test4`.
              initial cycle point = 20130808T00
              final cycle point = 20130812T00
              [[dependencies]]
-                 [[[R1]]]
-                     graph = "prep"
-                 [[[R1/T00]]]
-         # ^ implies the initial cycle point:
-              graph = "prep[^] => foo"
-                 [[[R1/T12]]]
-         # ^ is initial cycle point, as above:
-              graph = "prep[^] => baz"
-                 [[[T00]]]
-              graph = "foo[-P1D] => foo => bar"
-                 [[[T12]]]
-              graph = "baz[-P1D] => baz => qux"
+                 R1 = "prep"
+                 # ^ implies the initial cycle point:
+                 R1/T00 = "prep[^] => foo"
+                 # ^ is initial cycle point, as above:
+                 R1/T12 = "prep[^] => baz"
+                 T00 = "foo[-P1D] => foo => bar"
+                 T12 = "baz[-P1D] => baz => qux"
          [visualization]
              initial cycle point = 20130808T00
              final cycle point = 20130810T00
@@ -972,13 +946,11 @@ that has one-off dependencies with other task sets at different cycles.
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
               [[dependencies]]
-                  [[[R1]]]
-                      graph = "setup_foo => foo"
-                  [[[+PT6H/PT6H]]]
-                      graph = """
-                          foo[-PT6H] => foo
-                          foo => bar
-                      """
+                  R1 = "setup_foo => foo"
+                  +PT6H/PT6H = """
+                      foo[-PT6H] => foo
+                      foo => bar
+                  """ 
           [visualization]
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
@@ -994,7 +966,7 @@ with some tasks missing compared to subsequent cycle points?
 
 In :numref:`fig-test5`, ``bar`` will not be run at the initial
 cycle point, but will still run at subsequent cycle points.
-``[[[+PT6H/PT6H]]]`` means start at ``+PT6H`` (6 hours after
+``+PT6H/PT6H`` means start at ``+PT6H`` (6 hours after
 the initial cycle point) and then repeat every ``PT6H`` (6 hours).
 
 Some suites may have staggered start-up sequences where different tasks need
@@ -1010,12 +982,9 @@ used as follows:
    [scheduling]
        initial cycle point = 20100101T03
        [[dependencies]]
-           [[[R1/min(T00,T12)]]]
-               graph = "prep1 => foo"
-           [[[R1/min(T06,T18)]]]
-               graph = "prep2 => foo"
-           [[[T00,T06,T12,T18]]]
-               graph = "foo => bar"
+           R1/min(T00,T12) = "prep1 => foo"
+           R1/min(T06,T18) = "prep2 => foo"
+           T00,T06,T12,T18 = "foo => bar"
 
 
 In this example the initial cycle point is ``20100101T03``, so the
@@ -1049,19 +1018,19 @@ where suite initial and final cycle points can be assumed. Some examples:
 
 .. code-block:: cylc
 
-   [[[ R1 ]]]        # Run once at the initial cycle point
-                     # (short for R1/initial-point/?)
-   [[[ P1 ]]]        # Repeat with step 1 from the initial cycle point
-                     # (short for R/initial-point/P1)
-   [[[ P5 ]]]        # Repeat with step 5 from the initial cycle point
-                     # (short for R/initial-point/P5)
-   [[[ R2//P2 ]]]    # Run twice with step 3 from the initial cycle point
-                     # (short for R2/initial-point/P2)
-   [[[ R/+P1/P2 ]]]  # Repeat with step 2, from 1 after the initial cycle point
-   [[[ R2/P2 ]]]     # Run twice with step 2, to the final cycle point
-                     # (short for R2/P2/final-point)
-   [[[ R1/P0 ]]]     # Run once at the final cycle point
-                     # (short for R1/P0/final-point)
+   R1        # Run once at the initial cycle point
+             # (short for R1/initial-point/?)
+   P1        # Repeat with step 1 from the initial cycle point
+             # (short for R/initial-point/P1)
+   P5        # Repeat with step 5 from the initial cycle point
+             # (short for R/initial-point/P5)
+   R2//P2    # Run twice with step 3 from the initial cycle point
+             # (short for R2/initial-point/P2)
+   R/+P1/P2  # Repeat with step 2, from 1 after the initial cycle point
+   R2/P2     # Run twice with step 2, to the final cycle point
+             # (short for R2/P2/final-point)
+   R1/P0     # Run once at the final cycle point
+             # (short for R1/P0/final-point)
 
 Advanced Integer Cycling Syntax
 '''''''''''''''''''''''''''''''
@@ -1073,9 +1042,9 @@ example you can write:
 
 .. code-block:: cylc
 
-   [[[ R1/^ ]]]     # Run once at the initial cycle point
-   [[[ R1/$ ]]]     # Run once at the final cycle point
-   [[[ R3/^/P2 ]]]  # Run three times with step two starting at the
+   R1/^     # Run once at the initial cycle point
+   R1/$     # Run once at the final cycle point
+   R3/^/P2  # Run three times with step two starting at the
                     # initial cycle point
 
 Likewise the syntax introduced in :ref:`excluding-dates` for excluding
@@ -1084,12 +1053,10 @@ example:
 
 .. code-block:: cylc
 
-   [[[ R/P4!8 ]]]       # Run with step 4, to the final cycle point
-                        # but not at point 8
-   [[[ R3/3/P2!5 ]]]    # Run with step 2 from point 3 but not at
-                        # point 5
-   [[[ R/+P1/P6!14 ]]]  # Run with step 6 from 1 step after the
-                        # initial cycle point but not at point 14
+   R/P4!8       # Run with step 4, to the final cycle point but not at point 8
+   R3/3/P2!5    # Run with step 2 from point 3 but not at point 5
+   R/+P1/P6!14  # Run with step 6 from 1 step after the
+                # initial cycle point but not at point 14
 
 Multiple integer exclusions are also valid in the same way as the syntax
 in :ref:`excluding-dates`. Integer exclusions may be a list of single
@@ -1097,17 +1064,17 @@ integer points, an integer sequence, or a combination of both:
 
 .. code-block:: cylc
 
-   [[[ R/P1!(2,3,7) ]]]  # Run with step 1 to the final cycle point,
-                         # but not at points 2, 3, or 7.
-   [[[ P1 ! P2 ]]]       # Run with step 1 from the initial to final
-                         # cycle point, skipping every other step from
-                         # the initial cycle point.
-   [[[ P1 ! +P1/P2 ]]]   # Run with step 1 from the initial cycle point,
-                         # excluding every other step beginning one step
-                         # after the initial cycle point.
-   [[[ P1 !(P2,6,8) ]]]  # Run with step 1 from the initial cycle point,
-                         # excluding every other step, and also excluding
-                         # steps 6 and 8.
+   R/P1!(2,3,7)  # Run with step 1 to the final cycle point,
+                 # but not at points 2, 3, or 7.
+   P1 ! P2       # Run with step 1 from the initial to final
+                 # cycle point, skipping every other step from
+                 # the initial cycle point.
+   P1 ! +P1/P2   # Run with step 1 from the initial cycle point,
+                 # excluding every other step beginning one step
+                 # after the initial cycle point.
+   P1 !(P2,6,8)  # Run with step 1 from the initial cycle point,
+                 # excluding every other step, and also excluding
+                 # steps 6 and 8.
 
 An Integer Cycling Example
 ''''''''''''''''''''''''''
@@ -1608,12 +1575,9 @@ start-up.
 
      [scheduling]
          [[dependencies]]
-             [[[R1]]]
-                 graph = "prep"
-             [[[R1/T00,R1/T12]]]
-                 graph = "prep[^] => foo"
-             [[[T00,T12]]]
-                 graph = "foo[-PT12H] => foo => bar"
+             R1 = "prep"
+             R1/T00,R1/T12 = "prep[^] => foo"
+             T00,T12 = "foo[-PT12H] => foo => bar"
 
 ``R1``, or ``R1/date-time`` tasks are the recommended way to
 specify unusual start up conditions. They allow you to specify a clean
@@ -1634,10 +1598,9 @@ If a task has a dependency on another task in a different cycle point, the
 dependency can be written using the ``[offset]`` syntax such as
 ``[-PT12H]`` in ``foo[-PT12H] => foo``. This means that
 ``foo`` at the current cycle point depends on a previous instance of
-``foo`` at 12 hours before the current cycle point. Unlike the
-cycling section headings (e.g. ``[[[T00,T12]]]``), dependencies
-assume that relative times are relative to the current cycle point, not the
-initial cycle point.
+``foo`` at 12 hours before the current cycle point. Unlike recurrences
+(e.g. ``T00,T12``), dependencies assume that relative times are relative to the
+current cycle point, not the initial cycle point.
 
 However, it can be useful to have specific dependencies on tasks at or near
 the initial cycle point. You can switch the context of the offset to be
@@ -1647,19 +1610,16 @@ For example, you can write ``foo[^]`` to mean foo at the initial
 cycle point, and ``foo[^+PT6H]`` to mean foo 6 hours after the initial
 cycle point. Usually, this kind of dependency will only apply in a limited
 number of cycle points near the start of the suite, so you may want to write
-it in ``R1``-based cycling sections. Here's the example inter-cycle
+it in ``R1``-based graphs. Here's the example inter-cycle
 ``R1`` suite from above again.
 
 .. code-block:: cylc
 
    [scheduling]
        [[dependencies]]
-           [[[R1]]]
-               graph = "prep"
-           [[[R1/T00,R1/T12]]]
-               graph = "prep[^] => foo"
-           [[[T00,T12]]]
-               graph = "foo[-PT12H] => foo => bar"
+           R1 = "prep"
+           R1/T00,R1/T12 = "prep[^] => foo"
+           T00,T12 = "foo[-PT12H] => foo => bar"
 
 You can see there is a dependence on the initial ``R1`` task
 ``prep`` for ``foo`` at the first ``T00`` cycle point,
@@ -1673,8 +1633,7 @@ point.
 
    [scheduling]
        [[dependencies]]
-           [[[R1/20200202]]]
-               graph = "baz[20200101] => qux"
+           R1/20200202 = "baz[20200101] => qux"
 
 However, in a long running suite, a repeating cycle should avoid having a
 dependency on a task with a specific cycle point (including the initial cycle
@@ -1688,8 +1647,7 @@ will never be removed from the task pool:
        initial cycle point = 2010
        [[dependencies]]
            # Can cause performance issue!
-           [[[P1D]]]
-               graph = "baz[20200101] => qux"
+           P1D = "baz[20200101] => qux"
 
 
 .. _SequentialTasks:
@@ -1707,8 +1665,7 @@ Tasks that depend on their own previous-cycle instance can be declared as
            # foo depends on its previous instance:
            sequential = foo  # deprecated - see below!
        [[dependencies]]
-           [[[T00,T12]]]
-               graph = "foo => bar"
+           T00,T12 = "foo => bar"
 
 *The sequential declaration is deprecated* however, in favor of explicit
 inter-cycle triggers which clearly expose the same scheduling behaviour in the
@@ -1718,9 +1675,8 @@ graph:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T12]]]
-               # foo depends on its previous instance:
-               graph = "foo[-PT12H] => foo => bar"
+           # foo depends on its previous instance:
+           T00,T12 = "foo[-PT12H] => foo => bar"
 
 The sequential declaration is arguably convenient in one unusual situation
 though: if a task has a non-uniform cycling sequence then multiple explicit
@@ -1730,14 +1686,10 @@ triggers,
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T03,T11]]]
-               graph = "foo => bar"
-           [[[T00]]]
-               graph = "foo[-PT13H] => foo"
-           [[[T03]]]
-               graph = "foo[-PT3H] => foo"
-           [[[T11]]]
-               graph = "foo[-PT8H] => foo"
+           T00,T03,T11 = "foo => bar"
+           T00 = "foo[-PT13H] => foo"
+           T03 = "foo[-PT3H] => foo"
+           T11 = "foo[-PT8H] => foo"
 
 can be replaced by a single sequential declaration,
 
@@ -1747,8 +1699,7 @@ can be replaced by a single sequential declaration,
        [[special tasks]]
            sequential = foo
        [[dependencies]]
-           [[[T00,T03,T11]]]
-               graph = "foo => bar"
+           T00,T03,T11 = "foo => bar"
 
 
 Future Triggers
@@ -1761,13 +1712,12 @@ unless the task has a clock trigger):
 .. code-block:: cylc
 
    [[dependencies]]
-       [[[T00,T06,T12,T18]]]
-           graph = """
-       # A runs in this cycle:
-               A
-       # B in this cycle triggers off A in the next cycle.
-               A[PT6H] => B
-           """
+       T00,T06,T12,T18 = """
+           # A runs in this cycle:
+           A
+           # B in this cycle triggers off A in the next cycle.
+           A[PT6H] => B
+       """
 
 Future triggers present a problem at suite shutdown rather than at start-up.
 Here, ``B`` at the final cycle point wants to trigger off an instance
@@ -1802,8 +1752,7 @@ triggers) a wall clock time expressed as an offset from cycle point:
        [[special tasks]]
            clock-trigger = foo(PT2H)
        [[dependencies]]
-           [[[T00]]]
-               graph = foo
+           T00 = foo
 
 Here, ``foo[2015-08-23T00]`` would trigger (other dependencies allowing)
 when the wall clock time reaches ``2015-08-23T02``. Clock-trigger
@@ -1845,10 +1794,10 @@ workflow is skipped, if it is more than one day behind the wall-clock:
        [[special tasks]]
            clock-expire = copy(-P1D)
        [[dependencies]]
-           [[[P1D]]]
-               graph = """
-           model[-P1D] => model => copy => proc
-                 copy:expired => !proc"""
+           P1D = """
+               model[-P1D] => model => copy => proc
+               copy:expired => !proc
+           """
 
 
 .. _SuiteConfigExternalTriggers:
@@ -1872,8 +1821,7 @@ dependence requires an inter-cycle trigger:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T06,T12,T18]]]
-               graph = "A[-PT6H] => A"
+           T00,T06,T12,T18 = "A[-PT6H] => A"
 
 If your model is configured to write out additional restart files
 to allow one or more cycle points to be skipped in an emergency *do not
@@ -1888,9 +1836,8 @@ be finished first:
 
    [scheduling]
        [[dependencies]]
-           [[[T00,T06,T12,T18]]]
-               # DO NOT DO THIS (SEE ACCOMPANYING TEXT):
-               graph = "A[-PT24H] | A[-PT18H] | A[-PT12H] | A[-PT6H] => A"
+           # DO NOT DO THIS (SEE ACCOMPANYING TEXT):
+           T00,T06,T12,T18 = "A[-PT24H] | A[-PT18H] | A[-PT12H] | A[-PT6H] => A"
 
 
 How The Graph Determines Task Instantiation
@@ -1933,9 +1880,8 @@ the existence of the cycle offset task is not defined anywhere at all:
    [scheduling]
        initial cycle point = 2020
        [[dependencies]]
-           [[[P1Y]]]
-               # ERROR
-               graph = "foo[-P1Y] => bar"
+           # ERROR
+           P1Y = "foo[-P1Y] => bar"
 
 .. code-block:: bash
 
@@ -1950,10 +1896,10 @@ To fix this, use another line in the graph to tell Cylc to define
    [scheduling]
        initial cycle point = 2020
        [[dependencies]]
-           [[[P1Y]]]
-               graph = """
-                   foo
-                   foo[-P1Y] => bar"""
+           P1Y = """
+               foo
+               foo[-P1Y] => bar
+           """
 
 But validation does not catch this kind of error if the offset task
 is defined only on a different cycling sequence:
@@ -1963,10 +1909,11 @@ is defined only on a different cycling sequence:
    [scheduling]
        initial cycle point = 2020
        [[dependencies]]
-           [[[P2Y]]]
-               graph = """foo
-                   # ERROR
-                   foo[-P1Y] => bar"""
+           # ERROR
+           P2Y = """
+               foo
+               foo[-P1Y] => bar
+           """
 
 This suite will validate OK, but it will stall at runtime with ``bar``
 waiting on ``foo[-P1Y]`` at the intermediate years where it does not
@@ -1979,10 +1926,8 @@ exist. The offset ``[-P1Y]`` is presumably an error (it should be
    [scheduling]
        initial cycle point = 2020
        [[dependencies]]
-           [[[P1Y]]]
-               graph = "foo"
-           [[[P2Y]]]
-               graph = "foo[-P1Y] => bar"
+           P1Y = "foo"
+           P2Y = "foo[-P1Y] => bar"
 
 Similarly the following suite will validate OK, but it will stall at
 runtime with ``bar`` waiting on ``foo[-P1Y]`` in
@@ -1994,11 +1939,9 @@ cycle point:
    [scheduling]
        initial cycle point = 2020
        [[dependencies]]
-           [[[R1]]]
-               graph = foo
-           [[[P1Y]]]
-               # ERROR
-               graph = foo[-P1Y] => bar
+           R1 = foo
+           # ERROR
+           P1Y = foo[-P1Y] => bar
 
 .. note::
 
@@ -2987,10 +2930,10 @@ with previous-instance model dependence (e.g. for model restart files):
        initial cycle point = 2020-01
        final cycle point = 2020-12
        [[dependencies]]
-           [[[R1]]]  # Run once, at the initial point.
-               graph = "prep => model"
-           [[[P2M]]]  # Run at 2-month intervals between the initial and final points.
-               graph = "model[-P2M] => model => post_proc & archive"
+           # Run once, at the initial point.
+           R1 = "prep => model"
+           # Run at 2-month intervals between the initial and final points.
+           P2M = "model[-P2M] => model => post_proc & archive"
    [runtime]
        [[model]]
            script = "run-model $CYLC_TASK_CYCLE_POINT"
@@ -3052,9 +2995,10 @@ point:
    [scheduling]
        initial cycle point = 2020-01
        [[dependencies]]
-           [[[P1Y]]]
-               graph = """model<chunk-1> => model<chunk>
-                       model<chunk=4>[-P1Y] => model<chunk=1>"""
+           P1Y = """
+               model<chunk-1> => model<chunk>
+               model<chunk=4>[-P1Y] => model<chunk=1>
+           """
 
 .. note::
 
@@ -3067,8 +3011,7 @@ point:
       [scheduling]
           initial cycle point = 2020-01
           [[dependencies]]
-              [[[P3M]]]
-                  graph = "model[-P3M] => model"
+              P3M = "model[-P3M] => model"
 
 Here's a possible valid use-case for mixed cycling: consider a portable
 date-time cycling workflow of model jobs that can each take too long to run on

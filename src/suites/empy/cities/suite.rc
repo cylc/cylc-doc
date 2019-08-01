@@ -18,11 +18,9 @@ CLEANUP = True
     initial cycle point = 2011-08-08T12
     [[ dependencies ]]
 @[ if CLEANUP ]
-        [[[T23]]]
-            graph = "clean"
+        T23 = "clean"
 @[ end if ]
-        [[[T00,T12]]]
-            graph = """
+        T00,T12 = """
                 setup => get_lbc & get_ic # foo
 @[ for CITY in CITIES ]@# comment
                 get_lbc => @(CITY)_one
