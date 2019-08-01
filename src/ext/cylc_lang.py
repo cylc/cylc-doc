@@ -37,7 +37,6 @@ class CylcLexer(RegexLexer):
     EXTERNAL_SUITE_TOKEN = Name.Builtin.Pseudo
     INTERCYCLE_OFFSET_TOKEN = Name.Builtin
 
-    EMPY_BLOCK_REGEX = r'@\{([^\{\}]+|\{[^\}]+\})+\}'
     EMPY_BLOCK_REGEX = (
         r'@\%(open)s('  # open empy block
         r'[^\%(open)s\%(close)s]+|'  # either not a close character
