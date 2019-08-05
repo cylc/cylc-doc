@@ -1,14 +1,19 @@
-/* Make quotations small enough to fit on the slide. */
+/* (1)
+ * Make quotations small enough to fit on the slide. */
 q {
     font-size: 1em;
 }
 
-/* Add a bit of space between slide titles and images. */
+
+/* (2)
+ * Add a bit of space between slide titles and images. */
 object, img {
     margin: 1em 0 1em 0;
 }
 
-/* Don't display glossary terms as hyperlinks. */
+
+/* (3)
+ * Don't display glossary terms as hyperlinks. */
 a.reference {
     text-decoration: none
 }
@@ -25,7 +30,9 @@ a.reference span.xref:hover {
     color: #0066CC;
 }
 
-/* Make code block captions legible. */
+
+/* (4)
+ * Make code block captions legible. */
 .code-block-caption span {
     font-size: 2em;
 }
