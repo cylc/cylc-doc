@@ -267,7 +267,7 @@ submission until the expected data arrival time:
        [[special tasks]]
            # Trigger 5 min after wall-clock time is equal to cycle point.
            clock-trigger = get-data(PT5M)
-       [[dependencies]]
+       [[graph]]
            T00 = get-data => process-data
 
 Clock-triggered tasks typically have to handle late data arrival. Task
@@ -358,7 +358,7 @@ that can be active (i.e. submitted or running) at the same time:
            [[[big_jobs_queue]]]
                limit = 2
                members = BIG_JOBS
-       [[dependencies]]
+       [[graph]]
            T00 = pre => BIG_JOBS
    [runtime]
        [[BIG_JOBS]]
@@ -518,8 +518,8 @@ by inheritance:
 
    # Sharing an I/O location via inheritance.
    [scheduling]
-       [[dependencies]]
-           graph = write_data => read_data
+       [[graph]]
+           R1 = write_data => read_data
    [runtime]
        [[root]]
            env-script = $(eval rose task-env)
@@ -543,8 +543,8 @@ be shared via Jinja variables:
    # Sharing an I/O location with Jinja2.
    {% set DATA_DIR = '$ROSE_DATA/stuff' %}
    [scheduling]
-       [[dependencies]]
-           graph = write_data => read_data
+       [[graph]]
+           R1 = write_data => read_data
    [runtime]
        [[write_data]]
            script = """
@@ -568,7 +568,7 @@ effect delete the work directories of tasks other than its intended target.
    # Shared work directory: tasks can read and write in $PWD - use with caution!
    [scheduling]
        initial cycle point = 2018
-       [[dependencies]]
+       [[graph]]
            P1Y = write_data => read_data
    [runtime]
        [[WORKSPACE]]
@@ -596,7 +596,7 @@ graph:
    # Run the same job differently at different cycle points.
    [scheduling]
        initial cycle point = 2020-01-01T00
-       [[dependencies]]
+       [[graph]]
            T00 = pre => long_fc => post
            T12 = pre => short_fc => post
    [runtime]
@@ -708,7 +708,7 @@ path from the workflow:
       .. code-block:: cylc
 
          [scheduling]
-             [[dependencies]]
+             [[graph]]
                  graph = """
                      model | model_short => postproc
                      model:fail => diagnose => model_short

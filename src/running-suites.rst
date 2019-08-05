@@ -170,7 +170,7 @@ workflow by coding tasks that run the ``cylc checkpoint`` command:
 .. code-block:: cylc
 
    [scheduling]
-      [[dependencies]]
+      [[graph]]
          PT6H = "pre => model => post => checkpointer"
    [runtime]
       # ...
@@ -1227,7 +1227,7 @@ a remote suite called ``other.suite``:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
+       [[graph]]
            T00, T12 = "my-foo<other.suite::foo> => bar"
 
 Local task ``my-foo`` will poll for the success of ``foo``
@@ -1245,7 +1245,7 @@ configured if necessary under the local polling task runtime section:
 .. code-block:: cylc
 
    [scheduling]
-       [[ dependencies]]
+       [[graph]]
            T00,T12 = "my-foo<other.suite::foo> => bar"
    [runtime]
        [[my-foo]]
@@ -1283,7 +1283,7 @@ at ``3,9,15,21``:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
+       [[graph]]
            T03,T09,T15,T21 = "my-dog<other.suite::dog>"
            T00,T06,T12,T18 = "my-dog[-PT3H] => cat"
 
@@ -1307,8 +1307,8 @@ command interrogates the suite run database, not the suite server program.
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              graph = "poller<other-suite::foo:succeed>:fail => another-task"
+          [[graph]]
+              R1 = "poller<other-suite::foo:succeed>:fail => another-task"
       [runtime]
           [[my-foo]]
               [[[suite state polling]]]
@@ -1340,8 +1340,8 @@ cylc-7.2.0) by a small suite that runs two 30-second dummy tasks
    [scheduling]
        initial cycle point = 2017-01-01T00Z
        final cycle point = 2017-01-01T00Z
-       [[dependencies]]
-           graph = "foo => bar"
+       [[graph]]
+           R1 = "foo => bar"
    [runtime]
        [[foo]]
            script = sleep 30; /bin/false

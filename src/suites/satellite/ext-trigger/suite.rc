@@ -34,7 +34,7 @@ until triggered by an external system."""
     # runahead limit = P5 # (alternative limiting method)
     [[special tasks]]
         external-trigger = get_data("new dataset ready for processing")
-    [[dependencies]]
+    [[graph]]
         # first cycle
         R1 = prep => satsim & get_data
         P1 = """

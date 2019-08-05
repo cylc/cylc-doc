@@ -1150,7 +1150,7 @@ tasks, may be required.
 - *default*: (none)
 
 
-[scheduling] ``->`` [[dependencies]]
+[scheduling] ``->`` [[graph]]
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The suite dependency graph is defined under this section.  You can plot
@@ -1161,7 +1161,7 @@ also :ref:`ConfiguringScheduling`.
 
 .. _GraphDescrip:
 
-[scheduling] ``->`` [[dependencies]] ``->`` \_\_RECURRENCE\_\_
+[scheduling] ``->`` [[graph]] ``->`` \_\_RECURRENCE\_\_
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 The ``__RECURRENCE__`` defines the sequence of cycle points for
@@ -1202,17 +1202,6 @@ follow; see also :ref:`ConfiguringScheduling` and :ref:`TriggerTypes`.
      """
 
 - *default*: (none)
-
-
-[scheduling] ``->`` [[dependencies]] ``->`` graph
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-Implies a non-cycling suite, and same as ``R1 = ...``. The value should be a
-dependency graph.  See also :ref:`GraphDescrip` above and
-:ref:`ConfiguringScheduling`, for graph string syntax.
-
-- *type*: string
-- *example*: (see :ref:`GraphDescrip` above)
 
 
 [runtime]

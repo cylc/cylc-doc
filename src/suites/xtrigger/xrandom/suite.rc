@@ -11,7 +11,7 @@
         x2 = xrandom(percent=25, secs=2, _=%(name)s):PT5S
         # Called once per cycle for all dependent tasks.
         x3 = xrandom(percent=25, secs=2, _=%(point)s):PT5S
-    [[dependencies]]
+    [[graph]]
         P1 = """
 # all instances of foo and bar should trigger at once, together
             @x1 => foo & bar

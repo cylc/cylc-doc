@@ -30,8 +30,8 @@ Cylc Parameters
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = start => hello<world> => end
+       [[graph]]
+           R1 = start => hello<world> => end
    [runtime]
        [[hello<world>]]
            script = echo 'Hello World!'
@@ -46,8 +46,8 @@ Cylc Parameters
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                start => hello_Mercury => end
                start => hello_Venus => end
                start => hello_Earth => end
@@ -130,8 +130,8 @@ Parameters can be either words or integers:
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              graph = """
+          [[graph]]
+              R1 = """
                   # task<bar> would result in:
                   task_bar1
                   task_bar3
@@ -153,9 +153,8 @@ Parameters can be either words or integers:
 .. code-block:: cylc
 
    [scheduling]
-      [[dependencies]]
-          [[[T00/PT3H]]]
-              graph = """
+      [[graph]]
+          T00/PT3H = """
                   get_observations<station> => consolidate_observations
               """
    [runtime]

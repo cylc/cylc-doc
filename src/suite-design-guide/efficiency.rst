@@ -98,8 +98,8 @@ tasks need to trigger at once:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = pre => MODELS
+       [[graph]]
+           R1 = pre => MODELS
    [runtime]
        [[MODELS]]
        [[model1, model2, model3, ...]]
@@ -112,8 +112,8 @@ member-triggering semantics:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """pre => MODELS
+       [[graph]]
+           R1 = """pre => MODELS
                    MODELS:succeed-all => post"""
 
 Note that this can be simplified further because Cylc ignores trigger
@@ -123,8 +123,8 @@ to allow chaining of dependencies:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = pre => MODELS:succeed-all => post
+       [[graph]]
+           R1 = pre => MODELS:succeed-all => post
 
 
 Family-to-Family Triggering
@@ -133,8 +133,8 @@ Family-to-Family Triggering
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = BIG_FAM_1:succeed-all => BIG_FAM_2
+       [[graph]]
+           R1 = BIG_FAM_1:succeed-all => BIG_FAM_2
 
 This means every member of ``BIG_FAM_2`` depends on every member
 of ``BIG_FAM_1`` succeeding. For very large families this can create so
@@ -145,8 +145,8 @@ interpose a dummy task that signifies completion of the first family:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = BIG_FAM_1:succeed-all => big_fam_1_done => BIG_FAM_2
+       [[graph]]
+           R1 = BIG_FAM_1:succeed-all => big_fam_1_done => BIG_FAM_2
 
 For families with ``M`` and ``N`` members respectively, this 
 reduces the number of dependencies from ``M*N`` to ``M+N``
@@ -218,8 +218,8 @@ like this:
    # Task generation the old way: Jinja2 loops (NO LONGER RECOMMENDED!)
    {% set PARAMS = range(1,11) %}
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
    {% for P in PARAMS %}
          pre => model_p{{P}} => post
          {% if P == 5 %}
@@ -257,8 +257,8 @@ example using suite parameters instead of Jinja2 loops:
        [[parameters]]
            p = 1..10
    [scheduling]
-       [[dependencies]]
-           graph = """pre => model<p> => post
+       [[graph]]
+           R1 = """pre => model<p> => post
                    model<p=5> => check"""
    [runtime]
        [[model<p>]]
@@ -279,8 +279,8 @@ values: ``chunk<p-1> => chunk<p>``.  Here's a multi-parameter example:
            run = a, b, c
            m = 1..5
    [scheduling]
-       [[dependencies]]
-           graph = pre => init<run> => sim<run,m> => close<run> => post
+       [[graph]]
+           R1 = pre => init<run> => sim<run,m> => close<run> => post
    [runtime]
        [[sim<run,m>]]
 
@@ -296,8 +296,8 @@ For example, this:
        [[parameters]]
            n = 1..5
    [scheduling]
-       [[dependencies]]
-           graph = pre => model<n> => post
+       [[graph]]
+           R1 = pre => model<n> => post
    [runtime]
        [[MODELS]]
        [[model<n>]]
@@ -311,8 +311,8 @@ is equivalent to this:
        [[parameters]]
            n = 1..5
    [scheduling]
-       [[dependencies]]
-           graph = pre => MODELS:succeed-all => post
+       [[graph]]
+           R1 = pre => MODELS:succeed-all => post
    [runtime]
        [[MODELS]]
        [[model<n>]]

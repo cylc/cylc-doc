@@ -53,8 +53,8 @@ and a local task views a remote job log then polls and kills the remote jobs.
 
    # suite.rc
    [scheduling]
-      [[dependencies]]
-             graph = "delayer => master & REMOTES"
+      [[graph]]
+         R1 = "delayer => master & REMOTES"
    [runtime]
       [[REMOTES]]
          script = "sleep 30"

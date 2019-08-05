@@ -184,18 +184,16 @@ might produce different results for the recurrences.
 
           [scheduling]
               initial cycle point = 2000-01-01T00
-              [[dependencies]]
-                  [[[P1D]]]
-                      graph = foo[-P1D] => foo
+              [[graph]]
+                  P1D = foo[-P1D] => foo
 
      - .. code-block:: cylc
           :emphasize-lines: 2
 
           [scheduling]
               initial cycle point = 2000-01-01T12
-              [[dependencies]]
-                  [[[P1D]]]
-                      graph = foo[-P1D] => foo
+              [[graph]]
+                  P1D = foo[-P1D] => foo
 
    * - .. digraph:: Example
           :align: center
@@ -456,7 +454,7 @@ Putting It All Together
              UTC mode = True
          [scheduling]
              initial cycle point = 20000101T00Z
-             [[dependencies]]
+             [[graph]]
 
    #. **Add The Recurrences.**
 
@@ -483,9 +481,9 @@ Putting It All Together
                  UTC mode = True
              [scheduling]
                  initial cycle point = 20000101T00Z
-                 [[dependencies]]
-            +        [[[PT3H]]]
-            +        [[[+PT6H/PT6H]]]
+                 [[graph]]
+            +        PT3H =
+            +        +PT6H/PT6H =
 
    #. **Write The Graphing.**
 
@@ -528,16 +526,14 @@ Putting It All Together
                UTC mode = True
            [scheduling]
                initial cycle point = 20000101T00Z
-               [[dependencies]]
-                   [[[PT3H]]]
-                       graph = """
+               [[graph]]
+                   PT3H = """
                            get_observations_belmullet => consolidate_observations
                            get_observations_camborne => consolidate_observations
                            get_observations_heathrow => consolidate_observations
                            get_observations_shetland => consolidate_observations
                        """
-                   [[[+PT6H/PT6H]]]
-                       graph = """
+                   +PT6H/PT6H = """
                            consolidate_observations => forecast
                            consolidate_observations[-PT3H] => forecast
                            consolidate_observations[-PT6H] => forecast

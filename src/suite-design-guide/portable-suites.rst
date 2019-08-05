@@ -125,7 +125,7 @@ override semantics). So, for instance, this graph:
 
    [scheduling]
        initial cycle point = 2025
-       [[dependencies]]
+       [[graph]]
            P1Y = "pre => model => post => niwa_archive"
 
 can be written like this:
@@ -134,7 +134,7 @@ can be written like this:
 
    [scheduling]
        initial cycle point = 2025
-       [[dependencies]]
+       [[graph]]
            P1Y = "pre => model => post"
            P1Y = "post => niwa_archive"
 
@@ -149,7 +149,7 @@ and again, the site-specific part can be taken out to a site include-file:
    #...
    [scheduling]
        initial cycle point = 2025
-       [[dependencies]]
+       [[graph]]
            P1Y = "pre => model => post"
    #...
    # Site-specific settings:
@@ -161,7 +161,7 @@ where the site include-file ``site/niwa.rc`` contains:
 
    # site/niwa.rc
    [scheduling]
-       [[dependencies]]
+       [[graph]]
            P1Y = "post => niwa_archive"
 
 Note that the site-file graph needs to define the dependencies of the
@@ -322,7 +322,7 @@ and batch scheduler directives.
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01
-       [[dependencies]]
+       [[graph]]
            R1 = install_niwa => preproc
            P1D = """
                preproc & model[-P1D] => model => postproc => upload_niwa
@@ -368,7 +368,7 @@ settings from an include-file at the end:
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01
-       [[dependencies]]
+       [[graph]]
            P1D = """
                preproc & model[-P1D] => model => postproc
    {% if HAVE_IDL %}
@@ -401,7 +401,7 @@ and ``site/niwa.rc``:
 
    # site/niwa.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    [scheduling]
-       [[dependencies]]
+       [[graph]]
            R1 = install_niwa => preproc
            P1D = postproc => upload_niwa
    [runtime]

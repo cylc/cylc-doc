@@ -40,8 +40,8 @@ trying to roll doubles using two dice:
        UTC mode = True # Ignore DST
 
    [scheduling]
-       [[dependencies]]
-           graph = start => roll_doubles => win
+       [[graph]]
+           R1 = start => roll_doubles => win
 
    [runtime]
        [[start]]

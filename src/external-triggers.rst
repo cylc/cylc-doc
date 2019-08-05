@@ -76,7 +76,7 @@ cycle point value by one hour:
        initial cycle point = 2018-01-01
        [[xtriggers]]
            clock_1 = wall_clock(offset=PT1H):PT10S
-       [[dependencies]]
+       [[graph]]
            P1D = "@clock_1 => foo"
    [runtime]
        [[foo]]
@@ -102,7 +102,7 @@ the ``[xtriggers]`` section:
 
    [scheduling]
        initial cycle point = 2018-01-01
-       [[dependencies]]
+       [[graph]]
             # zero-offset clock trigger:
            P1D = "@wall_clock => foo"
    [runtime]
@@ -318,7 +318,7 @@ Here's an example echo trigger suite:
        initial cycle point = now
        [[xtriggers]]
            echo_1 = echo(hello, 99, qux=True, point=%(point)s, foo=10)
-       [[dependencies]]
+       [[graph]]
            PT1H = "@echo_1 => foo"
    [runtime]
        [[foo]]
@@ -434,7 +434,7 @@ scheduling section:
        initial cycle point = 1
        [[special tasks]]
            external-trigger = get-data("new sat X data avail")
-       [[dependencies]]
+       [[graph]]
            P1 = get-data => conv-data => products
 
 Then, each time a new dataset arrives the external detection system should
@@ -474,7 +474,7 @@ message:
        final cycle point   = 20150126T00
        [[special tasks]]
            external-trigger = get-data("data arrived for $CYLC_TASK_CYCLE_POINT")
-       [[dependencies]]
+       [[graph]]
            T00 = init-process => get-data => post-process
 
 Once the variable-length waiting is finished, an external detection system

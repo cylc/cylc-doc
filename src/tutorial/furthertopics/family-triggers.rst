@@ -57,8 +57,8 @@ Paste the following configuration into the ``suite.rc`` file:
    [cylc]
        UTC mode = True # Ignore DST
    [scheduling]
-       [[dependencies]]
-           graph = visit_mine => MINERS
+       [[graph]]
+           R1 = visit_mine => MINERS
    [runtime]
        [[visit_mine]]
            script = sleep 5; echo 'off to work we go'
@@ -108,14 +108,14 @@ to use the ``finish-all`` trigger to check for all members of the ``MINERS``
 family finishing, and the ``succeed-any`` trigger to check for any of the
 tasks in the ``MINERS`` family succeeding.
 
-Open your ``suite.rc`` file and change the ``[[dependencies]]`` to look like
+Open your ``suite.rc`` file and change the ``[[graph]]`` to look like
 this:
 
 .. code-block:: cylc
 
-   [[dependencies]]
-       graph = """visit_mine => MINERS
-                  MINERS:finish-all & MINERS:succeed-any => sell_diamonds"""
+   [[graph]]
+       R1 = """visit_mine => MINERS
+               MINERS:finish-all & MINERS:succeed-any => sell_diamonds"""
 
 Then, add the following task to the ``[runtime]`` section:
 
@@ -143,14 +143,14 @@ all the miners have reported back and had time to discuss their findings.
 
 To do this we will make use of family triggers in a similar manner to before.
 
-Open your ``suite.rc`` file and change the ``[[dependencies]]`` to look like
+Open your ``suite.rc`` file and change the ``[[graph]]`` to look like
 this:
 
 .. code-block:: cylc
 
-   [[dependencies]]
-       graph = """visit_mine => MINERS
-                  MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+   [[graph]]
+       R1 = """visit_mine => MINERS
+               MINERS:finish-all & MINERS:succeed-any => sell_diamonds
                   MINERS:finish-all & MINERS:fail-any => close_shafts
                   close_shafts => !MINERS
                   """

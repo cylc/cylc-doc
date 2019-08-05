@@ -16,7 +16,7 @@ CLEANUP = True
 
 [scheduling]
     initial cycle point = 2011-08-08T12
-    [[ dependencies ]]
+    [[graph]]
 @[ if CLEANUP ]
         T23 = "clean"
 @[ end if ]

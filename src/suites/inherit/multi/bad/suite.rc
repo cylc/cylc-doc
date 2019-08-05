@@ -8,8 +8,8 @@ object MRI reference document. For a detailed explanation, see:
 """
 
 [scheduling]
-    [[dependencies]]
-        graph = g
+    [[graph]]
+        R1 = g
 [runtime]
     [[F]]
     [[E]]

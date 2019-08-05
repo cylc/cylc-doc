@@ -239,13 +239,13 @@ Cylc Graphs
 .. ifnotslides::
 
    In a :term:`Cylc suite` the :term:`graph` is stored under the
-   ``[scheduling][dependencies]graph`` setting, i.e:
+   ``[scheduling][graph]R1`` setting, i.e:
 
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                purchase_ingredients => make_dough
                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
            """
@@ -329,8 +329,8 @@ Cylc Graphs
       .. code-block:: cylc
 
          [scheduling]
-             [[dependencies]]
-                 graph = """
+             [[graph]]
+                 R1 = """
                      # Write graph strings here!
                  """
 
@@ -398,8 +398,8 @@ Cylc Graphs
          .. code-block:: cylc
 
             [scheduling]
-                [[dependencies]]
-                    graph = """
+                [[graph]]
+                    R1 = """
                         foo & pub => bar => baz & wop
                         baz => qux
                     """

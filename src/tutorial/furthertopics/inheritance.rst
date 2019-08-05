@@ -30,8 +30,8 @@ a different aircraft, the Airbus A380 jumbo jet and the Robson R44 helicopter:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = a380 & r44
+       [[graph]]
+           R1 = a380 & r44
 
    [runtime]
        [[VEHICLE]]

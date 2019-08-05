@@ -32,11 +32,9 @@ Copy the following configuration into a ``suite.rc`` file:
 
    [scheduling]
        initial cycle point = 1012
-       [[dependencies]]
-           [[[R1]]]
-               graph = wipe_log => announce
-           [[[PT1H]]]
-               graph = announce[-PT1H] => announce
+       [[graph]]
+           R1 = wipe_log => announce
+           PT1H = announce[-PT1H] => announce
 
    [runtime]
        [[wipe_log]]
