@@ -21,8 +21,8 @@ You will now have a ``suite.rc`` file that looks like this:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                open_restaurant => steak1 & steak2 & pasta1 & pasta2 & pasta3 & \
                                   pizza1 & pizza2 & pizza3 & pizza4
                steak1 => ice_cream1

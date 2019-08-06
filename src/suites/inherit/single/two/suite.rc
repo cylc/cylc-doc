@@ -9,7 +9,7 @@ generated with 'cylc jobscript'."""
 [scheduling]
     initial cycle point = 20110101T00
     final cycle point = 20110103T00
-    [[dependencies]]
+    [[graph]]
         T00 = """
                 foo => OPS
                 OPS:finish-all & OPS:succeed-any => VAR

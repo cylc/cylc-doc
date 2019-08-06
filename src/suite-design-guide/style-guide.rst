@@ -166,8 +166,8 @@ Multiline ``graph`` strings can be entirely free-form:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
        # Main workflow:
      FAMILY:succeed-all => bar & baz => qux
 
@@ -182,8 +182,8 @@ indents; see :ref:`Line Length`):
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                # Main workflow:
                FAMILY:succeed-all => bar & baz => qux
 
@@ -256,9 +256,9 @@ trigger arrows imply line continuation:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
+       [[graph]]
            # No line continuation marker is needed here.
-           graph = """prep => one => two => three =>
+           R1 = """prep => one => two => three =>
                    four => five six => seven => eight"""
    [runtime]
        [[MY_TASKS]]

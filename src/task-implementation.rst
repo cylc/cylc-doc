@@ -177,8 +177,8 @@ task to repeatedly poll for the results of the detached processes:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = "model => checker => post-proc"
+       [[graph]]
+           R1 = "model => checker => post-proc"
    [runtime]
        [[model]]
            # Uh-oh, this script does an internal job submission to run model.exe:

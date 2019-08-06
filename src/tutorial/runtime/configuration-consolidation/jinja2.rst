@@ -138,9 +138,8 @@ This would result in:
                       'shetland': 3005} %}
 
    [scheduling]
-       [[dependencies]]
-           [[[T00/PT3H]]]
-               graph = """
+       [[graph]]
+           T00/PT3H = """
    {% for station in stations %}
                   get_observations_{{station}} => consolidate_observations
    {% endfor %}

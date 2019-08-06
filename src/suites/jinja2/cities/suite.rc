@@ -14,7 +14,7 @@ generation of groups of related dependencies and runtime properties."""
 
 [scheduling]
     initial cycle point = 2011-08-08T12
-    [[ dependencies ]]
+    [[graph]]
 {% if CLEANUP %}
         T23 = "clean"
 {% endif %}

@@ -1,7 +1,7 @@
 [scheduling]
     cycling mode = integer
     initial cycle point = 1
-    [[dependencies]]
+    [[graph]]
         R/^/P1 = """
                 A => B => C
                 A[-P1] => A

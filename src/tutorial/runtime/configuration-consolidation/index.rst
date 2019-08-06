@@ -61,9 +61,8 @@ Consolidating Configuration
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              [[[T00/PT3H]]]
-                  graph = """
+          [[graph]]
+              T00/PT3H = """
                       get_observations_belmullet => consolidate_observations
                       get_observations_camborne => consolidate_observations
                       get_observations_heathrow => consolidate_observations

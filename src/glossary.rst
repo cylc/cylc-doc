@@ -28,15 +28,13 @@ Glossary
    graph
       The graph of a :term:`suite<Cylc suite>` refers to the
       :term:`graph strings<graph string>` contained within the
-      ``[scheduling][dependencies]`` section. For example the following is,
+      ``[scheduling][graph]`` section. For example the following is,
       collectively, a graph:
 
       .. code-block:: cylc
 
-         [P1D]
-             graph = foo => bar
-         [PT12H]
-             graph = baz
+         P1D = foo => bar
+         PT12H = baz
 
       .. digraph:: example
          :align: center
@@ -285,12 +283,11 @@ Glossary
          [scheduling]
              initial cycle point = 1
              cycling mode = integer
-             [[dependencies]]
-                 [[[P1]]]
-                     graph = """
-                         foo => bar => baz
-                         bar[-P1] => bar
-                     """
+             [[graph]]
+                 P1 = """
+                     foo => bar => baz
+                     bar[-P1] => bar
+                 """
 
       .. digraph:: example
          :align: center
@@ -641,8 +638,8 @@ Glossary
              [[parameters]]
                  foo = 1..3
          [scheduling]
-             [[dependencies]]
-                 graph = bar<foo> => baz<foo>
+             [[graph]]
+                 R1 = bar<foo> => baz<foo>
 
       .. minicylc::
          :theme: none

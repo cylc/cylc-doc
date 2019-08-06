@@ -68,10 +68,9 @@ Clock Triggers
        initial cycle point = 2000-01-01T00Z
        [[special tasks]]
            clock-trigger = daily(-PT1H)
-       [[dependencies]]
-           [[[T12]]]
-                graph = daily  # "daily" will run, at the earliest, one hour
-                               # before midday.
+       [[graph]]
+           T12 = daily  # "daily" will run, at the earliest, one hour
+                        # before midday.
 
 .. tip::
 

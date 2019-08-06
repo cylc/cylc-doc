@@ -568,8 +568,8 @@ name in suite configurations:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = "a"
+       [[graph]]
+           R1 = "a"
    [runtime]
        [[root]]
            [[[job]]]

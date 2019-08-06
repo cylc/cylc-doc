@@ -54,9 +54,8 @@ Paste the following code into a ``suite.rc`` file:
    [scheduling]
        initial cycle point = TODO
        final cycle point = +P1D # Run for one day
-       [[dependencies]]
-           [[[PT1H]]]
-               graph = bell
+       [[graph]]
+           PT1H = bell
 
    [runtime]
        [[root]]
@@ -133,9 +132,8 @@ Edit the ``[[scheduling]]`` section to read:
 
    [[special tasks]]
        clock-trigger = bell(PT0M), quarter_past(PT15M), half_past(PT30M), quarter_to(PT45M)
-   [[dependencies]]
-       [[[PT1H]]]
-           graph = """
+   [[graph]]
+       PT1H = """
                bell
                quarter_past
                half_past

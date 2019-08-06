@@ -112,9 +112,8 @@ Paste the following code into the ``suite.rc`` file:
    [scheduling]
       cycling mode = integer
       initial cycle point = 1
-      [[dependencies]]
-          [[[P1]]]
-              graph = """
+      [[graph]]
+          P1 = """
                   make_cake_mixture => bake_cake => sell_cake
                   bake_cake:fail => eat_cake
               """
@@ -446,8 +445,8 @@ A common use case where a ``recover`` task is used to handle a task failure.
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                # Regular graph.
                foo => bar
 
@@ -508,8 +507,8 @@ cases.
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                # Regular graph.
                foo => bar
 
@@ -587,8 +586,8 @@ the task ``showdown`` produces one of three possible custom outputs, ``good``,
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-            graph = """
+       [[graph]]
+            R1 = """
                 # The "regular" dependencies
                 showdown:good => good
                 showdown:bad => bad
@@ -657,8 +656,8 @@ It is possible for a task to suicide trigger itself e.g:
 .. code-block:: cylc
 
    [scheduling]
-       [[dependencies]]
-           graph = """
+       [[graph]]
+           R1 = """
                foo => bar => baz
                bar => pub
 

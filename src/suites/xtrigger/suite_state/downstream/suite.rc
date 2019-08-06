@@ -6,7 +6,7 @@
          upstream = suite_state(suite=up, task=foo, point=%(point)s, \
             message='data ready'):PT10S
          clock_0 = wall_clock(offset=PT0H)
-   [[dependencies]]
+   [[graph]]
         P1Y = """
             foo
             @clock_0 & @upstream => FAM:succeed-all => blam

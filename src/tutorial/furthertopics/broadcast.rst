@@ -32,11 +32,9 @@ Copy the following configuration into a ``suite.rc`` file:
 
    [scheduling]
        initial cycle point = 1012
-       [[dependencies]]
-           [[[R1]]]
-               graph = wipe_log => announce
-           [[[PT1H]]]
-               graph = announce[-PT1H] => announce
+       [[graph]]
+           R1 = wipe_log => announce
+           PT1H = announce[-PT1H] => announce
 
    [runtime]
        [[wipe_log]]
@@ -95,12 +93,11 @@ tasks.
 
 .. TODO - examples of this?
 
-Add the following recurrence to the ``dependencies`` section:
+Add the following recurrence to the ``graph`` section:
 
 .. code-block:: cylc
 
-           [[[PT3H]]]
-               graph = announce[-PT1H] => change_word => announce
+           PT3H = announce[-PT1H] => change_word => announce
 
 The ``change_word`` task runs the ``cylc broadcast`` command to randomly
 change the ``WORD`` environment variable used by the ``announce`` task.

@@ -53,9 +53,9 @@ To make a workflow repeat we must tell Cylc three things:
     [scheduling]
    +    cycling mode = integer
    +    initial cycle point = 1
-        [[dependencies]]
-   +        [[[P1]]]
-                graph = """
+        [[graph]]
+   -        R1 = """
+   +        P1 = """
                     purchase_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                 """
@@ -156,9 +156,8 @@ Inter-Cycle Dependencies
     [scheduling]
         cycling mode = integer
         initial cycle point = 1
-        [[dependencies]]
-            [[[P1]]]
-                graph = """
+        [[graph]]
+            P1 = """
                     purchase_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
    +                clean_oven[-P1] => pre_heat_oven
@@ -251,9 +250,8 @@ Inter-Cycle Dependencies
     [scheduling]
         cycling mode = integer
         initial cycle point = 1
-        [[dependencies]]
-            [[[P1]]]
-                graph = """
+        [[graph]]
+            P1 = """
                     purchase_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                     clean_oven[-P1] => pre_heat_oven
@@ -356,13 +354,13 @@ Recurrence Sections
    [scheduling]
        cycling mode = integer
        initial cycle point = 1
-       [[dependencies]]
-           [[[P1]]]  # Repeat every cycle.
-               graph = foo
-           [[[P2]]]  # Repeat every second cycle.
-               graph = bar
-           [[[P3]]]  # Repeat every third cycle.
-               graph = baz
+       [[graph]]
+           # Repeat every cycle.
+           P1 = foo
+           # Repeat every second cycle.
+           P2 = bar
+           # Repeat every third cycle.
+           P3 = baz
 
 .. digraph:: example
    :align: center
@@ -432,8 +430,8 @@ Recurrence Sections
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              graph = """
+          [[graph]]
+              R1 = """
                   foo & pub => bar => baz & wop
                   baz => qux
               """
@@ -459,9 +457,9 @@ Recurrence Sections
           [scheduling]
          +    cycling mode = integer
          +    initial cycle point = 1
-              [[dependencies]]
-         +        [[[P1]]]
-                      graph = """
+              [[graph]]
+         -        R1 = """
+         +        P1 = """
                           foo & pub => bar => baz & wop
                           baz => qux
                       """
@@ -503,14 +501,12 @@ Recurrence Sections
           [scheduling]
               cycling mode = integer
               initial cycle point = 1
-              [[dependencies]]
-                  [[[P1]]]
-                      graph = """
+              [[graph]]
+                  P1 = """
                           foo & pub => bar => baz & wop
          -                baz => qux
                       """
-         +        [[[P2]]]
-         +            graph = """
+         +        P2 = """
          +                baz => qux
          +            """
 
@@ -595,18 +591,15 @@ Recurrence Sections
             [scheduling]
                 cycling mode = integer
                 initial cycle point = 1
-                [[dependencies]]
-                    [[[P1]]]
-                        graph = """
+                [[graph]]
+                    P1 = """
                             foo & pub => bar => baz & wop
                             wop[-P1] => pub  # (1)
                         """
-                    [[[P2]]]
-                        graph = """
+                    P2 = """
                             baz => qux
                             baz[-P1] => foo  # (2)
                         """
-                    [[[2/P2]]]
-                        graph = """
+                    2/P2 = """
                             qux[-P1] => foo  # (3)
                         """

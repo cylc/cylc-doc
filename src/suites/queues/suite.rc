@@ -12,8 +12,8 @@
         [[[foo]]]
             limit = 3
             members = n, o, p, FAM2, u, v, w, x, y, z
-    [[dependencies]]
-        graph = """
+    [[graph]]
+        R1 = """
             a => b & c => FAM1
             n => o & p => FAM2
             FAM1:succeed-all => h & i & j & k & l & m
