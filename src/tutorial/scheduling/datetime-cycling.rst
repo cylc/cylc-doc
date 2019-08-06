@@ -459,7 +459,7 @@ Putting It All Together
    #. **Add The Recurrences.**
 
       The weather-forecasting suite will require two
-      recurrences. Add sections under the dependencies section for these,
+      recurrences. Add sections under the ``graph`` section for these,
       based on the information given above.
 
       .. hint::
@@ -614,12 +614,10 @@ Putting It All Together
 
       .. code-block:: diff
 
-                    [[[+PT6H/PT6H]]]
-                        graph = """
+                    +PT6H/PT6H = """
                             ...
          -                  forecast[-PT6H] => forecast
                         """
-         +          [[[+PT12H/PT6H]]]
-         +              graph = """
+         +          +PT12H/PT6H = """
          +                  forecast[-PT6H] => forecast
          +              """

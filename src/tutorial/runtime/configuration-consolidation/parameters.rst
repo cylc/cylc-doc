@@ -279,9 +279,8 @@ Parameters can be either words or integers:
 
       .. code-block:: diff
 
-          [[[PT3H]]]
-              # Repeat every three hours starting at the initial cycle point.
-              graph = """
+          # Repeat every three hours starting at the initial cycle point.
+          PT3H = """
          -        get_observations_belmullet => consolidate_observations
          -        get_observations_camborne => consolidate_observations
          -        get_observations_heathrow => consolidate_observations

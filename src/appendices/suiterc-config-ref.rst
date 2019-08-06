@@ -1185,7 +1185,7 @@ follow; see also :ref:`ConfiguringScheduling` and :ref:`TriggerTypes`.
 
   .. code-block:: cylc
 
-     graph = """
+     PT1H = """
          foo => bar => baz & waz     # baz and waz both trigger off bar
          foo[-P1D-PT6H] => bar       # bar triggers off foo[-P1D-PT6H]
          baz:out1 => faz             # faz triggers off a message output of baz

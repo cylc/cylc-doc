@@ -1236,7 +1236,7 @@ or if it succeeds. Other task states can also be polled:
 
 .. code-block:: cylc
 
-   graph = "my-foo<other.suite::foo:fail> => bar"
+   T00, T12 = "my-foo<other.suite::foo:fail> => bar"
 
 The default polling parameters (e.g. maximum number of polls and the interval
 between them) are printed by ``cylc suite-state --help`` and can be

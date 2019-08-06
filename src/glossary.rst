@@ -33,10 +33,8 @@ Glossary
 
       .. code-block:: cylc
 
-         [P1D]
-             graph = foo => bar
-         [PT12H]
-             graph = baz
+         P1D = foo => bar
+         PT12H = baz
 
       .. digraph:: example
          :align: center

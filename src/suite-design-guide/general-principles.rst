@@ -709,7 +709,7 @@ path from the workflow:
 
          [scheduling]
              [[graph]]
-                 graph = """
+                 R1 = """
                      model | model_short => postproc
                      model:fail => diagnose => model_short
                        # Clean up with suicide triggers:

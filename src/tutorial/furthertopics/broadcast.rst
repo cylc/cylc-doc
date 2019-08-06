@@ -93,12 +93,11 @@ tasks.
 
 .. TODO - examples of this?
 
-Add the following recurrence to the ``dependencies`` section:
+Add the following recurrence to the ``graph`` section:
 
 .. code-block:: cylc
 
-           [[[PT3H]]]
-               graph = announce[-PT1H] => change_word => announce
+           PT3H = announce[-PT1H] => change_word => announce
 
 The ``change_word`` task runs the ``cylc broadcast`` command to randomly
 change the ``WORD`` environment variable used by the ``announce`` task.

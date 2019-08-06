@@ -378,14 +378,14 @@ Triggers can be chained together. This graph:
 
 .. code-block:: cylc
 
-   graph = """A => B  # B triggers off A
-              B => C  # C triggers off B"""
+   T00, T12 = """A => B  # B triggers off A
+                 B => C  # C triggers off B"""
 
 is equivalent to this:
 
 .. code-block:: cylc
 
-   graph = "A => B => C"
+   T00, T12 = "A => B => C"
 
 *Each trigger in the graph must be unique* but *the same task
 can appear in multiple pairs or chains*. Separately defined triggers
@@ -393,14 +393,14 @@ for the same task have an AND relationship. So this:
 
 .. code-block:: cylc
 
-   graph = """A => X  # X triggers off A
-              B => X  # X also triggers off B"""
+   T00, T12 = """A => X  # X triggers off A
+                 B => X  # X also triggers off B"""
 
 is equivalent to this:
 
 .. code-block:: cylc
 
-   graph = "A & B => X"  # X triggers off A AND B
+   T00, T12 = "A & B => X"  # X triggers off A AND B
 
 In summary, the branching tree structure of a dependency graph can
 be partitioned into lines (in the suite.rc graph string) of pairs
@@ -410,22 +410,22 @@ and comments to make the graph structure as clear as possible.
 .. code-block:: cylc
 
    # B triggers if A succeeds, then C and D trigger if B succeeds:
-       graph = "A => B => C & D"
+       R1 = "A => B => C & D"
    # which is equivalent to this:
-       graph = """A => B => C
-                  B => D"""
+       R1 = """A => B => C
+               B => D"""
    # and to this:
-       graph = """A => B => D
-                  B => C"""
+       R1 = """A => B => D
+               B => C"""
    # and to this:
-       graph = """A => B
-                  B => C
-                  B => D"""
+       R1 = """A => B
+               B => C
+               B => D"""
    # and it can even be written like this:
-       graph = """A => B # blank line follows:
+       R1 = """A => B # blank line follows:
 
-                  B => C # comment ...
-                  B => D"""
+               B => C # comment ...
+               B => D"""
 
 
 Splitting Up Long Graph Lines
@@ -437,21 +437,21 @@ or split long chains into smaller ones. This graph:
 
 .. code-block:: cylc
 
-   graph = "A => B => C"
+   R1 = "A => B => C"
 
 is equivalent to this:
 
 .. code-block:: cylc
 
-   graph = """A => B =>
-              C"""
+   R1 = """A => B =>
+           C"""
 
 and also to this:
 
 .. code-block:: cylc
 
-   graph = """A => B
-              B => C"""
+   R1 = """A => B
+           B => C"""
 
 
 .. _GraphTypes:
@@ -1125,7 +1125,7 @@ upstream task succeeding:
 .. code-block:: cylc
 
    # B triggers if A SUCCEEDS:
-       graph = "A => B"
+       R1 = "A => B"
 
 For consistency and completeness, however, the success trigger can be
 explicit:
@@ -1133,9 +1133,9 @@ explicit:
 .. code-block:: cylc
 
    # B triggers if A SUCCEEDS:
-       graph = "A => B"
+       R1 = "A => B"
    # or:
-       graph = "A:succeed => B"
+       R1 = "A:succeed => B"
 
 
 Failure Triggers
@@ -1146,7 +1146,7 @@ To trigger off the upstream task reporting failure:
 .. code-block:: cylc
 
    # B triggers if A FAILS:
-       graph = "A:fail => B"
+       R1 = "A:fail => B"
 
 *Suicide triggers* can be used to remove task ``B`` here if
 ``A`` does not fail, see :ref:`SuicideTriggers`.
@@ -1160,7 +1160,7 @@ To trigger off the upstream task starting to execute:
 .. code-block:: cylc
 
    # B triggers if A STARTS EXECUTING:
-       graph = "A:start => B"
+       R1 = "A:start => B"
 
 This can be used to trigger tasks that monitor other tasks once they
 (the target tasks) start executing. Consider a long-running forecast model,
@@ -1188,9 +1188,9 @@ one way or the other:
 .. code-block:: cylc
 
    # B triggers if A either SUCCEEDS or FAILS:
-       graph = "A | A:fail => B"
+       R1 = "A | A:fail => B"
    # or
-       graph = "A:finish => B"
+       R1 = "A:finish => B"
 
 
 .. _MessageTriggers:
@@ -1216,9 +1216,9 @@ It is also possible to trigger off a task submitting, or failing to submit:
 .. code-block:: cylc
 
    # B triggers if A submits successfully:
-       graph = "A:submit => B"
+       R1 = "A:submit => B"
    # D triggers if C fails to submit successfully:
-       graph = "C:submit-fail => D"
+       R1 = "C:submit-fail => D"
 
 A possible use case for submit-fail triggers: if a task goes into the
 submit-failed state, possibly after several job submission retries,
@@ -1236,19 +1236,19 @@ provide a concise alternative to defining multiple triggers separately:
 .. code-block:: cylc
 
    # 1/ this:
-       graph = "A & B => C"
+       R1 = "A & B => C"
    # is equivalent to:
-       graph = """A => C
+       R1 = """A => C
                   B => C"""
    # 2/ this:
-       graph = "A => B & C"
+       R1 = "A => B & C"
    # is equivalent to:
-       graph = """A => B
+       R1 = """A => B
                   A => C"""
    # 3/ and this:
-       graph = "A & B => C & D"
+       R1 = "A & B => C & D"
    # is equivalent to this:
-       graph = """A => C
+       R1 = """A => C
                   B => C
                   A => D
                   B => D"""
@@ -1259,7 +1259,7 @@ can only appear on the left [1]_ :
 .. code-block:: cylc
 
    # C triggers when either A or B finishes:
-       graph = "A | B => C"
+       R1 = "A | B => C"
 
 Forecasting suites typically have simple conditional
 triggering requirements, but any valid conditional expression can be
@@ -1284,7 +1284,7 @@ used, as shown in :numref:`fig-conditional`
 
       .. code-block:: cylc
 
-                 graph = """
+                 R1 = """
          # D triggers if A or (B and C) succeed
          A | B & C => D
          # just to align the two graph sections
@@ -1852,14 +1852,14 @@ will infer that ``bar`` must exist at the same cycle points as
 
 .. code-block:: cylc
 
-   graph = "foo => bar"
+   R1 = "foo => bar"
 
 to be written as shorthand for this:
 
 .. code-block:: cylc
 
-   graph = """foo
-              foo => bar"""
+   R1 = """foo
+           foo => bar"""
 
 (where ``foo`` by itself means ``<nothing> => foo``, i.e. the
 task exists at these cycle points but has no prerequisites - although other
@@ -2762,36 +2762,36 @@ steps with each step depending on the previous one, either of these graphs:
 
 .. code-block:: cylc
 
-   graph = "model<run-1> => model<run>"  # for run = 1, 2, 3
-   graph = "model<run> => model<run+1>"  # for run = 1, 2, 3
+   R1 = "model<run-1> => model<run>"  # for run = 1, 2, 3
+   R1 = "model<run> => model<run+1>"  # for run = 1, 2, 3
 
 expands to:
 
 .. code-block:: cylc
 
-   graph = """model_run1 => model_run2
-              model_run2 => model_run3"""
+   R1 = """model_run1 => model_run2
+           model_run2 => model_run3"""
 
    # or equivalently:
 
-   graph = "model_run1 => model_run2 => model_run3"
+   R1 = "model_run1 => model_run2 => model_run3"
 
 And this graph:
 
 .. code-block:: cylc
 
-   graph = "proc<size-1> => proc<size>"  # for size = small, big, huge
+   R1 = "proc<size-1> => proc<size>"  # for size = small, big, huge
 
 expands to:
 
 .. code-block:: cylc
 
-   graph = """proc_small => proc_big
+   R1 = """proc_small => proc_big
               proc_big => proc_huge"""
 
    # or equivalently:
 
-   graph = "proc_small => proc_big => proc_huge"
+   R1 = "proc_small => proc_big => proc_huge"
 
 However, a quirk in the current system means that you should avoid mixing
 conditional logic in these statements. For example, the following will do the
@@ -2799,24 +2799,24 @@ unexpected:
 
 .. code-block:: cylc
 
-   graph = foo<m-1> & baz => foo<m>  # for m = cat, dog
+   R1 = foo<m-1> & baz => foo<m>  # for m = cat, dog
 
 currently expands to:
 
 .. code-block:: cylc
 
-   graph = foo_cat & baz => foo_dog
+   R1 = foo_cat & baz => foo_dog
 
    # when users may expect it to be:
-   #    graph = foo_cat => foo_dog
-   #    graph = baz => foo_cat & foo_dog
+   #    R1 = foo_cat => foo_dog
+   #    R1 = baz => foo_cat & foo_dog
 
 For the time being, writing out the logic explicitly will give you the correct
 graph.
 
 .. code-block:: cylc
 
-   graph = """foo<m-1> => foo<m>  # for m = cat, dog
+   R1 = """foo<m-1> => foo<m>  # for m = cat, dog
               baz => foo<m>"""
 
 
@@ -2852,32 +2852,32 @@ trigger all members at once:
 
 .. code-block:: cylc
 
-   graph = "foo => FAMILY"
+   R1 = "foo => FAMILY"
 
 or to trigger off all members:
 
 .. code-block:: cylc
 
-   graph = "FAMILY:succeed-all => bar"
+   R1 = "FAMILY:succeed-all => bar"
 
 or to trigger off any members:
 
 .. code-block:: cylc
 
-   graph = "FAMILY:succeed-any => bar"
+   R1 = "FAMILY:succeed-any => bar"
 
 If the members of ``FAMILY`` were generated with parameters, you can
 also trigger them all at once with parameter notation:
 
 .. code-block:: cylc
 
-   graph = "foo => member<m>"
+   R1 = "foo => member<m>"
 
 Similarly, to trigger off all members:
 
 .. code-block:: cylc
 
-   graph = "member<m> => bar"
+   R1 = "member<m> => bar"
    # (member<m>:fail etc., for other trigger types)
 
 Family names are still needed in the graph, however, to succinctly express
@@ -2885,7 +2885,7 @@ Family names are still needed in the graph, however, to succinctly express
 
 .. code-block:: cylc
 
-   graph = "FAM1:succeed-any => FAM2"
+   R1 = "FAM1:succeed-any => FAM2"
 
 (Direct all-to-all and any-to-all family triggering is not recommended for
 efficiency reasons though - see :ref:`EfficientInterFamilyTriggering`).
@@ -2896,7 +2896,7 @@ family ``OBS_PROC`` has members ``proc<obs>`` then this graph:
 
 .. code-block:: cylc
 
-   graph = "get<obs> => proc<obs>"  # for obs = ship, buoy, plane
+   R1 = "get<obs> => proc<obs>"  # for obs = ship, buoy, plane
 
 expands to:
 
@@ -3027,26 +3027,26 @@ cycle point. So this graph:
 
 .. code-block:: cylc
 
-   graph = "model[-P1D] => model"
+   P1D = "model[-P1D] => model"
 
 simplifies at the initial cycle point to this:
 
 .. code-block:: cylc
 
-   graph = "model"
+   P1D = "model"
 
 Similarly, parameter offsets are ignored if they extend beyond the start
 of the parameter value list. So this graph:
 
 .. code-block:: cylc
 
-   graph = "model<chunk-1> => model<chunk>"
+   R1 = "model<chunk-1> => model<chunk>"
 
 simplifies for ``chunk=1`` to this:
 
 .. code-block:: cylc
 
-   graph = "model_chunk1"
+   R1 = "model_chunk1"
 
 .. note::
 
