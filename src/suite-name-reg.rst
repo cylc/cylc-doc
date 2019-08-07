@@ -3,9 +3,15 @@
 Suite Name Registration
 =======================
 
-Cylc commands target suites via their names, which are relative path names
-under the suite run directory (``~/cylc-run/`` by default). Suites can
-be grouped together under sub-directories. E.g.:
+Cylc commands identifies suites via their names, which are relative path names
+under the suite run directory (``~/cylc-run/`` by default).
+
+Suite names are validated by
+:py:class:`cylc.flow.unicode_rules.SuiteNameValidator`.
+
+.. autoclass:: cylc.flow.unicode_rules.SuiteNameValidator
+
+Suites can be grouped together under sub-directories. E.g.:
 
 .. code-block:: bash
 
