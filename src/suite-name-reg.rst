@@ -3,7 +3,7 @@
 Suite Name Registration
 =======================
 
-Cylc commands identifies suites via their names, which are relative path names
+Cylc commands identify suites via their names, which are relative path names
 under the suite run directory (``~/cylc-run/`` by default).
 
 Suite names are validated by
