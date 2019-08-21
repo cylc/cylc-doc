@@ -95,10 +95,6 @@ exclude_patterns = ['_build']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'autumn'
 
-# Enable automatic numbering of any captioned figures, tables & code blocks.
-numfig = True
-numfig_secnum_depth = 0
-
 # Global configuration for graphviz diagrams.
 graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',

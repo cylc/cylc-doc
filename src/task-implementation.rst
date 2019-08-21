@@ -19,10 +19,9 @@ generates a *job script* for the task, and submits it to run (see
 :ref:`TaskJobSubmission`).
 
 Job scripts encapsulate configured task runtime settings: ``script`` and
-``environment`` items, if defined, are just concatenated in the order shown in
-:numref:`fig-anatomy-of-a-job-script`, to make the job script. Everything
-executes in the same shell, so each part of the script can potentially affect
-the environment of subsequent parts.
+``environment`` items, if defined, are just concatenated in the order shown
+below, to make the job script. Everything executes in the same shell, so each
+part of the script can potentially affect the environment of subsequent parts.
 
 .. _fig-anatomy-of-a-job-script:
 

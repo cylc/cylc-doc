@@ -787,7 +787,7 @@ The syntax uses truncated ISO8601 time representations, and is of the style:
 * ``initial cycle point = previous(T-20)``
 
 Examples of interpretation are given in
-:numref:`fig-relative-initial-cycle-point-time-syntax-interpretation`.
+:ref:`fig-relative-initial-cycle-point-time-syntax-interpretation`.
 
 A list of times, separated by semicolons, can be provided, e.g.
 ``next(T-00;T-15;T-30;T-45)``. At least one time is required within the
@@ -835,7 +835,7 @@ Note that day-of-week should always be specified when using weeks. If a time
 is not included, the calculation of the next or previous corresponding
 point will be done from midnight of the current day.
 Examples of interpretation are given in
-:numref:`fig-relative-initial-cycle-point-date-syntax-interpretation`.
+:ref:`fig-relative-initial-cycle-point-date-syntax-interpretation`.
 
 .. _fig-relative-initial-cycle-point-date-syntax-interpretation:
 
