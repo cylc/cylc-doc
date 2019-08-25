@@ -298,7 +298,7 @@ Toy Examples
 echo
 """"
 
-The trivial built in ``echo`` function takes any number of positional
+The trivial built-in ``echo`` function takes any number of positional
 and keyword arguments (from the suite configuration) and simply prints
 them to stdout, and then returns False (i.e. trigger condition not
 satisfied). Here it is in its entirety.
@@ -306,9 +306,9 @@ satisfied). Here it is in its entirety.
 .. code-block:: python
 
    def echo(*args, **kwargs):
-       print "echo: ARGS:", args
-       print "echo: KWARGS:", kwargs
-       return (False, {})
+       print("echo: ARGS:", args)
+       print("echo: KWARGS:", kwargs)
+       return False, {}
 
 Here's an example echo trigger suite:
 
@@ -332,7 +332,7 @@ your terminal).
 xrandom
 """""""
 
-The built in ``xrandom`` function sleeps for a configurable amount of
+The built-in ``xrandom`` function sleeps for a configurable amount of
 time (useful for testing the effect of a long-running trigger function
 - which should be avoided) and has a configurable random chance of
 success. The function signature is:
