@@ -510,7 +510,7 @@ It is possible to set a default for this at the site level
 
 
 [cylc] ``->`` [[events]] ``->`` abort if any task fails
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc does not normally abort if tasks fail, but if this item is turned
 on it will abort with exit status 1 if any task fails.
