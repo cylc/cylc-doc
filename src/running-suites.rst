@@ -1144,8 +1144,7 @@ exit status if any of the following conditions occur (by default):
 - the suite times out (e.g. a task dies without reporting failure)
 - a nominated shutdown event handler exits with error status
 
-The default shutdown event handler for reference tests is
-``cylc hook check-triggering`` which compares task triggering
+When a reference test suite shuts down, it compares task triggering
 information (what triggers off what at run time) in the test run suite
 log to that from an earlier reference run, disregarding the timing and
 order of events - which can vary according to the external queueing
@@ -1173,12 +1172,7 @@ Reference tests can be configured with the following settings:
 
    [cylc]
        [[reference test]]
-           suite shutdown event handler = cylc check-triggering
-           required run mode = dummy
-           allow task failures = False
-           live mode suite timeout = PT5M
-           dummy mode suite timeout = PT2M
-           simulation mode suite timeout = PT2M
+           expected task failures = t1.1
 
 
 Roll-your-own Reference Tests
@@ -1193,10 +1187,9 @@ you wish:
 .. code-block:: cylc
 
    [cylc]
-       abort if any task fails = True
        [[events]]
-           shutdown handler = cylc check-triggering
            timeout = PT5M
+           abort if any task fails = True
            abort if shutdown handler fails = True
            abort on timeout = True
 

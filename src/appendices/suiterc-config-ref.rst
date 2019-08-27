@@ -207,16 +207,6 @@ also not set), then they will default to the current local time zone.
    that the time zone is used as part of task output filenames.
 
 
-[cylc] ``->`` abort if any task fails
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Cylc does not normally abort if tasks fail, but if this item is turned
-on it will abort with exit status 1 if any task fails.
-
-- *type*: boolean
-- *default*: False
-
-
 .. _health-check-interval:
 
 [cylc] ``->`` health check interval
@@ -255,18 +245,6 @@ normally when all tasks have finished (a suite timeout can still be used to
 stop the daemon after a period of inactivity, however).  This option can
 make it easier to re-trigger tasks manually near the end of a suite run,
 during suite development and debugging.
-
-- *type*: boolean
-- *default*: False
-
-
-[cylc] ``->`` log resolved dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If this is turned on cylc will write the resolved dependencies of each
-task to the suite log as it becomes ready to run (a list of the IDs of
-the tasks that actually satisfied its prerequisites at run time). Mainly
-used for cylc testing and development.
 
 - *type*: boolean
 - *default*: False
@@ -531,6 +509,16 @@ It is possible to set a default for this at the site level
 - *default*: False, unless set at the site level.
 
 
+[cylc] ``->`` [[events]] ``->`` abort if any task fails
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc does not normally abort if tasks fail, but if this item is turned
+on it will abort with exit status 1 if any task fails.
+
+- *type*: boolean
+- *default*: False
+
+
 [cylc] ``->`` [[events]] ``->`` abort if EVENT handler fails
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -599,43 +587,6 @@ out, or if a shutdown event handler that (by default) compares the test
 run with a reference run reports failure. See :ref:`AutoRefTests`.
 
 
-[cylc] ``->`` [[reference test]] ``->`` suite shutdown event handler
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-A shutdown event handler that should compare the test run with the
-reference run, exiting with zero exit status only if the test run
-verifies.
-
-- *type*: string (event handler command name or path)
-- *default*: ``cylc hook check-triggering``
-
-As for any event handler, the full path can be omitted if the script is
-located somewhere in ``$PATH`` or in the suite bin directory.
-
-
-[cylc] ``->`` [[reference test]] ``->`` required run mode
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-If your reference test is only valid for a particular run mode, this
-setting will cause cylc to abort if a reference test is attempted
-in another run mode.
-
-- *type*: string
-- *legal values*: live, dummy, dummy-local, simulation
-- *default*: None
-
-
-[cylc] ``->`` [[reference test]] ``->`` allow task failures
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-A reference test run will abort immediately if any task fails, unless
-this item is set, or a list of *expected task failures* is provided
-(below).
-
-- *type*: boolean
-- *default*: False
-
-
 [cylc] ``->`` [[reference test]] ``->`` expected task failures
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -646,48 +597,6 @@ in a list IDs of tasks that are expected to fail.
 - *type*: Comma-separated list of strings (task IDs: ``name.cycle_point``).
 - *default*: (none)
 - *example*: ``foo.20120808, bar.20120908``
-
-
-[cylc] ``->`` [[reference test]] ``->`` live mode suite timeout
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-The timeout value, expressed as an ISO 8601 duration/interval, after which the
-test run should be aborted if it has not finished, in live mode. Test runs
-cannot be done in live mode unless you define a value for this item, because
-it is not possible to arrive at a sensible default for all suites.
-
-- *type*: ISO 8601 duration/interval representation, e.g. 
-  ``PT5M`` is 5 minutes (note: by contrast ``P5M`` means 5
-  months, so remember the ``T``!).
-- *default*: PT1M (1 minute)
-
-
-[cylc] ``->`` [[reference test]] ``->`` simulation mode suite timeout
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-The timeout value in minutes after which the test run should be aborted
-if it has not finished, in simulation mode. Test runs cannot be done in
-simulation mode unless you define a value for this item, because it is
-not possible to arrive at a sensible default for all suites.
-
-- *type*: ISO 8601 duration/interval representation (e.g. 
-  ``PT5M``, 5 minutes (note: by contrast, ``P5M`` means 5
-  months, so remember the ``T``!)).
-- *default*: PT1M (1 minute)
-
-
-[cylc] ``->`` [[reference test]] ``->`` dummy mode suite timeout
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-The timeout value, expressed as an ISO 8601 duration/interval, after which the
-test run should be aborted if it has not finished, in dummy mode.  Test runs
-cannot be done in dummy mode unless you define a value for this item, because
-it is not possible to arrive at a sensible default for all suites.
-
-- *type*: ISO 8601 duration/interval representation (e.g. 
-  ``PT5M``, 5 minutes (note: by contrast, ``P5M`` means 5
-  months, so remember the ``T``!)).
-- *default*: PT1M (1 minute)
 
 
 .. _SuiteAuth:
