@@ -1697,6 +1697,10 @@ will be substituted with actual values:
 - \%(id)s: task ID (i.e. \%(name)s.\%(point)s)
 - \%(batch\_sys\_name)s: batch system name
 - \%(batch\_sys\_job\_id)s: batch system job ID
+- \%(submit\_time)s: date-time when task job is submitted
+- \%(start\_time)s: date-time when task job starts running
+- \%(finish\_time)s: date-time when task job exits
+- \%(user@host)s: user@host where the task job is submitted
 - \%(message)s: event message, if any
 - any task [meta] item, e.g.:
   - \%(title)s: task title
