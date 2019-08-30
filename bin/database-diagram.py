@@ -130,7 +130,7 @@ def schema_to_markdown(db_name):
     return lines, orphans
 
 
-def add_orphans_subgraph(file_name, orphans, append=None):
+def add_orphans_subgraph(file_name, orphans, invisible_relationships=None):
     """Add a subgraph with the orphans tables, so they appear grouped
     at the bottom of the diagram.
 
@@ -141,17 +141,20 @@ def add_orphans_subgraph(file_name, orphans, append=None):
     Args:
         file_name (str): dot file name
         orphans (list): list of orphan tables
-        append (list): list of table names to be appended to the subgraph
+        invisible_relationships (list): list of invisible relationships
     """
     # TODO: rather complicated, some extensibility work around eralchemy
     #       may make it way simpler later
     graph_beginning = []  # dot file graph beginning
-    subgraph = ["subgraph orphan {rank = sink\n"]  # subgraph
-    subgraph_append = []  # extra tables that must be appended to subgraph too
+    subgraph_orphans = [
+        "subgraph orphan {\n",
+        "rank=same;\n",
+        "randir=LR;\n"]  # subgraph
+    nodes = []  # extra tables that must be appended to subgraph too
     graph = []  # normal graph
     relationships = []  # the relationships after the graph
-    if not append:
-        append = []
+    if not invisible_relationships:
+        invisible_relationships = []
     with open(file_name) as dot_file:
         for line in dot_file:
             if line.strip() == "}":
@@ -172,18 +175,20 @@ def add_orphans_subgraph(file_name, orphans, append=None):
                     quote_right = line.index("\"", quote_left)
                     table = line[quote_left:quote_right]
                     if table in orphans:
-                        subgraph.append(line)
-                    elif table not in append:
-                        graph.append(line)
+                        subgraph_orphans.append(line)
                     else:
-                        subgraph_append.append(line)
-        subgraph_append.append("}\n")  # close the subgraph section
+                        nodes.append(line)
+        if invisible_relationships:
+            for invisible in invisible_relationships:
+                relationships.append(
+                    f'"{invisible[0]}" -- "{invisible[1]}"[style=invis];\n')
+        subgraph_orphans.append("\n}\n")  # close the subgraph section
         relationships.append("}\n")  # close the main graph section
 
     # combine again everything creating a new dot file
     return "".join(graph_beginning +
-                   subgraph +
-                   subgraph_append +
+                   subgraph_orphans +
+                   nodes +
                    graph +
                    relationships)
 
@@ -219,10 +224,9 @@ def main():
                 #       there is no way of doing that in eralchemy
                 eralchemy_main.GRAPH_BEGINNING = (
                     'graph {\n'
-                    '  node [label = "\\N", shape = plaintext];\n'
-                    '  edge [color = gray50, minlen = 2, style = dashed];\n'
-                    '  rankdir = "TB";\n'
-                    '  newrank="true"\n'
+                    'node [label = "\\N", shape = plaintext];\n'
+                    'edge [color = gray50, minlen = 2, style = dashed];\n'
+                    'rankdir = "TB";\n'
                 )
 
                 render_er(input=tf_md.name, output=tf_dot.name, mode="dot")
@@ -231,8 +235,10 @@ def main():
                 # finally modify a little bit the DOT file, by adding a
                 # subgraph with the orphan tables, and one linking table
                 # broadcast_states, which is not orphan, but balances the graph
-                new_file = add_orphans_subgraph(tf_dot.name, orphans,
-                                                ["broadcast_states"])
+                new_file = add_orphans_subgraph(
+                    tf_dot.name,
+                    orphans,
+                    [["task_pool_checkpoints", "inheritance"]])
 
                 logger.info("Final dot file: ")
                 logger.info(new_file)
