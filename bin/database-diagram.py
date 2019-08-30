@@ -37,6 +37,9 @@ from eralchemy import render_er, main as eralchemy_main
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+ONE_TO_ONE = "?--?"
+ONE_TO_MANY = "*--?"
+
 
 def get_relationships():
     """These are the database relationships. * means 0..N, and ? {0, 1}.
@@ -51,18 +54,30 @@ def get_relationships():
     """
     # TODO: remove this once the relationships are in the DB, and then automate
     return [
-        ["task_states", "*--?", "task_events"],
-        ["task_states", "*--?", "task_jobs"],
-        ["broadcast_states", "*--?", "broadcast_states_checkpoints"],
-        ["checkpoint_id", "*--?", "broadcast_states_checkpoints"],
-        ["checkpoint_id", "*--?", "suite_params_checkpoints"],
-        ["checkpoint_id", "*--?", "task_pool_checkpoints"],
-        ["suite_params", "*--?", "suite_params_checkpoints"],
-        ["task_pool", "*--?", "task_pool_checkpoints"],
-        ["task_pool", "*--?", "task_action_timers"],
-        ["task_pool", "?--?", "task_late_flags"],
-        ["task_pool", "*--?", "task_outputs"],
-        ["task_pool", "?--?", "task_timeout_timers"]
+        [CylcSuiteDAO.TABLE_TASK_STATES, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_EVENTS],
+        [CylcSuiteDAO.TABLE_TASK_STATES, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_JOBS],
+        [CylcSuiteDAO.TABLE_BROADCAST_STATES, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_BROADCAST_STATES_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_BROADCAST_STATES_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_SUITE_PARAMS_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_POOL_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_SUITE_PARAMS, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_SUITE_PARAMS_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_POOL_CHECKPOINTS],
+        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_ACTION_TIMERS],
+        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_ONE,
+         CylcSuiteDAO.TABLE_TASK_LATE_FLAGS],
+        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcSuiteDAO.TABLE_TASK_OUTPUTS],
+        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_ONE,
+         CylcSuiteDAO.TABLE_TASK_TIMEOUT_TIMERS]
     ]
 
 
