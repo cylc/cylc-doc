@@ -96,13 +96,6 @@ def get_columns_metadata(table_name, conn):
         return cursor.fetchall()
 
 
-def is_orphan(table_name, relationships):
-    for relationship in relationships:
-        if table_name in relationship:
-            return False
-    return True
-
-
 def schema_to_markdown(db_name):
     """Return the database markdown schema.
 
@@ -127,7 +120,10 @@ def schema_to_markdown(db_name):
                     line = f"\t{pk}{column[1]} {label}"
                     lines.append(line)
 
-                if is_orphan(table, relationships):
+                if not any((
+                    table in relationship
+                    for relationship in relationships
+                )):
                     orphans.append(table)
             # in the eralchemy example, relationships go at the end of the file
             lines.extend([" ".join(value) for value in relationships])
