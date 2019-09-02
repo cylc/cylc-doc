@@ -39,6 +39,7 @@ extensions = [
     'sphinx_rtd_theme',
     # custom project extensions (located in ext/)
     'cylc_lang',
+    'database_diagram',
     'minicylc',
     'practical',
     'sub_lang',

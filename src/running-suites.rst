@@ -1439,7 +1439,7 @@ database tables, their columns, and how the tables are related to each other.
 
 .. _fig-cylc-database:
 
-.. figure:: img/database-diagram.png
+.. cylc-db-graph::
    :align: center
 
 
