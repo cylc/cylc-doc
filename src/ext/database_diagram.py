@@ -157,7 +157,7 @@ class CylcRunDBDirective(Graphviz):
             'graph {',
             'node [label = "\\N", shape = plaintext];',
             'edge [color = gray50, minlen = 2, style = dashed];',
-            'rankdir = "TB";'
+            'rankdir = "LR";'
         ]
 
         # the database graph
