@@ -25,15 +25,13 @@ INSTALL_REQUIRES = [
     'sphinx==2.0.*',
     'sphinx_rtd_theme',
     'sphinxcontrib-svg2pdfconverter',
-    'hieroglyph'
+    'hieroglyph',
+    'eralchemy==1.2.*'
 ]
 
 EXTRAS_REQUIRE = {
     'test': [
         'pycodestyle'
-    ],
-    'database': [
-        'eralchemy==1.2.*'
     ]
 }
 EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
