@@ -1434,10 +1434,10 @@ sqlite interface.
    foo|1|2017-03-12T11:06:19Z|1|output completed|succeeded
    foo|1|2017-03-12T11:06:19Z|1|succeeded|
 
-The diagram shown in :ref:`the diagram below <fig-cylc-database>` contains the
-database tables, their columns, and how the tables are related to each other.
-
-.. _fig-cylc-database:
+The diagram shown below contains the database tables, their columns,
+and how the tables are related to each other. For more details on how
+to interpret the diagram, refer to the
+`Entity–relationship model Wikipedia article <https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model>`_.
 
 .. cylc-db-graph::
    :align: center
