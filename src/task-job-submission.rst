@@ -289,10 +289,10 @@ file paths, and the execution time limit (if specified).
 Cylc constructs the job name string using a combination of the task ID and the
 suite name. PBS fails a job submit if the job name in ``-N name`` is
 too long. For version 12 or below, this is 15 characters. For version 13, this
-is 236 characters. The default setting will truncate the job name string to 15
-characters. If you have PBS 13 at your site, you should modify your site's
-global configuration file to allow the job name to be longer. (See also
-:ref:`JobNameLengthMaximum`.) For example:
+is 236 characters. The default setting will truncate the job name string to 236
+characters. If you have PBS 12 or older at your site, you should modify your
+site's global configuration file to allow the job name to be truncated at 15
+characters. (See also :ref:`JobNameLengthMaximum`.) For example:
 
 .. code-block:: cylc
 
@@ -301,7 +301,7 @@ global configuration file to allow the job name to be longer. (See also
            [[[batch systems]]]
                [[[[pbs]]]]
                    # PBS 13
-                   job name length maximum = 236
+                   job name length maximum = 15
 
 
 Directives Section Quirks (PBS, SGE, ...)
