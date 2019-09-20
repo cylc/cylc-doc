@@ -609,12 +609,11 @@ not use the normal log file location while the job is running.
 
 The maximum length for job name acceptable by a batch system on a given host.
 Currently, this setting is only meaningful for PBS jobs. For example, PBS 12
-or older will fail a job submit if the job name has more than 15 characters,
-which is the default setting. If you have PBS 13 or above, you may want to
-modify this setting to a larger value.
+or older will fail a job submit if the job name has more than 15 characters;
+whereas PBS 13 accepts up to 236 characters.
 
 - *type*: integer
-- *default*: (none)
+- *default*: 236
 - *example*:  For PBS:
 
 .. code-block:: cylc
@@ -623,8 +622,8 @@ modify this setting to a larger value.
        [[myhpc*]]
            [[[batch systems]]]
                [[[[pbs]]]]
-                   # PBS 13
-                   job name length maximum = 236
+                   # PBS <=12
+                   job name length maximum = 15
 
 
 .. _ExecutionTimeLimitPollingIntervals:
