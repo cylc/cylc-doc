@@ -32,5 +32,5 @@ For all legal items, see the :ref:`SiteRCReference`.
 File locations:
 ^^^^^^^^^^^^^^^
 
-- **Site**: ``/etc/cylc/flow/$CYLC_VERSION/flow.rc``
-- **User**: ``$HOME/.cylc/flow/$CYLC_VERSION/flow.rc``
+- **Site**: ``/etc/cylc/flow/<CYLC_VERSION>/flow.rc``
+- **User**: ``$HOME/.cylc/flow/<CYLC_VERSION>/flow.rc``
