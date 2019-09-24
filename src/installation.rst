@@ -143,19 +143,8 @@ in :ref:`SiteRCReference`.
 Configure Site Environment on Job Hosts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If your users submit task jobs to hosts other than the hosts they use to run
-their suites, you should ensure that the job hosts have the correct environment
-for running cylc. A cylc suite generates task job scripts that normally invoke
-``bash -l``, i.e. it will invoke bash as a login shell to run the job
-script. Users and sites should ensure that their bash login profiles are able
-to set up the correct environment for running cylc and their task jobs.
-
-Your site administrator may customise the environment for all task jobs by
-adding a site ``job-init-env.sh`` file and populate it with appropriate contents. If customisation is still required, you can add your own
-``${HOME}/.cylc/job-init-env.sh`` file and populate it with the
-appropriate contents.
-
-.. TODO: define site global config dir under cylc-8
-
-The job will attempt to source the first of these files it finds to set
-up its environment.
+Task jobs need access to Cylc on job hosts, to run task message (and other)
+Cylc commands. Task job scripts invoke ``bash -l`` (login shells) to run the
+job, so sites and users should ensure that their bash login scripts configure
+the environment appropriately for access to Cylc. See
+:ref:`HowTasksGetAccessToCylc` for more on job environment configuration.
