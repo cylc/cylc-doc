@@ -878,8 +878,8 @@ Settings for the automated development tests.
 .. note::
 
    The test battery reads
-   ``global-tests.rc`` instead of the normal site/user
-   global config files.
+   ``flow-tests.rc`` instead of the normal site/user
+   global config files (from the same locations, however).
 
 
 [test battery] ``->`` remote host with shared fs
