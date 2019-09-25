@@ -238,28 +238,24 @@ must be inserted manually at the right cycle point, with ``cylc insert``.
 Task Job Access To Cylc
 -----------------------
 
-Task jobs need access to Cylc on the job host, primarily for task messaging,
-but also to allow user-defined task scripting to run other Cylc commands.
+Task jobs need access to Cylc on the job host, primarily for the task message
+command, but also to allow jobs to to run other Cylc commands.
 
 Cylc should be installed on job hosts as on suite hosts, with different
 releases installed side-by-side and invoked via the central Cylc
 wrapper according to the value of ``$CYLC_VERSION`` - see
-:ref:`InstallCylc`. Task job scripts set ``$CYLC_VERSION`` to the
-version of the parent suite server program, so that the right Cylc will
-be invoked by jobs on the job host.
+:ref:`InstallCylc`. Task job scripts automatically set ``$CYLC_VERSION`` to the
+version of the suite server program, so that the right Cylc version will be
+invoked by jobs.  
 
-Access to the Cylc executable (preferably the central wrapper as just
-described) for different job hosts can be configured using site and user
-global configuration files (on the suite host). If the environment for running
-the Cylc executable is only set up correctly in a login shell for a given host,
-you can set ``[hosts][HOST]use login shell = True`` for the relevant
-host (this is the default, to cover more sites automatically). If the
-environment is already correct without the login shell, but the Cylc executable
-is not in ``$PATH``, then ``[hosts][HOST]cylc executable`` can
-be used to specify the direct path to the executable.
+Cylc suites generate task job scripts that invoke ``bash -l`` (i.e. a login
+shell) to run the job, so sites and users should ensure that their bash login
+scripts configure the correct environment for access to Cylc.
 
-To customize the environment more generally for Cylc on jobs hosts,
-use ``job-init-env.sh``.
+If needed, it is also possible to use global config ``[hosts][HOST]cylc
+executable`` to set the direct path to the Cylc executable on job hosts, or
+suite config ``[runtime][NAME]init-script`` to modify the environment in job
+scripts before any Cylc commands are called. 
 
 
 .. _The Suite Contact File:
