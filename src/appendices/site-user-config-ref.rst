@@ -87,48 +87,6 @@ sets a timeout for such a command to ensure that the suite can continue.
   ``PT10S``, 10 seconds, or ``PT1M``, 1 minute).
 - *default*: PT10S
 
-
-[task messaging]
-----------------
-
-This section contains configuration items that affect task-to-suite
-communications.
-
-
-[retry interval]{[task messaging] ``->`` retry interval
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If a send fails, the messaging code will retry after a configured
-delay interval.
-
-- *type*: ISO 8601 duration/interval representation (e.g.
-  ``PT10S``, 10 seconds, or ``PT1M``, 1 minute).
-- *default*: PT5S
-
-
-[maximum number of tries]{[task messaging] ``->`` maximum number of tries
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If successive sends fail, the messaging code will give up after a
-configured number of tries.
-
-- *type*: integer
-- *minimum*: 1
-- *default*: 7
-
-
-[connection timeout]{[task messaging] ``->`` connection timeout
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This is the same as the ``--comms-timeout`` option in cylc
-commands. Without a timeout remote connections to unresponsive
-suites can hang indefinitely (suites suspended with Ctrl-Z for instance).
-
-- *type*: ISO 8601 duration/interval representation (e.g.
-  ``PT10S``, 10 seconds, or ``PT1M``, 1 minute).
-- *default*: PT30S
-
-
 [suite logging]
 ---------------
 
