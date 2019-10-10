@@ -828,8 +828,9 @@ Runahead limiting prevents the fastest tasks in a suite from getting too far
 ahead of the slowest ones, as documented in :ref:`RunaheadLimit`.
 
 This config item specifies a hard limit as a cycle interval between the
-slowest and fastest tasks. It is deprecated in favour of the newer default
-limiting by ``max active cycle points`` (:ref:`max active cycle points`).
+slowest and fastest tasks. See also ``max active cycle points``
+(:ref:`max active cycle points`) which defines the limit as a number of
+cyles.
 
 - *type*: Cycle interval string e.g. ``PT12H``
   for a 12 hour limit under ISO 8601 cycling.
