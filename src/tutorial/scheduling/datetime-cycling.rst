@@ -151,7 +151,7 @@ Recurrence Formats
 
 1. By defining an arbitrary cycle point (``datetime/recurrence``):
 
-   * ``2000/P1Y``: every year starting with the year 2000.
+   * ``2000/P4Y``: every fourth year starting with the year 2000.
    * ``2000-01-01T00/T00``: every day at midnight starting on the 1st of January
      2000
    * ``2000-01-01T12/T00``: every day at midnight starting on the first midnight
