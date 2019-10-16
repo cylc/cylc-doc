@@ -46,9 +46,9 @@ ISO8601 Date-Times
    For brevity we may omit seconds (and minutes) from the time i.e:
    ``20000101T0000`` (``20000101T00``).
 
-   For readability we may add hyphen (``-``) characters between the date
-   components and colon (``:``) characters between the time components, i.e:
-   ``2000-01-01T00:00``. This is the "extended" format.
+   For reability we can add hyphens (``-``) between the date components
+   and colons (``:``) between the time components.
+   This is optional, but if you do this you must use both hyphens *and* colons.
 
    Time-zone information can be added onto the end. UTC is written ``Z``,
    UTC+1 is written ``+01``, etc. E.G: ``2000-01-01T00:00Z``.
@@ -58,19 +58,6 @@ ISO8601 Date-Times
 .. image:: ../img/iso8601-dates.svg
    :width: 75%
    :align: center
-
-.. nextslide::
-
-.. warning::
-
-   The "basic" (purely numeric except for ``T``) and "extended" (written with
-   hyphens and colons) formats cannot be mixed. For example the following
-   date-times are invalid:
-
-   .. code-block:: none
-
-      2000-01-01T0000
-      20000101T00:00
 
 .. _tutorial-iso8601-durations:
 
