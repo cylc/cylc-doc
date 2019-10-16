@@ -27,7 +27,7 @@ To make a workflow repeat we must tell Cylc three things:
 
    * :term:`recurrence`
    * :term:`initial cycle point`
-   * :term:`final cycle point`
+   * :term:`final cycle point` (Optional)
 
 .. ifnotslides::
 
