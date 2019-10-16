@@ -344,8 +344,8 @@ Cylc Graphs
       .. digraph:: graph_tutorial
          :align: center
 
-         foo -> bar -> baz -> qux
-         pub -> bar -> wop
+         a -> b -> d -> e
+         c -> b -> f
 
    #. **Use** ``cylc graph`` **to visualise the workflow.**
 
@@ -385,13 +385,13 @@ Cylc Graphs
 
          .. code-block:: cylc-graph
 
-            foo & pub => bar => baz & wop
-            baz => qux
+            a & c => b => d & f
+            d => e
 
          .. code-block:: cylc-graph
 
-            foo => bar => baz => qux
-            pub => bar => wop
+            a => b => d => e
+            c => b => f
 
          The whole suite should look something like this:
 
@@ -400,6 +400,6 @@ Cylc Graphs
             [scheduling]
                 [[graph]]
                     R1 = """
-                        foo & pub => bar => baz & wop
-                        baz => qux
+                        a & c => b => d & f
+                        d => e
                     """

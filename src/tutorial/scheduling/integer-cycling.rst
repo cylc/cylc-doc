@@ -432,8 +432,8 @@ Recurrence Sections
       [scheduling]
           [[graph]]
               R1 = """
-                  foo & pub => bar => baz & wop
-                  baz => qux
+                  a & c => b => d & f
+                  d => e
               """
 
    #. **Create a new suite.**
@@ -460,8 +460,8 @@ Recurrence Sections
               [[graph]]
          -        R1 = """
          +        P1 = """
-                          foo & pub => bar => baz & wop
-                          baz => qux
+                          a & c => b => d & f
+                          d => e
                       """
 
    #. **Visualise the suite.**
@@ -491,8 +491,9 @@ Recurrence Sections
 
    #. **Add another recurrence.**
 
-      Suppose we wanted the ``qux`` task to run every *other* cycle as opposed
-      to every cycle. We can do this by adding another recurrence.
+      Suppose we wanted the ``e`` task to run every *other* cycle
+      as opposed to every cycle. We can do this by adding another
+      recurrence.
 
       Make the following changes to your ``suite.rc`` file.
 
@@ -503,11 +504,11 @@ Recurrence Sections
               initial cycle point = 1
               [[graph]]
                   P1 = """
-                          foo & pub => bar => baz & wop
-         -                baz => qux
+                          a & c => b => d & f
+         -                d => e
                       """
          +        P2 = """
-         +                baz => qux
+         +                d => e
          +            """
 
       Use ``cylc graph`` to see the effect this has on the workflow.
@@ -517,11 +518,11 @@ Recurrence Sections
       Next we need to add some inter-cycle dependencies. We are going to add
       three inter-cycle dependencies:
 
-      #. Between ``wop`` from the previous cycle and ``pub``.
-      #. Between ``baz`` from the previous cycle and ``foo``
-         *every odd cycle* (e.g. baz.2 => foo.3).
-      #. Between ``qux`` from the previous cycle and ``foo``
-         *every even cycle* (e.g. qux.1 => foo.2).
+      #. Between ``f`` from the previous cycle and ``c``.
+      #. Between ``d`` from the previous cycle and ``a``
+         *every odd cycle* (e.g. d.2 => a.3).
+      #. Between ``e`` from the previous cycle and ``a``
+         *every even cycle* (e.g. e.1 => a.2).
 
       Have a go at adding inter-cycle dependencies to your ``suite.rc`` file to
       make your workflow match the diagram below.
@@ -539,49 +540,49 @@ Recurrence Sections
          subgraph cluster_1 {
              label = 1
              style = dashed
-             "foo.1" [label="foo\n1"]
-             "bar.1" [label="bar\n1"]
-             "baz.1" [label="baz\n1"]
-             "wop.1" [label="wop\n1"]
-             "pub.1" [label="pub\n1"]
-             "qux.1" [label="qux\n1"]
+             "a.1" [label="a\n1"]
+             "b.1" [label="b\n1"]
+             "d.1" [label="d\n1"]
+             "f.1" [label="f\n1"]
+             "c.1" [label="c\n1"]
+             "e.1" [label="e\n1"]
          }
 
          subgraph cluster_2 {
              label = 2
              style = dashed
-             "foo.2" [label="foo\n2"]
-             "bar.2" [label="bar\n2"]
-             "baz.2" [label="baz\n2"]
-             "wop.2" [label="wop\n2"]
-             "pub.2" [label="pub\n2"]
+             "a.2" [label="a\n2"]
+             "b.2" [label="b\n2"]
+             "d.2" [label="d\n2"]
+             "f.2" [label="f\n2"]
+             "c.2" [label="c\n2"]
          }
 
          subgraph cluster_3 {
              label = 3
              style = dashed
-             "foo.3" [label="foo\n3"]
-             "bar.3" [label="bar\n3"]
-             "baz.3" [label="baz\n3"]
-             "wop.3" [label="wop\n3"]
-             "pub.3" [label="pub\n3"]
-             "qux.3" [label="qux\n3"]
+             "a.3" [label="a\n3"]
+             "b.3" [label="b\n3"]
+             "d.3" [label="d\n3"]
+             "f.3" [label="f\n3"]
+             "c.3" [label="c\n3"]
+             "e.3" [label="e\n3"]
          }
 
-         "foo.1" -> "bar.1" -> "wop.1"
-         "bar.1" -> "baz.1"
-         "pub.1" -> "bar.1"
-         "foo.2" -> "bar.2" -> "wop.2"
-         "bar.2" -> "baz.2"
-         "pub.2" -> "bar.2"
-         "foo.3" -> "bar.3" -> "wop.3"
-         "bar.3" -> "baz.3"
-         "pub.3" -> "bar.3"
-         "baz.1" -> "qux.1" -> "foo.2"
-         "baz.3" -> "qux.3"
-         "baz.2" -> "foo.3"
-         "wop.1" -> "pub.2"
-         "wop.2" -> "pub.3"
+         "a.1" -> "b.1" -> "f.1"
+         "b.1" -> "d.1"
+         "c.1" -> "b.1"
+         "a.2" -> "b.2" -> "f.2"
+         "b.2" -> "d.2"
+         "c.2" -> "b.2"
+         "a.3" -> "b.3" -> "f.3"
+         "b.3" -> "d.3"
+         "c.3" -> "b.3"
+         "d.1" -> "e.1" -> "a.2"
+         "d.3" -> "e.3"
+         "d.2" -> "a.3"
+         "f.1" -> "c.2"
+         "f.2" -> "c.3"
 
       .. spoiler:: Solution warning
 
@@ -593,13 +594,13 @@ Recurrence Sections
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                            foo & pub => bar => baz & wop
-                            wop[-P1] => pub  # (1)
+                            a & c => b => d & f
+                            f[-P1] => c  # (1)
                         """
                     P2 = """
-                            baz => qux
-                            baz[-P1] => foo  # (2)
+                            d => e
+                            d[-P1] => a  # (2)
                         """
                     2/P2 = """
-                            qux[-P1] => foo  # (3)
+                            e[-P1] => a  # (3)
                         """
