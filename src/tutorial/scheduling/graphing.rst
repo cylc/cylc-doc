@@ -157,21 +157,21 @@ In Cylc we consider workflows in terms of :term:`tasks <task>` and
 
    Task are represented as words and dependencies as arrows (``=>``), so the
    following text defines two tasks where ``make_dough`` is dependent on
-   ``purchase_ingredients``:
+   ``buy_ingredients``:
 
 .. minicylc::
    :align: center
    :snippet:
    :theme: demo
 
-   purchase_ingredients => make_dough
+   buy_ingredients => make_dough
 
 .. nextslide::
 
 .. ifnotslides::
 
    In a Cylc workflow this would mean that ``make_dough`` would only run when
-   ``purchase_ingredients`` has succeeded. These :term:`dependencies
+   ``buy_ingredients`` has succeeded. These :term:`dependencies
    <dependency>` can be chained together:
 
 .. minicylc::
@@ -179,7 +179,7 @@ In Cylc we consider workflows in terms of :term:`tasks <task>` and
    :snippet:
    :theme: demo
 
-   purchase_ingredients => make_dough => bake_bread => sell_bread
+   buy_ingredients => make_dough => bake_bread => sell_bread
 
 .. nextslide::
 
@@ -193,7 +193,7 @@ In Cylc we consider workflows in terms of :term:`tasks <task>` and
    :snippet:
    :theme: demo
 
-   purchase_ingredients => make_dough => bake_bread => sell_bread
+   buy_ingredients => make_dough => bake_bread => sell_bread
    pre_heat_oven => bake_bread
    bake_bread => clean_oven
 
@@ -206,7 +206,7 @@ In Cylc we consider workflows in terms of :term:`tasks <task>` and
 
 .. code-block:: cylc-graph
 
-   purchase_ingredients => make_dough
+   buy_ingredients => make_dough
    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
 
 .. nextslide::
@@ -246,7 +246,7 @@ Cylc Graphs
    [scheduling]
        [[graph]]
            R1 = """
-               purchase_ingredients => make_dough
+               buy_ingredients => make_dough
                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
            """
 

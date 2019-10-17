@@ -56,7 +56,7 @@ To make a workflow repeat we must tell Cylc three things:
         [[graph]]
    -        R1 = """
    +        P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                 """
 
@@ -82,7 +82,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -93,7 +93,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -104,7 +104,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -158,7 +158,7 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
    +                clean_oven[-P1] => pre_heat_oven
                 """
@@ -177,7 +177,7 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -188,7 +188,7 @@ Inter-Cycle Dependencies
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -199,7 +199,7 @@ Inter-Cycle Dependencies
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -228,8 +228,8 @@ Inter-Cycle Dependencies
    task in the previous cycle. Equally ``[-P2]`` would refer to a task two
    cycles ago.
 
-   Note that the ``purchase_ingredients`` task has no arrows pointing at it
-   meaning that it has no dependencies. Consequently the ``purchase_ingredients``
+   Note that the ``buy_ingredients`` task has no arrows pointing at it
+   meaning that it has no dependencies. Consequently the ``buy_ingredients``
    tasks will all run straight away. This could cause our bakery to run into
    cash-flow problems as they would be purchasing ingredients well in advance
    of using them.
@@ -240,7 +240,7 @@ Inter-Cycle Dependencies
 
 .. ifslides::
 
-   We need ``purchase_ingredients`` to be dependent on ``sell_bread`` from
+   We need ``buy_ingredients`` to be dependent on ``sell_bread`` from
    two cycles before.
 
 .. nextslide::
@@ -252,17 +252,17 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                     clean_oven[-P1] => pre_heat_oven
-   +                sell_bread[-P2] => purchase_ingredients
+   +                sell_bread[-P2] => buy_ingredients
                 """
 
 .. nextslide::
 
 .. ifnotslides::
 
-   This dependency means that the ``purchase_ingredients`` task will run after
+   This dependency means that the ``buy_ingredients`` task will run after
    the ``sell_bread`` task two cycles before.
 
 .. note::
@@ -282,7 +282,7 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -293,7 +293,7 @@ Inter-Cycle Dependencies
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -304,7 +304,7 @@ Inter-Cycle Dependencies
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -315,7 +315,7 @@ Inter-Cycle Dependencies
    subgraph cluster_4 {
        label = 4
        style = dashed
-       "pur.4" [label="purchase_ingredients\n4"]
+       "pur.4" [label="buy_ingredients\n4"]
        "mak.4" [label="make_dough\n4"]
        "bak.4" [label="bake_bread\n4"]
        "sel.4" [label="sell_bread\n4"]
