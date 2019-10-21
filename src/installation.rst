@@ -10,6 +10,8 @@ including Apple OS X, but they are not officially tested and supported.
 Third-Party Software Packages
 -----------------------------
 
+.. _GNU Coreutils: https://www.gnu.org/software/coreutils/coreutils.html
+
 Requirements:
 
 - Python 3.7+
@@ -17,6 +19,11 @@ Requirements:
   - `python-jose <https://pypi.org/project/python-jose/>`_
   - `zmq <https://pypi.org/project/zmq/>`_
   - `colorama <https://pypi.org/project/colorama/>`_
+
+- `GNU Coreutils`_
+
+  - These must be available in the Cylc environment using the canonical names
+    (e.g. ``ls``).
 
 The following packages are necessary for running tests in Cylc:
 
