@@ -31,8 +31,10 @@ The following packages are necessary for running tests in Cylc:
 
 To generate the HTML User Guide, you will need:
 
-- `Sphinx <http://www.sphinx-doc.org/en/master/>`_ of compatible version,
-  ``>=`` **1.5.3** and ``<=`` **1.7.9**.
+- `Sphinx <http://www.sphinx-doc.org/en/master/>`_ 2.0+.
+
+
+.. TODO: Remove or fix this section once deployment has been sorted.
 
 To check that dependencies are installed and environment is configured
 correctly run ``cylc check-software``:
