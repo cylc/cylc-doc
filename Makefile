@@ -3,7 +3,7 @@
 # You can set these variables from the command line:
 # e.g. $ make html CYLC_VERSION=1.2.3
 CYLC_VERSION = $(shell cylc version | sed 's/Cylc Flow //')
-SPHINXOPTS =
+SPHINXOPTS = -n
 SPHINXBUILD = sphinx-build
 SOURCEDIR = src
 BUILDDIR = doc/$(CYLC_VERSION)

@@ -86,6 +86,9 @@ release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
 intersphinx_mapping = {
     'rose': (
         'http://metomi.github.io/rose/doc/html', None
+    ),
+    'python': (
+        'https://docs.python.org/', None
     )
 }
 
