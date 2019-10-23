@@ -56,7 +56,7 @@ To make a workflow repeat we must tell Cylc three things:
         [[graph]]
    -        R1 = """
    +        P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                 """
 
@@ -82,7 +82,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -93,7 +93,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -104,7 +104,7 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -158,7 +158,7 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
    +                clean_oven[-P1] => pre_heat_oven
                 """
@@ -177,7 +177,7 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -188,7 +188,7 @@ Inter-Cycle Dependencies
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -199,7 +199,7 @@ Inter-Cycle Dependencies
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -228,8 +228,8 @@ Inter-Cycle Dependencies
    task in the previous cycle. Equally ``[-P2]`` would refer to a task two
    cycles ago.
 
-   Note that the ``purchase_ingredients`` task has no arrows pointing at it
-   meaning that it has no dependencies. Consequently the ``purchase_ingredients``
+   Note that the ``buy_ingredients`` task has no arrows pointing at it
+   meaning that it has no dependencies. Consequently the ``buy_ingredients``
    tasks will all run straight away. This could cause our bakery to run into
    cash-flow problems as they would be purchasing ingredients well in advance
    of using them.
@@ -240,7 +240,7 @@ Inter-Cycle Dependencies
 
 .. ifslides::
 
-   We need ``purchase_ingredients`` to be dependent on ``sell_bread`` from
+   We need ``buy_ingredients`` to be dependent on ``sell_bread`` from
    two cycles before.
 
 .. nextslide::
@@ -252,17 +252,17 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    purchase_ingredients => make_dough
+                    buy_ingredients => make_dough
                     pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
                     clean_oven[-P1] => pre_heat_oven
-   +                sell_bread[-P2] => purchase_ingredients
+   +                sell_bread[-P2] => buy_ingredients
                 """
 
 .. nextslide::
 
 .. ifnotslides::
 
-   This dependency means that the ``purchase_ingredients`` task will run after
+   This dependency means that the ``buy_ingredients`` task will run after
    the ``sell_bread`` task two cycles before.
 
 .. note::
@@ -282,7 +282,7 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="purchase_ingredients\n1"]
+       "pur.1" [label="buy_ingredients\n1"]
        "mak.1" [label="make_dough\n1"]
        "bak.1" [label="bake_bread\n1"]
        "sel.1" [label="sell_bread\n1"]
@@ -293,7 +293,7 @@ Inter-Cycle Dependencies
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="purchase_ingredients\n2"]
+       "pur.2" [label="buy_ingredients\n2"]
        "mak.2" [label="make_dough\n2"]
        "bak.2" [label="bake_bread\n2"]
        "sel.2" [label="sell_bread\n2"]
@@ -304,7 +304,7 @@ Inter-Cycle Dependencies
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="purchase_ingredients\n3"]
+       "pur.3" [label="buy_ingredients\n3"]
        "mak.3" [label="make_dough\n3"]
        "bak.3" [label="bake_bread\n3"]
        "sel.3" [label="sell_bread\n3"]
@@ -315,7 +315,7 @@ Inter-Cycle Dependencies
    subgraph cluster_4 {
        label = 4
        style = dashed
-       "pur.4" [label="purchase_ingredients\n4"]
+       "pur.4" [label="buy_ingredients\n4"]
        "mak.4" [label="make_dough\n4"]
        "bak.4" [label="bake_bread\n4"]
        "sel.4" [label="sell_bread\n4"]
@@ -432,8 +432,8 @@ Recurrence Sections
       [scheduling]
           [[graph]]
               R1 = """
-                  foo & pub => bar => baz & wop
-                  baz => qux
+                  a & c => b => d & f
+                  d => e
               """
 
    #. **Create a new suite.**
@@ -460,8 +460,8 @@ Recurrence Sections
               [[graph]]
          -        R1 = """
          +        P1 = """
-                          foo & pub => bar => baz & wop
-                          baz => qux
+                          a & c => b => d & f
+                          d => e
                       """
 
    #. **Visualise the suite.**
@@ -491,8 +491,9 @@ Recurrence Sections
 
    #. **Add another recurrence.**
 
-      Suppose we wanted the ``qux`` task to run every *other* cycle as opposed
-      to every cycle. We can do this by adding another recurrence.
+      Suppose we wanted the ``e`` task to run every *other* cycle
+      as opposed to every cycle. We can do this by adding another
+      recurrence.
 
       Make the following changes to your ``suite.rc`` file.
 
@@ -503,11 +504,11 @@ Recurrence Sections
               initial cycle point = 1
               [[graph]]
                   P1 = """
-                          foo & pub => bar => baz & wop
-         -                baz => qux
+                          a & c => b => d & f
+         -                d => e
                       """
          +        P2 = """
-         +                baz => qux
+         +                d => e
          +            """
 
       Use ``cylc graph`` to see the effect this has on the workflow.
@@ -517,11 +518,11 @@ Recurrence Sections
       Next we need to add some inter-cycle dependencies. We are going to add
       three inter-cycle dependencies:
 
-      #. Between ``wop`` from the previous cycle and ``pub``.
-      #. Between ``baz`` from the previous cycle and ``foo``
-         *every odd cycle* (e.g. baz.2 => foo.3).
-      #. Between ``qux`` from the previous cycle and ``foo``
-         *every even cycle* (e.g. qux.1 => foo.2).
+      #. Between ``f`` from the previous cycle and ``c``.
+      #. Between ``d`` from the previous cycle and ``a``
+         *every odd cycle* (e.g. d.2 => a.3).
+      #. Between ``e`` from the previous cycle and ``a``
+         *every even cycle* (e.g. e.1 => a.2).
 
       Have a go at adding inter-cycle dependencies to your ``suite.rc`` file to
       make your workflow match the diagram below.
@@ -539,49 +540,49 @@ Recurrence Sections
          subgraph cluster_1 {
              label = 1
              style = dashed
-             "foo.1" [label="foo\n1"]
-             "bar.1" [label="bar\n1"]
-             "baz.1" [label="baz\n1"]
-             "wop.1" [label="wop\n1"]
-             "pub.1" [label="pub\n1"]
-             "qux.1" [label="qux\n1"]
+             "a.1" [label="a\n1"]
+             "b.1" [label="b\n1"]
+             "d.1" [label="d\n1"]
+             "f.1" [label="f\n1"]
+             "c.1" [label="c\n1"]
+             "e.1" [label="e\n1"]
          }
 
          subgraph cluster_2 {
              label = 2
              style = dashed
-             "foo.2" [label="foo\n2"]
-             "bar.2" [label="bar\n2"]
-             "baz.2" [label="baz\n2"]
-             "wop.2" [label="wop\n2"]
-             "pub.2" [label="pub\n2"]
+             "a.2" [label="a\n2"]
+             "b.2" [label="b\n2"]
+             "d.2" [label="d\n2"]
+             "f.2" [label="f\n2"]
+             "c.2" [label="c\n2"]
          }
 
          subgraph cluster_3 {
              label = 3
              style = dashed
-             "foo.3" [label="foo\n3"]
-             "bar.3" [label="bar\n3"]
-             "baz.3" [label="baz\n3"]
-             "wop.3" [label="wop\n3"]
-             "pub.3" [label="pub\n3"]
-             "qux.3" [label="qux\n3"]
+             "a.3" [label="a\n3"]
+             "b.3" [label="b\n3"]
+             "d.3" [label="d\n3"]
+             "f.3" [label="f\n3"]
+             "c.3" [label="c\n3"]
+             "e.3" [label="e\n3"]
          }
 
-         "foo.1" -> "bar.1" -> "wop.1"
-         "bar.1" -> "baz.1"
-         "pub.1" -> "bar.1"
-         "foo.2" -> "bar.2" -> "wop.2"
-         "bar.2" -> "baz.2"
-         "pub.2" -> "bar.2"
-         "foo.3" -> "bar.3" -> "wop.3"
-         "bar.3" -> "baz.3"
-         "pub.3" -> "bar.3"
-         "baz.1" -> "qux.1" -> "foo.2"
-         "baz.3" -> "qux.3"
-         "baz.2" -> "foo.3"
-         "wop.1" -> "pub.2"
-         "wop.2" -> "pub.3"
+         "a.1" -> "b.1" -> "f.1"
+         "b.1" -> "d.1"
+         "c.1" -> "b.1"
+         "a.2" -> "b.2" -> "f.2"
+         "b.2" -> "d.2"
+         "c.2" -> "b.2"
+         "a.3" -> "b.3" -> "f.3"
+         "b.3" -> "d.3"
+         "c.3" -> "b.3"
+         "d.1" -> "e.1" -> "a.2"
+         "d.3" -> "e.3"
+         "d.2" -> "a.3"
+         "f.1" -> "c.2"
+         "f.2" -> "c.3"
 
       .. spoiler:: Solution warning
 
@@ -593,13 +594,13 @@ Recurrence Sections
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                            foo & pub => bar => baz & wop
-                            wop[-P1] => pub  # (1)
+                            a & c => b => d & f
+                            f[-P1] => c  # (1)
                         """
                     P2 = """
-                            baz => qux
-                            baz[-P1] => foo  # (2)
+                            d => e
+                            d[-P1] => a  # (2)
                         """
                     2/P2 = """
-                            qux[-P1] => foo  # (3)
+                            e[-P1] => a  # (3)
                         """
