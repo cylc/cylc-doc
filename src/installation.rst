@@ -10,6 +10,8 @@ including Apple OS X, but they are not officially tested and supported.
 Third-Party Software Packages
 -----------------------------
 
+.. _GNU Coreutils: https://www.gnu.org/software/coreutils/coreutils.html
+
 Requirements:
 
 - Python 3.7+
@@ -18,14 +20,21 @@ Requirements:
   - `zmq <https://pypi.org/project/zmq/>`_
   - `colorama <https://pypi.org/project/colorama/>`_
 
+- `GNU Coreutils`_
+
+  - These must be available in the Cylc environment using the canonical names
+    (e.g. ``ls``).
+
 The following packages are necessary for running tests in Cylc:
 
 - `pytest <https://pytest.org>`_
 
 To generate the HTML User Guide, you will need:
 
-- `Sphinx <http://www.sphinx-doc.org/en/master/>`_ of compatible version,
-  ``>=`` **1.5.3** and ``<=`` **1.7.9**.
+- `Sphinx <http://www.sphinx-doc.org/en/master/>`_ 2.0+.
+
+
+.. TODO: Remove or fix this section once deployment has been sorted.
 
 To check that dependencies are installed and environment is configured
 correctly run ``cylc check-software``:
