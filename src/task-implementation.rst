@@ -50,12 +50,16 @@ independent testing, re-use, and shell mode editing.
 Task Messages
 -------------
 
-Task jobs automatically send status messages back to the server program to
-report that execution has started, succeeded, or failed. Custom messages
-can also be sent back by the same mechanism, with various severity levels.
-These can be used to trigger other tasks off specific task outputs, or 
-to trigger execution of event handlers by the suite server program (see
-:ref:`EventHandling`), or just to write information to the server log.
+Task jobs send status messages back to the server program to report that
+execution has started, succeeded, or failed. Custom messages can also be sent
+by the same mechanism, with various severity levels.  These can be used to
+trigger other tasks off specific task outputs, or to trigger execution of event
+handlers by the server program (see :ref:`EventHandling`), or just to write
+information to the server log.
+
+(If polling is configured as the task communication method for a host, the
+messaging system just writes messages to the local job status file for
+recovery by the server at the next poll).
 
 Normal severity messages are printed to ``job.out`` and logged by the
 server program:
@@ -97,8 +101,9 @@ suite server program, and can be passed to *critical* event handlers:
 Task jobs no longer (since Cylc 8) attempt to resend messages if the server
 cannot be reached. Send failures normally imply a network or Cylc configuration
 problem that will not recover by itself, in which case a series of messaging
-retries just holds up job completion unnecessarily. The server will recover
-task status by polling on job timeout, if a message does not get through.
+retries just holds up job completion unnecessarily. If a job status message
+does not get through, the server will recover the correct task status by
+polling on job timeout (or earlier if regular polling is configured).
 
 Aborting Job Scripts on Error
 -----------------------------
