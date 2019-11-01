@@ -50,22 +50,26 @@ independent testing, re-use, and shell mode editing.
 Task Messages
 -------------
 
-Tasks messages can be sent back to the suite server program to report completed
-outputs and arbitrary messages of different severity levels.
+Task jobs send status messages back to the server program to report that
+execution has started, succeeded, or failed. Custom messages can also be sent
+by the same mechanism, with various severity levels.  These can be used to
+trigger other tasks off specific task outputs, or to trigger execution of event
+handlers by the server program (see :ref:`EventHandling`), or just to write
+information to the server log.
 
-Some types of message - in addition to events like task failure -  can
-optionally trigger execution of event handlers in the suite server program
-(see :ref:`EventHandling`).
+(If polling is configured as the task communication method for a host, the
+messaging system just writes messages to the local job status file for
+recovery by the server at the next poll).
 
 Normal severity messages are printed to ``job.out`` and logged by the
-suite server program:
+server program:
 
 .. code-block:: bash
 
    cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
      "Hello from ${CYLC_TASK_ID}"
 
-CUSTOM severity messages are printed to ``job.out``, logged by the
+"CUSTOM" severity messages are printed to ``job.out``, logged by the
 suite server program, and can be used to trigger *custom*
 event handlers:
 
@@ -74,12 +78,11 @@ event handlers:
    cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
      "CUSTOM:data available for ${CYLC_TASK_CYCLE_POINT}"
 
-Custom severity messages and event handlers can be used to signal special
-events that are neither routine information or an error condition, such as
-production of a particular data file. Task output messages, used for triggering
-other tasks, can also be sent with custom severity if need be.
+These can be used to signal special events that are neither routine information
+nor an error condition, such as production of a particular data file (a "data
+availability" event).
 
-WARNING severity messages are printed to ``job.err``, logged by the
+"WARNING" severity messages are printed to ``job.err``, logged by the
 suite server program, and can be passed to *warning* event handlers:
 
 .. code-block:: bash
@@ -87,7 +90,7 @@ suite server program, and can be passed to *warning* event handlers:
    cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
      "WARNING:Uh-oh, something's not right here."
 
-CRITICAL severity messages are printed to ``job.err``, logged by the
+"CRITICAL" severity messages are printed to ``job.err``, logged by the
 suite server program, and can be passed to *critical* event handlers:
 
 .. code-block:: bash
@@ -95,6 +98,12 @@ suite server program, and can be passed to *critical* event handlers:
    cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
      "CRITICAL:ERROR occurred in process X!"
 
+Task jobs no longer (since Cylc 8) attempt to resend messages if the server
+cannot be reached. Send failures normally imply a network or Cylc configuration
+problem that will not recover by itself, in which case a series of messaging
+retries just holds up job completion unnecessarily. If a job status message
+does not get through, the server will recover the correct task status by
+polling on job timeout (or earlier if regular polling is configured).
 
 Aborting Job Scripts on Error
 -----------------------------
