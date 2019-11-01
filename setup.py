@@ -17,9 +17,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from importlib.util import spec_from_file_location, module_from_spec
+from pathlib import Path
 from setuptools import setup
 
-VERSION = "0.0.1"
+
+HERE = Path(__file__).resolve().parent
+
+
+def get_version(module, path):
+    """Return the __version__ attr from a module sourced by FS path."""
+    spec = spec_from_file_location(module, path)
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.__version__
+
+
+VERSION = get_version(
+    'cylc.doc',
+    str(Path(HERE, 'cylc/doc/__init__.py'))
+)
 
 INSTALL_REQUIRES = [
     'sphinx==2.0.*',
