@@ -282,7 +282,7 @@ dependent tasks, which in terms of format must:
 
 - be *flat* (non-nested);
 - contain *only* keys which are
-  `valid <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_ as environment variable names.
+  `valid <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_ as environment variable names.
 
 See :ref:`Built-in Suite State Triggers` for an example of one such
 ``results`` dictionary and how it gets processed by the suite.
