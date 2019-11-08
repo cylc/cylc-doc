@@ -46,6 +46,7 @@ script:
   - pycodestyle
   - eslint .
   - make html singlehtml slides linkcheck SPHINXOPTS='-W'
+  - bin/run-validate
 
 after_failure:
   - cat /tmp/sphinx-err*  # sphinx traceback

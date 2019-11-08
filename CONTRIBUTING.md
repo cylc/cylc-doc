@@ -37,6 +37,8 @@ below.
  - Sadie Bartholomew
  - Bruno Kinoshita
  - Tim Pillinger
+ - Mel Hall
+ 
 
 (All contributors are identifiable with email addresses in the git version
 control logs or otherwise.)
