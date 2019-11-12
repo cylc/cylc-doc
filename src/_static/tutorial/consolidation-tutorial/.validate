@@ -17,4 +17,5 @@
 
 
 set -eux
+
 cylc validate . --icp=2000

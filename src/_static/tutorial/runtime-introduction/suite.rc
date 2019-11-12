@@ -49,5 +49,5 @@
     [[process_exeter]]
         script = """python3 -c "
 from random import choice
-print choice(['Windy', 'Rainy', 'Sunny', 'Snowy'])"
+print(choice(['Windy', 'Rainy', 'Sunny', 'Snowy']))"
 """

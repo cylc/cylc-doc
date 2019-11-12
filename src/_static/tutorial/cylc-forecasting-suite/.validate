@@ -23,9 +23,6 @@ APIKEY=$(head --lines 1 ../api-keys)
 cd "$TEMPORARYDIRECTORY"
 sed -i '1s;^;[cylc]\n    abort if any task fails = True\n;' suite.rc
 sed -i "s/DATAPOINT_API_KEY/$APIKEY/" suite.rc
-cylc validate . --icp=2000
 cylc validate --strict . --icp=2000
-cylc run --no-detach \
-    --until "$(isodatetime --offset=-PT1H --format CCYY-MM-DDThh:00Z)" \
-    --initial-cycle-point "$(isodatetime --offset=-PT7H --format CCYY-MM-DDThh:00Z)"
+cylc run --no-detach 
 rm -r "$TEMPORARYDIRECTORY"

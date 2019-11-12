@@ -21,7 +21,7 @@ cleanall:
 
 cli:
 	# auto-document CLI reference
-	#bin/autodoc-cli
+	bin/autodoc-cli
 
 .PHONY: help clean cli Makefile
 

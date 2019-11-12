@@ -50,3 +50,4 @@ script:
 
 after_failure:
   - cat /tmp/sphinx-err*  # sphinx traceback
+  - find ~/cylc-run -name job.err -exec cat {} +  # cylc error files
