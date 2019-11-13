@@ -46,8 +46,11 @@ script:
   - pycodestyle
   - eslint .
   - make html singlehtml slides linkcheck SPHINXOPTS='-W'
+  - mkdir -p "${HOME}/cylc-run"
   - bin/run-validate
 
 after_failure:
+  - env 
   - cat /tmp/sphinx-err*  # sphinx traceback
   - find ~/cylc-run -name job.err -exec cat {} +  # cylc error files
+
