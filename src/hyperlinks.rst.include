@@ -2,7 +2,7 @@
    documentation.
 
 .. _Cylc: https://cylc.github.io/
-.. _Cylc User Guide: https://cylc.github.io/documentation.html#the-cylc-user-guide
+.. _Cylc User Guide: https://cylc.github.io/documentation/
 .. _Cylc Suite Design Guide: https://cylc.github.io/doc/built-sphinx/suite-design-guide/suite-design-guide-master.html
 .. _DataPoint: https://www.metoffice.gov.uk/datapoint
 .. _EmPy: http://www.alcyone.com/software/empy/
@@ -15,5 +15,7 @@
 .. _PyGTK: http://www.pygtk.org/
 .. _Python: https://www.python.org/
 .. _Python Regular Expressions: https://docs.python.org/2/library/re.html#regular-expression-syntax
+.. _Rose Documentation: https://metomi.github.io/rose
+.. _Rose GitHub: https://github.com/metomi/rose
 .. _SRS: https://code.metoffice.gov.uk/
 .. _SVN: https://subversion.apache.org/

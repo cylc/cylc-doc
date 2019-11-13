@@ -22,5 +22,5 @@ Rose
 scientific applications*, developed at the Met Office for use with
 cylc. It is available under the open source GPL license.
 
-- `Rose documentation <http://metomi.github.io/rose/>`_
-- `Rose source repository <https://github.com/metomi/rose>`_
+- `Rose Documentation`_
+- `Rose GitHub`_
