@@ -10,7 +10,7 @@ Usage:
     consolidate-observations
 
 Environment Variables:
-    DOMIAN: The area in which to generate forecasts for in the format
+    DOMAIN: The area in which to generate forecasts for in the format
         (lng1, lat1, lng2, lat2).
     RESOLUTION: The length/width of each grid cell in degrees.
 

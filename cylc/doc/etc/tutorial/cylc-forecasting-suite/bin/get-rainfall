@@ -13,7 +13,7 @@ Environment Variables:
     API_KEY: The DataPoint API key, required for getting live weather data.
         If un-specified then get-observations will fall back to archive data
         from the suite directory.
-    DOMIAN: The area in which to generate forecasts for in the format
+    DOMAIN: The area in which to generate forecasts for in the format
         (lng1, lat1, lng2, lat2).
     RESOLUTION: The length/width of each grid cell in degrees.
 
@@ -26,7 +26,7 @@ import shutil
 import urllib.request
 
 import PIL.Image
-from mecator import get_offset, get_scale, coord_to_pos, pos_to_coord
+from mercator import get_offset, get_scale, pos_to_coord
 import util
 
 
@@ -71,7 +71,7 @@ class Rainfall(object):
         Args:
             lng (float): The longitude for this reading.
             lat (float): The latitude fo this reading.
-            value (float): The value of the reading.
+            value (tuple): The value of the reading.
 
         """
         itt_x, itt_y = util.get_grid_coordinates(lng, lat, self.domain,
@@ -97,7 +97,7 @@ def get_datapoint_radar_image(filename, time, api_key):
 
     Args:
         filename (str): The path to write the image file to.
-        time (str): The date-time of the image to reteieve in ISO8601 format.
+        time (str): The date-time of the image to retrieve in ISO8601 format.
         api_key (str): Datapoint API key.
 
     """
@@ -115,7 +115,7 @@ def get_archived_radar_image(filename, time):
 
     Args:
         filename (str): The path to write the image file to.
-        time (str): The date-time of the image to reteieve in ISO8601 format.
+        time (str): The date-time of the image to retrieve in ISO8601 format.
 
     """
     shutil.copyfile(
@@ -124,11 +124,11 @@ def get_archived_radar_image(filename, time):
 
 
 def process_rainfall_data(filename, resolution, domain):
-    """Generate a 2D matric of data from the rainfall data in the image.
+    """Generate a 2D matrix of data from the rainfall data in the image.
 
     Args:
         filename (str): Path to the png image to process.
-        resolution (float): The length/wieght of each grid cell in degrees.
+        resolution (float): The length/weight of each grid cell in degrees.
         domain (dict): The bounds of the domain as returned by
             util.parse_domain.
 
@@ -163,7 +163,7 @@ def main():
         print('Attempting to get weather data from the DataPoint service.')
         get_datapoint_radar_image('rainfall-radar.png', time, api_key)
     else:
-        print('No API key provided, falling back to arhived data')
+        print('No API key provided, falling back to archived data')
         get_archived_radar_image('rainfall-radar.png', time)
 
     data = process_rainfall_data('rainfall-radar.png', resolution, domain)

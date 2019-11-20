@@ -49,7 +49,11 @@ INSTALL_REQUIRES = [
 EXTRAS_REQUIRE = {
     'test': [
         'pycodestyle'
+    ],
+    'tutorial': [
+        'pillow'
     ]
+
 }
 EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
 
@@ -65,5 +69,8 @@ setup(
         "Documentation": "https://cylc.github.io/documentation.html",
         "Source": "https://github.com/cylc/cylc-doc",
         "Tracker": "https://github.com/cylc/cylc-doc/issues"
-    }
+    },
+    package_data={
+        'cylc.doc': ['etc/tutorial/']
+    },
 )

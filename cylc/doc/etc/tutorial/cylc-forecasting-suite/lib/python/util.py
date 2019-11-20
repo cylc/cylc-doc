@@ -54,7 +54,7 @@ def field_to_csv(field, x_range, y_range, filename):
         x_range (list): List of the x coordinates of the extrapolated grid.
             These are the extrapolation coordinates, the length of this list
             defines the size of the grid.
-        x_range (list): List of the y coordinates of the extrapolated grid.
+        y_range (list): List of the y coordinates of the extrapolated grid.
             These are the extrapolation coordinates, the length of this list
             defines the size of the grid.
 
@@ -139,7 +139,8 @@ def interpolate_grid(points, dim_x, dim_y, d_x, d_y, spline_order=0):
         return [(int(round(pos_x)), int(round(pos_y)), z_val)]  # [(x, y, z)]
 
     def spline_1(pos_x, pos_y, z_val):
-        """First order beta spline (weight spread about four nearest ponts)."""
+        """First order beta spline (weight spread about four nearest
+        points)."""
         x_0 = int(math.floor(pos_x))
         y_0 = int(math.floor(pos_y))
         x_1 = x_0 + 1

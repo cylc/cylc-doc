@@ -19,7 +19,7 @@
 set -eu
 cd "$(dirname "$0")"
 
-for FILE in $(echo ../src/_static/tutorial/*/.validate) ; do 
+for FILE in $(echo ../cylc/doc/etc/tutorial/*/.validate) ; do 
     echo "running $FILE" 
     (
         cd "$(dirname "$FILE")"

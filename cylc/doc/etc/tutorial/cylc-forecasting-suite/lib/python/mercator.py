@@ -38,7 +38,7 @@ def get_scale(bbox, width):
 
 
 def coord_to_pos(lng, lat, offset=(0., 0.), scale=(1., 1.)):
-    """Convert a lng, lat coord to an x, y position in a mecator projection.
+    """Convert a lng, lat coord to an x, y position in a mercator projection.
 
     proj equivalent:
         $ echo <lng> <lat> | proj +proj=merc
@@ -58,7 +58,7 @@ def coord_to_pos(lng, lat, offset=(0., 0.), scale=(1., 1.)):
 
 
 def pos_to_coord(pos_x, pos_y, offset=(0., 0.), scale=(1., 1.)):
-    """Convert an x, y coordinate in a mecator projection to a lng, lat coord.
+    """Convert an x, y coordinate in a mercator projection to a lng, lat coord.
 
     proj equivalent:
         # Add offset
