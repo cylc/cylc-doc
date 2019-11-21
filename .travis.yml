@@ -40,7 +40,6 @@ install:
   - sudo apt-get install -y graphviz
   - pip install git+https://github.com/cylc/cylc-flow/
   - pip install -e .'[all]'
-  - pip install pillow
   - npm install -g eslint
 
 script:
