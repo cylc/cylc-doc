@@ -2817,7 +2817,7 @@ graph.
 .. code-block:: cylc
 
    R1 = """foo<m-1> => foo<m>  # for m = cat, dog
-              baz => foo<m>"""
+           baz => foo<m>"""
 
 
 Task Families And Parameterization
