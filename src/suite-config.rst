@@ -2787,7 +2787,7 @@ expands to:
 .. code-block:: cylc
 
    R1 = """proc_small => proc_big
-              proc_big => proc_huge"""
+           proc_big => proc_huge"""
 
    # or equivalently:
 
