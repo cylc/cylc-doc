@@ -3519,6 +3519,38 @@ For better clarity and disambiguation Python modules can be prefixed with
    {% from "__python__.itertools" import product %}
 
 
+Logging
+^^^^^^^
+
+It is possible to output messages to the Cylc log from within Jinja2, these
+messages will appear on the console when running or validating a suite.
+This can be useful for development or debugging.
+
+Example ``suite.rc``:
+
+.. code-block:: cylc
+
+   #!Jinja2
+   {% from "cylc.flow" import LOG %}
+   {% do LOG.debug("Hello World!") %}
+
+Example output:
+
+.. code-block:: console
+
+   $ cylc validate . --debug
+   DEBUG - Loading site/user config files
+   DEBUG - Reading file <file>
+   DEBUG - Processing with Jinja2
+   DEBUG - Hello World!
+   ...
+   Valid for cylc-<version>
+
+Log messages will appear whenever the suite configuration is loaded so it is
+advisable to use the ``DEBUG`` logging level which is suppressed unless the
+``--debug`` option is provided.
+
+
 .. _EmPylabel:
 
 EmPy
