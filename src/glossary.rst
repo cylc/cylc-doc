@@ -721,6 +721,30 @@ Glossary
       * :term:`task trigger`
       * :term:`dependency`
       * :ref:`Family Trigger Tutorial <tutorial-cylc-family-triggers>`
+   
+   message trigger
+      A `message trigger` is a method of triggering a dependent 
+      :term:`task <task>` before the initial task has fully completed. 
+      
+      We can use :term:`custom task outputs <custom task output>` as triggers. 
+
+      Messages should be defined in the runtime section of the suite and
+      the graph trigger notation refers to each message.
+
+      See also:
+
+      * :ref:`Message Trigger Tutorial <tutorial-cylc-message-triggers>`
+      * :term:`custom task output`
+   
+   custom task output
+      A `custom task output` is a user-defined message sent from the 
+      :term:`job` to the work flow server. 
+      These can be used as :term:`message triggers <message trigger>`.
+
+      See also:
+
+      * `Cylc User Guide`_
+      * :term:`message trigger`
 
    stalled suite
    stalled state
