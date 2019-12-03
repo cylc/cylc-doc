@@ -362,39 +362,19 @@ Recurrence Sections
            # Repeat every third cycle.
            P3 = baz
 
-.. digraph:: example
+.. image:: ../../img/recurrence-sections.svg
    :align: center
-
-   subgraph cluster_1 {
-       label = 1
-       style = dashed
-       "foo.1" [label="foo\n1"]
-       "bar.1" [label="bar\n1"]
-       "baz.1" [label="baz\n1"]
-   }
-
-   subgraph cluster_2 {
-       label = 2
-       style = dashed
-       "foo.2" [label="foo\n2"]
-   }
-
-   subgraph cluster_3 {
-       label = 3
-       style = dashed
-       "foo.3" [label="foo\n3"]
-       "bar.3" [label="bar\n3"]
-   }
 
 .. nextslide::
 
 .. ifnotslides::
 
-   By default recurrences start at the :term:`initial cycle point`, however it
-   is possible to make them start at an arbitrary cycle point. This is done by
-   writing the cycle point and the recurrence separated by a forward slash
-   (``/``), e.g. ``5/P3`` means repeat every third cycle starting *from* cycle
-   number 5.
+  By default recurrences start at the
+   :term:`initial cycle point`, however it is possible to make them start at an
+   arbitrary cycle point. This is done by writing the cycle point and the
+   recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means repeat
+   every third cycle starting *from* cycle number 5. Therefore, if you wanted
+   a graph to occur every even cycle point you would use ``2/P2``.
 
    The start point of a recurrence can also be defined as an offset from the
    :term:`initial cycle point`, e.g. ``+P5/P3`` means repeat every third cycle
@@ -402,8 +382,12 @@ Recurrence Sections
 
 .. ifslides::
 
-   ``5/P3``
-      Repeat every third cycle starting *from* cycle number 5.
+   ``2/P2``
+      Repeat every even cycle (If your initial cycle point was odd)
+
+   .. image:: ../../img/recurrence-sections2.svg
+      :align: center
+
    ``+P5/P3``
       Repeat every third cycle starting 5 cycles *after* the initial cycle
       point.
@@ -453,7 +437,7 @@ Recurrence Sections
       Add in the following lines.
 
       .. code-block:: diff
-   
+
           [scheduling]
          +    cycling mode = integer
          +    initial cycle point = 1
