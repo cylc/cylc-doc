@@ -20,8 +20,20 @@ generates a *job script* for the task, and submits it to run (see
 
 Job scripts encapsulate configured task runtime settings: ``script`` and
 ``environment`` items, if defined, are just concatenated in the order shown
-below, to make the job script. Everything executes in the same shell, so each
-part of the script can potentially affect the environment of subsequent parts.
+below, to make the job script. The job script is separated into two parts.
+User scripts and environment (``env-script``, ``user-env``, ``pre-script``,
+``script`` and ``post-script``) are isolated and executed in a separate subshell.
+Any changes to environment, traps, etc., done in any of them are vivsible in
+subsequent parts, but will not interfere with the parent shell process. This
+parent shell executes and shares environment with ``init-script``, ``exit-script``
+and ``err-script``. In particular, any environment changes in ``init-script`` will
+be visible in the parent shell, as well as in the subshell hosting user scripts.
+
+The parent shell sets trap handlers for some signals (the exact list depends on
+a particular batch system being used) and typically resends any received signal
+to the subshell and its children (the whole process group, to be precise), unless
+the batch system doesn't execute the job script as process leader, in which case
+the signal is resent to the subshell process only.
 
 .. _fig-anatomy-of-a-job-script:
 
@@ -29,10 +41,9 @@ part of the script can potentially affect the environment of subsequent parts.
    :align: center
 
    The order in which task runtime script and environment configuration items
-   are combined, in the same shell, to create a task job script. ``cylc-env``
-   represents Cylc-defined environment variables, and ``user-env`` user-defined
-   variables from the task ``[environment]`` section. (Note this is not a suite
-   dependency graph).
+   are combined, to create a task job script. ``cylc-env`` represents Cylc-defined
+   environment variables, and ``user-env`` user-defined variables from the task
+   ``[environment]`` section. (Note this is not a suite dependency graph).
 
 Task job scripts are written to the suite's job log directory. They can be
 printed with ``cylc cat-log`` or generated and printed with
