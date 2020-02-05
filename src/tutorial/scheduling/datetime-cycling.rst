@@ -1,4 +1,4 @@
-.. _nowcasting: https://www.en.wikipedia.org/wiki/Nowcasting_(meteorology)
+.. _nowcasting: https://en.wikipedia.org/wiki/Nowcasting_(meteorology)
 
 .. _tutorial-datetime-cycling:
 
