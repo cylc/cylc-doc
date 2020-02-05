@@ -19,7 +19,7 @@ This output could be, for example, a report or perhaps another task.
 Usage
 -----
 
-:term:`Message triggers <message trigger>` are particularily useful if we have
+:term:`Message triggers <message trigger>` are particularly useful if we have
 a long running task and we want to produce multiple tailored outputs whilst
 this task is running, rather than having to wait for the task to fully
 complete.
@@ -119,6 +119,12 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          touch bin/random.sh
  
+      We will need to make this script exectuable. 
+      
+      .. code-block:: bash
+
+         chmod +x bin/random.sh
+
       Open the file and paste the following basic bash script into it:
 
       .. code-block:: bash
@@ -212,8 +218,8 @@ triggers another task bar and when fully completed triggers another task, baz.
       been created.    
       
       There are three aspects of creating messsage triggers. 
-      The first is to create the messages within ``runtime`` in our suite
-      - we need to create a sub-section called ``outputs``. Here we create
+      The first is to create the messages.  Within ``runtime``, ``TASK`` in our
+      suite, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.  
 
       .. code-block:: diff
@@ -243,11 +249,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                      sleep 2
                      random.sh
          +           cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
-                         "Task partially complete, report ready to view"
+                          "Task partially complete, report ready to view"
                      sleep 2
                      random.sh
          +           cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
-                         "Task partially complete, report updated"
+                          "Task partially complete, report updated"
                      sleep 2
                      random.sh
                  """
