@@ -1,4 +1,4 @@
-.. _nowcasting: https://www.metoffice.gov.uk/research/weather/research-to-operations/convective-scale-data-assimilation-and-nowcasting
+.. _nowcasting: https://www.en.wikipedia.org/wiki/Nowcasting_(meteorology)
 
 .. _tutorial-datetime-cycling:
 
