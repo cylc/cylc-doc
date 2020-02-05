@@ -305,7 +305,7 @@ properties such as ``script``):
 
       .. _fig-dep-eg-1:
 
-      .. figure:: img/dep-eg-1.png
+      .. figure:: ../../img/dep-eg-1.png
          :align: center
 
 
@@ -492,7 +492,7 @@ successors (once they're all finished the suite just exits). The integer
 
       .. _fig-test1:
 
-      .. figure:: img/test1.png
+      .. figure:: ../../img/test1.png
          :align: center
 
 
@@ -525,7 +525,7 @@ small suite of cycling tasks:
 
       .. _fig-test2:
 
-      .. figure:: img/test2.png
+      .. figure:: ../../img/test2.png
          :align: center
 
 
@@ -915,7 +915,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
       .. _fig-test4:
 
-      .. figure:: img/test4.png
+      .. figure:: ../../img/test4.png
          :align: center
 
 
@@ -966,7 +966,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
       .. _fig-test5:
 
-      .. figure:: img/test5.png
+      .. figure:: ../../img/test5.png
          :align: center
 
 
@@ -1082,7 +1082,7 @@ An Integer Cycling Example
 
 .. _fig-integer-pipeline:
 
-.. figure:: img/pipe-pub.png
+.. figure:: ../../img/pipe-pub.png
    :align: center
 
 The following suite definition, as :ref:`graphed above <fig-integer-pipeline>`,
@@ -1098,7 +1098,7 @@ configuration is omitted, but it would likely involve retrieving datasets by
 cycle point and processing them in cycle point-specific shared workspaces under
 the self-contained suite run directory.
 
-.. literalinclude:: suites/integer-pipeline/suite.rc
+.. literalinclude:: ../../suites/integer-pipeline/suite.rc
    :language: cylc
 
 
@@ -1205,7 +1205,7 @@ the ``[runtime]`` section of the emitting task, and reported using the
 refers to the item name of the registered output message.
 And example message triggering suite:
 
-.. literalinclude:: suites/message-triggers/suite.rc
+.. literalinclude:: ../../suites/message-triggers/suite.rc
    :language: cylc
 
 
@@ -1291,7 +1291,7 @@ with open arrow heads:
 
       .. _fig-conditional:
 
-      .. figure:: img/conditional-triggers.png
+      .. figure:: ../../img/conditional-triggers.png
          :align: center
 
 
@@ -1348,7 +1348,7 @@ you toggle them on with *View* ``->`` *Options* ``->``
 
       .. _fig-suicide:
 
-      .. figure:: img/suicide.png
+      .. figure:: ../../img/suicide.png
          :align: center
 
 
@@ -1952,7 +1952,7 @@ cycle point:
 
    .. _ghost-node-screenshot:
 
-   .. figure:: img/ghost-node-example.png
+   .. figure:: ../../img/ghost-node-example.png
       :align: center
 
       Screenshot of ``cylc graph`` showing one task as a "ghost node".
@@ -2042,7 +2042,7 @@ Runtime Inheritance - Single
 The following listing of the *inherit.single.one* example suite
 illustrates basic runtime inheritance with single parents.
 
-.. literalinclude:: suites/inherit/single/one/suite.rc
+.. literalinclude:: ../../suites/inherit/single/one/suite.rc
    :language: cylc
 
 
@@ -2062,7 +2062,7 @@ but for detailed documentation of how the algorithm works refer to the
 The *inherit.multi.one* example suite, listed here, makes use of
 multiple inheritance:
 
-.. literalinclude:: suites/inherit/multi/one/suite.rc
+.. literalinclude:: ../../suites/inherit/multi/one/suite.rc
    :language: cylc
 
 ``cylc get-suite-config`` provides an easy way to check the result of
@@ -2595,7 +2595,7 @@ The result as visualized by ``cylc graph`` is:
 
 .. _fig-params-1:
 
-.. figure:: img/params1.png
+.. figure:: ../../img/params1.png
    :align: center
 
    Parameter expansion example.
@@ -2970,12 +2970,12 @@ workflow will be visible at all times as the suite runs.
    Create sub-figures if possible: for now hacked as separate figures with
    link and caption on final displayed figure.
 
-.. figure:: img/eg2-static.png
+.. figure:: ../../img/eg2-static.png
    :align: center
 
 .. _fig-eg2:
 
-.. figure:: img/eg2-dynamic.png
+.. figure:: ../../img/eg2-dynamic.png
    :align: center
 
    Parameterized (top) and cycling (bottom) versions of the same
@@ -3104,7 +3104,7 @@ with standard programming techniques.
 
 .. _fig-jinja2-ensemble:
 
-.. figure:: img/jinja2-ensemble-graph.png
+.. figure:: ../../img/jinja2-ensemble-graph.png
    :align: center
 
    The Jinja2 ensemble example suite graph.
@@ -3147,12 +3147,12 @@ suite. To add a new city and associated tasks and dependencies simply
 add the city name to list at the top of the file. Here is the suite graphed,
 with the New York City task family expanded:
 
-.. literalinclude:: suites/jinja2/cities/suite.rc
+.. literalinclude:: ../../suites/jinja2/cities/suite.rc
    :language: cylc
 
 .. _fig-jinja2-cities:
 
-.. figure:: img/jinja2-suite-graph.png
+.. figure:: ../../img/jinja2-suite-graph.png
    :align: center
 
    The Jinja2 cities example suite graph, with the
@@ -3362,7 +3362,7 @@ The values of Jinja2 variables can be passed in from the cylc command
 line rather than hardwired in the suite configuration.
 Here's an example:
 
-.. literalinclude:: suites/jinja2/defaults/suite.rc
+.. literalinclude:: ../../suites/jinja2/defaults/suite.rc
    :language: cylc
 
 Here's the result:
@@ -3583,7 +3583,7 @@ An example suite ``empy.cities`` demonstrating its use is shown below.
 It is a translation of ``jinja2.cities`` example from
 :ref:`Jinja` and can be directly compared against it.
 
-.. literalinclude:: suites/empy/cities/suite.rc
+.. literalinclude:: ../../suites/empy/cities/suite.rc
    :language: cylc
 
 For basic usage the difference between Jinja2 and EmPy amounts to a different

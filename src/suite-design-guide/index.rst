@@ -1,7 +1,9 @@
-.. _Introduction Label:
+.. SDG:
 
-Introduction
-============
+Suite Design Guide
+==================
+
+.. rubric:: Cylc/Rose Suite Design Best Practice Guide.
 
 This document provides guidance on making complex Cylc + Rose workflows that
 are clear, maintainable, and portable. Note that best practice advice may
@@ -31,3 +33,12 @@ suites), and end with some pointers to future developments.
    framework*. However, the bulk of the information in this guide is about
    Cylc suite design; which parts are Rose-specific should be clear from
    context.
+
+.. toctree::
+   :maxdepth: 2
+
+   style-guide
+   general-principles
+   efficiency
+   portable-suites
+   roadmap

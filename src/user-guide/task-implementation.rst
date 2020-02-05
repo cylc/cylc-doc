@@ -25,7 +25,7 @@ part of the script can potentially affect the environment of subsequent parts.
 
 .. _fig-anatomy-of-a-job-script:
 
-.. figure:: img/anatomy-of-a-job-script.png
+.. figure:: ../img/anatomy-of-a-job-script.png
    :align: center
 
    The order in which task runtime script and environment configuration items
