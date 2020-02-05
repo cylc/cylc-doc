@@ -19,15 +19,11 @@ cleanall:
 	(cd doc; echo [0-9]*.*)
 	rm -rI doc/[0-9]*.*
 
-cli:
-	# auto-document CLI reference
-	bin/autodoc-cli
-
-.PHONY: help clean cli Makefile
+.PHONY: help clean Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile cli
+%: Makefile
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats

@@ -722,7 +722,7 @@ queue. The *queues* example suite illustrates how queues work by
 running two task trees side by side each
 limited to 2 and 3 tasks respectively:
 
-.. literalinclude:: suites/queues/suite.rc
+.. literalinclude:: ../suites/queues/suite.rc
    :language: cylc
 
 
