@@ -92,10 +92,11 @@ Glossary
       :term:`Dependency <dependency>` relationships can be thought of the other
       way around as "triggers".
 
-      For example the dependency ``foo => bar`` could be described in two ways:
+      For example the dependency ``foo => bar`` could be described in several ways:
 
-      * "``bar`` is dependent on ``foo``"
-      * "``foo`` is triggered by ``bar``"
+      * "``bar`` depends on ``foo``"
+      * "``foo`` triggers ``bar``"
+      * "``bar`` triggers off of ``foo``"
 
       In practice a trigger is the left-hand side of a dependency (``foo`` in
       this example).
