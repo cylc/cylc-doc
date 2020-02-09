@@ -52,7 +52,7 @@ In order to get our suite to trigger messages, we need to:
 * Refer to these messages in the ``[dependencies]`` section of our suite.
 
 These outputs are then triggered during the running of the task.    
-We can use these to manage tasks dependant on partially completed tasks.
+We can use these to manage tasks dependent on partially completed tasks.
 
 So, a basic example, where we have a task foo, that when partially completed 
 triggers another task bar and when fully completed triggers another task, baz. 
