@@ -258,7 +258,7 @@ triggers another task bar and when fully completed triggers another task, baz.
                      random.sh
                  """
 
-      Lastly, we need to do is to make reference to the messages in the
+      Lastly, we need to make reference to the messages in the
       graph section. 
       This will ensure our messages are triggered correctly. 
         
