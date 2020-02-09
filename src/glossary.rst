@@ -724,7 +724,7 @@ Glossary
    
    message trigger
       A `message trigger` is a method of triggering a dependent 
-      :term:`task <task>` before the initial task has fully completed. 
+      :term:`task <task>` before the upstream task has completed. 
       
       We can use :term:`custom task outputs <custom task output>` as triggers. 
 
