@@ -357,7 +357,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Inspect the work directory.**
 
-      We can now check for our report outputs. These should appear in the 
+      You can now check for your report outputs. These should appear in the 
       :term:`work directory` of the suite. All being well, our first cycle
       point should produce a test file with some random numbers, and each
       subsequent cycle point file should have more random numbers added.
