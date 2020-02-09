@@ -329,7 +329,7 @@ triggers another task bar and when fully completed triggers another task, baz.
    #. **Validate the suite.**
 
       It is a good idea to check that our ``suite.rc`` file does not have any
-      configuaration issues. 
+      configuration issues. 
 
       Run `cylc validate` to check for any errors:
 
