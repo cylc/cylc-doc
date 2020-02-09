@@ -738,7 +738,7 @@ Glossary
    
    custom task output
       A `custom task output` is a user-defined message sent from the 
-      :term:`job` to the work flow server. 
+      :term:`job` to the workflow server. 
       These can be used as :term:`message triggers <message trigger>`.
 
       See also:
