@@ -21,7 +21,7 @@ Usage
 
 :term:`Message triggers <message trigger>` are particularly useful if we have
 a long running task and we want to produce multiple tailored outputs whilst
-this task is running, rather than having to wait for the task to fully
+this task is running, rather than having to wait for the task to 
 complete.
 
 We could also set up :term:`message triggers <message trigger>` to, for example,
