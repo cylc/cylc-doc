@@ -4,7 +4,7 @@ Message Triggers
 ================
 
 :term:`Message triggers <message trigger>` allow us to trigger dependent tasks 
-before the initial task has fully completed. 
+before the upstream task has completed. 
 
 Explanation
 -----------
