@@ -157,3 +157,154 @@ Cylc commands. Task job scripts invoke ``bash -l`` (login shells) to run the
 job, so sites and users should ensure that their bash login scripts configure
 the environment appropriately for access to Cylc. See
 :ref:`HowTasksGetAccessToCylc` for more on job environment configuration.
+
+Conda installation
+------------------
+
+The ``cylc`` Conda metapackage includes:
+
+- Python 3.7
+- cylc-flow-8.0a1 - Python 3 Workflow Service and CLI
+- cylc-uiserver-0.1 - Python 3 UI Server component of the Cylc 8 architecture
+- cylc-ui-0.1 - Vue.js web UI
+- JupyterHub - authenticates users and launches their Cylc UI Servers
+- configurable-http-proxy - node.js proxy
+- (and all software dependencies of the above)
+
+Current Limitations
+^^^^^^^^^^^^^^^^^^^
+
+**Cylc-8.0a1 is an early full-system Cylc 8 preview release**
+
+- It has a fully functional Python 3 workflow service and CLI that can run existing Cylc workflows
+
+**BUT:**
+
+- It is not production-ready yet
+  - Use the latest cylc-7.8 release in production
+- Do not use it where security is a concern
+- The UI includes a prototype "tree view" with no control capability
+  - we are working on other views, and controls
+- Data update in the UI is via polling at 5 second intervals, and monolithic
+  - future releases will use WebSockets and incremental update
+
+Installation
+^^^^^^^^^^^^
+
+Enable the "kinow" Conda channel in your ``~/.condarc`` file
+(pending package availability on conda-forge).
+
+::
+
+   channels:
+     - defaults
+     - conda-forge
+     - kinow
+
+Create a new Conda environment for Cylc, e.g. ``cylc1``.
+
+::
+
+   $ conda create -n cylc1
+   $ conda activate cylc1
+   (cylc1) $
+
+Now you can install Cylc on this new environment.
+
+::
+
+   (cylc1) $ conda install cylc
+
+After the command above finishes successfully, you should be able
+to run Cylc commands, e.g.:
+
+::
+
+   (cylc1) $ cylc --version
+   (cylc1) $ cylc run --no-detach my.suite
+   (cylc1) $ cylc-uiserver --help
+
+Usage
+^^^^^
+
+Start the Hub (JupyterHub gets installed with the "cylc" package):
+
+::
+
+   (cylc1) $ mkdir -p "${HOME}/srv/cylc/"  # the hub will store session information here
+   (cylc1) $ cd "${HOME}/srv/cylc/"
+   (cylc1) $ jupyterhub \
+      --JupyterHub.spawner_class="jupyterhub.spawner.LocalProcessSpawner" \
+      --JupyterHub.logo_file="${CONDA_PREFIX}/work/cylc-ui/img/logo.svg" \
+      --Spawner.args="['-s', '${CONDA_PREFIX}/work/cylc-ui']" \
+      --Spawner.cmd="cylc-uiserver"
+
+Go to ``http://localhost:8000``, log in to the Hub with your local user
+credentials, and enjoy Cylc 8 Alpha-1!
+
+- Start a workflow with the CLI (a good example is shown below)
+- Log in at the Hub to authenticate and launch your UI Server
+
+.. figure:: img/installation/conda/hub.png
+   :align: center
+
+- Note that much of the UI Dashboard is not functional yet. The functional
+  links are:
+  - Cylc Hub
+  - Suite Design Guide (web link)
+  - Documentation (web link)
+
+.. figure:: img/installation/conda/dashboard.png
+   :align: center
+
+- In the left side-bar, click on Workflows to view your running workflows
+- In the workflows view, click on icons under "Actions" to view the
+  corresponding workflow.
+
+.. figure:: img/installation/conda/workflows.png
+   :align: center
+
+- In the tree view:
+  - click on task names to see the list of task jobs
+  - click on job icons to see the detail of a specific job
+
+.. figure:: img/installation/conda/treeview.png
+   :align: center
+
+To deactivate and/or remove the conda environment:
+
+::
+
+   (cylc1) $ conda deactivate
+   $ conda env remove -n cylc1
+
+An Example Workflow to View
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following workflow generates a bunch of tasks that initially
+fail before succeeding after a random number of retries (this shows
+the new "Cylc 8 task/job separation" nicely):
+
+::
+
+   [cylc]
+      cycle point format = %Y
+      [[parameters]]
+         m = 0..5
+         n = 0..2
+   [scheduling]
+      initial cycle point = 3000
+      [[graph]]
+         P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
+   [runtime]
+      [[root]]
+         script = """
+            sleep 20
+            # fail 50% of the time if try number is less than 5
+            if (( CYLC_TASK_TRY_NUMBER < 5 )); then
+              if (( RANDOM % 2 < 1 )); then
+                 exit 1
+              fi
+            fi"""
+         [[[job]]]
+            execution retry delays = 6*PT2S
