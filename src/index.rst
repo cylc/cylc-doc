@@ -15,4 +15,5 @@ indefinitely.
    user-guide/index
    suite-design-guide/index
    reference/index
+   security
    glossary
