@@ -11,6 +11,7 @@ indefinitely.
 
    installation
    introduction
+   architecture
    tutorial/index
    user-guide/index
    suite-design-guide/index
