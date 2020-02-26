@@ -191,16 +191,6 @@ Current Limitations
 Installation
 ^^^^^^^^^^^^
 
-Enable the "kinow" Conda channel in your ``~/.condarc`` file
-(pending package availability on conda-forge).
-
-::
-
-   channels:
-     - defaults
-     - conda-forge
-     - kinow
-
 Create a new Conda environment for Cylc, e.g. ``cylc1``.
 
 ::
