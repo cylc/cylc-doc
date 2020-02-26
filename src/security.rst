@@ -54,4 +54,21 @@ emitted in the logs alerting about the unauthorized access.
 Same-origin verification
 ````````````````````````
 
-TODO: pending Cylc UI Server same-origin verification and docs
+When a client tries to open a WebSocket with the Cylc UI Server, it
+will pass by a same-origin verification. This test is useful to prevent
+attacks such as `CORS`_.
+
+This verification only occurs when the client provides an ``Origin``
+HTTP header - which browsers normally do. Command line applications
+do not necessarily provide this header, but CORS is normally not an
+issue for that case.
+
+Cylc UI Server uses Tornado's default `same-origin policy`_.
+So whenever a client sends a request with the ``Origin`` header,
+the server will compare it against the ``Host`` HTTP header.
+
+If these values do not match, an error is logged and returned to the
+client.
+
+.. _`CORS`: https://owasp.org/www-community/attacks/CORS_OriginHeaderScrutiny
+.. _`same-origin policy`: https://www.tornadoweb.org/en/stable/websocket.html#tornado.websocket.WebSocketHandler.check_origin
