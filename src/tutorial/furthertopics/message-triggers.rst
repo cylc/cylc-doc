@@ -80,7 +80,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
 .. practical::
 
-   .. rubric:: In this practical we will create a suite to demonstrate
+   .. rubric:: In this practical example, we will create a suite to demonstrate
       :term:`message triggers <message trigger>`. We will use message triggers
       to both produce a report and trigger a new task from a partially completed
       task.
