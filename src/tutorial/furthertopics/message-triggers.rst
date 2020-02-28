@@ -260,7 +260,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       Lastly, we need to make reference to the messages in the
       graph section. 
-      This will ensure our messages are triggered correctly. 
+      This will ensure your tasks trigger off of the messages correctly. 
         
       Adapt the ``[[dependencies]]`` section in the ``suite.rc`` file to read as
       follows: 
