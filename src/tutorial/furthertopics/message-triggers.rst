@@ -105,7 +105,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       Scripts should be kept in the ``bin`` sub-directory within the 
       :term:`suite directory <suite directory>`. If a ``/bin`` exists in the 
-      suite directory, it will be prepended to the PATH at run time.
+      suite directory, it will be prepended $PATH at run time.
       
       Create a ``/bin`` directory.
       
