@@ -38,7 +38,11 @@ called `graphql-ws protocol`_.
 
 After a channel between client and server is open, the messages
 follow that protocol, starting by the ``connection init`` message,
-that simply expects an ``ack`` back from the server.
+that simply expects an ``ack`` message back from the server,
+where the ``ack`` is an acknowlegdement to the client - note
+that the protocol does not define an ``ack`` as a MUST, but
+rather as a MAY, so a client may interpret not receiving an
+error as an acknowledgement to proceed as well.
 
 The next message will be a ``start``, which will contain the
 GraphQL query subscription. If there were no errors, the client and
