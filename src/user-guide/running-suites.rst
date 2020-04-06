@@ -1515,66 +1515,7 @@ and optionally, restart them on a different host.
 This is useful if a host needs to be taken off-line e.g. for
 scheduled maintenance.
 
-This functionality is configured via the following site configuration settings:
-
-- ``[run hosts][suite servers]auto restart delay``
-- ``[run hosts][suite servers]condemned hosts``
-- ``[run hosts][suite servers]run hosts``
-
-The auto stop-restart feature has two modes:
-
-- [Normal Mode]
-
-  - When a host is added to the ``condemned hosts`` list, any suites
-    running on that host will automatically shutdown then restart selecting a
-    new host from ``run hosts``.
-  - For safety, before attempting to stop the suite cylc will first wait
-    for any jobs running locally (under background or at) to complete.
-  - *In order for Cylc to be able to successfully restart suites the
-    ``run hosts`` must all be on a shared filesystem.*
-
-- [Force Mode]
-
-  - If a host is suffixed with an exclamation mark then Cylc will not attempt
-    to automatically restart the suite and any local jobs (running under
-    background or at) will be left running.
-
-For example in the following configuration any suites running on
-``foo`` will attempt to restart on ``pub`` whereas any suites
-running on ``bar`` will stop immediately, making no attempt to restart.
-
-.. code-block:: cylc
-
-   [suite servers]
-       run hosts = pub
-       condemned hosts = foo, bar!
-
-.. warning::
-
-   Cylc will reject hosts with ambiguous names such as ``localhost`` or
-   ``127.0.0.1`` for this configuration as ``condemned hosts`` are evaluated
-   on the suite host server.
-
-To prevent large numbers of suites attempting to restart simultaneously the
-``auto restart delay`` setting defines a period of time in seconds.
-Suites will wait for a random period of time between zero and
-``auto restart delay`` seconds before attempting to stop and restart.
-
-Suites that are started up in no-detach mode cannot auto stop-restart on a
-different host - as it will still end up attached to the condemned host.
-Therefore, a suite in no-detach mode running on a condemned host will abort with
-a non-zero return code. The parent process should manually handle the restart of
-the suite if desired.
-
-See the ``[suite servers]`` configuration section
-(:ref:`global-suite-servers`) for more details.
-
-
-.. [3] Late notification of clock-triggered tasks is not very useful in
-       any case because they typically do not depend on other tasks, and as
-       such they can often trigger on time even if the suite is delayed to
-       the point that downstream tasks are late due to their dependence on
-       previous-cycle tasks that are delayed.
+See :py:mod:`cylc.flow.main_loop.auto_restart` for details.
 
 
 .. _Alternate Run Directories:
