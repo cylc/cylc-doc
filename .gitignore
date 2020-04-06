@@ -19,3 +19,6 @@ src/appendices/command-ref.rst
 # editor stuff
 *.swp
 *~
+
+# auto-generated documentation
+src/user-guide/plugins/main-loop/built-in
