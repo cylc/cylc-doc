@@ -5,7 +5,7 @@ TODO: Fill in other parts of this document, with information about
 cylc-flow (jobs, zmq, etc), UI Server, etc.
 
 Web
-~~~
+---
 
 TODO: write some introduction about web security in Cylc 8,
 UI Server, OAuth, JupyterHub Authenticators, etc.
@@ -18,7 +18,7 @@ WebSocket Secure, cookie-based authentication, and same origin backend
 verification.
 
 WebSocket Secure
-````````````````
+""""""""""""""""
 
 The WebSocket protocol supports the ``ws`` and the ``wss`` protocol URI
 identifiers. The former means "WebSocket", and the latter means
@@ -32,7 +32,7 @@ is enabled the Cylc web UI automatically detects it and uses ``wss``.
 .. _`a section on how to enable SSL`: https://jupyterhub.readthedocs.io/en/stable/getting-started/security-basics.html#enabling-ssl-encryption
 
 Cookie-based authentication
-```````````````````````````
+"""""""""""""""""""""""""""
 
 When the frontend initiates the communication with the backend it will send
 an HTTP request that will include the client cookies. The backend expects
@@ -52,7 +52,7 @@ If the backend log level is set to ``DEBUG`` a message will be
 emitted in the logs alerting about the unauthorized access.
 
 Same-origin verification
-````````````````````````
+""""""""""""""""""""""""
 
 When a client tries to open a WebSocket with the Cylc UI Server, it
 will pass by a same-origin verification. This test is useful to prevent
