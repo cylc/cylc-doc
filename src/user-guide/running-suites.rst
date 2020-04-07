@@ -1568,3 +1568,9 @@ sub-workflow run and then delete the sub-workflow run directory.
 
 For quick-running sub-workflows that generate large numbers of files, consider
 using :ref:`Alternate Run Directories` for better performance and easier housekeeping.
+
+.. [3] Late notification of clock-triggered tasks is not very useful in
+       any case because they typically do not depend on other tasks, and as
+       such they can often trigger on time even if the suite is delayed to
+       the point that downstream tasks are late due to their dependence on
+       previous-cycle tasks that are delayed.
