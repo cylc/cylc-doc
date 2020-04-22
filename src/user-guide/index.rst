@@ -14,3 +14,4 @@ User Guide
    remote-job-management
    external-triggers
    known-issues
+   plugins/index

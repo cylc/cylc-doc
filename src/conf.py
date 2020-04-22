@@ -30,6 +30,7 @@ sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
     # sphinx built-in extensions
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
@@ -82,6 +83,10 @@ copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
 # Versioning information. Sphinx advises version strictly meaning X.Y.
 version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
 release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
+
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autosummary_imported_members = False
 
 intersphinx_mapping = {
     'rose': (
