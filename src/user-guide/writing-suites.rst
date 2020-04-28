@@ -1,7 +1,7 @@
 .. _SuiteDefinition:
 
-Suite Configuration
-===================
+Writing Suites
+==============
 
 Cylc suites are defined in structured, validated, *suite.rc* files
 that concisely specify the properties of, and the relationships
