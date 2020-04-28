@@ -640,17 +640,6 @@ As a suite runs, its task proxies may pass through the following states:
   see :ref:`ClockExpireTasks`.
 
 
-Network Connection Timeouts
----------------------------
-
-A connection timeout can be set in site and user global config files
-(see :ref:`SiteAndUserConfiguration`) so that messaging commands
-cannot hang indefinitely if the suite is not responding (this can be
-caused by suspending a suite with Ctrl-Z) thereby preventing the task
-from completing. The same can be done on the command line for other
-suite-connecting user commands, with the ``--comms-timeout`` option.
-
-
 .. _RunaheadLimit:
 
 Runahead Limiting

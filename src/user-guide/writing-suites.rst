@@ -213,7 +213,7 @@ detects formatting errors, typographic errors, illegal items and illegal
 values prior to run time. Some values are complex strings that require
 further parsing by cylc to determine their correctness (this is also
 done during validation). All legal entries are documented in
-(:ref:`SuiteRCReference`).
+:cylc:conf:`suite.rc`.
 
 The validator reports the line numbers of detected errors. Here's an
 example showing a section heading with a missing right bracket:
@@ -242,7 +242,7 @@ Validation does not check the validity of chosen batch systems.
 Scheduling - Dependency Graphs
 ------------------------------
 
-The ``[scheduling]`` section of a suite.rc file defines the
+The :cylc:conf:`suite.rc[scheduling]` section defines the
 relationships between tasks in a suite - the information that allows
 cylc to determine when tasks are ready to run. The most important
 component of this is the suite dependency graph. Cylc graph notation
@@ -305,7 +305,7 @@ properties such as ``script``):
 
       .. _fig-dep-eg-1:
 
-      .. figure:: ../../img/dep-eg-1.png
+      .. figure:: ../img/dep-eg-1.png
          :align: center
 
 
@@ -492,7 +492,7 @@ successors (once they're all finished the suite just exits). The integer
 
       .. _fig-test1:
 
-      .. figure:: ../../img/test1.png
+      .. figure:: ../img/test1.png
          :align: center
 
 
@@ -525,7 +525,7 @@ small suite of cycling tasks:
 
       .. _fig-test2:
 
-      .. figure:: ../../img/test2.png
+      .. figure:: ../img/test2.png
          :align: center
 
 
@@ -915,7 +915,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
       .. _fig-test4:
 
-      .. figure:: ../../img/test4.png
+      .. figure:: ../img/test4.png
          :align: center
 
 
@@ -966,7 +966,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
       .. _fig-test5:
 
-      .. figure:: ../../img/test5.png
+      .. figure:: ../img/test5.png
          :align: center
 
 
@@ -1004,8 +1004,8 @@ In addition to non-repeating and date-time cycling workflows, cylc can do
 integer cycling for repeating workflows that are not date-time based.
 
 To construct an integer cycling suite, set
-``[scheduling]cycling mode = integer``, and specify integer values for
-the initial and (optional) final cycle points. The notation for intervals,
+:cylc:conf:`[scheduling]cycling mode = integer`, and specify integer values
+for the initial and (optional) final cycle points. The notation for intervals,
 offsets, and recurrences (sequences) is similar to the date-time cycling
 notation, except for the simple integer values.
 
@@ -1082,7 +1082,7 @@ An Integer Cycling Example
 
 .. _fig-integer-pipeline:
 
-.. figure:: ../../img/pipe-pub.png
+.. figure::/img/pipe-pub.png
    :align: center
 
 The following suite definition, as :ref:`graphed above <fig-integer-pipeline>`,
@@ -1098,7 +1098,7 @@ configuration is omitted, but it would likely involve retrieving datasets by
 cycle point and processing them in cycle point-specific shared workspaces under
 the self-contained suite run directory.
 
-.. literalinclude:: ../../suites/integer-pipeline/suite.rc
+.. literalinclude:: ../suites/integer-pipeline/suite.rc
    :language: cylc
 
 
@@ -1200,12 +1200,12 @@ Message Triggers
 """"""""""""""""
 
 Tasks can also trigger off custom output messages. These must be registered in
-the ``[runtime]`` section of the emitting task, and reported using the
-``cylc message`` command in task scripting. The graph trigger notation
+the :cylc:conf:`[runtime]` section of the emitting task, and reported using
+the ``cylc message`` command in task scripting. The graph trigger notation
 refers to the item name of the registered output message.
 And example message triggering suite:
 
-.. literalinclude:: ../../suites/message-triggers/suite.rc
+.. literalinclude:: ../suites/message-triggers/suite.rc
    :language: cylc
 
 
@@ -1291,7 +1291,7 @@ with open arrow heads:
 
       .. _fig-conditional:
 
-      .. figure:: ../../img/conditional-triggers.png
+      .. figure:: ../img/conditional-triggers.png
          :align: center
 
 
@@ -1301,7 +1301,8 @@ Suicide Triggers
 """"""""""""""""
 
 Suicide triggers take tasks out of the suite. This can be used for automated
-failure recovery. The following ``suite.rc`` listing and accompanying graph
+failure recovery. The following :cylc:conf:`suite.rc` listing and
+accompanying graph
 show how to define a chain of failure recovery tasks that trigger if they're
 needed but otherwise remove themselves from the
 suite (you can run the *AutoRecover.async* example suite to see how
@@ -1348,7 +1349,7 @@ you toggle them on with *View* ``->`` *Options* ``->``
 
       .. _fig-suicide:
 
-      .. figure:: ../../img/suicide.png
+      .. figure:: ../img/suicide.png
          :align: center
 
 
@@ -1777,8 +1778,10 @@ use case, consider a cycling task that copies the latest of a set of files to
 overwrite the previous set: if the task is delayed by more than one cycle there
 may be no point in running it because the freshly copied files will just be
 overwritten immediately by the next task instance as the suite catches back up
-to real time operation. Clock-expire tasks are configured like clock-trigger
-tasks, with a date-time offset relative to cycle point (:ref:`ClockExpireRef`).
+to real time operation. Clock-expire tasks are configured with
+:cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
+:cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
+with a date-time offset relative to cycle point.
 The offset should be positive to make the task expire if the wall-clock time
 has gone beyond the cycle point. Triggering off an expired task typically
 requires suicide triggers to remove the workflow that runs if the task has not
@@ -1952,7 +1955,7 @@ cycle point:
 
    .. _ghost-node-screenshot:
 
-   .. figure:: ../../img/ghost-node-example.png
+   .. figure:: ../img/ghost-node-example.png
       :align: center
 
       Screenshot of ``cylc graph`` showing one task as a "ghost node".
@@ -1963,17 +1966,17 @@ cycle point:
 Runtime - Task Configuration
 ----------------------------
 
-The ``[runtime]`` section of a suite configuration configures what
+The :cylc:conf:`[runtime]` section of a suite configuration configures what
 to execute (and where and how to execute it) when each task is ready to
 run, in a *multiple inheritance hierarchy* of *namespaces* culminating in
 individual tasks. This allows all common configuration detail to be
 factored out and defined in one place.
 
 Any namespace can configure any or all of the items defined in
-:ref:`SuiteRCReference`.
+:cylc:conf:`suite.rc`.
 
 Namespaces that do not explicitly inherit from others automatically
-inherit from the *root* namespace (below).
+inherit from the ``root`` namespace (below).
 
 Nested namespaces define *task families* that can be used in the
 graph as convenient shorthand for triggering all member tasks at once,
@@ -2005,7 +2008,7 @@ sufficient to allow test suites to be defined by dependency graph alone.
 The *script* item, for example, defaults to code that
 prints a message then sleeps for between 1 and 15 seconds and
 exits. Default values are documented with each item in
-:ref:`SuiteRCReference`. You can override the defaults or
+:cylc:conf:`suite.rc`. You can override the defaults or
 provide your own defaults by explicitly configuring the root namespace.
 
 
@@ -2042,7 +2045,7 @@ Runtime Inheritance - Single
 The following listing of the *inherit.single.one* example suite
 illustrates basic runtime inheritance with single parents.
 
-.. literalinclude:: ../../suites/inherit/single/one/suite.rc
+.. literalinclude:: ../suites/inherit/single/one/suite.rc
    :language: cylc
 
 
@@ -2062,7 +2065,7 @@ but for detailed documentation of how the algorithm works refer to the
 The *inherit.multi.one* example suite, listed here, makes use of
 multiple inheritance:
 
-.. literalinclude:: ../../suites/inherit/multi/one/suite.rc
+.. literalinclude:: ../suites/inherit/multi/one/suite.rc
    :language: cylc
 
 ``cylc get-suite-config`` provides an easy way to check the result of
@@ -2300,7 +2303,7 @@ typically held in cycle point sub-directories of the suite share directory.
 
 The top level share and work directory (below) location can be changed
 (e.g. to a large data area) by a global config setting
-(see :ref:`workdirectory`).
+:cylc:conf:`flow.rc[hosts][<hostname glob>]work directory`.
 
 
 Task Work Directories
@@ -2312,12 +2315,12 @@ directory from ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if
 it does not ``cd`` elsewhere at runtime). By default the location
 contains task name and cycle point, to provide a unique workspace for every
 instance of every task. This can be overridden in the suite configuration,
-however, to get several tasks to share the same work directory
-(see :ref:`worksubdirectory`).
+however, to get several tasks to share the same
+:cylc:conf:`work directory <flow.rc[hosts][<hostname glob>]work directory>`.
 
 The top level work and share directory (above) location can be changed
 (e.g. to a large data area) by a global config setting
-(see :ref:`workdirectory`).
+:cylc:conf:`flow.rc[hosts][<hostname glob>]work directory`.
 
 
 Environment Variable Evaluation
@@ -2396,8 +2399,8 @@ Dynamic Host Selection
 
 Instead of hardwiring host names into the suite configuration you can
 specify a shell command that prints a hostname, or an environment
-variable that holds a hostname, as the value of the host config item.
-See :ref:`DynamicHostSelection`.
+variable that holds a hostname, as the value of the
+:cylc:conf:`host config item <[runtime][<namespace>][remote]host>`.
 
 
 Remote Task Log Directories
@@ -2419,7 +2422,7 @@ Visualization
 The visualization section of a suite configuration is used to configure
 the representation of a suite in Cylc visualisation tools.
 
-See :ref:`SuiteRCReference` for details.
+See :cylc:conf:`suite.rc` for details.
 
 
 .. _Parameterized Tasks Label:
@@ -2524,7 +2527,8 @@ overridden if need be:
        [[parameter templates]]
            run = -R%(run)s  # Make foo<run> expand to foo-R1 etc.
 
-(See :ref:`RefParameterTemplates` for more on the string template syntax.)
+See :cylc:conf:`[cylc][parameter templates]` for more on the string
+template syntax.
 
 Any number of parameters can be used at once. This parameterization:
 
@@ -2566,7 +2570,8 @@ The result, post parameter expansion, is this:
        [[model_run2]]
            # ...
 
-Here's a more complex graph using two parameters (``[runtime]`` omitted):
+Here's a more complex graph using two parameters (:cylc:conf:`[runtime]`
+omitted):
 
 .. code-block:: cylc
 
@@ -2595,7 +2600,7 @@ The result as visualized by ``cylc graph`` is:
 
 .. _fig-params-1:
 
-.. figure:: ../../img/params1.png
+.. figure:: ../img/params1.png
    :align: center
 
    Parameter expansion example.
@@ -2704,7 +2709,7 @@ Selecting Specific Parameter Values
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Specific parameter values can be singled out in the graph and under
-``[runtime]`` with the notation ``<p=5>`` (for example).
+:cylc:conf:`[runtime]` with the notation ``<p=5>`` (for example).
 Here's how to make a special task trigger off just the first of a
 set of model runs:
 
@@ -2970,12 +2975,12 @@ workflow will be visible at all times as the suite runs.
    Create sub-figures if possible: for now hacked as separate figures with
    link and caption on final displayed figure.
 
-.. figure:: ../../img/eg2-static.png
+.. figure:: ../img/eg2-static.png
    :align: center
 
 .. _fig-eg2:
 
-.. figure:: ../../img/eg2-dynamic.png
+.. figure:: ../img/eg2-dynamic.png
    :align: center
 
    Parameterized (top) and cycling (bottom) versions of the same
@@ -3104,7 +3109,7 @@ with standard programming techniques.
 
 .. _fig-jinja2-ensemble:
 
-.. figure:: ../../img/jinja2-ensemble-graph.png
+.. figure:: ../img/jinja2-ensemble-graph.png
    :align: center
 
    The Jinja2 ensemble example suite graph.
@@ -3147,12 +3152,12 @@ suite. To add a new city and associated tasks and dependencies simply
 add the city name to list at the top of the file. Here is the suite graphed,
 with the New York City task family expanded:
 
-.. literalinclude:: ../../suites/jinja2/cities/suite.rc
+.. literalinclude:: ../suites/jinja2/cities/suite.rc
    :language: cylc
 
 .. _fig-jinja2-cities:
 
-.. figure:: ../../img/jinja2-suite-graph.png
+.. figure:: ../img/jinja2-suite-graph.png
    :align: center
 
    The Jinja2 cities example suite graph, with the
@@ -3200,9 +3205,9 @@ prior to configuration parsing to provide suite context:
 
 .. note::
 
-    The example above emphasizes that *the environment - including the suite
-    context variables - is read on the suite host when the suite configuration
-    is parsed*, not at task run time on job hosts.
+   The example above emphasizes that *the environment - including the suite
+   context variables - is read on the suite host when the suite configuration
+   is parsed*, not at task run time on job hosts.
 
 .. _CustomJinja2Filters:
 
@@ -3362,7 +3367,7 @@ The values of Jinja2 variables can be passed in from the cylc command
 line rather than hardwired in the suite configuration.
 Here's an example:
 
-.. literalinclude:: ../../suites/jinja2/defaults/suite.rc
+.. literalinclude:: ../suites/jinja2/defaults/suite.rc
    :language: cylc
 
 Here's the result:
@@ -3583,7 +3588,7 @@ An example suite ``empy.cities`` demonstrating its use is shown below.
 It is a translation of ``jinja2.cities`` example from
 :ref:`Jinja` and can be directly compared against it.
 
-.. literalinclude:: ../../suites/empy/cities/suite.rc
+.. literalinclude:: ../suites/empy/cities/suite.rc
    :language: cylc
 
 For basic usage the difference between Jinja2 and EmPy amounts to a different
@@ -3624,18 +3629,19 @@ commenting them out of the graph.
 
 To omit a task from the suite at runtime but still leave it fully
 defined and available for use (by insertion or ``cylc submit``)
-use one or both of ``[scheduling][[special task]]`` lists, *include at
-start-up* or *exclude at start-up* (documented in :ref:`IASU`
-and :ref:`EASU`). Then the graph still defines the
+use one or both of
+:cylc:conf:`[scheduling][special tasks]include at start-up` or
+:cylc:conf:`[scheduling][special tasks]exclude at start-up`.
+Then the graph still defines the
 validity of the tasks and their dependencies, but they are not actually
 loaded into the suite at start-up. Other tasks that depend on the
 omitted ones, if any, will have to wait on their insertion at a later
 time or otherwise be triggered manually.
 
 Finally, with Jinja2 (:ref:`Jinja`) you can radically alter
-suite structure by including or excluding tasks from the ``[scheduling]``
-and ``[runtime]`` sections according to the value of a single logical flag
-defined at the top of the suite.
+suite structure by including or excluding tasks from th
+:cylc:conf:`[scheduling]` and :cylc:conf:`[runtime]` sections according to the
+value of a single logical flag defined at the top of the suite.
 
 
 Naked Dummy Tasks And Strict Validation
