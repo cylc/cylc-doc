@@ -39,7 +39,7 @@ VERSION = get_version(
 )
 
 INSTALL_REQUIRES = [
-    'sphinx==2.0.*',
+    'sphinx>=2.0.0,<3.0.0',
     'sphinx_rtd_theme',
     'sphinxcontrib-svg2pdfconverter',
     'hieroglyph',
