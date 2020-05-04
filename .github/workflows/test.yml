@@ -1,0 +1,41 @@
+name: test
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: configure python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
+      - name: configure node
+        uses: actions/setup-node@v1
+        with:
+            node-version: '10.x'
+      - name: install
+        run: |
+          sudo apt-get install -y graphviz
+          pip install git+https://github.com/cylc/cylc-flow/  # install latest cylc-flow
+          pip install -e .[all]
+          npm install -g eslint
+      - name: style
+        run: |
+          pycodestyle .
+          eslint .
+      - name: build
+        run: |
+          make html slides linkcheck SPHINXOPTS='-Wn'
+      - name: tutorial suite
+        run: |
+          mkdir -p "${HOME}/cylc-run"
+          bin/run-validate
+      - name: debug
+        if: failure()
+        run: |
+          env 
+          cat /tmp/sphinx-err*  # sphinx traceback
+          find ~/cylc-run -name job.err -exec cat {} +  # cylc error files
