@@ -231,7 +231,7 @@ show an inlined copy of the suite with correct line numbers
 
 Validation does not check the validity of chosen batch systems.
 
-.. todo::
+.. todo
 
    This is to allow users to extend cylc with their own job submission
    methods, which are by definition unknown to the suite.rc spec.
@@ -2579,7 +2579,7 @@ Here's a more complex graph using two parameters (``[runtime]`` omitted):
            R1 = """prep => init<run> => model<run,mem> =>
                          post<run,mem> => wrap<run> => done"""
 
-.. todo::
+.. todo
 
    \.\.\. which expands to:
 
@@ -2966,7 +2966,7 @@ several disadvantages: it must be finite in extent and not too large; the
 date-time arithmetic has to be done by the user; and the full extent of the
 workflow will be visible at all times as the suite runs.
 
-.. todo::
+.. todo
    Create sub-figures if possible: for now hacked as separate figures with
    link and caption on final displayed figure.
 
