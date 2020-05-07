@@ -25,7 +25,12 @@ import os
 import shutil
 import urllib.request
 
-import PIL.Image
+try:
+    from PIL import Image
+except ModuleNotFoundError:
+    # not all PIL installations are created equal
+    # sometimes we must import like this
+    import Image
 from mercator import get_offset, get_scale, pos_to_coord
 import util
 
@@ -138,7 +143,7 @@ def process_rainfall_data(filename, resolution, domain):
     """
     rainfall = Rainfall(domain, resolution)
 
-    image = PIL.Image.open(filename)
+    image = Image.open(filename)
     scale = get_scale(domain, image.width)
     offset = get_offset(domain, scale)
 
