@@ -67,10 +67,13 @@ def get_datapoint_data(site_id, time, api_key):
            'Accept-Encoding': 'none',
            'Accept-Language': 'en-US,en;q=0.8',
            'Connection': 'keep-alive'}
-    req = urllib3.Request(url, headers=hdr)
+    http = urllib3.PoolManager()
+    req = http.request('GET', url, headers=hdr)
+    if req.status != 200:
+        raise Exception(f'{url} returned exit code {req.status}')
     # Get the data and parse it as JSON.
     print('Opening URL: %s' % url)
-    return json.loads(urllib3.urlopen(req).read())['SiteRep']['DV']['Location']
+    return json.loads(req.data)['SiteRep']['DV']['Location']
 
 
 def get_archived_data(site_id, time):
