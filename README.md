@@ -1,6 +1,6 @@
 # Cylc Documentation
 
-[![Build Status](https://travis-ci.org/cylc/cylc-doc.svg?branch=master)](https://travis-ci.org/cylc/cylc-doc)
+![](https://github.com/cylc/cylc-doc/workflows/build/badge.svg)
 
 Documentation for the Cylc Workflow Engine and its software ecosystem.
 
