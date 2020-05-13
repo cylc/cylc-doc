@@ -1,0 +1,65 @@
+name: test
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: configure node
+        uses: actions/setup-node@v1.4.2
+        with:
+            node-version: '10.x'
+
+      - name: install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
+          pip install pygraphviz
+
+      - name: checkout cylc-flow
+        uses: actions/checkout@v2
+        with:
+          repository: 'cylc/cylc-flow'
+          path: 'cylc-flow'
+
+      - name: install cylc-flow
+        run: |
+          (cd "$GITHUB_WORKSPACE/cylc-flow"; pip install .[all])
+          rm -r cylc-flow  # don't lint or test cylc-flow
+
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+      - name: install cylc-doc
+        run: |
+          pip install .[all]
+
+      - name: install eslint
+        run: |
+          npm install -g eslint
+
+      - name: lint
+        run: |
+          pycodestyle .
+          eslint .
+
+      - name: build
+        run: |
+          make html slides linkcheck SPHINXOPTS='-Wn'
+
+      - name: tutorial suite
+        run: |
+          mkdir -p "${HOME}/cylc-run"
+          bin/run-validate
+
+      - name: debug
+        if: failure()
+        run: |
+          env 
+          cat /tmp/sphinx-err* || true  # sphinx traceback
+          find ~/cylc-run -name job.err -exec cat {} +  # cylc error files

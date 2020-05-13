@@ -767,7 +767,7 @@ The suite host's identity must be determined locally by cylc and passed
 to running tasks (via ``$CYLC_SUITE_HOST``) so that task messages
 can target the right suite on the right host.
 
-.. todo::
+.. todo
 
    Is it conceivable that different remote task hosts at the same
    site might see the suite host differently? If so we would need to be

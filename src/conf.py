@@ -34,7 +34,6 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
     # sphinx user community extensions
     'hieroglyph',
     'sphinx_rtd_theme',
