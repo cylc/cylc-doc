@@ -1,6 +1,9 @@
 name: test
 
-on: [pull_request]
+on:
+  push:
+    branches: [master]
+  pull_request:
 
 jobs:
   test:
@@ -60,6 +63,6 @@ jobs:
       - name: debug
         if: failure()
         run: |
-          env 
+          env
           cat /tmp/sphinx-err* || true  # sphinx traceback
           find ~/cylc-run -name job.err -exec cat {} +  # cylc error files
