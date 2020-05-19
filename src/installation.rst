@@ -140,11 +140,12 @@ installation methods used and is outside of the scope of this document.
 Create A Site Config File
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Site and user global config files define some important parameters that affect
-all suites, some of which may need to be customized for your site.
-See :ref:`SiteAndUserConfiguration` for how to generate an initial site file and
-where to install it. All legal site and user global config items are defined
-in :ref:`SiteRCReference`.
+Site and user global config files (:cylc:conf:`flow.rc` files) define some
+important parameters that affect all suites, some of which may need to be
+customized for your site.
+
+See the :cylc:conf:`flow.rc` section for how to generate an initial site file
+and where to install it.
 
 
 .. _Configure Site Environment on Job Hosts:

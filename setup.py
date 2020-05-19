@@ -43,7 +43,8 @@ INSTALL_REQUIRES = [
     'sphinx_rtd_theme',
     'sphinxcontrib-svg2pdfconverter',
     'hieroglyph',
-    'eralchemy==1.2.*'
+    'eralchemy==1.2.*',
+    'cylc-sphinx-extensions'
 ]
 
 EXTRAS_REQUIRE = {
