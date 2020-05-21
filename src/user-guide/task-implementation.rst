@@ -66,13 +66,26 @@ Task job scripts are written to the suite's job log directory. They can be
 printed with ``cylc cat-log`` or generated and printed with
 ``cylc jobscript``.
 
+
 Inlined Tasks
 -------------
 
 Task *script* items can be multi-line strings of ``bash``  code, so many tasks
-can be entirely inlined in the suite.rc file. For anything more than a few
-lines of code, however, we recommend using external shell scripts to allow
-independent testing, re-use, and shell mode editing.
+can be entirely inlined in the :cylc:conf:`suite.rc` file.
+For anything more than a few lines of code, however, we recommend using
+external shell scripts to allow independent testing, re-use, and shell mode
+editing.
+
+
+Interpreter
+-----------
+
+The job script (which incorporates the ``*-script`` items) runs in the
+``bash`` interpreter.
+
+Cylc searches for ``bash`` in the ``$PATH`` by first running a login bash
+shell which means you can choose the bash interpreter used by modifying
+the ``$PATH`` in your bash configuration files (e.g. ``.bashrc``).
 
 
 Task Messages
