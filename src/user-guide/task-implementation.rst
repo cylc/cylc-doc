@@ -35,8 +35,7 @@ part of the script can potentially affect the environment of subsequent parts.
    dependency graph).
 
 Task job scripts are written to the suite's job log directory. They can be
-printed with ``cylc cat-log`` or generated and printed with
-``cylc jobscript``.
+printed with ``cylc cat-log``.
 
 Inlined Tasks
 -------------

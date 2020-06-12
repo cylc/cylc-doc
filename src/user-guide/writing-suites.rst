@@ -3628,8 +3628,7 @@ allows you to temporarily remove tasks from the suite by simply
 commenting them out of the graph.
 
 To omit a task from the suite at runtime but still leave it fully
-defined and available for use (by insertion or ``cylc submit``)
-use one or both of
+defined and available for use (by insertion) use one or both of
 :cylc:conf:`[scheduling][special tasks]include at start-up` or
 :cylc:conf:`[scheduling][special tasks]exclude at start-up`.
 Then the graph still defines the

@@ -595,23 +595,9 @@ name in suite configurations:
                -q = long
                -V =
 
-Generate a job script to see the resulting directives:
-
-.. code-block:: bash
-
-   $ cylc register test $HOME/test
-   $ cylc jobscript test a.1 | grep QSUB
-   #QSUB -e /home/oliverh/cylc-run/my.suite/log/job/1/a/01/job.err
-   #QSUB -l nodes=1
-   #QSUB -l walltime=60
-   #QSUB -o /home/oliverh/cylc-run/my.suite/log/job/1/a/01/job.out
-   #QSUB -N a.1
-   #QSUB -q long
-   #QSUB -V
-
-(Of course this suite will fail at run time because we only changed the
+Note, this suite will fail at run time because we only changed the
 directive format, and PBS does not accept ``#QSUB`` directives in
-reality).
+reality.
 
 
 .. _Where To Put Batch System Handler Modules:
