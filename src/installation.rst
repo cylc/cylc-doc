@@ -118,6 +118,16 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
                        self._host_exs[target] = socket.gethostbyname_ex(target)
                    except IOError as exc:
 
+.. warning::
+
+   For Mac OS Versions 10.15.0 (Catalina) and higher SSH is disabled by
+   default. The ability to SSH into your Mac OS box may be required for
+   certain Cylc installations.
+
+   See the `Apple support page
+   <https://support.apple.com/en-gb/guide/mac-help/mchlp1066/mac>`_
+   for instructions on enabling SSH.
+
 
 Site Installation
 -----------------
