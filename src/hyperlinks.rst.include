@@ -1,6 +1,7 @@
 .. This document contains hyperlink references to be used throughout the
    documentation.
 
+.. _coreutils: https://www.gnu.org/software/coreutils/coreutils.html
 .. _Cylc: https://cylc.github.io/
 .. _Cylc User Guide: https://cylc.github.io/documentation/
 .. _Cylc Suite Design Guide: https://cylc.github.io/doc/built-sphinx/suite-design-guide/suite-design-guide-master.html
@@ -19,3 +20,6 @@
 .. _Rose GitHub: https://github.com/metomi/rose
 .. _SRS: https://code.metoffice.gov.uk/
 .. _SVN: https://subversion.apache.org/
+
+.. _Cylc Flow: https://github.com/cylc/cylc-flow
+.. _Cylc UI Server: https://github.com/cylc/cylc-uiserver

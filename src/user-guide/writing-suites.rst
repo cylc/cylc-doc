@@ -2384,9 +2384,6 @@ For this to work:
 - the suite configuration directory, or some fraction of its
   content, can be installed on the task host, if needed.
 
-To learn how to give remote tasks access to cylc,
-see :ref:`HowTasksGetAccessToCylc`.
-
 Tasks running on the suite host under another user account are treated as
 remote tasks.
 

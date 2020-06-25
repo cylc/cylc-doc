@@ -233,31 +233,6 @@ reload are not inserted into the pool automatically. The first instance of each
 must be inserted manually at the right cycle point, with ``cylc insert``.
 
 
-.. _HowTasksGetAccessToCylc:
-
-Task Job Access To Cylc
------------------------
-
-Task jobs need access to Cylc on the job host, primarily for the task message
-command, but also to allow jobs to to run other Cylc commands.
-
-Cylc should be installed on job hosts as on suite hosts, with different
-releases installed side-by-side and invoked via the central Cylc
-wrapper according to the value of ``$CYLC_VERSION`` - see
-:ref:`InstallCylc`. Task job scripts automatically set ``$CYLC_VERSION`` to the
-version of the suite server program, so that the right Cylc version will be
-invoked by jobs.  
-
-Cylc suites generate task job scripts that invoke ``bash -l`` (i.e. a login
-shell) to run the job, so sites and users should ensure that their bash login
-scripts configure the correct environment for access to Cylc.
-
-If needed, it is also possible to use global config ``[hosts][HOST]cylc
-executable`` to set the direct path to the Cylc executable on job hosts, or
-suite config ``[runtime][NAME]init-script`` to modify the environment in job
-scripts before any Cylc commands are called. 
-
-
 .. _The Suite Contact File:
 
 The Suite Contact File
@@ -1116,8 +1091,7 @@ directives in your live suite, or else use a custom live mode test suite.
    The dummy modes ignore all configured task ``script`` items
    including ``init-script``. If your ``init-script`` is required
    to run even dummy tasks on a job host, note that host environment
-   setup should be done
-   elsewhere - see :ref:`Configure Site Environment on Job Hosts`.
+   setup should be done elsewhere.
 
 
 Restarting Suites With A Different Run Mode?
