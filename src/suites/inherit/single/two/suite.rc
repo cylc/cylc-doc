@@ -3,8 +3,7 @@
 
     description = """
 This suite illustrates several tiers of task runtime inheritance.
-To see the result, use 'cylc get-config' or examine task job scripts
-generated with 'cylc jobscript'."""
+To see the result, use 'cylc get-config'."""
 
 [scheduling]
     initial cycle point = 20110101T00

@@ -233,31 +233,6 @@ reload are not inserted into the pool automatically. The first instance of each
 must be inserted manually at the right cycle point, with ``cylc insert``.
 
 
-.. _HowTasksGetAccessToCylc:
-
-Task Job Access To Cylc
------------------------
-
-Task jobs need access to Cylc on the job host, primarily for the task message
-command, but also to allow jobs to to run other Cylc commands.
-
-Cylc should be installed on job hosts as on suite hosts, with different
-releases installed side-by-side and invoked via the central Cylc
-wrapper according to the value of ``$CYLC_VERSION`` - see
-:ref:`InstallCylc`. Task job scripts automatically set ``$CYLC_VERSION`` to the
-version of the suite server program, so that the right Cylc version will be
-invoked by jobs.  
-
-Cylc suites generate task job scripts that invoke ``bash -l`` (i.e. a login
-shell) to run the job, so sites and users should ensure that their bash login
-scripts configure the correct environment for access to Cylc.
-
-If needed, it is also possible to use global config ``[hosts][HOST]cylc
-executable`` to set the direct path to the Cylc executable on job hosts, or
-suite config ``[runtime][NAME]init-script`` to modify the environment in job
-scripts before any Cylc commands are called. 
-
-
 .. _The Suite Contact File:
 
 The Suite Contact File
@@ -317,8 +292,8 @@ Cylc supports three ways of tracking task state on job hosts:
   then local TCP
 - regular polling by the suite server program
 
-These can be configured per job host in the Cylc global config file - see
-:ref:`SiteRCReference`.
+These can be configured per job host using
+:cylc:conf:`flow.rc[hosts][<hostname glob>]task communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
 suite hosts, before resorting to the polling method you should
@@ -492,9 +467,9 @@ Public Access - No Auth Files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Without a suite passphrase the amount of information revealed by a suite
-server program is determined by the public access privilege level set in global
-site/user config (:ref:`GlobalAuth`) and optionally overridden in suites
-(:ref:`SuiteAuth`):
+server program is determined by the public access privilege level set in
+:cylc:conf:`flow.rc[authentication]` and optionally overridden in suites
+with :cylc:conf:`[cylc][authentication]`.
 
 See Cylc privilege levels: :py:obj:`cylc.flow.network.authorisation.Priv`.
 
@@ -640,17 +615,6 @@ As a suite runs, its task proxies may pass through the following states:
   see :ref:`ClockExpireTasks`.
 
 
-Network Connection Timeouts
----------------------------
-
-A connection timeout can be set in site and user global config files
-(see :ref:`SiteAndUserConfiguration`) so that messaging commands
-cannot hang indefinitely if the suite is not responding (this can be
-caused by suspending a suite with Ctrl-Z) thereby preventing the task
-from completing. The same can be done on the command line for other
-suite-connecting user commands, with the ``--comms-timeout`` option.
-
-
 .. _RunaheadLimit:
 
 Runahead Limiting
@@ -668,10 +632,12 @@ suites.  Succeeded and failed tasks are ignored when computing the runahead
 limit.
 
 The preferred runahead limiting mechanism restricts the number of consecutive
-active cycle points. The default value is three active cycle points;
-see :ref:`max active cycle points`. Alternatively the interval between the
-slowest and fastest tasks can be specified as hard limit;
-see :ref:`runahead limit`.
+active cycle points. The default value is three active cycle points, this
+is configured by :cylc:conf:`[scheduling]max active cycle points`.
+
+Alternatively the interval between the
+slowest and fastest tasks can be specified as hard limit by configuring
+:cylc:conf:`[scheduling]runahead limit`.
 
 
 .. _InternalQueues:
@@ -731,7 +697,7 @@ limited to 2 and 3 tasks respectively:
 Automatic Task Retry On Failure
 -------------------------------
 
-See also :ref:`RefRetries`.
+See also :cylc:conf:`[runtime][<namespace>][job]execution retry delays`.
 
 Tasks can be configured with a list of "retry delay" intervals, as
 ISO 8601 durations. If the task job fails it will go into the *retrying*
@@ -749,7 +715,8 @@ sequence by manually resetting it to the *failed* state.
 Task Event Handling
 -------------------
 
-See also :ref:`SuiteEventHandling` and :ref:`TaskEventHandling`.
+See also :cylc:conf:`suite events <[cylc][events]>`
+and :cylc:conf:`task events <[runtime][<namespace>][events]>`.
 
 Cylc can call nominated event handlers - to do whatever you like - when certain
 suite or task events occur. This facilitates centralized alerting and automated
@@ -785,14 +752,18 @@ By default, the emails will be sent to the current user with:
 
 These can be configured using the settings:
 
-- ``[[[events]]]mail to`` (list of email addresses),
-- ``[[[events]]]mail from``
-- ``[[[events]]]mail smtp``.
+.. cylc-scope:: suite.rc[runtime][<namespace>]
+
+- :cylc:conf:`[events]mail to` (list of email addresses)
+- :cylc:conf:`[events]mail from`
+- :cylc:conf:`[events]mail smtp`
+
+.. cylc-scope::
 
 By default, a cylc suite will send you no more than one task event email every
 5 minutes - this is to prevent your inbox from being flooded by emails should a
-large group of tasks all fail at similar time.
-See :ref:`task-event-mail-interval` for details.
+large group of tasks all fail at similar time. This is configured by
+:cylc:conf:`[cylc]task event mail interval`.
 
 Event handlers can be located in the suite ``bin/`` directory;
 otherwise it is up to you to ensure their location is in ``$PATH`` (in
@@ -829,8 +800,10 @@ output can also be used as an event name in this case.)
 
 Event handler arguments can be constructed from various templates
 representing suite name; task ID, name, cycle point, message, and submit
-number name; and any suite or task ``[meta]`` item.
-See :ref:`SuiteEventHandling` and :ref:`TaskEventHandling` for options.
+number name; and any :cylc:conf:`suite <[meta]>` or
+:cylc:conf:`task <[runtime][<namespace>][meta]>` ``[meta]`` item.
+See :cylc:conf:`suite events <[cylc][events]>` and
+:cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
 
 If no template arguments are supplied the following default command line
 will be used:
@@ -945,11 +918,14 @@ Managing External Command Execution
 Job submission commands, event handlers, and job poll and kill commands, are
 executed by the suite server program in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
-actively managed to limit it to a configurable size (:ref:`process pool size`).
+actively managed to limit it to a configurable size
+:cylc:conf:`flow.rc|process pool size`
 Custom event handlers should be light-weight and quick-running because they
 will tie up a process pool member until they complete, and the suite will
 appear to stall if the pool is saturated with long-running processes. Processes
-are killed after a configurable timeout (:ref:`process pool timeout`) however,
+are killed after a configurable timeout
+:cylc:conf:`flow.rc|process pool timeout`
+, however,
 to guard against rogue commands that hang indefinitely. All process kills are
 logged by the suite server program. For killed job submissions the associated
 tasks also go to the *submit-failed* state.
@@ -1089,7 +1065,8 @@ Set the run mode (default *live*) on the command line:
    $ cylc restart --mode=dummy SUITE
 
 You can get specified tasks to fail in these modes, for more flexible suite
-testing. See :ref:`suiterc-sim-config` for simulation configuration.
+testing. See 
+:cylc:conf:`[runtime][<namespace>][simulation]`.
 
 
 Proportional Simulated Run Length
@@ -1114,8 +1091,7 @@ directives in your live suite, or else use a custom live mode test suite.
    The dummy modes ignore all configured task ``script`` items
    including ``init-script``. If your ``init-script`` is required
    to run even dummy tasks on a job host, note that host environment
-   setup should be done
-   elsewhere - see :ref:`Configure Site Environment on Job Hosts`.
+   setup should be done elsewhere.
 
 
 Restarting Suites With A Different Run Mode?
@@ -1515,66 +1491,7 @@ and optionally, restart them on a different host.
 This is useful if a host needs to be taken off-line e.g. for
 scheduled maintenance.
 
-This functionality is configured via the following site configuration settings:
-
-- ``[run hosts][suite servers]auto restart delay``
-- ``[run hosts][suite servers]condemned hosts``
-- ``[run hosts][suite servers]run hosts``
-
-The auto stop-restart feature has two modes:
-
-- [Normal Mode]
-
-  - When a host is added to the ``condemned hosts`` list, any suites
-    running on that host will automatically shutdown then restart selecting a
-    new host from ``run hosts``.
-  - For safety, before attempting to stop the suite cylc will first wait
-    for any jobs running locally (under background or at) to complete.
-  - *In order for Cylc to be able to successfully restart suites the
-    ``run hosts`` must all be on a shared filesystem.*
-
-- [Force Mode]
-
-  - If a host is suffixed with an exclamation mark then Cylc will not attempt
-    to automatically restart the suite and any local jobs (running under
-    background or at) will be left running.
-
-For example in the following configuration any suites running on
-``foo`` will attempt to restart on ``pub`` whereas any suites
-running on ``bar`` will stop immediately, making no attempt to restart.
-
-.. code-block:: cylc
-
-   [suite servers]
-       run hosts = pub
-       condemned hosts = foo, bar!
-
-.. warning::
-
-   Cylc will reject hosts with ambiguous names such as ``localhost`` or
-   ``127.0.0.1`` for this configuration as ``condemned hosts`` are evaluated
-   on the suite host server.
-
-To prevent large numbers of suites attempting to restart simultaneously the
-``auto restart delay`` setting defines a period of time in seconds.
-Suites will wait for a random period of time between zero and
-``auto restart delay`` seconds before attempting to stop and restart.
-
-Suites that are started up in no-detach mode cannot auto stop-restart on a
-different host - as it will still end up attached to the condemned host.
-Therefore, a suite in no-detach mode running on a condemned host will abort with
-a non-zero return code. The parent process should manually handle the restart of
-the suite if desired.
-
-See the ``[suite servers]`` configuration section
-(:ref:`global-suite-servers`) for more details.
-
-
-.. [3] Late notification of clock-triggered tasks is not very useful in
-       any case because they typically do not depend on other tasks, and as
-       such they can often trigger on time even if the suite is delayed to
-       the point that downstream tasks are late due to their dependence on
-       previous-cycle tasks that are delayed.
+See :py:mod:`cylc.flow.main_loop.auto_restart` for details.
 
 
 .. _Alternate Run Directories:
@@ -1627,3 +1544,9 @@ sub-workflow run and then delete the sub-workflow run directory.
 
 For quick-running sub-workflows that generate large numbers of files, consider
 using :ref:`Alternate Run Directories` for better performance and easier housekeeping.
+
+.. [3] Late notification of clock-triggered tasks is not very useful in
+       any case because they typically do not depend on other tasks, and as
+       such they can often trigger on time even if the suite is delayed to
+       the point that downstream tasks are late due to their dependence on
+       previous-cycle tasks that are delayed.

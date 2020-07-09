@@ -6,6 +6,7 @@ User Guide
    :maxdepth: 2
 
    workflows
+   writing-suites
    running-suites
    suite-name-reg
    suite-storage-etc
@@ -14,3 +15,4 @@ User Guide
    remote-job-management
    external-triggers
    known-issues
+   plugins/index

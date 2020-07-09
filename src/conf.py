@@ -30,20 +30,22 @@ sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
     # sphinx built-in extensions
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
     # sphinx user community extensions
     'hieroglyph',
     'sphinx_rtd_theme',
     # custom project extensions (located in ext/)
-    'cylc_lang',
     'database_diagram',
-    'minicylc',
-    'practical',
-    'sub_lang',
-    'hieroglyph_patch'  # https://github.com/nyergler/hieroglyph/issues/148
+    # cylc-sphinx-extensions
+    'cylc.sphinx_ext.cylc_lang',
+    'cylc.sphinx_ext.minicylc',
+    'cylc.sphinx_ext.practical',
+    'cylc.sphinx_ext.sub_lang',
+    # https://github.com/nyergler/hieroglyph/issues/148
+    'cylc.sphinx_ext.hieroglyph_patch'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
@@ -82,6 +84,10 @@ copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
 # Versioning information. Sphinx advises version strictly meaning X.Y.
 version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
 release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
+
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autosummary_imported_members = False
 
 intersphinx_mapping = {
     'rose': (

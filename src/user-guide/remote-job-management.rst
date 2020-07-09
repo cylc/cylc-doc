@@ -136,7 +136,7 @@ migrated to Cylc soon though).
 
 Result:
 
-.. todo::
+.. todo
 
    Nicer dirtree display via sphinx or custom extension?
 
@@ -172,7 +172,7 @@ Server installs service directory
 
 Result:
 
-.. todo::
+.. todo
 
    Nicer dirtree display via sphinx or custom extension?
 
@@ -205,7 +205,7 @@ Server submits jobs
 
 Result:
 
-.. todo::
+.. todo
 
    Nicer dirtree display via sphinx or custom extension?
 

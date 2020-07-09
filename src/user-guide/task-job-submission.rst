@@ -292,7 +292,9 @@ too long. For version 12 or below, this is 15 characters. For version 13, this
 is 236 characters. The default setting will truncate the job name string to 236
 characters. If you have PBS 12 or older at your site, you should modify your
 site's global configuration file to allow the job name to be truncated at 15
-characters. (See also :ref:`JobNameLengthMaximum`.) For example:
+characters. See the
+:cylc:conf:`flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]job name length maximum`
+configuration, for example:
 
 .. code-block:: cylc
 
@@ -414,8 +416,7 @@ your suite.rc file:
                # until all job steps have completed:
                batch submit command template = llsubmit -s %(job)s
 
-As explained in :ref:`SuiteRCReference`
-the template's \%(job)s will be substituted by the job file path.
+The template's ``%(job)s`` will be substituted by the job file path.
 
 
 Job Polling
@@ -435,13 +436,16 @@ Tasks can be polled on demand by using the
 ``cylc poll`` command.
 
 Tasks are polled automatically, once, if they timeout while queueing in a
-batch scheduler and submission timeout is set. (See :ref:`TaskEventHandling`
+batch scheduler and submission timeout is set.
+(See :cylc:conf:`[runtime][<namespace>][events]`
 for how to configure timeouts).
 
 Tasks are polled multiple times, where necessary, when they exceed their
 execution time limits. These are normally set with some initial delays to allow
 the batch systems to kill the jobs.
-(See :ref:`ExecutionTimeLimitPollingIntervals` for how to configure the polling
+(See
+:cylc:conf:`execution time limit intervals <flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]execution time limit polling intervals>`
+for how to configure the polling
 intervals).
 
 Any tasks recorded in the *submitted* or *running* states at suite
@@ -453,14 +457,25 @@ hosts that are known to be flaky, or as the sole method of determining task
 status on hosts that do not allow task messages to be routed back to the suite
 host.
 
+
+
 To use polling instead of task-to-suite messaging set
-``task communication method = poll``
-in cylc site and user global config (see :ref:`task_comms_method`).
-The default polling intervals can be overridden for all suites there too
-(see :ref:`submission_polling` and :ref:`execution_polling`), or in specific
-suite configurations (in which case polling will be done regardless of the
-task communication method configured for the host;
-see :ref:`SubmissionPollingIntervals` and :ref:`ExecutionPollingIntervals`).
+:cylc:conf:`flow.rc[hosts][<hostname glob>]task communication method = poll`.
+
+The default polling intervals can be overridden in the gloal configuration:
+
+* :cylc:conf:`submission polling intervals
+  <flow.rc[hosts][<hostname glob>]submission polling intervals>`
+* :cylc:conf:`execution polling intervals
+  <flow.rc[hosts][<hostname glob>]execution polling intervals>`
+
+Or in suite configurations (in which case polling will be done regardless
+of the task communication method configured for the host):
+
+* :cylc:conf:`submission polling intervals
+  <[runtime][<namespace>][job]submission polling intervals>`
+* :cylc:conf:`execution polling intervals
+  <[runtime][<namespace>][job]execution polling intervals>`
 
 Note that regular polling is not as efficient as task messaging in updating
 task status, and it should be used sparingly in large suites.
@@ -580,23 +595,9 @@ name in suite configurations:
                -q = long
                -V =
 
-Generate a job script to see the resulting directives:
-
-.. code-block:: bash
-
-   $ cylc register test $HOME/test
-   $ cylc jobscript test a.1 | grep QSUB
-   #QSUB -e /home/oliverh/cylc-run/my.suite/log/job/1/a/01/job.err
-   #QSUB -l nodes=1
-   #QSUB -l walltime=60
-   #QSUB -o /home/oliverh/cylc-run/my.suite/log/job/1/a/01/job.out
-   #QSUB -N a.1
-   #QSUB -q long
-   #QSUB -V
-
-(Of course this suite will fail at run time because we only changed the
+Note, this suite will fail at run time because we only changed the
 directive format, and PBS does not accept ``#QSUB`` directives in
-reality).
+reality.
 
 
 .. _Where To Put Batch System Handler Modules:
