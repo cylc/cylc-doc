@@ -1,0 +1,105 @@
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag present on both cylc-flow and cylc-docs.'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.tag }}
+          path: docs
+
+      - name: install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
+          pip install pygraphviz
+
+      - name: install cylc-doc
+        run: |
+          pip install "${{ github.workspace }}/docs[all]"
+
+      - name: install cylc-flow
+        run: |
+          # NOTE: Install with [all] so we can import plugins which may
+          #       have extra dependencies.
+          pip install "cylc-flow[all]==${{ github.event.inputs.tag }}"
+
+      - name: checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: sync static files
+        run: |
+          DOCS="${{ github.workspace }}/docs" \
+          PAGE="${{ github.workspace }}/gh-pages"  \
+
+          rsync -r "$DOCS/doc/" "$PAGE/"
+
+          ls "$PAGE"
+
+      - name: install gh-pages
+        run: |
+          DOCS="${{ github.workspace }}/docs" \
+          PAGE="${{ github.workspace }}/gh-pages"  \
+
+          (
+            cd "$DOCS"
+            rm -r doc
+            ln -s "$PAGE" doc
+          )
+
+          ls -l "$DOCS"
+
+      - name: build docs
+        run: |
+          # NOTE: Doing a clean build allows up to update docs for a
+          #       deployed version at a later date.
+          make -C docs \
+            clean \
+            html \
+            slides \
+            SPHINXOPTS='-Wn'
+
+          # linkcheck \
+
+      - name: configure git
+        run: |
+          git config --global user.name "action:deploy"
+          git config --global user.email "action:deploy@github.com"
+
+      - name: tidy old versions
+        run: |
+          (
+            cd docs
+            git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
+          )
+
+      - name: commit changes
+        run: |
+          (
+            cd gh-pages
+            git add *
+            git commit -m "add: ${{ github.event.inputs.tag }}"
+          )
+
+      - name: push changes
+        run: |
+          (
+            cd gh-pages
+            git push origin HEAD
+          )

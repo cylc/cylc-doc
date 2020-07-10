@@ -12,8 +12,8 @@ Installation
 
    - It is not production-ready yet
 
-     - Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
-       for production systems.
+     Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
+     for production systems.
 
    - Do not use it where security is a concern
    - The UI includes a prototype "tree view" with no control capability

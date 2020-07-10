@@ -19,3 +19,24 @@ $ make html
 # note: -W tells Sphinx to fail on warnings
 $ make html linkcheck doctest SPHINXOPTS='-W'
 ```
+
+## Deploying
+
+To document a new version of Cylc:
+
+* Create a tag with a name matching a released cylc-flow tag.
+* Push it upstream.
+* The docs will auto build and deploy.
+
+To update documentation for an existing version (post release):
+
+* Update the existing tag.
+* Push it upstream.
+* The docs will auto build and deploy.
+
+To remove old documentation:
+
+* Checkout the gh-pages branch.
+* `git rm doc/<version>`
+* `git commit -m 'remove: <version>`
+* `git push upstream gh-pages`

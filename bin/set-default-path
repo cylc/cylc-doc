@@ -17,8 +17,9 @@
 
 set -eu
 
-CYLC_VERSION="$1"
-DEFAULT_FORMAT="$2"
+BUILD_DIR="$1"
+CYLC_VERSION="$2"
+DEFAULT_FORMAT="$3"
 LATEST='current'
 
 
@@ -43,7 +44,6 @@ __HTML__
 
 
 main () {
-    cd doc/
     # make the specified version of the documentation the default
     rm "${LATEST}" || true
     ln -s "${CYLC_VERSION}" "${LATEST}"
