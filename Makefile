@@ -31,4 +31,4 @@ cleanall:
 	# write out dict of available versions and formats
 	bin/write-version-file > doc/versions.json
 	# setup HTML redirects to point at this version
-	bin/set-default-path "$(CYLC_VERSION)" html
+	bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html
