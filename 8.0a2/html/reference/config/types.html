@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cylc Configuration Data Types &mdash; Cylc 8.0a2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/cylc.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/cylc.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc API" href="../api/index.html" />
+    <link rel="prev" title="Global Configuration" href="global.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0a2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table Of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction: How Cylc Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="suite.html">Suite Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global.html">Global Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cylc Configuration Data Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Configuration</a> &raquo;</li>
+        
+      <li>Cylc Configuration Data Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/config/types.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cylc-configuration-data-types">
+<h1>Cylc Configuration Data Types<a class="headerlink" href="#cylc-configuration-data-types" title="Permalink to this headline">¶</a></h1>
+<p>The Cylc configuration file format supports the following data types.</p>
+<dd><dl class="type">
+<dt id="parsec-type-absolute_host_list">
+<code class="sig-name descname">absolute host list</code><a class="headerlink" href="#parsec-type-absolute_host_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of hostnames which does not contain any self references (i.e. does not contain localhost, 127.0.0.1, 0.0.0.0)</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">foo</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bar</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">baz</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-boolean">
+<code class="sig-name descname">boolean</code><a class="headerlink" href="#parsec-type-boolean" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean in Python format</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-cycle_point">
+<code class="sig-name descname">cycle point</code><a class="headerlink" href="#parsec-type-cycle_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer or date-time cycle point as appropriate.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code> - An integer cycle point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2000-01-01T00:00Z</span></code> - A date-time cycle point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">now</span></code> - The current date-time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">next(T-00)</span></code> - The current date-time rounded up to the nearest whole hour.</p></li>
+</ul>
+<p class="rubric">See Also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="../../glossary.html#term-iso8601-duration"><span class="xref std std-term">ISO8601 duration</span></a></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-cycle_point_format">
+<code class="sig-name descname">cycle point format</code><a class="headerlink" href="#parsec-type-cycle_point_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>An time format for date-time cycle points in <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> “print” or “parse” format. See <code class="docutils literal notranslate"><span class="pre">isodatetime</span> <span class="pre">--help</span></code> for more information.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CCYYMM</span></code> - <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> print format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">%Y%m</span></code> - <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> parse format.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-cycle_point_time_zone">
+<code class="sig-name descname">cycle point time zone</code><a class="headerlink" href="#parsec-type-cycle_point_time_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>A time zone for date-time cycle points in ISO8601 format.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Z</span></code> - UTC / GMT.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+13</span></code> - UTC plus 13 hours.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-0830</span></code> - UTC minus 8 hours and 30 minutes.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-float">
+<code class="sig-name descname">float</code><a class="headerlink" href="#parsec-type-float" title="Permalink to this definition">¶</a></dt>
+<dd><p>A number in integer, decimal or exponential format</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.1e11</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-float_list">
+<code class="sig-name descname">float list</code><a class="headerlink" href="#parsec-type-float_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of floats.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">1.1,</span> <span class="pre">1.1e11</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-integer">
+<code class="sig-name descname">integer</code><a class="headerlink" href="#parsec-type-integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-integer_list">
+<code class="sig-name descname">integer list</code><a class="headerlink" href="#parsec-type-integer_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of integers.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-time_interval">
+<code class="sig-name descname">time interval</code><a class="headerlink" href="#parsec-type-time_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ISO8601 duration.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">P1Y</span></code> - Every year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PT6H</span></code> - Every six hours.</p></li>
+</ul>
+<p class="rubric">See Also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../glossary.html#term-iso8601-duration"><span class="xref std std-term">ISO8601 duration</span></a></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-time_interval_list">
+<code class="sig-name descname">time interval list</code><a class="headerlink" href="#parsec-type-time_interval_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of time intervals</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">P1Y,</span> <span class="pre">P2Y,</span> <span class="pre">P3Y</span></code></p></li>
+</ul>
+<p class="rubric">See Also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../glossary.html#term-iso8601-duration"><span class="xref std std-term">ISO8601 duration</span></a></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-parameter_list">
+<code class="sig-name descname">parameter list</code><a class="headerlink" href="#parsec-type-parameter_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of Cylc parameter values. This can include strings, integers and integer ranges.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">foo,</span> <span class="pre">bar,</span> <span class="pre">baz</span></code> - List of string parameters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span></code> - List of integer parameters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1..3</span></code> - The same as 1, 2, 3.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1..5..2</span></code> - The same as 1, 3, 5.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1..5..2,</span> <span class="pre">8</span></code> - Range and integers can be mixed.</p></li>
+</ul>
+<p class="rubric">See Also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../user-guide/writing-suites.html#parameterized-tasks-label"><span class="std std-ref">Parameterized Tasks</span></a></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-spaceless_list">
+<code class="sig-name descname">spaceless list</code><a class="headerlink" href="#parsec-type-spaceless_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of strings which cannot contain spaces.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">c</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-string">
+<code class="sig-name descname">string</code><a class="headerlink" href="#parsec-type-string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plain text.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-list">
+<code class="sig-name descname">list</code><a class="headerlink" href="#parsec-type-list" title="Permalink to this definition">¶</a></dt>
+<dd><p>A comma separated list of strings.</p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span> <span class="pre">c,</span> <span class="pre">d</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="type">
+<dt id="parsec-type-xtrigger_function_signature">
+<code class="sig-name descname">xtrigger function signature</code><a class="headerlink" href="#parsec-type-xtrigger_function_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function signature similar to how it would be written in Python.
+<code class="docutils literal notranslate"><span class="pre">&lt;function&gt;(&lt;arg&gt;,</span> <span class="pre">&lt;kwarg&gt;=&lt;value&gt;):&lt;interval&gt;</span></code></p>
+<p class="rubric">Examples:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mytrigger(42,</span> <span class="pre">cycle_point=%(point)):PT10S</span></code> - Run function <code class="docutils literal notranslate"><span class="pre">mytrigger</span></code> every 10 seconds.</p></li>
+</ul>
+<p class="rubric">See Also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../user-guide/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a></p></li>
+</ul>
+</dd></dl>
+
+</dd></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/index.html" class="btn btn-neutral float-right" title="Cylc API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="global.html" class="btn btn-neutral float-left" title="Global Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2019 NIWA &amp; British Crown (Met Office) &amp; Contributors
+      <span class="lastupdated">
+        Last updated on Jul 16, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0a2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/config/types";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

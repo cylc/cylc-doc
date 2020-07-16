@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cylc Development History - Major Changes &mdash; Cylc 8.0a2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/cylc.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/cylc.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Glossary" href="../glossary.html" />
+    <link rel="prev" title="Suite Runtime Interface" href="api/zmq.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0a2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table Of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction: How Cylc Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html">Cylc API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Reference</a> &raquo;</li>
+        
+      <li>Cylc Development History - Major Changes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/dev-history-major-changes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cylc-development-history-major-changes">
+<h1>Cylc Development History - Major Changes<a class="headerlink" href="#cylc-development-history-major-changes" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>pre-cylc-3</strong></p>
+<ul>
+<li><p>early versions focused on the new
+scheduling algorithm. A suite was a collection of “task definition files”
+that encoded the prerequisites and outputs of each task,
+exposing cylc’s self-organising nature. Tasks could be transferred
+from one suite to another by simply copying their taskdef files over
+and checking prerequisite and output consistency. Global suite
+structure was not easy to discern until run time (although cylc-2
+could generate resolved run time dependency graphs).</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-3</strong></p>
+<ul>
+<li><p>a new suite design interface: dependency graph and task runtime properties
+defined in a single structured, validated, configuration file - the
+suite.rc file</p></li>
+<li><p>graphical user interface</p></li>
+<li><p>suite graphing.</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-4</strong></p>
+<ul>
+<li><p>refined and organized the suite.rc file structure</p></li>
+<li><p>task runtime properties defined by an efficient inheritance hierarchy</p></li>
+<li><p>support for the Jinja2 template processor in suite configurations.</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-5</strong></p>
+<ul>
+<li><p>multi-threading for continuous network request handling and job submission</p></li>
+<li><p>more task states to distinguish job submission from execution</p></li>
+<li><p>dependence between suites via new suite run databases</p></li>
+<li><p>polling and killing of real task jobs</p></li>
+<li><p>polling as task communications option.</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-6</strong></p>
+<ul>
+<li><p>specification of all date-times and cycling workflows via the ISO8601
+date-times, durations, and recurrence expressions</p></li>
+<li><p>integer cycling</p></li>
+<li><p>a multi-process pool to execute job submissions, event handlers, and poll
+and kill commands.</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-7</strong></p>
+<ul>
+<li><p>Replaced the Pyro communications layer with RESTful HTTPS</p></li>
+<li><p>Removed deprecated pre cylc-6 syntax and features.</p></li>
+</ul>
+</li>
+<li><p><strong>cylc-8</strong></p>
+<ul>
+<li><p>Upgraded to Python3</p></li>
+<li><p>Replaced the RESTful HTTP(S) communications layer with ZMQ over TCP</p></li>
+<li><p>Removed deprecated pre cylc-6 syntax and features.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../glossary.html" class="btn btn-neutral float-right" title="Glossary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="api/zmq.html" class="btn btn-neutral float-left" title="Suite Runtime Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2019 NIWA &amp; British Crown (Met Office) &amp; Contributors
+      <span class="lastupdated">
+        Last updated on Jul 16, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0a2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/dev-history-major-changes";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

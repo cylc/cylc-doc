@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Remote Job Management &mdash; Cylc 8.0a2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/cylc.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0a2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/cylc.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0a2 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="External Triggers" href="external-triggers.html" />
+    <link rel="prev" title="Task Job Submission and Management" href="task-job-submission.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="remote-job-management">
+
+<h1>Remote Job Management<a class="headerlink" href="../../html/user-guide/remote-job-management.html#remote-job-management" title="View HTML">§</a></h1>
+
+<p>Managing tasks in a workflow requires more than just job execution: Cylc
+performs additional actions with <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and
+direct execution of <code class="docutils literal notranslate"><span class="pre">cylc</span></code> sub-commands over non-interactive
+SSH <a class="footnote-reference" href="#id5" id="id1">[4]</a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="ssh-free-job-management">
+
+<h2>SSH-free Job Management?<a class="headerlink" href="../../html/user-guide/remote-job-management.html#ssh-free-job-management" title="View HTML">§</a></h2>
+
+<p>Some sites may want to restrict access to job hosts by whitelisting SSH
+connections to allow only <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and allowing job
+execution only via a local batch system that sees the job hosts <a class="footnote-reference" href="#id6" id="id2">[5]</a> .
+We are investigating the feasibility of SSH-free job management when a local
+batch system is available, but this is not yet possible unless your suite
+and job hosts also share a filesystem, which allows Cylc to treat jobs as
+entirely local <a class="footnote-reference" href="#id7" id="id3">[6]</a> .</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="ssh-based-job-management">
+
+<h2>SSH-based Job Management<a class="headerlink" href="../../html/user-guide/remote-job-management.html#ssh-based-job-management" title="View HTML">§</a></h2>
+
+<p>Cylc does not have persistent agent processes running on job hosts to act on
+instructions received over the network <a class="footnote-reference" href="#id8" id="id4">[7]</a> so instead we execute job
+management commands directly on job hosts over SSH. Reasons for this include:</p>
+<ul class="simple">
+<li>it works equally for batch system and background jobs</li>
+<li>SSH is <em>required</em> for background jobs, and for batch jobs if the
+batch system is not available on the suite host</li>
+<li><em>querying the batch system alone is not sufficient for full job
+polling functionality</em> because jobs can complete (and then be forgotten by
+the batch system) while the network, suite host, or suite server program is
+down (e.g. between suite shutdown and restart)<ul>
+<li>to handle this we get the automatic job wrapper code to write
+job messages and exit status to <em>job status files</em> that are
+interrogated by suite server programs during job polling operations</li>
+<li>job status files reside on the job host, so the interrogation
+is done over SSH</li>
+</ul>
+</li>
+<li>job status files also hold batch system name and job ID; this is
+written by the job submit command, and read by job poll and kill commands
+(all over SSH)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="a-concrete-example">
+
+<h2>A Concrete Example<a class="headerlink" href="../../html/user-guide/remote-job-management.html#a-concrete-example" title="View HTML">§</a></h2>
+
+<p>The following suite, registered as <code class="docutils literal notranslate"><span class="pre">suitex</span></code>, is used to illustrate
+our current SSH-based remote job management. It submits two jobs to a remote,
+and a local task views a remote job log then polls and kills the remote jobs.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># suite.rc</span>
+<span class="nt">[scheduling]</span>
+   <span class="nt">[[graph]]</span>
+      <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;delayer =&gt; master &amp; REMOTES&quot;</span>
+<span class="nt">[runtime]</span>
+   <span class="nt">[[REMOTES]]</span>
+      <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 30&quot;</span>
+       <span class="nt">[[[remote]]]</span>
+           <span class="nv">host </span><span class="o">=</span><span class="s"> wizard</span>
+           <span class="nv">owner </span><span class="o">=</span><span class="s"> hobo</span>
+   <span class="nt">[[remote-a, remote-b]]</span>
+       <span class="nv">inherit </span><span class="o">=</span><span class="s"> REMOTES</span>
+   <span class="nt">[[delayer]]</span>
+      <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 10&quot;</span>
+   <span class="nt">[[master]]</span>
+       <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"> sleep 5</span>
+<span class="s2"> cylc cat-log -m c -f o $CYLC_SUITE_NAME remote-a.1</span>
+<span class="s2"> sleep 2</span>
+<span class="s2"> cylc poll $CYLC_SUITE_NAME REMOTES.1</span>
+<span class="s2"> sleep 2</span>
+<span class="s2"> cylc kill $CYLC_SUITE_NAME REMOTES.1</span>
+<span class="s2"> sleep 2</span>
+<span class="s2"> cylc remove $CYLC_SUITE_NAME REMOTES.1&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The <em>delayer</em> task just separates suite start-up from remote job
+submission, for clarity when watching the job host (e.g. with
+<code class="docutils literal notranslate"><span class="pre">watch</span> <span class="pre">-n</span> <span class="pre">1</span> <span class="pre">find</span> <span class="pre">~/cylc-run/suitex</span></code>).</p>
+<p>Global config specifies the path to the remote Cylc executable, says
+to retrieve job logs, and not to use a remote login shell:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># flow.rc</span>
+<span class="nt">[hosts]</span>
+   <span class="nt">[[wizard]]</span>
+       <span class="nv">cylc executable </span><span class="o">=</span><span class="s"> /opt/bin/cylc</span>
+       <span class="nv">retrieve job logs </span><span class="o">=</span><span class="s"> True</span>
+       <span class="nv">use login shell </span><span class="o">=</span><span class="s"> False</span>
+</pre></div>
+</div>
+<p>On running the suite, remote job host actions were captured in the transcripts
+below by wrapping the <code class="docutils literal notranslate"><span class="pre">ssh</span></code>, <code class="docutils literal notranslate"><span class="pre">scp</span></code>, and <code class="docutils literal notranslate"><span class="pre">rsync</span></code>
+executables in scripts that log their command lines before taking action.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="create-suite-run-directory-and-install-source-files">
+
+<h3>Create suite run directory and install source files<a class="headerlink" href="../../html/user-guide/remote-job-management.html#create-suite-run-directory-and-install-source-files" title="View HTML">§</a></h3>
+
+<p>Done by <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> before suite start-up (the command will be
+migrated to Cylc soon though).</p>
+<ul class="simple">
+<li>with <code class="docutils literal notranslate"><span class="pre">--new</span></code> it invokes bash over SSH and a raw shell
+expression, to delete previous-run files</li>
+<li>it invokes itself over SSH to create top level suite directories
+and install source files<ul>
+<li>skips installation if server UUID file is found on the job host
+(indicates a shared filesystem)</li>
+</ul>
+</li>
+<li>uses <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for suite source file installation</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The same directory structure is used on suite and job hosts, for
+consistency and simplicity, and because the suite host can also be a job
+host.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># rose suite-run --new only: initial clean-out</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard bash -l -O extglob -c <span class="s1">&#39;cd; echo &#39;</span><span class="s2">&quot;&#39;&quot;</span><span class="s1">&#39;673d7a0d-7816-42a4-8132-4b1ab394349c&#39;</span><span class="s2">&quot;&#39;&quot;</span><span class="s1">&#39;; ls -d -r cylc-run/suitex/work cylc-run/suitex/share/cycle cylc-run/suitex/share cylc-run/suitex; rm -fr cylc-run/suitex/work cylc-run/suitex/share/cycle cylc-run/suitex/share cylc-run/suitex; (cd ; rmdir -p cylc-run/suitex/work cylc-run/suitex/share/cycle cylc-run/suitex/share cylc-run 2&gt;/dev/null || true)&#39;</span>
+
+<span class="c1"># rose suite-run: test for shared filesystem and create share/cycle directories</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> -n hobo@wizard env <span class="nv">ROSE_VERSION</span><span class="o">=</span><span class="m">2018</span>.02.0 <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x bash -l -c <span class="s1">&#39;&quot;$0&quot; &quot;$@&quot;&#39;</span> rose suite-run -vv -n suitex --run<span class="o">=</span>run --remote<span class="o">=</span><span class="nv">uuid</span><span class="o">=</span>231cd6a1-6d61-476d-96e1-4325ef9216fc,now-str<span class="o">=</span>20180416T042319Z
+
+<span class="c1"># rose suite-run: install suite source directory to job host</span>
+rsync -a --exclude<span class="o">=</span>.* --timeout<span class="o">=</span><span class="m">1800</span> --rsh<span class="o">=</span>ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> --exclude<span class="o">=</span>231cd6a1-6d61-476d-96e1-4325ef9216fc --exclude<span class="o">=</span>log/231cd6a1-6d61-476d-96e1-4325ef9216fc --exclude<span class="o">=</span>share/231cd6a1-6d61-476d-96e1-4325ef9216fc --exclude<span class="o">=</span>share/cycle/231cd6a1-6d61-476d-96e1-4325ef9216fc --exclude<span class="o">=</span>work/231cd6a1-6d61-476d-96e1-4325ef9216fc --exclude<span class="o">=</span>/.* --exclude<span class="o">=</span>/cylc-suite.db --exclude<span class="o">=</span>/log --exclude<span class="o">=</span>/log.* --exclude<span class="o">=</span>/state --exclude<span class="o">=</span>/share --exclude<span class="o">=</span>/work ./ hobo@wizard:cylc-run/suitex
+   <span class="c1"># (internal rsync)</span>
+   ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> -l hobo wizard rsync --server -logDtpre.iLsfx --timeout<span class="o">=</span><span class="m">1800</span> . cylc-run/suitex
+   <span class="c1"># (internal rsync, back from hobo@wizard)</span>
+   rsync --server -logDtpre.iLsfx --timeout<span class="o">=</span><span class="m">1800</span> . cylc-run/suitex
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> ~/cylc-run/suitex
+<span class="p">|</span>__log-&gt;log.20180418T025047Z  <span class="c1"># LOG DIRECTORIES</span>
+<span class="p">|</span>__log.20180418T025047Z  <span class="c1"># log directory for current suite run</span>
+<span class="p">|</span>__suiter.rc
+<span class="p">|</span>__xxx  <span class="c1"># any suite source sub-dirs or file</span>
+<span class="p">|</span>__work  <span class="c1"># JOB WORK DIRECTORIES</span>
+<span class="p">|</span>__share  <span class="c1">#  SUITE SHARE DIRECTORY</span>
+   <span class="p">|</span>__cycle
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-installs-service-directory">
+
+<h3>Server installs service directory<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-installs-service-directory" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>server address and credentials, so that clients such as
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> executed by jobs can connect</li>
+<li>done just before the first job is submitted to a remote, and at
+suite restart for the remotes of jobs running when the suite went
+down (server host, port, etc. may change at restart)</li>
+<li>uses SSH to invoke <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remote-init</span></code> on job hosts. If the remote command
+does not find a server-side UUID file (which would indicate a shared
+filesystem) it reads a tar archive of the service directory from stdin, and
+unpacks it to install.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc remote-init: install suite service directory</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc remote-init <span class="s1">&#39;066592b1-4525-48b5-b86e-da06eb2380d9&#39;</span> <span class="s1">&#39;$HOME/cylc-run/suitex&#39;</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> ~/cylc-run/suitex
+<span class="p">|</span>__.service  <span class="c1"># SUITE SERVICE DIRECTORY</span>
+<span class="p">|</span>  <span class="p">|</span>__contact  <span class="c1"># server address information</span>
+<span class="p">|</span>  <span class="p">|</span>__passphrase  <span class="c1"># suite passphrase</span>
+<span class="p">|</span>__log-&gt;log.20180418T025047Z  <span class="c1"># LOG DIRECTORIES</span>
+<span class="p">|</span>__log.20180418T025047Z  <span class="c1"># log directory for current suite run</span>
+<span class="p">|</span>__suiter.rc
+<span class="p">|</span>__xxx  <span class="c1"># any suite source sub-dirs or file</span>
+<span class="p">|</span>__work  <span class="c1"># JOB WORK DIRECTORIES</span>
+<span class="p">|</span>__share  <span class="c1">#  SUITE SHARE DIRECTORY</span>
+   <span class="p">|</span>__cycle
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-submits-jobs">
+
+<h3>Server submits jobs<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-submits-jobs" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>done when tasks are ready to run, for multiple jobs at once</li>
+<li>uses SSH to invoke <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">jobs-submit</span></code> on the remote - to read job
+scripts from stdin, write them to disk, and submit them to run</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc jobs-submit: submit two jobs</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc jobs-submit <span class="s1">&#39;--remote-mode&#39;</span> <span class="s1">&#39;--&#39;</span> <span class="s1">&#39;$HOME/cylc-run/suitex/log/job&#39;</span> <span class="s1">&#39;1/remote-a/01&#39;</span> <span class="s1">&#39;1/remote-b/01&#39;</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> ~/cylc-run/suitex
+<span class="p">|</span>__.service  <span class="c1"># SUITE SERVICE DIRECTORY</span>
+<span class="p">|</span>  <span class="p">|</span>__contact  <span class="c1"># server address information</span>
+<span class="p">|</span>  <span class="p">|</span>__passphrase  <span class="c1"># suite passphrase</span>
+<span class="p">|</span>__log-&gt;log.20180418T025047Z  <span class="c1"># LOG DIRECTORIES</span>
+<span class="p">|</span>__log.20180418T025047Z  <span class="c1"># log directory for current suite run</span>
+<span class="p">|</span>  <span class="p">|</span>__ job  <span class="c1"># job logs (to be distinguished from log/suite/ on the suite host)</span>
+<span class="p">|</span>     <span class="p">|</span>__1  <span class="c1"># cycle point</span>
+<span class="p">|</span>        <span class="p">|</span>__remote-a  <span class="c1"># task name</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>__01  <span class="c1"># job submit number</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>  <span class="p">|</span>__job  <span class="c1"># job script</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>  <span class="p">|</span>__job.out  <span class="c1"># job stdout</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>  <span class="p">|</span>__job.err  <span class="c1"># job stderr</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>  <span class="p">|</span>__job.status  <span class="c1"># job status</span>
+<span class="p">|</span>        <span class="p">|</span>  <span class="p">|</span>__NN-&gt;0l  <span class="c1"># symlink to latest submit number</span>
+<span class="p">|</span>        <span class="p">|</span>__remote-b  <span class="c1"># task name</span>
+<span class="p">|</span>           <span class="p">|</span>__01  <span class="c1"># job submit number</span>
+<span class="p">|</span>           <span class="p">|</span>  <span class="p">|</span>__job  <span class="c1"># job script</span>
+<span class="p">|</span>           <span class="p">|</span>  <span class="p">|</span>__job.out  <span class="c1"># job stdout</span>
+<span class="p">|</span>           <span class="p">|</span>  <span class="p">|</span>__job.err  <span class="c1"># job stderr</span>
+<span class="p">|</span>           <span class="p">|</span>  <span class="p">|</span>__job.status  <span class="c1"># job status</span>
+<span class="p">|</span>           <span class="p">|</span>__NN-&gt;0l  <span class="c1"># symlink to latest submit number</span>
+<span class="p">|</span>__suiter.rc
+<span class="p">|</span>__xxx  <span class="c1"># any suite source sub-dirs or file</span>
+<span class="p">|</span>__work  <span class="c1"># JOB WORK DIRECTORIES</span>
+<span class="p">|</span>  <span class="p">|</span>__1  <span class="c1"># cycle point</span>
+<span class="p">|</span>     <span class="p">|</span>__remote-a  <span class="c1"># task name</span>
+<span class="p">|</span>     <span class="p">|</span>  <span class="p">|</span>__xxx  <span class="c1"># (any files written by job to PWD)</span>
+<span class="p">|</span>     <span class="p">|</span>__remote-b  <span class="c1"># task name</span>
+<span class="p">|</span>        <span class="p">|</span>__xxx  <span class="c1"># (any files written by job to PWD)</span>
+<span class="p">|</span>__share  <span class="c1">#  SUITE SHARE DIRECTORY</span>
+   <span class="p">|</span>__cycle
+   <span class="p">|</span>__xxx  <span class="c1"># (any job-created sub-dirs and files)</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-tracks-job-progress">
+
+<h3>Server tracks job progress<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-tracks-job-progress" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>jobs send messages back to the server program on the suite host<ul>
+<li>directly: client-server HTTPS over the network (requires service
+files installed - see above)</li>
+<li>indirectly: re-invoke clients on the suite host (requires reverse SSH)</li>
+</ul>
+</li>
+<li>OR server polls jobs at intervals (requires job polling - see below)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="user-views-job-logs">
+
+<h3>User views job logs<a class="headerlink" href="../../html/user-guide/remote-job-management.html#user-views-job-logs" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>command <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code>, invokes itself over SSH to the remote</li>
+<li>suites will serve job logs in future, but this will still be needed
+(e.g. if the suite is down)</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc cat-log: view a job log</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> -n hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc cat-log --remote-arg<span class="o">=</span><span class="s1">&#39;$HOME/cylc-run/suitex/log/job/1/remote-a/NN/job.out&#39;</span> --remote-arg<span class="o">=</span>cat --remote-arg<span class="o">=</span><span class="s1">&#39;tail -n +1 -F %(filename)s&#39;</span> suitex
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-cancels-or-kills-jobs">
+
+<h3>Server cancels or kills jobs<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-cancels-or-kills-jobs" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>done automatically or via user command <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">kill</span></code>, for
+multiple jobs at once</li>
+<li>uses SSH to invoke <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">jobs-kill</span></code> on the
+remote, with job log paths on the command line. Reads job ID from the
+job status file.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc jobs-kill: kill two jobs</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc jobs-kill <span class="s1">&#39;--&#39;</span> <span class="s1">&#39;$HOME/cylc-run/suitex/log/job&#39;</span> <span class="s1">&#39;1/remote-a/01&#39;</span> <span class="s1">&#39;1/remote-b/01&#39;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-polls-jobs">
+
+<h3>Server polls jobs<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-polls-jobs" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>done automatically or via user command <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">poll</span></code>, for
+multiple jobs at once</li>
+<li>uses SSH to invoke <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">jobs-poll</span></code> on the
+remote, with job log paths on the command line. Reads job ID from the
+job status file.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc jobs-poll: poll two jobs</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc jobs-poll <span class="s1">&#39;--&#39;</span> <span class="s1">&#39;$HOME/cylc-run/suitex/log/job&#39;</span> <span class="s1">&#39;1/remote-a/01&#39;</span> <span class="s1">&#39;1/remote-b/01&#39;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-retrieves-jobs-logs">
+
+<h3>Server retrieves jobs logs<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-retrieves-jobs-logs" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>done at job completion, according to global config</li>
+<li>uses <code class="docutils literal notranslate"><span class="pre">rsync</span></code></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># rsync: retrieve two job logs</span>
+rsync -a --rsh<span class="o">=</span>ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> --include<span class="o">=</span>/1 --include<span class="o">=</span>/1/remote-a --include<span class="o">=</span>/1/remote-a/01 --include<span class="o">=</span>/1/remote-a/01/** --include<span class="o">=</span>/1/remote-b --include<span class="o">=</span>/1/remote-b/01 --include<span class="o">=</span>/1/remote-b/01/** --exclude<span class="o">=</span>/** hobo@wizard:<span class="nv">$HOME</span>/cylc-run/suitex/log/job/ /home/vagrant/cylc-run/suitex/log/job/
+   <span class="c1"># (internal rsync)</span>
+   ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> -l hobo wizard rsync --server --sender -logDtpre.iLsfx . <span class="nv">$HOME</span>/cylc-run/suitex/log/job/
+   <span class="c1"># (internal rsync, back from hobo@wizard)</span>
+   rsync --server --sender -logDtpre.iLsfx . /home/hobo/cylc-run/suitex/log/job/
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="server-tidies-job-remote-at-shutdown">
+
+<h3>Server tidies job remote at shutdown<a class="headerlink" href="../../html/user-guide/remote-job-management.html#server-tidies-job-remote-at-shutdown" title="View HTML">§</a></h3>
+
+<ul class="simple">
+<li>removes <code class="docutils literal notranslate"><span class="pre">.service/contact</span></code> so that clients won’t repeatedly
+try to connect</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cylc remote-tidy: remove the remote suite contact file</span>
+ssh -oBatchMode<span class="o">=</span>yes -oConnectTimeout<span class="o">=</span><span class="m">10</span> hobo@wizard env <span class="nv">CYLC_VERSION</span><span class="o">=</span><span class="m">7</span>.6.x /opt/bin/cylc remote-tidy <span class="s1">&#39;$HOME/cylc-run/suitex&#39;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="other-use-of-ssh-in-cylc">
+
+<h2>Other Use of SSH in Cylc<a class="headerlink" href="../../html/user-guide/remote-job-management.html#other-use-of-ssh-in-cylc" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>see if a suite is running on another host with a shared
+filesystem - see <code class="docutils literal notranslate"><span class="pre">detect_old_contact_file()</span></code> in
+<code class="docutils literal notranslate"><span class="pre">lib/cylc/suite_srv_files_mgr.py</span></code></li>
+<li>cat content of a remote service file over SSH, if possible, for
+clients on that do not have suite credentials installed - see
+<code class="docutils literal notranslate"><span class="pre">_load_remote_item()</span></code> in <code class="docutils literal notranslate"><span class="pre">suite_srv_files_mgr.py</span></code></li>
+</ul>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[4]</a></td><td>Cylc used to run bare shell expressions over SSH, which required
+a bash shell and made whitelisting difficult.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[5]</a></td><td>A malicious script could be <code class="docutils literal notranslate"><span class="pre">rsync</span></code>’d and run from a batch
+job, but batch jobs are considered easier to audit.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[6]</a></td><td>The job ID must also be valid to query and kill the job via the local
+batch system. This is not the case for Slurm, unless the <code class="docutils literal notranslate"><span class="pre">--cluster</span></code>
+option is explicitly used in job query and kill commands, otherwise
+the job ID is not recognized by the local Slurm instance.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[7]</a></td><td>This would be a more complex solution, in terms of implementation,
+administration, and security.</td></tr>
+</tbody>
+</table>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

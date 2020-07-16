@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Graphing &mdash; Cylc 8.0a2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/cylc.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/cylc.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Basic Cycling" href="integer-cycling.html" />
+    <link rel="prev" title="Scheduling" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0a2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table Of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction: How Cylc Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Scheduling</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Graphing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-suite-rc-file-format">The <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> File Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graph-strings">Graph Strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-graphs">Cylc Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="integer-cycling.html">Basic Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="datetime-cycling.html">Date-Time Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="further-scheduling.html">Further Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../runtime/index.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furthertopics/index.html">Further Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Tutorial</a> &raquo;</li>
+        
+          <li><a href="index.html">Scheduling</a> &raquo;</li>
+        
+      <li>Graphing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/tutorial/scheduling/graphing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graphing">
+<span id="tutorial-cylc-graphing"></span><h1>Graphing<a class="headerlink" href="#graphing" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will cover writing basic workflows in cylc.</p>
+<div class="section" id="the-suite-rc-file-format">
+<span id="cylc-file-format"></span><h2>The <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> File Format<a class="headerlink" href="#the-suite-rc-file-format" title="Permalink to this headline">¶</a></h2>
+<p>We refer to a Cylc workflow as a <a class="reference internal" href="../../glossary.html#term-cylc-suite"><span class="xref std std-term">Cylc suite</span></a>. A Cylc suite is a
+directory containing a <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file. This configuration file is where
+we define our workflow. The <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file uses a nested <a class="reference external" href="https://en.wikipedia.org/wiki/INI_file">INI</a>-based
+format:</p>
+<ul class="simple">
+<li><p>Comments start with a <code class="docutils literal notranslate"><span class="pre">#</span></code> character.</p></li>
+<li><p>Settings are written as <code class="docutils literal notranslate"><span class="pre">key</span> <span class="pre">=</span> <span class="pre">value</span></code> pairs.</p></li>
+<li><p>Settings can be contained within sections.</p></li>
+<li><p>Sections are written inside square brackets i.e. <code class="docutils literal notranslate"><span class="pre">[section-name]</span></code>.</p></li>
+<li><p>Sections can be nested, by adding an extra square bracket with each level,
+so a sub-section would be written <code class="docutils literal notranslate"><span class="pre">[[sub-section]]</span></code>, a sub-sub-section
+<code class="docutils literal notranslate"><span class="pre">[[[sub-sub-section]]]</span></code>, and so on.</p></li>
+</ul>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comment</span>
+<span class="nt">[section]</span>
+    <span class="nv">key </span><span class="o">=</span><span class="s"> value</span>
+    <span class="nt">[[sub-section]]</span>
+        <span class="nv">another-key </span><span class="o">=</span><span class="s"> another-value</span>  <span class="c1"># Inline comment</span>
+        <span class="nv">yet-another-key </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            A</span>
+<span class="s2">            Multi-line</span>
+<span class="s2">            String</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shorthand">
+<h3>Shorthand<a class="headerlink" href="#shorthand" title="Permalink to this headline">¶</a></h3>
+<p>Throughout this tutorial we will refer to settings in the following format:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">[section]</span></code></dt><dd><p>Refers to the entire section.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section]key</span></code></dt><dd><p>Refers to a setting within the section.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section]key=value</span></code></dt><dd><p>Expresses the value of the setting.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section][sub-section]another-key</span></code></dt><dd><p>Note we only use one set of square brackets with nested sections.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="duplicate-items">
+<h3>Duplicate Items<a class="headerlink" href="#duplicate-items" title="Permalink to this headline">¶</a></h3>
+<p>Duplicate sections get merged:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">input</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[a]</span>
+   <span class="nv">c </span><span class="o">=</span><span class="s"> C</span>
+<span class="nt">[b]</span>
+   <span class="nv">d </span><span class="o">=</span><span class="s"> D</span>
+<span class="nt">[a]</span>  <span class="c1"># duplicate</span>
+   <span class="nv">e </span><span class="o">=</span><span class="s"> E</span>
+</pre></div>
+</div>
+</div>
+</td>
+<td><div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">result</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[a]</span>
+   <span class="nv">c </span><span class="o">=</span><span class="s"> C</span>
+   <span class="nv">e </span><span class="o">=</span><span class="s"> E</span>
+<span class="nt">[b]</span>
+   <span class="nv">d </span><span class="o">=</span><span class="s"> D</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Duplicate settings get overwritten:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">input</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">a </span><span class="o">=</span><span class="s"> foo</span>
+<span class="nv">a </span><span class="o">=</span><span class="s"> bar</span>  <span class="c1"># duplicate</span>
+</pre></div>
+</div>
+</div>
+</td>
+<td><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">result</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">a </span><span class="o">=</span><span class="s"> bar</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="indentation">
+<h3>Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline">¶</a></h3>
+<p>It is advisable to indent <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> files.</p>
+<p>However, Cylc ignores this indentation meaning the following two examples
+are equivalent:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">input</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[section]</span>
+    <span class="nv">a </span><span class="o">=</span><span class="s"> A</span>
+    <span class="nt">[[sub-section]]</span>
+        <span class="nv">b </span><span class="o">=</span><span class="s"> B</span>
+    <span class="nv">b </span><span class="o">=</span><span class="s"> C</span>
+    <span class="c1"># this setting is still</span>
+    <span class="c1"># in [[sub-section]]</span>
+</pre></div>
+</div>
+</div>
+</td>
+<td><div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">result</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[section]</span>
+    <span class="nv">a </span><span class="o">=</span><span class="s"> A</span>
+    <span class="nt">[[sub-section]]</span>
+        <span class="nv">b </span><span class="o">=</span><span class="s"> C</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="graph-strings">
+<h2>Graph Strings<a class="headerlink" href="#graph-strings" title="Permalink to this headline">¶</a></h2>
+<p>In Cylc we consider workflows in terms of <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> and
+<a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a>.</p>
+<p>Task are represented as words and dependencies as arrows (<code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>), so the
+following text defines two tasks where <code class="docutils literal notranslate"><span class="pre">make_dough</span></code> is dependent on
+<code class="docutils literal notranslate"><span class="pre">buy_ingredients</span></code>:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
+</pre></div>
+</div>
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Mini_Cylc {
+make_dough
+buy_ingredients -&gt; make_dough
+}</p></object></div>
+</div>
+</div><p>In a Cylc workflow this would mean that <code class="docutils literal notranslate"><span class="pre">make_dough</span></code> would only run when
+<code class="docutils literal notranslate"><span class="pre">buy_ingredients</span></code> has succeeded. These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
+</pre></div>
+</div>
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e0b175e16cb314157c20a4e9340ad5572cedb34d.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Mini_Cylc {
+sell_bread
+bake_bread -&gt; sell_bread
+make_dough -&gt; bake_bread
+buy_ingredients -&gt; make_dough
+}</p></object></div>
+</div>
+</div><p>This line of text is referred to as a <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph string</span></a>. These graph
+strings can be combined to form more complex workflows:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
+<span class="kd">pre_heat_oven</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span>
+<span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
+</pre></div>
+</div>
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-474013c2cdf0e395723407771e1254a2207fa8c1.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Mini_Cylc {
+pre_heat_oven -&gt; bake_bread
+make_dough -&gt; bake_bread
+clean_oven
+sell_bread
+buy_ingredients -&gt; make_dough
+bake_bread
+bake_bread -&gt; clean_oven
+bake_bread -&gt; sell_bread
+}</p></object></div>
+</div>
+</div><p>Graph strings can also contain “and” (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>) and “or” (<code class="docutils literal notranslate"><span class="pre">|</span></code>) operators, for
+instance the following lines are equivalent to the ones just above:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
+<span class="kd">pre_heat_oven</span> <span class="o">&amp;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span> <span class="o">&amp;</span> <span class="kd">clean_oven</span>
+</pre></div>
+</div>
+<p>Collectively these <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph strings</span></a> are referred to as a
+<a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Note</p>
+<p>The order in which lines appear in the graph section doesn’t matter, for
+instance the following examples are the same as each other:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+<span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+<span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cylc-graphs">
+<h2>Cylc Graphs<a class="headerlink" href="#cylc-graphs" title="Permalink to this headline">¶</a></h2>
+<p>In a <a class="reference internal" href="../../glossary.html#term-cylc-suite"><span class="xref std std-term">Cylc suite</span></a> the <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> is stored under the
+<code class="docutils literal notranslate"><span class="pre">[scheduling][graph]R1</span></code> setting, i.e:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            buy_ingredients =&gt; make_dough</span>
+<span class="s2">            pre_heat_oven &amp; make_dough =&gt; bake_bread =&gt; sell_bread &amp; clean_oven</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>This is a minimal <a class="reference internal" href="../../glossary.html#term-cylc-suite"><span class="xref std std-term">Cylc suite</span></a>, in which we have defined a
+<a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> representing a workflow for Cylc to run.
+We have not yet provided Cylc with the scripts or binaries to run for
+each task. This will be covered later in the
+<a class="reference internal" href="../runtime/index.html#tutorial-runtime"><span class="std std-ref">runtime tutorial</span></a>.</p>
+<p>Cylc provides a GUI for visualising <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a>. It is run on the
+command line using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">&lt;path&gt;</span></code> command where the path <code class="docutils literal notranslate"><span class="pre">path</span></code>
+is to the <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file you wish to visualise.</p>
+<p>When run, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> will display a diagram similar to the ones you have
+seen so far. The number <code class="docutils literal notranslate"><span class="pre">1</span></code> which appears below each task is the
+<a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a>. We will explain what this means in the next section.</p>
+<img alt="../../_images/cylc-graph.png" class="align-center" src="../../_images/cylc-graph.png" />
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>A graph can be drawn in multiple ways, for instance the following two
+examples are equivalent:</p>
+<img alt="../../_images/cylc-graph-reversible.png" class="align-center" src="../../_images/cylc-graph-reversible.png" />
+<p>The graph drawn by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> may vary slightly from one run to
+another but the tasks and dependencies will always be the same.</p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Practical</p>
+<p class="rubric">In this practical we will create a new Cylc suite and write a
+graph for it to use.</p>
+<ol class="arabic">
+<li><p><strong>Create a Cylc suite.</strong></p>
+<p>A Cylc suite is just a directory containing a <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file.</p>
+<p>If you don’t have one already, create a <code class="docutils literal notranslate"><span class="pre">cylc-run</span></code> directory in your
+user space i.e:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">run</span>
+</pre></div>
+</div>
+<p>Within this directory create a new folder called <code class="docutils literal notranslate"><span class="pre">graph-introduction</span></code>,
+which is to be our <a class="reference internal" href="../../glossary.html#term-suite-directory"><span class="xref std std-term">suite directory</span></a>. Move into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/cylc-run/graph-introduction
+<span class="nb">cd</span> ~/cylc-run/graph-introduction
+</pre></div>
+</div>
+<p>Inside this directory create a <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file and paste in the
+following text:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># Write graph strings here!</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Write a graph.</strong></p>
+<p>We now have a blank Cylc suite, next we need to define a workflow.</p>
+<p>Edit your <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> file to add graph strings representing the
+following graph:</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-d5181c18b29b889a1db79d16a30c45bed288b3d9.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph graph_tutorial {
+a -&gt; b -&gt; d -&gt; e
+c -&gt; b -&gt; f
+}</p></object></div>
+</div>
+</li>
+<li><p><strong>Use</strong> <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> <strong>to visualise the workflow.</strong></p>
+<p>Once you have written some graph strings try using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> to
+display the workflow. Run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc graph .
+</pre></div>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> takes the path to the suite as an argument. As we are
+inside the <a class="reference internal" href="../../glossary.html#term-suite-directory"><span class="xref std std-term">suite directory</span></a> we can run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">.</span></code>.</p>
+</div>
+<p>If the results don’t match the diagram above try going back to the
+suite.rc file and making changes.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>In the top right-hand corner of the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> window there is a
+refresh button which will reload the GUI with any changes you have
+made.</p>
+<img alt="../../_images/cylc-graph-refresh.png" class="align-center" src="../../_images/cylc-graph-refresh.png" />
+</div>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<p>There are multiple correct ways to write this graph. So long as what
+you see in <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> matches the above diagram then you have a
+correct solution.</p>
+<p>Two valid examples:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">a</span> <span class="o">&amp;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">&amp;</span> <span class="kd">f</span>
+<span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">e</span>
+</pre></div>
+</div>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">e</span>
+<span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">f</span>
+</pre></div>
+</div>
+<p>The whole suite should look something like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            a &amp; c =&gt; b =&gt; d &amp; f</span>
+<span class="s2">            d =&gt; e</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="integer-cycling.html" class="btn btn-neutral float-right" title="Basic Cycling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Scheduling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2019 NIWA &amp; British Crown (Met Office) &amp; Contributors
+      <span class="lastupdated">
+        Last updated on Jul 16, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0a2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/scheduling/graphing";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

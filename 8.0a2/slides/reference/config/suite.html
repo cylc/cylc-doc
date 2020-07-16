@@ -1,0 +1,2982 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Suite Configuration &mdash; Cylc 8.0a2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/cylc.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0a2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/cylc.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0a2 documentation" href="../../index.html" />
+    <link rel="up" title="Configuration" href="index.html" />
+    <link rel="next" title="Global Configuration" href="global.html" />
+    <link rel="prev" title="Configuration" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="suite-configuration">
+
+<h1>Suite Configuration<a class="headerlink" href="../../../html/reference/config/suite.html#suite-configuration" title="View HTML">§</a></h1>
+
+<dd><dl class="conf">
+<dt id="suite.rc">
+<code class="descname">suite.rc</code></dt>
+<dd><p>Defines a cylc suite configuration.</p>
+<p>Embedded Jinja2 code (see <a class="reference internal" href="../../user-guide/writing-suites.html#jinja"><span class="std std-ref">Jinja2</span></a>) must process to a valid
+raw suite.rc file. See also <a class="reference internal" href="../../user-guide/writing-suites.html#suitercfile"><span class="std std-ref">Suite.rc File Overview</span></a> for a descriptive
+overview of suite.rc files, including syntax (<a class="reference internal" href="../../user-guide/writing-suites.html#syntax"><span class="std std-ref">Syntax</span></a>).</p>
+<dl class="section">
+<dt id="suite.rc[meta]">
+<code class="descname">[meta]</code></dt>
+<dd><p>Section containing metadata items for this suite. Several items (title,
+description, URL) are pre-defined and are used by Cylc. Others can be
+user-defined and passed to suite event handlers to be interpreted
+according to your needs. For example, the value of a “suite-priority”
+item could determine how an event handler responds to failure events.</p>
+<dl class="setting">
+<dt id="suite.rc[meta]description">
+<code class="descname">description</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A multi-line description of the suite. It can be retrieved at run
+time with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[meta]group">
+<code class="descname">group</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A group name for a suite.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[meta]title">
+<code class="descname">title</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A single line description of the suite, can be retrieved at run
+time with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[meta]URL">
+<code class="descname">URL</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A web URL to suite documentation.  If present it can be browsed
+with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">doc</span></code> command. The string template
+<code class="docutils literal notranslate"><span class="pre">%(suite_name)s</span></code> will be replaced with the actual suite name.
+See also <a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;][meta]URL" title="suite.rc[runtime][&lt;namespace&gt;][meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][meta]URL</span></code></a>.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">http://my-site.com/suites/%(suite_name)s/index.html</span></code></p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[meta]&lt;custom metadata&gt;">
+<code class="descname">&lt;custom metadata&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Any user-defined metadata item. These,
+like title, URL, etc. can be passed to suite event handlers to be
+interpreted according to your needs. For example,
+“suite-priority”.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc]">
+<code class="descname">[cylc]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc]UTC mode">
+<code class="descname">UTC mode</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]cycle point format">
+<code class="descname">cycle point format</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-cycle_point_format" title="parsec-type-cycle_point_format"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">format</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]cycle point num expanded year digits">
+<code class="descname">cycle point num expanded year digits</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]cycle point time zone">
+<code class="descname">cycle point time zone</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-cycle_point_time_zone" title="parsec-type-cycle_point_time_zone"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">time</span> <span class="pre">zone</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]required run mode">
+<code class="descname">required run mode</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body">`` <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">``live</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy-local</span></code>, <code class="docutils literal notranslate"><span class="pre">simulation</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]force run mode">
+<code class="descname">force run mode</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Options:</th><td class="field-body">`` <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">``live</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy-local</span></code>, <code class="docutils literal notranslate"><span class="pre">simulation</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]task event mail interval">
+<code class="descname">task event mail interval</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc]disable automatic shutdown">
+<code class="descname">disable automatic shutdown</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][main loop]">
+<code class="descname">[main loop]</code></dt>
+<dd><dl class="section">
+<dt id="suite.rc[cylc][main loop][&lt;plugin name&gt;]">
+<code class="descname">[&lt;plugin name&gt;]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][main loop][&lt;plugin name&gt;]interval">
+<code class="descname">interval</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][simulation]">
+<code class="descname">[simulation]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][simulation]disable suite event handlers">
+<code class="descname">disable suite event handlers</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][environment]">
+<code class="descname">[environment]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][environment]&lt;variable&gt;">
+<code class="descname">&lt;variable&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][parameters]">
+<code class="descname">[parameters]</code></dt>
+<dd><p>Define parameter values here for use in expanding
+<a class="reference internal" href="../../user-guide/writing-suites.html#parameterized-tasks-label"><span class="std std-ref">parameterized tasks</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[cylc][parameters]&lt;parameter&gt;">
+<code class="descname">&lt;parameter&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-parameter_list" title="parsec-type-parameter_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">parameter</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Examples:
+- <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">=</span> <span class="pre">control,</span> <span class="pre">test1,</span> <span class="pre">test2</span></code>
+- <code class="docutils literal notranslate"><span class="pre">mem</span> <span class="pre">=</span> <span class="pre">1..5</span></code>  (equivalent to <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5</span></code>).
+- <code class="docutils literal notranslate"><span class="pre">mem</span> <span class="pre">=</span> <span class="pre">-11..-7..2</span></code>  (equivalent to <code class="docutils literal notranslate"><span class="pre">-11,</span> <span class="pre">-9,</span> <span class="pre">-7</span></code>).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][parameter templates]">
+<code class="descname">[parameter templates]</code></dt>
+<dd><p>Parameterized task names are expanded, for each parameter value,
+using string templates.</p>
+<p>You can assign templates to parameter names here to override the
+default templates.</p>
+<dl class="setting">
+<dt id="suite.rc[cylc][parameter templates]&lt;parameter&gt;">
+<code class="descname">&lt;parameter&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Default for integer parameters:</dt><dd><code class="docutils literal notranslate"><span class="pre">_p%(p)0Nd</span></code>
+where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the number of digits of the maximum integer
+value, e.g. <code class="docutils literal notranslate"><span class="pre">foo&lt;run&gt;</span></code> becomes <code class="docutils literal notranslate"><span class="pre">foo_run3</span></code> for <code class="docutils literal notranslate"><span class="pre">run</span></code>
+value <code class="docutils literal notranslate"><span class="pre">3</span></code>.</dd>
+<dt>Default for non-integer parameters:</dt><dd><code class="docutils literal notranslate"><span class="pre">_%(p)s</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">foo&lt;run&gt;</span></code> becomes <code class="docutils literal notranslate"><span class="pre">foo_top</span></code> for
+<code class="docutils literal notranslate"><span class="pre">run</span></code> value <code class="docutils literal notranslate"><span class="pre">top</span></code>.</dd>
+</dl>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">=</span> <span class="pre">-R%(run)s</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">foo&lt;run&gt;</span></code> becomes <code class="docutils literal notranslate"><span class="pre">foo-R3</span></code> for
+<code class="docutils literal notranslate"><span class="pre">run</span></code> value <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The values of a parameter named <code class="docutils literal notranslate"><span class="pre">p</span></code> are substituted for
+<code class="docutils literal notranslate"><span class="pre">%(p)s</span></code>.  In <code class="docutils literal notranslate"><span class="pre">_run%(run)s</span></code> the first “run” is a string
+literal, and the second gets substituted with each value of
+the parameter.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][events]">
+<code class="descname">[events]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][events]handlers">
+<code class="descname">handlers</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]handler events">
+<code class="descname">handler events</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]startup handler">
+<code class="descname">startup handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]timeout handler">
+<code class="descname">timeout handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]inactivity handler">
+<code class="descname">inactivity handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]shutdown handler">
+<code class="descname">shutdown handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]aborted handler">
+<code class="descname">aborted handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]stalled handler">
+<code class="descname">stalled handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]timeout">
+<code class="descname">timeout</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]inactivity">
+<code class="descname">inactivity</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if startup handler fails">
+<code class="descname">abort if startup handler fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if shutdown handler fails">
+<code class="descname">abort if shutdown handler fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if timeout handler fails">
+<code class="descname">abort if timeout handler fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if inactivity handler fails">
+<code class="descname">abort if inactivity handler fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if stalled handler fails">
+<code class="descname">abort if stalled handler fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort if any task fails">
+<code class="descname">abort if any task fails</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort on stalled">
+<code class="descname">abort on stalled</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort on timeout">
+<code class="descname">abort on timeout</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]abort on inactivity">
+<code class="descname">abort on inactivity</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]mail events">
+<code class="descname">mail events</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]mail from">
+<code class="descname">mail from</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]mail smtp">
+<code class="descname">mail smtp</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]mail to">
+<code class="descname">mail to</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[cylc][events]mail footer">
+<code class="descname">mail footer</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][reference test]">
+<code class="descname">[reference test]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][reference test]expected task failures">
+<code class="descname">expected task failures</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[cylc][authentication]">
+<code class="descname">[authentication]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[cylc][authentication]public">
+<code class="descname">public</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">state-totals</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">identity</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>, <code class="docutils literal notranslate"><span class="pre">state-totals</span></code>, <code class="docutils literal notranslate"><span class="pre">read</span></code>, <code class="docutils literal notranslate"><span class="pre">shutdown</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling]">
+<code class="descname">[scheduling]</code></dt>
+<dd><p>This section allows cylc to determine when tasks are ready to run.</p>
+<dl class="setting">
+<dt id="suite.rc[scheduling]initial cycle point">
+<code class="descname">initial cycle point</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-cycle_point" title="parsec-type-cycle_point"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">cycle</span> <span class="pre">point</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>In a cold start each cycling task (unless specifically excluded
+under <a class="reference internal" href="#suite.rc[scheduling][special tasks]" title="suite.rc[scheduling][special tasks]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[special</span> <span class="pre">tasks]</span></code></a>) will be loaded into the
+suite with this cycle point, or with the closest subsequent valid
+cycle point for the task. This item can be overridden on the
+command line.</p>
+<p>In integer cycling, the default is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>In date-time cycling, if you do not provide time zone information
+for this, it will be assumed to be local time, or in UTC if
+<a class="reference internal" href="#suite.rc[cylc]UTC mode" title="suite.rc[cylc]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc]UTC</span> <span class="pre">mode</span></code></a> is set, or in the time zone
+determined by :cylc:conf`suite.rc[cylc][cycle point time zone]`.</p>
+<p>The string <code class="docutils literal notranslate"><span class="pre">now</span></code> converts to the current date-time on the suite
+host (adjusted to UTC if the suite is in UTC mode but the host is
+not) to minute resolution.  Minutes (or hours, etc.) may be
+ignored depending on the value of
+<a class="reference internal" href="#suite.rc[cylc]cycle point format" title="suite.rc[cylc]cycle point format"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc]cycle</span> <span class="pre">point</span> <span class="pre">format</span></code></a>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]final cycle point">
+<code class="descname">final cycle point</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Cycling tasks are held once they pass the final cycle point, if
+one is specified. Once all tasks have achieved this state the
+suite will shut down. If this item is provided you can override it
+on the command line.</p>
+<p>In date-time cycling, if you do not provide time zone information
+for this, it will be assumed to be local time, or in UTC if
+<a class="reference internal" href="#suite.rc[cylc]UTC mode" title="suite.rc[cylc]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc]UTC</span> <span class="pre">mode</span></code></a>
+is set, or in the time zone determined by
+:cylc:conf`suite.rc[cylc][cycle point time zone]`.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]initial cycle point constraints">
+<code class="descname">initial cycle point constraints</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>in a cycling suite it is possible to restrict the initial cycle
+point by defining a list of truncated time points under the
+initial cycle point constraints.</p>
+<p>Examples: T00, T06, T-30).</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]final cycle point constraints">
+<code class="descname">final cycle point constraints</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>In a cycling suite it is possible to restrict the final cycle
+point by defining a list of truncated time points under the final
+cycle point constraints.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]hold after point">
+<code class="descname">hold after point</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-cycle_point" title="parsec-type-cycle_point"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">cycle</span> <span class="pre">point</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Cycling tasks are held once they pass the hold after cycle point,
+if one is specified. Unlike the final cycle point suite will not
+shut down once all tasks have passed this point. If this item
+is provided you can override it on the command line.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]cycling mode">
+<code class="descname">cycling mode</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">gregorian</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Options:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">360day</span></code>, <code class="docutils literal notranslate"><span class="pre">360_day</span></code>, <code class="docutils literal notranslate"><span class="pre">365day</span></code>, <code class="docutils literal notranslate"><span class="pre">365_day</span></code>, <code class="docutils literal notranslate"><span class="pre">366day</span></code>, <code class="docutils literal notranslate"><span class="pre">366_day</span></code>, <code class="docutils literal notranslate"><span class="pre">gregorian</span></code>, <code class="docutils literal notranslate"><span class="pre">integer</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Cylc runs using the proleptic Gregorian calendar by default. This
+item allows you to either run the suite using the 360 day calendar
+(12 months of 30 days in a year) or using integer cycling. It also
+supports use of the 365 (never a leap year) and 366 (always a leap
+year) calendars.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]runahead limit">
+<code class="descname">runahead limit</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Runahead limiting prevents the fastest tasks in a suite from
+getting too far ahead of the slowest ones, as documented in
+<a class="reference internal" href="../../user-guide/running-suites.html#runaheadlimit"><span class="std std-ref">Runahead Limiting</span></a>.</p>
+<p>This config item specifies a hard limit as a cycle interval
+between the slowest and fastest tasks. See also
+<a class="reference internal" href="#suite.rc[scheduling]max active cycle points" title="suite.rc[scheduling]max active cycle points"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">max</span> <span class="pre">active</span> <span class="pre">cycle</span> <span class="pre">points</span></code></a> which defines the limit
+as a number of cyles.</p>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">PT12H</span></code> - for a 12 hour limit under ISO 8601 cycling.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]max active cycle points">
+<code class="descname">max active cycle points</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">3</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Runahead limiting prevents the fastest tasks in a suite from
+getting too far ahead of the slowest ones, as documented in
+<a class="reference internal" href="../../user-guide/running-suites.html#runaheadlimit"><span class="std std-ref">Runahead Limiting</span></a>.</p>
+<p>It allows up to <code class="docutils literal notranslate"><span class="pre">N</span></code> (default 3)
+consecutive cycle points to be active at any time, adjusted up if
+necessary for any future triggering.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling]spawn to max active cycle points">
+<code class="descname">spawn to max active cycle points</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Allows tasks to spawn out to
+<a class="reference internal" href="#suite.rc[scheduling]max active cycle points" title="suite.rc[scheduling]max active cycle points"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">max</span> <span class="pre">active</span> <span class="pre">cycle</span> <span class="pre">points</span></code></a>,
+removing restriction that a task
+has to have submitted before its successor can be spawned.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This should be used with care given the potential impact of
+additional task proxies in terms of memory and cpu for the
+cylc server program. Also, use of the setting may highlight
+any issues with suite design relying on the default behaviour
+where downstream tasks would otherwise be waiting on ones
+upstream submitting and the suite would have stalled e.g. a
+housekeeping task at a later cycle deleting an earlier cycle’s
+data before that cycle has had chance to run where previously
+the task would not have been spawned until its predecessor had
+been submitted.</p>
+</div>
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling][queues]">
+<code class="descname">[queues]</code></dt>
+<dd><p>Configuration of internal queues, by which the number of
+simultaneously active tasks (submitted or running) can be limited,
+per queue. By default a single queue called <em>default</em> is defined,
+with all tasks assigned to it and no limit. To use a single queue
+for the whole suite just set the limit on the <em>default</em> queue as
+required. See also <a class="reference internal" href="../../user-guide/running-suites.html#internalqueues"><span class="std std-ref">Limiting Activity With Internal Queues</span></a>.</p>
+<dl class="section">
+<dt id="suite.rc[scheduling][queues][default]">
+<code class="descname">[default]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[scheduling][queues][default]limit">
+<code class="descname">limit</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The maximum number of active tasks allowed at any one
+time, for this queue.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][queues][default]members">
+<code class="descname">members</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>All tasks.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling][queues][&lt;queue name&gt;]">
+<code class="descname">[&lt;queue name&gt;]</code></dt>
+<dd><p>Section heading for configuration of a single queue.</p>
+<dl class="setting">
+<dt id="suite.rc[scheduling][queues][&lt;queue name&gt;]limit">
+<code class="descname">limit</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The maximum number of active tasks allowed at any one
+time, for this queue.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][queues][&lt;queue name&gt;]members">
+<code class="descname">members</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A list of member tasks, or task family names, to assign to
+this queue (assigned tasks will automatically be removed
+from the default queue).</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling][special tasks]">
+<code class="descname">[special tasks]</code></dt>
+<dd><p>This section is used to identify tasks with special behaviour.
+Family names can be used in special task lists as shorthand for
+listing all member tasks.</p>
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]clock-trigger">
+<code class="descname">clock-trigger</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please read <a class="reference internal" href="../../user-guide/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a> before
+using the older clock triggers described in this section.</p>
+</div>
+<p>Clock-trigger tasks (see <a class="reference internal" href="../../user-guide/writing-suites.html#clocktriggertasks"><span class="std std-ref">Clock Triggers</span></a>) wait on a wall
+clock time specified as an offset from their own cycle point.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">foo(PT1H30M),</span> <span class="pre">bar(PT1.5H),</span> <span class="pre">baz</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]external-trigger">
+<code class="descname">external-trigger</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please read <a class="reference internal" href="../../user-guide/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a> before
+using the older mechanism described in this section.</p>
+</div>
+<p>Externally triggered tasks (see <a class="reference internal" href="../../user-guide/external-triggers.html#old-style-external-triggers"><span class="std std-ref">Old-Style External Triggers (Deprecated)</span></a>) wait on external events reported via the
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">ext-trigger</span></code> command. To constrain triggers to a
+specific cycle point, include <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_CYCLE_POINT</span></code>
+in the trigger message string and pass the cycle point to the
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">ext-trigger</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]clock-expire">
+<code class="descname">clock-expire</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Clock-expire tasks enter the <code class="docutils literal notranslate"><span class="pre">expired</span></code> state and skip job
+submission if too far behind the wall clock when they become
+ready to run.  The expiry time is specified as an offset from
+wall-clock time; typically it should be negative - see
+<a class="reference internal" href="../../user-guide/writing-suites.html#clockexpiretasks"><span class="std std-ref">Clock-Expire Triggers</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The offset:</p>
+<ul class="last simple">
+<li>May be positive or negative</li>
+<li>The offset may be omitted if it is zero.</li>
+</ul>
+</div>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">PT1H</span></code> - 1 hour</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]sequential">
+<code class="descname">sequential</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Sequential tasks automatically depend on their own
+previous-cycle instance.  This declaration is deprecated in
+favour of explicit inter-cycle triggers - see
+<a class="reference internal" href="../../user-guide/writing-suites.html#sequentialtasks"><span class="std std-ref">Special Sequential Tasks</span></a>.</p>
+<dl class="docutils">
+<dt>Example:</dt><dd><code class="docutils literal notranslate"><span class="pre">foo,</span> <span class="pre">bar</span></code></dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]exclude at start-up">
+<code class="descname">exclude at start-up</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Any task listed here will be excluded from the initial task
+pool (this goes for suite restarts too). If an <em>inclusion</em>
+list is also specified, the initial pool will contain only
+included tasks that have not been excluded. Excluded tasks can
+still be inserted at run time.  Other tasks may still depend
+on excluded tasks if they have not been removed from the suite
+dependency graph, in which case some manual triggering, or
+insertion of excluded tasks, may be required.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[scheduling][special tasks]include at start-up">
+<code class="descname">include at start-up</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>If this list is not empty, any task <em>not</em> listed in it will be
+excluded from the initial task pool (this goes for suite
+restarts too).  If an <em>exclusion</em> list is also specified, the
+initial pool will contain only included tasks that have not
+been excluded. Excluded tasks can still be inserted at run
+time. Other tasks may still depend on excluded tasks if they
+have not been removed from the suite dependency graph, in
+which case some manual triggering, or insertion of excluded
+tasks, may be required.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling][xtriggers]">
+<code class="descname">[xtriggers]</code></dt>
+<dd><p>This section is for <em>External Trigger</em> function declarations -
+see <a class="reference internal" href="../../user-guide/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[scheduling][xtriggers]&lt;xtrigger name&gt;">
+<code class="descname">&lt;xtrigger name&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-xtrigger_function_signature" title="parsec-type-xtrigger_function_signature"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">xtrigger</span> <span class="pre">function</span> <span class="pre">signature</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Any user-defined event trigger function declarations and
+corresponding labels for use in the graph.</p>
+<p>See <a class="reference internal" href="../../user-guide/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a> for details.</p>
+<p>Example = <code class="docutils literal notranslate"><span class="pre">my_trigger(arg1,</span> <span class="pre">arg2,</span> <span class="pre">kwarg1,</span> <span class="pre">kwarg2):PT10S</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[scheduling][graph]">
+<code class="descname">[graph]</code></dt>
+<dd><p>The suite dependency graph is defined under this section.  You can
+plot the dependency graph as you work on it, with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code>
+or by right clicking on the suite in the db viewer.  See also
+<a class="reference internal" href="../../user-guide/writing-suites.html#configuringscheduling"><span class="std std-ref">Scheduling - Dependency Graphs</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[scheduling][graph]&lt;recurrence&gt;">
+<code class="descname">&lt;recurrence&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The recurrence defines the sequence of cycle points
+for which the dependency graph is valid. These should be
+specified in our ISO 8601 derived sequence syntax, or
+similar for integer cycling:</p>
+<p>Example Recurrences:</p>
+<dl class="docutils">
+<dt>date-time cycling:</dt><dd><code class="docutils literal notranslate"><span class="pre">T00,T06,T12,T18</span></code> or <code class="docutils literal notranslate"><span class="pre">PT6H</span></code> - <em>every six hours</em></dd>
+<dt>integer cycling:</dt><dd><code class="docutils literal notranslate"><span class="pre">P2</span></code> - <em>every other cycle</em></dd>
+</dl>
+<p>See <a class="reference internal" href="../../user-guide/writing-suites.html#graphtypes"><span class="std std-ref">Graph Types</span></a> for more on recurrence expressions, and
+how multiple graphs combine.</p>
+<p>The value should be a dependency graph the given recurrence.
+Syntax examples follow; see also <a class="reference internal" href="../../user-guide/writing-suites.html#configuringscheduling"><span class="std std-ref">Scheduling - Dependency Graphs</span></a>
+and <a class="reference internal" href="../../user-guide/writing-suites.html#triggertypes"><span class="std std-ref">Task Triggering</span></a>.</p>
+<p>Example Graph Strings:</p>
+<blockquote>
+<div><div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># baz and waz both trigger off bar</span>
+<span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span> <span class="o">&amp;</span> <span class="kd">waz</span>
+
+<span class="c1"># bar triggers off foo[-P1D-PT6H]</span>
+<span class="kd">foo</span>[<span class="nb">-P1D-PT6H</span>] <span class="o">=&gt;</span> <span class="kd">bar</span>
+
+<span class="c1"># faz triggers off a message output of baz</span>
+<span class="kd">baz</span><span class="c">:</span><span class="kd">out1</span> <span class="o">=&gt;</span> <span class="kd">faz</span>
+
+<span class="c1"># Y triggers if X starts executing</span>
+<span class="kd">X</span><span class="c">:</span><span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">Y</span>
+
+<span class="c1"># Y triggers if X fails</span>
+<span class="kd">X</span><span class="c">:</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">Y</span>
+
+<span class="c1"># bar triggers if foo[-PT6H] fails</span>
+<span class="kd">foo</span>[<span class="nb">-PT6H</span>]<span class="c">:</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+
+<span class="c1"># Y suicides if X succeeds</span>
+<span class="kd">X</span> <span class="o">=&gt;</span> <span class="x">!Y</span>
+
+<span class="c1"># Z triggers if X succeeds or fails</span>
+<span class="kd">X</span> <span class="o">|</span> <span class="kd">X</span><span class="c">:</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">Z</span>
+
+<span class="c1"># Z triggers if X succeeds or fails</span>
+<span class="kd">X</span><span class="c">:</span><span class="kd">finish</span> <span class="o">=&gt;</span> <span class="kd">Z</span>
+
+<span class="c1"># general conditional triggers</span>
+<span class="p">(</span><span class="kd">A</span> <span class="o">|</span> <span class="kd">B</span> <span class="o">&amp;</span> <span class="kd">C</span> <span class="p">)</span> <span class="o">|</span> <span class="kd">D</span> <span class="o">=&gt;</span> <span class="kd">foo</span>
+
+<span class="c1"># bar triggers if foo is successfully submitted</span>
+<span class="kd">foo</span><span class="c">:</span><span class="kd">submit</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+
+<span class="c1"># bar triggers if submission of foo fails</span>
+<span class="kd">foo</span><span class="c">:</span><span class="kd">submit</span><span class="c">-</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime]">
+<code class="descname">[runtime]</code></dt>
+<dd><p>This section is used to specify how, where, and what to execute when
+tasks are ready to run. Common configuration can be factored out in a
+multiple-inheritance hierarchy of runtime namespaces that culminates
+in the tasks of the suite. Order of precedence is determined by the C3
+linearization algorithm as used to find the <em>method resolution order</em>
+in Python language class hierarchies. For details and examples see
+<a class="reference internal" href="../../user-guide/writing-suites.html#niorp"><span class="std std-ref">Runtime - Task Configuration</span></a>.</p>
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]">
+<code class="descname">[&lt;namespace&gt;]</code></dt>
+<dd><p>A namespace (i.e. task or family name) or a comma-separated list
+of namespace names, and repeat as needed to define all tasks in
+the suite. Names may contain letters, digits, underscores, and
+hyphens.  A namespace represents a group or family of tasks if
+other namespaces inherit from it, or a task if no others inherit
+from it.</p>
+<p>Names may not contain colons (which would preclude use of
+directory paths involving the registration name in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>
+variables). They may not contain the “.” character (it will be
+interpreted as the namespace hierarchy delimiter, separating
+groups and names -huh?).</p>
+<p>legal values:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">[foo]</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">[foo,</span> <span class="pre">bar,</span> <span class="pre">baz]</span></code></li>
+</ul>
+<p>If multiple names are listed the subsequent settings apply to
+each.</p>
+<p>All namespaces inherit initially from <em>root</em>, which can be
+explicitly configured to provide or override default settings for
+all tasks in the suite.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]platform">
+<code class="descname">platform</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]inherit">
+<code class="descname">inherit</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A list of the immediate parent(s) this namespace inherits
+from. If no parents are listed <code class="docutils literal notranslate"><span class="pre">root</span></code> is assumed.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]init-script">
+<code class="descname">init-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script invoked by the task job script before the task
+execution environment is configured - so it does not have
+access to any suite or task environment variables. It can be
+an external command or script, or inlined scripting. The
+original intention for this item was to allow remote tasks to
+source login scripts to configure their access to cylc, but
+this should no longer be necessary.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;Hello World&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]env-script">
+<code class="descname">env-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script invoked by the task job script between the
+cylc-defined environment (suite and task identity, etc.) and
+the user-defined task runtime environment - so it has access
+to the cylc environment (and the task environment has access
+to variables defined by this scripting). It can be an
+external command or script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;Hello World&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]err-script">
+<code class="descname">err-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script to be invoked at the end of the error trap,
+which is triggered due to failure of a command in the task job
+script or trappable job kill. The output of this will always
+be sent to STDERR and <code class="docutils literal notranslate"><span class="pre">$1</span></code> is set to the name of the signal
+caught by the error trap. The script should be fast and use
+very little system resource to ensure that the error trap can
+return quickly.  Companion of <code class="docutils literal notranslate"><span class="pre">exit-script</span></code>, which is
+executed on job success.  It can be an external command or
+script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printenv</span> <span class="n">FOO</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]exit-script">
+<code class="descname">exit-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script invoked at the very end of <em>successful</em> job
+execution, just before the job script exits. It should
+execute very quickly. Companion of <code class="docutils literal notranslate"><span class="pre">err-script</span></code>, which is
+executed on job failure. It can be an external command or
+script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="s2">&quot;$TMP_FILES&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]pre-script">
+<code class="descname">pre-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script invoked by the task job script immediately
+before the <code class="docutils literal notranslate"><span class="pre">script</span></code> item (just below). It can be an
+external command or script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;Hello from suite $</span><span class="si">{CYLC_SUITE_NAME}</span><span class="s2">!&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]script">
+<code class="descname">script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The main custom script invoked from the task job script. It
+can be an external command or script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]post-script">
+<code class="descname">post-script</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Custom script invoked by the task job script immediately
+after the <code class="docutils literal notranslate"><span class="pre">script</span></code> item (just above). It can be an external
+command or script, or inlined scripting.</p>
+<p>See also <a class="reference internal" href="../../user-guide/task-implementation.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+<p>User-defined script items:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]init-script" title="suite.rc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]env-script" title="suite.rc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]pre-script" title="suite.rc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]script" title="suite.rc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]post-script" title="suite.rc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]err-script" title="suite.rc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a></li>
+<li><a class="reference internal" href="#suite.rc[runtime][&lt;namespace&gt;]exit-script" title="suite.rc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a></li>
+</ul>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]extra log files">
+<code class="descname">extra log files</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A list of user-defined log files associated with a task. Log
+files must reside in the job log directory
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_LOG_DIR</span></code> and ideally should be named using the
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_LOG_ROOT</span></code> prefix (see <a class="reference internal" href="../../user-guide/writing-suites.html#task-job-script-variables"><span class="std std-ref">Task Job Script Variables</span></a>).</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">job.custom-log-name</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;]work sub-directory">
+<code class="descname">work sub-directory</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Task job scripts are executed from within <em>work directories</em>
+created automatically under the suite run directory. A task
+can get its own work directory from <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_WORK_DIR</span></code>
+(or simply <code class="docutils literal notranslate"><span class="pre">$PWD</span></code> if it does not <code class="docutils literal notranslate"><span class="pre">cd</span></code> elsewhere at
+runtime). The default directory path contains task name and
+cycle point, to provide a unique workspace for every instance
+of every task. If several tasks need to exchange files and
+simply read and write from their from current working
+directory, this item can be used to override the default to
+make them all use the same workspace.</p>
+<p>The top level share and work directory location can be changed
+(e.g. to a large data area) by a global config setting (see
+<a class="reference internal" href="global.html#flow.rc[hosts][&lt;hostname glob&gt;]work directory" title="flow.rc[hosts][&lt;hostname glob&gt;]work directory"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.rc[hosts][&lt;hostname</span> <span class="pre">glob&gt;]work</span> <span class="pre">directory</span></code></a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you omit cycle point from the work sub-directory path
+successive instances of the task will share the same
+workspace. Consider the effect on cycle point offset
+housekeeping of work directories before doing this.</p>
+</div>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_CYCLE_POINT/shared/</span></code></q>
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][meta]">
+<code class="descname">[meta]</code></dt>
+<dd><p>Section containing metadata items for this task or family
+namespace.  Several items (title, description, URL) are
+pre-defined and are used by Cylc. Others can be user-defined
+and passed to task event handlers to be interpreted according
+to your needs. For example, the value of an “importance” item
+could determine how an event handler responds to task failure
+events.</p>
+<p>Any suite meta item can now be passed to task event handlers
+by prefixing the string template item name with <code class="docutils literal notranslate"><span class="pre">suite_</span></code>,
+for example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">failed handler </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                send-help.sh \</span>
+<span class="s2">                    %(suite_title)s \</span>
+<span class="s2">                    %(suite_importance)s \</span>
+<span class="s2">                    %(title)s</span>
+<span class="s2">             &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][meta]title">
+<code class="descname">title</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A single line description of this namespace. It is
+displayed by the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">list</span></code> command and can be
+retrieved from running tasks with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code>
+command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][meta]description">
+<code class="descname">description</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A multi-line description of this namespace, retrievable
+from running tasks with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][meta]URL">
+<code class="descname">URL</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>A web URL to task documentation for this suite.  If</dt><dd><p>present it can be browsed with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">doc</span></code>
+command.  The string templates <code class="docutils literal notranslate"><span class="pre">%(suite_name)s</span></code> and
+<code class="docutils literal notranslate"><span class="pre">%(task_name)s</span></code> will be replaced with the actual
+suite and task names.</p>
+<p>See also <a class="reference internal" href="#suite.rc[meta]URL" title="suite.rc[meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[meta]URL</span></code></a>.</p>
+<p>Example:</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">http://my-site.com/suites/%(suite_name)s/%(task_name)s.html</span></code></p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][meta]&lt;custom metadata&gt;">
+<code class="descname">&lt;custom metadata&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Any user-defined metadata item.
+These, like title, URL, etc. can be passed to task event
+handlers to be interpreted according to your needs. For
+example, the value of an “importance” item could determine
+how an event handler responds to task failure events.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]">
+<code class="descname">[simulation]</code></dt>
+<dd><p>Task configuration for the suite <em>simulation</em> and <em>dummy</em> run
+modes described in <a class="reference internal" href="../../user-guide/running-suites.html#simulationmode"><span class="std std-ref">Simulating Suite Behaviour</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]default run length">
+<code class="descname">default run length</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">PT10S</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>The default simulated job run length, if
+<code class="docutils literal notranslate"><span class="pre">[job]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[simulation]speedup</span> <span class="pre">factor</span></code> are not set.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]speedup factor">
+<code class="descname">speedup factor</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-float" title="parsec-type-float"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">float</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>If <code class="docutils literal notranslate"><span class="pre">[job]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code> is set, the task
+simulated run length is computed by dividing it by this
+factor.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">10.0</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]time limit buffer">
+<code class="descname">time limit buffer</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">PT30S</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>For dummy jobs, a new <code class="docutils literal notranslate"><span class="pre">[job]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code> is set
+to the simulated task run length plus this buffer
+interval, to avoid job kill due to exceeding the time
+limit.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">PT10S</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]fail cycle points">
+<code class="descname">fail cycle points</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Configure simulated or dummy jobs to fail at certain cycle
+points.</p>
+<p>Example:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">all</span></code> - all instance of the task will fail</li>
+<li><code class="docutils literal notranslate"><span class="pre">2017-08-12T06,</span> <span class="pre">2017-08-12T18</span></code> - these instances of
+the task will fail</li>
+</ul>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]fail try 1 only">
+<code class="descname">fail try 1 only</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>If this is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> only the first run of the task
+instance will fail, otherwise retries will fail too.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][simulation]disable task event handlers">
+<code class="descname">disable task event handlers</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>If this is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> configured task event handlers
+will not be called in simulation or dummy modes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][environment filter]">
+<code class="descname">[environment filter]</code></dt>
+<dd><p>This section contains environment variable inclusion and
+exclusion lists that can be used to filter the inherited
+environment. <em>This is not intended as an alternative to a
+well-designed inheritance hierarchy that provides each task
+with just the variables it needs.</em> Filters can, however,
+improve suites with tasks that inherit a lot of environment
+they don’t need, by making it clear which tasks use which
+variables.  They can optionally be used routinely as explicit
+“task environment interfaces” too, at some cost to brevity,
+because they guarantee that variables filtered out of the
+inherited task environment are not used.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Environment filtering is done after inheritance is
+completely worked out, not at each level on the way, so
+filter lists in higher-level namespaces only have an effect
+if they are not overridden by descendants.</p>
+</div>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][environment filter]include">
+<code class="descname">include</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>If given, only variables named in this list will be
+included from the inherited environment, others will be
+filtered out. Variables may also be explicitly excluded by
+an <code class="docutils literal notranslate"><span class="pre">exclude</span></code> list.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][environment filter]exclude">
+<code class="descname">exclude</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Variables named in this list will be filtered out of the
+inherited environment.  Variables may also be implicitly
+excluded by omission from an <code class="docutils literal notranslate"><span class="pre">include</span></code> list.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]">
+<code class="descname">[job]</code></dt>
+<dd><p>This section configures the means by which cylc submits task
+job scripts to run.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]batch system">
+<code class="descname">batch system</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">background</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]batch submit command template">
+<code class="descname">batch submit command template</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]execution polling intervals">
+<code class="descname">execution polling intervals</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]execution retry delays">
+<code class="descname">execution retry delays</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]execution time limit">
+<code class="descname">execution time limit</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]submission polling intervals">
+<code class="descname">submission polling intervals</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][job]submission retry delays">
+<code class="descname">submission retry delays</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]">
+<code class="descname">[remote]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]host">
+<code class="descname">host</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]owner">
+<code class="descname">owner</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]suite definition directory">
+<code class="descname">suite definition directory</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs">
+<code class="descname">retrieve job logs</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs max size">
+<code class="descname">retrieve job logs max size</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs retry delays">
+<code class="descname">retrieve job logs retry delays</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]">
+<code class="descname">[events]</code></dt>
+<dd><p>Cylc can call nominated event handlers when certain task
+events occur. This section configures specific task event
+handlers; see <a class="reference internal" href="#suite.rc[cylc][events]" title="suite.rc[cylc][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc][events]</span></code></a> for
+suite event handlers.</p>
+<p>Event handlers can be located in the suite <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory,
+otherwise it is up to you to ensure their location is in
+<code class="docutils literal notranslate"><span class="pre">$PATH</span></code> (in the shell in which the suite server program
+runs). They should require little resource to run and return
+quickly.</p>
+<p>Each task event handler can be specified as a list of command
+lines or command line templates. They can contain any or all
+of the following patterns, which will be substituted with
+actual values:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">%(event)s</span></code></dt><dd>Event name</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(suite)s</span></code></dt><dd>Suite name</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(suite_uuid)s</span></code></dt><dd>Suite UUID string</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(point)s</span></code></dt><dd>Cycle point</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(name)s</span></code></dt><dd>Task name</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(submit_num)s</span></code></dt><dd>Submit number</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(try_num)s</span></code></dt><dd>Try number</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(id)s</span></code></dt><dd>Task ID (i.e. %(name)s.%(point)s)</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(batch_sys_name)s</span></code></dt><dd>Batch system name</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(batch_sys_job_id)</span></code></dt><dd>Batch system job ID</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(submit_time)s</span></code></dt><dd>Date-time when task job is submitted</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(start_time)s</span></code></dt><dd>Date-time when task job starts running</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(finish_time)s</span></code></dt><dd>Date-time when task job exits</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(user&#64;host)s</span></code></dt><dd><a class="reference external" href="mailto:user&#37;&#52;&#48;host">user<span>&#64;</span>host</a> where the task job is submitted</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(message)s</span></code></dt><dd>Event message, if any</dd>
+<dt>any task [meta] item, e.g.:</dt><dd><dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">%(title)s</span></code></dt><dd>Task title</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(URL)s</span></code></dt><dd>Task URL</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(importance)s</span></code></dt><dd>Example custom task metadata</dd>
+</dl>
+</dd>
+<dt>any suite <code class="docutils literal notranslate"><span class="pre">[meta]</span></code> item, prefixed with <code class="docutils literal notranslate"><span class="pre">suite_</span></code></dt><dd><dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">%(suite_title)s</span></code></dt><dd>Suite title</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(suite_URL)s</span></code></dt><dd>Suite URL.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(suite_rating)s</span></code></dt><dd>Example custom suite metadata.</dd>
+</dl>
+</dd>
+</dl>
+<p>Otherwise, the command line will be called with the following
+default</p>
+<p>Arguments:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;task-event-handler&gt; %(event)s %(suite)s %(id)s %(message)s
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Substitution patterns should not be quoted in the template
+strings.  This is done automatically where required.</p>
+</div>
+<p>For an explanation of the substitution syntax, see
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#string-formatting">String Formatting Operations in the Python
+documentation</a>.</p>
+<p>Additional information can be passed to event handlers via the
+<code class="docutils literal notranslate"><span class="pre">[cylc]</span> <span class="pre">-&gt;</span> <span class="pre">[[environment]]</span></code> (but not via task
+runtime environments - event handlers are not called by
+tasks).</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]execution timeout">
+<code class="descname">execution timeout</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>If a task has not finished after the specified ISO 8601
+duration/interval, the <em>execution timeout</em> event
+handler(s) will be called.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]handlers">
+<code class="descname">handlers</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify a list of command lines or command line templates
+as task event handlers.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]handler events">
+<code class="descname">handler events</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify the events for which the general task event
+handlers should be invoked.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">submission</span> <span class="pre">failed,</span> <span class="pre">failed</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]handler retry delays">
+<code class="descname">handler retry delays</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify an initial delay before running an event handler
+command and any retry delays in case the command returns a
+non-zero code. The default behaviour is to run an event
+handler command once without any delay.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">PT10S,</span> <span class="pre">PT1M,</span> <span class="pre">PT5M</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]mail events">
+<code class="descname">mail events</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify the events for which notification emails should be
+sent.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">submission</span> <span class="pre">failed,</span> <span class="pre">failed</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]mail from">
+<code class="descname">mail from</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify an alternate <code class="docutils literal notranslate"><span class="pre">from:</span></code> email address for event
+notifications.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]mail retry delays">
+<code class="descname">mail retry delays</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify an initial delay before running the mail
+notification command and any retry delays in case the
+command returns a non-zero code. The default behaviour is
+to run the mail notification command once without any
+delay.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]mail smtp">
+<code class="descname">mail smtp</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Specify the SMTP server for sending email notifications.</p>
+<p>Example:</p>
+<q>
+<code class="docutils literal notranslate"><span class="pre">smtp.yourorg</span></code></q>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]mail to">
+<code class="descname">mail to</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>A list of email addresses to send task event
+notifications. The list can be anything accepted by the
+<code class="docutils literal notranslate"><span class="pre">mail</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]submission timeout">
+<code class="descname">submission timeout</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>If a task has not started after the specified ISO 8601
+duration/interval, the <em>submission timeout</em> event
+handler(s) will be called.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]expired handler">
+<code class="descname">expired handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]late offset">
+<code class="descname">late offset</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]late handler">
+<code class="descname">late handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]submitted handler">
+<code class="descname">submitted handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]started handler">
+<code class="descname">started handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]succeeded handler">
+<code class="descname">succeeded handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]failed handler">
+<code class="descname">failed handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]submission failed handler">
+<code class="descname">submission failed handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]warning handler">
+<code class="descname">warning handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]critical handler">
+<code class="descname">critical handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]retry handler">
+<code class="descname">retry handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]submission retry handler">
+<code class="descname">submission retry handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]execution timeout handler">
+<code class="descname">execution timeout handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]submission timeout handler">
+<code class="descname">submission timeout handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][events]custom handler">
+<code class="descname">custom handler</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]">
+<code class="descname">[suite state polling]</code></dt>
+<dd><p>Configure automatic suite polling tasks as described in
+<a class="reference internal" href="../../user-guide/running-suites.html#suitestatepolling"><span class="std std-ref">Triggering Off Of Tasks In Other Suites</span></a>. The items in this section reflect
+the options and defaults of the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code> command,
+except that the target suite name and the
+<code class="docutils literal notranslate"><span class="pre">--task</span></code>, <code class="docutils literal notranslate"><span class="pre">--cycle</span></code>, and <code class="docutils literal notranslate"><span class="pre">--status</span></code> options are
+taken from the graph notation.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]user">
+<code class="descname">user</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Username of an account on the suite host to which you have
+access. The polling <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code> command will be
+invoked on the remote account.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]host">
+<code class="descname">host</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The hostname of the target suite. The polling
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code> command will be invoked on the remote
+account.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]interval">
+<code class="descname">interval</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Polling interval expressed as an ISO 8601
+duration/interval.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]max-polls">
+<code class="descname">max-polls</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The maximum number of polls before timing out and entering
+the “failed” state.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]message">
+<code class="descname">message</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Wait for the target task in the target suite to receive a
+specified message rather than achieve a state.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]run-dir">
+<code class="descname">run-dir</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>For your own suites the run database location is
+determined by your site/user config. For other suites,
+e.g. those owned by others, or mirrored suite databases,
+use this item to specify the location of the top level
+cylc run directory (the database should be a suite-name
+sub-directory of this location).</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][suite state polling]verbose mode">
+<code class="descname">verbose mode</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Run the polling <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code> command in verbose
+output mode.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][environment]">
+<code class="descname">[environment]</code></dt>
+<dd><p>The user defined task execution environment. Variables
+defined here can refer to cylc suite and task identity
+variables, which are exported earlier in the task job
+script, and variable assignment expressions can use cylc
+utility commands because access to cylc is also configured
+earlier in the script.  See also
+<a class="reference internal" href="../../user-guide/writing-suites.html#taskexecutionenvironment"><span class="std std-ref">Task Execution Environment</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][environment]&lt;variable&gt;">
+<code class="descname">&lt;variable&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>The order of definition is
+preserved so values can refer to previously defined
+variables. Values are passed through to the task job
+script without evaluation or manipulation by cylc, so any
+variable assignment expression that is legal in the job
+submission shell can be used.  White space around the
+<code class="docutils literal notranslate"><span class="pre">=</span></code> is allowed (as far as cylc’s suite.rc parser is
+concerned these are just normal configuration items).</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FOO = $HOME/bar/baz
+BAR = ${FOO}$GLOBALVAR
+BAZ = $( echo &quot;hello world&quot; )
+WAZ = ${FOO%.jpg}.png
+NEXT_CYCLE = $( cylc cycle-point --offset=PT6H )
+ZAZ = &quot;${FOO#bar}&quot;
+# ^ quoted to escape the suite.rc comment character
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][directives]">
+<code class="descname">[directives]</code></dt>
+<dd><p>Batch queue scheduler directives.  Whether or not these are
+used depends on the batch system. For the built-in methods
+that support directives (<code class="docutils literal notranslate"><span class="pre">loadleveler</span></code>, <code class="docutils literal notranslate"><span class="pre">lsf</span></code>, <code class="docutils literal notranslate"><span class="pre">pbs</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sge</span></code>, <code class="docutils literal notranslate"><span class="pre">slurm</span></code>, <code class="docutils literal notranslate"><span class="pre">moab</span></code>), directives are written to the
+top of the task job script in the correct format for the
+method. Specifying directives individually like this allows
+use of default directives that can be individually overridden
+at lower levels of the runtime namespace hierarchy.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][directives]&lt;directive&gt;">
+<code class="descname">&lt;directive&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>e.g. <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">=</span> <span class="pre">parallel</span></code>.</p>
+<p>Example directives for the built-in batch system handlers
+are shown in <a class="reference internal" href="../../user-guide/task-job-submission.html#availablemethods"><span class="std std-ref">Supported Job Submission Methods</span></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][outputs]">
+<code class="descname">[outputs]</code></dt>
+<dd><p>Register custom task outputs for use in message triggering in
+this section (<a class="reference internal" href="../../user-guide/writing-suites.html#messagetriggers"><span class="std std-ref">Message Triggers</span></a>)</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][outputs]&lt;output&gt;">
+<code class="descname">&lt;output&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Task output
+messages (<a class="reference internal" href="../../user-guide/writing-suites.html#messagetriggers"><span class="std std-ref">Message Triggers</span></a>).  The item name is used
+to select the custom output
+message in graph trigger notation.</p>
+<p>Examples:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;sea state products ready&quot;</span>
+<span class="nv">out2 </span><span class="o">=</span><span class="s"> &quot;NWP restart files completed&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][parameter environment templates]">
+<code class="descname">[parameter environment templates]</code></dt>
+<dd><p>The user defined task execution parameter environment
+templates. This is only relevant for <em>parameterized tasks</em> -
+see <a class="reference internal" href="../../user-guide/writing-suites.html#parameterized-tasks-label"><span class="std std-ref">Parameterized Tasks</span></a>.</p>
+<dl class="setting">
+<dt id="suite.rc[runtime][&lt;namespace&gt;][parameter environment templates]&lt;parameter&gt;">
+<code class="descname">&lt;parameter&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Pairs of environment
+variable name and Python string template for parameter
+substitution. This is only relevant for <em>parameterized
+tasks</em> - see <a class="reference internal" href="../../user-guide/writing-suites.html#parameterized-tasks-label"><span class="std std-ref">Parameterized Tasks</span></a>.</p>
+<p>If specified, in addition to the standard
+<code class="docutils literal notranslate"><span class="pre">CYLC_TASK_PARAM_&lt;key&gt;</span></code> variables, the job script will
+also export the named variables specified here, with the
+template strings substituted with the parameter values.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">MYNUM=%(i)d</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">MYITEM=%(item)s</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">MYFILE=/path/to/%(i)03d/%(item)s</span></code></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[visualization]">
+<code class="descname">[visualization]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[visualization]initial cycle point">
+<code class="descname">initial cycle point</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-cycle_point" title="parsec-type-cycle_point"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">cycle</span> <span class="pre">point</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]final cycle point">
+<code class="descname">final cycle point</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]number of cycle points">
+<code class="descname">number of cycle points</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">3</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]collapsed families">
+<code class="descname">collapsed families</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]use node color for edges">
+<code class="descname">use node color for edges</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]use node fillcolor for edges">
+<code class="descname">use node fillcolor for edges</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]use node color for labels">
+<code class="descname">use node color for labels</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]node penwidth">
+<code class="descname">node penwidth</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">2</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]edge penwidth">
+<code class="descname">edge penwidth</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">2</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]default node attributes">
+<code class="descname">default node attributes</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Default:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">style=unfilled,</span> <span class="pre">shape=ellipse</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="setting">
+<dt id="suite.rc[visualization]default edge attributes">
+<code class="descname">default edge attributes</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[visualization][node groups]">
+<code class="descname">[node groups]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[visualization][node groups]&lt;group&gt;">
+<code class="descname">&lt;group&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="suite.rc[visualization][node attributes]">
+<code class="descname">[node attributes]</code></dt>
+<dd><dl class="setting">
+<dt id="suite.rc[visualization][node attributes]&lt;node&gt;">
+<code class="descname">&lt;node&gt;</code></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd>
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Roadmap &mdash; Cylc 8.0a2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/cylc.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0a2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/cylc.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0a2 documentation" href="../index.html" />
+    <link rel="up" title="Suite Design Guide" href="index.html" />
+    <link rel="next" title="Reference" href="../reference/index.html" />
+    <link rel="prev" title="Portable Suites" href="portable-suites.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="roadmap">
+
+<h1>Roadmap<a class="headerlink" href="../../html/suite-design-guide/roadmap.html#roadmap" title="View HTML">§</a></h1>
+
+<p>Several planned future developments in Rose and Cylc may have an impact on
+suite design.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="list-item-override-in-site-include-files">
+
+<h2>List Item Override In Site Include-Files<a class="headerlink" href="../../html/suite-design-guide/roadmap.html#list-item-override-in-site-include-files" title="View HTML">§</a></h2>
+
+<p>A few Cylc config items hold lists of task (or family) names, e.g.:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">clock-trigger </span><span class="o">=</span><span class="s"> get-data-a, get-data-b</span>
+    <span class="c1">#...</span>
+<span class="c1">#...</span>
+</pre></div>
+</div>
+<p>Currently a repeated config item completely overrides a previously set value
+(apart from graph strings which are always additive). This means a site
+include-file (for example) can’t add a new site-specific clock-triggered task
+without writing out the complete list of all clock-triggered tasks in the
+suite, which breaks the otherwise clean separation into core and site files.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the future we <a class="reference external" href="https://github.com/cylc/cylc-flow/issues/1363">plan to</a>
+support add, subtract, unset, and override semantics for all items.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="um-stash-in-optional-app-configs">
+
+<h2>UM STASH in Optional App Configs<a class="headerlink" href="../../html/suite-design-guide/roadmap.html#um-stash-in-optional-app-configs" title="View HTML">§</a></h2>
+
+<p>A caveat to the advice on use of option app configs in
+<a class="reference internal" href="efficiency.html#optional-app-config-files"><span class="std std-ref">Optional App Config Files</span></a>: in general you might need the ability
+to turn off or modify some STASH requests in the main
+app, not just add additional site-specific
+STASH. But overriding STASH in optional configs is fragile because STASH
+namelists names are automatically generated from a <em>hash</em> of the precise
+content of the namelist. This makes it possible to uniquely identify the same
+STASH requests in different apps, but if any detail of a STASH request changes
+in a main app its namelist name will change and any optional configs that refer
+to it will become divorced from their intended target.</p>
+<p>Until this problem is solved we recommend that:</p>
+<ul class="simple">
+<li>All STASH in main UM apps should be grouped into sensible
+<em>packages</em> that can be turned on and off in optional configs without
+referencing the individual STASH request namelists.</li>
+<li>Or all STASH should be held in optional site configs and none in the
+main app. Note however that STASH is difficult to configure outside of
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code>, and the editor <a class="reference external" href="https://github.com/metomi/rose/issues/1685">does not yet allow you to edit optional
+configs</a>.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="modular-suite-design">
+
+<h2>Modular Suite Design<a class="headerlink" href="../../html/suite-design-guide/roadmap.html#modular-suite-design" title="View HTML">§</a></h2>
+
+<p>The <a class="reference external" href="https://github.com/cylc/cylc-flow/issues/1829">modular suite design concept</a>
+is that we should be able to import common workflow segments at install time
+rather than duplicating them in each suite. The content of a suite module
+will be encapsulated in a protected namespace to avoid clashing with the
+importing suite, and selected inputs and outputs exposed via a proper interface.</p>
+<p>This should aid portable suite design too by enabling site-specific parts of a
+workflow (local product generation for example) to be stored and imported
+on-site rather than polluting the source and revision control record of
+the core suite that everyone sees.</p>
+<p>We note that this can already be done to a limited extent by using
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> to install suite.rc fragments from an external
+location. However, as a literal inlining mechanism with no encapsulation or
+interface, the internals of the “imported” fragments would have to be
+compatible with the suite definition in every respect.</p>
+<p>See also <a class="reference internal" href="general-principles.html#monolithic-or-interdependent-suites"><span class="std std-ref">Monolithic Or Interdependent Suites</span></a> on modular <em>systems of
+suites</em> connected by inter-suite triggering.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
