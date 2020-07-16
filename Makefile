@@ -7,6 +7,7 @@ SPHINXOPTS = -n
 SPHINXBUILD = sphinx-build
 SOURCEDIR = src
 BUILDDIR = doc/$(CYLC_VERSION)
+SETCURRENT = true
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -23,12 +24,17 @@ cleanall:
 
 .PHONY: help clean Makefile
 
+finally =
+ifeq ($(SETCURRENT),true)
+	finally = bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html
+endif
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats
-	bin/version "$(BUILDDIR)/../" write > doc/versions.json
-	# setup HTML redirects to point at this version
-	bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html
+	bin/version write > doc/versions.json
+	# setup HTML redirects to point at this version if $(SETCURRENT) == true
+	$(finally)

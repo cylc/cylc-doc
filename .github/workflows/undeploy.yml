@@ -48,9 +48,7 @@ jobs:
 
       - name: check tag
         run: |
-          readlink gh-pages/current
           current="$(readlink gh-pages/current)"
-          echo "current: $current"
           if [[ -z $current ]]
           then
             exit 'could not determine the "current" version.'

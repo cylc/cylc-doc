@@ -22,21 +22,27 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
 
 ## Deploying
 
-To document a new version of Cylc:
+**To document a new version of Cylc:**
 
 * Create a tag with a name matching a released cylc-flow tag.
 * Push it upstream.
 * Trigger the `deploy` workflow against that tag.
 
-To update documentation for an existing version (post release):
+**To update documentation for an existing version (post release):**
 
 * Update the existing tag.
 * Push it upstream.
 * Trigger the `deploy` workflow against that tag.
 
-To remove old documentation:
+**To remove old documentation:**
 
 * Trigger the `undeploy` workflow against the relevant tag.
+
+**To do any other weird or wonderful things:**
+
+* Checkout `upstream/gh-pages`.
+* Make your changes and add them to a new commit.
+* Push to `gh-pages`.
 
 > **Note:** All changes made to the `gh-pages` branch are non-destructive 
   (i.e. no force pusing) so all changes can be undone.

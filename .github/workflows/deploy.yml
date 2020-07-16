@@ -27,6 +27,10 @@ on:
       tag:
         description: 'Tag present on both cylc-flow and cylc-docs.'
         required: true
+      set_current:
+        description: 'Make this the default documented version.'
+        required: false
+        default: true
 
 jobs:
   deploy:
@@ -95,7 +99,8 @@ jobs:
             clean \
             html \
             slides \
-            SPHINXOPTS='-Wn'
+            SPHINXOPTS='-Wn' \
+            SETCURRENT=${{ github.event.inputs.set_current }}
 
           # linkcheck \
 
