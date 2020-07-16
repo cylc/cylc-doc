@@ -1,0 +1,79 @@
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Remove a deployed version of the documentation.
+
+# Note: All changes made to the gh-pages branch are non-destructive 
+#       (i.e. no force pusing) so all changes can be undone.
+
+name: undeploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag present on both cylc-flow and cylc-docs.'
+        required: true
+
+jobs:
+  undeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+
+      - name: checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: check tag
+        run: |
+          readlink gh-pages/current
+          current="$(readlink gh-pages/current)"
+          echo "current: $current"
+          if [[ -z $current ]]
+          then
+            exit 'could not determine the "current" version.'
+          elif [[ "$current" == '${{ github.event.inputs.tag }}' ]]
+          then
+            exit 'Error: cannot delete the "current" version'
+          fi
+
+      - name: configure git
+        run: |
+          git config --global user.name "action:undeploy"
+          git config --global user.email "action:undeploy@github.com"
+
+      - name: remove version
+        run: |
+          git -C gh-pages rm -r ${{ github.event.inputs.tag }}
+
+      - name: update version file
+        run: |
+          bin/version write
+          git -C gh-pages add -u
+
+      - name: push changes
+        run: |
+          git -C gh-pages commit -m "remove: ${{ github.event.inputs.tag }}"
+          git -C gh-pages push origin HEAD

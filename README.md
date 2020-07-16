@@ -26,17 +26,25 @@ To document a new version of Cylc:
 
 * Create a tag with a name matching a released cylc-flow tag.
 * Push it upstream.
-* The docs will auto build and deploy.
+* Trigger the `deploy` workflow against that tag.
 
 To update documentation for an existing version (post release):
 
 * Update the existing tag.
 * Push it upstream.
-* The docs will auto build and deploy.
+* Trigger the `deploy` workflow against that tag.
 
 To remove old documentation:
 
-* Checkout the gh-pages branch.
-* `git rm doc/<version>`
-* `git commit -m 'remove: <version>`
-* `git push upstream gh-pages`
+* Trigger the `undeploy` workflow against the relevant tag.
+
+> **Note:** All changes made to the `gh-pages` branch are non-destructive 
+  (i.e. no force pusing) so all changes can be undone.
+
+  The `deploy` and `undeploy` actions are automations for convenience, however,
+  everything can still be done by hand.
+
+> **Warning:** When you remove an old version from the documentation the
+  old version is still in the commit history. After a while we may wish to
+  rebase-squeeze the `gh-pages` branch to reduce the size of the repo.
+  This has not been automated on-purpose.

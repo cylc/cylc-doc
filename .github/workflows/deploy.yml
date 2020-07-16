@@ -1,3 +1,26 @@
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Deploy a new version of the documentation or rebuild an existing one.
+
+# Note: All changes made to the gh-pages branch are non-destructive 
+#       (i.e. no force pusing) so all changes can be undone.
+
+name: deploy
+
 on:
   workflow_dispatch:
     inputs:
@@ -8,7 +31,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: configure python
         uses: actions/setup-python@v2
@@ -89,17 +111,11 @@ jobs:
             git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
           )
 
-      - name: commit changes
+      - name: push changes
         run: |
           (
             cd gh-pages
             git add *
             git commit -m "add: ${{ github.event.inputs.tag }}"
-          )
-
-      - name: push changes
-        run: |
-          (
-            cd gh-pages
             git push origin HEAD
           )
