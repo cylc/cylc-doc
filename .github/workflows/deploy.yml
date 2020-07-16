@@ -99,10 +99,9 @@ jobs:
             clean \
             html \
             slides \
+            linkcheck \
             SPHINXOPTS='-Wn' \
             SETCURRENT=${{ github.event.inputs.set_current }}
-
-          # linkcheck \
 
       - name: configure git
         run: |
