@@ -1,5 +1,5 @@
 # THIS FILE IS PART OF THE CYLC SUITE ENGINE.
-# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+# Copyright (C) 2008-2020 NIWA & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
+copyright = '2008-2020 NIWA & British Crown (Met Office) & Contributors'
 
 # Versioning information. Sphinx advises version strictly meaning X.Y.
 version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
