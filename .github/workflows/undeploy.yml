@@ -17,7 +17,7 @@
 # Remove a deployed version of the documentation.
 
 # Note: All changes made to the gh-pages branch are non-destructive 
-#       (i.e. no force pusing) so all changes can be undone.
+#       (i.e. no force pushing) so all changes can be undone.
 
 name: undeploy
 

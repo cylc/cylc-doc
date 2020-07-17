@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""Simple tools for managing multiple documented versions of cylc-flow."""
 
 import argparse
 import json
@@ -67,7 +68,10 @@ def tidy(args):
     ]
 
     # build dictionary of minor versions
-    # e.g. {(1, 0): ['1.0.1', '1.0.2', '1.0.3']}
+    # versions = [<Version('1.0.1')>, <Version('1.0.2')>]
+    # minor_versions = {
+    #     (1, 0): [<Version('1.0.1')>, <Version('1.0.2')>]
+    # }
     minor_versions = {}
     for version in versions:
         release = version._version.release
