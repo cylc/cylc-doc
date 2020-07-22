@@ -70,6 +70,7 @@ jobs:
           path: gh-pages
 
       - name: sync static files
+        if: ${{ github.event.inputs.set_current }}
         run: |
           DOCS="${{ github.workspace }}/docs" \
           PAGE="${{ github.workspace }}/gh-pages"  \
