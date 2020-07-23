@@ -56,3 +56,11 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
 
   This has not been automated on-purpose, though if it becomes a problem
   we could potentially setup a chron job to squash all but the last N commits.
+
+## Nightly Builds
+
+The `nightly` action builds `cylc-doc:master` against `cylc-flow:master`
+and pushes the result up to `upstream/gh-pages`.
+
+This action deletes its previous commits so the nightly build history is not
+preserved and does not require housekeeping.

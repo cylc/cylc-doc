@@ -22,7 +22,7 @@ cd "$1/.."
 
 CYLC_VERSION="$2"
 DEFAULT_FORMAT="$3"
-LATEST='current'
+LATEST="${4:-}"
 
 
 html_redirect () {
@@ -46,12 +46,15 @@ __HTML__
 
 
 main () {
-    # make the specified version of the documentation the default
-    rm "${LATEST}" || true
-    ln -s "${CYLC_VERSION}" "${LATEST}"
-    html_redirect "${LATEST}/index.html" "index.html"
-    # make the specified format the default
-    html_redirect "${DEFAULT_FORMAT}/index.html" "${LATEST}/index.html"
+    # link to the default format in the freshly built documentation
+    html_redirect "${DEFAULT_FORMAT}/index.html" "${CYLC_VERSION}/index.html"
+
+    if [[ -n $LATEST ]]; then
+        # make the specified version of the documentation the default
+        rm "${LATEST}" || true
+        ln -s "${CYLC_VERSION}" "${LATEST}"
+        html_redirect "${LATEST}/index.html" "index.html"
+    fi
 }
 
 

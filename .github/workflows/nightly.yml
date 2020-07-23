@@ -75,44 +75,33 @@ jobs:
           DOCS="${{ github.workspace }}/docs" \
           PAGE="${{ github.workspace }}/gh-pages"  \
 
-          (
-            cd "$DOCS"
-            rm -r doc
-            ln -s "$PAGE" doc
-          )
-
-          ls -l "$DOCS"
-
-      - name: build docs
-        run: |
-          # remove previous build
-          rm -r docs/nightly || true
-          # make new build
-          make -C docs \
-            html \
-            slides \
-            linkcheck \
-            SPHINXOPTS='-Wn' \
-            SETCURRENT=false \
-            CYLC_VERSION=nightly
+          cd "$DOCS"
+          rm -r doc
+          ln -s "$PAGE" doc
 
       - name: configure git
         run: |
           git config --global user.name "action:deploy"
           git config --global user.email "action:deploy@github.com"
 
-      - name: tidy old versions
+      - name: remove previous nightly build
         run: |
-          (
-            cd docs
-            git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
-          )
+          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/omit \1/"' \
+            git -C gh-pages rebase -i --keep-base
+
+      - name: build docs
+        run: |
+          build_name="nightly.$(isodatetime --utc -f %Y-%m-%d)"
+          make -C docs \
+            html \
+            slides \
+            linkcheck \
+            SPHINXOPTS='-Wn' \
+            SETCURRENT=false \
+            CYLC_VERSION="$build_name"
+          git -C gh-pages add "$build_name" 'versions.json'
 
       - name: push changes
         run: |
-          (
-            cd gh-pages
-            git add *
-            git commit -m 'nightly build'
-            git push origin HEAD
-          )
+          git -C gh-pages commit -m '-nightly build-'
+          git -C gh-pages push origin HEAD

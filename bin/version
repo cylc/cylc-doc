@@ -36,8 +36,9 @@ DUMMY_FORMATS = [
 
 
 def get_versions(builddir):
+    """Yield paths to each documented version."""
     yield from pathlib.Path(builddir).glob('[0-9]*.*')
-    yield from pathlib.Path(builddir).glob('nightly*')
+    yield from pathlib.Path(builddir).glob('nightly.*')
     yield from pathlib.Path(builddir).glob('dev*')
 
 
