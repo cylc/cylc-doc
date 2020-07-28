@@ -86,7 +86,7 @@ jobs:
 
       - name: remove previous nightly build
         run: |
-          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/omit \1/"' \
+          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
             git -C gh-pages rebase -i --keep-base
 
       - name: build docs
