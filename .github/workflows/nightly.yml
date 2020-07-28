@@ -19,18 +19,12 @@
 # Note: All changes made to the gh-pages branch are non-destructive 
 #       (i.e. no force pushing) so all changes can be undone.
 
-name: deploy
+name: nightly
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag present on both cylc-flow and cylc-docs.'
-        required: true
-      set_current:
-        description: 'Make this the default documented version.'
-        required: false
-        default: true
+  schedule:
+    - cron: '35 0 * * *'
 
 jobs:
   deploy:
@@ -44,7 +38,7 @@ jobs:
       - name: checkout cylc-doc
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.tag }}
+          ref: master
           path: docs
 
       - name: install graphviz
@@ -57,25 +51,24 @@ jobs:
         run: |
           pip install "${{ github.workspace }}/docs[all]"
 
+      - name: checkout cylc-flow
+        uses: actions/checkout@v2
+        with:
+          repository: cylc/cylc-flow
+          ref: master
+          path: cylc-flow
+
       - name: install cylc-flow
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install "cylc-flow[all]==${{ github.event.inputs.tag }}"
+          pip install './cylc-flow[all]'
 
       - name: checkout gh-pages
         uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: gh-pages
-
-      - name: sync static files
-        if: ${{ github.event.inputs.set_current }}
-        run: |
-          DOCS="${{ github.workspace }}/docs" \
-          PAGE="${{ github.workspace }}/gh-pages"  \
-
-          rsync -r "$DOCS/doc/" "$PAGE/"
 
       - name: install gh-pages
         run: |
@@ -86,31 +79,29 @@ jobs:
           rm -r doc
           ln -s "$PAGE" doc
 
-      - name: build docs
-        run: |
-          # NOTE: Doing a clean build allows up to update docs for a
-          #       deployed version at a later date.
-          make -C docs \
-            clean \
-            html \
-            slides \
-            linkcheck \
-            SPHINXOPTS='-Wn' \
-            SETCURRENT=${{ github.event.inputs.set_current }}
-
       - name: configure git
         run: |
           git config --global user.name "action:deploy"
           git config --global user.email "action:deploy@github.com"
 
-      - name: tidy old versions
+      - name: remove previous nightly build
         run: |
-          cd docs
-          git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
+          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
+            git -C gh-pages rebase -i --keep-base
+
+      - name: build docs
+        run: |
+          build_name="nightly.$(isodatetime --utc -f %Y-%m-%d)"
+          make -C docs \
+            html \
+            slides \
+            linkcheck \
+            SPHINXOPTS='-Wn' \
+            SETCURRENT=false \
+            CYLC_VERSION="$build_name"
+          git -C gh-pages add "$build_name" 'versions.json'
 
       - name: push changes
         run: |
-          cd gh-pages
-          git add *
-          git commit -m "add: ${{ github.event.inputs.tag }}"
-          git push origin HEAD
+          git -C gh-pages commit -m '-nightly build-'
+          git -C gh-pages push origin HEAD

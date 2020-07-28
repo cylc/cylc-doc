@@ -81,14 +81,16 @@ master_doc = 'index'
 project = 'Cylc'
 copyright = '2008-2020 NIWA & British Crown (Met Office) & Contributors'
 
-# Versioning information. Sphinx advises version strictly meaning X.Y.
-version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
-release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
+# Versioning information.
+release = os.environ['CYLC_VERSION']  # set in makefile
+version = '.'.join(release.split('.')[:2])  # short version for display
 
+# Autosummary opts (for auto generation of docs from source code).
 autosummary_generate = True
 autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
+# Mapping to other Sphinx projects we want to import references from.
 intersphinx_mapping = {
     'rose': (
         'http://metomi.github.io/rose/doc/html', None

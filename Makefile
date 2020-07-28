@@ -22,19 +22,20 @@ cleanall:
 	(cd doc; echo [0-9]*.*)
 	rm -rI doc/[0-9]*.*
 
-.PHONY: help clean Makefile
+.PHONY: help clean Makefile .EXPORT_ALL_VARIABLES
 
-finally =
+default_version =
 ifeq ($(SETCURRENT),true)
-	finally = bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html
+	default_version = current
 endif
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
+# NOTE: EXPORT_ALL_VARIABLES exports make vars as env vars
+%: Makefile .EXPORT_ALL_VARIABLES
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats
 	bin/version write > doc/versions.json
 	# setup HTML redirects to point at this version if $(SETCURRENT) == true
-	$(finally)
+	bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html "$(default_version)"
