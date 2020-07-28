@@ -76,20 +76,14 @@ jobs:
 
           rsync -r "$DOCS/doc/" "$PAGE/"
 
-          ls "$PAGE"
-
       - name: install gh-pages
         run: |
           DOCS="${{ github.workspace }}/docs" \
           PAGE="${{ github.workspace }}/gh-pages"  \
 
-          (
-            cd "$DOCS"
-            rm -r doc
-            ln -s "$PAGE" doc
-          )
-
-          ls -l "$DOCS"
+          cd "$DOCS"
+          rm -r doc
+          ln -s "$PAGE" doc
 
       - name: build docs
         run: |
@@ -110,16 +104,12 @@ jobs:
 
       - name: tidy old versions
         run: |
-          (
-            cd docs
-            git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
-          )
+          cd docs
+          git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
 
       - name: push changes
         run: |
-          (
-            cd gh-pages
-            git add *
-            git commit -m "add: ${{ github.event.inputs.tag }}"
-            git push origin HEAD
-          )
+          cd gh-pages
+          git add *
+          git commit -m "add: ${{ github.event.inputs.tag }}"
+          git push origin HEAD
