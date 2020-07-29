@@ -3,6 +3,10 @@
         "html",
         "singlehtml"
     ],
+    "7.9.1": [
+        "html",
+        "singlehtml"
+    ],
     "8.0a2": [
         "html",
         "slides"
