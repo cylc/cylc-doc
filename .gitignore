@@ -19,6 +19,7 @@ src/appendices/command-ref.rst
 # editor stuff
 *.swp
 *~
+.vscode
 
 # auto-generated documentation
 src/user-guide/plugins/main-loop/built-in

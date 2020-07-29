@@ -86,8 +86,15 @@ jobs:
 
       - name: remove previous nightly build
         run: |
+          cd gh-pages
           EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
-            git -C gh-pages rebase -i --keep-base
+            git rebase -i --keep-base
+          # if versions have been added/removed since the last build we
+          # will get conflicts on the versions.json file so we rebuild it
+          # now just incase
+          ../docs/bin/version write > versions.json
+          git add versions.json
+          git rebase --continue || true  # true incase there wasn't a conflict
 
       - name: build docs
         run: |
