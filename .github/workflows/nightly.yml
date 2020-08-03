@@ -16,8 +16,8 @@
 
 # Deploy a new version of the documentation or rebuild an existing one.
 
-# Note: All changes made to the gh-pages branch are non-destructive 
-#       (i.e. no force pushing) so all changes can be undone.
+# Note: This action deletes its previous commits so the nightly build history
+# is not preserved and does not require housekeeping.
 
 name: nightly
 
@@ -36,7 +36,7 @@ jobs:
           python-version: '3.7'
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.1
         with:
           ref: master
           path: docs
@@ -52,7 +52,7 @@ jobs:
           pip install "${{ github.workspace }}/docs[all]"
 
       - name: checkout cylc-flow
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.1
         with:
           repository: cylc/cylc-flow
           ref: master
@@ -64,11 +64,12 @@ jobs:
           #       have extra dependencies.
           pip install './cylc-flow[all]'
 
-      - name: checkout gh-pages
-        uses: actions/checkout@v2
+      - name: checkout gh-pages branch
+        uses: actions/checkout@v2.3.1
         with:
           ref: gh-pages
           path: gh-pages
+          fetch-depth: 0 # all history (unfortunately all branches too)
 
       - name: install gh-pages
         run: |
@@ -81,17 +82,20 @@ jobs:
 
       - name: configure git
         run: |
-          git config --global user.name "action:deploy"
-          git config --global user.email "action:deploy@github.com"
+          git config --global user.name "action:deploy[bot]"
+          git config --global user.email "action:deploy[bot]@github.com"
 
       - name: remove previous nightly build
         run: |
           cd gh-pages
+          echo "INFO: gh-pages branch at $(git rev-parse HEAD) pre-rebase"
+          echo "Use git fetch <upstream> <commit> if you need to recover the branch"
+          echo ""
           EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
-            git rebase -i --keep-base
+            git rebase -i gh-pages.root
           # if versions have been added/removed since the last build we
           # will get conflicts on the versions.json file so we rebuild it
-          # now just incase
+          # now just in case
           ../docs/bin/version write > versions.json
           git add versions.json
           git rebase --continue || true  # true incase there wasn't a conflict
@@ -109,6 +113,7 @@ jobs:
           git -C gh-pages add "$build_name" 'versions.json'
 
       - name: push changes
+        working-directory: gh-pages
         run: |
-          git -C gh-pages commit -m '-nightly build-'
-          git -C gh-pages push origin HEAD
+          git commit -m '-nightly build-'
+          git push -f origin gh-pages
