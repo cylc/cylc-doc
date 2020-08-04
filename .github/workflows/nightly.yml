@@ -88,11 +88,11 @@ jobs:
       - name: remove previous nightly build
         run: |
           cd gh-pages
-          echo "INFO: gh-pages branch at $(git rev-parse HEAD) pre-rebase"
-          echo "Use git fetch <upstream> <commit> if you need to recover the branch"
-          echo ""
+          echo "::group::History before rebase: (you can still fetch these commits for recovery)"
+          git log --oneline --graph --no-abbrev-commit gh-pages
+          echo "::endgroup::"
           EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
-            git rebase -i gh-pages.root
+            git rebase -i --root
           # if versions have been added/removed since the last build we
           # will get conflicts on the versions.json file so we rebuild it
           # now just in case
@@ -115,5 +115,6 @@ jobs:
       - name: push changes
         working-directory: gh-pages
         run: |
+          git status
           git commit -m '-nightly build-'
-          git push -f origin gh-pages
+          git push --force-with-lease origin gh-pages
