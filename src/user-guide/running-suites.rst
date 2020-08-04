@@ -1014,8 +1014,17 @@ or:
 An initial cycle given on the command line will override one in the
 suite.rc file.
 
+.. _setting-the-icp-relative-to-now:
+
 Setting The Initial Cycle Point Relative To The Current Time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. warning::
+
+   Setting the initial cycle point relative to the current time only works
+   for :term:`datetime cycling` suites which use the Gregorian calendar and
+   will not work for alternative calendars like the 360, 365 or 366 day
+   calendars.
 
 Two additional commands, ``next`` and ``previous``, can be used when setting
 the initial cycle point.
