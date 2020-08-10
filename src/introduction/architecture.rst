@@ -17,7 +17,7 @@ In order to handle the communication between the client and the
 server, Apollo Client uses WebSockets. It will have one WebSocket
 per user session.
 
-.. figure:: img/architecture/websocket-communication.png
+.. figure:: ../img/architecture/websocket-communication.png
    :align: center
 
 Every message received by the server is added to a queue, and processed
@@ -33,7 +33,7 @@ store.
 The communication between client and server follows a protocol
 called `graphql-ws protocol`_.
 
-.. figure:: img/architecture/websocket-graphql-ws-protocol.png
+.. figure:: ../img/architecture/websocket-graphql-ws-protocol.png
    :align: center
 
 After a channel between client and server is open, the messages

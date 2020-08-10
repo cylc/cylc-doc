@@ -1,7 +1,7 @@
 .. _HowCylcWorks:
 
-Introduction: How Cylc Works
-============================
+How Cylc Works
+==============
 
 
 .. _SchedulingForecastSuites:
@@ -77,7 +77,7 @@ upstream tasks.
 
 .. _fig-dep-one:
 
-.. figure:: img/dep-one-cycle.svg
+.. figure:: ../img/dep-one-cycle.svg
    :align: center
 
    A single cycle point dependency graph for a simple suite.
@@ -94,7 +94,7 @@ the horizontal extent of the task bars:
 
 .. _fig-time-one:
 
-.. figure:: img/timeline-one.svg
+.. figure:: ../img/timeline-one.svg
    :align: center
 
    A single cycle point job schedule for real time operation.
@@ -123,7 +123,7 @@ start as soon as its predecessor has finished:
 
 .. _fig-dep-two-linked:
 
-.. figure:: img/dep-two-cycles-linked.svg
+.. figure:: ../img/dep-two-cycles-linked.svg
    :align: center
 
    What if the external driving data is available early? If the external
@@ -137,7 +137,7 @@ violations in half of the tasks in the example suite:
 
 .. _fig-overlap:
 
-.. figure:: img/timeline-one-c.svg
+.. figure:: ../img/timeline-one-c.svg
    :align: center
 
    Attempted overlap of consecutive single-cycle-point job
@@ -155,7 +155,7 @@ agree not to start the next cycle point early:
 
 .. _fig-job-no-overlap:
 
-.. figure:: img/timeline-one-a.svg
+.. figure:: ../img/timeline-one-a.svg
    :align: center
 
    The only safe multi-cycle-point job schedule? The best that can be done
@@ -185,7 +185,7 @@ and *c*) each depend on their own previous instances:
 
 .. _fig-dep-multi:
 
-.. figure:: img/dep-multi-cycle.svg
+.. figure:: ../img/dep-multi-cycle.svg
    :align: center
 
    The complete multi-cycle-point dependency graph.
@@ -225,7 +225,7 @@ inter-cycle dependence, would be:
 
 .. _fig-optimal-two:
 
-.. figure:: img/timeline-two-cycles-optimal.svg
+.. figure:: ../img/timeline-two-cycles-optimal.svg
    :align: center
 
    The optimal two-cycle-point job schedule. The optimal two cycle job
@@ -247,7 +247,7 @@ cycle point in a suite with little downtime between cycle points:
 
 .. _fig-time-three:
 
-.. figure:: img/timeline-three.svg
+.. figure:: ../img/timeline-three.svg
    :align: center
 
    Comparison of job schedules after a delay. Job
@@ -261,7 +261,7 @@ cycle point in a suite with little downtime between cycle points:
 
 .. _fig-time-two:
 
-.. figure:: img/timeline-two.svg
+.. figure:: ../img/timeline-two.svg
    :align: center
 
    Optimal job schedule when all external data is
@@ -316,7 +316,7 @@ suite (a "task pool"):
 
 .. _fig-task-pool:
 
-.. figure:: img/task-pool.svg
+.. figure:: ../img/task-pool.svg
    :align: center
 
    The cylc task pool: how cylc sees a suite, in contrast to the
