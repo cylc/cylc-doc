@@ -1,0 +1,26 @@
+cylc.flow.main\_loop.log\_data\_store
+=====================================
+
+.. automodule:: cylc.flow.main_loop.log_data_store
+   :members: init, log_data_store, report
+
+   .. set members so that we only document what is actually defined
+      otherwise you can end up with imported modules and mess like that
+
+   
+   
+   .. rubric:: Coroutines
+
+   .. write out a table of functions (coroutines in this context)
+      for quick reference
+       
+   .. autosummary::
+      :nosignatures:
+
+   
+      init
+      log_data_store
+      report
+
+   
+   

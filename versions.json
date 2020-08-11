@@ -8,7 +8,11 @@
         "singlehtml"
     ],
     "8.0a2": [
-        "html",
-        "slides"
+        "slides",
+        "html"
+    ],
+    "nightly.2020-08-11": [
+        "slides",
+        "html"
     ]
 }

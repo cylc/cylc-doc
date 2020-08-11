@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Suite Name Registration &mdash; Cylc nightly.2020-08-11 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/cylc.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'nightly.2020-08-11',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/cylc.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc nightly.2020-08-11 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Suite Storage, Discovery, Revision Control, and Deployment" href="suite-storage-etc.html" />
+    <link rel="prev" title="Running Suites" href="running-suites.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="suite-name-registration">
+
+<h1>Suite Name Registration<a class="headerlink" href="../../html/user-guide/suite-name-reg.html#suite-name-registration" title="View HTML">§</a></h1>
+
+<p>Cylc commands identify suites via their names, which are relative path names
+under the suite run directory (<code class="docutils literal notranslate"><span class="pre">~/cylc-run/</span></code> by default).</p>
+<p>Suite names are validated by
+<a class="reference internal" href="#cylc.flow.unicode_rules.SuiteNameValidator" title="cylc.flow.unicode_rules.SuiteNameValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.unicode_rules.SuiteNameValidator</span></code></a>.</p>
+<dl class="class">
+<dt id="cylc.flow.unicode_rules.SuiteNameValidator">
+<em class="property">class </em><code class="descclassname">cylc.flow.unicode_rules.</code><code class="descname">SuiteNameValidator</code></dt>
+<dd><p>The rules for valid suite names:</p>
+<ul class="simple">
+<li>must be between 1 and 254 characters long</li>
+<li>can not start with: ., -</li>
+<li>can only contain: alphanumeric, /, _, +, -, ., &#64;</li>
+</ul>
+</dd></dl>
+
+<p>Suites can be grouped together under sub-directories. E.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cylc print -t nwp
+nwp
+ <span class="p">|</span>-oper
+ <span class="p">|</span> <span class="p">|</span>-region1  Local Model Region1       /home/oliverh/cylc-run/nwp/oper/region1
+ <span class="p">|</span> <span class="sb">`</span>-region2  Local Model Region2       /home/oliverh/cylc-run/nwp/oper/region2
+ <span class="sb">`</span>-test
+   <span class="sb">`</span>-region1  Local Model TEST Region1  /home/oliverh/cylc-run/nwp/test/region1
+</pre></div>
+</div>
+<p>Suite names can be pre-registered with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">register</span></code> command,
+which creates the suite run directory structure and some service files
+underneath it. Otherwise, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code> will do this at suite start up.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

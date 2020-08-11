@@ -1,0 +1,1439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Suite Runtime Interface &mdash; Cylc nightly.2020-08-11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/cylc.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/cylc.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc Development History - Major Changes" href="../dev-history-major-changes.html" />
+    <link rel="prev" title="Cylc API" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                nightly.2020-08-11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table Of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction: How Cylc Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../config/index.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Cylc API</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Suite Runtime Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#privilege-levels">Privilege Levels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#client">Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#server">Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Cylc API</a> &raquo;</li>
+        
+      <li>Suite Runtime Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/api/zmq.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="suite-runtime-interface">
+<h1>Suite Runtime Interface<a class="headerlink" href="#suite-runtime-interface" title="Permalink to this headline">¶</a></h1>
+<p>Cylc suites are TCP servers which use the ZeroMQ protocol to communicate with
+clients and jobs.</p>
+<p>Cylc provides a Python client to communicate with this server
+<a class="reference internal" href="#cylc.flow.network.client.SuiteRuntimeClient" title="cylc.flow.network.client.SuiteRuntimeClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.client.SuiteRuntimeClient</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cylc.flow.network.client</span> <span class="kn">import</span> <span class="n">SuiteRuntimeClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">SuiteRuntimeClient</span><span class="p">(</span><span class="s1">&#39;my-suite&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ping_suite&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Cylc also provides sub-command called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">client</span></code> which is a simple
+wrapper of the Python client.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cylc client generic ping_suite -n
+<span class="go">true</span>
+</pre></div>
+</div>
+<p>The available “commands” or (“endpoints”) are contained in
+<a class="reference internal" href="#cylc.flow.network.server.SuiteRuntimeServer" title="cylc.flow.network.server.SuiteRuntimeServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.server.SuiteRuntimeServer</span></code></a> class.</p>
+<div class="section" id="privilege-levels">
+<h2>Privilege Levels<a class="headerlink" href="#privilege-levels" title="Permalink to this headline">¶</a></h2>
+<p>Cylc protects its network interface with configurable privilege levels which
+can be used to allocate different levels of control to different users.</p>
+<dl class="class">
+<dt id="cylc.flow.network.authorisation.Priv">
+<em class="property">class </em><code class="sig-prename descclassname">cylc.flow.network.authorisation.</code><code class="sig-name descname">Priv</code><a class="headerlink" href="#cylc.flow.network.authorisation.Priv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cylc privilege levels.</p>
+<p>In Cylc configurations use the lower-case form of each privilege level
+e.g. <code class="docutils literal notranslate"><span class="pre">control</span></code> for <code class="docutils literal notranslate"><span class="pre">Priv.CONTROL</span></code>.</p>
+<p>These levels are ordered (by the integer associated with each) from 0.
+Each privilege level grants access to the levels below it.</p>
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.CONTROL">
+<code class="sig-name descname">CONTROL</code><em class="property"> = 6</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides full control of a suite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.DESCRIPTION">
+<code class="sig-name descname">DESCRIPTION</code><em class="property"> = 2</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.DESCRIPTION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits reading of suite metadata.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.IDENTITY">
+<code class="sig-name descname">IDENTITY</code><em class="property"> = 1</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.IDENTITY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides read access to the suite name, owner and Cylc version.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.NONE">
+<code class="sig-name descname">NONE</code><em class="property"> = 0</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.NONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>No access.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.READ">
+<code class="sig-name descname">READ</code><em class="property"> = 4</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.READ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permits read access to the suite’s state.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.SHUTDOWN">
+<code class="sig-name descname">SHUTDOWN</code><em class="property"> = 5</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows issuing of the shutdown command.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="cylc.flow.network.authorisation.Priv.STATE_TOTALS">
+<code class="sig-name descname">STATE_TOTALS</code><em class="property"> = 3</em><a class="headerlink" href="#cylc.flow.network.authorisation.Priv.STATE_TOTALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides access to the count of tasks in each state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cylc.flow.network.client.SuiteRuntimeClient">
+<em class="property">class </em><code class="sig-prename descclassname">cylc.flow.network.client.</code><code class="sig-name descname">SuiteRuntimeClient</code><span class="sig-paren">(</span><em class="sig-param">suite: str</em>, <em class="sig-param">owner: str = None</em>, <em class="sig-param">host: str = None</em>, <em class="sig-param">port: Union[int</em>, <em class="sig-param">str] = None</em>, <em class="sig-param">context: object = None</em>, <em class="sig-param">timeout: Union[float</em>, <em class="sig-param">str] = None</em>, <em class="sig-param">srv_public_key_loc: str = None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.SuiteRuntimeClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate a client to the workflow server API.</p>
+<p>Initiates the REQ part of a ZMQ REQ-REP pair.</p>
+<p>This class contains the logic for the ZMQ message interface and client -
+server communication.</p>
+<p>Determine host and port from the contact file unless provided.</p>
+<p>If there is no socket bound to the specified host/port the client will
+bail after <code class="docutils literal notranslate"><span class="pre">timeout</span></code> seconds.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>suite (str):</dt><dd><p>Name of the suite to connect to.</p>
+</dd>
+<dt>owner (str):</dt><dd><p>Owner of suite, defaults to $USER.</p>
+</dd>
+<dt>host (str):</dt><dd><p>Overt need to check contact file if provided along with the
+port.</p>
+</dd>
+<dt>port (int):</dt><dd><p>The port on the aforementioned host to connect to.</p>
+</dd>
+<dt>timeout (float):</dt><dd><p>Set the default timeout in seconds. The default is
+<code class="docutils literal notranslate"><span class="pre">ZMQClient.DEFAULT_TIMEOUT</span></code>.
+Note the default timeout can be overridden for individual requests.</p>
+</dd>
+<dt>timeout_handler (function):</dt><dd><p>Optional function which runs before ClientTimeout is raised.
+This provides an interface for raising more specific exceptions in
+the event of a communication timeout.</p>
+</dd>
+<dt>header (dict):</dt><dd><p>Request “header” data to attach to each request.</p>
+</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd><p>Call endpoints using <code class="docutils literal notranslate"><span class="pre">ZMQClient.__call__</span></code>.</p>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts responses of the format: {“data”: {…}}</p></li>
+<li><p>Accepts error in the format: {“error”: {“message”: MSG}}</p></li>
+<li><p>Returns requests of the format: {“command”: CMD,
+“args”: {…}}</p></li>
+</ul>
+</dd>
+<dt>Raises:</dt><dd><p>ClientError: if the suite is not running.</p>
+</dd>
+<dt>Call server “endpoints” using:</dt><dd><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">__call__</span></code>, <code class="docutils literal notranslate"><span class="pre">serial_request</span></code></dt><dd><dl class="method">
+<dt id="cylc.flow.network.client.SuiteRuntimeClient.serial_request">
+<code class="sig-name descname">serial_request</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">args=None</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.SuiteRuntimeClient.serial_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a request.</p>
+<p>For convenience use <code class="docutils literal notranslate"><span class="pre">__call__</span></code> to call this method.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>command (str): The name of the endpoint to call.
+args (dict): Arguments to pass to the endpoint function.
+timeout (float): Override the default timeout (seconds).</p>
+</dd>
+<dt>Raises:</dt><dd><p>ClientTimeout: If a response takes longer than timeout to arrive.
+ClientError: Coverall for all other issues including failed auth.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>object: The data exactly as returned from the endpoint function,</dt><dd><p>nothing more, nothing less.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">async_request</span></code></dt><dd><dl class="method">
+<dt id="cylc.flow.network.client.SuiteRuntimeClient.async_request">
+<em class="property">async </em><code class="sig-name descname">async_request</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">args=None</em>, <em class="sig-param">timeout=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.SuiteRuntimeClient.async_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an asynchronous request using asyncio.</p>
+<p>Has the same arguments and return values as <code class="docutils literal notranslate"><span class="pre">serial_request</span></code>.</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer">
+<em class="property">class </em><code class="sig-prename descclassname">cylc.flow.network.server.</code><code class="sig-name descname">SuiteRuntimeServer</code><span class="sig-paren">(</span><em class="sig-param">schd</em>, <em class="sig-param">context=None</em>, <em class="sig-param">barrier=None</em>, <em class="sig-param">threaded=True</em>, <em class="sig-param">daemon=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suite runtime service API facade exposed via zmq.</p>
+<p>This class contains the Cylc endpoints.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>schd (object): The parent object instantiating the server. In</dt><dd><p>this case, the workflow scheduler.</p>
+</dd>
+<dt>context (object): The instantiated ZeroMQ context (i.e. zmq.Context())</dt><dd><p>passed in from the application.</p>
+</dd>
+<dt>barrier (object): Threading Barrier object used to sync threads, for</dt><dd><p>the main thread to ensure socket setup has finished.</p>
+</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd><ul class="simple">
+<li><p>Define endpoints using the <code class="docutils literal notranslate"><span class="pre">expose</span></code> decorator.</p></li>
+<li><p>Call endpoints using the function name.</p></li>
+</ul>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts requests of the format: {“command”: CMD, “args”: {…}}</p></li>
+<li><p>Returns responses of the format: {“data”: {…}}</p></li>
+<li><p>Returns error in the format: {“error”: {“message”: MSG}}</p></li>
+</ul>
+</dd>
+<dt>Common Arguments:</dt><dd><p>Arguments which are shared between multiple commands.</p>
+<dl class="simple" id="task-identifier">
+<dt>task identifier (str):</dt><dd><p>A task identifier in the format <code class="docutils literal notranslate"><span class="pre">task.cycle-point</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">foo.1</span></code> or <code class="docutils literal notranslate"><span class="pre">bar.20000101T0000Z</span></code>.</p>
+</dd>
+</dl>
+<dl id="task-globs">
+<dt>task globs (list):</dt><dd><p>A list of strings in the format
+<code class="docutils literal notranslate"><span class="pre">name[.cycle_point][:task_state]</span></code> where <code class="docutils literal notranslate"><span class="pre">name</span></code> could be a
+task or family name.</p>
+<blockquote>
+<div><p>Glob-like patterns may be used to match multiple items e.g.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">*</span></code></dt><dd><p>Matches everything.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*.1</span></code></dt><dd><p>Matches everything in cycle <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*.*:failed</span></code></dt><dd><p>Matches all failed tasks.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.RECV_TIMEOUT">
+<code class="sig-name descname">RECV_TIMEOUT</code><em class="property"> = 1</em><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.RECV_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max time the SuiteRuntimeServer will wait for an incoming
+message in seconds.</p>
+<p>We use a timeout here so as to give the _listener a chance to respond to
+requests (i.e. stop) from its spawner (the scheduler).</p>
+<p>The alternative would be to spin up a client and send a message to the
+server, this way seems safer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.api">
+<code class="sig-name descname">api</code><span class="sig-paren">(</span><em class="sig-param">endpoint=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return information about this API.</p>
+<p>Returns a list of callable endpoints.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>endpoint (str, optional):</dt><dd><p>If specified the documentation for the endpoint
+will be returned instead.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>list/str: List of endpoints or string documentation of the
+requested endpoint.</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.IDENTITY" title="cylc.flow.network.authorisation.Priv.IDENTITY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.IDENTITY</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.broadcast">
+<code class="sig-name descname">broadcast</code><span class="sig-paren">(</span><em class="sig-param">mode</em>, <em class="sig-param">cycle_points=None</em>, <em class="sig-param">tasks=None</em>, <em class="sig-param">settings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put or clear broadcasts.Authentication:
+<a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.clear_broadcast">
+<code class="sig-name descname">clear_broadcast</code><span class="sig-paren">(</span><em class="sig-param">point_strings=None</em>, <em class="sig-param">namespaces=None</em>, <em class="sig-param">cancel_settings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.clear_broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear settings globally, or for listed namespaces and/or points.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>point_strings (list, optional):</dt><dd><p>List of point strings for this operation to apply to or
+<code class="docutils literal notranslate"><span class="pre">None</span></code> to apply to all cycle points.</p>
+</dd>
+<dt>namespaces (list, optional):</dt><dd><p>List of namespace string (task / family names) for this
+operation to apply to or <code class="docutils literal notranslate"><span class="pre">None</span></code> to apply to all namespaces.</p>
+</dd>
+<dt>cancel_settings (list, optional):</dt><dd><p>List of broadcast keys to cancel.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (modified_settings, bad_options)</p>
+<blockquote>
+<div><dl class="simple">
+<dt>modified_settings</dt><dd><p>similar to the return value of the “put” method, but for
+removed settings.</p>
+</dd>
+<dt>bad_options</dt><dd><p>A dict in the form:
+<code class="docutils literal notranslate"><span class="pre">{&quot;point_strings&quot;:</span> <span class="pre">[&quot;20020202&quot;,</span> <span class="pre">...&quot;],</span> <span class="pre">...}</span></code>.
+The dict is only populated if there are options not
+associated with previous broadcasts. The keys can be:</p>
+<ul class="simple">
+<li><p>point_strings: a list of bad point strings.</p></li>
+<li><p>namespaces: a list of bad namespaces.</p></li>
+<li><p>cancel: a list of tuples. Each tuple contains the keys of
+a bad setting.</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.describe">
+<code class="sig-name descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.describe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the suite metadata.]</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>dict: <code class="docutils literal notranslate"><span class="pre">{cylc.flow.suite_status:</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}}</span></code></p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.DESCRIPTION" title="cylc.flow.network.authorisation.Priv.DESCRIPTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.DESCRIPTION</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.expire_broadcast">
+<code class="sig-name descname">expire_broadcast</code><span class="sig-paren">(</span><em class="sig-param">cutoff=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.expire_broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all settings targeting cycle points earlier than cutoff.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>cutoff (str, optional):</dt><dd><p>Cycle point, broadcasts earlier than but not inclusive of the
+cutoff will be canceled.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.force_spawn_children">
+<code class="sig-name descname">force_spawn_children</code><span class="sig-paren">(</span><em class="sig-param">tasks</em>, <em class="sig-param">outputs</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.force_spawn_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spawn children of given task outputs.</p>
+<dl>
+<dt>Args:</dt><dd><p>tasks (list): List of identifiers, see <cite>task globs</cite>
+outputs (list): List of outputs to spawn on</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.force_trigger_tasks">
+<code class="sig-name descname">force_trigger_tasks</code><span class="sig-paren">(</span><em class="sig-param">tasks</em>, <em class="sig-param">reflow=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.force_trigger_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger submission of task jobs where possible.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>tasks (list):</dt><dd><p>List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>reflow (bool, optional):</dt><dd><p>Start new flow(s) from triggered tasks.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_broadcast">
+<code class="sig-name descname">get_broadcast</code><span class="sig-paren">(</span><em class="sig-param">task_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all broadcast variables that target a given task ID.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>task_id (str, optional): A <a class="reference internal" href="#task-identifier">task identifier</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: all broadcast variables that target the given task ID.</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_cylc_version">
+<code class="sig-name descname">get_cylc_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_cylc_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the cylc version running this suite.Authentication:
+<a class="reference internal" href="#cylc.flow.network.authorisation.Priv.IDENTITY" title="cylc.flow.network.authorisation.Priv.IDENTITY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.IDENTITY</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_graph_raw">
+<code class="sig-name descname">get_graph_raw</code><span class="sig-paren">(</span><em class="sig-param">start_point_string</em>, <em class="sig-param">stop_point_string</em>, <em class="sig-param">group_nodes=None</em>, <em class="sig-param">ungroup_nodes=None</em>, <em class="sig-param">ungroup_recursive=False</em>, <em class="sig-param">group_all=False</em>, <em class="sig-param">ungroup_all=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_graph_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a textural representation of the suite graph.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The grouping options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">group_nodes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ungroup_nodes</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_all</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ungroup_all</span></code></p></li>
+</ul>
+<p>Are mutually exclusive.</p>
+</div>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>start_point_string (str):</dt><dd><p>Cycle point as a string to define the window of view of the
+suite graph.</p>
+</dd>
+<dt>stop_point_string (str):</dt><dd><p>Cycle point as a string to define the window of view of the
+suite graph.</p>
+</dd>
+<dt>group_nodes (list, optional):</dt><dd><p>List of (graph nodes) family names to group (collapse according
+to inheritance) in the output graph.</p>
+</dd>
+<dt>ungroup_nodes (list, optional):</dt><dd><p>List of (graph nodes) family names to ungroup (expand according
+to inheritance) in the output graph.</p>
+</dd>
+<dt>ungroup_recursive (bool, optional):</dt><dd><p>Recursively ungroup families.</p>
+</dd>
+<dt>group_all (bool, optional):</dt><dd><p>Group all families (collapse according to inheritance).</p>
+</dd>
+<dt>ungroup_all (bool, optional):</dt><dd><p>Ungroup all families (expand according to inheritance).</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>list: [left, right, None, is_suicide, condition]</p>
+<dl class="simple">
+<dt>left (str):</dt><dd><p><cite>Task identifier &lt;task identifier&gt;</cite> for the dependency of
+an edge.</p>
+</dd>
+<dt>right (str):</dt><dd><p><cite>Task identifier &lt;task identifier&gt;</cite> for the dependant task
+of an edge.</p>
+</dd>
+<dt>is_suicide (bool):</dt><dd><p>True if edge represents a suicide trigger.</p>
+</dd>
+<dt>condition:</dt><dd><p>Conditional expression if edge represents a conditional trigger
+else <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_suite_info">
+<code class="sig-name descname">get_suite_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_suite_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dictionary containing the suite title and description.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>dict: The <cite>[meta]</cite> section of a suite configuration</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.DESCRIPTION" title="cylc.flow.network.authorisation.Priv.DESCRIPTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.DESCRIPTION</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_suite_state_summary">
+<code class="sig-name descname">get_suite_state_summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_suite_state_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the global, task, and family summary data summaries.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (global_summary, task_summary, family_summary)</p>
+<dl class="simple">
+<dt>global_summary (dict):</dt><dd><p>Contains suite status items e.g. <code class="docutils literal notranslate"><span class="pre">last_updated</span></code>.</p>
+</dd>
+<dt>task_summary (dict):</dt><dd><p>A dictionary of <a class="reference external" href="taskidentifier">task identifiers</a>
+in the format <code class="docutils literal notranslate"><span class="pre">{task_id:</span> <span class="pre">{...},</span> <span class="pre">...}</span></code>.</p>
+</dd>
+<dt>family_summary (dict):</dt><dd><p>Contains task family information in the format
+<code class="docutils literal notranslate"><span class="pre">{family_id:</span> <span class="pre">{...},</span> <span class="pre">...}</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_task_info">
+<code class="sig-name descname">get_task_info</code><span class="sig-paren">(</span><em class="sig-param">names</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_task_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the configurations for the provided tasks.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>names (list): A list of task names to request information for.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: Dictionary in the format <code class="docutils literal notranslate"><span class="pre">{'task':</span> <span class="pre">{...},</span> <span class="pre">...}</span></code></p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_task_jobfile_path">
+<code class="sig-name descname">get_task_jobfile_path</code><span class="sig-paren">(</span><em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_task_jobfile_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return task job file path.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>task_id: A <a class="reference internal" href="#task-identifier">task identifier</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The jobfile path.</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.get_task_requisites">
+<code class="sig-name descname">get_task_requisites</code><span class="sig-paren">(</span><em class="sig-param">task_globs=None</em>, <em class="sig-param">list_prereqs=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.get_task_requisites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return prerequisites of a task.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>task_globs (list, optional):</dt><dd><p>List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>list_prereqs (bool): whether to include the prerequisites in</dt><dd><p>the results or not.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>list: Dictionary of <a class="reference external" href="taskidentifier">task identifiers</a>
+in the format <code class="docutils literal notranslate"><span class="pre">{task_id:</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">},</span> <span class="pre">...}</span></code>.</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.graphql">
+<code class="sig-name descname">graphql</code><span class="sig-paren">(</span><em class="sig-param">request_string=None</em>, <em class="sig-param">variables=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.graphql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the GraphQL scheme execution result.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>request_string (str, optional):</dt><dd><p>GraphQL request passed to Graphene</p>
+</dd>
+<dt>variables (dict, optional):</dt><dd><p>Dict of variables passed to Graphene</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>object: Execution result, or a list with errors.</p>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.hold">
+<code class="sig-name descname">hold</code><span class="sig-paren">(</span><em class="sig-param">tasks=None</em>, <em class="sig-param">time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.hold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hold the workflow.Authentication:
+<a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.hold_after_point_string">
+<code class="sig-name descname">hold_after_point_string</code><span class="sig-paren">(</span><em class="sig-param">point_string</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.hold_after_point_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set hold point of suite.</p>
+<dl>
+<dt>Args:</dt><dd><p>point_string (str): The cycle point to hold the suite <em>after.</em></p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.hold_suite">
+<code class="sig-name descname">hold_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.hold_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hold the suite.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.hold_tasks">
+<code class="sig-name descname">hold_tasks</code><span class="sig-paren">(</span><em class="sig-param">task_globs</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.hold_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hold tasks.</p>
+<dl>
+<dt>Args:</dt><dd><p>task_globs (list): List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.identify">
+<code class="sig-name descname">identify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.identify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return basic information about the suite.</p>
+<dl>
+<dt>Returns:</dt><dd><p>dict: Dictionary containing the keys</p>
+<dl class="simple">
+<dt>cylc.flow.suite_status.KEY_NAME</dt><dd><p>The suite name.</p>
+</dd>
+<dt>cylc.flow.suite_status.KEY_OWNER</dt><dd><p>The user account the suite is running under.</p>
+</dd>
+<dt>cylc.flow.suite_status.KEY_VERSION</dt><dd><p>The Cylc version the suite is running with.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.IDENTITY" title="cylc.flow.network.authorisation.Priv.IDENTITY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.IDENTITY</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.kill_tasks">
+<code class="sig-name descname">kill_tasks</code><span class="sig-paren">(</span><em class="sig-param">tasks</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.kill_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kill task jobs.</p>
+<dl>
+<dt>Args:</dt><dd><p>tasks (list): List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.nudge">
+<code class="sig-name descname">nudge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.nudge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell suite to try task processing.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.pb_data_elements">
+<code class="sig-name descname">pb_data_elements</code><span class="sig-paren">(</span><em class="sig-param">element_type</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.pb_data_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the specified data elements in delta form.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>element_type (str):</dt><dd><p>Key from DELTAS_MAP dictionary.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>bytes</dt><dd><p>Serialised Protobuf message</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.pb_entire_workflow">
+<code class="sig-name descname">pb_entire_workflow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.pb_entire_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the entire data-store in a single Protobuf message.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>bytes</dt><dd><p>Serialised Protobuf message</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.ping_suite">
+<code class="sig-name descname">ping_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.ping_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True.</p>
+<p>This serves as a basic network comms tests.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.IDENTITY" title="cylc.flow.network.authorisation.Priv.IDENTITY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.IDENTITY</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.ping_task">
+<code class="sig-name descname">ping_task</code><span class="sig-paren">(</span><em class="sig-param">task_id</em>, <em class="sig-param">exists_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.ping_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if task_id exists (and is running).</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>task_id:</dt><dd><p>A <a class="reference internal" href="#task-identifier">task identifier</a></p>
+</dd>
+<dt>exists_only (bool, optional):</dt><dd><p>If True only test that the task exists, if False check both
+that the task exists and that it is running.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool):</dt><dd><p>True if task exists (and is running).</p>
+</dd>
+<dt>message (str):</dt><dd><p>A string describing the outcome / state of the task.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.READ" title="cylc.flow.network.authorisation.Priv.READ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.READ</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.poll_tasks">
+<code class="sig-name descname">poll_tasks</code><span class="sig-paren">(</span><em class="sig-param">tasks=None</em>, <em class="sig-param">poll_succeeded=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.poll_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request the suite to poll task jobs.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>tasks (list, optional):</dt><dd><p>List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>poll_succeeded (bool, optional):</dt><dd><p>Allow polling of remote tasks if True.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.put_broadcast">
+<code class="sig-name descname">put_broadcast</code><span class="sig-paren">(</span><em class="sig-param">point_strings=None</em>, <em class="sig-param">namespaces=None</em>, <em class="sig-param">settings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.put_broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new broadcast settings (server side interface).</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>point_strings (list, optional):</dt><dd><p>List of point strings for this operation to apply to or
+<code class="docutils literal notranslate"><span class="pre">None</span></code> to apply to all cycle points.</p>
+</dd>
+<dt>namespaces (list, optional):</dt><dd><p>List of namespace string (task / family names) for this
+operation to apply to or <code class="docutils literal notranslate"><span class="pre">None</span></code> to apply to all namespaces.</p>
+</dd>
+<dt>settings (list, optional):</dt><dd><p>List of strings in the format <code class="docutils literal notranslate"><span class="pre">key=value</span></code> where <code class="docutils literal notranslate"><span class="pre">key</span></code> is a
+Cylc configuration including section names e.g.
+<code class="docutils literal notranslate"><span class="pre">[section][subsection]item</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (modified_settings, bad_options)</p>
+<blockquote>
+<div><dl class="simple">
+<dt>modified_settings</dt><dd><p>similar to the return value of the “put” method, but for
+removed settings.</p>
+</dd>
+<dt>bad_options</dt><dd><p>A dict in the form:
+<code class="docutils literal notranslate"><span class="pre">{&quot;point_strings&quot;:</span> <span class="pre">[&quot;20020202&quot;,</span> <span class="pre">...&quot;],</span> <span class="pre">...}</span></code>.
+The dict is only populated if there are options not
+associated with previous broadcasts. The keys can be:</p>
+<ul class="simple">
+<li><p>point_strings: a list of bad point strings.</p></li>
+<li><p>namespaces: a list of bad namespaces.</p></li>
+<li><p>cancel: a list of tuples. Each tuple contains the keys of
+a bad setting.</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.put_ext_trigger">
+<code class="sig-name descname">put_ext_trigger</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.put_ext_trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server-side external event trigger interface.</p>
+<dl>
+<dt>Args:</dt><dd><p>message (str): The external trigger message.
+id (str): The unique trigger ID.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.put_messages">
+<code class="sig-name descname">put_messages</code><span class="sig-paren">(</span><em class="sig-param">task_job=None</em>, <em class="sig-param">event_time=None</em>, <em class="sig-param">messages=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.put_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put task messages in queue for processing later by the main loop.</p>
+<dl>
+<dt>Arguments:</dt><dd><dl class="simple">
+<dt>task_job (str, optional):</dt><dd><p>Task job in the format <code class="docutils literal notranslate"><span class="pre">CYCLE/TASK_NAME/SUBMIT_NUM</span></code>.</p>
+</dd>
+<dt>event_time (str, optional):</dt><dd><p>Event time as an ISO8601 string.</p>
+</dd>
+<dt>messages (list, optional):</dt><dd><p>List in the format <code class="docutils literal notranslate"><span class="pre">[[severity,</span> <span class="pre">message],</span> <span class="pre">...]</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.register_endpoints">
+<code class="sig-name descname">register_endpoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.register_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register all exposed methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.release">
+<code class="sig-name descname">release</code><span class="sig-paren">(</span><em class="sig-param">tasks=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release (un-hold) the workflow.Authentication:
+<a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.release_suite">
+<code class="sig-name descname">release_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.release_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unhold suite.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.release_tasks">
+<code class="sig-name descname">release_tasks</code><span class="sig-paren">(</span><em class="sig-param">task_globs</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.release_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unhold tasks.</p>
+<dl>
+<dt>Args:</dt><dd><p>task_globs (list): List of identifiers, see <a class="reference internal" href="#task-globs">task globs</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.reload_suite">
+<code class="sig-name descname">reload_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.reload_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell suite to reload the suite definition.</p>
+<dl>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.remove_tasks">
+<code class="sig-name descname">remove_tasks</code><span class="sig-paren">(</span><em class="sig-param">tasks</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.remove_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove tasks from the task pool.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>tasks (list):</dt><dd><p>List of identifiers, see <cite>task globs</cite></p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_clock_time">
+<code class="sig-name descname">set_stop_after_clock_time</code><span class="sig-paren">(</span><em class="sig-param">datetime_string</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_clock_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set suite to stop after wallclock time.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>datetime_string (str):</dt><dd><p>An ISO8601 formatted date-time of the wallclock
+(real-world as opposed to simulation) time
+to stop the suite after.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_point">
+<code class="sig-name descname">set_stop_after_point</code><span class="sig-paren">(</span><em class="sig-param">point_string</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set suite to stop after cycle point.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>point_string (str):</dt><dd><p>The cycle point to stop the suite after.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_task">
+<code class="sig-name descname">set_stop_after_task</code><span class="sig-paren">(</span><em class="sig-param">task_id</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.set_stop_after_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set suite to stop after an instance of a task.</p>
+<dl>
+<dt>Args:</dt><dd><p>task_id (str): A <a class="reference internal" href="#task-identifier">task identifier</a></p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.set_stop_cleanly">
+<code class="sig-name descname">set_stop_cleanly</code><span class="sig-paren">(</span><em class="sig-param">kill_active_tasks=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.set_stop_cleanly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set suite to stop cleanly or after kill active tasks.</p>
+<p>The suite will wait for all active (running, submitted) tasks
+to complete before stopping.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>kill_active_tasks (bool, optional):</dt><dd><p>If True the suite will attempt to kill any active
+(running, submitted) tasks</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.set_verbosity">
+<code class="sig-name descname">set_verbosity</code><span class="sig-paren">(</span><em class="sig-param">level</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.set_verbosity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set suite verbosity to new level (for suite logs).</p>
+<dl>
+<dt>Args:</dt><dd><p>level (str): A logging level e.g. <code class="docutils literal notranslate"><span class="pre">INFO</span></code> or <code class="docutils literal notranslate"><span class="pre">ERROR</span></code>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.state_totals">
+<code class="sig-name descname">state_totals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.state_totals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns counts of the task states present in the suite.</p>
+<dl>
+<dt>Returns:</dt><dd><p>dict: Dictionary with the keys:</p>
+<dl>
+<dt>cylc.flow.suite_status.KEY_UPDATE_TIME</dt><dd><p>ISO8601 timestamp of when this data snapshot was made.</p>
+</dd>
+<dt>cylc.flow.suite_status.KEY_STATES</dt><dd><p>Tuple of the form <code class="docutils literal notranslate"><span class="pre">(state_count_totals,</span> <span class="pre">state_count_cycles)</span></code></p>
+<dl class="simple">
+<dt>state_count_totals (dict):</dt><dd><p>Dictionary of the form <code class="docutils literal notranslate"><span class="pre">{task_state:</span> <span class="pre">task_count}</span></code>.</p>
+</dd>
+<dt>state_count_cycles (dict):</dt><dd><p>Dictionary of the form <code class="docutils literal notranslate"><span class="pre">{cycle_point:</span> <span class="pre">task_count}</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>cylc.flow.suite_status.KEY_TASKS_BY_STATE</dt><dd><p>Dictionary in the form
+<code class="docutils literal notranslate"><span class="pre">{state:</span> <span class="pre">[(most_recent_time_string,</span> <span class="pre">task_name,</span> <span class="pre">point_string),</span></code>
+<code class="docutils literal notranslate"><span class="pre">...]}</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.STATE_TOTALS" title="cylc.flow.network.authorisation.Priv.STATE_TOTALS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.STATE_TOTALS</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.stop_flow">
+<code class="sig-name descname">stop_flow</code><span class="sig-paren">(</span><em class="sig-param">flow_label</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.stop_flow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop a specified flow from spawning any further.</p>
+<dl>
+<dt>Args:</dt><dd><p>flow_label (str): the flow to stop</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.stop_now">
+<code class="sig-name descname">stop_now</code><span class="sig-paren">(</span><em class="sig-param">terminate=False</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.stop_now" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop suite on event handler completion, or terminate right away.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>terminate (bool, optional):</dt><dd><p>If False Cylc will run event handlers, if True it will not.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.stop_workflow">
+<code class="sig-name descname">stop_workflow</code><span class="sig-paren">(</span><em class="sig-param">mode=None</em>, <em class="sig-param">cycle_point=None</em>, <em class="sig-param">clock_time=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.stop_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the workflow.Authentication:
+<a class="reference internal" href="#cylc.flow.network.authorisation.Priv.SHUTDOWN" title="cylc.flow.network.authorisation.Priv.SHUTDOWN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.SHUTDOWN</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cylc.flow.network.server.SuiteRuntimeServer.take_checkpoints">
+<code class="sig-name descname">take_checkpoints</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.SuiteRuntimeServer.take_checkpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checkpoint current task pool.</p>
+<dl>
+<dt>Args:</dt><dd><p>name (str): The checkpoint name</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple: (outcome, message)</p>
+<dl class="simple">
+<dt>outcome (bool)</dt><dd><p>True if command successfully queued.</p>
+</dd>
+<dt>message (str)</dt><dd><p>Information about outcome.</p>
+</dd>
+</dl>
+</dd>
+<dt>Authentication:</dt><dd><p><a class="reference internal" href="#cylc.flow.network.authorisation.Priv.CONTROL" title="cylc.flow.network.authorisation.Priv.CONTROL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.network.authorisation.Priv.CONTROL</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../dev-history-major-changes.html" class="btn btn-neutral float-right" title="Cylc Development History - Major Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Cylc API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2020 NIWA &amp; British Crown (Met Office) &amp; Contributors
+      <span class="lastupdated">
+        Last updated on Aug 11, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly.2020-08-11";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/api/zmq";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

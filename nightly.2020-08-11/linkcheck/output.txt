@@ -1,0 +1,12 @@
+glossary.rst:239: [redirected with Found] http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html to https://www.cl.cam.ac.uk/~mgk25/iso-time.html
+reference/api/zmq.rst:9: [local] taskidentifier
+reference/api/zmq.rst:10: [local] taskidentifier
+tutorial/runtime/configuration-consolidation/index.rst:164: [redirected with Found] http://jinja.pocoo.org/ to https://jinja.palletsprojects.com/en/2.11.x/
+tutorial/runtime/configuration-consolidation/jinja2.rst:10: [redirected with Found] http://jinja.pocoo.org/ to https://jinja.palletsprojects.com/en/2.11.x/
+tutorial/runtime/configuration-consolidation/jinja2.rst:70: [redirected with Found] http://jinja.pocoo.org/docs to https://jinja.palletsprojects.com/en/2.11.x/
+tutorial/runtime/introduction.rst:357: [redirected with Found] http://jinja.pocoo.org/ to https://jinja.palletsprojects.com/en/2.11.x/
+tutorial/runtime/runtime-configuration.rst:293: [redirected with Found] https://www.metoffice.gov.uk/datapoint to https://www.metoffice.gov.uk/services/data
+tutorial/scheduling/further-scheduling.rst:17: [local] tutorial-tasks-and-jobs
+user-guide/writing-suites.rst:88: [redirected with Found] http://jinja.pocoo.org/ to https://jinja.palletsprojects.com/en/2.11.x/
+user-guide/writing-suites.rst:3102: [redirected with Found] http://jinja.pocoo.org/docs to https://jinja.palletsprojects.com/en/2.11.x/
+user-guide/writing-suites.rst:3450: [redirected permanently] http://jinja.pocoo.org/docs/2.10/templates/#assignments to https://jinja.palletsprojects.com/en/2.10.x/templates/#assignments

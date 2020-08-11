@@ -1,0 +1,2306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Global Configuration &mdash; Cylc nightly.2020-08-11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/cylc.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/cylc.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc Configuration Data Types" href="types.html" />
+    <link rel="prev" title="Suite Configuration" href="suite.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                nightly.2020-08-11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table Of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction: How Cylc Works</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="suite.html">Suite Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Global Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Cylc Configuration Data Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Configuration</a> &raquo;</li>
+        
+      <li>Global Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/reference/config/global.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="global-configuration">
+<h1>Global Configuration<a class="headerlink" href="#global-configuration" title="Permalink to this headline">¶</a></h1>
+<dd><dl class="conf">
+<dt id="flow.rc">
+<code class="sig-name descname">flow.rc</code><a class="headerlink" href="#flow.rc" title="Permalink to this definition">¶</a></dt>
+<dd><p>The global configuration which defines default Cylc Flow settings
+for a user or site.</p>
+<p>To view your global config run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cylc get-global-config --sparse
+</pre></div>
+</div>
+<p>Cylc will attempt to load the global configuration (flow.rc) from two
+locations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/cylc/flow/&lt;CYLC_VERSION&gt;/flow.rc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.cylc/flow/&lt;CYLC_VERSION&gt;/flow.rc</span></code></p></li>
+</ul>
+<p>If both files are present files will be loaded in this order so those
+lower down the list may override settings from those higher up.</p>
+<p>To override the default configuration path use <code class="docutils literal notranslate"><span class="pre">CYLC_CONF_PATH</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">flow.rc</span></code> file can be templated using Jinja2 variables.
+See <a class="reference internal" href="../../user-guide/writing-suites.html#jinja"><span class="std std-ref">Jinja2</span></a>.</p>
+</div>
+<dl class="setting">
+<dt id="flow.rc|process pool size">
+<code class="sig-name descname">process pool size</code><a class="headerlink" href="#flow.rc|process pool size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">4</span></code></p>
+</dd>
+</dl>
+<p>Maximum number of concurrent processes used to execute external job
+submission, event handlers, and job poll and kill commands - see
+<a class="reference internal" href="../../user-guide/running-suites.html#managing-external-command-execution"><span class="std std-ref">Managing External Command Execution</span></a>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc|process pool timeout">
+<code class="sig-name descname">process pool timeout</code><a class="headerlink" href="#flow.rc|process pool timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">PT10M</span></code></p>
+</dd>
+</dl>
+<p>Interval after which long-running commands in the process pool will be
+killed - see <a class="reference internal" href="../../user-guide/running-suites.html#managing-external-command-execution"><span class="std std-ref">Managing External Command Execution</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default is set quite high to avoid killing important
+processes when the system is under load.</p>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc|disable interactive command prompts">
+<code class="sig-name descname">disable interactive command prompts</code><a class="headerlink" href="#flow.rc|disable interactive command prompts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+</dd>
+</dl>
+<p>Commands that intervene in running suites can be made to ask for
+confirmation before acting. Some find this annoying and ineffective as
+a safety measure, however, so command prompts are disabled by default.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc|run directory rolling archive length">
+<code class="sig-name descname">run directory rolling archive length</code><a class="headerlink" href="#flow.rc|run directory rolling archive length" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">-1</span></code></p>
+</dd>
+</dl>
+<p>The number of old run directory trees to retain at start-up.</p>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc]">
+<code class="sig-name descname">[cylc]</code><a class="headerlink" href="#flow.rc[cylc]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default values for entries in the suite.rc <code class="docutils literal notranslate"><span class="pre">[cylc]</span></code> section.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc]UTC mode">
+<code class="sig-name descname">UTC mode</code><a class="headerlink" href="#flow.rc[cylc]UTC mode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+<p>Default for <a class="reference internal" href="suite.html#suite.rc[cylc]UTC mode" title="suite.rc[cylc]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc]UTC</span> <span class="pre">mode</span></code></a>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc]task event mail interval">
+<code class="sig-name descname">task event mail interval</code><a class="headerlink" href="#flow.rc[cylc]task event mail interval" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">PT5M</span></code></p>
+</dd>
+</dl>
+<p>Default for
+<a class="reference internal" href="suite.html#suite.rc[cylc]task event mail interval" title="suite.rc[cylc]task event mail interval"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc]task</span> <span class="pre">event</span> <span class="pre">mail</span> <span class="pre">interval</span></code></a>.</p>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc][events]">
+<code class="sig-name descname">[events]</code><a class="headerlink" href="#flow.rc[cylc][events]" title="Permalink to this definition">¶</a></dt>
+<dd><p>You can define site defaults for each of the following options,
+details of which can be found under
+<a class="reference internal" href="suite.html#suite.rc[cylc][events]" title="suite.rc[cylc][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc][events]</span></code></a>.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc][events]handlers">
+<code class="sig-name descname">handlers</code><a class="headerlink" href="#flow.rc[cylc][events]handlers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]handler events">
+<code class="sig-name descname">handler events</code><a class="headerlink" href="#flow.rc[cylc][events]handler events" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]mail events">
+<code class="sig-name descname">mail events</code><a class="headerlink" href="#flow.rc[cylc][events]mail events" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]mail from">
+<code class="sig-name descname">mail from</code><a class="headerlink" href="#flow.rc[cylc][events]mail from" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]mail smtp">
+<code class="sig-name descname">mail smtp</code><a class="headerlink" href="#flow.rc[cylc][events]mail smtp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]mail to">
+<code class="sig-name descname">mail to</code><a class="headerlink" href="#flow.rc[cylc][events]mail to" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]mail footer">
+<code class="sig-name descname">mail footer</code><a class="headerlink" href="#flow.rc[cylc][events]mail footer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]startup handler">
+<code class="sig-name descname">startup handler</code><a class="headerlink" href="#flow.rc[cylc][events]startup handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]timeout handler">
+<code class="sig-name descname">timeout handler</code><a class="headerlink" href="#flow.rc[cylc][events]timeout handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]inactivity handler">
+<code class="sig-name descname">inactivity handler</code><a class="headerlink" href="#flow.rc[cylc][events]inactivity handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]shutdown handler">
+<code class="sig-name descname">shutdown handler</code><a class="headerlink" href="#flow.rc[cylc][events]shutdown handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]aborted handler">
+<code class="sig-name descname">aborted handler</code><a class="headerlink" href="#flow.rc[cylc][events]aborted handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]stalled handler">
+<code class="sig-name descname">stalled handler</code><a class="headerlink" href="#flow.rc[cylc][events]stalled handler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]timeout">
+<code class="sig-name descname">timeout</code><a class="headerlink" href="#flow.rc[cylc][events]timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]inactivity">
+<code class="sig-name descname">inactivity</code><a class="headerlink" href="#flow.rc[cylc][events]inactivity" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]abort on timeout">
+<code class="sig-name descname">abort on timeout</code><a class="headerlink" href="#flow.rc[cylc][events]abort on timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]abort on inactivity">
+<code class="sig-name descname">abort on inactivity</code><a class="headerlink" href="#flow.rc[cylc][events]abort on inactivity" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][events]abort on stalled">
+<code class="sig-name descname">abort on stalled</code><a class="headerlink" href="#flow.rc[cylc][events]abort on stalled" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc][main loop]">
+<code class="sig-name descname">[main loop]</code><a class="headerlink" href="#flow.rc[cylc][main loop]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration of the Cylc Scheduler’s main loop.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc][main loop]plugins">
+<code class="sig-name descname">plugins</code><a class="headerlink" href="#flow.rc[cylc][main loop]plugins" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'health</span> <span class="pre">check',</span> <span class="pre">'prune</span> <span class="pre">flow</span> <span class="pre">labels'</span></code></p>
+</dd>
+</dl>
+<p>Configure the default main loop plugins to use when
+starting up new suites.</p>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc][main loop][&lt;plugin name&gt;]">
+<code class="sig-name descname">[&lt;plugin name&gt;]</code><a class="headerlink" href="#flow.rc[cylc][main loop][<plugin name>]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure a main loop plugin.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc][main loop][&lt;plugin name&gt;]interval">
+<code class="sig-name descname">interval</code><a class="headerlink" href="#flow.rc[cylc][main loop][<plugin name>]interval" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+<p>The interval with which this plugin is run.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[cylc][main loop][&lt;plugin name&gt;]foo">
+<code class="sig-name descname">foo</code><a class="headerlink" href="#flow.rc[cylc][main loop][<plugin name>]foo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">X</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc][main loop][health check]">
+<code class="sig-name descname">[health check]</code><a class="headerlink" href="#flow.rc[cylc][main loop][health check]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Inherits</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flow.rc[cylc][main loop][&lt;plugin name&gt;]" title="flow.rc[cylc][main loop][&lt;plugin name&gt;]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.rc[cylc][main</span> <span class="pre">loop][&lt;plugin</span> <span class="pre">name&gt;]</span></code></a></p>
+</dd>
+</dl>
+<p>Checks the integrity of the suite run directory.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc][main loop][health check]interval">
+<code class="sig-name descname">interval</code><a class="headerlink" href="#flow.rc[cylc][main loop][health check]interval" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">PT10M</span></code></p>
+</dd>
+</dl>
+<p>The interval with which this plugin is run.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[cylc][main loop][prune flow labels]">
+<code class="sig-name descname">[prune flow labels]</code><a class="headerlink" href="#flow.rc[cylc][main loop][prune flow labels]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Inherits</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#flow.rc[cylc][main loop][&lt;plugin name&gt;]" title="flow.rc[cylc][main loop][&lt;plugin name&gt;]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.rc[cylc][main</span> <span class="pre">loop][&lt;plugin</span> <span class="pre">name&gt;]</span></code></a></p>
+</dd>
+</dl>
+<p>Prune redundant flow labels.</p>
+<dl class="setting">
+<dt id="flow.rc[cylc][main loop][prune flow labels]interval">
+<code class="sig-name descname">interval</code><a class="headerlink" href="#flow.rc[cylc][main loop][prune flow labels]interval" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">PT10M</span></code></p>
+</dd>
+</dl>
+<p>The interval with which this plugin is run.</p>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[suite logging]">
+<code class="sig-name descname">[suite logging]</code><a class="headerlink" href="#flow.rc[suite logging]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The suite event log, held under the suite run directory, is maintained
+as a rolling archive. Logs are rolled over (backed up and started anew)
+when they reach a configurable limit size.</p>
+<dl class="setting">
+<dt id="flow.rc[suite logging]rolling archive length">
+<code class="sig-name descname">rolling archive length</code><a class="headerlink" href="#flow.rc[suite logging]rolling archive length" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">5</span></code></p>
+</dd>
+</dl>
+<p>How many rolled logs to retain in the archive.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite logging]maximum size in bytes">
+<code class="sig-name descname">maximum size in bytes</code><a class="headerlink" href="#flow.rc[suite logging]maximum size in bytes" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">1000000</span></code></p>
+</dd>
+</dl>
+<p>Suite event logs are rolled over when they reach this file size.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[documentation]">
+<code class="sig-name descname">[documentation]</code><a class="headerlink" href="#flow.rc[documentation]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Documentation locations for the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">doc</span></code> command.</p>
+<dl class="setting">
+<dt id="flow.rc[documentation]local">
+<code class="sig-name descname">local</code><a class="headerlink" href="#flow.rc[documentation]local" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>Path where the cylc documentation will appear if built locally.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[documentation]online">
+<code class="sig-name descname">online</code><a class="headerlink" href="#flow.rc[documentation]online" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">http://cylc.github.io/doc/built-sphinx/index.html</span></code></p>
+</dd>
+</dl>
+<p>URL of the online cylc documentation.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[documentation]cylc homepage">
+<code class="sig-name descname">cylc homepage</code><a class="headerlink" href="#flow.rc[documentation]cylc homepage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">http://cylc.github.io/</span></code></p>
+</dd>
+</dl>
+<p>URL of the cylc internet homepage, with links to documentation for
+the latest official release.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[document viewers]">
+<code class="sig-name descname">[document viewers]</code><a class="headerlink" href="#flow.rc[document viewers]" title="Permalink to this definition">¶</a></dt>
+<dd><p>PDF and HTML viewers can be launched by cylc to view the
+documentation.</p>
+<dl class="setting">
+<dt id="flow.rc[document viewers]html">
+<code class="sig-name descname">html</code><a class="headerlink" href="#flow.rc[document viewers]html" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">firefox</span></code></p>
+</dd>
+</dl>
+<p>Your preferred web browser.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[editors]">
+<code class="sig-name descname">[editors]</code><a class="headerlink" href="#flow.rc[editors]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choose your favourite text editor for editing suite configurations.</p>
+<dl class="setting">
+<dt id="flow.rc[editors]terminal">
+<code class="sig-name descname">terminal</code><a class="headerlink" href="#flow.rc[editors]terminal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>An in-terminal text editor to be used by the cylc command line.</p>
+<p>If unspecified Cylc will use the environment variable
+<code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code> which is the preferred way to set your text editor.</p>
+<p>If neither this or <code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code> are specified then Cylc will
+default to <code class="docutils literal notranslate"><span class="pre">vi</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set your <code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code> in your shell profile file
+(e.g. <code class="docutils literal notranslate"><span class="pre">~.bashrc</span></code>)</p>
+</div>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ed</span>
+<span class="n">emacs</span> <span class="o">-</span><span class="n">nw</span>
+<span class="n">nano</span>
+<span class="n">vi</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[editors]gui">
+<code class="sig-name descname">gui</code><a class="headerlink" href="#flow.rc[editors]gui" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>A graphical text editor to be used by cylc.</p>
+<p>If unspecified Cylc will use the environment variable
+<code class="docutils literal notranslate"><span class="pre">$GEDITOR</span></code> which is the preferred way to set your text editor.</p>
+<p>If neither this or <code class="docutils literal notranslate"><span class="pre">$GEDITOR</span></code> are specified then Cylc will
+default to <code class="docutils literal notranslate"><span class="pre">gvim</span> <span class="pre">-fg</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can set your <code class="docutils literal notranslate"><span class="pre">$GEDITOR</span></code> in your shell profile file
+(e.g. <code class="docutils literal notranslate"><span class="pre">~.bashrc</span></code>)</p>
+</div>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atom</span> <span class="o">--</span><span class="n">wait</span>
+<span class="n">code</span> <span class="o">-</span><span class="n">nw</span>
+<span class="n">emacs</span>
+<span class="n">gedit</span> <span class="o">-</span><span class="n">s</span>
+<span class="n">gvim</span> <span class="o">-</span><span class="n">fg</span>
+<span class="n">nedit</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[job platforms]">
+<code class="sig-name descname">[job platforms]</code><a class="headerlink" href="#flow.rc[job platforms]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="section">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]">
+<code class="sig-name descname">[&lt;platform name&gt;]</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]batch system">
+<code class="sig-name descname">batch system</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]batch system" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">background</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]batch submit command template">
+<code class="sig-name descname">batch submit command template</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]batch submit command template" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]shell">
+<code class="sig-name descname">shell</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]shell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]run directory">
+<code class="sig-name descname">run directory</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]run directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run</span></code></p>
+</dd>
+</dl>
+<p>The number of old run directory trees to retain at start-up.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]work directory">
+<code class="sig-name descname">work directory</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]work directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run</span></code></p>
+</dd>
+</dl>
+<p>The top level for suite work and share directories. Can contain
+<code class="docutils literal notranslate"><span class="pre">$HOME</span></code> or <code class="docutils literal notranslate"><span class="pre">$USER</span></code> but not other environment variables (the
+item cannot actually be evaluated by the shell on HOST before
+use, but the remote home directory is where <code class="docutils literal notranslate"><span class="pre">rsync</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ssh</span></code> naturally land, and the remote username is known by the
+suite server program).</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/nfs/data/$USER/cylc-run
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]suite definition directory">
+<code class="sig-name descname">suite definition directory</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]suite definition directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]task communication method">
+<code class="sig-name descname">task communication method</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]task communication method" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">zmq</span></code></p>
+</dd>
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">zmq</span></code>, <code class="docutils literal notranslate"><span class="pre">poll</span></code></p>
+</dd>
+</dl>
+<p>The means by which task progress messages are reported back to
+the running suite.</p>
+<p>Options:</p>
+<dl class="simple">
+<dt>zmq</dt><dd><p>Direct client-server TCP communication via network ports</p>
+</dd>
+<dt>poll</dt><dd><p>The suite polls for the status of tasks (no task messaging)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]submission polling intervals">
+<code class="sig-name descname">submission polling intervals</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]submission polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Cylc can also poll submitted jobs to catch problems that
+prevent the submitted job from executing at all, such as
+deletion from an external batch scheduler queue. Routine
+polling is done only for the polling <code class="docutils literal notranslate"><span class="pre">task</span> <span class="pre">communication</span>
+<span class="pre">method</span></code> unless suite-specific polling is configured in
+the suite configuration. A list of interval values can be
+specified as for execution polling but a single value
+is probably sufficient for job submission polling.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">*</span><span class="n">PT1M</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">PT5M</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]submission retry delays">
+<code class="sig-name descname">submission retry delays</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]submission retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]execution polling intervals">
+<code class="sig-name descname">execution polling intervals</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]execution polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Cylc can poll running jobs to catch problems that prevent task
+messages from being sent back to the suite, such as hard job
+kills, network outages, or unplanned task host shutdown.
+Routine polling is done only for the polling <em>task
+communication method</em> (below) unless suite-specific polling is
+configured in the suite configuration.  A list of interval
+values can be specified, with the last value used repeatedly
+until the task is finished - this allows more frequent polling
+near the beginning and end of the anticipated task run time.
+Multipliers can be used as shorthand as in the example below.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">*</span><span class="n">PT1M</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">PT5M</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]execution time limit polling intervals">
+<code class="sig-name descname">execution time limit polling intervals</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]execution time limit polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>The intervals between polling after a task job (submitted to
+the relevant batch system on the relevant host) exceeds its
+execution time limit. The default setting is PT1M, PT2M, PT7M.
+The accumulated times (in minutes) for these intervals will be
+roughly 1, 1 + 2 = 3 and 1 + 2 + 7 = 10 after a task job
+exceeds its execution time limit.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]scp command">
+<code class="sig-name descname">scp command</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]scp command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">scp</span> <span class="pre">-oBatchMode=yes</span> <span class="pre">-oConnectTimeout=10</span></code></p>
+</dd>
+</dl>
+<p>A string for the command used to copy files to a remote host.
+This is not used on the suite host unless you run local tasks
+under another user account. The value is assumed to be <code class="docutils literal notranslate"><span class="pre">scp</span></code>
+with some initial options or a command that implements a
+similar interface to <code class="docutils literal notranslate"><span class="pre">scp</span></code>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]ssh command">
+<code class="sig-name descname">ssh command</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]ssh command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-oBatchMode=yes</span> <span class="pre">-oConnectTimeout=10</span></code></p>
+</dd>
+</dl>
+<p>A string for the command used to invoke commands on this host.
+This is not used on the suite host unless you run local tasks
+under another user account.  The value is assumed to be <code class="docutils literal notranslate"><span class="pre">ssh</span></code>
+with some initial options or a command that implements a
+similar interface to <code class="docutils literal notranslate"><span class="pre">ssh</span></code>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]use login shell">
+<code class="sig-name descname">use login shell</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]use login shell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+</dd>
+</dl>
+<p>Whether to use a login shell or not for remote command
+invocation. By default cylc runs remote ssh commands using a
+login shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh user@host <span class="s1">&#39;bash --login cylc ...&#39;</span>
+</pre></div>
+</div>
+<p>which will source <code class="docutils literal notranslate"><span class="pre">/etc/profile</span></code> and <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code> to set up
+the user environment.  However, for security reasons some
+institutions do not allow unattended commands to start login
+shells, so you can turn off this behaviour to get:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh user@host <span class="s1">&#39;cylc ...&#39;</span>
+</pre></div>
+</div>
+<p>which will use the default shell on the remote machine,
+sourcing <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> (or <code class="docutils literal notranslate"><span class="pre">~/.cshrc</span></code>) to set up the
+environment.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]remote hosts">
+<code class="sig-name descname">remote hosts</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]remote hosts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]cylc executable">
+<code class="sig-name descname">cylc executable</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]cylc executable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">cylc</span></code></p>
+</dd>
+</dl>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span></code> executable on a remote host.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This should normally point to the cylc multi-version wrapper
+on the host, not <code class="docutils literal notranslate"><span class="pre">bin/cylc</span></code> for a specific installed
+version.</p>
+</div>
+<p>Specify a full path if <code class="docutils literal notranslate"><span class="pre">cylc</span></code> is not in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> when it is
+invoked via <code class="docutils literal notranslate"><span class="pre">ssh</span></code> on this host.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]global init-script">
+<code class="sig-name descname">global init-script</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]global init-script" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>If specified, the value of this setting will be inserted to
+just before the <code class="docutils literal notranslate"><span class="pre">init-script</span></code> section of all job scripts that
+are to be submitted to the specified remote host.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]copyable environment variables">
+<code class="sig-name descname">copyable environment variables</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]copyable environment variables" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>A list containing the names of the environment variables that
+can and/or need to be copied from the suite server program to a
+job.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]retrieve job logs">
+<code class="sig-name descname">retrieve job logs</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]retrieve job logs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+<p>Global default for
+<a class="reference internal" href="suite.html#suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs" title="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][remote]retrieve</span> <span class="pre">job</span>
+<span class="pre">logs</span></code></a>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]retrieve job logs command">
+<code class="sig-name descname">retrieve job logs command</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]retrieve job logs command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">rsync</span> <span class="pre">-a</span></code></p>
+</dd>
+</dl>
+<p>If <code class="docutils literal notranslate"><span class="pre">rsync</span> <span class="pre">-a</span></code> is unavailable or insufficient to retrieve job
+logs from a remote host, you can use this setting to specify a
+suitable command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]retrieve job logs max size">
+<code class="sig-name descname">retrieve job logs max size</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]retrieve job logs max size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>Global default for the
+<a class="reference internal" href="suite.html#suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs max size" title="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs max size"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][remote]retrieve</span> <span class="pre">job</span>
+<span class="pre">logs</span> <span class="pre">max</span> <span class="pre">size</span></code></a>.
+the specified host.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]retrieve job logs retry delays">
+<code class="sig-name descname">retrieve job logs retry delays</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]retrieve job logs retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Global default for the
+<a class="reference internal" href="suite.html#suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs retry delays" title="suite.rc[runtime][&lt;namespace&gt;][remote]retrieve job logs retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][remote]retrieve</span> <span class="pre">job</span>
+<span class="pre">logs</span> <span class="pre">retry</span> <span class="pre">delays</span></code></a>.
+setting for the specified host.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]task event handler retry delays">
+<code class="sig-name descname">task event handler retry delays</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]task event handler retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Host specific default for
+<a class="reference internal" href="suite.html#suite.rc[runtime][&lt;namespace&gt;][events]handler retry delays" title="suite.rc[runtime][&lt;namespace&gt;][events]handler retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][events]handler</span> <span class="pre">retry</span>
+<span class="pre">delays</span></code></a>.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]tail command template">
+<code class="sig-name descname">tail command template</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]tail command template" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-n</span> <span class="pre">+1</span> <span class="pre">-F</span> <span class="pre">%(filename)s</span></code></p>
+</dd>
+</dl>
+<p>A command template (with <code class="docutils literal notranslate"><span class="pre">%(filename)s</span></code> substitution) to
+tail-follow job logs on HOST, by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code>. You are
+unlikely to need to override this.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]err tailer">
+<code class="sig-name descname">err tailer</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]err tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>A command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution) that can
+be used to tail-follow the stderr stream of a running job if
+SYSTEM does not use the normal log file location while the job
+is running.  This setting overrides
+<a class="reference internal" href="#flow.rc[job platforms][&lt;platform name&gt;]tail command template" title="flow.rc[job platforms][&lt;platform name&gt;]tail command template"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">tail</span> <span class="pre">command</span> <span class="pre">template</span></code></a>.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for PBS</span>
+<span class="n">qcat</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">e</span> <span class="o">%</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span><span class="n">s</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]out tailer">
+<code class="sig-name descname">out tailer</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]out tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>A command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution) that can
+be used to tail-follow the stdout stream of a running job if
+SYSTEM does not use the normal log file location while the job
+is running.  This setting overrides
+<a class="reference internal" href="#flow.rc[job platforms][&lt;platform name&gt;]tail command template" title="flow.rc[job platforms][&lt;platform name&gt;]tail command template"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">tail</span> <span class="pre">command</span> <span class="pre">template</span></code></a>.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for PBS</span>
+<span class="n">qcat</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">o</span> <span class="o">%</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span><span class="n">s</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]err viewer">
+<code class="sig-name descname">err viewer</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]err viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>A command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution) that can
+be used to view the stderr stream of a running job if SYSTEM
+does not use the normal log file location while the job is
+running.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for PBS</span>
+<span class="n">qcat</span> <span class="o">-</span><span class="n">e</span> <span class="o">%</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span><span class="n">s</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]out viewer">
+<code class="sig-name descname">out viewer</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]out viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>A command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution) that can
+be used to view the stdout stream of a running job if SYSTEM
+does not use the normal log file location while the job is
+running.</p>
+<p>Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for PBS</span>
+<span class="n">qcat</span> <span class="o">-</span><span class="n">o</span> <span class="o">%</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span><span class="n">s</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]job name length maximum">
+<code class="sig-name descname">job name length maximum</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]job name length maximum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+</dl>
+<p>The maximum length for job name acceptable by a batch system on
+a given host.  Currently, this setting is only meaningful for
+PBS jobs. For example, PBS 12 or older will fail a job submit
+if the job name has more than 15 characters; whereas PBS 13
+accepts up to 236 characters.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[job platforms][&lt;platform name&gt;]owner">
+<code class="sig-name descname">owner</code><a class="headerlink" href="#flow.rc[job platforms][<platform name>]owner" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[platform groups]">
+<code class="sig-name descname">[platform groups]</code><a class="headerlink" href="#flow.rc[platform groups]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="section">
+<dt id="flow.rc[platform groups][&lt;group&gt;]">
+<code class="sig-name descname">[&lt;group&gt;]</code><a class="headerlink" href="#flow.rc[platform groups][<group>]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[platform groups][&lt;group&gt;]platforms">
+<code class="sig-name descname">platforms</code><a class="headerlink" href="#flow.rc[platform groups][<group>]platforms" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[hosts]">
+<code class="sig-name descname">[hosts]</code><a class="headerlink" href="#flow.rc[hosts]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="section">
+<dt id="flow.rc[hosts][localhost]">
+<code class="sig-name descname">[localhost]</code><a class="headerlink" href="#flow.rc[hosts][localhost]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[hosts][localhost]run directory">
+<code class="sig-name descname">run directory</code><a class="headerlink" href="#flow.rc[hosts][localhost]run directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]work directory">
+<code class="sig-name descname">work directory</code><a class="headerlink" href="#flow.rc[hosts][localhost]work directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]task communication method">
+<code class="sig-name descname">task communication method</code><a class="headerlink" href="#flow.rc[hosts][localhost]task communication method" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p>
+</dd>
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh</span></code>, <code class="docutils literal notranslate"><span class="pre">poll</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]submission polling intervals">
+<code class="sig-name descname">submission polling intervals</code><a class="headerlink" href="#flow.rc[hosts][localhost]submission polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]execution polling intervals">
+<code class="sig-name descname">execution polling intervals</code><a class="headerlink" href="#flow.rc[hosts][localhost]execution polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]scp command">
+<code class="sig-name descname">scp command</code><a class="headerlink" href="#flow.rc[hosts][localhost]scp command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">scp</span> <span class="pre">-oBatchMode=yes</span> <span class="pre">-oConnectTimeout=10</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]ssh command">
+<code class="sig-name descname">ssh command</code><a class="headerlink" href="#flow.rc[hosts][localhost]ssh command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-oBatchMode=yes</span> <span class="pre">-oConnectTimeout=10</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]use login shell">
+<code class="sig-name descname">use login shell</code><a class="headerlink" href="#flow.rc[hosts][localhost]use login shell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]cylc executable">
+<code class="sig-name descname">cylc executable</code><a class="headerlink" href="#flow.rc[hosts][localhost]cylc executable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">cylc</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]global init-script">
+<code class="sig-name descname">global init-script</code><a class="headerlink" href="#flow.rc[hosts][localhost]global init-script" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]copyable environment variables">
+<code class="sig-name descname">copyable environment variables</code><a class="headerlink" href="#flow.rc[hosts][localhost]copyable environment variables" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]retrieve job logs">
+<code class="sig-name descname">retrieve job logs</code><a class="headerlink" href="#flow.rc[hosts][localhost]retrieve job logs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]retrieve job logs command">
+<code class="sig-name descname">retrieve job logs command</code><a class="headerlink" href="#flow.rc[hosts][localhost]retrieve job logs command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">rsync</span> <span class="pre">-a</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]retrieve job logs max size">
+<code class="sig-name descname">retrieve job logs max size</code><a class="headerlink" href="#flow.rc[hosts][localhost]retrieve job logs max size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]retrieve job logs retry delays">
+<code class="sig-name descname">retrieve job logs retry delays</code><a class="headerlink" href="#flow.rc[hosts][localhost]retrieve job logs retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]task event handler retry delays">
+<code class="sig-name descname">task event handler retry delays</code><a class="headerlink" href="#flow.rc[hosts][localhost]task event handler retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost]tail command template">
+<code class="sig-name descname">tail command template</code><a class="headerlink" href="#flow.rc[hosts][localhost]tail command template" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-n</span> <span class="pre">+1</span> <span class="pre">-F</span> <span class="pre">%(filename)s</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[hosts][localhost][batch systems]">
+<code class="sig-name descname">[batch systems]</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="section">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]">
+<code class="sig-name descname">[&lt;batch system name&gt;]</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]err tailer">
+<code class="sig-name descname">err tailer</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]err tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]out tailer">
+<code class="sig-name descname">out tailer</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]out tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]err viewer">
+<code class="sig-name descname">err viewer</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]err viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]out viewer">
+<code class="sig-name descname">out viewer</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]out viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]job name length maximum">
+<code class="sig-name descname">job name length maximum</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]job name length maximum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][localhost][batch systems][&lt;batch system name&gt;]execution time limit polling intervals">
+<code class="sig-name descname">execution time limit polling intervals</code><a class="headerlink" href="#flow.rc[hosts][localhost][batch systems][<batch system name>]execution time limit polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]">
+<code class="sig-name descname">[&lt;hostname glob&gt;]</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]run directory">
+<code class="sig-name descname">run directory</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]run directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]work directory">
+<code class="sig-name descname">work directory</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]work directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]task communication method">
+<code class="sig-name descname">task communication method</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]task communication method" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">default</span></code></p>
+</dd>
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">default</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh</span></code>, <code class="docutils literal notranslate"><span class="pre">poll</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]submission polling intervals">
+<code class="sig-name descname">submission polling intervals</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]submission polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]execution polling intervals">
+<code class="sig-name descname">execution polling intervals</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]execution polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]scp command">
+<code class="sig-name descname">scp command</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]scp command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]ssh command">
+<code class="sig-name descname">ssh command</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]ssh command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]use login shell">
+<code class="sig-name descname">use login shell</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]use login shell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]cylc executable">
+<code class="sig-name descname">cylc executable</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]cylc executable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]global init-script">
+<code class="sig-name descname">global init-script</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]global init-script" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]copyable environment variables">
+<code class="sig-name descname">copyable environment variables</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]copyable environment variables" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]retrieve job logs">
+<code class="sig-name descname">retrieve job logs</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]retrieve job logs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-boolean" title="parsec-type-boolean"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">boolean</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]retrieve job logs command">
+<code class="sig-name descname">retrieve job logs command</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]retrieve job logs command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]retrieve job logs max size">
+<code class="sig-name descname">retrieve job logs max size</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]retrieve job logs max size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]retrieve job logs retry delays">
+<code class="sig-name descname">retrieve job logs retry delays</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]retrieve job logs retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]task event handler retry delays">
+<code class="sig-name descname">task event handler retry delays</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]task event handler retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;]tail command template">
+<code class="sig-name descname">tail command template</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>]tail command template" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems]">
+<code class="sig-name descname">[batch systems]</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="section">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]">
+<code class="sig-name descname">[&lt;batch system name&gt;]</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]err tailer">
+<code class="sig-name descname">err tailer</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]err tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]out tailer">
+<code class="sig-name descname">out tailer</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]out tailer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]out viewer">
+<code class="sig-name descname">out viewer</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]out viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]err viewer">
+<code class="sig-name descname">err viewer</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]err viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]job name length maximum">
+<code class="sig-name descname">job name length maximum</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]job name length maximum" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer" title="parsec-type-integer"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[hosts][&lt;hostname glob&gt;][batch systems][&lt;batch system name&gt;]execution time limit polling intervals">
+<code class="sig-name descname">execution time limit polling intervals</code><a class="headerlink" href="#flow.rc[hosts][<hostname glob>][batch systems][<batch system name>]execution time limit polling intervals" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[task events]">
+<code class="sig-name descname">[task events]</code><a class="headerlink" href="#flow.rc[task events]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global site/user defaults for
+<a class="reference internal" href="suite.html#suite.rc[runtime][&lt;namespace&gt;][events]" title="suite.rc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[runtime][&lt;namespace&gt;][events]</span></code></a>.</p>
+<dl class="setting">
+<dt id="flow.rc[task events]execution timeout">
+<code class="sig-name descname">execution timeout</code><a class="headerlink" href="#flow.rc[task events]execution timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]handlers">
+<code class="sig-name descname">handlers</code><a class="headerlink" href="#flow.rc[task events]handlers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]handler events">
+<code class="sig-name descname">handler events</code><a class="headerlink" href="#flow.rc[task events]handler events" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]handler retry delays">
+<code class="sig-name descname">handler retry delays</code><a class="headerlink" href="#flow.rc[task events]handler retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]mail events">
+<code class="sig-name descname">mail events</code><a class="headerlink" href="#flow.rc[task events]mail events" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-list" title="parsec-type-list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]mail from">
+<code class="sig-name descname">mail from</code><a class="headerlink" href="#flow.rc[task events]mail from" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]mail retry delays">
+<code class="sig-name descname">mail retry delays</code><a class="headerlink" href="#flow.rc[task events]mail retry delays" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval_list" title="parsec-type-time_interval_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]mail smtp">
+<code class="sig-name descname">mail smtp</code><a class="headerlink" href="#flow.rc[task events]mail smtp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]mail to">
+<code class="sig-name descname">mail to</code><a class="headerlink" href="#flow.rc[task events]mail to" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[task events]submission timeout">
+<code class="sig-name descname">submission timeout</code><a class="headerlink" href="#flow.rc[task events]submission timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[test battery]">
+<code class="sig-name descname">[test battery]</code><a class="headerlink" href="#flow.rc[test battery]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for the automated development tests.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The test battery reads <code class="docutils literal notranslate"><span class="pre">flow-tests.rc</span></code> instead of the normal
+site/user global config files (from the same locations, however).</p>
+</div>
+<dl class="setting">
+<dt id="flow.rc[test battery]remote host with shared fs">
+<code class="sig-name descname">remote host with shared fs</code><a class="headerlink" href="#flow.rc[test battery]remote host with shared fs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>The name of a remote host that sees the same HOME file system as
+the host running the test battery.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[test battery]remote host">
+<code class="sig-name descname">remote host</code><a class="headerlink" href="#flow.rc[test battery]remote host" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>Host name of a remote account that does not see the same home
+directory as the account running the test battery - see also
+“remote owner” below).</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[test battery]remote owner">
+<code class="sig-name descname">remote owner</code><a class="headerlink" href="#flow.rc[test battery]remote owner" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>User name of a remote account that does not see the same home
+directory as the account running the test battery - see also
+“remote host” above).</p>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[test battery][batch systems]">
+<code class="sig-name descname">[batch systems]</code><a class="headerlink" href="#flow.rc[test battery][batch systems]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for testing supported batch systems (job submission
+methods). The tests for a batch system are only performed if the
+batch system is available on the test host or a remote host
+accessible via SSH from the test host.</p>
+<dl class="section">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;]">
+<code class="sig-name descname">[&lt;batch system name&gt;]</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>]" title="Permalink to this definition">¶</a></dt>
+<dd><p>SYSTEM is the name of a supported batch system with automated
+tests.  This can currently be “loadleveler”, “lsf”, “pbs”,
+“sge” and/or “slurm”.</p>
+<dl class="setting">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;]host">
+<code class="sig-name descname">host</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>]host" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>The name of a host where commands for this batch system is
+available. Use “localhost” if the batch system is available
+on the host running the test battery. Any specified remote
+host should be accessible via SSH from the host running the
+test battery.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;]out viewer">
+<code class="sig-name descname">out viewer</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>]out viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>The command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution)
+for testing the run time stdout viewer functionality for
+this batch system.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;]err viewer">
+<code class="sig-name descname">err viewer</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>]err viewer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>The command template (with <code class="docutils literal notranslate"><span class="pre">%(job_id)s</span></code> substitution)
+for testing the run time stderr viewer functionality for
+this batch system.</p>
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;][directives]">
+<code class="sig-name descname">[directives]</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>][directives]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum set of directives that must be supplied to the
+batch system on the site to initiate jobs for the tests.</p>
+<dl class="setting">
+<dt id="flow.rc[test battery][batch systems][&lt;batch system name&gt;][directives]&lt;directive&gt;">
+<code class="sig-name descname">&lt;directive&gt;</code><a class="headerlink" href="#flow.rc[test battery][batch systems][<batch system name>][directives]<directive>" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[suite host self-identification]">
+<code class="sig-name descname">[suite host self-identification]</code><a class="headerlink" href="#flow.rc[suite host self-identification]" title="Permalink to this definition">¶</a></dt>
+<dd><p>The suite host’s identity must be determined locally by cylc and passed
+to running tasks (via <code class="docutils literal notranslate"><span class="pre">$CYLC_SUITE_HOST</span></code>) so that task messages can
+target the right suite on the right host.</p>
+<dl class="setting">
+<dt id="flow.rc[suite host self-identification]method">
+<code class="sig-name descname">method</code><a class="headerlink" href="#flow.rc[suite host self-identification]method" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p>
+</dd>
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">address</span></code>, <code class="docutils literal notranslate"><span class="pre">hardwired</span></code></p>
+</dd>
+</dl>
+<p>This item determines how cylc finds the identity of the suite host.
+For the default <em>name</em> method cylc asks the suite host for its host
+name. This should resolve on remote task hosts to the IP address of
+the suite host; if it doesn’t, adjust network settings or use one
+of the other methods. For the <em>address</em> method, cylc attempts to
+use a special external “target address” to determine the IP address
+of the suite host as seen by remote task hosts.  And finally, as a
+last resort, you can choose the <em>hardwired</em> method and manually
+specify the host name or IP address of the suite host.</p>
+<p>Options:</p>
+<dl class="simple">
+<dt>name</dt><dd><p>Self-identified host name.</p>
+</dd>
+<dt>address</dt><dd><p>Automatically determined IP address (requires <em>target</em>).</p>
+</dd>
+<dt>hardwired</dt><dd><p>Manually specified host name or IP address (requires <em>host</em>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite host self-identification]target">
+<code class="sig-name descname">target</code><a class="headerlink" href="#flow.rc[suite host self-identification]target" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">google.com</span></code></p>
+</dd>
+</dl>
+<p>This item is required for the <em>address</em> self-identification method.
+If your suite host sees the internet, a common address such as
+<code class="docutils literal notranslate"><span class="pre">google.com</span></code> will do; otherwise choose a host visible on your
+intranet.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite host self-identification]host">
+<code class="sig-name descname">host</code><a class="headerlink" href="#flow.rc[suite host self-identification]host" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+<p>Use this item to explicitly set the name or IP address of the suite
+host if you have to use the <em>hardwired</em> self-identification method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[authentication]">
+<code class="sig-name descname">[authentication]</code><a class="headerlink" href="#flow.rc[authentication]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authentication of client programs with suite server programs can be
+configured here, and overridden in suites if necessary with
+<a class="reference internal" href="suite.html#suite.rc[cylc][authentication]" title="suite.rc[cylc][authentication]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite.rc[cylc][authentication]</span></code></a>.</p>
+<p>The suite-specific passphrase must be installed on a user’s account to
+authorize full control privileges (see
+<a class="reference internal" href="../../user-guide/running-suites.html#connectionauthentication"><span class="std std-ref">Client-Server Interaction</span></a>). In the future we plan to move to a
+more traditional user account model so that each authorized user can
+have their own password.</p>
+<dl class="setting">
+<dt id="flow.rc[authentication]public">
+<code class="sig-name descname">public</code><a class="headerlink" href="#flow.rc[authentication]public" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">state-totals</span></code></p>
+</dd>
+<dt class="field-odd">Options</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">identity</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>, <code class="docutils literal notranslate"><span class="pre">state-totals</span></code>, <code class="docutils literal notranslate"><span class="pre">read</span></code>, <code class="docutils literal notranslate"><span class="pre">shutdown</span></code></p>
+</dd>
+</dl>
+<p>This sets the client privilege level for public access - i.e.
+no suite passphrase required.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="section">
+<dt id="flow.rc[suite servers]">
+<code class="sig-name descname">[suite servers]</code><a class="headerlink" href="#flow.rc[suite servers]" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure allowed suite hosts and ports for starting up (running or
+restarting) suites. Additionally configure host selection settings
+specifying how to determine the most suitable run host at any given
+time from those configured.</p>
+<dl class="setting">
+<dt id="flow.rc[suite servers]run hosts">
+<code class="sig-name descname">run hosts</code><a class="headerlink" href="#flow.rc[suite servers]run hosts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-spaceless_list" title="parsec-type-spaceless_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">spaceless</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>A list of allowed suite run hosts. One of these hosts will be
+appointed for a suite to start up on if an explicit host is not
+provided as an option to a <code class="docutils literal notranslate"><span class="pre">run</span></code> or <code class="docutils literal notranslate"><span class="pre">restart</span></code> command.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite servers]run ports">
+<code class="sig-name descname">run ports</code><a class="headerlink" href="#flow.rc[suite servers]run ports" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-integer_list" title="parsec-type-integer_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">integer</span> <span class="pre">list</span></code></a></p>
+</dd>
+<dt class="field-even">Default</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">43001</span> <span class="pre">..</span> <span class="pre">43100</span></code></p>
+</dd>
+</dl>
+<p>A list of allowed ports for Cylc to use to run suites.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite servers]condemned hosts">
+<code class="sig-name descname">condemned hosts</code><a class="headerlink" href="#flow.rc[suite servers]condemned hosts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-absolute_host_list" title="parsec-type-absolute_host_list"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">absolute</span> <span class="pre">host</span> <span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+<p>Hosts specified in <code class="docutils literal notranslate"><span class="pre">condemned</span> <span class="pre">hosts</span></code> will not be considered as
+suite run hosts. If suites are already running on <code class="docutils literal notranslate"><span class="pre">condemned</span>
+<span class="pre">hosts</span></code> they will be automatically shutdown and restarted (see
+<a class="reference internal" href="../../user-guide/running-suites.html#auto-stop-restart"><span class="std std-ref">Auto Stop-Restart</span></a>).</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite servers]auto restart delay">
+<code class="sig-name descname">auto restart delay</code><a class="headerlink" href="#flow.rc[suite servers]auto restart delay" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-time_interval" title="parsec-type-time_interval"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">time</span> <span class="pre">interval</span></code></a></p>
+</dd>
+</dl>
+<p>Relates to Cylc’s auto stop-restart mechanism (see
+<a class="reference internal" href="../../user-guide/running-suites.html#auto-stop-restart"><span class="std std-ref">Auto Stop-Restart</span></a>).  When a host is set to automatically
+shutdown/restart it will first wait a random period of time between
+zero and <code class="docutils literal notranslate"><span class="pre">auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code> seconds before beginning the
+process. This is to prevent large numbers of suites from restarting
+simultaneously.</p>
+</dd></dl>
+
+<dl class="setting">
+<dt id="flow.rc[suite servers]ranking">
+<code class="sig-name descname">ranking</code><a class="headerlink" href="#flow.rc[suite servers]ranking" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="types.html#parsec-type-string" title="parsec-type-string"><code class="xref parsec parsec-type docutils literal notranslate"><span class="pre">string</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+</dd></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="types.html" class="btn btn-neutral float-right" title="Cylc Configuration Data Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="suite.html" class="btn btn-neutral float-left" title="Suite Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2008-2020 NIWA &amp; British Crown (Met Office) &amp; Contributors
+      <span class="lastupdated">
+        Last updated on Aug 11, 2020.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly.2020-08-11";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/config/global";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
