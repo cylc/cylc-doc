@@ -17,9 +17,12 @@ suite state checkpoint. The only difference between cold starts and warm starts
 is that warm starts start from a point beyond the suite initial cycle point.
 
 Once a suite is up and running it is typically a restart that is needed most
-often (but see also ``cylc reload``). *Be aware that cold and warm
-starts wipe out prior suite state, so you can't go back to a restart if you
-decide you made a mistake.*
+often (but see also ``cylc reload``).
+
+.. warning::
+   
+   Cold and warm starts wipe out prior suite state, so you can't go back to a
+   restart if you decide you made a mistake.
 
 
 .. _Cold Start:
@@ -44,12 +47,12 @@ Warm Start
 ^^^^^^^^^^
 
 A warm start runs a suite from scratch like a cold start, but from the
-beginning of a given cycle point that is beyond the suite initial cycle point.
-This is generally inferior to a *restart* (which loads a previously
-recorded suite state - see :ref:`RestartingSuites`) because it may result in
-some tasks rerunning. However, a warm start may be required if a restart is not
-possible, e.g. because the suite run database was accidentally deleted. The
-warm start cycle point must be given on the command line:
+beginning of a given :term:`cycle point` that is beyond the suite
+:term:`initial cycle point`.  This is generally inferior to a *restart* (which
+loads a previously recorded suite state - see :ref:`RestartingSuites`) because
+it may result in some tasks rerunning. However, a warm start may be required if
+a restart is not possible, e.g. because the suite run database was accidentally
+deleted. The warm start cycle point must be given on the command line:
 
 .. code-block:: console
 
@@ -60,7 +63,7 @@ dependencies before the given warm start cycle point are ignored.
 
 The scheduler starts by loading a first instance of each task at the warm
 start cycle point, or at the next valid point for the task.
-``R1``-type tasks behave exactly the same as other tasks - if their
+``R1`` type tasks behave exactly the same as other tasks - if their
 cycle point is at or later than the given start cycle point, they will run; if
 not, they will be ignored.
 
@@ -176,9 +179,9 @@ workflow by coding tasks that run the ``cylc checkpoint`` command:
       # ...
       [[checkpointer]]
          script = """
-   wait "${CYLC_TASK_MESSAGE_STARTED_PID}" 2>/dev/null || true
-   cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
-                  """
+             wait "${CYLC_TASK_MESSAGE_STARTED_PID}" 2>/dev/null || true
+             cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
+         """
 
 .. note::
 
@@ -207,7 +210,7 @@ updated automatically according to the poll results.
 Existing instances of tasks removed from the suite configuration before restart
 are not removed from the task pool automatically, but they will not spawn new
 instances. They can be removed manually if necessary,
-with~``cylc remove``.
+with ``cylc remove``.
 
 Similarly, instances of new tasks added to the suite configuration before
 restart are not inserted into the task pool automatically, because it is
@@ -238,7 +241,7 @@ must be inserted manually at the right cycle point, with ``cylc insert``.
 The Suite Contact File
 ----------------------
 
-At start-up, suite server programs write a *suite contact file*
+At start-up, suite server programs write a :term:`contact file`
 ``$HOME/cylc-run/SUITE/.service/contact`` that records suite host,
 user, port number, process ID, Cylc version, and other information. Client
 commands can read this file, if they have access to it, to find the target
@@ -285,15 +288,13 @@ for task messaging by TCP or SSH. See :ref:`Polling To Track Job Status`.
 Tracking Task State
 -------------------
 
-Cylc supports three ways of tracking task state on job hosts:
+Cylc supports two ways of tracking task state on job hosts:
 
 - task-to-suite messaging via TCP (using ZMQ protocol)
-- task-to-suite messaging via non-interactive SSH to the suite host,
-  then local TCP
 - regular polling by the suite server program
 
 These can be configured per job host using
-:cylc:conf:`global.cylc[hosts][<hostname glob>]task communication method`.
+:cylc:conf:`global.cylc[platforms][<platform name>]communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
 suite hosts, before resorting to the polling method you should
@@ -318,33 +319,18 @@ By default the messaging occurs via an authenticated, TCP connection to the
 suite server program using the ZMQ protocol.
 This is the preferred task communications method - it is efficient and direct.
 
-Suite server programs automatically install suite contact information
-and credentials on job hosts.  Users only need to do this manually
-for remote access to suites on other hosts, or suites owned by other
+Suite server programs automatically install suite :term:`contact information
+<contact file>` and credentials on job hosts.  Users only need to do this
+manually for remote access to suites on other hosts, or suites owned by other
 users - see :ref:`RemoteControl`.
-
-
-Ssh Task Messaging
-^^^^^^^^^^^^^^^^^^
-
-Cylc can be configured to re-invoke task messaging commands on the
-suite host via non-interactive SSH (from job host to suite host).
-Then a local TCP connection is made to the suite server program.
-
-(User-invoked client commands
-can do the same thing with the ``--use-ssh`` command option).
-
-This is less efficient than direct TCP messaging, but it may be useful at
-sites where the TCP ports are blocked but non-interactive SSH is allowed.
-
 
 .. _Polling To Track Job Status:
 
 Polling to Track Job Status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Finally, suite server programs can actively poll task jobs at
-configurable intervals, via non-interactive SSH to the job host.
+Suite server programs can actively poll task jobs at configurable intervals,
+via non-interactive SSH to the job host.
 
 Polling is the least efficient task communications method because task state is
 updated only at intervals, not when task events actually occur.  However, it
@@ -354,12 +340,14 @@ host to suite host.
 Be careful to avoid spamming task hosts with polling commands. Each poll
 opens (and then closes) a new SSH connection.
 
-Polling intervals are configurable under ``[runtime]`` because
+Polling intervals are configurable under :cylc:conf:`[runtime]` because
 they should may depend on the expected execution time. For instance, a
 task that typically takes an hour to run might be polled every 10
 minutes initially, and then every minute toward the end of its run.
 Interval values are used in turn until the last value, which is used
 repeatedly until finished:
+
+.. TODO - platformise this example
 
 .. code-block:: cylc
 
@@ -372,73 +360,16 @@ repeatedly until finished:
                # minutes for 50 minutes, then every minute until finished:
                execution polling intervals = PT1M, 5*PT10M, PT1M
 
-A list of intervals with optional multipliers can be used for both
-submission and execution polling, although a single value is probably
-sufficient for submission polling. If these items are not configured
-default values from site and user global config will be used for the polling
-task communication method; polling is not done by default under the
-other task communications methods (but it can still be used if you
-like).
+.. cylc-scope:: flow.rc[platforms][<platform name>]
 
+A list of intervals with optional multipliers can be used for both submission
+and execution polling, although a single value is probably sufficient for
+submission polling. If these items are not configured default values from site
+and user global config will be used for :cylc:conf:`communication method =
+polling`; polling is not done by default under the other task communications
+methods (but it can still be used if you like).
 
-Task Communications Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-.. _The Suite Service Directory:
-
-The Suite Service Directory
----------------------------
-
-At registration time a *suite service directory*,
-``$HOME/cylc-run/<SUITE>/.service/``, is created and populated
-with a private passphrase file (containing random text), a self-signed
-SSL certificate (see :ref:`ConnectionAuthentication`), and a symlink to the
-suite source directory.  An existing passphrase file will not be overwritten
-if a suite is re-registered.
-
-At run time, the private suite run database is also written to the service
-directory, along with a *suite contact file* that records the host,
-user, port number, process ID, Cylc version, and other information about the
-suite server program. Client commands automatically read daemon targetting
-information from the contact file, if they have access to it.
-
-
-File-Reading Commands
----------------------
-
-Some Cylc commands parse suite configurations or read
-other files
-from the suite host account, rather than communicate with a suite server
-program over the network. In future we plan to have suite server program serve
-up these files to clients, but for the moment this functionality requires
-read-access to the relevant files on the suite host.
-
-If you are logged into the suite host account, file-reading commands will just
-work.
-
-
-Remote Host, Shared Home Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you are logged into another host with shared home directories (shared
-filesystems are common in HPC environments) file-reading commands will just
-work because suite files will look "local" on both hosts.
-
-
-Remote Host, Different Home Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you are logged into another host with no shared home directory, file-reading
-commands require non-interactive SSH to the suite host account, and use of the
-``--host`` and ``--user`` options to re-invoke the command
-on the suite account.
-
-
-Same Host, Different User Account
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-(This is essentially the same as *Remote Host, Different Home Directory*.)
+.. cylc-scope::
 
 
 .. _ConnectionAuthentication:
@@ -450,61 +381,10 @@ Cylc server programs listen on dedicated network ports for
 TCP communications from Cylc clients (task jobs and user-invoked commands)
 
 Use ``cylc scan`` to see which suites are listening on which ports on
-scanned hosts (this lists your own suites by default, but it can show others
-too - see ``cylc scan --help``).
+scanned hosts.
 
-Cylc supports two kinds of access to suite server programs:
-
-- *public* (non-authenticated) - the amount of information
-  revealed is configurable, see :ref:`PublicAccess`
-- *control* (authenticated) - full control, suite passphrase
-  required, see :ref:`passphrases`
-
-
-.. _PublicAccess:
-
-Public Access - No Auth Files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Without a suite passphrase the amount of information revealed by a suite
-server program is determined by the public access privilege level set in
-:cylc:conf:`global.cylc[authentication]` and optionally overridden in suites
-with :cylc:conf:`[cylc][authentication]`.
-
-See Cylc privilege levels: :py:obj:`cylc.flow.network.authorisation.Priv`.
-
-The default public access level is
-:py:obj:`cylc.flow.network.authorisation.Priv.STATE_TOTALS`.
-
-The ``cylc scan`` command can print
-descriptions and task state totals in addition to basic suite identity, if the
-that information is revealed publicly.
-
-
-.. _passphrases:
-
-Full Control - With Auth Files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Suite auth files (passphrase and SSL certificate) give full control. They are
-loaded from the suite service directory by the suite server program at
-start-up, and used to authenticate subsequent client connections. Passphrases
-are used in a secure encrypted challenge-response scheme, never sent in plain
-text over the network.
-
-If two users need access to the same suite server program, they must both
-possess the passphrase file for that suite. Fine-grained access to a single
-suite server program via distinct user accounts is not currently supported.
-
-Suite server programs automatically install their auth and contact files to job
-hosts via SSH, to enable task jobs to connect back to the suite server program
-for task messaging.
-
-Client programs invoked by the suite owner automatically load the passphrase,
-SSL certificate, and contact file too, for automatic connection to suites.
-
-*Manual installation of suite auth files is only needed for remote control,
-if you do not have a shared filesystem - see below.*
+Cylc generates public-private key pairs on the suite server and job hosts
+which are used for authentication.
 
 
 .. _RemoteControl:
@@ -512,68 +392,15 @@ if you do not have a shared filesystem - see below.*
 Remote Control
 --------------
 
-Cylc client programs can interact with suite server
-programs running on other accounts or hosts. How this works depends on whether
-or not you have:
+Cylc client programs connect to running suites using information stored in
+the :term:`contact file` in the suite :term:`run directory`.
 
-- a *shared filesystem* such that you see the same home directory on
-  both hosts.
-- *non-interactive SSH* from the client account to the server
-  account.
+This means that Cylc can interact with suites running on another host provided
+that they share the filesystem on which the :term:`run directory`
+(``cylc-run``) is located.
 
-With a shared filesystem, a suite registered on the remote (server) host is
-also - in effect - registered on the local (client) host.  In this case you
-can invoke client commands without the ``--host`` option; the client
-will automatically read the host and port from the contact file in the
-suite service directory.
-
-To control suite server programs running under other user accounts or on other
-hosts without a shared filesystem, the suite SSL certificate and passphrase
-must be installed under your ``$HOME/.cylc/`` directory:
-
-.. code-block:: console
-
-   $HOME/.cylc/auth/OWNER@HOST/SUITE/
-         passphrase
-         contact  # (optional - see below)
-
-where ``OWNER@HOST`` is the suite host account and ``SUITE``
-is the suite name. Client commands should then be invoked with the
-``--user`` and ``--host`` options, e.g.:
-
-.. code-block:: console
-
-   $ cylc edit --user=OWNER --host=HOST SUITE
-
-.. note::
-
-   Remote suite auth files do not need to be installed for read-only
-   access - see :ref:`PublicAccess`.
-
-The suite contact file (see :ref:`The Suite Contact File`) is not needed if
-you have read-access to the remote suite run directory via the local
-filesystem or non-interactive SSH to the suite host account - client commands
-will automatically read it. If you do install the contact file in your auth
-directory note that the port number will need to be updated if the suite gets
-restarted on a different port. Otherwise use ``cylc scan`` to determine
-the suite port number and use the ``--port`` client command option.
-
-.. warning::
-
-   Possession of a suite passphrase gives full control over the
-   target suite, including edit run functionality - which lets you run
-   arbitrary scripting on job hosts as the suite owner. Further,
-   non-interactive SSH gives full access to the target user account, so we
-   recommended that this is only used to interact with suites running on
-   accounts to which you already have full access.
-
-
-Scan
-----
-
-``cylc scan`` can display
-suites owned by other users on other hosts, including task state totals if the
-public access level permits that (see :ref:`PublicAccess`).
+If the hosts do not share a filesystem you must use SSH when calling Cylc client
+commands.
 
 
 Task States Explained
@@ -583,8 +410,6 @@ As a suite runs, its task proxies may pass through the following states:
 
 - **waiting** - still waiting for prerequisites (e.g. dependence on
   other tasks, and clock triggers) to be satisfied.
-- **held** - will not be submitted to run even if all prerequisites
-  are satisfied, until released/un-held.
 - **queued** - ready to run (prerequisites satisfied) but
   temporarily held back by an *internal cylc queue*
   (see :ref:`InternalQueues`).
@@ -657,10 +482,9 @@ A queue is defined by a *name*; a *limit*, which is the maximum
 number of active tasks allowed for the queue; and a list of *members*,
 assigned by task or family name.
 
-Queue configuration is done under the ``[scheduling]`` section of the :cylc:conf:`flow.cylc`
-file (like dependencies, internal queues constrain *when* a task runs).
+Queue configuration is done in the :cylc:conf:`[scheduling][queues]` section.
 
-By default every task is assigned to the *default* queue, which by default
+By default every task is assigned to the ``default`` queue, which by default
 has a zero limit (interpreted by cylc as no limit). To use a single queue for
 the whole suite just set the default queue limit:
 
@@ -700,9 +524,10 @@ Automatic Task Retry On Failure
 See also :cylc:conf:`[runtime][<namespace>][job]execution retry delays`.
 
 Tasks can be configured with a list of "retry delay" intervals, as
-ISO 8601 durations. If the task job fails it will go into the *retrying*
-state and resubmit after the next configured delay interval. An example is
-shown in the suite listed below under :ref:`EventHandling`.
+:term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will go
+into the *retrying* state and resubmit after the next configured delay
+interval. An example is shown in the suite listed below under
+:ref:`EventHandling`.
 
 If a task with configured retries is *killed* (by ``cylc kill``
 it goes to the *held* state so that the operator can decide
@@ -715,8 +540,12 @@ sequence by manually resetting it to the *failed* state.
 Task Event Handling
 -------------------
 
-See also :cylc:conf:`suite events <[cylc][events]>`
-and :cylc:conf:`task events <[runtime][<namespace>][events]>`.
+* Task events (e.g. task succeeded/failed) are configured by
+  :cylc:conf:`task events <[runtime][<namespace>][events]>`.
+* Suite events (e.g. suite started/stopped) are configured by
+  :cylc:conf:`suite events <[cylc][events]>`
+
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
 Cylc can call nominated event handlers - to do whatever you like - when certain
 suite or task events occur. This facilitates centralized alerting and automated
@@ -724,7 +553,7 @@ handling of critical events. Event handlers can be used to send a message, call
 a pager, or whatever; they can even intervene in the operation of their own
 suite using cylc commands.
 
-To send an email, use the built-in setting ``[[[events]]]mail events``
+To send an email, use the built-in setting :cylc:conf:`[events]mail events`
 to specify a list of events for which notifications should be sent. (The
 name of a registered task output can also be used as an event name in
 this case.) E.g. to send an email on (submission) failed and retry:
@@ -770,8 +599,10 @@ otherwise it is up to you to ensure their location is in ``$PATH`` (in
 the shell in which the suite server program runs). They should require little
 resource and return quickly - see :ref:`Managing External Command Execution`.
 
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
 Task event handlers can be specified using the
-``[[[events]]]<event> handler`` settings, where
+``[events]<event> handler`` settings, where
 ``<event>`` is one of:
 
 - 'submitted' - the job submit command was successful
@@ -792,16 +623,18 @@ Task event handlers can be specified using the
 The value of each setting should be a list of command lines or command line
 templates (see below).
 
-Alternatively you can use ``[[[events]]]handlers`` and
-``[[[events]]]handler events``, where the former is a list of command
+Alternatively you can use :cylc:conf:`[events]handlers` and
+:cylc:conf:`[events]handler events`, where the former is a list of command
 lines or command line templates (see below) and the latter is a list of events
 for which these commands should be invoked. (The name of a registered task
 output can also be used as an event name in this case.)
 
+.. cylc-scope::
+
 Event handler arguments can be constructed from various templates
 representing suite name; task ID, name, cycle point, message, and submit
 number name; and any :cylc:conf:`suite <[meta]>` or
-:cylc:conf:`task <[runtime][<namespace>][meta]>` ``[meta]`` item.
+:cylc:conf:`task <[runtime][<namespace>][meta]>` item.
 See :cylc:conf:`suite events <[cylc][events]>` and
 :cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
 
@@ -975,7 +808,7 @@ task submits.
 Cylc Broadcast
 --------------
 
-The ``cylc broadcast`` command overrides ``[runtime]``
+The ``cylc broadcast`` command overrides :cylc:conf:`[runtime]`
 settings in a running suite. This can
 be used to communicate information to downstream tasks by broadcasting
 environment variables (communication of information from one task to
@@ -1000,9 +833,9 @@ When a suite is started with the ``cylc run`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
 line or hardwired into the :cylc:conf:`flow.cylc` file:
 
-.. code-block:: bash
+.. code-block:: console
 
-   cylc run foo 20120808T06Z
+   $ cylc run foo 20120808T06Z
 
 or:
 
@@ -1124,23 +957,22 @@ Simulating Suite Behaviour
 Several suite run modes allow you to simulate suite behaviour quickly without
 running the suite's real jobs - which may be long-running and resource-hungry:
 
-- *dummy mode* - runs dummy tasks as background jobs on configured
-  job hosts.
+dummy mode
+   Runs dummy tasks as background jobs on configured job hosts.
 
-  - simulates scheduling, job host connectivity, and
-    generates all job files on suite and job hosts.
+   This simulates scheduling, job host connectivity, and generates all job
+   files on suite and job hosts.
+dummy-local mode
+   Runs real dummy tasks as background jobs on the suite host, which allows
+   dummy-running suites from other sites.
 
-- *dummy-local mode* - runs real dummy tasks as background jobs on
-  the suite host, which allows dummy-running suites from other sites.
+   This simulates scheduling and generates all job files on the suite host.
+simulation mode
+   Does not run any real tasks.
 
-  - simulates scheduling and generates all job files on the
-    suite host.
+   This simulates scheduling without generating any job files.
 
-- *simulation mode* - does not run any real tasks.
-
-  - simulates scheduling without generating any job files.
-
-Set the run mode (default *live*) on the command line:
+Set the run mode (default ``live``) on the command line:
 
 .. code-block:: console
 
@@ -1148,16 +980,15 @@ Set the run mode (default *live*) on the command line:
    $ cylc restart --mode=dummy SUITE
 
 You can get specified tasks to fail in these modes, for more flexible suite
-testing. See
-:cylc:conf:`[runtime][<namespace>][simulation]`.
+testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
 
 
 Proportional Simulated Run Length
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If task ``[job]execution time limit`` is set, Cylc divides it by
-``[simulation]speedup factor`` (default ``10.0``) to compute
-simulated task run lengths (default 10 seconds).
+If :cylc:conf:`[runtime][<namespace>][job]execution time limit` is set, Cylc
+divides it by :cylc:conf:`[runtime][<namespace>][simulation]speedup factor` to compute simulated task
+run lengths.
 
 
 Limitations Of Suite Simulation
@@ -1369,79 +1200,19 @@ command interrogates the suite run database, not the suite server program.
 Suite Server Logs
 -----------------
 
-Each suite maintains its own log of time-stamped events under the *suite
-server log directory*:
-
-.. code-block:: bash
-
-   $HOME/cylc-run/SUITE-NAME/log/suite/
-
-By way of example, we will show the complete server log generated (at
-cylc-7.2.0) by a small suite that runs two 30-second dummy tasks
-``foo`` and ``bar`` for a single cycle point
-``2017-01-01T00Z`` before shutting down:
-
-.. code-block:: cylc
-
-   [cylc]
-       cycle point format = %Y-%m-%dT%HZ
-   [scheduling]
-       initial cycle point = 2017-01-01T00Z
-       final cycle point = 2017-01-01T00Z
-       [[graph]]
-           R1 = "foo => bar"
-   [runtime]
-       [[foo]]
-           script = sleep 30; /bin/false
-       [[bar]]
-           script = sleep 30; /bin/true
-
-By the task scripting defined above, this suite will stall when ``foo``
-fails. Then, the suite owner *vagrant@cylon* manually resets the failed
-task's state to *succeeded*, allowing ``bar`` to trigger and the
-suite to finish and shut down.  Here's the complete suite log for this run:
-
-.. code-block:: none
-
-   $ cylc cat-log SUITE-NAME
-   2017-03-30T09:46:10Z INFO - Suite starting: server=localhost:43086 pid=3483
-   2017-03-30T09:46:10Z INFO - Run mode: live
-   2017-03-30T09:46:10Z INFO - Initial point: 2017-01-01T00Z
-   2017-03-30T09:46:10Z INFO - Final point: 2017-01-01T00Z
-   2017-03-30T09:46:10Z INFO - Cold Start 2017-01-01T00Z
-   2017-03-30T09:46:11Z INFO - [foo.2017-01-01T00Z] -submit_method_id=3507
-   2017-03-30T09:46:11Z INFO - [foo.2017-01-01T00Z] -submission succeeded
-   2017-03-30T09:46:11Z INFO - [foo.2017-01-01T00Z] status=submitted: (received)started at 2017-03-30T09:46:10Z for job(01)
-   2017-03-30T09:46:41Z CRITICAL - [foo.2017-01-01T00Z] status=running: (received)failed/EXIT at 2017-03-30T09:46:40Z for job(01)
-   2017-03-30T09:46:42Z WARNING - suite stalled
-   2017-03-30T09:46:42Z WARNING - Unmet prerequisites for bar.2017-01-01T00Z:
-   2017-03-30T09:46:42Z WARNING -  * foo.2017-01-01T00Z succeeded
-   2017-03-30T09:47:58Z INFO - [client-command] reset_task_states vagrant@cylon:cylc-reset 1e0d8e9f-2833-4dc9-a0c8-9cf263c4c8c3
-   2017-03-30T09:47:58Z INFO - [foo.2017-01-01T00Z] -resetting state to succeeded
-   2017-03-30T09:47:58Z INFO - Command succeeded: reset_task_states(['foo.2017'], state=succeeded)
-   2017-03-30T09:47:59Z INFO - [bar.2017-01-01T00Z] -submit_method_id=3565
-   2017-03-30T09:47:59Z INFO - [bar.2017-01-01T00Z] -submission succeeded
-   2017-03-30T09:47:59Z INFO - [bar.2017-01-01T00Z] status=submitted: (received)started at 2017-03-30T09:47:58Z for job(01)
-   2017-03-30T09:48:29Z INFO - [bar.2017-01-01T00Z] status=running: (received)succeeded at 2017-03-30T09:48:28Z for job(01)
-   2017-03-30T09:48:30Z INFO - Waiting for the command process pool to empty for shutdown
-   2017-03-30T09:48:30Z INFO - Suite shutting down - AUTOMATIC
+Each suite maintains its own log of time-stamped events in the
+:term:`suite log directory` (``$HOME/cylc-run/SUITE-NAME/log/suite/``).
 
 The information logged here includes:
 
-- event timestamps, at the start of each line
-- suite server host, port and process ID
-- suite initial and final cycle points
-- suite start type (cold start in this case)
-- task events (task started, succeeded, failed, etc.)
-- suite stalled warning (in this suite nothing else can run when
-  ``foo`` fails)
-- the client command issued by *vagrant@cylon* to reset
-  ``foo`` to {\em succeeded}
-- job IDs  - in this case process IDs for background jobs (or PBS job IDs
-  etc.)
-- state changes due to incoming task progress message  ("started at ..."
-  etc.) suite shutdown time and reasons (AUTOMATIC means "all tasks finished
-  and nothing else to do")
+- Event timestamps, at the start of each line
+- Suite server host, port and process ID
+- Suite initial and final cycle points
+- Suite start type (i.e. cold start, warn start, restart)
+- Task events (task started, succeeded, failed, etc.)
+- Suite stalled warnings.
+- Client commands (e.g. ``cylc hold``)
+- Job IDs.
 
 .. note::
 
@@ -1516,7 +1287,7 @@ a significant number of tasks that had already completed.
 
 To restart the suite, the critical Cylc files that must be restored are:
 
-.. code-block:: bash
+.. code-block:: sub
 
    # On the suite host:
    ~/cylc-run/SUITE-NAME/
@@ -1536,15 +1307,15 @@ To restart the suite, the critical Cylc files that must be restored are:
    consumed by task jobs at run time. How suite data is stored and recovered
    in your environment is a matter of suite and system design.
 
-In short, you can simply restore the suite service directory, the log
-directory, and the :cylc:conf:`flow.cylc` file that is the target of the symlink in the
-service directory. The service and log directories will come with extra files
-that aren't strictly needed for a restart, but that doesn't matter - although
-depending on your log housekeeping the ``log/job`` directory could be
-huge, so you might want to be selective about that.  (Also in a Rose suite, the
-``flow.cylc`` file does not need to be restored if you restart with
-``rose suite-run`` - which re-installs suite source files to the run
-directory).
+In short, you can simply restore the suite :term:`service directory`, the
+:term:`suite log directory`, and the :cylc:conf:`flow.cylc` file that is the
+target of the symlink in the service directory. The :term:`service directory`
+and :term:`suite log directory` will come with extra files that aren't strictly
+needed for a restart, but that doesn't matter - although depending on your log
+housekeeping the ``log/job`` directory could be huge, so you might want to be
+selective about that.  (Also in a Rose suite, the ``flow.cylc`` file does not
+need to be restored if you restart with ``rose suite-run`` - which re-installs
+suite source files to the run directory).
 
 The public DB is not strictly required for a restart - the suite server program
 will recreate it if need be - but it is required by

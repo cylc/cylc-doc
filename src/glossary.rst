@@ -479,6 +479,30 @@ Glossary
       * ``job.status``: a file holding Cylc's most up-to-date
         understanding of the :term:`job's <job>` present status.
 
+   service directory
+      This directory is used to store information for internal use for internal
+      use by Cylc.
+
+      It is called ``.service`` and is located in the :term:`run directory`, it
+      should exist for all registered suites.
+
+   contact file
+      The contact file records information about a running suite such as the host it
+      is running on, the TCP port(s) it is listening on and the process ID.
+      The file is called ``contact`` and lives inside the suite's
+      :term:`service directory`.
+
+      The contact file only exists when the suite is running, if you delete the
+      contact file, the suite will (after a delay) notice this and shut down.
+
+      .. warning::
+
+         In the event that a suite process dies in an uncontrolled way, for
+         example if the process is killed or the host which is running the
+         process crashes, the contact file may be erroneously left behind. Some
+         Cylc commands will automatically detect such files and remove them,
+         otherwise they should be manually removed.
+
    job
       A job is the realisation of a :term:`task` consisting of a file called
       the :term:`job script` which is executed when the job "runs".
