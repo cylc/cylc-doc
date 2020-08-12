@@ -1,11 +1,6 @@
 Glossary
 ========
 
-.. set the default scope for cylc references to suite.rc so we can do [runtime]
-   rather than suite.rc[runtime]
-
-.. cylc-scope:: suite.rc
-
 .. glossary::
    :sorted:
 
@@ -91,7 +86,23 @@ Glossary
       See also:
 
       * :term:`task trigger`
+      * :term:`conditional dependency`
 
+   conditional dependency
+   conditional trigger
+      A conditional dependency is a :term:`dependency` which uses the ``&`` (and)
+      or ``|`` (or) operators for example:
+
+      .. code-block:: cylc-graph
+
+         a & (b | c) => d
+
+      See also:
+
+      * :term:`dependency`
+      * :term:`task trigger`
+
+   trigger
    task trigger
       :term:`Dependency <dependency>` relationships can be thought of the other
       way around as "triggers".
@@ -279,6 +290,7 @@ Glossary
       * :term:`datetime cycling`
 
    inter-cycle dependency
+   inter-cycle trigger
       In a :term:`cycling suite <cycling>` an inter-cycle dependency
       is a :term:`dependency` between two tasks in different cycles.
 

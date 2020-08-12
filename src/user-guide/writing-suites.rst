@@ -3,20 +3,19 @@
 Writing Suites
 ==============
 
-Cylc suites are defined in structured, validated, :cylc:conf:`flow.cylc` files
-that concisely specify the properties of, and the relationships
-between, the various tasks managed by the suite. This section of the
-User Guide deals with the format and content of the :cylc:conf:`flow.cylc` file,
-including task definition. Task implementation - what's required of the
-real commands, scripts, or programs that do the processing that the
-tasks represent - is covered in :ref:`TaskImplementation`; and
-task job submission - how tasks are submitted to run - is
-in :ref:`TaskJobSubmission`.
+Cylc suites are defined in structured, validated, :cylc:conf:`suite.rc`
+files that concisely specify the properties of, and the relationships
+between, the various tasks managed by the suite.
+
+Here we will look at the format and content of the
+:cylc:conf:`flow.cylc` file and how to configure suites.
 
 .. note::
 
-   Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
-   but that name is now deprecated.
+   Task implementation - what's required of the real commands, scripts, or
+   programs that do the processing that the tasks represent - is
+   covered in :ref:`TaskImplementation`; and task job submission
+   - how tasks are submitted to run - is in :ref:`TaskJobSubmission`.
 
 
 .. _SuiteDefinitionDirectories:
@@ -24,63 +23,27 @@ in :ref:`TaskJobSubmission`.
 Suite Configuration Directories
 -------------------------------
 
-A cylc *suite configuration directory* contains:
+A Cylc :term:`suite directory` contains:
 
-- **A :cylc:conf:`flow.cylc` file**: this is the suite configuration.
+:cylc:conf:`flow.cylc`
+   The file which configures the workflow.
+``bin/`` (optional)
+   A directiory where you can put scripts and executables for use
+   in the workflow. It is automatically added to ``$PATH`` in the job
+   execution environment.
 
-  - And any include-files used in it (see below; may be
-    kept in sub-directories).
+   Alternatively, tasks can call external commands; or they can be
+   scripted entirely within the suite.rc file.
+``lib/python/`` (optional)
+   A directory for Python modules which can be used for:
 
-- **A** ``bin/`` **sub-directory** (optional)
+   - Tasks; this directory is automatically added to `$PYTHONPATH``
+     in the job execution environment.
+   - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`.
+   - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`).
 
-  - For scripts and executables that implement, or are
-    used by, suite tasks.
-  - Automatically added to ``$PATH`` in task
-    execution environments.
-  - Alternatively, tasks can call external
-    commands, scripts, or programs; or they can be scripted
-    entirely within the :cylc:conf:`flow.cylc` file.
-
-- **A** ``lib/python/`` **sub-directory** (optional)
-
-  - Python libraries for use by suite tasks.
-  - Automatically added to ``$PYTHONPATH`` in task execution environments.
-  - Custom job submission modules
-    (see :ref:`CustomJobSubmissionMethods`)
-  - Python libraries for use by Jinja2 in custom filters,
-    tests and globals (see :ref:`CustomJinja2Filters`).
-
-- **Any other sub-directories and files** - documentation,
-  control files, etc. (optional)
-
-  - Holding everything in one place makes proper suite
-    revision control possible.
-  - Portable access to files here, for running tasks, is
-    provided through ``$CYLC_SUITE_DEF_PATH``
-    (see :ref:`TaskExecutionEnvironment`).
-  - Ignored by cylc, but the entire suite configuration
-    directory tree is copied when you copy a
-    suite using cylc commands.
-
-A typical example:
-
-.. code-block:: bash
-
-   /path/to/my/suite   # suite configuration directory
-       flow.cylc           # THE SUITE CONFIGURATION FILE
-       bin/               # scripts and executables used by tasks
-           foo.sh
-           bar.sh
-           ...
-       # (OPTIONAL) any other suite-related files, for example:
-       inc/               # flow.cylc include-files
-           nwp-tasks.cylc
-           globals.cylc
-           ...
-       doc/               # documentation
-       control/           # control files
-       ancil/             # ancillary files
-       ...
+Other files and folders may be placed in the :term:`suite directory` e.g.
+documentation, configuration files, etc.
 
 
 .. _FlowConfigFile:
@@ -88,14 +51,14 @@ A typical example:
 flow.cylc File Overview
 -----------------------
 
-flow.cylc files are an extended-INI format with section nesting.
+:cylc:conf:`flow.cylc` files are an extended-INI format with section nesting.
 
-Embedded template processor expressions may also be used in the file, to
-programatically generate the final suite configuration seen by
-cylc. Currently the `Jinja2`_ and `EmPy`_ template processors are
-supported; see :ref:`Jinja` and :ref:`EmPylabel` for examples. In the future
-cylc may provide a plug-in interface to allow use of other template
-engines too.
+.. _template processors: https://en.wikipedia.org/wiki/Template_processor
+
+Cylc supports two `template processors`_ for use in the suite.rc file:
+
+* `Jinja2`_
+* `EmPy`_
 
 
 .. _Syntax:
@@ -147,27 +110,24 @@ e.g.:
    # include the file $CYLC_SUITE_DEF_PATH/inc/foo.cylc:
    %include inc/foo.cylc
 
+.. note::
 
-Editing Temporarily Inlined Suites
-""""""""""""""""""""""""""""""""""
+   Template processors may have their own include functionality
+   which can also be used.
 
-Cylc's native file inclusion mechanism supports optional inlined
-editing:
+.. note::
 
-.. code-block:: console
+   Cylc's native file inclusion mechanism supports optional inlined
+   editing:
 
-   $ cylc edit --inline SUITE
+   .. code-block:: bash
 
-The suite will be split back into its constituent include-files when you
-exit the edit session. While editing, the inlined file becomes the
-official suite configuration so that changes take effect whenever you save
-the file. See ``cylc prep edit --help`` for more information.
+      $ cylc edit --inline SUITE
 
-
-Include-Files via Jinja2
-""""""""""""""""""""""""
-
-Jinja2 (:ref:`Jinja`) also has template inclusion functionality.
+   The suite will be split back into its constituent include-files when you
+   exit the edit session. While editing, the inlined file becomes the
+   official suite configuration so that changes take effect whenever you save
+   the file. See ``cylc prep edit --help`` for more information.
 
 
 .. _SyntaxHighlighting:
@@ -175,13 +135,44 @@ Jinja2 (:ref:`Jinja`) also has template inclusion functionality.
 Syntax Highlighting For Suite Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Cylc comes with syntax files for a number of text editors: vim, emacs,
-gedit (and other gtksourceview programs), and kate.
+Cylc provides syntax plugins for the following editors:
 
-These can be extracted from the cylc-flow library with the ``cylc
-get-pkg-resources`` command. Refer to comments at the top of each file for
-usage instructions.
+.. _Cylc.tmbundle: https://github.com/cylc/Cylc.tmbundle
+.. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
+.. _language-cylc: https://atom.io/packages/language-cylc
 
+atom
+   install the `language-cylc`_ extension.
+emacs
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   `cylc extract-resources . etc/syntax/cylc-mode.el``
+   installation instructions are at the top of the file.
+gedit
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   ``cylc extract-resources . etc/syntax/cylc.lang``
+   installation instructions are at the top of the file.
+kate
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   ``cylc extract-resources . etc/syntax/cylc.xml``
+   installation instructions are at the top of the file.
+pycharm
+   Install the `Cylc.tmbundle`_.
+vi
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   ``cylc extract-resources . etc/syntax/cylc.vim``
+   installation instructions are at the top of the file.
+vscode
+   Install the `vscode-cylc`_ extension.
+Sublime Text 3
+   Install the `Cylc.tmbundle`_.
+TextMate
+   Install the `Cylc.tmbundle`_.
+webstorm
+      Install the `Cylc.tmbundle`_.
 
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
@@ -189,23 +180,23 @@ Gross File Structure
 Cylc :cylc:conf:`flow.cylc` files consist of a suite title and description followed by
 configuration items grouped under several top level section headings:
 
-- **[cylc]** - *non task-specific suite configuration*
-- **[scheduling]** - *determines when tasks are ready to run*
+:cylc:conf:`[cylc]`
+   Non task-specific suite configuration.
+:cylc:conf:`[scheduling]`
+   Determines when tasks are ready to run.
 
-  - tasks with special behaviour, e.g. clock-trigger tasks
-  - the dependency graph, which defines the relationships
-    between tasks
+   - tasks with special behaviour, e.g. clock-trigger tasks
+   - the dependency graph, which defines the relationships
+     between tasks
+:cylc:conf:`[runtime]`
+   Determines how, where, and what to execute when tasks are ready
 
-- **[runtime]** - *determines how, where, and what to
-  execute when tasks are ready*
-
-  - script, environment, job submission, remote hosting, etc.
-  - suite-wide defaults in the *root* namespace
-  - a nested family hierarchy with common properties
-    inherited by related tasks
-
-- **[visualization]** - suite graph styling
-
+   - script, environment, job submission, remote hosting, etc.
+   - suite-wide defaults in the *root* namespace
+   - a nested family hierarchy with common properties
+     inherited by related tasks
+:cylc:conf:`[visualization]`
+   Suite graph styling
 
 .. _Validation:
 
@@ -216,30 +207,18 @@ Cylc :cylc:conf:`flow.cylc` files are automatically validated against a specific
 that defines all legal entries, values, options, and defaults. This
 detects formatting errors, typographic errors, illegal items and illegal
 values prior to run time. Some values are complex strings that require
-further parsing by cylc to determine their correctness (this is also
+further parsing by Cylc to determine their correctness (this is also
 done during validation). All legal entries are documented in
 :cylc:conf:`flow.cylc`.
-
-The validator reports the line numbers of detected errors. Here's an
-example showing a section heading with a missing right bracket:
-
-.. code-block:: console
-
-   $ cylc validate my.suite
-       [[special tasks]
-   'Section bracket mismatch, line 19'
 
 If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
 show an inlined copy of the suite with correct line numbers
 (you can also edit suites in a temporarily inlined state with
 ``cylc edit --inline``).
 
-Validation does not check the validity of chosen batch systems.
+.. note::
 
-.. todo
-
-   This is to allow users to extend cylc with their own job submission
-   methods, which are by definition unknown to the :cylc:conf:`flow.cylc` spec.
+   Validation does not check the validity of chosen batch systems.
 
 
 .. _ConfiguringScheduling:
@@ -247,82 +226,56 @@ Validation does not check the validity of chosen batch systems.
 Scheduling - Dependency Graphs
 ------------------------------
 
-The :cylc:conf:`flow.cylc[scheduling]` section defines the
-relationships between tasks in a suite - the information that allows
-cylc to determine when tasks are ready to run. The most important
-component of this is the suite dependency graph. Cylc graph notation
-makes clear textual graph representations that are very concise because
-sections of the graph that repeat at different hours of the day, say,
-only have to be defined once. Here's an example with dependencies that
-vary depending on the particular cycle point:
+.. tutorial:: Scheduling Tutorial <tutorial-scheduling>
+
+The :term:`graph` defines the workflow in terms of
+:term:`tasks <task>` and the :term:`dependencies <dependency>`
+between them.
+
+Graph Syntax
+^^^^^^^^^^^^
+
+.. tutorial:: Graph Tutorial <tutorial-cylc-graphing>
+
+A Cylc :term:`graph` is composed of one or more
+:term:`graph strings <graph string>` which use a special syntax.
+
+* ``=>`` defines a dependency.
+* ``&`` and ``|`` meaning *and* & *or* can be used to write
+  :term:`conditional dependencies <conditional dependency>`.
+
+For example:
+
+.. code-block:: cylc-graph
+
+   # baz will not be run until both foo and bar have succeeded
+   foo & bar => baz
+
+These :term:`graph strings <graph string>` are configured in the
+:cylc:conf:`[scheduling][graph]` section e.g:
 
 .. code-block:: cylc
 
    [scheduling]
-       initial cycle point = 20200401
-       final cycle point = 20200405
        [[graph]]
-           # validity (hours)
-           T00,T06,T12,T18 = """
-               A => B & C   # B and C trigger off A
-               A[-PT6H] => A  # Model A restart trigger
+           R1 = """
+               foo & bar => baz
            """
-           # hours
-           T06,T18 = "C => X"
 
-Here is the complete :cylc:conf:`flow.cylc` listing with the corresponding suite graph;
-this is a complete, valid, runnable suite (it will use default task runtime
-properties such as ``script``):
+In this example ``R1`` is the :term:`recurrence` which defines the interval
+at which this graph string is to be run. ``R1`` means "run once", ``P1D`` means every day.
 
-.. Need to use a 'container' directive to get centered image with
-   left-aligned caption (as required for code block text).
+Graph strings may contain blank lines, arbitrary white space and comments e.g:
 
-.. container:: twocol
+.. code-block:: cylc
 
-   .. container:: caption
+   [scheduling]
+       [[graph]]
+           R1 = """
 
-      *Example Suite*
+               foo & bar => baz  # baz is dependent on foo and bar
 
-      .. code-block:: cylc
-
-         [meta]
-             title = "Dependency Example 1"
-         [cylc]
-             UTC mode = True
-         [scheduling]
-             initial cycle point = 20200401
-             final cycle point = 20200405
-             [[graph]]
-                 # validity (hours)
-                 T00,T06,T12,T18 = """
-                     A => B & C     # B and C trigger off A
-                     A[-PT6H] => A  # Model A restart trigger
-                 """
-                 # hours
-                 T06,T18 = "C => X"
-         [visualization]
-             initial cycle point = 20200401
-             final cycle point = 20200401T06
-             [[node attributes]]
-                 X = "color=red"
-
-   .. container:: image
-
-      .. _fig-dep-eg-1:
-
-      .. figure:: ../img/dep-eg-1.png
-         :align: center
-
-
-Graph String Syntax
-^^^^^^^^^^^^^^^^^^^
-
-Multiline graph strings may contain:
-
-- **blank lines**
-- **arbitrary white space**
-- **internal comments**: following the ``#`` character
-- **conditional task trigger expressions** - see below.
+           """
 
 
 Interpreting Graph Strings
@@ -330,7 +283,7 @@ Interpreting Graph Strings
 
 Suite dependency graphs can be broken down into pairs in which the left
 side (which may be a single task or family, or several that are
-conditionally related) defines a trigger for the task or family on the
+conditionally related) defines a :term:`trigger` for the task or family on the
 right. For instance the "word graph" *C triggers off B which
 triggers off A* can be deconstructed into pairs *C triggers off B*
 and *B triggers off A*. In this section we use only the default
@@ -347,8 +300,8 @@ graph section. For example this graph:
        [[graph]]
            T00,T12 = "A => B"
 
-implies that B triggers off A for cycle points in which the hour matches ``00``
-or ``12``.
+implies that ``B`` triggers off ``A`` for cycle points in which the hour
+matches ``00`` or ``12``.
 
 To define inter-cycle dependencies, attach an offset indicator to the
 left side of a pair:
@@ -359,7 +312,7 @@ left side of a pair:
        [[graph]]
            T00,T12 = "A[-PT12H] => B"
 
-This means B[time] triggers off A[time-PT12H] (12 hours before) for cycle
+This means ``B[time]`` triggers off ``A[time-PT12H]`` (12 hours before) for cycle
 points with hours matching ``00`` or ``12``. ``time`` is implicit because
 this keeps graphs clean and concise, given that the
 majority of tasks will typically
@@ -376,15 +329,17 @@ possible to combine multiple offsets within a cycle point offset e.g.
        [[graph]]
            T00,T12 = "A[-P1D-PT12H] => B"
 
-This means that B[Time] triggers off A[time-P1D-PT12H] (1 day and 12 hours
+This means that ``B[Time]`` triggers off ``A[time-P1D-PT12H]`` (1 day and 12 hours
 before).
 
 Triggers can be chained together. This graph:
 
 .. code-block:: cylc
 
-   T00, T12 = """A => B  # B triggers off A
-                 B => C  # C triggers off B"""
+   T00, T12 = """
+       A => B  # B triggers off A
+       B => C  # C triggers off B
+   """
 
 is equivalent to this:
 
@@ -398,8 +353,10 @@ for the same task have an AND relationship. So this:
 
 .. code-block:: cylc
 
-   T00, T12 = """A => X  # X triggers off A
-                 B => X  # X also triggers off B"""
+   T00, T12 = """
+       A => X  # X triggers off A
+       B => X  # X also triggers off B
+   """
 
 is equivalent to this:
 
@@ -417,20 +374,28 @@ and comments to make the graph structure as clear as possible.
    # B triggers if A succeeds, then C and D trigger if B succeeds:
        R1 = "A => B => C & D"
    # which is equivalent to this:
-       R1 = """A => B => C
-               B => D"""
+       R1 = """
+           A => B => C
+           B => D
+       """
    # and to this:
-       R1 = """A => B => D
-               B => C"""
+       R1 = """
+           A => B => D
+           B => C
+       """
    # and to this:
-       R1 = """A => B
-               B => C
-               B => D"""
+       R1 = """
+           A => B
+           B => C
+           B => D
+       """
    # and it can even be written like this:
-       R1 = """A => B # blank line follows:
+       R1 = """
+           A => B # blank line follows:
 
-               B => C # comment ...
-               B => D"""
+           B => C # comment ...
+           B => D
+       """
 
 
 Splitting Up Long Graph Lines
@@ -448,15 +413,19 @@ is equivalent to this:
 
 .. code-block:: cylc
 
-   R1 = """A => B =>
-           C"""
+   R1 = """
+       A => B =>
+       C
+   """
 
 and also to this:
 
 .. code-block:: cylc
 
-   R1 = """A => B
-           B => C"""
+   R1 = """
+       A => B
+       B => C
+   """
 
 
 .. _GraphTypes:
@@ -537,6 +506,8 @@ small suite of cycling tasks:
 Graph Section Headings
 ^^^^^^^^^^^^^^^^^^^^^^
 
+.. tutorial:: Datetime Tutorial <tutorial-datetime-cycling>
+
 Graph section headings define recurrence expressions, the graph within a graph
 section heading defines a workflow at each point of the recurrence. For
 example in the following scenario:
@@ -552,30 +523,31 @@ initial cycle point". Cylc allows you to start (or end) at any particular
 time, repeat at whatever frequency you like, and even optionally limit the
 number of repetitions.
 
-Graph section heading can also be used with integer cycling see
-:ref:`IntegerCycling`.
+Graph section heading can also be used with
+:ref:`integer cycling <IntegerCycling>`.
 
 
 Syntax Rules
 """"""""""""
 
-Date-time cycling information is made up of a starting *date-time*, an
-*interval*, and an optional *limit*.
+:term:`Date-time cycling <datetime cycling>` information is made up of a
+starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
+limit.
 
 The time is assumed to be in the local time zone unless you set
-``[cylc]cycle point time zone`` or ``[cylc]UTC mode``. The
-calendar is assumed to be the proleptic Gregorian calendar unless you set
-``[scheduling]cycling mode``.
+:cylc:conf:`[cylc]cycle point time zone` or :cylc:conf:`[cylc]UTC mode`.
+The calendar is assumed to be the proleptic Gregorian calendar unless
+you set :cylc:conf:`[scheduling]cycling mode`.
 
-The syntax for representations is based on the ISO 8601 date-time standard.
-This includes the representation of *date-time*, *interval*. What we
-define for cylc's cycling syntax is our own optionally-heavily-condensed form
-of ISO 8601 recurrence syntax. The most common full form is:
+The syntax for representations is based on the :term:`ISO8601` date-time standard.
+This includes the representation of date-times and intervals. What we
+define for Cylc's cycling syntax is our own optionally-heavily-condensed form
+of ISO8601 recurrence syntax. The most common full form is:
 ``R[limit?]/[date-time]/[interval]``. However, we allow omitting
 information that can be guessed from the context (rules below). This means
 that it can be written as:
 
-.. code-block:: none
+.. code-block:: sub
 
    R[limit?]/[date-time]
    R[limit?]//[interval]
@@ -586,7 +558,7 @@ that it can be written as:
 
 with example graph headings for each form being:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R5/T00           # Run 5 times at 00:00 every day
    R//PT1H          # Run every hour (Note the R// is redundant)
@@ -600,26 +572,26 @@ with example graph headings for each form being:
    ``T00`` is an example of ``[date-time]``, with an
    inferred 1 day period and no limit.
 
-Where some or all *date-time* information is omitted, it is inferred to
-be relative to the initial date-time cycle point. For example, ``T00``
+Where some or all date-time information is omitted, it is inferred to
+be relative to the :term:`initial cycle point`. For example, ``T00``
 by itself would mean the next occurrence of midnight that follows, or is, the
 initial cycle point. Entering ``+PT6H`` would mean 6 hours after the
 initial cycle point. Entering ``-P1D`` would mean 1 day before the
-initial cycle point. Entering no information for the *date-time* implies
+initial cycle point. Entering no information for the date-time implies
 the initial cycle point date-time itself.
 
-Where the *interval* is omitted and some (but not all) *date-time*
+Where the interval is omitted and some (but not all) date-time
 information is omitted, it is inferred to be a single unit above
-the largest given specific *date-time* unit. For example, the largest
+the largest given specific date-time unit. For example, the largest
 given specific unit in ``T00`` is hours, so the inferred interval is
 1 day (daily), ``P1D``.
 
-Where the *limit* is omitted, unlimited cycling is assumed. This will be
+Where the limit is omitted, unlimited cycling is assumed. This will be
 bounded by the final cycle point's date-time if given.
 
-Another supported form of ISO 8601 recurrence is:
+Another supported form of ISO8601 :term:`recurrence` is:
 ``R[limit?]/[interval]/[date-time]``. This form uses the
-*date-time* as the end of the cycling sequence rather than the start.
+date-time as the end of the cycling sequence rather than the start.
 For example, ``R3/P5D/20140430T06`` means:
 
 .. code-block:: none
@@ -640,7 +612,7 @@ cylc with a collapsed form:
 
 So, for example, you can write:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R1//+P0D  # Run once at the final cycle point
    R5/P1D    # Run 5 times, every 1 day, ending at the final
@@ -659,7 +631,7 @@ Referencing The Initial And Final Cycle Points
 For convenience the caret and dollar symbols may be used as shorthand for the
 initial and final cycle points. Using this shorthand you can write:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R1/^+PT12H  # Repeat once 12 hours after the initial cycle point
                # R[limit]/[date-time]
@@ -676,7 +648,7 @@ initial and final cycle points. Using this shorthand you can write:
    There can be multiple ways to write the same headings, for instance
    the following all run once at the final cycle point:
 
-   .. code-block:: cylc
+   .. code-block:: sub
 
       R1/P0Y       # R[limit]/[interval]
       R1/P0Y/$     # R[limit]/[interval]/[date-time]
@@ -688,9 +660,9 @@ initial and final cycle points. Using this shorthand you can write:
 Excluding Dates
 """""""""""""""
 
-Date-times can be excluded from a recurrence by an exclamation mark for
-example ``PT1D!20000101`` means run daily except on the
-first of January 2000.
+:term:`Date-times <ISO8601 datetime>` can be excluded from a :term:`recurrence`
+by an exclamation mark for example ``PT1D!20000101`` means run daily except on
+the first of January 2000.
 
 This syntax can be used to exclude one or multiple date-times from a
 recurrence. Multiple date-times are excluded using the syntax
@@ -716,7 +688,7 @@ suite ``foo`` will only run once as its second run has been excluded.
            R2/P1D!20000102 = foo
 
 
-Advanced exclusion syntax
+Advanced Exclusion Syntax
 """""""""""""""""""""""""
 
 In addition to excluding isolated date-time points or lists of date-time points
@@ -726,7 +698,7 @@ excluded from the main sequence.
 
 For example, partial date-times can be excluded using the syntax:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    PT1H ! T12                   # Run hourly but not at 12:00 from the initial
                                 # cycle point.
@@ -738,7 +710,7 @@ For example, partial date-times can be excluded using the syntax:
 
 It is also valid to use sequences for exclusions. For example:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    PT1H ! PT6H         # Run hourly from the initial cycle point but
                        # not 6-hourly from the initial cycle point.
@@ -759,7 +731,7 @@ It is also valid to use sequences for exclusions. For example:
 You can combine exclusion sequences and single point exclusions within a
 comma separated list enclosed in parentheses:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    T-00 ! (20000101T07, PT2H)  # Run hourly on the hour but not at 07:00
                                # on the 1st Jan, 2000 and not 2-hourly
@@ -804,9 +776,9 @@ the graph should be written like this:
 Advanced Examples
 """""""""""""""""
 
-The following examples show the various ways of writing graph headings in cylc.
+The following examples show the various ways of writing graph headings in Cylc.
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R1         # Run once at the initial cycle point
    P1D        # Run every day starting at the initial cycle point
@@ -837,8 +809,8 @@ The following examples show the various ways of writing graph headings in cylc.
 Advanced Starting Up
 """"""""""""""""""""
 
-Dependencies that are only valid at the initial cycle point can be written
-using the ``R1`` notation. For example:
+Dependencies that are only valid at the :term:`initial cycle point` can be
+written using the ``R1`` notation. For example:
 
 .. code-block:: cylc
 
@@ -978,7 +950,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 Some suites may have staggered start-up sequences where different tasks need
 running once but only at specific cycle points, potentially due to differing
 data sources at different cycle points with different possible initial cycle
-points. To allow this cylc provides a ``min( )`` function that can be
+points. To allow this Cylc provides a ``min( )`` function that can be
 used as follows:
 
 .. code-block:: cylc
@@ -1005,14 +977,17 @@ the first cycle points after the initial cycle point in the respective
 Integer Cycling
 """""""""""""""
 
-In addition to non-repeating and date-time cycling workflows, cylc can do
-integer cycling for repeating workflows that are not date-time based.
+.. tutorial:: Integer Cycling Tutorial <tutorial-integer-cycling>
+
+In addition to non-repeating and :term:`datetime cycling` workflows, Cylc can do
+:term:`integer cycling` for repeating workflows that are not date-time based.
 
 To construct an integer cycling suite, set
 :cylc:conf:`[scheduling]cycling mode = integer`, and specify integer values
-for the initial and (optional) final cycle points. The notation for intervals,
-offsets, and recurrences (sequences) is similar to the date-time cycling
-notation, except for the simple integer values.
+for the :term:`initial cycle point` and optionally the
+:term:`final cycle point`. The notation for intervals,
+offsets, and :term:`recurrences <recurrence>` (sequences) is similar to the
+date-time cycling notation, except for the simple integer values.
 
 The full integer recurrence expressions supported are:
 
@@ -1022,7 +997,7 @@ The full integer recurrence expressions supported are:
 But, as for date-time cycling, sequence start and end points can be omitted
 where suite initial and final cycle points can be assumed. Some examples:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R1        # Run once at the initial cycle point
              # (short for R1/initial-point/?)
@@ -1046,7 +1021,7 @@ The same syntax used to reference the initial and final cycle points
 use with date-time cycling can also be used for integer cycling. For
 example you can write:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R1/^     # Run once at the initial cycle point
    R1/$     # Run once at the final cycle point
@@ -1057,7 +1032,7 @@ Likewise the syntax introduced in :ref:`excluding-dates` for excluding
 a particular point from a recurrence also works for integer cycling. For
 example:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R/P4!8       # Run with step 4, to the final cycle point but not at point 8
    R3/3/P2!5    # Run with step 2 from point 3 but not at point 5
@@ -1068,7 +1043,7 @@ Multiple integer exclusions are also valid in the same way as the syntax
 in :ref:`excluding-dates`. Integer exclusions may be a list of single
 integer points, an integer sequence, or a combination of both:
 
-.. code-block:: cylc
+.. code-block:: sub
 
    R/P1!(2,3,7)  # Run with step 1 to the final cycle point,
                  # but not at points 2, 3, or 7.
@@ -1112,10 +1087,10 @@ the self-contained suite run directory.
 Task Triggering
 ^^^^^^^^^^^^^^^
 
-A task is said to "trigger" when it submits its job to run, as soon as all of
+A task is said to :term:`trigger` when it submits its job to run, as soon as all of
 its dependencies (also known as its separate "triggers") are met. Tasks can
 be made to trigger off of the state of other tasks (indicated by a
-``:state`` qualifier on the upstream task (or family)
+``:state`` :term:`qualifier` on the upstream task (or family)
 name in the graph) and, and off the clock, and arbitrary external events.
 
 External triggering is relatively more complicated, and is documented
@@ -1181,7 +1156,7 @@ to execute first; or a different postprocessing task could be
 triggered off a message output for each data file
 (``model:out1 => post1`` etc.; see :ref:`MessageTriggers`), but this
 may not be practical if the
-number of output files is large or if it is difficult to add cylc
+number of output files is large or if it is difficult to add Cylc
 messaging calls to the model.
 
 
@@ -1203,6 +1178,8 @@ one way or the other:
 
 Message Triggers
 """"""""""""""""
+
+.. tutorial:: Message Trigger Tutorial <tutorial-cylc-message-triggers>
 
 Tasks can also trigger off custom output messages. These must be registered in
 the :cylc:conf:`[runtime]` section of the emitting task, and reported using
@@ -1236,6 +1213,9 @@ same job on a different platform.
 Conditional Triggers
 """"""""""""""""""""
 
+:term:`Conditional triggers <conditional trigger>` allow the configuration of
+more advanced task dependencies.
+
 AND operators (``&``) can appear on both sides of an arrow. They
 provide a concise alternative to defining multiple triggers separately:
 
@@ -1244,20 +1224,26 @@ provide a concise alternative to defining multiple triggers separately:
    # 1/ this:
        R1 = "A & B => C"
    # is equivalent to:
-       R1 = """A => C
-                  B => C"""
+       R1 = """
+           A => C
+           B => C
+       """
    # 2/ this:
        R1 = "A => B & C"
    # is equivalent to:
-       R1 = """A => B
-                  A => C"""
+       R1 = """
+           A => B
+           A => C
+       """
    # 3/ and this:
        R1 = "A & B => C & D"
    # is equivalent to this:
-       R1 = """A => C
-                  B => C
-                  A => D
-                  B => D"""
+       R1 = """
+           A => C
+           B => C
+           A => D
+           B => D
+       """
 
 OR operators (``|``) which result in true conditional triggers,
 can only appear on the left [1]_ :
@@ -1267,10 +1253,8 @@ can only appear on the left [1]_ :
    # C triggers when either A or B finishes:
        R1 = "A | B => C"
 
-Forecasting suites typically have simple conditional
-triggering requirements, but any valid conditional expression can be
-used, as shown in the graph below, where conditional triggers are plotted
-with open arrow heads:
+Any valid conditional expression can be used, as shown in the graph below,
+where conditional triggers are plotted with open arrow heads:
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -1281,16 +1265,14 @@ with open arrow heads:
 
       *Conditional triggers*
 
-      .. code-block:: cylc
+      .. code-block:: cylc-graph
 
-                 R1 = """
          # D triggers if A or (B and C) succeed
          A | B & C => D
          # just to align the two graph sections
          D => W
          # Z triggers if (W or X) and Y succeed
          (W|X) & Y => Z
-                         """
 
    .. container:: image
 
@@ -1305,17 +1287,15 @@ with open arrow heads:
 Suicide Triggers
 """"""""""""""""
 
+.. tutorial:: Suicide Trigger Tutorial <tut-cylc-suicide-triggers>
+
 Suicide triggers take tasks out of the suite. This can be used for automated
-failure recovery. The following :cylc:conf:`flow.cylc` listing and
-accompanying graph
-show how to define a chain of failure recovery tasks that trigger if they're
-needed but otherwise remove themselves from the
-suite (you can run the *AutoRecover.async* example suite to see how
-this works). The dashed graph edges ending in solid dots indicate
-suicide triggers, and the open arrowheads indicate conditional triggers
-as usual. Suicide triggers are ignored by default in the graph view, unless
-you toggle them on with *View* ``->`` *Options* ``->``
-*Ignore Suicide Triggers*.
+failure recovery. The following :cylc:conf:`flow.cylc` listing and accompanying
+:term:`graph` show how to define a chain of failure recovery tasks that trigger
+if they're needed but otherwise remove themselves from the suite (you can run
+the *AutoRecover.async* example suite to see how this works). The dashed graph
+edges ending in solid dots indicate suicide triggers, and the open arrowheads
+indicate conditional triggers as usual.
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -1331,20 +1311,20 @@ you toggle them on with *View* ``->`` *Options* ``->``
           [meta]
               title = automated failure recovery
               description = """
-          Model task failure triggers diagnosis
-          and recovery tasks, which take themselves
-          out of the suite if model succeeds. Model
-          post processing triggers off model OR
-          recovery tasks.
-                        """
+                  Model task failure triggers diagnosis
+                  and recovery tasks, which take themselves
+                  out of the suite if model succeeds. Model
+                  post processing triggers off model OR
+                  recovery tasks.
+              """
           [scheduling]
               [[graph]]
                   R1 = """
-          pre => model
-          model:fail => diagnose => recover
-          model => !diagnose & !recover
-          model | recover => post
-                          """
+                      pre => model
+                      model:fail => diagnose => recover
+                      model => !diagnose & !recover
+                      model | recover => post
+                  """
           [runtime]
               [[model]]
                   # UNCOMMENT TO TEST FAILURE:
@@ -1363,14 +1343,14 @@ you toggle them on with *View* ``->`` *Options* ``->``
    Multiple suicide triggers combine in the same way as other
    triggers, so this:
 
-   .. code-block:: cylc
+   .. code-block:: cylc-graph
 
       foo => !baz
       bar => !baz
 
    is equivalent to this:
 
-   .. code-block:: cylc
+   .. code-block:: cylc-graph
 
       foo & bar => !baz
 
@@ -1379,7 +1359,7 @@ you toggle them on with *View* ``->`` *Options* ``->``
    to be taken out if any one of several events occurs then be careful to
    write it that way:
 
-   .. code-block:: cylc
+   .. code-block:: cylc-graph
 
       foo | bar => !baz
 
@@ -1404,8 +1384,8 @@ you toggle them on with *View* ``->`` *Options* ``->``
           [[graph]]
               R1 = """
                   foo & bar
-                 foo => !bar
-                      """
+                  foo => !bar
+              """
 
    In other words both tasks will trigger immediately, at the same time,
    and then ``bar`` will be removed if ``foo`` succeeds.
@@ -1419,8 +1399,8 @@ is removed from the suite by a suicide trigger, a warning will be logged.
 Family Triggers
 """""""""""""""
 
-Families defined by the namespace inheritance hierarchy
-(:ref:`NIORP`) can be used in the graph trigger whole groups of
+:term:`Families <family>` defined by the namespace inheritance hierarchy
+(:ref:`NIORP`) can be used in the graph to :term:`trigger` whole groups of
 tasks at the same time (e.g. forecast model ensembles and groups of
 tasks for processing different observation types at the same time) and
 for triggering downstream tasks off families as a whole. Higher level
@@ -1465,17 +1445,17 @@ triggers are thus:
    [scheduling]
        [[graph]]
            R1 = """
-         # all-member triggers:
-       FAM:start-all => one
-       FAM:succeed-all => one
-       FAM:fail-all => one
-       FAM:finish-all => one
-         # any-member triggers:
-       FAM:start-any => one
-       FAM:succeed-any => one
-       FAM:fail-any => one
-       FAM:finish-any => one
-                   """
+               # all-member triggers:
+               FAM:start-all => one
+               FAM:succeed-all => one
+               FAM:fail-all => one
+               FAM:finish-all => one
+               # any-member triggers:
+               FAM:start-any => one
+               FAM:succeed-any => one
+               FAM:fail-any => one
+               FAM:finish-any => one
+           """
 
 Here's how to trigger downstream processing after if one or more family
 members succeed, but only after all members have finished (succeeded or
@@ -1486,8 +1466,8 @@ failed):
    [scheduling]
        [[graph]]
            R1 = """
-       FAM:finish-all & FAM:succeed-any => foo
-                   """
+              FAM:finish-all & FAM:succeed-any => foo
+           """
 
 
 .. _EfficientInterFamilyTriggering:
@@ -1495,24 +1475,23 @@ failed):
 Efficient Inter-Family Triggering
 """""""""""""""""""""""""""""""""
 
-While cylc allows writing dependencies between two families it is important to
-consider the number of dependencies this will generate. In the following
-example, each member of ``FAM2`` has dependencies pointing at all the
-members of ``FAM1``.
+While Cylc allows writing :term:`dependencies <dependency>` between two
+:term:`families <family>` it is important to consider the number of
+dependencies this will generate. In the following example, each member of
+``FAM2`` has dependencies pointing at all the members of ``FAM1``.
 
 .. code-block:: cylc
 
    [scheduling]
        [[graph]]
            R1 = """
-       FAM1:succeed-any => FAM2
-                   """
+               FAM1:succeed-any => FAM2
+           """
 
-Expanding this out, you generate ``N * M`` dependencies, where
-``N`` is the number of members of ``FAM1`` and ``M`` is
-the number of members of ``FAM2``. This can result in high memory use
-as the number of members of these families grows, potentially rendering the
-suite impractical for running on some systems.
+Expanding this out, you generate ``N * M`` dependencies, where ``N`` is the
+number of members of ``FAM1`` and ``M`` is the number of members of ``FAM2``.
+This can result in high memory use as the number of members of these families
+grows, potentially rendering the suite impractical for running on some systems.
 
 You can greatly reduce the number of dependencies generated in these situations
 by putting dummy tasks in the graphing to represent the state of the family you
@@ -1525,15 +1504,15 @@ member of ``FAM1`` succeeding you can create a dummy task
    [scheduling]
        [[graph]]
            R1 = """
-       FAM1:succeed-any => FAM1_succeed_any_marker => FAM2
-                   """
+               FAM1:succeed-any => FAM1_succeed_any_marker => FAM2
+           """
    [runtime]
    # ...
        [[FAM1_succeed_any_marker]]
            script = true
    # ...
 
-This graph generates only ``N + M`` dependencies, which takes
+This :term:`graph` generates only ``N + M`` dependencies, which takes
 significantly less memory and CPU to store and evaluate.
 
 
@@ -1545,9 +1524,9 @@ Inter-Cycle Triggers
 Typically most tasks in a suite will trigger off others in the same
 cycle point, but some may depend on others with other cycle points.
 This notably applies to warm-cycled forecast models, which depend on
-their own previous instances (see below); but other kinds of inter-cycle
-dependence are possible too [2]_ . Here's how to express this
-kind of relationship in cylc:
+their own previous instances (see below); but other kinds of
+:term:`inter-cycle dependence <inter-cycle dependency>` are possible too [2]_ .
+Here's how to express this kind of relationship in cylc:
 
 .. code-block:: cylc
 
@@ -1565,13 +1544,13 @@ combined:
 
 At suite start-up inter-cycle triggers refer to a previous cycle point
 that does not exist. This does not cause the dependent task to wait
-indefinitely, however, because cylc ignores triggers that reach back
+indefinitely, however, because Cylc ignores triggers that reach back
 beyond the initial cycle point. That said, the presence of an
 inter-cycle trigger does normally imply that something special has to
 happen at start-up. If a model depends on its own previous instance for
 restart files, for instance, then an initial set of restart files has to be
 generated somehow or the first model task will presumably fail with
-missing input files. There are several ways to handle this in cylc
+missing input files. There are several ways to handle this in Cylc
 using different kinds of one-off (non-cycling) tasks that run at suite
 start-up.
 
@@ -1711,9 +1690,9 @@ can be replaced by a single sequential declaration,
 Future Triggers
 """""""""""""""
 
-Cylc also supports inter-cycle triggering off tasks "in the future" (with
-respect to cycle point - which has no bearing on wall-clock job submission time
-unless the task has a clock trigger):
+Cylc also supports term:`inter-cycle triggering <inter-cycle trigger>` off
+tasks "in the future" (with respect to cycle point - which has no bearing on
+wall-clock job submission time unless the task has a clock trigger):
 
 .. code-block:: cylc
 
@@ -1742,8 +1721,9 @@ Clock Triggers
    Please read External Triggers (:ref:`Section External Triggers`) before
    using the older clock triggers described in this section.
 
-By default, date-time cycle points are not connected to the real time "wall
-clock". They are just labels that are passed to task jobs (e.g. to
+By default, date-time cycle points are not connected to the real time
+(the :term:`wall-clock time`).
+They are just labels that are passed to task jobs (e.g. to
 initialize an atmospheric model run with a particular date-time value). In real
 time cycling systems, however, some tasks - typically those near the top of the
 graph in each cycle - need to trigger at or near the time when their cycle point
@@ -1867,8 +1847,10 @@ to be written as shorthand for this:
 
 .. code-block:: cylc
 
-   R1 = """foo
-           foo => bar"""
+   R1 = """
+       foo
+       foo => bar
+   """
 
 (where ``foo`` by itself means ``<nothing> => foo``, i.e. the
 task exists at these cycle points but has no prerequisites - although other
@@ -1971,6 +1953,8 @@ cycle point:
 Runtime - Task Configuration
 ----------------------------
 
+.. tutorial:: Runtime Tutorial <tutorial-runtime>
+
 The :cylc:conf:`[runtime]` section of a suite configuration configures what
 to execute (and where and how to execute it) when each task is ready to
 run, in a *multiple inheritance hierarchy* of *namespaces* culminating in
@@ -2006,7 +1990,7 @@ Namespace names may contain letters, digits, underscores, and hyphens.
 Root - Runtime Defaults
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The root namespace, at the base of the inheritance hierarchy,
+The ``root`` namespace, at the base of the inheritance hierarchy,
 provides default configuration for all tasks in the suite.
 Most root items are unset by default, but some have default values
 sufficient to allow test suites to be defined by dependency graph alone.
@@ -2041,7 +2025,7 @@ argument that identifies the calling task name:
 
 For large ensembles template processing can be used to
 automatically generate the member names and associated dependencies
-(see :ref:`Jinja` and :ref:`EmPylabel`).
+(see :ref:`Jinja` and :ref:`EmPy <EmPylabel>`).
 
 
 Runtime Inheritance - Single
@@ -2062,7 +2046,7 @@ precedence (which namespace overrides which) is determined by the
 so-called *C3 algorithm* used to find the linear *method
 resolution order* for class hierarchies in Python and several other
 object oriented programming languages. The result of this should be
-fairly obvious for typical use of multiple inheritance in cylc suites,
+fairly obvious for typical use of multiple inheritance in Cylc suites,
 but for detailed documentation of how the algorithm works refer to the
 `official Python documentation
 <https://www.python.org/download/releases/2.3/mro/>`_.
@@ -2142,9 +2126,9 @@ variables can refer to them. Order of definition is preserved throughout
 so that variable assignment expressions can safely refer to previously
 defined variables.
 
-Additionally, access to cylc itself is configured prior to the user-defined
+Additionally, access to Cylc itself is configured prior to the user-defined
 environment, so that variable assignment expressions can make use of
-cylc utility commands:
+Cylc utility commands:
 
 .. code-block:: cylc
 
@@ -2158,7 +2142,7 @@ User Environment Variables
 """"""""""""""""""""""""""
 
 A task's user-defined environment results from its inherited
-``[[[environment]]]`` sections:
+:cylc:conf:`[runtime][<namespace>][environment]` section.
 
 .. code-block:: cylc
 
@@ -2225,7 +2209,7 @@ task job script.
 
 The task job script may export the following environment variables:
 
-.. code-block:: bash
+.. code-block:: sub
 
    CYLC_DEBUG                      # Debug mode, true or not defined
    CYLC_VERSION                    # Version of cylc installation used
@@ -2287,7 +2271,7 @@ The task job script may export the following environment variables:
 There are also some global shell variables that may be defined in the task job
 script (but not exported to the environment). These include:
 
-.. code-block:: bash
+.. code-block:: sub
 
    CYLC_FAIL_SIGNALS               # List of signals trapped by the error trap
    CYLC_VACATION_SIGNALS           # List of signals trapped by the vacation trap
@@ -2301,31 +2285,32 @@ script (but not exported to the environment). These include:
 Suite Share Directories
 """""""""""""""""""""""
 
-A *suite share directory* is created automatically under the suite run
+A suite :term:`share directory` is created automatically under the suite run
 directory as a share space for tasks. The location is available to tasks as
 ``$CYLC_SUITE_SHARE_DIR``. In a cycling suite, output files are
 typically held in cycle point sub-directories of the suite share directory.
 
 The top level share and work directory (below) location can be changed
 (e.g. to a large data area) by a global config setting
-:cylc:conf:`global.cylc[hosts][<hostname glob>]work directory`.
+:cylc:conf:`global.cylc[platforms][<platform name>]work directory`.
 
 
 Task Work Directories
 """""""""""""""""""""
 
-Task job scripts are executed from within *work directories* created
-automatically under the suite run directory. A task can get its own work
-directory from ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if
-it does not ``cd`` elsewhere at runtime). By default the location
-contains task name and cycle point, to provide a unique workspace for every
-instance of every task. This can be overridden in the suite configuration,
-however, to get several tasks to share the same
-:cylc:conf:`work directory <global.cylc[hosts][<hostname glob>]work directory>`.
+Task job scripts are executed from within
+:term:`work directories <work directory>` created automatically under the suite
+run directory. A task can get its own work directory from
+``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if it does not ``cd`` elsewhere at
+runtime). By default the location contains task name and cycle point, to
+provide a unique workspace for every instance of every task. This can be
+overridden in the suite configuration, however, to get several tasks to share
+the same :cylc:conf:`
+work directory <global.cylc[platforms][<platform name>]work directory>`.
 
 The top level work and share directory (above) location can be changed
 (e.g. to a large data area) by a global config setting
-:cylc:conf:`global.cylc[hosts][<hostname glob>]work directory`.
+:cylc:conf:`global.cylc[platforms][<platform name>]work directory`.
 
 
 Environment Variable Evaluation
@@ -2334,7 +2319,7 @@ Environment Variable Evaluation
 Variables in the task execution environment are not evaluated in the
 shell in which the suite is running prior to submitting the task. They
 are written in unevaluated form to the job script that is submitted by
-cylc to run the task (:ref:`JobScripts`) and are therefore
+Cylc to run the task (:ref:`JobScripts`) and are therefore
 evaluated when the task begins executing under the task owner account
 on the task host. Thus ``$HOME``, for instance, evaluates at
 run time to the home directory of task owner on the task host.
@@ -2357,7 +2342,7 @@ Remote Task Hosting
 ^^^^^^^^^^^^^^^^^^^
 
 If a task declares an owner other than the suite owner and/or
-a host other than the suite host, cylc will use non-interactive ssh to
+a host other than the suite host, Cylc will use non-interactive ssh to
 execute the task on the ``owner@host`` account by the configured
 batch system:
 
@@ -2373,12 +2358,10 @@ batch system:
 
 For this to work:
 
-- non-interactive ssh is required from the suite host to the remote
+- Non-interactive ssh is required from the suite host to the remote
   task accounts.
-- cylc must be installed on task hosts.
+- Cylc must be installed on task hosts.
 
-  - Optional software dependencies such as graphviz and
-    Jinja2 are not needed on task hosts.
   - If polling task communication is used, there is no other
     requirement.
   - If SSH task communication is configured, non-interactive ssh is
@@ -2386,7 +2369,7 @@ For this to work:
   - If (default) task communication is configured, the task host
     should have access to the port on the suite host.
 
-- the suite configuration directory, or some fraction of its
+- The suite configuration directory, or some fraction of its
   content, can be installed on the task host, if needed.
 
 Tasks running on the suite host under another user account are treated as
@@ -2408,23 +2391,12 @@ variable that holds a hostname, as the value of the
 Remote Task Log Directories
 """""""""""""""""""""""""""
 
-Task stdout and stderr streams are written to log files in a
-suite-specific sub-directory of the *suite run directory*, as
+Task stdout and stderr streams are written to :term:`log files <job log>` in a
+suite-specific sub-directory of the suite :term:`run directory`, as
 explained in :ref:`WhitherStdoutAndStderr`. For remote tasks
 the same directory is used, but *on the task host*.
 Remote task log directories, like local ones, are created on the fly, if
 necessary, during job submission.
-
-
-.. _viso:
-
-Visualization
--------------
-
-The visualization section of a suite configuration is used to configure
-the representation of a suite in Cylc visualisation tools.
-
-See :cylc:conf:`flow.cylc` for details.
 
 
 .. _Parameterized Tasks Label:
@@ -2433,8 +2405,8 @@ Parameterized Tasks
 -------------------
 
 Cylc can automatically generate tasks and dependencies by expanding
-parameterized task names over lists of parameter values. Uses for this
-include:
+:term:`parameterized <parameterisation>` task names over lists of parameter
+values. Uses for this include:
 
 - generating an ensemble of similar model runs
 - generating chains of tasks to process similar datasets
@@ -2492,7 +2464,7 @@ For example:
 Then angle brackets denote use of these parameters throughout the suite
 configuration. For the values above, this parameterized name:
 
-.. code-block:: none
+.. code-block:: sub
 
    model<run>  # for run = 1..5
 
@@ -2504,7 +2476,7 @@ expands to these concrete task names:
 
 and this parameterized name:
 
-.. code-block:: none
+.. code-block:: sub
 
    proc<obs>  # for obs = ship, buoy, plane
 
@@ -2534,7 +2506,7 @@ template syntax.
 
 Any number of parameters can be used at once. This parameterization:
 
-.. code-block:: none
+.. code-block:: sub
 
    model<run,obs>  # for run = 1..2 and obs = ship, buoy, plane
 
@@ -2583,8 +2555,10 @@ omitted):
            mem = cat, dog
    [scheduling]
        [[graph]]
-           R1 = """prep => init<run> => model<run,mem> =>
-                         post<run,mem> => wrap<run> => done"""
+           R1 = """
+               prep => init<run> => model<run,mem> =>
+               post<run,mem> => wrap<run> => done
+           """
 
 .. todo
 
@@ -2653,9 +2627,9 @@ should be overridden to remove the initial underscore. For example:
    [scheduling]
        [[graph]]
            R1 = """
-   foo => <i>  # foo => i1 & i2 & i3 & i4
-   <obs> => bar  # ship & buoy & plane => bar
-   """
+               foo => <i>  # foo => i1 & i2 & i3 & i4
+               <obs> => bar  # ship & buoy & plane => bar
+           """
 
 
 Passing Parameter Values To Tasks
@@ -2722,8 +2696,10 @@ set of model runs:
            run = 1..5
    [scheduling]
        [[graph]]
-           R1 = """ model<run> => post_proc<run>  # general case
-                    model<run=1> => check_first_run """  # special case
+           R1 = """
+               model<run> => post_proc<run>  # general case
+               model<run=1> => check_first_run  # special case
+            """
    [runtime]
        [[model<run>]]
            # config for all "model" runs...
@@ -2765,66 +2741,66 @@ Parameter Offsets In The Graph
 A negative offset notation ``<NAME-1>`` is interpreted as the previous
 value in the ordered list of parameter values, while a positive offset is
 interpreted as the next value. For example, to split a model run into multiple
-steps with each step depending on the previous one, either of these graphs:
+steps with each step depending on the previous one, either of these graph lines:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "model<run-1> => model<run>"  # for run = 1, 2, 3
-   R1 = "model<run> => model<run+1>"  # for run = 1, 2, 3
+   model<run-1> => model<run>  # for run = 1, 2, 3
+   model<run> => model<run+1>  # for run = 1, 2, 3
 
 expands to:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = """model_run1 => model_run2
-           model_run2 => model_run3"""
+   model_run1 => model_run2
+   model_run2 => model_run3
 
    # or equivalently:
 
-   R1 = "model_run1 => model_run2 => model_run3"
+   model_run1 => model_run2 => model_run3
 
 And this graph:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "proc<size-1> => proc<size>"  # for size = small, big, huge
+   proc<size-1> => proc<size>  # for size = small, big, huge
 
 expands to:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = """proc_small => proc_big
-           proc_big => proc_huge"""
+   proc_small => proc_big
+   proc_big => proc_huge
 
    # or equivalently:
 
-   R1 = "proc_small => proc_big => proc_huge"
+   proc_small => proc_big => proc_huge
 
 However, a quirk in the current system means that you should avoid mixing
 conditional logic in these statements. For example, the following will do the
 unexpected:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = foo<m-1> & baz => foo<m>  # for m = cat, dog
+   foo<m-1> & baz => foo<m>  # for m = cat, dog
 
 currently expands to:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = foo_cat & baz => foo_dog
+   foo_cat & baz => foo_dog
 
    # when users may expect it to be:
-   #    R1 = foo_cat => foo_dog
-   #    R1 = baz => foo_cat & foo_dog
+   #     foo_cat => foo_dog
+   #     foo_cat & foo_dog
 
 For the time being, writing out the logic explicitly will give you the correct
 graph.
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = """foo<m-1> => foo<m>  # for m = cat, dog
-           baz => foo<m>"""
+   foo<m-1> => foo<m>  # for m = cat, dog
+   baz => foo<m>
 
 
 Task Families And Parameterization
@@ -2857,42 +2833,42 @@ Family names can be parameterized too, just like task names:
 As described in :ref:`FamilyTriggers` family names can be used to
 trigger all members at once:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "foo => FAMILY"
+   foo => FAMILY
 
 or to trigger off all members:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "FAMILY:succeed-all => bar"
+   FAMILY:succeed-all => bar
 
 or to trigger off any members:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "FAMILY:succeed-any => bar"
+   FAMILY:succeed-any => bar
 
 If the members of ``FAMILY`` were generated with parameters, you can
 also trigger them all at once with parameter notation:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "foo => member<m>"
+   foo => member<m>
 
 Similarly, to trigger off all members:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "member<m> => bar"
+   member<m> => bar
    # (member<m>:fail etc., for other trigger types)
 
 Family names are still needed in the graph, however, to succinctly express
 "succeed-any" triggering semantics, and all-to-all or any-to-all triggering:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "FAM1:succeed-any => FAM2"
+   FAM1:succeed-any => FAM2
 
 (Direct all-to-all and any-to-all family triggering is not recommended for
 efficiency reasons though - see :ref:`EfficientInterFamilyTriggering`).
@@ -2901,13 +2877,13 @@ For family *member-to-member* triggering use parameterized members.
 For example, if family ``OBS_GET`` has members ``get<obs>`` and
 family ``OBS_PROC`` has members ``proc<obs>`` then this graph:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   R1 = "get<obs> => proc<obs>"  # for obs = ship, buoy, plane
+   get<obs> => proc<obs>  # for obs = ship, buoy, plane
 
 expands to:
 
-.. code-block:: none
+.. code-block:: cylc-graph
 
    get_ship => proc_ship
    get_buoy => proc_buoy
@@ -2920,8 +2896,8 @@ Parameterized Cycling
 ^^^^^^^^^^^^^^^^^^^^^
 
 Two ways of constructing cycling systems are described and contrasted in
-:ref:`Workflows For Cycling Systems`.  For most purposes use of
-a proper *cycling workflow* is recommended, wherein cylc incrementally
+:ref:`Workflows For Cycling Systems`. For most purposes use of
+a proper :term:`cycling` workflow is recommended, wherein Cylc incrementally
 generates the date-time sequence and extends the workflow, potentially
 indefinitely, at run time. For smaller systems of finite duration, however,
 parameter expansion can be used to generate a sequence of pre-defined tasks
@@ -2953,9 +2929,11 @@ And here's how to do the same thing with parameterized tasks:
            chunk = 1..6
    [scheduling]
        [[graph]]
-           R1 = """prep => model<chunk=1>
-                   model<chunk-1> => model<chunk> =>
-                   post_proc<chunk> & archive<chunk>"""
+           R1 = """
+               prep => model<chunk=1>
+               model<chunk-1> => model<chunk> =>
+               post_proc<chunk> & archive<chunk>
+            """
    [runtime]
        [[model<chunk>]]
            script = """
@@ -3071,16 +3049,19 @@ simplifies for ``chunk=1`` to this:
 Jinja2
 ------
 
+.. tutorial::
+   Configuration Consolidation Tutorial <tutorial-cylc-consolidating-configuration>
+
 .. note::
 
    This section needs to be revised - the Parameterized Task feature
    introduced in cylc-6.11.0 (see :ref:`Parameterized Tasks Label`) provides
    a cleaner way to auto-generate tasks without coding messy Jinja2 loops.
 
-Cylc has built in support for the Jinja2 template processor in suite
+Cylc has built in support for the `Jinja2`_ template processor in suite
 configurations. Jinja2 variables, mathematical expressions, loop control
 structures, conditional logic, etc., are automatically processed to
-generate the final suite configuration seen by cylc.
+generate the final suite configuration seen by Cylc.
 
 The need for Jinja2 processing must be declared with a hash-bang
 comment as the first line of the :cylc:conf:`flow.cylc` file:
@@ -3126,10 +3107,11 @@ shows an ensemble of similar tasks generated using Jinja2:
    {% set N_MEMBERS = 5 %}
    [scheduling]
        [[graph]]
-           R1 = """{# generate ensemble dependencies #}
-               {% for I in range( 0, N_MEMBERS ) %}
-                  foo => mem_{{ I }} => post_{{ I }} => bar
-               {% endfor %}"""
+           R1 = """
+   {# generate ensemble dependencies #}
+   {% for I in range( 0, N_MEMBERS ) %}
+               foo => mem_{{ I }} => post_{{ I }} => bar
+   {% endfor %}"""
 
 Here is the generated suite configuration, after Jinja2 processing:
 
@@ -3169,7 +3151,7 @@ with the New York City task family expanded:
 Accessing Environment Variables With Jinja2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This functionality is not provided by Jinja2 by default, but cylc
+This functionality is not provided by Jinja2 by default, but Cylc
 automatically imports the user environment to template's global namespace
 (see :ref:`CustomJinja2Filters`) in a dictionary structure called
 *environ*. A usage example:
@@ -3186,7 +3168,7 @@ automatically imports the user environment to template's global namespace
 In addition, the following variables are exported to this environment
 prior to configuration parsing to provide suite context:
 
-.. code-block:: bash
+.. code-block:: sub
 
    CYLC_DEBUG                      # Debug mode, true or not defined
    CYLC_VERBOSE                    # Verbose mode, True or False
@@ -3219,8 +3201,8 @@ Custom Jinja2 Filters, Tests and Globals
 Jinja2 has three different namespaces used to separate "globals",
 "filters" and "tests". Globals are template-wide accessible variables
 and functions. Cylc extends this namespace with "environ" dictionary and
-"raise" and "assert" functions for raising exceptions
-(see :ref:`Jinja2RaisingExceptions`).
+:ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
+functions for raising exceptions.
 
 Filters can be used to modify variable values and are applied using pipe
 notation. For example, the built-in ``trim`` filter strips leading
@@ -3231,101 +3213,33 @@ and trailing white space from a string:
    {% set MyString = "   dog   " %}
    {{ MyString | trim() }}  # "dog"
 
-Additionally, variable values can be tested using "is" keyword followed by
+Variable values can be tested using the ``is`` keyword followed by
 the name of the test, e.g. ``VARIABLE is defined``.
 See official Jinja2 documentation for available built-in globals, filters
 and tests.
 
 Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
 filter or test is a single Python function in a source file with the same name
-as the function (plus ".py" extension) and stored in one of the following
+as the function (plus ``.py`` extension) and stored in one of the following
 locations:
-
-.. TODO: THIS HAS BEEN UPDATED ON MASTER?
 
 In the argument list of filter or test function, the first argument is
 the variable value to be "filtered" or "tested", respectively, and
 subsequent arguments can be whatever else is needed. Currently there are three
 custom filters:
 
+.. autosummary::
+   :nosignatures:
 
-pad
-"""
+   cylc.flow.jinja.filters.pad.pad
+   cylc.flow.jinja.filters.strftime.strftime
+   cylc.flow.jinja.filters.duration_as.duration_as
 
-The "pad" filter is for padding string values to some
-constant length with a fill character - useful for generating task names
-and related values in ensemble suites:
+.. autofunction:: cylc.flow.jinja.filters.pad.pad
 
-.. code-block:: cylc
+.. autofunction:: cylc.flow.jinja.filters.strftime.strftime
 
-   {% for i in range(0,100) %}  # 0, 1, ..., 99
-       {% set j = i | pad(2,'0') %}
-       [[A_{{j}}]]         # [[A_00]], [[A_01]], ..., [[A_99]]
-   {% endfor %}
-
-
-strftime
-""""""""
-
-The "strftime" filter can be used to format ISO8601 date-time strings using
-an strftime string.
-
-.. code-block:: cylc
-
-   {% set START_CYCLE = '10661004T08+01' %}
-   {{ START_CYCLE | strftime('%H') }}  # 00
-
-Examples:
-
-- ``{{START_CYCLE | strftime('%Y')}}`` - 1066
-- ``{{START_CYCLE | strftime('%m')}}`` - 10
-- ``{{START_CYCLE | strftime('%d')}}`` - 14
-- ``{{START_CYCLE | strftime('%H:%M:%S %z')}}`` - 08:00:00 +01
-
-It is also possible to parse non-standard date-time strings by passing a
-strptime string as the second argument.
-
-Examples:
-
-- ``{{'12,30,2000' | strftime('%m', '%m,%d,%Y')}}`` - 12
-- ``{{'1066/10/14 08:00:00' | strftime('%Y%m%dT%H', '%Y/%m/%d %H:%M:%S')}}`` - 10661014T08
-
-
-duration\_as
-""""""""""""
-
-The "duration\_as" filter can be used to format ISO8601 duration
-strings as a floating-point number of several different units.  Units
-for the conversion can be specified in a case-insensitive short or long
-form:
-
-- Seconds - "s" or "seconds"
-- Minutes - "m" or "minutes"
-- Hours - "h" or "hours"
-- Days - "d" or "days"
-- Weeks - "w" or "weeks"
-
-Within the suite, this becomes:
-
-.. code-block:: cylc
-
-   {% set CYCLE_INTERVAL = 'PT1D' %}
-   {{ CYCLE_INTERVAL | duration_as('h') }}  # 24.0
-   {% set CYCLE_SUBINTERVAL = 'PT30M' %}
-   {{ CYCLE_SUBINTERVAL | duration_as('hours') }}  # 0.5
-   {% set CYCLE_INTERVAL = 'PT1D' %}
-   {{ CYCLE_INTERVAL | duration_as('s') }}  # 86400.0
-   {% set CYCLE_SUBINTERVAL = 'PT30M' %}
-   {{ CYCLE_SUBINTERVAL | duration_as('seconds') }}  # 1800.0
-
-While the filtered value is a floating-point number, it is often required to
-supply an integer to suite entities (e.g. environment variables) that require
-it.  This is accomplished by chaining filters:
-
-- ``{{CYCLE_INTERVAL | duration_as('h') | int}}`` - 24
-- ``{{CYCLE_SUBINTERVAL | duration_as('h') | int}}`` - 0
-- ``{{CYCLE_INTERVAL | duration_as('s') | int}}`` - 86400
-- ``{{CYCLE_SUBINTERVAL | duration_as('s') | int}}`` - 1800
+.. autofunction:: cylc.flow.jinja.filters.duration_as.duration_as
 
 
 Associative Arrays In Jinja2
@@ -3365,7 +3279,7 @@ Here's the result:
 Jinja2 Default Values And Template Inputs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The values of Jinja2 variables can be passed in from the cylc command
+The values of Jinja2 variables can be passed in from the Cylc command
 line rather than hardwired in the suite configuration.
 Here's an example:
 
@@ -3471,11 +3385,12 @@ from running.
    These functions must be contained within ``{{`` Jinja2
    blocks as opposed to ``{%`` blocks.
 
+.. _jinja2-raise:
 
 Raise
 """""
 
-The "raise" function will result in an error containing the provided text.
+The ``raise`` function will result in an error containing the provided text.
 
 .. code-block:: cylc
 
@@ -3483,11 +3398,12 @@ The "raise" function will result in an error containing the provided text.
        {{ raise('VARIABLE must be defined for this suite.') }}
    {% endif %}
 
+.. _jinja2-assert:
 
 Assert
 """"""
 
-The "assert" function will raise an exception containing the text provided in
+The ``assert`` function will raise an exception containing the text provided in
 the second argument providing that the first argument evaluates as False. The
 following example is equivalent to the "raise" example above.
 
@@ -3572,14 +3488,14 @@ details on its templating features and how to use them.
 
 .. note::
 
-   EmPy is not bundled with Cylc and must be installed separately. It
-   should be available to Python through standard ``import em``. Please also
-   note that there is another Python package called "em" that provides
-   a conflicting module of the same name. You can run
-   ``cylc check-software`` command to check your installation.
+   EmPy is not included in the standard Cylc installation, if installing
+   with ``pip`` run ``pip install cylc-flow[empy]`` to install this
+   dependency.
 
-The need for EmPy processing must be declared with a hash-bang comment as
-the first line of the :cylc:conf:`flow.cylc` file:
+.. TODO: update this when the conda instructions change
+
+To enable EmPy place an ``empy`` hash-bang comment on the first line of
+the suite.rc file:
 
 .. code-block:: cylc
 
@@ -3603,12 +3519,12 @@ text. It makes the full power of Python language and its ecosystem easily
 accessible from within the template. This might be desirable for several
 reasons:
 
-- no need to learn different language and its idiosyncrasies just for
-  writing template logic
-- availability of lambda functions, list and dictionary comprehensions
-  can make template code smaller and more readable compared to Jinja2
-- natural and straightforward integration with Python package ecosystem
-- no two-language barrier between writing template logic and processing
+- No need to learn different language and its idiosyncrasies just for
+  writing template logic.
+- Availability of lambda functions, list and dictionary comprehensions
+  can make template code smaller and more readable compared to Jinja2.
+- Natural and straightforward integration with Python package ecosystem.
+- No two-language barrier between writing template logic and processing
   extensions makes it easier to refactor and maintain the template code
   as its complexity grows - inline pieces of Python code can be
   gathered into subroutines and eventually into separate modules and
@@ -3621,13 +3537,13 @@ Omitting Tasks At Runtime
 It is sometimes convenient to omit certain tasks from the suite at
 runtime without actually deleting their definitions from the suite.
 
-Defining ``[runtime]`` properties for tasks that do not appear in the suite
-graph results in verbose-mode validation warnings that the tasks are
-disabled. They cannot be used because the suite graph is what defines
-their dependencies and valid cycle points. Nevertheless, it is legal to
-leave these orphaned runtime sections in the suite configuration because it
-allows you to temporarily remove tasks from the suite by simply
-commenting them out of the graph.
+Defining :cylc:conf:`[runtime]` properties for tasks that do not appear
+in the suite graph results in verbose-mode validation warnings that the
+tasks are disabled. They cannot be used because the suite graph is what
+defines their dependencies and valid cycle points. Nevertheless, it is
+legal to leave these orphaned runtime sections in the suite
+configuration because it allows you to temporarily remove tasks from
+the suite by commenting them out of the graph.
 
 To omit a task from the suite at runtime but still leave it fully
 defined and available for use (by insertion) use one or both of
@@ -3672,7 +3588,7 @@ tasks are detected.
 
 
 .. [1] An OR operator on the right doesn't make much sense: if "B or C"
-       triggers off A, what exactly should cylc do when A finishes?
+       triggers off A, what exactly should Cylc do when A finishes?
 .. [2] In NWP forecast analysis suites parts of the observation
        processing and data assimilation subsystem will typically also
        depend on model background fields generated by the previous forecast.
