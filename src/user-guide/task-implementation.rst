@@ -3,7 +3,7 @@
 Task Implementation
 ===================
 
-Existing scripts and executables can be used as cylc tasks without
+Existing scripts and executables can be used as Cylc tasks without
 modification so long as they return standard exit status - zero on success,
 non-zero for failure - and do not spawn detaching processes internally (see
 :ref:`DetachingJobs`).
@@ -18,10 +18,13 @@ When the suite server program determines that a task is ready to run it
 generates a *job script* for the task, and submits it to run (see
 :ref:`TaskJobSubmission`).
 
-Job scripts encapsulate configured task runtime settings: ``script`` and
-``environment`` items, if defined, are just concatenated in the order shown
-below, to make the job script. Everything executes in the same shell, so each
-part of the script can potentially affect the environment of subsequent parts.
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+:term:`Job scripts <job script>` encapsulate configured task runtime settings:
+:cylc:conf:`script` and :cylc:conf:`[environment]` items, if defined, are just
+concatenated in the order shown below, to make the job script. Everything
+executes in the same shell, so each part of the script can potentially affect
+the environment of subsequent parts.
 
 .. digraph:: example
 
@@ -53,17 +56,18 @@ part of the script can potentially affect the environment of subsequent parts.
       "post-script" -> "exit-script"
    }
 
-The two "cylc defined scripts" are:
+The two "Cylc defined scripts" are:
 
 ``cylc-env``
-   Which provides default ``CYLC`` environment variables
-   e.g. ``CYLC_TASK_NAME``.
+   Which provides default ``CYLC_*`` environment variables e.g.
+   ``CYLC_TASK_NAME``.
 ``user-env``
-   Which is the contents of the
-   :cylc:conf:`[runtime][<namespace>][environment]` section.
+   Which is the contents of the :cylc:conf:`[environment]` section.
 
 Task job scripts are written to the suite's job log directory. They can be
 printed with ``cylc cat-log``.
+
+.. cylc-scope::
 
 
 Inlined Tasks
@@ -71,6 +75,7 @@ Inlined Tasks
 
 Task *script* items can be multi-line strings of ``bash``  code, so many tasks
 can be entirely inlined in the :cylc:conf:`flow.cylc` file.
+
 For anything more than a few lines of code, however, we recommend using
 external shell scripts to allow independent testing, re-use, and shell mode
 editing.
@@ -97,9 +102,13 @@ trigger other tasks off specific task outputs, or to trigger execution of
 event handlers by the server program (see :ref:`EventHandling`), or just to
 write information to the server log.
 
-(If polling is configured as the task communication method for a host, the
-messaging system just writes messages to the local job status file for
-recovery by the server at the next poll).
+.. cylc-scope:: flow.rc[platforms][<platform name>]
+
+(If polling is configured as the :cylc:conf:`communication method` for a
+:cylc:conf:`platform <[..]>`, the messaging system just writes messages to the
+local job status file for recovery by the server at the next poll).
+
+.. cylc-scope::
 
 Normal severity messages are printed to ``job.out`` and logged by the
 server program:
@@ -209,7 +218,7 @@ Avoid Detaching Processes
 
 If a task script starts background sub-processes and does not wait on them, or
 internally submits jobs to a batch scheduler and then exits immediately, the
-detached processes will not be visible to cylc and the task will appear to
+detached processes will not be visible to Cylc and the task will appear to
 finish when the top-level script finishes. You will need to modify scripts
 like this to make them execute all sub-processes in the foreground (or use the
 shell ``wait`` command to wait on them before exiting) and to prevent job
