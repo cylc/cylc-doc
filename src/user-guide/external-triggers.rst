@@ -15,7 +15,7 @@ The triggering mechanism described in this section replaces an older and less
 powerful one documented in :ref:`Old-Style External Triggers`.
 
 If you can write a Python function to check the status of an external
-condition or event, the suite server program can call it at configurable
+condition or event, the :term:`scheduler` can call it at configurable
 intervals until it reports success, at which point dependent tasks can trigger
 and data returned by the function will be passed to the job environments of
 those tasks. Functions can be written for triggering off of almost anything,
@@ -95,7 +95,7 @@ cycle point value by one hour:
 
 Notice that the short label ``clock_1`` is used to represent the
 trigger function in the graph. The function call interval, which determines how
-often the suite server program checks the clock, is optional.  Here it is
+often the :term:`scheduler` checks the clock, is optional.  Here it is
 ``PT10S`` (i.e. 10 seconds, which is also the default value).
 
 Argument keywords can be omitted if called in the right order, so the
@@ -303,7 +303,7 @@ dependent tasks, which in terms of format must:
 See :ref:`Built-in Suite State Triggers` for an example of one such
 ``results`` dictionary and how it gets processed by the suite.
 
-The suite server program manages trigger functions as follows:
+The :term:`scheduler` manages trigger functions as follows:
 
 - they are called asynchronously in the process pool
   - (except for clock triggers, which are called from the main process)
@@ -443,7 +443,7 @@ distinguishes one instance of the event from another (the name of the target
 task and its current cycle point are not required). The event ID is just an
 arbitrary string to Cylc, but it can be used to identify something associated
 with the event to the suite - such as the filename of a new
-externally-generated dataset. When the suite server program receives the event
+externally-generated dataset. When the :term:`scheduler` receives the event
 notification it will trigger the next instance of any task waiting on that
 trigger (whatever its cycle point) and then broadcast
 (see :ref:`cylc-broadcast`) the event ID to the cycle point of the triggered

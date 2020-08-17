@@ -32,11 +32,12 @@ management commands directly on job hosts over SSH. Reasons for this include:
   polling functionality.
   
   - This is because jobs can complete (and then be forgotten by
-    the batch system) while the network, suite host, or suite server program is
+    the batch system) while the network, suite host, or :term:`scheduler` is
     down (e.g. between suite shutdown and restart).
   - To handle this we get the automatic job wrapper code to write
     job messages and exit status to *job status files* that are
-    interrogated by suite server programs during job polling operations.
+    interrogated by :term:`schedulers <scheduler>` during job polling
+    operations.
   - Job status files reside on the job host, so the interrogation
     is done over SSH.
 

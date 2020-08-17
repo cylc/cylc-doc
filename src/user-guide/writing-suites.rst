@@ -1982,7 +1982,7 @@ Namespace names may contain letters, digits, underscores, and hyphens.
 
    *Task names need not be hardwired into task implementations*
    because task and suite identity can be extracted portably from the task
-   execution environment supplied by the suite server program
+   execution environment supplied by the :term:`scheduler`
    (:ref:`TaskExecutionEnvironment`) - then to rename a task you can
    just change its name in the suite configuration.
 
@@ -2117,7 +2117,7 @@ Task Execution Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The task execution environment contains suite and task identity variables
-provided by the suite server program, and user-defined environment variables.
+provided by the :term:`scheduler`, and user-defined environment variables.
 The environment is explicitly exported (by the task job script) prior to
 executing the task ``script`` (see :ref:`TaskJobSubmission`).
 

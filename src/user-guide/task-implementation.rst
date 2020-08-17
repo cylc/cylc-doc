@@ -14,7 +14,7 @@ non-zero for failure - and do not spawn detaching processes internally (see
 Task Job Scripts
 ----------------
 
-When the suite server program determines that a task is ready to run it
+When the :term:`scheduler` determines that a task is ready to run it
 generates a *job script* for the task, and submits it to run (see
 :ref:`TaskJobSubmission`).
 
@@ -119,7 +119,7 @@ server program:
      "Hello from ${CYLC_TASK_ID}"
 
 "CUSTOM" severity messages are printed to ``job.out``, logged by the
-suite server program, and can be used to trigger *custom*
+:term:`scheduler`, and can be used to trigger *custom*
 event handlers:
 
 .. code-block:: bash
@@ -132,7 +132,7 @@ information nor an error condition, such as production of a particular data
 file (a "data availability" event).
 
 "WARNING" severity messages are printed to ``job.err``, logged by the
-suite server program, and can be passed to *warning* event handlers:
+:term:`scheduler`, and can be passed to *warning* event handlers:
 
 .. code-block:: bash
 
@@ -140,7 +140,7 @@ suite server program, and can be passed to *warning* event handlers:
      "WARNING:Uh-oh, something's not right here."
 
 "CRITICAL" severity messages are printed to ``job.err``, logged by the
-suite server program, and can be passed to *critical* event handlers:
+:term:`scheduler`, and can be passed to *critical* event handlers:
 
 .. code-block:: bash
 
@@ -159,7 +159,7 @@ Aborting Job Scripts on Error
 -----------------------------
 
 Task job scripts use ``set -x`` to abort on any error, and trap ERR, EXIT, and
-SIGTERM to send task failed messages back to the suite server program before
+SIGTERM to send task failed messages back to the :term:`scheduler` before
 aborting. Other scripts called from job scripts should therefore abort with
 standard non-zero exit status on error, to trigger the job script error trap.
 
@@ -186,7 +186,7 @@ Custom Failure Messages
 Critical events normally warrant aborting a job script rather than just
 sending a message. As described just above, ``exit 1`` or any failing command
 not protected by the surrounding scripting will cause a job script to abort
-and report failure to the suite server program, potentially triggering a
+and report failure to the :term:`scheduler`, potentially triggering a
 *failed* task event handler.
 
 For failures detected by the scripting you could send a critical message back

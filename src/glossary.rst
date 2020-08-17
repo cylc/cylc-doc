@@ -567,21 +567,21 @@ Glossary
 
       * :term:`batch system`
 
-   suite server program
+   scheduler
       When we say that a :term:`suite` is "running" we mean that the cylc
-      suite server program is running.
+      scheduler is running.
 
-      The suite server program is responsible for running the suite. It submits
+      The scheduler is responsible for running the suite. It submits
       :term:`jobs <job>`, monitors their status and maintains the suite state.
 
       .. _daemon: https://en.wikipedia.org/wiki/Daemon_(computing)
 
-      By default a suite server program is a `daemon`_ meaning that it runs in
+      By default a scheduler is a `daemon`_ meaning that it runs in
       the background (potentially on another host).
 
    start
    startup
-      When a :term:`suite` starts the Cylc :term:`suite server program` is
+      When a :term:`suite` starts the Cylc :term:`scheduler` is
       run. This program controls the suite and is what we refer to as
       "running".
 
@@ -591,7 +591,7 @@ Glossary
       See also:
 
       * :ref:`Starting Suites`
-      * :term:`suite server program`
+      * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
       * :term:`shutdown`
@@ -619,7 +619,7 @@ Glossary
 
    stop
    shutdown
-      When a :term:`suite` is shutdown the :term:`suite server program` is
+      When a :term:`suite` is shutdown the :term:`scheduler` is
       stopped. This means that no further :term:`jobs <job>` will be submitted.
 
       By default Cylc waits for any submitted or running :term:`jobs <job>` to

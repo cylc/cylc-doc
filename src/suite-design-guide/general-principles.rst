@@ -60,7 +60,7 @@ Inter-Suite Triggering
 A task in one suite can explicitly trigger off of a task in another suite. The
 full range of possible triggering conditions is supported, including custom
 message triggers. Remote triggering involves repeatedly querying ("polling")
-the remote suite run database, not the suite server program, so it works even
+the remote suite run database, not the :term:`scheduler`, so it works even
 if the other suite is down at the time.
 
 There is special graph syntax to support triggering off of a task in another
@@ -176,7 +176,7 @@ suite and its tasks, all task scripts should:
   expected location.
 - Always return correct shell exit status - zero for success, non-zero
   for failure. This is used by Cylc job wrapper code to detect success and
-  failure and report it back to the suite server program.
+  failure and report it back to the :term:`scheduler`.
 - In shell scripts use ``set -u`` to abort on any reference to
   an undefined variable. If you really need an undefined variable to evaluate
   to an empty string, make it explicit: ``FOO=${FOO:-}``.

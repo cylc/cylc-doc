@@ -73,7 +73,7 @@ not, they will be ignored.
 Restart and Suite State Checkpoints
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At restart (see ``cylc restart --help``) a suite server program
+At restart (see ``cylc restart --help``) a :term:`scheduler`
 initializes its task pool from a previously recorded checkpoint state. By
 default the latest automatic checkpoint - which is updated with every task
 state change - is loaded so that the suite can carry on exactly as it was just
@@ -104,7 +104,7 @@ Restart From Another Checkpoint
 
 Suite server programs automatically update the "latest" checkpoint every time
 a task changes state, and at every suite restart, but you can also take
-checkpoints at other times. To tell a suite server program to checkpoint its
+checkpoints at other times. To tell a :term:`scheduler` to checkpoint its
 current state:
 
 .. code-block:: console
@@ -188,7 +188,7 @@ workflow by coding tasks that run the ``cylc checkpoint`` command:
    We need to "wait" on the "task started" message - which
    is sent in the background to avoid holding tasks up in a network
    outage - to ensure that the checkpointer task is correctly recorded
-   as running in the checkpoint (at restart the suite server program will
+   as running in the checkpoint (at restart the :term:`scheduler` will
    poll to determine that that task job finished successfully). Otherwise
    it may be recorded in the waiting state and, if its upstream dependencies
    have already been cleaned up, it will need to be manually reset from waiting
@@ -222,7 +222,7 @@ inserted manually at the right cycle point, with ``cylc insert``.
 Reloading The Suite Configuration At Runtime
 --------------------------------------------
 
-The ``cylc reload`` command tells a suite server program to reload its
+The ``cylc reload`` command tells a :term:`scheduler` to reload its
 suite configuration at run time. This is an alternative to shutting a
 suite down and restarting it after making changes.
 
@@ -241,11 +241,11 @@ must be inserted manually at the right cycle point, with ``cylc insert``.
 The Suite Contact File
 ----------------------
 
-At start-up, suite server programs write a :term:`contact file`
+At start-up, :term:`schedulers <scheduler>` write a :term:`contact file`
 ``$HOME/cylc-run/SUITE/.service/contact`` that records suite host,
 user, port number, process ID, Cylc version, and other information. Client
 commands can read this file, if they have access to it, to find the target
-suite server program.
+:term:`scheduler`.
 
 
 .. _Task Job Polling:
@@ -261,12 +261,12 @@ manually.
 Polling may be necessary if, for example, a task job gets killed by the
 untrappable SIGKILL signal (e.g. ``kill -9 PID``), or if a network
 outage prevents task success or failure messages getting through, or if the
-suite server program itself is down when tasks finish execution.
+:term:`scheduler` itself is down when tasks finish execution.
 
-To poll a task job the suite server program interrogates the
+To poll a task job the :term:`scheduler` interrogates the
 batch system, and the ``job.status`` file, on the job host. This
 information is enough to determine the final task status even if the
-job finished while the suite server program was down or unreachable on
+job finished while the :term:`scheduler` was down or unreachable on
 the network.
 
 
@@ -291,7 +291,7 @@ Tracking Task State
 Cylc supports two ways of tracking task state on job hosts:
 
 - task-to-suite messaging via TCP (using ZMQ protocol)
-- regular polling by the suite server program
+- regular polling by the :term:`scheduler`
 
 These can be configured per job host using
 :cylc:conf:`global.cylc[platforms][<platform name>]communication method`.
@@ -301,7 +301,7 @@ suite hosts, before resorting to the polling method you should
 consider installing dedicated Cylc servers or
 VMs inside the HPC trust zone (where TCP and SSH should be allowed).
 
-It is also possible to run Cylc suite server programs on HPC login
+It is also possible to run Cylc :term:`schedulers <scheduler>` on HPC login
 nodes, but this is not recommended for load and run duration,
 
 Finally, it has been suggested that *port forwarding* may provide another
@@ -312,11 +312,11 @@ TCP Task Messaging
 ^^^^^^^^^^^^^^^^^^
 
 Task job wrappers automatically invoke ``cylc message`` to report
-progress back to the suite server program when they begin executing,
+progress back to the :term:`scheduler` when they begin executing,
 at normal exit (success) and abnormal exit (failure).
 
 By default the messaging occurs via an authenticated, TCP connection to the
-suite server program using the ZMQ protocol.
+:term:`scheduler` using the ZMQ protocol.
 This is the preferred task communications method - it is efficient and direct.
 
 Suite server programs automatically install suite :term:`contact information
@@ -452,7 +452,7 @@ cylc from interleaving cycles, but it will not stall a suite unless it fails to
 extend out past a future trigger (see :ref:`InterCyclePointTriggers`).
 A high runahead limit may allow fast tasks that are not constrained by
 dependencies or clock-triggers to spawn far ahead of the pack, which could have
-performance implications for the suite server program when running very large
+performance implications for the :term:`scheduler` when running very large
 suites.  Succeeded and failed tasks are ignored when computing the runahead
 limit.
 
@@ -596,7 +596,7 @@ large group of tasks all fail at similar time. This is configured by
 
 Event handlers can be located in the suite ``bin/`` directory;
 otherwise it is up to you to ensure their location is in ``$PATH`` (in
-the shell in which the suite server program runs). They should require little
+the shell in which the :term:`scheduler` runs). They should require little
 resource and return quickly - see :ref:`Managing External Command Execution`.
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
@@ -662,7 +662,7 @@ the retry delay period when it is resubmitted.
 
 .. note::
 
-   Event handlers are called by the suite server program, not by
+   Event handlers are called by the :term:`scheduler`, not by
    task jobs. If you wish to pass additional information to them use
    ``[cylc] -> [[environment]]``, not task runtime environment.
 
@@ -749,7 +749,7 @@ Managing External Command Execution
 -----------------------------------
 
 Job submission commands, event handlers, and job poll and kill commands, are
-executed by the suite server program in a "pool" of asynchronous
+executed by the :term:`scheduler` in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
 actively managed to limit it to a configurable size
 :cylc:conf:`global.cylc|process pool size`
@@ -760,7 +760,7 @@ are killed after a configurable timeout
 :cylc:conf:`global.cylc|process pool timeout`
 , however,
 to guard against rogue commands that hang indefinitely. All process kills are
-logged by the suite server program. For killed job submissions the associated
+logged by the :term:`scheduler`. For killed job submissions the associated
 tasks also go to the *submit-failed* state.
 
 
@@ -1170,7 +1170,7 @@ For suite-state polling, the cycle point is automatically converted to the
 cycle point format of the target suite.
 
 The remote suite does not have to be running when polling commences because the
-command interrogates the suite run database, not the suite server program.
+command interrogates the suite run database, not the :term:`scheduler`.
 
 .. note::
 
@@ -1235,11 +1235,11 @@ restart checkpoints and various other aspects of run history:
    $HOME/cylc-run/SUITE-NAME/log/db  # public suite DB
    $HOME/cylc-run/SUITE-NAME/.service/db  # private suite DB
 
-The private DB is for use only by the suite server program. The identical
+The private DB is for use only by the :term:`scheduler`. The identical
 public DB is provided for use by external commands such as
 ``cylc suite-state``, ``cylc ls-checkpoints``, and
 ``cylc report-timings``. If the public DB gets locked for too long by
-an external reader, the suite server program will eventually delete it and
+an external reader, the :term:`scheduler` will eventually delete it and
 replace it with a new copy of the private DB, to ensure that both correctly
 reflect the suite state.
 
@@ -1317,7 +1317,7 @@ selective about that.  (Also in a Rose suite, the ``flow.cylc`` file does not
 need to be restored if you restart with ``rose suite-run`` - which re-installs
 suite source files to the run directory).
 
-The public DB is not strictly required for a restart - the suite server program
+The public DB is not strictly required for a restart - the :term:`scheduler`
 will recreate it if need be - but it is required by
 ``cylc ls-checkpoints`` if you need to identify the right restart
 checkpoint.
