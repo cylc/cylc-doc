@@ -1,6 +1,7 @@
 # Cylc Documentation
 
-![test](https://github.com/cylc/cylc-doc/workflows/test/badge.svg?branch=master&event=push)
+[![test](https://github.com/cylc/cylc-doc/workflows/test/badge.svg?branch=master&event=push)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Atest)
+[![nightly](https://github.com/cylc/cylc-doc/workflows/nightly/badge.svg)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Anightly)
 
 Documentation for the Cylc Workflow Engine and its software ecosystem.
 
@@ -44,7 +45,7 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
 * Make your changes and add them to a new commit.
 * Push to `upstream/gh-pages` (don't force push for ease of rollback).
 
-> **Note:** All changes made to the `gh-pages` branch are non-destructive 
+> **Note:** All changes made to the `gh-pages` branch are non-destructive
   (i.e. no force pushing) so all changes can be undone.
 
   The `deploy` and `undeploy` actions are automations for convenience, however,
