@@ -106,7 +106,7 @@ Installing Files At Start-up
 
 Use ``rose suite-run`` *file creation mode* or ``R1``
 install tasks to copy files to the self-contained suite run directory at
-start-up.  Install tasks are preferred for time-consuming installations because
+start-up. Install tasks are preferred for time-consuming installations because
 they don't slow the suite start-up process, they can be monitored,
 they can run directly on target platforms, and you can rerun them later without
 restarting the suite. If you are using symbolic links to install files under
@@ -441,7 +441,7 @@ difficult to be sure which tasks are *using* which global variables.
 
 Any ``[runtime]`` settings can be shared - scripting, host
 and batch scheduler configuration, environment variables, and so on - from
-single items up to complete task or app configurations.  At the latter extreme,
+single items up to complete task or app configurations. At the latter extreme,
 it is quite common to have several tasks that inherit the same complete
 job configuration followed by minor task-specific additions:
 

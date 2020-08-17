@@ -97,7 +97,7 @@ Task Messages
 
 Task jobs send status messages back to the server program to report that
 execution has started, succeeded, or failed. Custom messages can also be sent
-by the same mechanism, with various severity levels.  These can be used to
+by the same mechanism, with various severity levels. These can be used to
 trigger other tasks off specific task outputs, or to trigger execution of
 event handlers by the server program (see :ref:`EventHandling`), or just to
 write information to the server log.

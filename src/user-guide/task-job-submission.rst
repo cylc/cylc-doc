@@ -14,7 +14,7 @@ handlers.
 
 When a task is ready Cylc generates a :term:`job script` (see :ref:`JobScripts`). The
 job script is submitted to run by the *batch system* chosen for
-the task. Different tasks can use different batch systems.  Like
+the task. Different tasks can use different batch systems. Like
 other runtime properties, you can set a suite default batch system and
 override it for specific tasks or families:
 

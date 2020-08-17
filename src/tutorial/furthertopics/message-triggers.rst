@@ -215,10 +215,10 @@ triggers another task bar and when fully completed triggers another task, baz.
       In this case, we shall trigger ``another_weather_task`` after one set of
       random numbers has been created
       and ``different_weather_task`` after a second set of random numbers has
-      been created.
-
-      There are three aspects of creating messsage triggers.
-      The first is to create the messages.  Within ``runtime``, ``TASK`` in our
+      been created.    
+      
+      There are three aspects of creating messsage triggers. 
+      The first is to create the messages. Within ``runtime``, ``TASK`` in our
       suite, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.
 

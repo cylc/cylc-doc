@@ -95,7 +95,7 @@ cycle point value by one hour:
 
 Notice that the short label ``clock_1`` is used to represent the
 trigger function in the graph. The function call interval, which determines how
-often the :term:`scheduler` checks the clock, is optional.  Here it is
+often the :term:`scheduler` checks the clock, is optional. Here it is
 ``PT10S`` (i.e. 10 seconds, which is also the default value).
 
 Argument keywords can be omitted if called in the right order, so the

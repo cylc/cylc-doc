@@ -5,7 +5,7 @@ Portable Suites
 
 A *portable* or *interoperable* suite can run "out of the box" at
 different sites, or in different environments such as research and operations
-within a site.  For convenience we just use the term *site portability*.
+within a site. For convenience we just use the term *site portability*.
 
 Lack of portability is a major barrier to collaborative development when
 sites need to run more or less the same workflow, because it is very

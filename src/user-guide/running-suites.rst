@@ -48,7 +48,7 @@ Warm Start
 
 A warm start runs a suite from scratch like a cold start, but from the
 beginning of a given :term:`cycle point` that is beyond the suite
-:term:`initial cycle point`.  This is generally inferior to a *restart* (which
+:term:`initial cycle point`. This is generally inferior to a *restart* (which
 loads a previously recorded suite state - see :ref:`RestartingSuites`) because
 it may result in some tasks rerunning. However, a warm start may be required if
 a restart is not possible, e.g. because the suite run database was accidentally
@@ -255,7 +255,7 @@ Task Job Polling
 
 At any point after job submission task jobs can be *polled* to check that
 their true state conforms to what is currently recorded by the suite server
-program.  See ``cylc poll --help`` for how to poll one or more tasks
+program. See ``cylc poll --help`` for how to poll one or more tasks
 manually.
 
 Polling may be necessary if, for example, a task job gets killed by the
@@ -320,7 +320,7 @@ By default the messaging occurs via an authenticated, TCP connection to the
 This is the preferred task communications method - it is efficient and direct.
 
 Suite server programs automatically install suite :term:`contact information
-<contact file>` and credentials on job hosts.  Users only need to do this
+<contact file>` and credentials on job hosts. Users only need to do this
 manually for remote access to suites on other hosts, or suites owned by other
 users - see :ref:`RemoteControl`.
 
@@ -333,7 +333,7 @@ Suite server programs can actively poll task jobs at configurable intervals,
 via non-interactive SSH to the job host.
 
 Polling is the least efficient task communications method because task state is
-updated only at intervals, not when task events actually occur.  However, it
+updated only at intervals, not when task events actually occur. However, it
 may be needed at sites that do not allow TCP or non-interactive SSH from job
 host to suite host.
 
@@ -433,7 +433,7 @@ As a suite runs, its task proxies may pass through the following states:
   execution retries are exhausted.
 - **runahead** - will not have prerequisites checked (and so
   automatically held, in effect) until the rest of the suite catches up
-  sufficiently.  The amount of runahead allowed is configurable - see
+  sufficiently. The amount of runahead allowed is configurable - see
   :ref:`RunaheadLimit`.
 - **expired** - will not be submitted to run, due to falling too far
   behind the wall-clock relative to its cycle point -
@@ -453,7 +453,7 @@ extend out past a future trigger (see :ref:`InterCyclePointTriggers`).
 A high runahead limit may allow fast tasks that are not constrained by
 dependencies or clock-triggers to spawn far ahead of the pack, which could have
 performance implications for the :term:`scheduler` when running very large
-suites.  Succeeded and failed tasks are ignored when computing the runahead
+suites. Succeeded and failed tasks are ignored when computing the runahead
 limit.
 
 The preferred runahead limiting mechanism restricts the number of consecutive
@@ -778,7 +778,7 @@ to run again from the start (if killed).
 Suspended jobs will poll as still running (their job status file says they
 started running, and they still appear in the resource manager queue).
 Loadleveler jobs that are preempted by kill-and-requeue ("job vacation") are
-automatically returned to the submitted state by Cylc.  This is possible
+automatically returned to the submitted state by Cylc. This is possible
 because Loadleveler sends the SIGUSR1 signal before SIGKILL for preemption.
 Other batch schedulers just send SIGTERM before SIGKILL as normal, so Cylc
 cannot distinguish a preemption job kill from a normal job kill. After this the
@@ -996,7 +996,7 @@ Limitations Of Suite Simulation
 
 Dummy mode ignores batch scheduler settings because Cylc does not know which
 job resource directives (requested memory, number of compute nodes, etc.) would
-need to be changed for the dummy jobs.  If you need to dummy-run jobs on a
+need to be changed for the dummy jobs. If you need to dummy-run jobs on a
 batch scheduler manually comment out ``script`` items and modify
 directives in your live suite, or else use a custom live mode test suite.
 
@@ -1313,7 +1313,7 @@ target of the symlink in the service directory. The :term:`service directory`
 and :term:`suite log directory` will come with extra files that aren't strictly
 needed for a restart, but that doesn't matter - although depending on your log
 housekeeping the ``log/job`` directory could be huge, so you might want to be
-selective about that.  (Also in a Rose suite, the ``flow.cylc`` file does not
+selective about that. (Also in a Rose suite, the ``flow.cylc`` file does not
 need to be restored if you restart with ``rose suite-run`` - which re-installs
 suite source files to the run directory).
 
@@ -1324,7 +1324,7 @@ checkpoint.
 
 The job status files are only needed if the restart suite state checkpoint
 contains active tasks that need to be polled to determine what happened to them
-while the suite was down.  Without them, polling will fail and those tasks will
+while the suite was down. Without them, polling will fail and those tasks will
 need to be manually set to the correct state.
 
 .. warning::

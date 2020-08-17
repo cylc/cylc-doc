@@ -270,7 +270,7 @@ Here ``model<p>`` expands to ``model_p7`` for ``p=7``,
 and so on, via the default expansion template for integer-valued parameters,
 but custom templates can be defined if necessary. Parameters can also be
 defined as lists of strings, and you can define dependencies between different
-values: ``chunk<p-1> => chunk<p>``.  Here's a multi-parameter example:
+values: ``chunk<p-1> => chunk<p>``. Here's a multi-parameter example:
 
 .. code-block:: cylc
 
