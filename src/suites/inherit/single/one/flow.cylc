@@ -1,14 +1,20 @@
 # FLOW.CYLC
+#
 [meta]
     title = "User Guide [runtime] example."
+
 [cylc]
     required run mode = simulation # (no task implementations)
+
 [scheduling]
     initial cycle point = 20110101T06
     final cycle point = 20110102T00
     [[graph]]
-        T00 = """foo => OBS
-                 OBS:succeed-all => bar"""
+        T00 = """
+            foo => OBS
+            OBS:succeed-all => bar
+        """
+
 [runtime]
     [[root]] # base namespace for all tasks (defines suite-wide defaults)
         [[[job]]]

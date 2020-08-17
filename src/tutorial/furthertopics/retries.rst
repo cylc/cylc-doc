@@ -48,17 +48,17 @@ trying to roll doubles using two dice:
        [[win]]
        [[roll_doubles]]
            script = """
-   sleep 10
-   RANDOM=$$  # Seed $RANDOM
-   DIE_1=$((RANDOM%6 + 1))
-   DIE_2=$((RANDOM%6 + 1))
-   echo "Rolled $DIE_1 and $DIE_2..."
-   if (($DIE_1 == $DIE_2)); then
-      echo "doubles!"
-   else
-      exit 1
-   fi
-   """
+               sleep 10
+               RANDOM=$$  # Seed $RANDOM
+               DIE_1=$((RANDOM%6 + 1))
+               DIE_2=$((RANDOM%6 + 1))
+               echo "Rolled $DIE_1 and $DIE_2..."
+               if (($DIE_1 == $DIE_2)); then
+                   echo "doubles!"
+               else
+                   exit 1
+               fi
+           """
 
 
 Running Without Retries

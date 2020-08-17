@@ -2,19 +2,20 @@
     title = 'inheritance example'
 
     description = """
-This suite illustrates several tiers of task runtime inheritance.
-To see the result, use 'cylc get-config'."""
+        This suite illustrates several tiers of task runtime inheritance.
+        To see the result, use 'cylc get-config'.
+    """
 
 [scheduling]
     initial cycle point = 20110101T00
     final cycle point = 20110103T00
     [[graph]]
         T00 = """
-                foo => OPS
-                OPS:finish-all & OPS:succeed-any => VAR
-                VAR:succeed-all => BAZ
-                atovs => atovs_post
-                """
+            foo => OPS
+            OPS:finish-all & OPS:succeed-any => VAR
+            VAR:succeed-all => BAZ
+            atovs => atovs_post
+        """
 [runtime]
     [[root]]
         [[[environment]]]

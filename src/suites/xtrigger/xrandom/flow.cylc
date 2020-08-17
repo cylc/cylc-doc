@@ -13,18 +13,21 @@
         x3 = xrandom(percent=25, secs=2, _=%(point)s):PT5S
     [[graph]]
         P1 = """
-# all instances of foo and bar should trigger at once, together
+            # all instances of foo and bar should trigger at once, together
             @x1 => foo & bar
-# all instances of cat should trigger at once, and separately, all instances of
-# baz should trigger at once.
+
+            # all instances of cat should trigger at once, and separately, all
+            # instances of baz should trigger at once.
             @x2 => cat & dog
-# each instance of qux should trigger separately
+
+            # each instance of qux should trigger separately
             @x3 => qux
-# Result:
-# - x1 should return True once, and not be called again.
-# - x2 should return True twice, and not be called again.
-# - x3 should return True five times, and not be called again.
-# i.e. 8 True returns in the 5-cycle suite run.
+
+            # Result:
+            # - x1 should return True once, and not be called again.
+            # - x2 should return True twice, and not be called again.
+            # - x3 should return True five times, and not be called again.
+            # i.e. 8 True returns in the 5-cycle suite run.
         """
 [runtime]
     [[root]]

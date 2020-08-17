@@ -529,8 +529,9 @@ by inheritance:
        [[write_data]]
            inherit = WORKSPACE
            script = """
-   mkdir -p $DATA_DIR
-   write-data.exe -o ${DATA_DIR}"""
+               mkdir -p $DATA_DIR
+               write-data.exe -o ${DATA_DIR}
+           """
        [[read_data]]
            inherit = WORKSPACE
            script = read-data.exe -i ${DATA_DIR}
@@ -548,8 +549,9 @@ be shared via Jinja variables:
    [runtime]
        [[write_data]]
            script = """
-   mkdir -p {{DATA_DIR}}
-   write-data.exe -o {{DATA_DIR}}"""
+               mkdir -p {{DATA_DIR}}
+               write-data.exe -o {{DATA_DIR}}
+           """
        [[read_data]]
            script = read-data.exe -i {{DATA_DIR}}
 
@@ -669,12 +671,13 @@ then an automatic retry may be appropriate:
    [runtime]
        [[model]]
            script = """
-   if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
-       SHORT_TIMESTEP=true
-   else
-       SHORT_TIMESTEP=false
-   fi
-   model.exe"""
+               if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
+                   SHORT_TIMESTEP=true
+               else
+                   SHORT_TIMESTEP=false
+               fi
+               model.exe
+           """
            [[[job]]]
                execution retry delays = 1*PT0M
 
@@ -714,7 +717,8 @@ path from the workflow:
                      model:fail => diagnose => model_short
                        # Clean up with suicide triggers:
                      model => ! diagnose & ! model_short
-                     model_short => ! model"""
+                     model_short => ! model
+                 """
 
 
 Include Files

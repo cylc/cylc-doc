@@ -47,7 +47,9 @@
         script = cat >rainfall <<<'The rain in Spain falls mainly on the plain'
 
     [[process_exeter]]
-        script = """python3 -c "
-from random import choice
-print(choice(['Windy', 'Rainy', 'Sunny', 'Snowy']))"
-"""
+        script = """
+            python3 -c "
+            from random import choice
+            print(choice(['Windy', 'Rainy', 'Sunny', 'Snowy']))
+            "
+        """

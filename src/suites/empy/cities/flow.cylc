@@ -2,9 +2,9 @@
 [meta]
     title = "EmPy city suite example."
     description = """
-Illustrates use of variables and math expressions, and programmatic
-generation of groups of related dependencies and runtime properties.
-"""
+        Illustrates use of variables and math expressions, and programmatic
+        generation of groups of related dependencies and runtime properties.
+    """
 
 @{
 HOST = "SuperComputer"
@@ -18,19 +18,19 @@ CLEANUP = True
     initial cycle point = 2011-08-08T12
     [[graph]]
 @[ if CLEANUP ]
-        T23 = "clean"
+        T23 = clean
 @[ end if ]
         T00,T12 = """
-                setup => get_lbc & get_ic # foo
+            setup => get_lbc & get_ic # foo
 @[ for CITY in CITIES ]@# comment
-                get_lbc => @(CITY)_one
-                get_ic => @(CITY)_two
-                @(CITY)_one & @(CITY)_two => @(CITY)_three & @(CITY)_four
+            get_lbc => @(CITY)_one
+            get_ic => @(CITY)_two
+            @(CITY)_one & @(CITY)_two => @(CITY)_three & @(CITY)_four
     @[ if CLEANUP ]
-                @(CITY)_three & @(CITY)_four => cleanup
+            @(CITY)_three & @(CITY)_four => cleanup
     @[ end if ]
 @[ end for ]
-            """
+        """
 [runtime]
     [[on_@HOST ]]
         [[[remote]]]

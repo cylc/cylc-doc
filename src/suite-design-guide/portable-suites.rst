@@ -241,11 +241,11 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
    #...
    {% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
    R1 = """
-     pre => model => post
+       pre => model => post
    {% if HAVE_IDL %}
-         post => idl-1 => idl-2 => idl-3
+       post => idl-1 => idl-2 => idl-3
    {% endif %}
-           """
+   """
 
 where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
 

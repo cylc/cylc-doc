@@ -5,6 +5,7 @@
         two active tasks at once; the second uses another queue limited to three
         active tasks at once.
     """
+
 [scheduling]
     [[queues]]
         [[[default]]]
@@ -18,7 +19,8 @@
             n => o & p => FAM2
             FAM1:succeed-all => h & i & j & k & l & m
             FAM2:succeed-all => u & v & w & x & y & z
-                """
+        """
+
 [runtime]
     [[FAM1, FAM2]]
     [[d,e,f,g]]

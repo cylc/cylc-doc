@@ -155,8 +155,8 @@ Parameters can be either words or integers:
    [scheduling]
       [[graph]]
           T00/PT3H = """
-                  get_observations<station> => consolidate_observations
-              """
+              get_observations<station> => consolidate_observations
+          """
    [runtime]
        [[get_observations<station>]]
            script = get-observations
@@ -281,12 +281,12 @@ Parameters can be either words or integers:
 
           # Repeat every three hours starting at the initial cycle point.
           PT3H = """
-         -        get_observations_belmullet => consolidate_observations
-         -        get_observations_camborne => consolidate_observations
-         -        get_observations_heathrow => consolidate_observations
-         -        get_observations_shetland => consolidate_observations
-         +        get_observations<station> => consolidate_observations
-              """
+         -    get_observations_belmullet => consolidate_observations
+         -    get_observations_camborne => consolidate_observations
+         -    get_observations_heathrow => consolidate_observations
+         -    get_observations_shetland => consolidate_observations
+         +    get_observations<station> => consolidate_observations
+          """
 
       .. hint::
 
