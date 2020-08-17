@@ -23,8 +23,3 @@
 
 .. _Cylc Flow: https://github.com/cylc/cylc-flow
 .. _Cylc UI Server: https://github.com/cylc/cylc-uiserver
-
-.. set the default scope for cylc references to suite.rc so we can do [runtime]
-   rather than suite.rc[runtime]
-
-.. cylc-scope:: suite.rc
