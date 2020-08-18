@@ -28,7 +28,7 @@ A Cylc :term:`suite directory` contains:
 :cylc:conf:`flow.cylc`
    The file which configures the workflow.
 ``bin/`` (optional)
-   A directiory where you can put scripts and executables for use
+   A directory where you can put scripts and executables for use
    in the workflow. It is automatically added to ``$PATH`` in the job
    execution environment.
 

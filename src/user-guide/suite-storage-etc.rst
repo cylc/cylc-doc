@@ -3,8 +3,7 @@
 Suite Storage, Discovery, Revision Control, and Deployment
 ==========================================================
 
-Cylc suites should be portable and may be version controlled, however, beyond
-this Cylc does not have a built-in solution for suite storage and discovery,
+Cylc does not have a built-in solution for suite storage and discovery,
 revision control, and deployment, on a network.
 
 Version control is not Cylc's core purpose, and projects may have their own

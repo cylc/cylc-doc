@@ -480,8 +480,7 @@ Glossary
         understanding of the :term:`job's <job>` present status.
 
    service directory
-      This directory is used to store information for internal use for internal
-      use by Cylc.
+      This directory is used to store information for internal use by Cylc.
 
       It is called ``.service`` and is located in the :term:`run directory`, it
       should exist for all registered suites.
