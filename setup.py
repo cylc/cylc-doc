@@ -40,7 +40,7 @@ VERSION = get_version(
 
 INSTALL_REQUIRES = [
     'sphinx>=2.0.0,<3.0.0',
-    'sphinx_rtd_theme',
+    'sphinx_rtd_theme>=0.5.0',
     'sphinxcontrib-svg2pdfconverter',
     'hieroglyph',
     'eralchemy==1.2.*',
