@@ -13,6 +13,11 @@ tasks represent - is covered in :ref:`TaskImplementation`; and
 task job submission - how tasks are submitted to run - is
 in :ref:`TaskJobSubmission`.
 
+.. note::
+
+   In earlier versions of Cylc, :cylc:conf:`flow.cylc` was named ``suite.rc``,
+   but that name is now deprecated.
+
 
 .. _SuiteDefinitionDirectories:
 

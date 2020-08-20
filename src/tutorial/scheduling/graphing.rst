@@ -34,6 +34,11 @@ The :cylc:conf:`flow.cylc` File Format
      so a sub-section would be written ``[[sub-section]]``, a sub-sub-section
      ``[[[sub-sub-section]]]``, and so on.
 
+   .. note::
+
+      In earlier versions of Cylc, :cylc:conf:`flow.cylc` was named ``suite.rc``,
+      but that name is now deprecated.
+
 Example
 ^^^^^^^
 
