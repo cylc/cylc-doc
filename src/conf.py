@@ -22,9 +22,6 @@ from cylc.flow import __version__ as CYLC_VERSION
 
 # -- General configuration ------------------------------------------------
 
-# minimal Sphinx version required.
-needs_sphinx = '1.5.3'
-
 # Sphinx extension module names.
 sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
@@ -44,8 +41,6 @@ extensions = [
     'cylc.sphinx_ext.minicylc',
     'cylc.sphinx_ext.practical',
     'cylc.sphinx_ext.sub_lang',
-    # https://github.com/nyergler/hieroglyph/issues/148
-    'cylc.sphinx_ext.hieroglyph_patch'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()

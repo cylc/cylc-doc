@@ -39,12 +39,12 @@ VERSION = get_version(
 )
 
 INSTALL_REQUIRES = [
-    'sphinx>=2.0.0,<3.0.0',
+    'cylc-sphinx-extensions>=1.2'
+    'eralchemy==1.2.*',
+    'hieroglyph>=2.1.0',
+    'sphinx>=3.0.0',
     'sphinx_rtd_theme>=0.5.0',
     'sphinxcontrib-svg2pdfconverter',
-    'hieroglyph',
-    'eralchemy==1.2.*',
-    'cylc-sphinx-extensions'
 ]
 
 EXTRAS_REQUIRE = {
