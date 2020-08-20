@@ -86,7 +86,7 @@ to retrieve job logs, and not to use a remote login shell:
 
 .. code-block:: cylc
 
-   # flow.rc
+   # global.cylc
    [hosts]
       [[wizard]]
           cylc executable = /opt/bin/cylc

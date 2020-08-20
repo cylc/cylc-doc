@@ -293,7 +293,7 @@ Cylc supports three ways of tracking task state on job hosts:
 - regular polling by the suite server program
 
 These can be configured per job host using
-:cylc:conf:`flow.rc[hosts][<hostname glob>]task communication method`.
+:cylc:conf:`global.cylc[hosts][<hostname glob>]task communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
 suite hosts, before resorting to the polling method you should
@@ -468,7 +468,7 @@ Public Access - No Auth Files
 
 Without a suite passphrase the amount of information revealed by a suite
 server program is determined by the public access privilege level set in
-:cylc:conf:`flow.rc[authentication]` and optionally overridden in suites
+:cylc:conf:`global.cylc[authentication]` and optionally overridden in suites
 with :cylc:conf:`[cylc][authentication]`.
 
 See Cylc privilege levels: :py:obj:`cylc.flow.network.authorisation.Priv`.
@@ -919,12 +919,12 @@ Job submission commands, event handlers, and job poll and kill commands, are
 executed by the suite server program in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
 actively managed to limit it to a configurable size
-:cylc:conf:`flow.rc|process pool size`
+:cylc:conf:`global.cylc|process pool size`
 Custom event handlers should be light-weight and quick-running because they
 will tie up a process pool member until they complete, and the suite will
 appear to stall if the pool is saturated with long-running processes. Processes
 are killed after a configurable timeout
-:cylc:conf:`flow.rc|process pool timeout`
+:cylc:conf:`global.cylc|process pool timeout`
 , however,
 to guard against rogue commands that hang indefinitely. All process kills are
 logged by the suite server program. For killed job submissions the associated

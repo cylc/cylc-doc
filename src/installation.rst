@@ -203,10 +203,15 @@ however, many things may need to be configured e.g:
 Cylc Flow
 ^^^^^^^^^
 
-`Cylc Flow`_ is configured by the :cylc:conf:`flow.rc` file which supports
+`Cylc Flow`_ is configured by the :cylc:conf:`global.cylc` file which supports
 both global (site) and local (user) configuration of the system.
 
-See the :cylc:conf:`flow.rc` section for details.
+See the :cylc:conf:`global.cylc` section for details.
+
+.. note::
+
+   In earlier versions of Cylc, ``global.cylc`` was named ``global.rc`` or
+   ``flow.rc``, but those names are no longer supported.
 
 Bash Profile
 ^^^^^^^^^^^^

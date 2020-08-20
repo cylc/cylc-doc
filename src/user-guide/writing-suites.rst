@@ -2308,7 +2308,7 @@ typically held in cycle point sub-directories of the suite share directory.
 
 The top level share and work directory (below) location can be changed
 (e.g. to a large data area) by a global config setting
-:cylc:conf:`flow.rc[hosts][<hostname glob>]work directory`.
+:cylc:conf:`global.cylc[hosts][<hostname glob>]work directory`.
 
 
 Task Work Directories
@@ -2321,11 +2321,11 @@ it does not ``cd`` elsewhere at runtime). By default the location
 contains task name and cycle point, to provide a unique workspace for every
 instance of every task. This can be overridden in the suite configuration,
 however, to get several tasks to share the same
-:cylc:conf:`work directory <flow.rc[hosts][<hostname glob>]work directory>`.
+:cylc:conf:`work directory <global.cylc[hosts][<hostname glob>]work directory>`.
 
 The top level work and share directory (above) location can be changed
 (e.g. to a large data area) by a global config setting
-:cylc:conf:`flow.rc[hosts][<hostname glob>]work directory`.
+:cylc:conf:`global.cylc[hosts][<hostname glob>]work directory`.
 
 
 Environment Variable Evaluation
