@@ -3,10 +3,10 @@
 Writing Suites
 ==============
 
-Cylc suites are defined in structured, validated, *suite.rc* files
+Cylc suites are defined in structured, validated, *flow.cylc* files
 that concisely specify the properties of, and the relationships
 between, the various tasks managed by the suite. This section of the
-User Guide deals with the format and content of the suite.rc file,
+User Guide deals with the format and content of the flow.cylc file,
 including task definition. Task implementation - what's required of the
 real commands, scripts, or programs that do the processing that the
 tasks represent - is covered in :ref:`TaskImplementation`; and
@@ -21,7 +21,7 @@ Suite Configuration Directories
 
 A cylc *suite configuration directory* contains:
 
-- **A suite.rc file**: this is the suite configuration.
+- **A flow.cylc file**: this is the suite configuration.
 
   - And any include-files used in it (see below; may be
     kept in sub-directories).
@@ -34,7 +34,7 @@ A cylc *suite configuration directory* contains:
     execution environments.
   - Alternatively, tasks can call external
     commands, scripts, or programs; or they can be scripted
-    entirely within the suite.rc file.
+    entirely within the flow.cylc file.
 
 - **A** ``lib/python/`` **sub-directory** (optional)
 
@@ -62,13 +62,13 @@ A typical example:
 .. code-block:: bash
 
    /path/to/my/suite   # suite configuration directory
-       suite.rc           # THE SUITE CONFIGURATION FILE
+       flow.cylc           # THE SUITE CONFIGURATION FILE
        bin/               # scripts and executables used by tasks
            foo.sh
            bar.sh
            ...
        # (OPTIONAL) any other suite-related files, for example:
-       inc/               # suite.rc include-files
+       inc/               # flow.cylc include-files
            nwp-tasks.rc
            globals.rc
            ...
@@ -80,10 +80,10 @@ A typical example:
 
 .. _SuiteRCFile:
 
-Suite.rc File Overview
+flow.cylc File Overview
 ----------------------
 
-Suite.rc files are an extended-INI format with section nesting.
+flow.cylc files are an extended-INI format with section nesting.
 
 Embedded template processor expressions may also be used in the file, to
 programatically generate the final suite configuration seen by
@@ -98,7 +98,7 @@ engines too.
 Syntax
 ^^^^^^
 
-The following defines legal suite.rc syntax:
+The following defines legal flow.cylc syntax:
 
 - **Items** are of the form ``item = value``.
 - **[Section]** headings are enclosed in square brackets.
@@ -123,15 +123,15 @@ The following defines legal suite.rc syntax:
   used as a verbatim inlining mechanism.
 
 Suites that embed templating code (see :ref:`Jinja` and :ref:`EmPylabel`) must
-process to raw suite.rc syntax.
+process to raw flow.cylc syntax.
 
 
 Include-Files
 ^^^^^^^^^^^^^
 
-Cylc has native support for suite.rc include-files, which may help to
+Cylc has native support for flow.cylc include-files, which may help to
 organize large suites. Inclusion boundaries are completely arbitrary -
-you can think of include-files as chunks of the suite.rc file simply
+you can think of include-files as chunks of the flow.cylc file simply
 cut-and-pasted into another file. Include-files may be included
 multiple times in the same file, and even nested. Include-file paths
 can be specified portably relative to the suite configuration directory,
@@ -181,7 +181,7 @@ usage instructions.
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
 
-Cylc suite.rc files consist of a suite title and description followed by
+Cylc flow.cylc files consist of a suite title and description followed by
 configuration items grouped under several top level section headings:
 
 - **[cylc]** - *non task-specific suite configuration*
@@ -207,13 +207,13 @@ configuration items grouped under several top level section headings:
 Validation
 ^^^^^^^^^^
 
-Cylc suite.rc files are automatically validated against a specification
+Cylc flow.cylc files are automatically validated against a specification
 that defines all legal entries, values, options, and defaults. This
 detects formatting errors, typographic errors, illegal items and illegal
 values prior to run time. Some values are complex strings that require
 further parsing by cylc to determine their correctness (this is also
 done during validation). All legal entries are documented in
-:cylc:conf:`suite.rc`.
+:cylc:conf:`flow.cylc`.
 
 The validator reports the line numbers of detected errors. Here's an
 example showing a section heading with a missing right bracket:
@@ -224,7 +224,7 @@ example showing a section heading with a missing right bracket:
        [[special tasks]
    'Section bracket mismatch, line 19'
 
-If the suite.rc file uses include-files ``cylc view`` will
+If the flow.cylc file uses include-files ``cylc view`` will
 show an inlined copy of the suite with correct line numbers
 (you can also edit suites in a temporarily inlined state with
 ``cylc edit --inline``).
@@ -234,7 +234,7 @@ Validation does not check the validity of chosen batch systems.
 .. todo
 
    This is to allow users to extend cylc with their own job submission
-   methods, which are by definition unknown to the suite.rc spec.
+   methods, which are by definition unknown to the flow.cylc spec.
 
 
 .. _ConfiguringScheduling:
@@ -242,7 +242,7 @@ Validation does not check the validity of chosen batch systems.
 Scheduling - Dependency Graphs
 ------------------------------
 
-The :cylc:conf:`suite.rc[scheduling]` section defines the
+The :cylc:conf:`flow.cylc[scheduling]` section defines the
 relationships between tasks in a suite - the information that allows
 cylc to determine when tasks are ready to run. The most important
 component of this is the suite dependency graph. Cylc graph notation
@@ -265,7 +265,7 @@ vary depending on the particular cycle point:
            # hours
            T06,T18 = "C => X"
 
-Here is the complete suite.rc listing with the corresponding suite graph;
+Here is the complete flow.cylc listing with the corresponding suite graph;
 this is a complete, valid, runnable suite (it will use default task runtime
 properties such as ``script``):
 
@@ -403,7 +403,7 @@ is equivalent to this:
    T00, T12 = "A & B => X"  # X triggers off A AND B
 
 In summary, the branching tree structure of a dependency graph can
-be partitioned into lines (in the suite.rc graph string) of pairs
+be partitioned into lines (in the flow.cylc graph string) of pairs
 or chains, in any way you like, with liberal use of internal white space
 and comments to make the graph structure as clear as possible.
 
@@ -954,7 +954,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
                   +PT6H/PT6H = """
                       foo[-PT6H] => foo
                       foo => bar
-                  """ 
+                  """
           [visualization]
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
@@ -1098,7 +1098,7 @@ configuration is omitted, but it would likely involve retrieving datasets by
 cycle point and processing them in cycle point-specific shared workspaces under
 the self-contained suite run directory.
 
-.. literalinclude:: ../suites/integer-pipeline/suite.rc
+.. literalinclude:: ../suites/integer-pipeline/flow.cylc
    :language: cylc
 
 
@@ -1205,7 +1205,7 @@ the ``cylc message`` command in task scripting. The graph trigger notation
 refers to the item name of the registered output message.
 And example message triggering suite:
 
-.. literalinclude:: ../suites/message-triggers/suite.rc
+.. literalinclude:: ../suites/message-triggers/flow.cylc
    :language: cylc
 
 
@@ -1301,7 +1301,7 @@ Suicide Triggers
 """"""""""""""""
 
 Suicide triggers take tasks out of the suite. This can be used for automated
-failure recovery. The following :cylc:conf:`suite.rc` listing and
+failure recovery. The following :cylc:conf:`flow.cylc` listing and
 accompanying graph
 show how to define a chain of failure recovery tasks that trigger if they're
 needed but otherwise remove themselves from the
@@ -1973,7 +1973,7 @@ individual tasks. This allows all common configuration detail to be
 factored out and defined in one place.
 
 Any namespace can configure any or all of the items defined in
-:cylc:conf:`suite.rc`.
+:cylc:conf:`flow.cylc`.
 
 Namespaces that do not explicitly inherit from others automatically
 inherit from the ``root`` namespace (below).
@@ -2008,7 +2008,7 @@ sufficient to allow test suites to be defined by dependency graph alone.
 The *script* item, for example, defaults to code that
 prints a message then sleeps for between 1 and 15 seconds and
 exits. Default values are documented with each item in
-:cylc:conf:`suite.rc`. You can override the defaults or
+:cylc:conf:`flow.cylc`. You can override the defaults or
 provide your own defaults by explicitly configuring the root namespace.
 
 
@@ -2045,7 +2045,7 @@ Runtime Inheritance - Single
 The following listing of the *inherit.single.one* example suite
 illustrates basic runtime inheritance with single parents.
 
-.. literalinclude:: ../suites/inherit/single/one/suite.rc
+.. literalinclude:: ../suites/inherit/single/one/flow.cylc
    :language: cylc
 
 
@@ -2065,7 +2065,7 @@ but for detailed documentation of how the algorithm works refer to the
 The *inherit.multi.one* example suite, listed here, makes use of
 multiple inheritance:
 
-.. literalinclude:: ../suites/inherit/multi/one/suite.rc
+.. literalinclude:: ../suites/inherit/multi/one/flow.cylc
    :language: cylc
 
 ``cylc get-suite-config`` provides an easy way to check the result of
@@ -2419,7 +2419,7 @@ Visualization
 The visualization section of a suite configuration is used to configure
 the representation of a suite in Cylc visualisation tools.
 
-See :cylc:conf:`suite.rc` for details.
+See :cylc:conf:`flow.cylc` for details.
 
 
 .. _Parameterized Tasks Label:
@@ -3078,7 +3078,7 @@ structures, conditional logic, etc., are automatically processed to
 generate the final suite configuration seen by cylc.
 
 The need for Jinja2 processing must be declared with a hash-bang
-comment as the first line of the suite.rc file:
+comment as the first line of the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -3149,7 +3149,7 @@ suite. To add a new city and associated tasks and dependencies simply
 add the city name to list at the top of the file. Here is the suite graphed,
 with the New York City task family expanded:
 
-.. literalinclude:: ../suites/jinja2/cities/suite.rc
+.. literalinclude:: ../suites/jinja2/cities/flow.cylc
    :language: cylc
 
 .. _fig-jinja2-cities:
@@ -3364,7 +3364,7 @@ The values of Jinja2 variables can be passed in from the cylc command
 line rather than hardwired in the suite configuration.
 Here's an example:
 
-.. literalinclude:: ../suites/jinja2/defaults/suite.rc
+.. literalinclude:: ../suites/jinja2/defaults/flow.cylc
    :language: cylc
 
 Here's the result:
@@ -3458,7 +3458,7 @@ Raising Exceptions
 ^^^^^^^^^^^^^^^^^^
 
 Cylc provides two functions for raising exceptions using Jinja2. These
-exceptions are raised when the suite.rc file is loaded and will prevent a suite
+exceptions are raised when the flow.cylc file is loaded and will prevent a suite
 from running.
 
 .. note::
@@ -3528,7 +3528,7 @@ It is possible to output messages to the Cylc log from within Jinja2, these
 messages will appear on the console when running or validating a suite.
 This can be useful for development or debugging.
 
-Example ``suite.rc``:
+Example ``flow.cylc``:
 
 .. code-block:: cylc
 
@@ -3574,7 +3574,7 @@ details on its templating features and how to use them.
    ``cylc check-software`` command to check your installation.
 
 The need for EmPy processing must be declared with a hash-bang comment as
-the first line of the suite.rc file:
+the first line of the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -3585,7 +3585,7 @@ An example suite ``empy.cities`` demonstrating its use is shown below.
 It is a translation of ``jinja2.cities`` example from
 :ref:`Jinja` and can be directly compared against it.
 
-.. literalinclude:: ../suites/empy/cities/suite.rc
+.. literalinclude:: ../suites/empy/cities/flow.cylc
    :language: cylc
 
 For basic usage the difference between Jinja2 and EmPy amounts to a different

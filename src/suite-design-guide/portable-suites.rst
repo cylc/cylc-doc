@@ -52,7 +52,7 @@ This will be used to select site-specific configuration, as described below.
 Site Include-Files
 ------------------
 
-If a section heading in a suite.rc file is repeated the items under it simply
+If a section heading in a flow.cylc file is repeated the items under it simply
 add to or override those defined under the same section earlier in the file
 (but note :ref:`List Item Override In Site Include-Files`).
 For example, this task definition:
@@ -211,7 +211,7 @@ But be wary of accumulating too many of these switches:
 
 .. code-block:: cylc
 
-   # (core suite.rc file)
+   # (core flow.cylc file)
    #...
    {% if SITE == 'small' %}
       {# We can't run 100 members... #}
@@ -234,7 +234,7 @@ Site-Specific Suite Variables
 It can sometimes be useful to set site-specific values of suite variables that
 aren't exposed to users via ``rose-suite.conf``. For example, consider
 a suite that can run a special post-processing workflow of some kind at sites
-where IDL is available. The IDL-dependence switch can be set per site like this: 
+where IDL is available. The IDL-dependence switch can be set per site like this:
 
 .. code-block:: cylc
 
@@ -298,7 +298,7 @@ built-in *optional app config* capability:
        [[root]]
            script = rose task-run -v -O '({{SITE}})'
 
-Normally a missing optional app config is considered to be an error, but the 
+Normally a missing optional app config is considered to be an error, but the
 round parentheses here mean the named optional config is optional - i.e.
 use it if it exists, otherwise ignore.
 
@@ -310,7 +310,7 @@ An Example
 ----------
 
 The following small suite is not portable because all of its tasks are
-submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they 
+submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they
 respectively install files from a local database and upload products to a local
 distribution system; and one task runs a somewhat NIWA-specific configuration
 of a model. The remaining tasks are site-agnostic apart from local job host
@@ -355,13 +355,13 @@ and batch scheduler directives.
        [[upload_niwa]]  # NIWA-specific product upload.
            inherit = HPC
 
-To make this portable, refactor it into a core suite.rc file that contains the
+To make this portable, refactor it into a core flow.cylc file that contains the
 clean site-independent workflow configuration and loads all site-specific
 settings from an include-file at the end:
 
 .. code-block:: cylc
 
-   # suite.rc: CORE SITE-INDEPENDENT CONFIGURATION.
+   # flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.
    {% set SITE = 'niwa' %}
    {% from 'site/' ~ SITE ~ '-vars.rc' import HAVE_IDL %}
    [cylc]
@@ -453,11 +453,11 @@ Official releases of a portable suite should be made from the suite trunk.
 Changes should be developed on feature branches so as not to affect other users
 of the suite.
 
-Site-specific changes shouldn't touch the core suite.rc file, just the relevant
+Site-specific changes shouldn't touch the core flow.cylc file, just the relevant
 site include-file, and therefore should not need close scrutiny from other
 sites.
 
-Changes to the core suite.rc file should be agreed by all stakeholders, and
+Changes to the core flow.cylc file should be agreed by all stakeholders, and
 should be carefully checked for effects on site include-files:
 
 - Changing the name of tasks or families in the core suite may break

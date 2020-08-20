@@ -33,7 +33,7 @@ A cold start is the primary way to start a suite run from scratch:
 
    $ cylc run SUITE [INITIAL_CYCLE_POINT]
 
-The initial cycle point may be specified on the command line or in the suite.rc
+The initial cycle point may be specified on the command line or in the flow.cylc
 file. The scheduler starts by loading the first instance of each task at the
 suite initial cycle point, or at the next valid point for the task.
 
@@ -657,7 +657,7 @@ A queue is defined by a *name*; a *limit*, which is the maximum
 number of active tasks allowed for the queue; and a list of *members*,
 assigned by task or family name.
 
-Queue configuration is done under the ``[scheduling]`` section of the suite.rc
+Queue configuration is done under the ``[scheduling]`` section of the flow.cylc
 file (like dependencies, internal queues constrain *when* a task runs).
 
 By default every task is assigned to the *default* queue, which by default
@@ -688,7 +688,7 @@ queue. The *queues* example suite illustrates how queues work by
 running two task trees side by side each
 limited to 2 and 3 tasks respectively:
 
-.. literalinclude:: ../suites/queues/suite.rc
+.. literalinclude:: ../suites/queues/flow.cylc
    :language: cylc
 
 
@@ -752,7 +752,7 @@ By default, the emails will be sent to the current user with:
 
 These can be configured using the settings:
 
-.. cylc-scope:: suite.rc[runtime][<namespace>]
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
 - :cylc:conf:`[events]mail to` (list of email addresses)
 - :cylc:conf:`[events]mail from`
@@ -833,7 +833,7 @@ the retry delay period when it is resubmitted.
    task jobs. If you wish to pass additional information to them use
    ``[cylc] -> [[environment]]``, not task runtime environment.
 
-The following two ``suite.rc`` snippets are examples on how to specify
+The following two ``flow.cylc`` snippets are examples on how to specify
 event handlers using the alternate methods:
 
 .. code-block:: cylc
@@ -998,7 +998,7 @@ The Meaning And Use Of Initial Cycle Point
 
 When a suite is started with the ``cylc run`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
-line or hardwired into the suite.rc file:
+line or hardwired into the flow.cylc file:
 
 .. code-block:: bash
 
@@ -1012,7 +1012,7 @@ or:
        initial cycle point = 20100808T06Z
 
 An initial cycle given on the command line will override one in the
-suite.rc file.
+flow.cylc file.
 
 .. _setting-the-icp-relative-to-now:
 
@@ -1236,7 +1236,7 @@ Roll-your-own Reference Tests
 If the default reference test is not sufficient for your needs, firstly
 note that you can override the default shutdown event handler, and
 secondly that the ``--reference-test`` option is merely a short
-cut to the following suite.rc settings which can also be set manually if
+cut to the following flow.cylc settings which can also be set manually if
 you wish:
 
 .. code-block:: cylc
@@ -1520,7 +1520,7 @@ To restart the suite, the critical Cylc files that must be restored are:
 
    # On the suite host:
    ~/cylc-run/SUITE-NAME/
-       suite.rc   # live suite configuration (located here in Rose suites)
+       flow.cylc   # live suite configuration (located here in Rose suites)
        log/db  # public suite DB (can just be a copy of the private DB)
        log/rose-suite-run.conf  # (needed to restart a Rose suite)
        .service/db  # private suite DB
@@ -1537,12 +1537,12 @@ To restart the suite, the critical Cylc files that must be restored are:
    in your environment is a matter of suite and system design.
 
 In short, you can simply restore the suite service directory, the log
-directory, and the suite.rc file that is the target of the symlink in the
+directory, and the flow.cylc file that is the target of the symlink in the
 service directory. The service and log directories will come with extra files
 that aren't strictly needed for a restart, but that doesn't matter - although
 depending on your log housekeeping the ``log/job`` directory could be
 huge, so you might want to be selective about that.  (Also in a Rose suite, the
-``suite.rc`` file does not need to be restored if you restart with
+``flow.cylc`` file does not need to be restored if you restart with
 ``rose suite-run`` - which re-installs suite source files to the run
 directory).
 

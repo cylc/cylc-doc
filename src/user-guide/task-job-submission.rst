@@ -58,7 +58,7 @@ loadleveler
 ^^^^^^^^^^^
 
 Submits task job scripts to loadleveler by the ``llsubmit`` command.
-Loadleveler directives can be provided in the suite.rc file:
+Loadleveler directives can be provided in the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -101,7 +101,7 @@ lsf
 ^^^
 
 Submits task job scripts to IBM Platform LSF by the ``bsub`` command.
-LSF directives can be provided in the suite.rc file:
+LSF directives can be provided in the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -133,7 +133,7 @@ pbs
 ^^^
 
 Submits task job scripts to PBS (or Torque) by the ``qsub`` command.
-PBS directives can be provided in the suite.rc file:
+PBS directives can be provided in the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -169,7 +169,7 @@ moab
 ^^^^
 
 Submits task job scripts to the Moab workload manager by the ``msub``
-command.  Moab directives can be provided in the suite.rc file; the syntax is
+command.  Moab directives can be provided in the flow.cylc file; the syntax is
 very similar to PBS:
 
 .. code-block:: cylc
@@ -208,7 +208,7 @@ sge
 ^^^
 
 Submits task job scripts to Sun/Oracle Grid Engine by the ``qsub``
-command.  SGE directives can be provided in the suite.rc file:
+command.  SGE directives can be provided in the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -245,7 +245,7 @@ slurm
 ^^^^^
 
 Submits task job scripts to Simple Linux Utility for Resource Management by the
-``sbatch`` command. SLURM directives can be provided in the suite.rc file:
+``sbatch`` command. SLURM directives can be provided in the flow.cylc file:
 
 .. code-block:: cylc
 
@@ -311,7 +311,7 @@ Directives Section Quirks (PBS, SGE, ...)
 
 To specify an option with no argument, such as ``-V`` in PBS or
 ``-cwd`` in SGE you must give a null string as the directive value in
-the suite.rc file.
+the flow.cylc file.
 
 The left hand side of a setting (i.e. the string before the first equal sign)
 must be unique. To specify multiple values using an option such as
@@ -404,7 +404,7 @@ Overriding The Job Submission Command
 To change the form of the actual command used to submit a job you do not
 need to define a new batch system handler; just override the
 ``command template`` in the relevant job submission sections of
-your suite.rc file:
+your flow.cylc file:
 
 .. code-block:: cylc
 

@@ -51,7 +51,7 @@ and a local task views a remote job log then polls and kills the remote jobs.
 
 .. code-block:: cylc
 
-   # suite.rc
+   # flow.cylc
    [scheduling]
       [[graph]]
          R1 = "delayer => master & REMOTES"

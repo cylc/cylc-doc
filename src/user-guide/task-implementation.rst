@@ -70,7 +70,7 @@ Inlined Tasks
 -------------
 
 Task *script* items can be multi-line strings of ``bash``  code, so many tasks
-can be entirely inlined in the :cylc:conf:`suite.rc` file.
+can be entirely inlined in the :cylc:conf:`flow.cylc` file.
 For anything more than a few lines of code, however, we recommend using
 external shell scripts to allow independent testing, re-use, and shell mode
 editing.

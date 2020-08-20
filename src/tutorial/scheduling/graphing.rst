@@ -8,21 +8,21 @@ In this section we will cover writing basic workflows in cylc.
 
 .. _Cylc file format:
 
-The ``suite.rc`` File Format
+The ``flow.cylc`` File Format
 ----------------------------
 
 .. ifnotslides::
 
    We refer to a Cylc workflow as a :term:`Cylc suite`. A Cylc suite is a
-   directory containing a ``suite.rc`` file. This configuration file is where
-   we define our workflow. The ``suite.rc`` file uses a nested `INI`_-based
+   directory containing a ``flow.cylc`` file. This configuration file is where
+   we define our workflow. The ``flow.cylc`` file uses a nested `INI`_-based
    format:
 
 .. ifslides::
 
    * Cylc workflow == Cylc suite
-   * Cylc suite is a directory containing a ``suite.rc`` file
-   * The ``suite.rc`` file is written in a nested `INI`_-based format
+   * Cylc suite is a directory containing a ``flow.cylc`` file
+   * The ``flow.cylc`` file is written in a nested `INI`_-based format
 
 .. ifnotslides::
 
@@ -116,7 +116,7 @@ Duplicate settings get overwritten:
 Indentation
 ^^^^^^^^^^^
 
-It is advisable to indent ``suite.rc`` files.
+It is advisable to indent ``flow.cylc`` files.
 
 However, Cylc ignores this indentation meaning the following two examples
 are equivalent:
@@ -124,7 +124,7 @@ are equivalent:
 .. list-table::
    :class: grid-table
 
-   * - 
+   * -
        .. code-block:: cylc
           :caption: input
 
@@ -137,7 +137,7 @@ are equivalent:
               # in [[sub-section]]
 
 
-     - 
+     -
        .. code-block:: cylc
           :caption: result
 
@@ -262,7 +262,7 @@ Cylc Graphs
 
    Cylc provides a GUI for visualising :term:`graphs <graph>`. It is run on the
    command line using the ``cylc graph <path>`` command where the path ``path``
-   is to the ``suite.rc`` file you wish to visualise.
+   is to the ``flow.cylc`` file you wish to visualise.
 
    When run, ``cylc graph`` will display a diagram similar to the ones you have
    seen so far. The number ``1`` which appears below each task is the
@@ -308,7 +308,7 @@ Cylc Graphs
 
    #. **Create a Cylc suite.**
 
-      A Cylc suite is just a directory containing a ``suite.rc`` file.
+      A Cylc suite is just a directory containing a ``flow.cylc`` file.
 
       If you don't have one already, create a ``cylc-run`` directory in your
       user space i.e::
@@ -323,7 +323,7 @@ Cylc Graphs
          mkdir ~/cylc-run/graph-introduction
          cd ~/cylc-run/graph-introduction
 
-      Inside this directory create a ``suite.rc`` file and paste in the
+      Inside this directory create a ``flow.cylc`` file and paste in the
       following text:
 
       .. code-block:: cylc
@@ -338,7 +338,7 @@ Cylc Graphs
 
       We now have a blank Cylc suite, next we need to define a workflow.
 
-      Edit your ``suite.rc`` file to add graph strings representing the
+      Edit your ``flow.cylc`` file to add graph strings representing the
       following graph:
 
       .. digraph:: graph_tutorial
@@ -363,7 +363,7 @@ Cylc Graphs
          inside the :term:`suite directory` we can run ``cylc graph .``.
 
       If the results don't match the diagram above try going back to the
-      suite.rc file and making changes.
+      flow.cylc file and making changes.
 
       .. tip::
 

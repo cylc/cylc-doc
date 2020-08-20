@@ -3,30 +3,30 @@
 Message Triggers
 ================
 
-:term:`Message triggers <message trigger>` allow us to trigger dependent tasks 
-before the upstream task has completed. 
+:term:`Message triggers <message trigger>` allow us to trigger dependent tasks
+before the upstream task has completed.
 
 Explanation
 -----------
 
-We have seen :ref:`before <tutorial-qualifiers>` that tasks can have 
-:term:`qualifiers <qualifier>` for different 
+We have seen :ref:`before <tutorial-qualifiers>` that tasks can have
+:term:`qualifiers <qualifier>` for different
 :term:`task states <task state>`.
 :term:`Message triggers <message trigger>` are essentially custom qualifiers.
 We can produce a bespoke output while our task is still running.
-This output could be, for example, a report or perhaps another task. 
+This output could be, for example, a report or perhaps another task.
 
 Usage
 -----
 
 :term:`Message triggers <message trigger>` are particularly useful if we have
 a long running task and we want to produce multiple tailored outputs whilst
-this task is running, rather than having to wait for the task to 
+this task is running, rather than having to wait for the task to
 complete.
 
 We could also set up :term:`message triggers <message trigger>` to, for example,
-send an email to inform us that a submission has failed, making use of Cylc's 
-task event handling system. More information is available on these in the 
+send an email to inform us that a submission has failed, making use of Cylc's
+task event handling system. More information is available on these in the
 `Cylc User Guide`_.
 
 
@@ -34,7 +34,7 @@ task event handling system. More information is available on these in the
 the problem of file system polling. We could, for example, design our suite
 such that we check if our task is finished by polling at intervals.
 It is inefficient to 'spam' task hosts with polling commands, it is preferable
-to set up a message trigger. 
+to set up a message trigger.
 
 How to create a message trigger
 -------------------------------
@@ -45,17 +45,17 @@ In order to get our suite to trigger messages, we need to:
      ``[runtime]`` section of our suite,
 
 * add ``cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
-     to the ``script`` section of ``[runtime]``, your chosen trigger message 
+     to the ``script`` section of ``[runtime]``, your chosen trigger message
      should be unique and should exactly match the message defined in
-     ``[[outputs]]``.  
+     ``[[outputs]]``.
 
 * Refer to these messages in the ``[dependencies]`` section of our suite.
 
-These outputs are then triggered during the running of the task.    
+These outputs are then triggered during the running of the task.
 We can use these to manage tasks dependent on partially completed tasks.
 
-So, a basic example, where we have a task foo, that when partially completed 
-triggers another task bar and when fully completed triggers another task, baz. 
+So, a basic example, where we have a task foo, that when partially completed
+triggers another task bar and when fully completed triggers another task, baz.
 
    .. code-block:: cylc
 
@@ -72,7 +72,7 @@ triggers another task bar and when fully completed triggers another task, baz.
                   """
             [[[outputs]]]
                out1 = "file 1 done"
-                  
+
          [[bar, baz]]
             script = sleep 10
 
@@ -87,7 +87,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Create a new directory.**
 
-      Within your ``~/cylc-run`` directory create a new directory called 
+      Within your ``~/cylc-run`` directory create a new directory called
 
       ``message-triggers`` and move into it:
 
@@ -101,26 +101,26 @@ triggers another task bar and when fully completed triggers another task, baz.
       The suite we will be designing requires a bash script, ``random.sh``,
       to produce our report. It will simply create a text file ``report.txt``
       with some random numbers in it. This will be executed when the associated
-      task is run. 
+      task is run.
 
-      Scripts should be kept in the ``bin`` sub-directory within the 
-      :term:`suite directory <suite directory>`. If a ``/bin`` exists in the 
+      Scripts should be kept in the ``bin`` sub-directory within the
+      :term:`suite directory <suite directory>`. If a ``/bin`` exists in the
       suite directory, it will be prepended $PATH at run time.
-      
+
       Create a ``/bin`` directory.
-      
+
       .. code-block:: bash
 
          mkdir ~/cylc-run/message-triggers/bin
-             
-      Create a bash script in the bin directory:    
+
+      Create a bash script in the bin directory:
 
       .. code-block:: bash
 
          touch bin/random.sh
- 
-      We will need to make this script exectuable. 
-      
+
+      We will need to make this script exectuable.
+
       .. code-block:: bash
 
          chmod +x bin/random.sh
@@ -143,7 +143,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Create a new suite.**
 
-      Create a ``suite.rc`` file and paste the following basic suite into it:
+      Create a ``flow.cylc`` file and paste the following basic suite into it:
 
       .. code-block:: cylc
 
@@ -156,13 +156,13 @@ triggers another task bar and when fully completed triggers another task, baz.
          [scheduling]
              initial cycle point = 2019-06-27T00Z
              final cycle point = 2019-10-27T00Z
-                
+
              [[dependencies]]
 
                  [[[P2M]]]
                      graph = """
                          long_forecasting_task =>  another_weather_task
-                         long_forecasting_task => different_weather_task 
+                         long_forecasting_task => different_weather_task
                          long_forecasting_task[-P2M] => long_forecasting_task
                      """
 
@@ -173,14 +173,14 @@ triggers another task bar and when fully completed triggers another task, baz.
    #. **Define our tasks in the runtime section.**
 
       Next we want to create our ``runtime`` section of our suite.
-      First we define what the tasks do. In this example 
+      First we define what the tasks do. In this example
       ``long_forecasting_task`` will sleep, create a file containing some
       random numbers and produce a message.
-      (Note that the random number generator bash script has already been 
+      (Note that the random number generator bash script has already been
       preloaded into your ``bin`` directory.)
       ``another_weather_task`` and ``different_weather_task`` simply sleep.
 
-      Add the following code to the  ``suite.rc`` file. 
+      Add the following code to the  ``flow.cylc`` file.
 
       .. code-block:: cylc
 
@@ -190,10 +190,10 @@ triggers another task bar and when fully completed triggers another task, baz.
                  script = """
                          sleep 2
                          random.sh
-                        
+
                          sleep 2
                          random.sh
-                                            
+
                          sleep 2
                          random.sh
                      """
@@ -201,7 +201,7 @@ triggers another task bar and when fully completed triggers another task, baz.
              [[another_weather_task, different_weather_task]]
                  script = sleep 1
 
-      
+
    #. **Create message triggers.**
 
       We now have a suite with a task, ``long_forecasting_task`` which, after
@@ -210,34 +210,34 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       Suppose we want ``another_weather_task`` and ``different_weather_task``
       to start before ``long_forecasting_task`` has fully completed, perhaps
-      after some data has become available. 
-      
-      In this case, we shall trigger ``another_weather_task`` after one set of 
+      after some data has become available.
+
+      In this case, we shall trigger ``another_weather_task`` after one set of
       random numbers has been created
       and ``different_weather_task`` after a second set of random numbers has
-      been created.    
-      
-      There are three aspects of creating messsage triggers. 
+      been created.
+
+      There are three aspects of creating messsage triggers.
       The first is to create the messages.  Within ``runtime``, ``TASK`` in our
       suite, we need to create a sub-section called ``outputs``. Here we create
-      our custom outputs.  
+      our custom outputs.
 
       .. code-block:: diff
 
          +        [[[outputs]]]
          +            update1 = "Task partially complete, report ready to view"
-         +            update2 = "Task partially complete, report updated" 
+         +            update2 = "Task partially complete, report updated"
 
       The second thing we need to do is to create a cylc message in our script.
-      This should be placed where you want the message to be called. In our 
+      This should be placed where you want the message to be called. In our
       case, this is after each of the first two set of random numbers are
-      generated. 
-      
+      generated.
+
       .. tip::
-         Remember that the ``cylc message`` should exactly match the outputs 
+         Remember that the ``cylc message`` should exactly match the outputs
          stated in our ``[[[outputs]]]`` section.
 
-      Modify the ``[[long_forecasting_task]]`` script in the ``suite.rc`` file
+      Modify the ``[[long_forecasting_task]]`` script in the ``flow.cylc`` file
       as follows:
 
       .. code-block:: diff
@@ -259,24 +259,24 @@ triggers another task bar and when fully completed triggers another task, baz.
                  """
 
       Lastly, we need to make reference to the messages in the
-      graph section. 
-      This will ensure your tasks trigger off of the messages correctly. 
-        
-      Adapt the ``[[dependencies]]`` section in the ``suite.rc`` file to read as
-      follows: 
-      
+      graph section.
+      This will ensure your tasks trigger off of the messages correctly.
+
+      Adapt the ``[[dependencies]]`` section in the ``flow.cylc`` file to read as
+      follows:
+
       .. code-block:: diff
 
                   [[[P2M]]]
                       graph = """
          -               long_forecasting_task =>  another_weather_task
-         -               long_forecasting_task => different_weather_task 
+         -               long_forecasting_task => different_weather_task
          +               long_forecasting_task:update1 =>  another_weather_task
-         +               long_forecasting_task:update2 => different_weather_task 
+         +               long_forecasting_task:update2 => different_weather_task
                          long_forecasting_task[-P2M] => long_forecasting_task
                      """
 
-      This completes our ``suite.rc`` file.
+      This completes our ``flow.cylc`` file.
 
       Our final suite should look like this:
 
@@ -293,13 +293,13 @@ triggers another task bar and when fully completed triggers another task, baz.
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
-                
+
                 [[dependencies]]
 
                     [[[P2M]]]
                         graph = """
                             long_forecasting_task:update1 =>  another_weather_task
-                            long_forecasting_task:update2 => different_weather_task 
+                            long_forecasting_task:update2 => different_weather_task
                             long_forecasting_task[-P2M] => long_forecasting_task
                         """
 
@@ -328,15 +328,15 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Validate the suite.**
 
-      It is a good idea to check that our ``suite.rc`` file does not have any
-      configuration issues. 
+      It is a good idea to check that our ``flow.cylc`` file does not have any
+      configuration issues.
 
       Run `cylc validate` to check for any errors:
 
-      .. code-block:: bash      
+      .. code-block:: bash
 
           cylc validate .
-   
+
    #. **Run the suite.**
 
       Now we are ready to run our suite. Open the Cylc GUI by running the
@@ -353,25 +353,25 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          cylc run message-triggers
 
-      Your suite should now run, the tasks should succeed. 
+      Your suite should now run, the tasks should succeed.
 
    #. **Inspect the work directory.**
 
-      You can now check for your report outputs. These should appear in the 
+      You can now check for your report outputs. These should appear in the
       :term:`work directory` of the suite. All being well, our first cycle
       point should produce a test file with some random numbers, and each
       subsequent cycle point file should have more random numbers added.
 
    #. **Extension.**
-      
-      Suppose now we would like to send an email alerting us to the reports 
+
+      Suppose now we would like to send an email alerting us to the reports
       being ready to view.
 
-      We will need to add to our ``suite.rc`` file.
+      We will need to add to our ``flow.cylc`` file.
 
-      In the ``runtime`` section, add a sub-section called ``[[[events]]]``. 
+      In the ``runtime`` section, add a sub-section called ``[[[events]]]``.
       Within this section we will make use of the built-in setting
-      ``mail events``. 
+      ``mail events``.
       Here, we specify a list of events for which notifications should be sent.
 
       The events we are interested in are, in this case, our outputs.
@@ -382,13 +382,13 @@ triggers another task bar and when fully completed triggers another task, baz.
 
            [[[events]]]
                mail events = update1, update2
-      
+
         Our updated suite should look like this:
 
       .. spoiler:: Solution warning
-         
+
          .. code-block:: cylc
-   
+
             [cylc]
             UTC mode = True
             [meta]
@@ -396,13 +396,13 @@ triggers another task bar and when fully completed triggers another task, baz.
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
-                
+
                 [[dependencies]]
 
                     [[[P2M]]]
                         graph = """
                             long_forecasting_task:update1 =>  another_weather_task
-                            long_forecasting_task:update2 => different_weather_task 
+                            long_forecasting_task:update2 => different_weather_task
                             long_forecasting_task[-P2M] => long_forecasting_task
                         """
             [runtime]
@@ -419,21 +419,21 @@ triggers another task bar and when fully completed triggers another task, baz.
                         sleep 2
                         random.sh
                     """
-                  
+
                     [[[outputs]]]
                         update1 = "Task partially complete, report ready to view"
                         update2 = "Task partially complete, report updated"
-                    
+
                     [[[events]]]
-                        mail events = update1, update2    
-                
+                        mail events = update1, update2
+
                 [[another_weather_task, different_weather_task]]
                     script = sleep 1
 
-      Save your changes and run your suite. 
+      Save your changes and run your suite.
       Check your emails and you should have, one email for the first update and,
       a second email alerting you to the subsequent updated reports being ready.
 
       Note that the second email automatically bundles the messages to prevent
       your inbox from being flooded.
-               
+

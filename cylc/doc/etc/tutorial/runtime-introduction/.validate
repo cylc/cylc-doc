@@ -18,10 +18,10 @@
 
 set -eux
 
-TEMPORARYDIRECTORY=$(mktemp -dp "$HOME"/cylc-run/) 
+TEMPORARYDIRECTORY=$(mktemp -dp "$HOME"/cylc-run/)
 cp -r ./* "$TEMPORARYDIRECTORY"
-cd "$TEMPORARYDIRECTORY" 
-sed -i '1s;^;[cylc]\n    abort if any task fails = True\n;' suite.rc
+cd "$TEMPORARYDIRECTORY"
+sed -i '1s;^;[cylc]\n    abort if any task fails = True\n;' flow.cylcc
 cylc validate --strict . --icp=2000
-cylc run --no-detach 
+cylc run --no-detach
 rm -r "$TEMPORARYDIRECTORY"
