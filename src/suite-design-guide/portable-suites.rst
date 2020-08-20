@@ -101,13 +101,13 @@ out into an include-file (file inclusion is essentially just literal inlining):
    #...
 
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-where the site include-file ``site/niwa.rc`` contains:
+where the site include-file ``site/niwa.cylc`` contains:
 
 .. code-block:: cylc
 
-   # site/niwa.rc
+   # site/niwa.cylc
    [runtime]
        [[foo]]
            [[[remote]]]
@@ -153,13 +153,13 @@ and again, the site-specific part can be taken out to a site include-file:
            P1Y = "pre => model => post"
    #...
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-where the site include-file ``site/niwa.rc`` contains:
+where the site include-file ``site/niwa.cylc`` contains:
 
 .. code-block:: cylc
 
-   # site/niwa.rc
+   # site/niwa.cylc
    [scheduling]
        [[graph]]
            P1Y = "post => niwa_archive"
@@ -239,7 +239,7 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
 .. code-block:: cylc
 
    #...
-   {% from SITE ~ '-vars.rc' import HAVE_IDL, OTHER_VAR %}
+   {% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
    R1 = """
      pre => model => post
    {% if HAVE_IDL %}
@@ -247,11 +247,11 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
    {% endif %}
            """
 
-where for ``SITE = niwa`` the file ``niwa-vars.rc`` contains:
+where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
 
 .. code-block:: cylc
 
-   {# niwa-vars.rc #}
+   {# niwa-vars.cylc #}
    {% set HAVE_IDL = True %}
    {% set OTHER_VAR = "the quick brown fox" %}
 
@@ -363,7 +363,7 @@ site-specific settings from an include-file at the end:
 
    # flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.
    {% set SITE = 'niwa' %}
-   {% from 'site/' ~ SITE ~ '-vars.rc' import HAVE_IDL %}
+   {% from 'site/' ~ SITE ~ '-vars.cylc' import HAVE_IDL %}
    [cylc]
        UTC mode = True
    [scheduling]
@@ -386,20 +386,20 @@ site-specific settings from an include-file at the end:
            inherit = HPC
            [[[environment]]]
                SPEED = fast
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-plus site files ``site/niwa-vars.rc``:
+plus site files ``site/niwa-vars.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa-vars.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa-vars.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    {% set HAVE_IDL = True %}
 
-and ``site/niwa.rc``:
+and ``site/niwa.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    [scheduling]
        [[graph]]
            R1 = install_niwa => preproc

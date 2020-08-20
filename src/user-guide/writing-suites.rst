@@ -74,8 +74,8 @@ A typical example:
            ...
        # (OPTIONAL) any other suite-related files, for example:
        inc/               # flow.cylc include-files
-           nwp-tasks.rc
-           globals.rc
+           nwp-tasks.cylc
+           globals.cylc
            ...
        doc/               # documentation
        control/           # control files

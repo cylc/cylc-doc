@@ -744,4 +744,4 @@ include-files get inlined before Jinja2 processing is done):
 .. code-block:: cylc
 
    #...
-   {% include 'inc/' ~ SITE ~ '.rc' %}
+   {% include 'inc/' ~ SITE ~ '.cylc' %}
