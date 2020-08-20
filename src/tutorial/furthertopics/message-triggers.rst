@@ -143,7 +143,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Create a new suite.**
 
-      Create a ``flow.cylc`` file and paste the following basic suite into it:
+      Create a :cylc:conf:`flow.cylc` file and paste the following basic suite into it:
 
       .. code-block:: cylc
 
@@ -180,7 +180,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       preloaded into your ``bin`` directory.)
       ``another_weather_task`` and ``different_weather_task`` simply sleep.
 
-      Add the following code to the  ``flow.cylc`` file.
+      Add the following code to the  :cylc:conf:`flow.cylc` file.
 
       .. code-block:: cylc
 
@@ -237,7 +237,7 @@ triggers another task bar and when fully completed triggers another task, baz.
          Remember that the ``cylc message`` should exactly match the outputs
          stated in our ``[[[outputs]]]`` section.
 
-      Modify the ``[[long_forecasting_task]]`` script in the ``flow.cylc`` file
+      Modify the ``[[long_forecasting_task]]`` script in the :cylc:conf:`flow.cylc` file
       as follows:
 
       .. code-block:: diff
@@ -262,7 +262,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       graph section.
       This will ensure your tasks trigger off of the messages correctly.
 
-      Adapt the ``[[dependencies]]`` section in the ``flow.cylc`` file to read as
+      Adapt the ``[[dependencies]]`` section in the :cylc:conf:`flow.cylc` file to read as
       follows:
 
       .. code-block:: diff
@@ -276,7 +276,7 @@ triggers another task bar and when fully completed triggers another task, baz.
                          long_forecasting_task[-P2M] => long_forecasting_task
                      """
 
-      This completes our ``flow.cylc`` file.
+      This completes our :cylc:conf:`flow.cylc` file.
 
       Our final suite should look like this:
 
@@ -328,7 +328,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Validate the suite.**
 
-      It is a good idea to check that our ``flow.cylc`` file does not have any
+      It is a good idea to check that our :cylc:conf:`flow.cylc` file does not have any
       configuration issues.
 
       Run `cylc validate` to check for any errors:
@@ -367,7 +367,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       Suppose now we would like to send an email alerting us to the reports
       being ready to view.
 
-      We will need to add to our ``flow.cylc`` file.
+      We will need to add to our :cylc:conf:`flow.cylc` file.
 
       In the ``runtime`` section, add a sub-section called ``[[[events]]]``.
       Within this section we will make use of the built-in setting

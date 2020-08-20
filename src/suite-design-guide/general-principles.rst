@@ -144,7 +144,7 @@ Task Scripting
 --------------
 
 Non-trivial task scripting should be held in external files rather than
-inlined in the flow.cylc. This keeps the suite definition tidy, and it
+inlined in :cylc:conf:`flow.cylc`. This keeps the suite definition tidy, and it
 allows proper shell-mode text editing and independent testing of task scripts.
 
 For automatic access by task jobs, task-specific scripts should be kept in
@@ -642,8 +642,8 @@ distinct from job retries for job execution failure (just below).
 
 Job submission retries should normally be host (or host-group for
 ``rose host-select``) specific, not task-specific, so configure them in
-a host (or host-group) specific family. The following flow.cylc fragment
-configures all HPC jobs to retry on job submission failure up to 10
+a host (or host-group) specific family. The following :cylc:conf:`flow.cylc`
+fragment configures all HPC jobs to retry on job submission failure up to 10
 times at 1 minute intervals, then another 5 times at 1 hour intervals:
 
 .. code-block:: cylc

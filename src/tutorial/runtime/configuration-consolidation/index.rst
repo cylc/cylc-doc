@@ -5,7 +5,7 @@ Consolidating Configuration
 
 .. ifnotslides::
 
-   In the last section we wrote out the following code in the ``flow.cylc`` file:
+   In the last section we wrote out the following code in the :cylc:conf:`flow.cylc` file:
 
 .. slide:: Weather Forecasting Suite
    :level: 2
@@ -87,12 +87,12 @@ The ``cylc get-config`` Command
 
 .. ifnotslides::
 
-   The ``cylc get-config`` command reads in then prints out the ``flow.cylc`` file
+   The ``cylc get-config`` command reads in then prints out the :cylc:conf:`flow.cylc` file
    to the terminal.
 
    Throughout this section we will be introducing methods for consolidating
-   the ``flow.cylc`` file, the ``cylc get-config`` command can be used to
-   "expand" the ``flow.cylc`` file back to its full form.
+   the :cylc:conf:`flow.cylc` file, the ``cylc get-config`` command can be used to
+   "expand" the :cylc:conf:`flow.cylc` file back to its full form.
 
    .. note::
 

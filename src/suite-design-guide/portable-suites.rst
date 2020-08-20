@@ -52,9 +52,9 @@ This will be used to select site-specific configuration, as described below.
 Site Include-Files
 ------------------
 
-If a section heading in a flow.cylc file is repeated the items under it simply
-add to or override those defined under the same section earlier in the file
-(but note :ref:`List Item Override In Site Include-Files`).
+If a section heading in a :cylc:conf:`flow.cylc` file is repeated the items
+under it simply add to or override those defined under the same section earlier
+in the file (but note :ref:`List Item Override In Site Include-Files`).
 For example, this task definition:
 
 .. code-block:: cylc
@@ -355,9 +355,9 @@ and batch scheduler directives.
        [[upload_niwa]]  # NIWA-specific product upload.
            inherit = HPC
 
-To make this portable, refactor it into a core flow.cylc file that contains the
-clean site-independent workflow configuration and loads all site-specific
-settings from an include-file at the end:
+To make this portable, refactor it into a core :cylc:conf:`flow.cylc` file that
+contains the clean site-independent workflow configuration and loads all
+site-specific settings from an include-file at the end:
 
 .. code-block:: cylc
 
@@ -453,12 +453,13 @@ Official releases of a portable suite should be made from the suite trunk.
 Changes should be developed on feature branches so as not to affect other users
 of the suite.
 
-Site-specific changes shouldn't touch the core flow.cylc file, just the relevant
-site include-file, and therefore should not need close scrutiny from other
-sites.
+Site-specific changes shouldn't touch the core :cylc:conf:`flow.cylc` file,
+just the relevant site include-file, and therefore should not need close
+scrutiny from other sites.
 
-Changes to the core flow.cylc file should be agreed by all stakeholders, and
-should be carefully checked for effects on site include-files:
+Changes to the core :cylc:conf:`flow.cylc` file should be agreed by all
+stakeholders, and should be carefully checked for effects on site
+include-files:
 
 - Changing the name of tasks or families in the core suite may break
   sites that add configuration to the original runtime namespace.

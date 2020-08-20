@@ -354,7 +354,7 @@ Suite Files
          debugging purposes in the event of error.
 
    ``flow.cylc.processed``
-      A copy of the ``flow.cylc`` file made after any `Jinja2`_ has been
+      A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
       processed - we will cover this in the
       :ref:`tutorial-cylc-consolidating-configuration` section.
    ``share/``
@@ -399,14 +399,14 @@ Suite Files
          rose tutorial runtime-introduction
          cd ~/cylc-run/runtime-introduction
 
-      In this directory we have the ``flow.cylc`` file from the
+      In this directory we have the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
       with some runtime configuration added to it.
 
       There is also a script called ``get-observations`` located in the bin
       directory.
 
-      Take a look at the ``[runtime]`` section in the ``flow.cylc`` file.
+      Take a look at the ``[runtime]`` section in the :cylc:conf:`flow.cylc` file.
 
    #. **Run The Suite.**
 

@@ -49,7 +49,7 @@ Indentation
 
 Consistent indentation makes a suite definition more readable, it shows section
 nesting clearly, and it makes block re-indentation operations easier in text
-editors. Indent flow.cylc syntax four spaces per nesting level:
+editors. Indent :cylc:conf:`flow.cylc` syntax four spaces per nesting level:
 
 
 Config Items
@@ -175,7 +175,7 @@ Multiline ``graph`` strings can be entirely free-form:
      qux => rose_arch => rose_prune"""
 
 Whitespace is ignored in graph string parsing, however, so internal graph lines
-can be indented as if part of the flow.cylc syntax, or even out to the triple
+can be indented as if part of the :cylc:conf:`flow.cylc` syntax, or even out to the triple
 quotes, if you feel it aids readability (but watch line length with large
 indents; see :ref:`Line Length`):
 
@@ -196,9 +196,9 @@ Both styles are acceptable; choose one and use it consistently.
 Jinja2 Code
 ^^^^^^^^^^^
 
-A flow.cylc file with embedded Jinja2 code is essentially a Jinja2 program to
+A :cylc:conf:`flow.cylc` file with embedded Jinja2 code is essentially a Jinja2 program to
 generate a Cylc suite definition. It is not possible to consistently indent the
-Jinja2 as if it were part of the flow.cylc syntax (which to the Jinja2 processor
+Jinja2 as if it were part of the :cylc:conf:`flow.cylc` syntax (which to the Jinja2 processor
 is just arbitrary text), so it should be indented from the left margin on
 its own terms:
 
@@ -246,7 +246,7 @@ Line Length And Continuation
 Keep to the standard maximum line length of 79 characters where possible. Very
 long lines affect readability and make side-by-side diffs hard to view.
 
-Backslash line continuation markers can be used anywhere in the flow.cylc file
+Backslash line continuation markers can be used anywhere in the :cylc:conf:`flow.cylc` file
 but should be avoided if possible because they are easily broken by invisible
 trailing whitespace.
 

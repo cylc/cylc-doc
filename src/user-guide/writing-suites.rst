@@ -3,10 +3,10 @@
 Writing Suites
 ==============
 
-Cylc suites are defined in structured, validated, *flow.cylc* files
+Cylc suites are defined in structured, validated, :cylc:conf:`flow.cylc` files
 that concisely specify the properties of, and the relationships
 between, the various tasks managed by the suite. This section of the
-User Guide deals with the format and content of the flow.cylc file,
+User Guide deals with the format and content of the :cylc:conf:`flow.cylc` file,
 including task definition. Task implementation - what's required of the
 real commands, scripts, or programs that do the processing that the
 tasks represent - is covered in :ref:`TaskImplementation`; and
@@ -21,7 +21,7 @@ Suite Configuration Directories
 
 A cylc *suite configuration directory* contains:
 
-- **A flow.cylc file**: this is the suite configuration.
+- **A :cylc:conf:`flow.cylc` file**: this is the suite configuration.
 
   - And any include-files used in it (see below; may be
     kept in sub-directories).
@@ -34,7 +34,7 @@ A cylc *suite configuration directory* contains:
     execution environments.
   - Alternatively, tasks can call external
     commands, scripts, or programs; or they can be scripted
-    entirely within the flow.cylc file.
+    entirely within the :cylc:conf:`flow.cylc` file.
 
 - **A** ``lib/python/`` **sub-directory** (optional)
 
@@ -98,7 +98,7 @@ engines too.
 Syntax
 ^^^^^^
 
-The following defines legal flow.cylc syntax:
+The following defines legal :cylc:conf:`flow.cylc` syntax:
 
 - **Items** are of the form ``item = value``.
 - **[Section]** headings are enclosed in square brackets.
@@ -123,15 +123,15 @@ The following defines legal flow.cylc syntax:
   used as a verbatim inlining mechanism.
 
 Suites that embed templating code (see :ref:`Jinja` and :ref:`EmPylabel`) must
-process to raw flow.cylc syntax.
+process to raw :cylc:conf:`flow.cylc` syntax.
 
 
 Include-Files
 ^^^^^^^^^^^^^
 
-Cylc has native support for flow.cylc include-files, which may help to
+Cylc has native support for :cylc:conf:`flow.cylc` include-files, which may help to
 organize large suites. Inclusion boundaries are completely arbitrary -
-you can think of include-files as chunks of the flow.cylc file simply
+you can think of include-files as chunks of the :cylc:conf:`flow.cylc` file simply
 cut-and-pasted into another file. Include-files may be included
 multiple times in the same file, and even nested. Include-file paths
 can be specified portably relative to the suite configuration directory,
@@ -181,7 +181,7 @@ usage instructions.
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
 
-Cylc flow.cylc files consist of a suite title and description followed by
+Cylc :cylc:conf:`flow.cylc` files consist of a suite title and description followed by
 configuration items grouped under several top level section headings:
 
 - **[cylc]** - *non task-specific suite configuration*
@@ -207,7 +207,7 @@ configuration items grouped under several top level section headings:
 Validation
 ^^^^^^^^^^
 
-Cylc flow.cylc files are automatically validated against a specification
+Cylc :cylc:conf:`flow.cylc` files are automatically validated against a specification
 that defines all legal entries, values, options, and defaults. This
 detects formatting errors, typographic errors, illegal items and illegal
 values prior to run time. Some values are complex strings that require
@@ -224,7 +224,7 @@ example showing a section heading with a missing right bracket:
        [[special tasks]
    'Section bracket mismatch, line 19'
 
-If the flow.cylc file uses include-files ``cylc view`` will
+If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
 show an inlined copy of the suite with correct line numbers
 (you can also edit suites in a temporarily inlined state with
 ``cylc edit --inline``).
@@ -234,7 +234,7 @@ Validation does not check the validity of chosen batch systems.
 .. todo
 
    This is to allow users to extend cylc with their own job submission
-   methods, which are by definition unknown to the flow.cylc spec.
+   methods, which are by definition unknown to the :cylc:conf:`flow.cylc` spec.
 
 
 .. _ConfiguringScheduling:
@@ -265,7 +265,7 @@ vary depending on the particular cycle point:
            # hours
            T06,T18 = "C => X"
 
-Here is the complete flow.cylc listing with the corresponding suite graph;
+Here is the complete :cylc:conf:`flow.cylc` listing with the corresponding suite graph;
 this is a complete, valid, runnable suite (it will use default task runtime
 properties such as ``script``):
 
@@ -403,7 +403,7 @@ is equivalent to this:
    T00, T12 = "A & B => X"  # X triggers off A AND B
 
 In summary, the branching tree structure of a dependency graph can
-be partitioned into lines (in the flow.cylc graph string) of pairs
+be partitioned into lines (in the :cylc:conf:`flow.cylc` graph string) of pairs
 or chains, in any way you like, with liberal use of internal white space
 and comments to make the graph structure as clear as possible.
 
@@ -3078,7 +3078,7 @@ structures, conditional logic, etc., are automatically processed to
 generate the final suite configuration seen by cylc.
 
 The need for Jinja2 processing must be declared with a hash-bang
-comment as the first line of the flow.cylc file:
+comment as the first line of the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
@@ -3458,7 +3458,7 @@ Raising Exceptions
 ^^^^^^^^^^^^^^^^^^
 
 Cylc provides two functions for raising exceptions using Jinja2. These
-exceptions are raised when the flow.cylc file is loaded and will prevent a suite
+exceptions are raised when the :cylc:conf:`flow.cylc` file is loaded and will prevent a suite
 from running.
 
 .. note::
@@ -3528,7 +3528,7 @@ It is possible to output messages to the Cylc log from within Jinja2, these
 messages will appear on the console when running or validating a suite.
 This can be useful for development or debugging.
 
-Example ``flow.cylc``:
+Example :cylc:conf:`flow.cylc`:
 
 .. code-block:: cylc
 
@@ -3574,7 +3574,7 @@ details on its templating features and how to use them.
    ``cylc check-software`` command to check your installation.
 
 The need for EmPy processing must be declared with a hash-bang comment as
-the first line of the flow.cylc file:
+the first line of the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 

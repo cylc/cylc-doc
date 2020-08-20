@@ -433,7 +433,7 @@ Putting It All Together
          mkdir ~/cylc-run/datetime-cycling
          cd ~/cylc-run/datetime-cycling
 
-      Create a ``flow.cylc`` file and paste the following code into it:
+      Create a :cylc:conf:`flow.cylc` file and paste the following code into it:
 
       .. code-block:: cylc
 

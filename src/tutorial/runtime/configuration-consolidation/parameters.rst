@@ -40,7 +40,7 @@ Cylc Parameters
 
 .. ifnotslides::
 
-   When the ``flow.cylc`` file is read by Cylc, the parameters will be expanded.
+   When the :cylc:conf:`flow.cylc` file is read by Cylc, the parameters will be expanded.
    For example the code above is equivalent to:
 
 .. code-block:: cylc

@@ -33,7 +33,7 @@ A cold start is the primary way to start a suite run from scratch:
 
    $ cylc run SUITE [INITIAL_CYCLE_POINT]
 
-The initial cycle point may be specified on the command line or in the flow.cylc
+The initial cycle point may be specified on the command line or in the :cylc:conf:`flow.cylc`
 file. The scheduler starts by loading the first instance of each task at the
 suite initial cycle point, or at the next valid point for the task.
 
@@ -657,7 +657,7 @@ A queue is defined by a *name*; a *limit*, which is the maximum
 number of active tasks allowed for the queue; and a list of *members*,
 assigned by task or family name.
 
-Queue configuration is done under the ``[scheduling]`` section of the flow.cylc
+Queue configuration is done under the ``[scheduling]`` section of the :cylc:conf:`flow.cylc`
 file (like dependencies, internal queues constrain *when* a task runs).
 
 By default every task is assigned to the *default* queue, which by default
@@ -833,7 +833,7 @@ the retry delay period when it is resubmitted.
    task jobs. If you wish to pass additional information to them use
    ``[cylc] -> [[environment]]``, not task runtime environment.
 
-The following two ``flow.cylc`` snippets are examples on how to specify
+The following two :cylc:conf:`flow.cylc` snippets are examples on how to specify
 event handlers using the alternate methods:
 
 .. code-block:: cylc
@@ -998,7 +998,7 @@ The Meaning And Use Of Initial Cycle Point
 
 When a suite is started with the ``cylc run`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
-line or hardwired into the flow.cylc file:
+line or hardwired into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: bash
 
@@ -1236,7 +1236,7 @@ Roll-your-own Reference Tests
 If the default reference test is not sufficient for your needs, firstly
 note that you can override the default shutdown event handler, and
 secondly that the ``--reference-test`` option is merely a short
-cut to the following flow.cylc settings which can also be set manually if
+cut to the following :cylc:conf:`flow.cylc` settings which can also be set manually if
 you wish:
 
 .. code-block:: cylc
@@ -1537,7 +1537,7 @@ To restart the suite, the critical Cylc files that must be restored are:
    in your environment is a matter of suite and system design.
 
 In short, you can simply restore the suite service directory, the log
-directory, and the flow.cylc file that is the target of the symlink in the
+directory, and the :cylc:conf:`flow.cylc` file that is the target of the symlink in the
 service directory. The service and log directories will come with extra files
 that aren't strictly needed for a restart, but that doesn't matter - although
 depending on your log housekeeping the ``log/job`` directory could be
