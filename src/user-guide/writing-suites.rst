@@ -154,7 +154,7 @@ Editing Temporarily Inlined Suites
 Cylc's native file inclusion mechanism supports optional inlined
 editing:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc edit --inline SUITE
 
@@ -223,7 +223,7 @@ done during validation). All legal entries are documented in
 The validator reports the line numbers of detected errors. Here's an
 example showing a section heading with a missing right bracket:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc validate my.suite
        [[special tasks]
@@ -1891,7 +1891,7 @@ the existence of the cycle offset task is not defined anywhere at all:
            # ERROR
            P1Y = "foo[-P1Y] => bar"
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc validate SUITE
    'ERROR: No cycling sequences defined for foo'
@@ -2076,7 +2076,7 @@ multiple inheritance:
 ``cylc get-suite-config`` provides an easy way to check the result of
 inheritance in a suite. You can extract specific items, e.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc get-suite-config --item '[runtime][var_p2]script' \
        inherit.multi.one
@@ -2086,7 +2086,7 @@ or use the ``--sparse`` option to print entire namespaces
 without obscuring the result with the dense runtime structure obtained
 from the root namespace:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc get-suite-config --sparse --item '[runtime]ops_s1' inherit.multi.one
    script = echo "RUN: run-ops.sh"
@@ -3356,7 +3356,7 @@ Here's an example:
 
 Here's the result:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc get-suite-config -i [runtime][airs]directives SUITE
    -I = ncpus=9
@@ -3374,7 +3374,7 @@ Here's an example:
 
 Here's the result:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc list SUITE
    Jinja2 Template Error

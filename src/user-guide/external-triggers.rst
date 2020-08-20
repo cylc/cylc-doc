@@ -193,7 +193,7 @@ unique trigger label ("upstream" here) and passed to the environment of
 dependent task jobs (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
 
-.. code-block:: bash
+.. code-block:: console
 
    % cylc cat-log -f j dn f2.2011
    ...
@@ -459,7 +459,7 @@ scheduling section:
 Then, each time a new dataset arrives the external detection system should
 notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger sat-proc "new sat X data avail" passX12334a
 
@@ -499,7 +499,7 @@ message:
 Once the variable-length waiting is finished, an external detection system
 should notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger data-proc "data arrived for 20150126T00" passX12334a
 

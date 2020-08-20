@@ -29,7 +29,7 @@ Cold Start
 
 A cold start is the primary way to start a suite run from scratch:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run SUITE [INITIAL_CYCLE_POINT]
 
@@ -51,7 +51,7 @@ some tasks rerunning. However, a warm start may be required if a restart is not
 possible, e.g. because the suite run database was accidentally deleted. The
 warm start cycle point must be given on the command line:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run --warm SUITE [START_CYCLE_POINT]
 
@@ -76,7 +76,7 @@ default the latest automatic checkpoint - which is updated with every task
 state change - is loaded so that the suite can carry on exactly as it was just
 before being shut down or killed.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart SUITE
 
@@ -91,7 +91,7 @@ Restart From Latest Checkpoint
 To restart from the latest checkpoint simply invoke the ``cylc restart``
 command with the suite name.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart SUITE
 
@@ -104,19 +104,19 @@ a task changes state, and at every suite restart, but you can also take
 checkpoints at other times. To tell a suite server program to checkpoint its
 current state:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc checkpoint SUITE-NAME CHECKPOINT-NAME
 
 The 2nd argument is a name to identify the checkpoint later with:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ls-checkpoints SUITE-NAME
 
 For example, with checkpoints named "bob", "alice", and "breakfast":
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ls-checkpoints SUITE-NAME
    #######################################################################
@@ -130,7 +130,7 @@ For example, with checkpoints named "bob", "alice", and "breakfast":
 To see the actual task state content of a given checkpoint ID (if you need to),
 for the moment you have to interrogate the suite DB, e.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ sqlite3 ~/cylc-run/SUITE-NAME/log/db \
        'select * from task_pool_checkpoints where id == 3;'
@@ -156,7 +156,7 @@ restarts).
 
 Once you have identified the right checkpoint, restart the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart --checkpoint=CHECKPOINT-ID SUITE
 
@@ -531,7 +531,7 @@ To control suite server programs running under other user accounts or on other
 hosts without a shared filesystem, the suite SSL certificate and passphrase
 must be installed under your ``$HOME/.cylc/`` directory:
 
-.. code-block:: bash
+.. code-block:: console
 
    $HOME/.cylc/auth/OWNER@HOST/SUITE/
          passphrase
@@ -541,7 +541,7 @@ where ``OWNER@HOST`` is the suite host account and ``SUITE``
 is the suite name. Client commands should then be invoked with the
 ``--user`` and ``--host`` options, e.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc edit --user=OWNER --host=HOST SUITE
 
@@ -1142,7 +1142,7 @@ running the suite's real jobs - which may be long-running and resource-hungry:
 
 Set the run mode (default *live*) on the command line:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run --mode=dummy SUITE
    $ cylc restart --mode=dummy SUITE
@@ -1459,7 +1459,7 @@ Suite Run Databases
 Suite server programs maintain two ``sqlite`` databases to record
 restart checkpoints and various other aspects of run history:
 
-.. code-block:: bash
+.. code-block:: console
 
    $HOME/cylc-run/SUITE-NAME/log/db  # public suite DB
    $HOME/cylc-run/SUITE-NAME/.service/db  # private suite DB
@@ -1476,7 +1476,7 @@ You can interrogate the public DB with the ``sqlite3`` command line tool,
 the ``sqlite3`` module in the Python standard library, or any other
 sqlite interface.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ sqlite3 ~/cylc-run/foo/log/db << _END_
    > .headers on

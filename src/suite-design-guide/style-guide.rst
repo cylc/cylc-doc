@@ -33,7 +33,7 @@ line continuation markers).
 To remove existing trailing whitespace in a file use a ``sed`` or
 ``perl`` one-liner:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ perl -pi -e "s/ +$//g" /path/to/file
    # or:
