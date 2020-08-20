@@ -39,7 +39,7 @@ A cylc *suite configuration directory* contains:
 - **A** ``lib/python/`` **sub-directory** (optional)
 
   - Python libraries for use by suite tasks.
-  - Automatically added to `$PYTHONPATH`` in task execution environments.
+  - Automatically added to ``$PYTHONPATH`` in task execution environments.
   - Custom job submission modules
     (see :ref:`CustomJobSubmissionMethods`)
   - Python libraries for use by Jinja2 in custom filters,
@@ -78,10 +78,10 @@ A typical example:
        ...
 
 
-.. _SuiteRCFile:
+.. _FlowConfigFile:
 
 flow.cylc File Overview
-----------------------
+-----------------------
 
 flow.cylc files are an extended-INI format with section nesting.
 
@@ -119,7 +119,7 @@ The following defines legal flow.cylc syntax:
   defined under the same section.
 - **Duplicate items** override, *except for dependency
   ``graph`` strings, which are additive*.
-- **Include-files** ``%include inc/foo.rc`` can be
+- **Include-files** ``%include inc/foo.cylc`` can be
   used as a verbatim inlining mechanism.
 
 Suites that embed templating code (see :ref:`Jinja` and :ref:`EmPylabel`) must
@@ -139,8 +139,8 @@ e.g.:
 
 .. code-block:: cylc
 
-   # include the file $CYLC_SUITE_DEF_PATH/inc/foo.rc:
-   %include inc/foo.rc
+   # include the file $CYLC_SUITE_DEF_PATH/inc/foo.cylc:
+   %include inc/foo.cylc
 
 
 Editing Temporarily Inlined Suites
@@ -2075,7 +2075,7 @@ inheritance in a suite. You can extract specific items, e.g.:
 
    $ cylc get-suite-config --item '[runtime][var_p2]script' \
        inherit.multi.one
-   echo ``RUN: run-var.sh''
+   echo "RUN: run-var.sh"
 
 or use the ``--sparse`` option to print entire namespaces
 without obscuring the result with the dense runtime structure obtained
@@ -2084,7 +2084,7 @@ from the root namespace:
 .. code-block:: bash
 
    $ cylc get-suite-config --sparse --item '[runtime]ops_s1' inherit.multi.one
-   script = echo ``RUN: run-ops.sh''
+   script = echo "RUN: run-ops.sh"
    inherit = ['OPS', 'SERIAL']
    [directives]
       job_type = serial
@@ -3499,8 +3499,8 @@ that can be imported into (and thus shared among) other templates.
 
 .. code-block:: cylc
 
-   {% import "suite-utils.rc" as utils %}
-   {% from "suite-utils.rc" import VARIABLE as ALIAS %}
+   {% import "flow-utils.cylc" as utils %}
+   {% from "flow-utils.cylc" import VARIABLE as ALIAS %}
    {{ utils.VARIABLE is equalto(ALIAS)) }}
 
 Cylc extends this functionality to allow import of arbitrary Python modules.

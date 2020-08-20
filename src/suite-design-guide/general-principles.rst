@@ -726,7 +726,7 @@ Include-files should not be overused, but they can sometimes be useful
 .. code-block:: cylc
 
    #...
-   {% include 'inc/foo.rc' %}
+   {% include 'inc/foo.cylc' %}
 
 (Technically this inserts a Jinja2-rendered file template). Cylc also has a
 native include mechanism that pre-dates Jinja2 support and literally inlines
@@ -735,7 +735,7 @@ the include-file:
 .. code-block:: cylc
 
    #...
-   %include 'inc/foo.rc'
+   %include 'inc/foo.cylc'
 
 The two methods normally produce the same result, but use the Jinja2 version if
 you need to construct an include-file name from a variable (because Cylc
