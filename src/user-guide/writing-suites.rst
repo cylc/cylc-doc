@@ -15,7 +15,7 @@ in :ref:`TaskJobSubmission`.
 
 .. note::
 
-   In earlier versions of Cylc, :cylc:conf:`flow.cylc` was named ``suite.rc``,
+   Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
    but that name is now deprecated.
 
 

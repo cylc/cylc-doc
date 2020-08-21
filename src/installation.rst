@@ -210,8 +210,8 @@ See the :cylc:conf:`global.cylc` section for details.
 
 .. note::
 
-   In earlier versions of Cylc, ``global.cylc`` was named ``global.rc`` or
-   ``flow.rc``, but those names are no longer supported.
+   Prior to Cylc 8, ``global.cylc`` was named ``global.rc``, but that name is
+   no longer supported.
 
 Bash Profile
 ^^^^^^^^^^^^
