@@ -3085,7 +3085,7 @@ Template processing is the first thing done on parsing a suite
 configuration so Jinja2 expressions can appear anywhere in the file (inside
 strings and namespace headings, for example).
 
-Jinja2 is `well documented <http://jinja.pocoo.org/docs>`_, so here
+Jinja2 is `well documented <https://jinja.palletsprojects.com/>`_, so here
 we just provide an example suite that uses it. The meaning of the
 embedded Jinja2 code should be reasonably self-evident to anyone familiar
 with standard programming techniques.
@@ -3367,8 +3367,8 @@ across scopes:
    # FOO is {{ns.foo}}
 
 For detail, see
-`Jinja2 Template Designer Documentation \>
-Assignments <http://jinja.pocoo.org/docs/2.10/templates/#assignments>`_
+`Jinja2 Template Designer Documentation - Assignments
+<https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments>`_
 
 
 .. _Jinja2RaisingExceptions:

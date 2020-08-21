@@ -1,7 +1,6 @@
 Suite Runtime Interface
 =======================
 
-
 Cylc suites are TCP servers which use the ZeroMQ protocol to communicate with
 clients and jobs.
 

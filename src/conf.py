@@ -110,6 +110,11 @@ graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
+linkcheck_ignore = [
+    # linkcheck has trouble handling RH readme pages
+    r'https://github.com/metomi/isodatetime.*#.*'
+]
+
 # -- Options for Slides output ----------------------------------------------
 
 slide_theme = 'single-level'
