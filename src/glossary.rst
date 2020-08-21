@@ -603,15 +603,15 @@ Glossary
 
       * :ref:`Restarting Suites`
       * :term:`start`
-      * :term:`Stop`
-      * :term:`Reload`
+      * :term:`Stop <stop>`
+      * :term:`Reload <reload>`
 
    reload
       Any changes made to the ``suite.rc`` file whilst the suite is running
       will not have any effect until the suite is either:
       
-      * :term:`Shutdown` and :term:`rerun <start>`
-      * :term:`Shutdown` and :term:`restarted <restart>`
+      * :term:`Shutdown <shutdown>` and :term:`rerun <start>`
+      * :term:`Shutdown <shutdown>` and :term:`restarted <restart>`
       * "Reloaded"
 
       Reloading does not require the suite to be :term:`shutdown`. When a suite
