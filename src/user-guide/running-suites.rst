@@ -360,7 +360,7 @@ repeatedly until finished:
                # minutes for 50 minutes, then every minute until finished:
                execution polling intervals = PT1M, 5*PT10M, PT1M
 
-.. cylc-scope:: flow.rc[platforms][<platform name>]
+.. cylc-scope:: global.cylc[platforms][<platform name>]
 
 A list of intervals with optional multipliers can be used for both submission
 and execution polling, although a single value is probably sufficient for

@@ -47,12 +47,12 @@ described below in:
 
 - custom trigger functions - see :ref:`Custom Trigger Functions`
 
-External triggers are configured in the :cylc:conf:`suite.rc[scheduling][xtriggers]`
-section.
+External triggers are configured in the
+:cylc:conf:`flow.cylc[scheduling][xtriggers]` section.
 
 .. NOTE - from here on all references can start [xtriggers]
 
-.. cylc-scope:: suite.rc[scheduling]
+.. cylc-scope:: flow.cylc[scheduling]
 
 
 .. _Built-in Clock Triggers:

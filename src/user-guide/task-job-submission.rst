@@ -56,6 +56,14 @@ too long. For version 12 or below, this is 15 characters. For version 13, this
 is 236 characters. The default setting will truncate the job name string to 236
 characters. If you have PBS 12 or older at your site, you should modify your
 site's global configuration file to allow the job name to be truncated at 15
+characters using
+:cylc:conf:`global.cylc[platforms][<platform name>]job name length maximum`.
+
+Directives Section Quirks (PBS, SGE, ...)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To specify an option with no argument, such as ``-V`` in PBS or
+``-cwd`` in SGE you must give a null string as the directive value in
 the :cylc:conf:`flow.cylc` file.
 
 The left hand side of a setting (i.e. the string before the first equal sign)

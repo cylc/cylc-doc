@@ -102,7 +102,7 @@ trigger other tasks off specific task outputs, or to trigger execution of
 event handlers by the server program (see :ref:`EventHandling`), or just to
 write information to the server log.
 
-.. cylc-scope:: flow.rc[platforms][<platform name>]
+.. cylc-scope:: global.cylc[platforms][<platform name>]
 
 (If polling is configured as the :cylc:conf:`communication method` for a
 :cylc:conf:`platform <[..]>`, the messaging system just writes messages to the

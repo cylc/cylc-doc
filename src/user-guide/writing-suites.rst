@@ -3,7 +3,7 @@
 Writing Suites
 ==============
 
-Cylc suites are defined in structured, validated, :cylc:conf:`suite.rc`
+Cylc suites are defined in structured, validated, :cylc:conf:`flow.cylc`
 files that concisely specify the properties of, and the relationships
 between, the various tasks managed by the suite.
 
@@ -33,7 +33,7 @@ A Cylc :term:`suite directory` contains:
    execution environment.
 
    Alternatively, tasks can call external commands; or they can be
-   scripted entirely within the suite.rc file.
+   scripted entirely within the flow.cylc file.
 ``lib/python/`` (optional)
    A directory for Python modules which can be used for:
 
@@ -55,7 +55,7 @@ flow.cylc File Overview
 
 .. _template processors: https://en.wikipedia.org/wiki/Template_processor
 
-Cylc supports two `template processors`_ for use in the suite.rc file:
+Cylc supports two `template processors`_ for use in the flow.cylc file:
 
 * `Jinja2`_
 * `EmPy`_
@@ -3495,7 +3495,7 @@ details on its templating features and how to use them.
 .. TODO: update this when the conda instructions change
 
 To enable EmPy place an ``empy`` hash-bang comment on the first line of
-the suite.rc file:
+the flow.cylc file:
 
 .. code-block:: cylc
 
