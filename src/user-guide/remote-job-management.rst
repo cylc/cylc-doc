@@ -51,7 +51,7 @@ and a local task views a remote job log then polls and kills the remote jobs.
 
 .. code-block:: cylc
 
-   # suite.rc
+   # flow.cylc
    [scheduling]
       [[graph]]
          R1 = "delayer => master & REMOTES"
@@ -86,7 +86,7 @@ to retrieve job logs, and not to use a remote login shell:
 
 .. code-block:: cylc
 
-   # flow.rc
+   # global.cylc
    [hosts]
       [[wizard]]
           cylc executable = /opt/bin/cylc
@@ -145,7 +145,7 @@ Result:
     ~/cylc-run/suitex
    |__log->log.20180418T025047Z  # LOG DIRECTORIES
    |__log.20180418T025047Z  # log directory for current suite run
-   |__suiter.rc
+   |__flow.cylc
    |__xxx  # any suite source sub-dirs or file
    |__work  # JOB WORK DIRECTORIES
    |__share  #  SUITE SHARE DIRECTORY
@@ -184,7 +184,7 @@ Result:
    |  |__passphrase  # suite passphrase
    |__log->log.20180418T025047Z  # LOG DIRECTORIES
    |__log.20180418T025047Z  # log directory for current suite run
-   |__suiter.rc
+   |__flow.cylc
    |__xxx  # any suite source sub-dirs or file
    |__work  # JOB WORK DIRECTORIES
    |__share  #  SUITE SHARE DIRECTORY
@@ -233,7 +233,7 @@ Result:
    |           |  |__job.err  # job stderr
    |           |  |__job.status  # job status
    |           |__NN->0l  # symlink to latest submit number
-   |__suiter.rc
+   |__flow.cylc
    |__xxx  # any suite source sub-dirs or file
    |__work  # JOB WORK DIRECTORIES
    |  |__1  # cycle point

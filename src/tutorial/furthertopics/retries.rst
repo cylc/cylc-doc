@@ -5,7 +5,7 @@ Retries allow us to automatically re-submit tasks which have failed due to
 failure in submission or execution.
 
 
-Purpose 
+Purpose
 -------
 
 Retries can be useful for tasks that may occasionally fail due to external
@@ -83,7 +83,7 @@ Configuring Retries
 -------------------
 
 We need to tell Cylc to retry it a few times. To do this, add the following
-to the end of the ``[[roll_doubles]]`` task section in the ``suite.rc`` file:
+to the end of the ``[[roll_doubles]]`` task section in the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 

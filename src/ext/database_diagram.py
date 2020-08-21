@@ -23,11 +23,8 @@ import sqlite3
 import tempfile
 from contextlib import closing
 
-import pygraphviz as pgv
 from cylc.flow.rundb import CylcSuiteDAO
-from eralchemy import render_er, main as eralchemy_main
 from eralchemy.main import all_to_intermediary
-from docutils.parsers.rst import directives
 from sphinx.ext.graphviz import Graphviz
 
 __version__ = '1.0.0'
@@ -170,7 +167,7 @@ class CylcRunDBDirective(Graphviz):
 
         # use invisible graph edges to change the graph layout
         dotcode.append(
-            f'"task_pool_checkpoints" -- "inheritance"[style=invis];'
+            '"task_pool_checkpoints" -- "inheritance"[style=invis];'
         )
 
         # graph suffix

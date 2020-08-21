@@ -19,7 +19,7 @@ Introduction
    ``[scheduling]``
       Defines the workflow in terms of :term:`tasks <task>` and
       :term:`dependencies <dependency>`.
-   ``[runtime]``   
+   ``[runtime]``
       Defines what runs, where and how it runs.
 
 
@@ -88,7 +88,7 @@ We can also call other scripts or executables in this way, e.g:
    echo 'Hello World!'
 
 .. code-block:: cylc
-   :caption: suite.rc
+   :caption: flow.cylc
 
    [runtime]
        [[hello_world]]
@@ -108,7 +108,7 @@ We can also call other scripts or executables in this way, e.g:
       print('Hello World!')
 
 .. code-block:: cylc
-   :caption: suite.rc
+   :caption: flow.cylc
 
    [runtime]
       [[hello_world]]
@@ -299,7 +299,7 @@ Running A Suite
 
    Here ``<path/to/suite>`` is the path to the suite's location within the
    filesystem (so if we create a suite in ``~/cylc-run/foo`` we would put
-   ``~/cylc-run/foo/suite.rc``).
+   ``~/cylc-run/foo/flow.cylc``).
 
    Next we can run the suite using the ``cylc run`` command.
 
@@ -353,8 +353,8 @@ Suite Files
          These files are written by Cylc as the suite is run and are useful for
          debugging purposes in the event of error.
 
-   ``suite.rc.processed``
-      A copy of the ``suite.rc`` file made after any `Jinja2`_ has been
+   ``flow.cylc.processed``
+      A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
       processed - we will cover this in the
       :ref:`tutorial-cylc-consolidating-configuration` section.
    ``share/``
@@ -370,7 +370,7 @@ Suite Files
       * ``log/db``
       * ``log/job``
       * ``log/suite``
-   * ``suite.rc.processed``
+   * ``flow.cylc.processed``
    * ``share/``
    * ``work/``
 
@@ -399,14 +399,14 @@ Suite Files
          rose tutorial runtime-introduction
          cd ~/cylc-run/runtime-introduction
 
-      In this directory we have the ``suite.rc`` file from the
+      In this directory we have the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
       with some runtime configuration added to it.
 
       There is also a script called ``get-observations`` located in the bin
       directory.
 
-      Take a look at the ``[runtime]`` section in the ``suite.rc`` file.
+      Take a look at the ``[runtime]`` section in the :cylc:conf:`flow.cylc` file.
 
    #. **Run The Suite.**
 

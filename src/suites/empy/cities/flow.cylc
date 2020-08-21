@@ -48,4 +48,4 @@ CLEANUP = True
     @[ end for ]
 @[ end for ]
 
-@empy.include("./suite-visualization.rc")
+@empy.include("./suite-visualization.cylc")

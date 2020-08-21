@@ -306,7 +306,7 @@ Start, Stop, Restart
 
          rose tutorial api-key
 
-      Add the following lines to the bottom of the ``suite.rc`` file replacing
+      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
       ``xxx...`` with your API key:
 
       .. code-block:: cylc
@@ -354,7 +354,7 @@ Start, Stop, Restart
                         SITE_ID = 3976
                         API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
-      Check the ``suite.rc`` file is valid by running the command:
+      Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
       .. code-block:: bash
 
@@ -420,9 +420,9 @@ Start, Stop, Restart
       The runtime configuration for the remaining tasks has been written out
       for you in the ``runtime`` file which you will find in the
       :term:`suite directory`. Copy the code in the ``runtime`` file to the
-      bottom of the ``suite.rc`` file.
+      bottom of the :cylc:conf:`flow.cylc` file.
 
-      Check the ``suite.rc`` file is valid by running the command:
+      Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
       .. code-block:: bash
 
@@ -441,7 +441,7 @@ Start, Stop, Restart
             cylc gui runtime-tutorial &
 
          Run the suite either by:
-          
+
          * Pressing the play button in the Cylc GUI. Then, ensuring that
            "Cold Start" is selected within the dialogue window, pressing the
            "Start" button.

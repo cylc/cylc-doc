@@ -1,4 +1,4 @@
-# SUITE.RC
+# FLOW.CYLC
 [meta]
     title = "User Guide [runtime] example."
 [cylc]

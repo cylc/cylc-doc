@@ -144,10 +144,10 @@ Task Scripting
 --------------
 
 Non-trivial task scripting should be held in external files rather than
-inlined in the suite.rc. This keeps the suite definition tidy, and it
+inlined in :cylc:conf:`flow.cylc`. This keeps the suite definition tidy, and it
 allows proper shell-mode text editing and independent testing of task scripts.
 
-For automatic access by task jobs, task-specific scripts should be kept in 
+For automatic access by task jobs, task-specific scripts should be kept in
 Rose app bin directories, and shared scripts kept in (or installed to) the
 suite bin directory.
 
@@ -226,7 +226,7 @@ and override it for the occasional non Rose app task:
 
 Rose Metadata Compliance
 ------------------------
- 
+
 Rose metadata drives page layout and sort order in ``rose edit``, plus
 help information, input validity checking, macros for advanced checking and app
 version upgrades, and more.
@@ -294,7 +294,7 @@ check-and-wait functionality in clock-triggered tasks
 (:ref:`Clock-Triggered Tasks`), for example.
 
 It is important to note that frequent polling may be bad for some filesystems,
-so be sure to configure a reasonable interval between polls. 
+so be sure to configure a reasonable interval between polls.
 
 
 Task Execution Time Limits
@@ -642,8 +642,8 @@ distinct from job retries for job execution failure (just below).
 
 Job submission retries should normally be host (or host-group for
 ``rose host-select``) specific, not task-specific, so configure them in
-a host (or host-group) specific family. The following suite.rc fragment
-configures all HPC jobs to retry on job submission failure up to 10
+a host (or host-group) specific family. The following :cylc:conf:`flow.cylc`
+fragment configures all HPC jobs to retry on job submission failure up to 10
 times at 1 minute intervals, then another 5 times at 1 hour intervals:
 
 .. code-block:: cylc
@@ -726,7 +726,7 @@ Include-files should not be overused, but they can sometimes be useful
 .. code-block:: cylc
 
    #...
-   {% include 'inc/foo.rc' %}
+   {% include 'inc/foo.cylc' %}
 
 (Technically this inserts a Jinja2-rendered file template). Cylc also has a
 native include mechanism that pre-dates Jinja2 support and literally inlines
@@ -735,7 +735,7 @@ the include-file:
 .. code-block:: cylc
 
    #...
-   %include 'inc/foo.rc'
+   %include 'inc/foo.cylc'
 
 The two methods normally produce the same result, but use the Jinja2 version if
 you need to construct an include-file name from a variable (because Cylc
@@ -744,4 +744,4 @@ include-files get inlined before Jinja2 processing is done):
 .. code-block:: cylc
 
    #...
-   {% include 'inc/' ~ SITE ~ '.rc' %}
+   {% include 'inc/' ~ SITE ~ '.cylc' %}

@@ -17,7 +17,6 @@
 from distutils.spawn import find_executable as which
 import sys
 import os
-from cylc.flow import __version__ as CYLC_VERSION
 
 
 # -- General configuration ------------------------------------------------

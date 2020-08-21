@@ -29,11 +29,11 @@ Cold Start
 
 A cold start is the primary way to start a suite run from scratch:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run SUITE [INITIAL_CYCLE_POINT]
 
-The initial cycle point may be specified on the command line or in the suite.rc
+The initial cycle point may be specified on the command line or in the :cylc:conf:`flow.cylc`
 file. The scheduler starts by loading the first instance of each task at the
 suite initial cycle point, or at the next valid point for the task.
 
@@ -51,7 +51,7 @@ some tasks rerunning. However, a warm start may be required if a restart is not
 possible, e.g. because the suite run database was accidentally deleted. The
 warm start cycle point must be given on the command line:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run --warm SUITE [START_CYCLE_POINT]
 
@@ -76,7 +76,7 @@ default the latest automatic checkpoint - which is updated with every task
 state change - is loaded so that the suite can carry on exactly as it was just
 before being shut down or killed.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart SUITE
 
@@ -91,7 +91,7 @@ Restart From Latest Checkpoint
 To restart from the latest checkpoint simply invoke the ``cylc restart``
 command with the suite name.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart SUITE
 
@@ -104,19 +104,19 @@ a task changes state, and at every suite restart, but you can also take
 checkpoints at other times. To tell a suite server program to checkpoint its
 current state:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc checkpoint SUITE-NAME CHECKPOINT-NAME
 
 The 2nd argument is a name to identify the checkpoint later with:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ls-checkpoints SUITE-NAME
 
 For example, with checkpoints named "bob", "alice", and "breakfast":
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ls-checkpoints SUITE-NAME
    #######################################################################
@@ -130,7 +130,7 @@ For example, with checkpoints named "bob", "alice", and "breakfast":
 To see the actual task state content of a given checkpoint ID (if you need to),
 for the moment you have to interrogate the suite DB, e.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ sqlite3 ~/cylc-run/SUITE-NAME/log/db \
        'select * from task_pool_checkpoints where id == 3;'
@@ -156,7 +156,7 @@ restarts).
 
 Once you have identified the right checkpoint, restart the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc restart --checkpoint=CHECKPOINT-ID SUITE
 
@@ -293,7 +293,7 @@ Cylc supports three ways of tracking task state on job hosts:
 - regular polling by the suite server program
 
 These can be configured per job host using
-:cylc:conf:`flow.rc[hosts][<hostname glob>]task communication method`.
+:cylc:conf:`global.cylc[hosts][<hostname glob>]task communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
 suite hosts, before resorting to the polling method you should
@@ -468,7 +468,7 @@ Public Access - No Auth Files
 
 Without a suite passphrase the amount of information revealed by a suite
 server program is determined by the public access privilege level set in
-:cylc:conf:`flow.rc[authentication]` and optionally overridden in suites
+:cylc:conf:`global.cylc[authentication]` and optionally overridden in suites
 with :cylc:conf:`[cylc][authentication]`.
 
 See Cylc privilege levels: :py:obj:`cylc.flow.network.authorisation.Priv`.
@@ -531,7 +531,7 @@ To control suite server programs running under other user accounts or on other
 hosts without a shared filesystem, the suite SSL certificate and passphrase
 must be installed under your ``$HOME/.cylc/`` directory:
 
-.. code-block:: bash
+.. code-block:: console
 
    $HOME/.cylc/auth/OWNER@HOST/SUITE/
          passphrase
@@ -541,7 +541,7 @@ where ``OWNER@HOST`` is the suite host account and ``SUITE``
 is the suite name. Client commands should then be invoked with the
 ``--user`` and ``--host`` options, e.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc edit --user=OWNER --host=HOST SUITE
 
@@ -657,7 +657,7 @@ A queue is defined by a *name*; a *limit*, which is the maximum
 number of active tasks allowed for the queue; and a list of *members*,
 assigned by task or family name.
 
-Queue configuration is done under the ``[scheduling]`` section of the suite.rc
+Queue configuration is done under the ``[scheduling]`` section of the :cylc:conf:`flow.cylc`
 file (like dependencies, internal queues constrain *when* a task runs).
 
 By default every task is assigned to the *default* queue, which by default
@@ -688,7 +688,7 @@ queue. The *queues* example suite illustrates how queues work by
 running two task trees side by side each
 limited to 2 and 3 tasks respectively:
 
-.. literalinclude:: ../suites/queues/suite.rc
+.. literalinclude:: ../suites/queues/flow.cylc
    :language: cylc
 
 
@@ -752,7 +752,7 @@ By default, the emails will be sent to the current user with:
 
 These can be configured using the settings:
 
-.. cylc-scope:: suite.rc[runtime][<namespace>]
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
 - :cylc:conf:`[events]mail to` (list of email addresses)
 - :cylc:conf:`[events]mail from`
@@ -833,7 +833,7 @@ the retry delay period when it is resubmitted.
    task jobs. If you wish to pass additional information to them use
    ``[cylc] -> [[environment]]``, not task runtime environment.
 
-The following two ``suite.rc`` snippets are examples on how to specify
+The following two :cylc:conf:`flow.cylc` snippets are examples on how to specify
 event handlers using the alternate methods:
 
 .. code-block:: cylc
@@ -919,12 +919,12 @@ Job submission commands, event handlers, and job poll and kill commands, are
 executed by the suite server program in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
 actively managed to limit it to a configurable size
-:cylc:conf:`flow.rc|process pool size`
+:cylc:conf:`global.cylc|process pool size`
 Custom event handlers should be light-weight and quick-running because they
 will tie up a process pool member until they complete, and the suite will
 appear to stall if the pool is saturated with long-running processes. Processes
 are killed after a configurable timeout
-:cylc:conf:`flow.rc|process pool timeout`
+:cylc:conf:`global.cylc|process pool timeout`
 , however,
 to guard against rogue commands that hang indefinitely. All process kills are
 logged by the suite server program. For killed job submissions the associated
@@ -998,7 +998,7 @@ The Meaning And Use Of Initial Cycle Point
 
 When a suite is started with the ``cylc run`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
-line or hardwired into the suite.rc file:
+line or hardwired into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: bash
 
@@ -1012,7 +1012,7 @@ or:
        initial cycle point = 20100808T06Z
 
 An initial cycle given on the command line will override one in the
-suite.rc file.
+flow.cylc file.
 
 .. _setting-the-icp-relative-to-now:
 
@@ -1142,7 +1142,7 @@ running the suite's real jobs - which may be long-running and resource-hungry:
 
 Set the run mode (default *live*) on the command line:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc run --mode=dummy SUITE
    $ cylc restart --mode=dummy SUITE
@@ -1236,7 +1236,7 @@ Roll-your-own Reference Tests
 If the default reference test is not sufficient for your needs, firstly
 note that you can override the default shutdown event handler, and
 secondly that the ``--reference-test`` option is merely a short
-cut to the following suite.rc settings which can also be set manually if
+cut to the following :cylc:conf:`flow.cylc` settings which can also be set manually if
 you wish:
 
 .. code-block:: cylc
@@ -1459,7 +1459,7 @@ Suite Run Databases
 Suite server programs maintain two ``sqlite`` databases to record
 restart checkpoints and various other aspects of run history:
 
-.. code-block:: bash
+.. code-block:: console
 
    $HOME/cylc-run/SUITE-NAME/log/db  # public suite DB
    $HOME/cylc-run/SUITE-NAME/.service/db  # private suite DB
@@ -1476,7 +1476,7 @@ You can interrogate the public DB with the ``sqlite3`` command line tool,
 the ``sqlite3`` module in the Python standard library, or any other
 sqlite interface.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ sqlite3 ~/cylc-run/foo/log/db << _END_
    > .headers on
@@ -1520,7 +1520,7 @@ To restart the suite, the critical Cylc files that must be restored are:
 
    # On the suite host:
    ~/cylc-run/SUITE-NAME/
-       suite.rc   # live suite configuration (located here in Rose suites)
+       flow.cylc   # live suite configuration (located here in Rose suites)
        log/db  # public suite DB (can just be a copy of the private DB)
        log/rose-suite-run.conf  # (needed to restart a Rose suite)
        .service/db  # private suite DB
@@ -1537,12 +1537,12 @@ To restart the suite, the critical Cylc files that must be restored are:
    in your environment is a matter of suite and system design.
 
 In short, you can simply restore the suite service directory, the log
-directory, and the suite.rc file that is the target of the symlink in the
+directory, and the :cylc:conf:`flow.cylc` file that is the target of the symlink in the
 service directory. The service and log directories will come with extra files
 that aren't strictly needed for a restart, but that doesn't matter - although
 depending on your log housekeeping the ``log/job`` directory could be
 huge, so you might want to be selective about that.  (Also in a Rose suite, the
-``suite.rc`` file does not need to be restored if you restart with
+``flow.cylc`` file does not need to be restored if you restart with
 ``rose suite-run`` - which re-installs suite source files to the run
 directory).
 

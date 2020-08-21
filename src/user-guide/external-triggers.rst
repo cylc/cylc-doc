@@ -142,13 +142,13 @@ the ``cylc suite-state`` command - see
 As a simple example, consider the following "upstream"
 suite (which we want to trigger off of):
 
-.. literalinclude:: ../suites/xtrigger/suite_state/upstream/suite.rc
+.. literalinclude:: ../suites/xtrigger/suite_state/upstream/flow.cylc
    :language: cylc
 
 It must be registered and run under the name *up*, as referenced in the
 "downstream" suite that depends on it:
 
-.. literalinclude:: ../suites/xtrigger/suite_state/downstream/suite.rc
+.. literalinclude:: ../suites/xtrigger/suite_state/downstream/flow.cylc
    :language: cylc
 
 Try starting the downstream suite first, then the upstream, and
@@ -193,7 +193,7 @@ unique trigger label ("upstream" here) and passed to the environment of
 dependent task jobs (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
 
-.. code-block:: bash
+.. code-block:: console
 
    % cylc cat-log -f j dn f2.2011
    ...
@@ -369,7 +369,7 @@ the appropriate string templates in the suite configuration for this).
 
 An example xrandom trigger suite:
 
-.. literalinclude:: ../suites/xtrigger/xrandom/suite.rc
+.. literalinclude:: ../suites/xtrigger/xrandom/flow.cylc
    :language: cylc
 
 .. _Current Trigger Function Limitations:
@@ -459,7 +459,7 @@ scheduling section:
 Then, each time a new dataset arrives the external detection system should
 notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger sat-proc "new sat X data avail" passX12334a
 
@@ -474,7 +474,7 @@ the new event. The suite passphrase must be installed on triggering account.
 
 Here is a working example of a simulated satellite processing suite:
 
-.. literalinclude:: ../suites/satellite/ext-trigger/suite.rc
+.. literalinclude:: ../suites/satellite/ext-trigger/flow.cylc
    :language: cylc
 
 External triggers are not normally needed in date-time cycling suites driven
@@ -499,7 +499,7 @@ message:
 Once the variable-length waiting is finished, an external detection system
 should notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger data-proc "data arrived for 20150126T00" passX12334a
 

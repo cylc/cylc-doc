@@ -105,7 +105,7 @@ Create a new suite called ``suicide-triggers``::
    mkdir -p ~/cylc-run/suicide-triggers
    cd ~/cylc-run/suicide-triggers
 
-Paste the following code into the ``suite.rc`` file:
+Paste the following code into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
@@ -215,7 +215,7 @@ three cycles concurrently. As each cycle has at least one task which hasn't
 either succeeded or failed Cylc cannot move onto the next cycle.
 
 .. tip::
-   
+
    For more information search ``max active cycle points`` in the
    `Cylc User Guide`_.
 
@@ -374,7 +374,7 @@ Add the following :term:`graph string` to your suite.
    eat_cake[-P1] | sell_cake[-P1] => make_cake_mixture
 
 Open the ``cylc gui`` and run the suite. You should see that if the
-``bake_cake`` task fails both it and the ``sell_cake`` task disappear and 
+``bake_cake`` task fails both it and the ``sell_cake`` task disappear and
 are replaced by the ``eat_cake`` task.
 
 
