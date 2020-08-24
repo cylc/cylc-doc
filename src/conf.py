@@ -37,8 +37,12 @@ extensions = [
     'database_diagram',
     # cylc-sphinx-extensions
     'cylc.sphinx_ext.cylc_lang',
+    'cylc.sphinx_ext.diff_selection',
+    'cylc.sphinx_ext.grid_table',
+    'cylc.sphinx_ext.hieroglyph_addons',
     'cylc.sphinx_ext.minicylc',
     'cylc.sphinx_ext.practical',
+    'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
 ]
 
@@ -96,7 +100,7 @@ intersphinx_mapping = {
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+# exclude_patterns = ['_build']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'autumn'
@@ -105,6 +109,11 @@ pygments_style = 'autumn'
 graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
+
+linkcheck_ignore = [
+    # linkcheck has trouble handling RH readme pages
+    r'https://github.com/metomi/isodatetime.*#.*'
+]
 
 # -- Options for Slides output ----------------------------------------------
 
@@ -125,12 +134,6 @@ html_logo = "img/cylc-logo-white.svg"
 html_favicon = "img/cylc-favicon.ico"  # sphinx specifies .ico format
 html_show_sphinx = False
 html_show_copyright = True
-html_js_files = [
-    'js/cylc.js'
-]
-html_css_files = [
-    'css/cylc.css'
-]
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {

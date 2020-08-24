@@ -60,7 +60,7 @@ Inter-Suite Triggering
 A task in one suite can explicitly trigger off of a task in another suite. The
 full range of possible triggering conditions is supported, including custom
 message triggers. Remote triggering involves repeatedly querying ("polling")
-the remote suite run database, not the suite server program, so it works even
+the remote suite run database, not the :term:`scheduler`, so it works even
 if the other suite is down at the time.
 
 There is special graph syntax to support triggering off of a task in another
@@ -106,7 +106,7 @@ Installing Files At Start-up
 
 Use ``rose suite-run`` *file creation mode* or ``R1``
 install tasks to copy files to the self-contained suite run directory at
-start-up.  Install tasks are preferred for time-consuming installations because
+start-up. Install tasks are preferred for time-consuming installations because
 they don't slow the suite start-up process, they can be monitored,
 they can run directly on target platforms, and you can rerun them later without
 restarting the suite. If you are using symbolic links to install files under
@@ -176,7 +176,7 @@ suite and its tasks, all task scripts should:
   expected location.
 - Always return correct shell exit status - zero for success, non-zero
   for failure. This is used by Cylc job wrapper code to detect success and
-  failure and report it back to the suite server program.
+  failure and report it back to the :term:`scheduler`.
 - In shell scripts use ``set -u`` to abort on any reference to
   an undefined variable. If you really need an undefined variable to evaluate
   to an empty string, make it explicit: ``FOO=${FOO:-}``.
@@ -441,7 +441,7 @@ difficult to be sure which tasks are *using* which global variables.
 
 Any ``[runtime]`` settings can be shared - scripting, host
 and batch scheduler configuration, environment variables, and so on - from
-single items up to complete task or app configurations.  At the latter extreme,
+single items up to complete task or app configurations. At the latter extreme,
 it is quite common to have several tasks that inherit the same complete
 job configuration followed by minor task-specific additions:
 
@@ -529,8 +529,9 @@ by inheritance:
        [[write_data]]
            inherit = WORKSPACE
            script = """
-   mkdir -p $DATA_DIR
-   write-data.exe -o ${DATA_DIR}"""
+               mkdir -p $DATA_DIR
+               write-data.exe -o ${DATA_DIR}
+           """
        [[read_data]]
            inherit = WORKSPACE
            script = read-data.exe -i ${DATA_DIR}
@@ -548,8 +549,9 @@ be shared via Jinja variables:
    [runtime]
        [[write_data]]
            script = """
-   mkdir -p {{DATA_DIR}}
-   write-data.exe -o {{DATA_DIR}}"""
+               mkdir -p {{DATA_DIR}}
+               write-data.exe -o {{DATA_DIR}}
+           """
        [[read_data]]
            script = read-data.exe -i {{DATA_DIR}}
 
@@ -669,12 +671,13 @@ then an automatic retry may be appropriate:
    [runtime]
        [[model]]
            script = """
-   if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
-       SHORT_TIMESTEP=true
-   else
-       SHORT_TIMESTEP=false
-   fi
-   model.exe"""
+               if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
+                   SHORT_TIMESTEP=true
+               else
+                   SHORT_TIMESTEP=false
+               fi
+               model.exe
+           """
            [[[job]]]
                execution retry delays = 1*PT0M
 
@@ -714,7 +717,8 @@ path from the workflow:
                      model:fail => diagnose => model_short
                        # Clean up with suicide triggers:
                      model => ! diagnose & ! model_short
-                     model_short => ! model"""
+                     model_short => ! model
+                 """
 
 
 Include Files

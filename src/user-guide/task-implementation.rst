@@ -3,7 +3,7 @@
 Task Implementation
 ===================
 
-Existing scripts and executables can be used as cylc tasks without
+Existing scripts and executables can be used as Cylc tasks without
 modification so long as they return standard exit status - zero on success,
 non-zero for failure - and do not spawn detaching processes internally (see
 :ref:`DetachingJobs`).
@@ -14,14 +14,17 @@ non-zero for failure - and do not spawn detaching processes internally (see
 Task Job Scripts
 ----------------
 
-When the suite server program determines that a task is ready to run it
+When the :term:`scheduler` determines that a task is ready to run it
 generates a *job script* for the task, and submits it to run (see
 :ref:`TaskJobSubmission`).
 
-Job scripts encapsulate configured task runtime settings: ``script`` and
-``environment`` items, if defined, are just concatenated in the order shown
-below, to make the job script. Everything executes in the same shell, so each
-part of the script can potentially affect the environment of subsequent parts.
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+:term:`Job scripts <job script>` encapsulate configured task runtime settings:
+:cylc:conf:`script` and :cylc:conf:`[environment]` items, if defined, are just
+concatenated in the order shown below, to make the job script. Everything
+executes in the same shell, so each part of the script can potentially affect
+the environment of subsequent parts.
 
 .. digraph:: example
 
@@ -53,17 +56,18 @@ part of the script can potentially affect the environment of subsequent parts.
       "post-script" -> "exit-script"
    }
 
-The two "cylc defined scripts" are:
+The two "Cylc defined scripts" are:
 
 ``cylc-env``
-   Which provides default ``CYLC`` environment variables
-   e.g. ``CYLC_TASK_NAME``.
+   Which provides default ``CYLC_*`` environment variables e.g.
+   ``CYLC_TASK_NAME``.
 ``user-env``
-   Which is the contents of the
-   :cylc:conf:`[runtime][<namespace>][environment]` section.
+   Which is the contents of the :cylc:conf:`[environment]` section.
 
 Task job scripts are written to the suite's job log directory. They can be
 printed with ``cylc cat-log``.
+
+.. cylc-scope::
 
 
 Inlined Tasks
@@ -71,6 +75,7 @@ Inlined Tasks
 
 Task *script* items can be multi-line strings of ``bash``  code, so many tasks
 can be entirely inlined in the :cylc:conf:`flow.cylc` file.
+
 For anything more than a few lines of code, however, we recommend using
 external shell scripts to allow independent testing, re-use, and shell mode
 editing.
@@ -92,14 +97,18 @@ Task Messages
 
 Task jobs send status messages back to the server program to report that
 execution has started, succeeded, or failed. Custom messages can also be sent
-by the same mechanism, with various severity levels.  These can be used to
+by the same mechanism, with various severity levels. These can be used to
 trigger other tasks off specific task outputs, or to trigger execution of
 event handlers by the server program (see :ref:`EventHandling`), or just to
 write information to the server log.
 
-(If polling is configured as the task communication method for a host, the
-messaging system just writes messages to the local job status file for
-recovery by the server at the next poll).
+.. cylc-scope:: global.cylc[platforms][<platform name>]
+
+(If polling is configured as the :cylc:conf:`communication method` for a
+:cylc:conf:`platform <[..]>`, the messaging system just writes messages to the
+local job status file for recovery by the server at the next poll).
+
+.. cylc-scope::
 
 Normal severity messages are printed to ``job.out`` and logged by the
 server program:
@@ -110,7 +119,7 @@ server program:
      "Hello from ${CYLC_TASK_ID}"
 
 "CUSTOM" severity messages are printed to ``job.out``, logged by the
-suite server program, and can be used to trigger *custom*
+:term:`scheduler`, and can be used to trigger *custom*
 event handlers:
 
 .. code-block:: bash
@@ -123,7 +132,7 @@ information nor an error condition, such as production of a particular data
 file (a "data availability" event).
 
 "WARNING" severity messages are printed to ``job.err``, logged by the
-suite server program, and can be passed to *warning* event handlers:
+:term:`scheduler`, and can be passed to *warning* event handlers:
 
 .. code-block:: bash
 
@@ -131,7 +140,7 @@ suite server program, and can be passed to *warning* event handlers:
      "WARNING:Uh-oh, something's not right here."
 
 "CRITICAL" severity messages are printed to ``job.err``, logged by the
-suite server program, and can be passed to *critical* event handlers:
+:term:`scheduler`, and can be passed to *critical* event handlers:
 
 .. code-block:: bash
 
@@ -150,7 +159,7 @@ Aborting Job Scripts on Error
 -----------------------------
 
 Task job scripts use ``set -x`` to abort on any error, and trap ERR, EXIT, and
-SIGTERM to send task failed messages back to the suite server program before
+SIGTERM to send task failed messages back to the :term:`scheduler` before
 aborting. Other scripts called from job scripts should therefore abort with
 standard non-zero exit status on error, to trigger the job script error trap.
 
@@ -177,7 +186,7 @@ Custom Failure Messages
 Critical events normally warrant aborting a job script rather than just
 sending a message. As described just above, ``exit 1`` or any failing command
 not protected by the surrounding scripting will cause a job script to abort
-and report failure to the suite server program, potentially triggering a
+and report failure to the :term:`scheduler`, potentially triggering a
 *failed* task event handler.
 
 For failures detected by the scripting you could send a critical message back
@@ -209,7 +218,7 @@ Avoid Detaching Processes
 
 If a task script starts background sub-processes and does not wait on them, or
 internally submits jobs to a batch scheduler and then exits immediately, the
-detached processes will not be visible to cylc and the task will appear to
+detached processes will not be visible to Cylc and the task will appear to
 finish when the top-level script finishes. You will need to modify scripts
 like this to make them execute all sub-processes in the foreground (or use the
 shell ``wait`` command to wait on them before exiting) and to prevent job

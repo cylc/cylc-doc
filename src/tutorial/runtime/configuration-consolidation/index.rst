@@ -63,11 +63,11 @@ Consolidating Configuration
       [scheduling]
           [[graph]]
               T00/PT3H = """
-                      get_observations_belmullet => consolidate_observations
-                      get_observations_camborne => consolidate_observations
-                      get_observations_heathrow => consolidate_observations
-                      get_observations_shetland => consolidate_observations
-                  """
+                  get_observations_belmullet => consolidate_observations
+                  get_observations_camborne => consolidate_observations
+                  get_observations_heathrow => consolidate_observations
+                  get_observations_shetland => consolidate_observations
+              """
 
 .. nextslide::
 

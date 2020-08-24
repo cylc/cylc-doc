@@ -114,9 +114,9 @@ Paste the following code into the :cylc:conf:`flow.cylc` file:
       initial cycle point = 1
       [[graph]]
           P1 = """
-                  make_cake_mixture => bake_cake => sell_cake
-                  bake_cake:fail => eat_cake
-              """
+              make_cake_mixture => bake_cake => sell_cake
+              bake_cake:fail => eat_cake
+          """
    [runtime]
        [[root]]
            script = sleep 2

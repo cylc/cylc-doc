@@ -101,10 +101,11 @@ be indented from the left margin:
        [[foo]]
            # Recommended.
            post-script = """
-   if [[ $RESULT == "bad" ]]; then
-       echo Goodbye World!
-       exit 1
-   fi"""
+               if [[ $RESULT == "bad" ]]; then
+                   echo Goodbye World!
+                   exit 1
+               fi
+           """
 
 Indentation is *mostly* ignored by the bash interpreter, but is useful for
 readability. It is *mostly* harmless to indent internal script lines as if
@@ -115,11 +116,10 @@ part of the Cylc syntax, or even out to the triple quotes:
    [runtime]
        [[foo]]
            # OK, but...
-           post-script = """
-               if [[ $RESULT == "bad" ]]; then
-                   echo Goodbye World!
-                   exit 1
-               fi"""
+           post-script = """if [[ $RESULT == "bad" ]]; then
+   echo Goodbye World!
+   exit 1
+   fi"""
 
 On parsing the triple quoted value, Cylc will remove any common leading
 whitespace from each line using the logic of
@@ -137,26 +137,25 @@ have many levels of indentations.
       [runtime]
           [[foo]]
            script = """
-           cat >> log.txt <<_EOF_
+               cat >> log.txt <<_EOF_
+                   The quick brown fox jumped
+                   over the lazy dog.
+               _EOF_
+           """
+
+   Each line in ``log.txt`` would end up with 4 leading white spaces. The
+   following will give you lines with no white spaces.
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[foo]]
+           script = """
+               cat >> log.txt <<_EOF_
                The quick brown fox jumped
                over the lazy dog.
-           _EOF_
-                    """
-
-In the above, each line in ``log.txt`` would end up with 4 leading
-white spaces. The following will give you lines with no white spaces.
-
-.. code-block:: cylc
-
-   [runtime]
-       [[foo]]
-           script = """
-           cat >> log.txt <<_EOF_
-           The quick brown fox jumped
-           over the lazy dog.
-           _EOF_
-                    """
-
+               _EOF_
+           """
 
 Graph String Lines
 ^^^^^^^^^^^^^^^^^^
@@ -188,7 +187,8 @@ indents; see :ref:`Line Length`):
                FAMILY:succeed-all => bar & baz => qux
 
                # Housekeeping:
-               qux => rose_arch => rose_prune"""
+               qux => rose_arch => rose_prune
+           """
 
 Both styles are acceptable; choose one and use it consistently.
 
@@ -258,13 +258,15 @@ trigger arrows imply line continuation:
    [scheduling]
        [[graph]]
            # No line continuation marker is needed here.
-           R1 = """prep => one => two => three =>
-                   four => five six => seven => eight"""
+           R1 = """
+               prep => one => two => three =>
+               four => five six => seven => eight
+           """
    [runtime]
        [[MY_TASKS]]
        # A line continuation marker *is* needed here:
        [[one, two, three, four, five, six, seven, eight, nine, ten, \
-         eleven, twelve, thirteen ]]
+         eleven, twelve, thirteen]]
            inherit = MY_TASKS
 
 

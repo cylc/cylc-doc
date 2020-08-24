@@ -65,13 +65,13 @@ Paste the following configuration into the :cylc:conf:`flow.cylc` file:
 
        [[MINERS]]
            script = """
-   sleep 5;
-   if (($RANDOM % 2)); then
-       echo 'Diamonds!'; true;
-   else
-       echo 'Nothing...'; false;
-   fi
-   """
+               sleep 5;
+               if (($RANDOM % 2)); then
+                   echo 'Diamonds!'; true;
+               else
+                   echo 'Nothing...'; false;
+               fi
+           """
        [[doc, grumpy, sleepy, happy, bashful, sneezy, dopey]]
            inherit = MINERS
 
@@ -114,8 +114,10 @@ this:
 .. code-block:: cylc
 
    [[graph]]
-       R1 = """visit_mine => MINERS
-               MINERS:finish-all & MINERS:succeed-any => sell_diamonds"""
+       R1 = """
+           visit_mine => MINERS
+           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+       """
 
 Then, add the following task to the ``[runtime]`` section:
 
@@ -149,11 +151,12 @@ this:
 .. code-block:: cylc
 
    [[graph]]
-       R1 = """visit_mine => MINERS
-               MINERS:finish-all & MINERS:succeed-any => sell_diamonds
-                  MINERS:finish-all & MINERS:fail-any => close_shafts
-                  close_shafts => !MINERS
-                  """
+       R1 = """
+           visit_mine => MINERS
+           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+           MINERS:finish-all & MINERS:fail-any => close_shafts
+           close_shafts => !MINERS
+       """
 
 Alter the ``[[sell_diamonds]]`` section to look like this:
 

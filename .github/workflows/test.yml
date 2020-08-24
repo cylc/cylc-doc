@@ -35,7 +35,7 @@ jobs:
       - name: install cylc-flow
         run: |
           (cd "$GITHUB_WORKSPACE/cylc-flow"; pip install .[all])
-          rm -r cylc-flow  # don't lint or test cylc-flow
+          rm -r cylc-flow  # don't lint or test cylc-flow
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2

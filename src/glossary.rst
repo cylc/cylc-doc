@@ -6,9 +6,8 @@ Glossary
 
    suite
    Cylc suite
-      A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file which contains
-      :term:`graphing<graph>` representing a workflow.
-
+      A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
+      which contains :term:`graphing<graph>` representing a workflow.
 
    suite directory
       The suite directory contains all of the configuration for a suite e.g.
@@ -28,7 +27,7 @@ Glossary
    graph
       The graph of a :term:`suite<Cylc suite>` refers to the
       :term:`graph strings<graph string>` contained within the
-      ``[scheduling][graph]`` section. For example the following is,
+      :cylc:conf:`[scheduling][graph]` section. For example the following is,
       collectively, a graph:
 
       .. code-block:: cylc
@@ -67,8 +66,8 @@ Glossary
          "foo.02T00" -> "bar.02T00"
 
    graph string
-      A graph string is a collection of dependencies which are placed under a
-      ``graph`` section in the :cylc:conf:`flow.cylc` file. E.G:
+      A graph string is a collection of dependencies which are placed inside the
+      :cylc:conf:`[scheduling][graph]` section e.g:
 
       .. code-block:: cylc-graph
 
@@ -87,7 +86,23 @@ Glossary
       See also:
 
       * :term:`task trigger`
+      * :term:`conditional dependency`
 
+   conditional dependency
+   conditional trigger
+      A conditional dependency is a :term:`dependency` which uses the ``&`` (and)
+      or ``|`` (or) operators for example:
+
+      .. code-block:: cylc-graph
+
+         a & (b | c) => d
+
+      See also:
+
+      * :term:`dependency`
+      * :term:`task trigger`
+
+   trigger
    task trigger
       :term:`Dependency <dependency>` relationships can be thought of the other
       way around as "triggers".
@@ -173,6 +188,7 @@ Glossary
    initial cycle point
       In a :term:`cycling suite <cycling>` the initial cycle point is the point
       from which cycling begins.
+      It is set by :cylc:conf:`[scheduling]initial cycle point`.
 
       If the initial cycle point were 2000 then the first cycle would
       be on the 1st of January 2000.
@@ -185,6 +201,7 @@ Glossary
    final cycle point
       In a :term:`cycling suite <cycling>` the final cycle point is the point
       at which cycling ends.
+      It is set by :cylc:conf:`[scheduling]final cycle point`.
 
       If the final cycle point were 2001 then the final cycle would be no later
       than the 1st of January 2001.
@@ -199,7 +216,7 @@ Glossary
       been configured to use integer cycling. When a suite uses integer cycling
       integer :term:`recurrences <recurrence>` may be used in the :term:`graph`,
       e.g. ``P3`` means every third cycle. This is configured by setting
-      ``[scheduling]cycling mode = integer`` in the :cylc:conf:`flow.cylc` file.
+      :cylc:conf:`[scheduling]cycling mode = integer`.
 
       See also:
 
@@ -273,6 +290,7 @@ Glossary
       * :term:`datetime cycling`
 
    inter-cycle dependency
+   inter-cycle trigger
       In a :term:`cycling suite <cycling>` an inter-cycle dependency
       is a :term:`dependency` between two tasks in different cycles.
 
@@ -455,11 +473,34 @@ Glossary
 
       Other files stored in the job log directory:
 
-      * `job`: the :term:`job script`.
-      * `job-activity.log`: a log file containing details of the
+      * ``job``: the :term:`job script`.
+      * ``job-activity.log``: a log file containing details of the
         :term:`job's <job>` progress.
-      * `job.status`: a file holding Cylc's most up-to-date
+      * ``job.status``: a file holding Cylc's most up-to-date
         understanding of the :term:`job's <job>` present status.
+
+   service directory
+      This directory is used to store information for internal use by Cylc.
+
+      It is called ``.service`` and is located in the :term:`run directory`, it
+      should exist for all registered suites.
+
+   contact file
+      The contact file records information about a running suite such as the host it
+      is running on, the TCP port(s) it is listening on and the process ID.
+      The file is called ``contact`` and lives inside the suite's
+      :term:`service directory`.
+
+      The contact file only exists when the suite is running, if you delete the
+      contact file, the suite will (after a delay) notice this and shut down.
+
+      .. warning::
+
+         In the event that a suite process dies in an uncontrolled way, for
+         example if the process is killed or the host which is running the
+         process crashes, the contact file may be erroneously left behind. Some
+         Cylc commands will automatically detect such files and remove them,
+         otherwise they should be manually removed.
 
    job
       A job is the realisation of a :term:`task` consisting of a file called
@@ -519,30 +560,27 @@ Glossary
       what a :term:`job's <job>` requirements are, e.g. how much memory
       it requires.
 
-      Directives are set in the :cylc:conf:`flow.cylc` file in the ``[runtime]`` section
-      (``[runtime][<task-name>][directives]``).
+      Directives are set in :cylc:conf:`[runtime][<namespace>][directives]`.
 
       See also:
 
       * :term:`batch system`
 
-
-
-   suite server program
+   scheduler
       When we say that a :term:`suite` is "running" we mean that the cylc
-      suite server program is running.
+      scheduler is running.
 
-      The suite server program is responsible for running the suite. It submits
+      The scheduler is responsible for running the suite. It submits
       :term:`jobs <job>`, monitors their status and maintains the suite state.
 
       .. _daemon: https://en.wikipedia.org/wiki/Daemon_(computing)
 
-      By default a suite server program is a `daemon`_ meaning that it runs in
+      By default a scheduler is a `daemon`_ meaning that it runs in
       the background (potentially on another host).
 
    start
    startup
-      When a :term:`suite` starts the Cylc :term:`suite server program` is
+      When a :term:`suite` starts the Cylc :term:`scheduler` is
       run. This program controls the suite and is what we refer to as
       "running".
 
@@ -552,7 +590,7 @@ Glossary
       See also:
 
       * :ref:`Starting Suites`
-      * :term:`suite server program`
+      * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
       * :term:`shutdown`
@@ -580,7 +618,7 @@ Glossary
 
    stop
    shutdown
-      When a :term:`suite` is shutdown the :term:`suite server program` is
+      When a :term:`suite` is shutdown the :term:`scheduler` is
       stopped. This means that no further :term:`jobs <job>` will be submitted.
 
       By default Cylc waits for any submitted or running :term:`jobs <job>` to
@@ -607,8 +645,8 @@ Glossary
       * :term:`Reload <reload>`
 
    reload
-      Any changes made to the :cylc:conf:`flow.cylc` file whilst the suite is running
-      will not have any effect until the suite is either:
+      Any changes made to the :cylc:conf:`flow.cylc` file whilst the suite is
+      running will not have any effect until the suite is either:
 
       * :term:`Shutdown <shutdown>` and :term:`rerun <start>`
       * :term:`Shutdown <shutdown>` and :term:`restarted <restart>`
@@ -630,8 +668,8 @@ Glossary
 
    parameterisation
       Parameterisation is a way to consolidate configuration in the Cylc
-      :cylc:conf:`flow.cylc` file by implicitly looping over a set of pre-defined
-      variables e.g:
+      :cylc:conf:`flow.cylc` file by implicitly looping over a set of
+      pre-defined variables e.g:
 
       .. code-block:: cylc
 
@@ -669,7 +707,7 @@ Glossary
 
    family inheritance
       A :term:`task` can be "added" to a :term:`family` by "inheriting" from
-      it.
+      it using the :cylc:conf:`[runtime][<namespace>]inherit` configuration.
 
       For example the :term:`task` ``task`` "belongs" to the :term:`family`
       ``FAMILY`` in the following snippet:

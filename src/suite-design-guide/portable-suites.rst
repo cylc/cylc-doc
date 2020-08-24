@@ -5,7 +5,7 @@ Portable Suites
 
 A *portable* or *interoperable* suite can run "out of the box" at
 different sites, or in different environments such as research and operations
-within a site.  For convenience we just use the term *site portability*.
+within a site. For convenience we just use the term *site portability*.
 
 Lack of portability is a major barrier to collaborative development when
 sites need to run more or less the same workflow, because it is very
@@ -241,11 +241,11 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
    #...
    {% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
    R1 = """
-     pre => model => post
+       pre => model => post
    {% if HAVE_IDL %}
-         post => idl-1 => idl-2 => idl-3
+       post => idl-1 => idl-2 => idl-3
    {% endif %}
-           """
+   """
 
 where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
 

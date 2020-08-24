@@ -342,14 +342,6 @@ their own dependencies so that optimal scheduling, as described in the
 previous section, emerges naturally at run time.
 
 
-Licensing
----------
-
-Cylc is open source and licensed under the
-`GNU General Public License v3.0
-<https://www.gnu.org/licenses/gpl-3.0.en.html>`_.
-
-
 .. [1] Future plans for EcoConnect include additional deterministic regional
        weather forecasts and a statistical ensemble.
 .. [2] Note that simply overlapping the single cycle point schedules of the

@@ -28,7 +28,7 @@ import urllib3
 try:
     from PIL import Image
 except ModuleNotFoundError:
-    # not all PIL installations are created equal
+    # not all PIL installations are created equal
     # sometimes we must import like this
     import Image
 from mercator import get_offset, get_scale, pos_to_coord

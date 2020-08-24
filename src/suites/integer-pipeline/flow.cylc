@@ -3,11 +3,11 @@
     initial cycle point = 1
     [[graph]]
         R/^/P1 = """
-                A => B => C
-                A[-P1] => A
-                B[-P1] => B
-                C[-P1] => C
-                     """
+            A => B => C
+            A[-P1] => A
+            B[-P1] => B
+            C[-P1] => C
+        """
 [runtime]
     [[A]]
         # ...

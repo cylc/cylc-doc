@@ -60,21 +60,23 @@ triggers another task bar and when fully completed triggers another task, baz.
    .. code-block:: cylc
 
       [scheduling]
-         [[dependencies]]
-         graph = """foo:out1 => bar
-                     foo => baz"""
+          [[dependencies]]
+              graph = """
+                  foo:out1 => bar
+                  foo => baz
+              """
       [runtime]
-         [[foo]]
-            script = """
-               sleep 5
-               cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" "file 1 done"
-               sleep 10
-                  """
-            [[[outputs]]]
-               out1 = "file 1 done"
+          [[foo]]
+              script = """
+                  sleep 5
+                  cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" "file 1 done"
+                  sleep 10
+              """
+              [[[outputs]]]
+                  out1 = "file 1 done"
 
-         [[bar, baz]]
-            script = sleep 10
+          [[bar, baz]]
+              script = sleep 10
 
 .. _message triggers practical:
 
@@ -188,15 +190,15 @@ triggers another task bar and when fully completed triggers another task, baz.
 
              [[long_forecasting_task]]
                  script = """
-                         sleep 2
-                         random.sh
+                     sleep 2
+                     random.sh
 
-                         sleep 2
-                         random.sh
+                     sleep 2
+                     random.sh
 
-                         sleep 2
-                         random.sh
-                     """
+                     sleep 2
+                     random.sh
+                 """
 
              [[another_weather_task, different_weather_task]]
                  script = sleep 1
@@ -218,7 +220,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       been created.
 
       There are three aspects of creating messsage triggers.
-      The first is to create the messages.  Within ``runtime``, ``TASK`` in our
+      The first is to create the messages. Within ``runtime``, ``TASK`` in our
       suite, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.
 

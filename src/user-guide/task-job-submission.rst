@@ -3,14 +3,18 @@
 Task Job Submission and Management
 ==================================
 
-For the requirements a command, script, or program, must fulfill in order
-to function as a cylc task, see :ref:`TaskImplementation`.
-This section explains how tasks are submitted by the suite server program when
-they are ready to run, and how to define new batch system handlers.
+This section explains how :term:`tasks <task>` are submitted by the suite
+server program when they are ready to run, and how to define new batch system
+handlers.
 
-When a task is ready cylc generates a job script (see :ref:`JobScripts`). The
+.. note::
+
+   For the requirements a command, script, or program, must fulfill in order to
+   function as a Cylc task, see :ref:`TaskImplementation`.
+
+When a task is ready Cylc generates a :term:`job script` (see :ref:`JobScripts`). The
 job script is submitted to run by the *batch system* chosen for
-the task. Different tasks can use different batch systems.  Like
+the task. Different tasks can use different batch systems. Like
 other runtime properties, you can set a suite default batch system and
 override it for specific tasks or families:
 
@@ -30,254 +34,14 @@ override it for specific tasks or families:
 Supported Job Submission Methods
 --------------------------------
 
-Cylc supports a number of commonly used batch systems.
+Cylc provided built-in support for the following batch submission systems:
+
+.. NOTE this builds and links stub-pages for each of the batch systems
+
+.. automodule:: cylc.flow.batch_sys_handlers
+
 See :ref:`CustomJobSubmissionMethods` for how to add new job
 submission methods.
-
-
-background
-^^^^^^^^^^
-
-Runs task job scripts as Unix background processes.
-
-If an execution time limit is specified for a task, its job will be wrapped
-by the ``timeout`` command.
-
-
-at
-^^
-
-Submits task job scripts to the rudimentary Unix ``at`` scheduler. The
-``atd`` daemon must be running.
-
-If an execution time limit is specified for a task, its job will be wrapped
-by the ``timeout`` command.
-
-
-loadleveler
-^^^^^^^^^^^
-
-Submits task job scripts to loadleveler by the ``llsubmit`` command.
-Loadleveler directives can be provided in the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = loadleveler
-               execution time limit = PT10M
-           [[[directives]]]
-               foo = bar
-               baz = qux
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   # DIRECTIVES
-   # @ foo = bar
-   # @ baz = qux
-   # @ wall_clock_limit = 660,600
-   # @ queue
-
-If ``restart=yes`` is specified as a directive for loadleveler, the job will
-automatically trap SIGUSR1, which loadleveler may use to preempt the job. On
-trapping SIGUSR1, the job will inform the suite that it has been vacated by
-loadleveler. This will put it back to the submitted state, until it starts
-running again.
-
-If ``execution time limit`` is specified, it is used to generate the
-``wall_clock_limit`` directive. The setting is assumed to be the soft
-limit. The hard limit will be set by adding an extra minute to the soft limit.
-Do not specify the ``wall_clock_limit`` directive explicitly if
-``execution time limit`` is specified. Otherwise, the execution time
-limit known by the suite may be out of sync with what is submitted to the batch
-system.
-
-
-lsf
-^^^
-
-Submits task job scripts to IBM Platform LSF by the ``bsub`` command.
-LSF directives can be provided in the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = lsf
-               execution time limit = PT10M
-           [[[directives]]]
-               -q = foo
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   # DIRECTIVES
-   #BSUB -q = foo
-   #BSUB -W = 10
-
-If ``execution time limit`` is specified, it is used to generate the
-``-W`` directive. Do not specify the ``-W`` directive
-explicitly if ``execution time limit`` is specified. Otherwise, the
-execution time limit known by the suite may be out of sync with what is
-submitted to the batch system.
-
-
-pbs
-^^^
-
-Submits task job scripts to PBS (or Torque) by the ``qsub`` command.
-PBS directives can be provided in the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = pbs
-               execution time limit = PT1M
-           [[[directives]]]
-               -V =
-               -q = foo
-               -l nodes = 1
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   # DIRECTIVES
-   #PBS -V
-   #PBS -q foo
-   #PBS -l nodes=1
-   #PBS -l walltime=60
-
-If ``execution time limit`` is specified, it is used to generate the
-``-l walltime`` directive. Do not specify the ``-l walltime``
-directive explicitly if ``execution time limit`` is specified.
-Otherwise, the execution time limit known by the suite may be out of sync with
-what is submitted to the batch system.
-
-
-moab
-^^^^
-
-Submits task job scripts to the Moab workload manager by the ``msub``
-command.  Moab directives can be provided in the :cylc:conf:`flow.cylc` file; the syntax is
-very similar to PBS:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = moab
-               execution time limit = PT1M
-           [[[directives]]]
-               -V =
-               -q = foo
-               -l nodes = 1
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   # DIRECTIVES
-   #PBS -V
-   #PBS -q foo
-   #PBS -l nodes=1
-   #PBS -l walltime=60
-
-(Moab understands ``#PBS`` directives).
-
-If ``execution time limit`` is specified, it is used to generate the
-``-l walltime`` directive. Do not specify the ``-l walltime``
-directive explicitly if ``execution time limit`` is specified.
-Otherwise, the execution time limit known by the suite may be out of sync with
-what is submitted to the batch system.
-
-
-sge
-^^^
-
-Submits task job scripts to Sun/Oracle Grid Engine by the ``qsub``
-command.  SGE directives can be provided in the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = sge
-               execution time limit = P1D
-           [[[directives]]]
-               -cwd =
-               -q = foo
-               -l h_data = 1024M
-               -l h_rt = 24:00:00
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   # DIRECTIVES
-   #$ -cwd
-   #$ -q foo
-   #$ -l h_data=1024M
-   #$ -l h_rt=24:00:00
-
-If ``execution time limit`` is specified, it is used to generate the
-``-l h_rt`` directive. Do not specify the ``-l h_rt``
-directive explicitly if ``execution time limit`` is specified.
-Otherwise, the execution time limit known by the suite may be out of sync with
-what is submitted to the batch system.
-
-
-slurm
-^^^^^
-
-Submits task job scripts to Simple Linux Utility for Resource Management by the
-``sbatch`` command. SLURM directives can be provided in the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[my_task]]
-           [[[job]]]
-               batch system = slurm
-               execution time limit = PT1H
-           [[[directives]]]
-               --nodes = 5
-               --account = QXZ5W2
-
-.. note::
-
-   Since not all SLURM commands have a short form, cylc requires
-   the long form directives.
-
-These are written to the top of the task job script like this:
-
-.. code-block:: bash
-
-   #!/bin/bash
-   #SBATCH --nodes=5
-   #SBATCH --time=60:00
-   #SBATCH --account=QXZ5W2
-
-If ``execution time limit`` is specified, it is used to generate the
-``--time`` directive. Do not specify the ``--time``
-directive explicitly if ``execution time limit`` is specified.
-Otherwise, the execution time limit known by the suite may be out of sync with
-what is submitted to the batch system.
-
 
 Default Directives Provided
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -292,19 +56,8 @@ too long. For version 12 or below, this is 15 characters. For version 13, this
 is 236 characters. The default setting will truncate the job name string to 236
 characters. If you have PBS 12 or older at your site, you should modify your
 site's global configuration file to allow the job name to be truncated at 15
-characters. See the
-:cylc:conf:`global.cylc[hosts][<hostname glob>][batch systems][<batch system name>]job name length maximum`
-configuration, for example:
-
-.. code-block:: cylc
-
-   [hosts]
-       [[myhpc*]]
-           [[[batch systems]]]
-               [[[[pbs]]]]
-                   # PBS 13
-                   job name length maximum = 15
-
+characters using
+:cylc:conf:`global.cylc[platforms][<platform name>]job name length maximum`.
 
 Directives Section Quirks (PBS, SGE, ...)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -322,8 +75,7 @@ line:
 
    -l=select=28:ncpus=36:mpiprocs=18:ompthreads=2:walltime=12:00:00
 
-(Left hand side is ``-l``. A second ``-l=...`` line will
-override the first.)
+(Left hand side is ``-l``. A second ``-l=...`` line will override the first.)
 
 Or separate the items:
 
@@ -347,12 +99,12 @@ Or separate the items:
 Task stdout And stderr Logs
 ---------------------------
 
-When a task is ready to run cylc generates a filename root to be used
+When a task is ready to run Cylc generates a filename root to be used
 for the task job script and log files. The file path contains the task
 name, cycle point, and a submit number that increments if the same task is
 re-triggered multiple times:
 
-.. code-block:: bash
+.. code-block:: sub
 
    # task job script:
    ~/cylc-run/my-suite/basic/log/job/1/hello/01/job
@@ -361,11 +113,12 @@ re-triggered multiple times:
    # task stderr:
    ~/cylc-run/my-suite/basic/log/job/1/hello/01/job.err
 
-How the stdout and stderr streams are directed into these files depends
-on the batch system. The ``background`` method just uses
+How the stdout and stderr streams are directed into these files depends on the
+batch system. The
+py:mod:`background <cylc.flow.batch_sys_handlers.background>` method just uses
 appropriate output redirection on the command line, as shown above. The
-``loadleveler`` method writes appropriate directives to the job
-script that is submitted to loadleveler.
+:py:mod:`loadleveler <cylc.flow.batch_sys_handlers.loadleveler>` method writes
+appropriate directives to the job script that is submitted to loadleveler.
 
 Cylc obviously has no control over the stdout and stderr output from
 tasks that do their own internal output management (e.g. tasks
@@ -373,16 +126,19 @@ that submit internal jobs and direct the associated output to other
 files). For less internally complex tasks, however, the files referred
 to here will be complete task job logs.
 
-Some batch systems, such as ``pbs``, redirect a job's stdout
+Some batch systems, such as :py:mod:`PBS <cylc.flow.batch_sys_handlers.pbs>`,
+redirect a job's stdout
 and stderr streams to a separate cache area while the job is running. The
 contents are only copied to the normal locations when the job completes. This
 means that ``cylc cat-log`` will be unable to find the
 job's stdout and stderr streams while the job is running. Some sites with these
 batch systems are known to provide commands for viewing and/or
 tail-follow a job's stdout and stderr streams that are redirected to these
-cache areas. If this is the case at your site, you can configure cylc to make
+cache areas. If this is the case at your site, you can configure Cylc to make
 use of the provided commands by adding some settings to the global site/user
 config. E.g.:
+
+.. TODO - re-write this example when default directives arrive for platforms
 
 .. code-block:: cylc
 
@@ -402,9 +158,10 @@ Overriding The Job Submission Command
 -------------------------------------
 
 To change the form of the actual command used to submit a job you do not
-need to define a new batch system handler; just override the
-``command template`` in the relevant job submission sections of
-your :cylc:conf:`flow.cylc` file:
+need to define a new batch system handler override
+:cylc:conf:`flow.cylc[runtime][<namespace>][job]batch submit command template`.
+
+.. TODO - platformise
 
 .. code-block:: cylc
 
@@ -423,7 +180,7 @@ Job Polling
 -----------
 
 For supported batch systems, one-way polling can be used to determine actual
-job status: the suite server program executes a process on the task host, by
+job status: the :term:`scheduler` executes a process on the task host, by
 non-interactive ssh, to interrogate the batch queueing system there, and to
 read a *status file* that is automatically generated by the task job script
 as it runs.
@@ -444,7 +201,7 @@ Tasks are polled multiple times, where necessary, when they exceed their
 execution time limits. These are normally set with some initial delays to allow
 the batch systems to kill the jobs.
 (See
-:cylc:conf:`execution time limit intervals <global.cylc[hosts][<hostname glob>][batch systems][<batch system name>]execution time limit polling intervals>`
+:cylc:conf:`execution time limit intervals <global.cylc[platforms][<platform name>]execution time limit polling intervals>`
 for how to configure the polling
 intervals).
 
@@ -457,20 +214,18 @@ hosts that are known to be flaky, or as the sole method of determining task
 status on hosts that do not allow task messages to be routed back to the suite
 host.
 
-
-
 To use polling instead of task-to-suite messaging set
-:cylc:conf:`global.cylc[hosts][<hostname glob>]task communication method = poll`.
+:cylc:conf:`global.cylc[platforms][<platform name>]communication method = poll`.
 
-The default polling intervals can be overridden in the gloal configuration:
+The default polling intervals can be overridden in the global configuration:
 
 * :cylc:conf:`submission polling intervals
-  <global.cylc[hosts][<hostname glob>]submission polling intervals>`
+  <global.cylc[platforms][<platform name>]submission polling intervals>`
 * :cylc:conf:`execution polling intervals
-  <global.cylc[hosts][<hostname glob>]execution polling intervals>`
+  <global.cylc[platforms][<platform name>]execution polling intervals>`
 
 Or in suite configurations (in which case polling will be done regardless
-of the task communication method configured for the host):
+of the communication method configured for the platform):
 
 * :cylc:conf:`submission polling intervals
   <[runtime][<namespace>][job]submission polling intervals>`
@@ -493,7 +248,7 @@ task status, and it should be used sparingly in large suites.
 Job Killing
 -----------
 
-For supported batch systems, the suite server program can execute a process on
+For supported batch systems, the :term:`scheduler` can execute a process on
 the task host, by non-interactive ssh, to kill a submitted or running job
 according to its batch system.
 
@@ -503,7 +258,9 @@ Tasks can be killed on demand by using the ``cylc kill`` command.
 Execution Time Limit
 --------------------
 
-You can specify an ``execution time limit`` for all supported job
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+You can specify an :cylc:conf:`[job]execution time limit` for all supported job
 submission methods. E.g.:
 
 .. code-block:: cylc
@@ -513,39 +270,47 @@ submission methods. E.g.:
            [[[job]]]
                execution time limit = PT1H
 
-For tasks running with ``background`` or ``at``, their jobs
+For tasks running with
+:py:mod:`background <cylc.flow.batch_sys_handlers.background>` or
+:py:mod:`at <cylc.flow.batch_sys_handlers.at>`, their jobs
 will be wrapped using the ``timeout`` command. For all other methods,
 the relevant time limit directive will be added to their job files.
 
-The ``execution time limit`` setting will also inform the suite when a
+The :cylc:conf:`[job]execution time limit` setting will also inform the suite when a
 a task job should complete by. If a task job has not reported completing within
 the specified time, the suite will poll the task job. (The default
-setting is PT1M, PT2M, PT7M. The accumulated times for these intervals will be
+setting is ``PT1M, PT2M, PT7M``. The accumulated times for these intervals will be
 roughly 1 minute, 1 + 2 = 3 minutes and 1 + 2 + 7 = 10 minutes after a task job
-exceeds its execution time limit.)
+exceeds its :cylc:conf:`[job]execution time limit`.)
+
+.. cylc-scope::
 
 
 Execution Time Limit and Execution Timeout
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you specify an ``execution time limit`` the
-``execution timeout event handler`` will only be called if the job has
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+If you specify an :cylc:conf:`[job]execution time limit` the
+execution timeout event handler will only be called if the job has
 not completed after the final poll (by default, 10 min after the time limit).
 This should only happen if the submission method you are using is not enforcing
 wallclock limits (unlikely) or you are unable to contact the machine to confirm
 the job status.
 
-If you specify an ``execution timeout`` and not an
-``execution time limit`` then the
-``execution timeout event handler`` will be called as soon as the
+If you specify an :cylc:conf:`[events]execution timeout` and not an
+:cylc:conf:`[job]execution time limit` then the
+execution timeout event handler will be called as soon as the
 specified time is reached. The job will also be polled to check its latest
 status (possibly resulting in an update in its status and the calling of the
 relevant event handler). This behaviour is deprecated, which users should avoid
 using.
 
-If you specify an ``execution timeout`` and an
-``execution time limit`` then the execution timeout setting will be
+If you specify an :cylc:conf:`[events]execution timeout` and an
+:cylc:conf:`[job]execution time limit` then the execution timeout setting will be
 ignored.
+
+.. cylc-scope::
 
 
 .. _CustomJobSubmissionMethods:
@@ -554,8 +319,8 @@ Custom Job Submission Methods
 -----------------------------
 
 Defining a new batch system handler requires a little Python programming. Use
-the built-in handlers as examples, and read the documentation in
-``lib/cylc/batch_sys_manager.py``.
+the built-in handlers (e.g. :py:mod:`cylc.flow.batch_sys_handlers.background`)
+as examples.
 
 
 An Example
@@ -564,6 +329,8 @@ An Example
 The following ``qsub.py`` module overrides the built-in *pbs*
 batch system handler to change the directive prefix from ``#PBS`` to
 ``#QSUB``:
+
+.. TODO - double check that this still works, it's been a while
 
 .. code-block:: python
 
@@ -579,6 +346,8 @@ batch system handler to change the directive prefix from ``#PBS`` to
 If this is in the Python search path (see
 :ref:`Where To Put Batch System Handler Modules` below) you can use it by
 name in suite configurations:
+
+.. TODO - platformise
 
 .. code-block:: cylc
 
@@ -600,13 +369,15 @@ directive format, and PBS does not accept ``#QSUB`` directives in
 reality.
 
 
+.. TODO - update with rose-suite run migration
+
 .. _Where To Put Batch System Handler Modules:
 
 Where To Put Batch System Handler Modules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-*Custom batch system handlers must be installed on suite and job
-hosts* in one of these locations:
+Custom batch system handlers must be installed on suite and job
+hosts in one of these locations:
 
 - under ``SUITE-DEF-PATH/lib/python/``
 - under ``CYLC-PATH/lib/cylc/batch_sys_handlers/``

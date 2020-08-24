@@ -15,8 +15,9 @@ help:
 
 clean:
 	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	# remove auto-generated content
+	# remove auto-generated content
 	rm -rf src/user-guide/plugins/main-loop/built-in
+	rm -rf src/user-guide/batch-sys-handlers
 
 cleanall:
 	(cd doc; echo [0-9]*.*)

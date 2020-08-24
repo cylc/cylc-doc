@@ -2,8 +2,9 @@
 [meta]
     title = "Jinja2 city suite example."
     description = """
-Illustrates use of variables and math expressions, and programmatic
-generation of groups of related dependencies and runtime properties."""
+        Illustrates use of variables and math expressions, and programmatic
+        generation of groups of related dependencies and runtime properties.
+    """
 
 {% set HOST = "SuperComputer" %}
 {% set CITIES = 'NewYork', 'Philadelphia', 'Newark', 'Houston', 'SantaFe', 'Chicago' %}
@@ -19,16 +20,17 @@ generation of groups of related dependencies and runtime properties."""
         T23 = "clean"
 {% endif %}
         T00,T12 = """
-                    setup => get_lbc & get_ic # foo
-{% for CITY in CITIES %} {# comment #}
-                    get_lbc => {{ CITY }}_one
-                    get_ic => {{ CITY }}_two
-                    {{ CITY }}_one & {{ CITY }}_two => {{ CITY }}_three & {{ CITY }}_four
-{% if CLEANUP %}
-                    {{ CITY }}_three & {{ CITY }}_four => cleanup
-{% endif %}
+            setup => get_lbc & get_ic # foo
+    {% for CITY in CITIES %} {# comment #}
+            get_lbc => {{ CITY }}_one
+            get_ic => {{ CITY }}_two
+            {{ CITY }}_one & {{ CITY }}_two => {{ CITY }}_three & {{ CITY }}_four
+        {% if CLEANUP %}
+            {{ CITY }}_three & {{ CITY }}_four => cleanup
+    {% endif %}
 {% endfor %}
-                    """
+        """
+
 [runtime]
     [[on_{{ HOST }} ]]
         [[[remote]]]
@@ -40,10 +42,10 @@ generation of groups of related dependencies and runtime properties."""
 {% for CITY in CITIES %}
     [[ {{ CITY }} ]]
         inherit = on_{{ HOST }}
-{% for JOB in CITYJOBS %}
+    {% for JOB in CITYJOBS %}
     [[ {{ CITY }}_{{ JOB }} ]]
         inherit = {{ CITY }}
-{% endfor %}
+    {% endfor %}
 {% endfor %}
 
 [visualization]

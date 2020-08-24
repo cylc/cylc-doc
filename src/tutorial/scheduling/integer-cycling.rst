@@ -56,9 +56,9 @@ To make a workflow repeat we must tell Cylc three things:
         [[graph]]
    -        R1 = """
    +        P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+            """
 
 .. nextslide::
 
@@ -158,10 +158,10 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-   +                clean_oven[-P1] => pre_heat_oven
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+   +            clean_oven[-P1] => pre_heat_oven
+            """
 
 .. nextslide::
 
@@ -252,11 +252,11 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-                    clean_oven[-P1] => pre_heat_oven
-   +                sell_bread[-P2] => buy_ingredients
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+                clean_oven[-P1] => pre_heat_oven
+   +            sell_bread[-P2] => buy_ingredients
+            """
 
 .. nextslide::
 
@@ -444,9 +444,9 @@ Recurrence Sections
               [[graph]]
          -        R1 = """
          +        P1 = """
-                          a & c => b => d & f
-                          d => e
-                      """
+                      a & c => b => d & f
+                      d => e
+                  """
 
    #. **Visualise the suite.**
 
@@ -488,12 +488,12 @@ Recurrence Sections
               initial cycle point = 1
               [[graph]]
                   P1 = """
-                          a & c => b => d & f
-         -                d => e
-                      """
+                      a & c => b => d & f
+         -            d => e
+                  """
          +        P2 = """
-         +                d => e
-         +            """
+         +            d => e
+         +        """
 
       Use ``cylc graph`` to see the effect this has on the workflow.
 
@@ -578,13 +578,13 @@ Recurrence Sections
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                            a & c => b => d & f
-                            f[-P1] => c  # (1)
-                        """
+                        a & c => b => d & f
+                        f[-P1] => c  # (1)
+                    """
                     P2 = """
-                            d => e
-                            d[-P1] => a  # (2)
-                        """
+                        d => e
+                        d[-P1] => a  # (2)
+                    """
                     2/P2 = """
-                            e[-P1] => a  # (3)
-                        """
+                        e[-P1] => a  # (3)
+                    """
