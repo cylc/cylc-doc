@@ -32,7 +32,7 @@ Via Conda (recommended):
 
 .. code-block:: console
 
-   # install cylc with the browser-GUI
+   # install cylc with the browser-GUI
    $ conda install cylc
 
 Via pip:
@@ -48,7 +48,7 @@ Via pip:
 .. code-block:: console
 
    # install the "core" cylc package
-   $ pip install cylc-flow
+   $ pip install cylc-flow
 
    # install the browser-GUI
    $ pip install cylc-uiserver
