@@ -316,7 +316,9 @@ Cylc Graphs
       A Cylc suite is just a directory containing a :cylc:conf:`flow.cylc` file.
 
       If you don't have one already, create a ``cylc-run`` directory in your
-      user space i.e::
+      user space i.e.
+
+      .. code-block::
 
          ~/cylc-run
 

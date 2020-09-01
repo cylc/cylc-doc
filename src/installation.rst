@@ -225,7 +225,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
 
    Start the Hub (JupyterHub gets installed with the "cylc" package):
 
-   ::
+   .. code-block:: console
 
       $ mkdir -p "${HOME}/srv/cylc/"  # the hub will store session information here
       $ cd "${HOME}/srv/cylc/"
@@ -269,7 +269,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
 
    To deactivate and/or remove the conda environment:
 
-   ::
+   .. code-block:: console
 
       (cylc1) $ conda deactivate
       $ conda env remove -n cylc1
@@ -281,7 +281,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
    fail before succeeding after a random number of retries (this shows
    the new "Cylc 8 task/job separation" nicely):
 
-   ::
+   .. code-block:: cylc
 
       [cylc]
          cycle point format = %Y

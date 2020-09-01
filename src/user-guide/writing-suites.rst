@@ -37,7 +37,7 @@ A Cylc :term:`suite directory` contains:
 ``lib/python/`` (optional)
    A directory for Python modules which can be used for:
 
-   - Tasks; this directory is automatically added to `$PYTHONPATH``
+   - Tasks; this directory is automatically added to ``$PYTHONPATH``
      in the job execution environment.
    - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`.
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`).
@@ -146,7 +146,7 @@ atom
 emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
-   `cylc extract-resources . etc/syntax/cylc-mode.el``
+   ``cylc extract-resources . etc/syntax/cylc-mode.el``
    installation instructions are at the top of the file.
 gedit
    The syntax file can be obtained from the Cylc library by
@@ -1182,10 +1182,10 @@ Message Triggers
 .. tutorial:: Message Trigger Tutorial <tutorial-cylc-message-triggers>
 
 Tasks can also trigger off custom output messages. These must be registered in
-the :cylc:conf:`[runtime]` section of the emitting task, and reported using
-the ``cylc message`` command in task scripting. The graph trigger notation
-refers to the item name of the registered output message.
-And example message triggering suite:
+the :cylc:conf:`[runtime][<namespace>][outputs]` section of the emitting task,
+and reported using the ``cylc message`` command in task scripting.
+The graph trigger notation refers to the item name of the registered
+output message. An example message triggering suite:
 
 .. literalinclude:: ../suites/message-triggers/flow.cylc
    :language: cylc
@@ -2305,8 +2305,7 @@ run directory. A task can get its own work directory from
 runtime). By default the location contains task name and cycle point, to
 provide a unique workspace for every instance of every task. This can be
 overridden in the suite configuration, however, to get several tasks to share
-the same :cylc:conf:`
-work directory <global.cylc[platforms][<platform name>]work directory>`.
+the same :cylc:conf:`work directory <global.cylc[platforms][<platform name>]work directory>`.
 
 The top level work and share directory (above) location can be changed
 (e.g. to a large data area) by a global config setting

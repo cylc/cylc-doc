@@ -20,7 +20,7 @@ Once a suite is up and running it is typically a restart that is needed most
 often (but see also ``cylc reload``).
 
 .. warning::
-   
+
    Cold and warm starts wipe out prior suite state, so you can't go back to a
    restart if you decide you made a mistake.
 
@@ -364,10 +364,11 @@ repeatedly until finished:
 
 A list of intervals with optional multipliers can be used for both submission
 and execution polling, although a single value is probably sufficient for
-submission polling. If these items are not configured default values from site
-and user global config will be used for :cylc:conf:`communication method =
-polling`; polling is not done by default under the other task communications
-methods (but it can still be used if you like).
+submission polling. If these items are not configured default values from
+site and user global config will be used for
+:cylc:conf:`communication method = polling`; polling is not done by default
+under the other task communications methods (but it can still be used
+if you like).
 
 .. cylc-scope::
 
