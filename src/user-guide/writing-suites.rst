@@ -2667,7 +2667,7 @@ substitution. For example, if we add this to the above configuration:
 
    [runtime]
        [[model<run,obs>]]
-           [[[parameter environment templates]]]
+           [[[environment]]]
                MYNAME = %(obs)sy-mc%(obs)sface
                MYFILE = /path/to/run%(run)03d/%(obs)s
 
