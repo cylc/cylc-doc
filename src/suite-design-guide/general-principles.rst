@@ -433,13 +433,13 @@ Sharing by inheritance of task families is recommended when more than a few
 configuration items are involved.
 
 The simplest application of inheritance is to set global defaults in the
-``[[runtime]][root]`` namespace that is inherited by all tasks.
+``[runtime][root]`` namespace that is inherited by all tasks.
 However, this should only be done for settings that really are used
 by the vast majority of tasks. Over-sharing of via root, particularly of
 environment variables, is a maintenance risk because it can be very
-difficult to be sure which tasks are *using* which global variables.
+difficult to be sure which tasks are using which global variables.
 
-Any ``[runtime]`` settings can be shared - scripting, host
+Any :cylc:conf:`[runtime]` settings can be shared - scripting, host
 and batch scheduler configuration, environment variables, and so on - from
 single items up to complete task or app configurations. At the latter extreme,
 it is quite common to have several tasks that inherit the same complete

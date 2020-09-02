@@ -202,8 +202,7 @@ execution time limits. These are normally set with some initial delays to allow
 the batch systems to kill the jobs.
 (See
 :cylc:conf:`execution time limit intervals <global.cylc[platforms][<platform name>]execution time limit polling intervals>`
-for how to configure the polling
-intervals).
+for how to configure the polling intervals).
 
 Any tasks recorded in the *submitted* or *running* states at suite
 restart are automatically polled to determine what happened to them while the
@@ -219,18 +218,14 @@ To use polling instead of task-to-suite messaging set
 
 The default polling intervals can be overridden in the global configuration:
 
-* :cylc:conf:`submission polling intervals
-  <global.cylc[platforms][<platform name>]submission polling intervals>`
-* :cylc:conf:`execution polling intervals
-  <global.cylc[platforms][<platform name>]execution polling intervals>`
+* :cylc:conf:`submission polling intervals<global.cylc[platforms][<platform name>]submission polling intervals>`
+* :cylc:conf:`execution polling intervals<global.cylc[platforms][<platform name>]execution polling intervals>`
 
 Or in suite configurations (in which case polling will be done regardless
 of the communication method configured for the platform):
 
-* :cylc:conf:`submission polling intervals
-  <[runtime][<namespace>][job]submission polling intervals>`
-* :cylc:conf:`execution polling intervals
-  <[runtime][<namespace>][job]execution polling intervals>`
+* :cylc:conf:`submission polling intervals<[runtime][<namespace>][job]submission polling intervals>`
+* :cylc:conf:`execution polling intervals<[runtime][<namespace>][job]execution polling intervals>`
 
 Note that regular polling is not as efficient as task messaging in updating
 task status, and it should be used sparingly in large suites.
