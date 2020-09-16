@@ -95,23 +95,22 @@ the ``$PATH`` in your bash configuration files (e.g. ``.bashrc``).
 Task Messages
 -------------
 
-Task jobs send status messages back to the server program to report that
+Task jobs send status messages back to the :term:`scheduler` to report that
 execution has started, succeeded, or failed. Custom messages can also be sent
 by the same mechanism, with various severity levels. These can be used to
-trigger other tasks off specific task outputs, or to trigger execution of
-event handlers by the server program (see :ref:`EventHandling`), or just to
-write information to the server log.
+trigger other tasks off specific task outputs (see :ref:`MessageTriggers`), or
+to trigger execution of event handlers by the scheduler (see
+:ref:`EventHandling`), or just to write information to the scheduler log.
 
 .. cylc-scope:: global.cylc[platforms][<platform name>]
 
 (If polling is configured as the :cylc:conf:`communication method` for a
 :cylc:conf:`platform <[..]>`, the messaging system just writes messages to the
-local job status file for recovery by the server at the next poll).
+local job status file for recovery by the scheduler at the next poll).
 
 .. cylc-scope::
 
-Normal severity messages are printed to ``job.out`` and logged by the
-server program:
+Normal severity messages are printed to ``job.out`` and logged by the scheduler:
 
 .. code-block:: bash
 
@@ -154,6 +153,11 @@ of messaging retries just holds up job completion unnecessarily. If a job
 status message does not get through, the server will recover the correct task
 status by polling on job timeout (or earlier if regular polling is
 configured).
+
+Task messages are validated by
+:py:class:`cylc.flow.unicode_rules.TaskMessageValidator`.
+
+.. autoclass:: cylc.flow.unicode_rules.TaskMessageValidator
 
 Aborting Job Scripts on Error
 -----------------------------
