@@ -104,9 +104,24 @@ files they need are more robust.
 Installing Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Use ``rose suite-run`` *file creation mode* or ``R1``
-install tasks to copy files to the self-contained suite run directory at
-start-up. Install tasks are preferred for time-consuming installations because
+Files can be installed on the remote platform. As standard, Cylc installs the
+following directories: ``app``, ``bin``, ``etc``, ``lib``.
+Cylc supports adding custom directories and files to the file installation.
+E.g. dir1, dir2, file1, file2, you can add the following configuration to your
+:cylc:conf:`flow.cylc`. To denote a directory, please add a trailing slash.  
+
+.. code-block:: cylc
+
+    [scheduler]
+        install = dir1/, dir2/, file1, file2
+
+.. note::
+
+   Please ensure files and directories to be installed are located in the top
+   level of your workflow. 
+
+The file installation will timeout after 10 minutes.
+Install tasks are preferred for time-consuming installations because
 they don't slow the suite start-up process, they can be monitored,
 they can run directly on target platforms, and you can rerun them later without
 restarting the suite. If you are using symbolic links to install files under
