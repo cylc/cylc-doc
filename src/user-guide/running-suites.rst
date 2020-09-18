@@ -253,10 +253,12 @@ commands can read this file, if they have access to it, to find the target
 Authentication Files
 --------------------
 
-Cylc uses CurveZMQ to ensure that any data, sent between the
-:term:`scheduler <scheduler>` and the client, remains protected during
-transmission. Public keys are used to encrypt the data, private keys for
-decryption. Authentication files will be created in your 
+Cylc uses `CurveZMQ <http://curvezmq.org/page:read-the-docs/>`_ to ensure that
+any data, sent between the :term:`scheduler <scheduler>` and the client,
+remains protected during transmission. Public keys are used to encrypt the
+data, private keys for decryption. 
+
+Authentication files will be created in your 
 ``$HOME/cylc-run/WORKFLOW/.service/`` directory at start-up. You can expect to
 find one client public key per file system for remote jobs.
 
