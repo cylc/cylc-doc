@@ -248,6 +248,46 @@ commands can read this file, if they have access to it, to find the target
 :term:`scheduler`.
 
 
+.. _Authentication Files:
+
+Authentication Files
+--------------------
+
+Cylc uses `CurveZMQ <http://curvezmq.org/page:read-the-docs/>`_ to ensure that
+any data, sent between the :term:`scheduler <scheduler>` and the client,
+remains protected during transmission. Public keys are used to encrypt the
+data, private keys for decryption. 
+
+Authentication files will be created in your 
+``$HOME/cylc-run/WORKFLOW/.service/`` directory at start-up. You can expect to
+find one client public key per file system for remote jobs.
+
+On the workflow host, the directory structure should contain:
+
+   .. code-block:: none
+
+         ~/cylc-run/workflow_x
+         |__.service
+            |__client_public_keys
+            |  \-- client_localhost.key
+            |  \-- <any further client keys>
+         |  \-- client.key_secret
+         |  \-- server.key
+         |  \-- server.key_secret
+
+On the remote job host, the directory structure should contain:
+
+   .. code-block:: none
+
+         ~/cylc-run/workflow_x
+         |__.service
+            \-- client.key
+            \-- client.key_secret
+            \-- server.key
+
+Keys are removed as soon as they are no longer required.
+
+
 .. _Task Job Polling:
 
 Task Job Polling
