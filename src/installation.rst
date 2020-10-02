@@ -204,9 +204,7 @@ Cylc Flow
 ^^^^^^^^^
 
 `Cylc Flow`_ is configured by the :cylc:conf:`global.cylc` file which supports
-both global (site) and local (user) configuration of the system.
-
-See the :cylc:conf:`global.cylc` section for details.
+configuration of the system on both a site and user basis.
 
 .. note::
 
