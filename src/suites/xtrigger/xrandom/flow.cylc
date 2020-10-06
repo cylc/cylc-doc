@@ -2,8 +2,7 @@
     cycling mode = integer
     initial cycle point = 1
     final cycle point = 5
-    max active cycle points = 5
-    spawn to max active cycle points = True
+    runahead limit = P5
     [[xtriggers]]
         # Called once for all dependent tasks (all cycles).
         x1 = xrandom(percent=25, secs=2):PT5S

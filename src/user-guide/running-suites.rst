@@ -256,9 +256,9 @@ Authentication Files
 Cylc uses `CurveZMQ <http://curvezmq.org/page:read-the-docs/>`_ to ensure that
 any data, sent between the :term:`scheduler <scheduler>` and the client,
 remains protected during transmission. Public keys are used to encrypt the
-data, private keys for decryption. 
+data, private keys for decryption.
 
-Authentication files will be created in your 
+Authentication files will be created in your
 ``$HOME/cylc-run/WORKFLOW/.service/`` directory at start-up. You can expect to
 find one client public key per file system for remote jobs.
 
@@ -498,12 +498,10 @@ suites. Succeeded and failed tasks are ignored when computing the runahead
 limit.
 
 The preferred runahead limiting mechanism restricts the number of consecutive
-active cycle points. The default value is three active cycle points, this
-is configured by :cylc:conf:`[scheduling]max active cycle points`.
-
-Alternatively the interval between the
-slowest and fastest tasks can be specified as hard limit by configuring
-:cylc:conf:`[scheduling]runahead limit`.
+active cycle points. The default value is five active cycle points, this
+is configured by :cylc:conf:`[scheduling]runahead limit`. Alternatively, the
+time interval between the slowest and fastest tasks can be specified (for
+:term:`datetime cycling` workflows).
 
 
 .. _InternalQueues:

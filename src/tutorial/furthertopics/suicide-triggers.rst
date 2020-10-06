@@ -216,14 +216,15 @@ either succeeded or failed Cylc cannot move onto the next cycle.
 
 .. tip::
 
-   For more information search ``max active cycle points`` in the
+   For more information search ``runahead limit`` in the
    `Cylc User Guide`_.
 
 You will also notice that some of the tasks (e.g. ``eat_cake`` in cycle ``2``
 in the above example) are drawn in a faded gray. This is because these tasks
 have not yet been run in earlier cycles and as such cannot run.
 
-.. TODO - Spawn On Demand!
+.. TODO - Spawn On Demand! (Also the default runahead limit on cycle points has
+   increased to 5)
 
 
 Removing Tasks From The Graph
