@@ -3,7 +3,7 @@ Installation
 
 .. warning::
 
-   **Cylc-8.0a1 is an early full-system Cylc 8 preview release**
+   **Cylc** |version| **is an early full-system Cylc 8 preview release**
 
    It has a fully functional Python 3 workflow service and CLI that can run
    existing Cylc workflows.
