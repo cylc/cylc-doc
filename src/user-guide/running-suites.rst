@@ -490,7 +490,7 @@ Runahead limiting prevents the fastest tasks in a suite from getting too far
 ahead of the slowest ones.
 
 For example in the following workflow the runahead limit of ``P5`` restricts the
-workflow so that only five consecuative cycles may run simultaneously.
+workflow so that only five consecutive cycles may run simultaneously.
 
 .. code-block:: cylc
 
@@ -509,10 +509,10 @@ Succeeded and failed tasks are ignored when computing the runahead limit. This
 functionality is controlled by the :cylc:conf:`[scheduling]runahead limit`
 which can be set to either:
 
-* A number of consecuative cycles.
+* A number of consecutive cycles.
 * Or a time interval between the oldest and newest cycles.
 
-A low runhead limit can prevent Cylc from interleaving cycles, but it will not
+A low runahead limit can prevent Cylc from interleaving cycles, but it will not
 stall a suite unless it fails to extend out past a future trigger (see
 :ref:`InterCyclePointTriggers`).
 

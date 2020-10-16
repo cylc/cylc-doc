@@ -54,7 +54,7 @@ jobs:
 
       - name: build
         run: |
-          make html slides linkcheck SPHINXOPTS='-Wn'
+          make html slides linkcheck doctest SPHINXOPTS='-Wn'
 
       - name: tutorial suite
         run: |
