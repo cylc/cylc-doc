@@ -8,3 +8,4 @@ Reference
    config/index
    api/index
    dev-history-major-changes
+   ../appendices/command-ref.rst

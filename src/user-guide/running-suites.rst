@@ -487,23 +487,41 @@ Runahead Limiting
 -----------------
 
 Runahead limiting prevents the fastest tasks in a suite from getting too far
-ahead of the slowest ones. Newly spawned tasks are released to the task pool
-only when they fall below the runahead limit. A low runhead limit can prevent
-cylc from interleaving cycles, but it will not stall a suite unless it fails to
-extend out past a future trigger (see :ref:`InterCyclePointTriggers`).
-A high runahead limit may allow fast tasks that are not constrained by
-dependencies or clock-triggers to spawn far ahead of the pack, which could have
-performance implications for the :term:`scheduler` when running very large
-suites. Succeeded and failed tasks are ignored when computing the runahead
-limit.
+ahead of the slowest ones.
 
-The preferred runahead limiting mechanism restricts the number of consecutive
-active cycle points. The default value is three active cycle points, this
-is configured by :cylc:conf:`[scheduling]max active cycle points`.
+For example in the following workflow the runahead limit of ``P5`` restricts the
+workflow so that only five consecuative cycles may run simultaneously.
 
-Alternatively the interval between the
-slowest and fastest tasks can be specified as hard limit by configuring
-:cylc:conf:`[scheduling]runahead limit`.
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 1
+       cycling mode = integer
+       runahead limit = P5
+       [[graph]]
+           P1 = foo
+
+When this workflow is started the tasks ``foo.1`` -> ``foo.5`` will be submitted,
+however, the tasks from ``foo.6`` onwards are said to be "runahead limited"
+and will not be submitted.
+
+Succeeded and failed tasks are ignored when computing the runahead limit. This
+functionality is controlled by the :cylc:conf:`[scheduling]runahead limit`
+which can be set to either:
+
+* A number of consecuative cycles.
+* Or a time interval between the oldest and newest cycles.
+
+A low runhead limit can prevent Cylc from interleaving cycles, but it will not
+stall a suite unless it fails to extend out past a future trigger (see
+:ref:`InterCyclePointTriggers`).
+
+A high runahead limit may allow fast tasks
+that are not constrained by dependencies or clock-triggers to spawn far ahead
+of the pack, which could have performance implications for the
+:term:`scheduler` when running very large suites.
+
+See the :cylc:conf:`[scheduling]runahead limit` configuration for more details.
 
 
 .. _InternalQueues:
@@ -624,16 +642,16 @@ These can be configured using the settings:
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
-- :cylc:conf:`[events]mail to` (list of email addresses)
-- :cylc:conf:`[events]mail from`
-- :cylc:conf:`[events]mail smtp`
+- :cylc:conf:`[mail]to` (list of email addresses)
+- :cylc:conf:`[mail]from`
+- :cylc:conf:`[mail]smtp`
 
 .. cylc-scope::
 
 By default, a cylc suite will send you no more than one task event email every
 5 minutes - this is to prevent your inbox from being flooded by emails should a
 large group of tasks all fail at similar time. This is configured by
-:cylc:conf:`[cylc]task event mail interval`.
+:cylc:conf:`[cylc][mail]task event batch interval`.
 
 Event handlers can be located in the suite ``bin/`` directory;
 otherwise it is up to you to ensure their location is in ``$PATH`` (in

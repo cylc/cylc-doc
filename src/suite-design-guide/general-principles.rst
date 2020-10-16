@@ -332,7 +332,7 @@ queues*, respectively.
 Runahead Limiting
 ^^^^^^^^^^^^^^^^^
 
-By default Cylc allows a maximum of three cycle points to be active at the same
+By default Cylc allows a maximum of five cycle points to be active at the same
 time, but this value is configurable:
 
 .. code-block:: cylc
@@ -340,7 +340,7 @@ time, but this value is configurable:
    [scheduling]
        initial cycle point = 2020-01-01T00
        # Don't allow any cycle interleaving:
-       max active cycle points = 1
+       runahead limit = 1
 
 
 Internal Queues
