@@ -3227,6 +3227,14 @@ the variable value to be "filtered" or "tested", respectively, and
 subsequent arguments can be whatever else is needed. Currently there are three
 custom filters:
 
+.. import the filters to allow their doctests to pass (make doctest)
+
+.. testsetup::
+
+   from cylc.flow.jinja.filters.pad import pad
+   from cylc.flow.jinja.filters.strftime import strftime
+   from cylc.flow.jinja.filters.duration_as import duration_as
+
 .. autosummary::
    :nosignatures:
 
