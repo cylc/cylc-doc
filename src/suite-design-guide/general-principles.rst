@@ -398,7 +398,7 @@ easy to modify for other purposes, rather than extremely complicated suites
 that attempt do everything out of the box but are hard to maintain and modify.
 
 Note that use of Jinja2 loops for generating tasks is now deprecated in favour
-of built-in parameterized tasks - see :ref:`Parameterized Tasks Label`.
+of built-in parameterized tasks - see :ref:`User Guide Param`.
 
 
 Shared Configuration

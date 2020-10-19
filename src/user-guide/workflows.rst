@@ -36,7 +36,7 @@ This is the only sensible way to run very large suites or operational suites
 that need to continue cycling indefinitely. The cycling is configured with
 standards-based ISO 8601 date-time *recurrence expressions*. Multiple
 cycling sequences can be used at once in the same suite. See
-:ref:`ConfiguringScheduling`.
+:ref:`User Guide Scheduling`.
 
 
 .. _Parameterized-Tasks-as-a-Proxy-for-Cycling:
@@ -49,7 +49,7 @@ which each instance of a cycling job is represented by *a different task*:
 as far as the abstract workflow is concerned there is no cycling. The sequence
 of tasks can be constructed efficiently, however, using Cylc's built-in suite
 parameters (:ref:`Parameterized Cycling`) or explicit Jinja2 loops
-(:ref:`Jinja`).
+(:ref:`User Guide Jinja2`).
 
 For example, to run ``model.exe`` 12 times on a monthly cycle we could
 loop over an integer parameter ``R = 0, 1, 2, ..., 11`` to define tasks
