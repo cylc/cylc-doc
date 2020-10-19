@@ -428,6 +428,37 @@ initial and final cycle points. Using this shorthand you can write:
 
 .. _excluding-dates:
 
+How Multiple Graph Strings Combine
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For a cycling graph with multiple validity sections for different
+hours of the day, the different sections *add* to generate the
+complete graph. Different graph sections can overlap (i.e. the same
+hours may appear in multiple section headings) and the same tasks may
+appear in multiple sections, but individual dependencies should be
+unique across the entire graph. For example, the following graph defines
+a duplicate prerequisite for task C:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           T00,T06,T12,T18 = "A => B => C"
+           T06,T18 = "B => C => X"
+           # duplicate prerequisite: B => C already defined at T06, T18
+
+This does not affect scheduling, but for the sake of clarity and brevity
+the graph should be written like this:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           T00,T06,T12,T18 = "A => B => C"
+           # X triggers off C only at 6 and 18 hours
+           T06,T18 = "C => X"
+
+
 Excluding Dates
 ^^^^^^^^^^^^^^^
 
@@ -458,8 +489,8 @@ suite ``foo`` will only run once as its second run has been excluded.
        [[graph]]
            R2/P1D!20000102 = foo
 
-Advanced Exclusion Syntax
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Excluding Recurrences
+^^^^^^^^^^^^^^^^^^^^^
 
 In addition to excluding isolated date-time points or lists of date-time points
 from recurrences, exclusions themselves may be date-time recurrence sequences.
@@ -509,35 +540,6 @@ comma separated list enclosed in parentheses:
 
 .. _HowMultipleGraphStringsCombine:
 
-How Multiple Graph Strings Combine
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-For a cycling graph with multiple validity sections for different
-hours of the day, the different sections *add* to generate the
-complete graph. Different graph sections can overlap (i.e. the same
-hours may appear in multiple section headings) and the same tasks may
-appear in multiple sections, but individual dependencies should be
-unique across the entire graph. For example, the following graph defines
-a duplicate prerequisite for task C:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           T00,T06,T12,T18 = "A => B => C"
-           T06,T18 = "B => C => X"
-           # duplicate prerequisite: B => C already defined at T06, T18
-
-This does not affect scheduling, but for the sake of clarity and brevity
-the graph should be written like this:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           T00,T06,T12,T18 = "A => B => C"
-           # X triggers off C only at 6 and 18 hours
-           T06,T18 = "C => X"
 
 .. _AdvancedCycling:
 

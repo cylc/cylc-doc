@@ -1,4 +1,4 @@
-.. _User Guild Configuration:
+.. _User Guide Configuration:
 
 Workflow Configuration
 ======================
@@ -9,13 +9,6 @@ between, the various tasks managed by the suite.
 
 Here we will look at the format and content of the
 :cylc:conf:`flow.cylc` file and how to configure suites.
-
-.. note::
-
-   Task implementation - what's required of the real commands, scripts, or
-   programs that do the processing that the tasks represent - is
-   covered in :ref:`TaskImplementation`; and task job submission
-   - how tasks are submitted to run - is in :ref:`TaskJobSubmission`.
 
 
 .. _SuiteDefinitionDirectories:
@@ -141,37 +134,37 @@ Cylc provides syntax plugins for the following editors:
 .. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
 .. _language-cylc: https://atom.io/packages/language-cylc
 
-atom
+Atom
    install the `language-cylc`_ extension.
-emacs
+Emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
    ``cylc extract-resources . etc/syntax/cylc-mode.el``
    installation instructions are at the top of the file.
-gedit
+Gedit
    The syntax file can be obtained from the Cylc library by
    running the following command
    ``cylc extract-resources . etc/syntax/cylc.lang``
    installation instructions are at the top of the file.
-kate
+Kate
    The syntax file can be obtained from the Cylc library by
    running the following command
    ``cylc extract-resources . etc/syntax/cylc.xml``
    installation instructions are at the top of the file.
-pycharm
+PyCharm
    Install the `Cylc.tmbundle`_.
-vi
+Vim
    The syntax file can be obtained from the Cylc library by
    running the following command
    ``cylc extract-resources . etc/syntax/cylc.vim``
    installation instructions are at the top of the file.
-vscode
+Visual Studio Code
    Install the `vscode-cylc`_ extension.
 Sublime Text 3
    Install the `Cylc.tmbundle`_.
 TextMate
    Install the `Cylc.tmbundle`_.
-webstorm
+WebStorm
       Install the `Cylc.tmbundle`_.
 
 Gross File Structure
@@ -203,19 +196,16 @@ configuration items grouped under several top level section headings:
 Validation
 ^^^^^^^^^^
 
-Cylc :cylc:conf:`flow.cylc` files are automatically validated against a specification
-that defines all legal entries, values, options, and defaults. This
-detects formatting errors, typographic errors, illegal items and illegal
-values prior to run time. Some values are complex strings that require
-further parsing by Cylc to determine their correctness (this is also
-done during validation). All legal entries are documented in
-:cylc:conf:`flow.cylc`.
+The ``cylc validate`` command evaluates the :cylc:conf:`flow.cylc` file
+against a specification that defines all legal entries, values and options.
+It also performs some integrity checks designed to catch certain configuration
+issues and impossible scheduling constraints.
+
+These checks are also performed by ``cylc run`` before starting a workflow.
+
+All legal entries are documented in :cylc:conf:`flow.cylc`.
 
 If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
 show an inlined copy of the suite with correct line numbers
 (you can also edit suites in a temporarily inlined state with
 ``cylc edit --inline``).
-
-.. note::
-
-   Validation does not check the validity of chosen batch systems.
