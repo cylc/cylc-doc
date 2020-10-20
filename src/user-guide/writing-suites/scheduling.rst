@@ -853,7 +853,7 @@ the self-contained suite run directory.
 .. _TriggerTypes:
 
 Task Triggering
-^^^^^^^^^^^^^^^
+---------------
 
 A task is said to :term:`trigger` when it submits its job to run, as soon as all of
 its dependencies (also known as its separate "triggers") are met. Tasks can
@@ -1562,6 +1562,178 @@ External Triggers
 ^^^^^^^^^^^^^^^^^
 
 This is a substantial topic, documented in :ref:`Section External Triggers`.
+
+
+.. _Graph Branching:
+
+Graph Branching
+---------------
+
+.. versionadded:: 8.0.0
+
+Cylc handles :term:`graphs <graph>` in an event-driven manner which means
+that a workflow can follow different paths in different eventualities.
+This is called :term:`branching`.
+
+.. note::
+
+   Before Cylc 8 graphs were not event-driven so
+   :term:`suicide triggers <suicide trigger>`
+   were used to allow the graph to evolve at runtime.
+
+Basic Example
+^^^^^^^^^^^^^
+
+In this example Cylc will follow one of two possible "branches" depending
+on the outcome of task ``b``:
+
+* If ``b`` succeeds then the task ``c`` will run.
+* If ``b`` fails then the task ``r`` will run.
+
+Task ``d`` will run after either ``c`` or ``r`` succeeds.
+
+.. digraph:: example
+   :align: center
+
+   subgraph cluster_success {
+      label = ":succeed"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+
+      c
+   }
+
+   subgraph cluster_failure {
+      label = ":fail"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      r
+   }
+
+   a -> b -> c -> d
+   b -> r -> d
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           R1 = """
+               # the success path
+               a => b => c
+               # the fail path
+               a => b:fail => r
+               # carrying on with the rest of the workflow
+               c | r => d
+           """
+
+Note the last line of the graph ``c | r => d`` which allows the graph to
+continue on to ``d`` irrespective of which path has been taken.
+
+Message Trigger Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Branching is particularly powerful when combined with :ref:`MessageTriggers`,
+here is an example showing how message triggers can be used to define multiple
+parallel pathways.
+
+In this graph there is a task called ``showdown`` which produces one of three
+possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
+a different path depending on which of these three outputs is produced:
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+      label = ":good"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+      good
+   }
+   subgraph cluster_2 {
+      label = ":bad"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+      bad
+   }
+   subgraph cluster_3 {
+      label = ":ugly"
+      color = "purple"
+      fontcolor = "purple"
+      style = "dashed"
+      ugly
+   }
+   showdown -> good
+   showdown -> bad
+   showdown -> ugly
+   good -> fin [arrowhead="onormal"]
+   bad -> fin [arrowhead="onormal"]
+   ugly -> fin [arrowhead="onormal"]
+
+As with the previous example each path begins with a different outcome
+of a particular task and ends with an "or" dependency to allow the workflow
+to continue irrespective of which path was taken:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           R1 = """
+              showdown
+              showdown:good => good
+              showdown:bad => bad
+              showdown:ugly => ugly
+              good | bad | ugly => fin
+           """
+
+   [runtime]
+       [[root]]
+           script = sleep 1
+       [[showdown]]
+           # Randomly return one of the three custom outputs.
+           script = """
+               SEED=$RANDOM
+               if ! (( $SEED % 3 )); then
+                   cylc message 'The-Good'
+               elif ! (( ( $SEED + 1 ) % 3 )); then
+                   cylc message 'The-Bad'
+               else
+                   cylc message 'The-Ugly'
+               fi
+           """
+           [[[outputs]]]
+               # Register the three custom outputs with cylc.
+               good = 'The-Good'
+               bad = 'The-Bad'
+               ugly = 'The-Ugly'
+
+When using message triggers in this way there are two things to be aware of:
+
+1. Message triggers are not exit states.
+
+   Message triggers are produced ``before`` a task has completed, consequently,
+   it can be useful to combine a message trigger with a regular trigger for
+   safety e.g:
+
+   .. code-block:: cylc-graph
+
+      # good will wait for showdown to finish before running
+      showdown:finish & showdown:good => good
+
+      # if showdown fails then good will not run
+      showdown:succeed & showdown:good => good
+
+2. Message triggers are not mutually exclusive.
+
+   There is nothing in Cylc to prevent a task from producing multiple outputs
+   e.g. ``good``, ``bad`` and ``ugly``.
+
+   This is hard to defend against, ensure that the task that produces these
+   outputs is written in such a way that this cannot happen.
 
 
 .. _ModelRestartDependencies:

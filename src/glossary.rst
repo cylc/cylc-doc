@@ -807,3 +807,63 @@ Glossary
 
       When a Cylc detects that a suite has stalled an email will be sent to the
       user. Human interaction is required to escape a stalled state.
+
+   suicide trigger
+      Suicide triggers remove :term:`tasks <task>` from the :term:`graph`.
+
+      This allows Cylc to dynamically alter the graph based on events in the
+      workflow.
+
+      .. warning::
+
+         Since Cylc 8 suicide triggers have been surpassed by
+         :term:`graph branching` which provides a simpler, superiour
+         solution.
+
+      Suicide triggers are denoted using an exclamation mark, ``!foo`` would
+      mean "remove the task foo from this cycle".
+
+      .. code-block:: cylc-graph
+
+         a => b
+
+         # suicide trigger which removes the task "b" if "a" fails
+         # NOTE: since Cylc 8 this suicide trigger is not necessary
+         a:fail => !b
+
+   branching
+   graph branching
+      Cylc handles :term:`graphs <graph>` in an event-driven manner which means
+      that a workflow can follow different paths in different eventualities.
+      This is called "branching".
+
+      For example the following workflow follows one of two possible paths
+      depending on the outcome of task ``b``:
+
+      .. digraph:: example
+         :align: center
+
+         subgraph cluster_success {
+            label = ":succeed"
+            color = "green"
+            fontcolor = "green"
+            style = "dashed"
+
+            c
+         }
+
+         subgraph cluster_failure {
+            label = ":fail"
+            color = "red"
+            fontcolor = "red"
+            style = "dashed"
+
+            r
+         }
+
+         a -> b -> c -> d
+         b -> r -> d
+
+      See also:
+
+      * :ref:`Graph Branching`
