@@ -7,8 +7,11 @@ Cylc suites are defined in structured, validated, :cylc:conf:`flow.cylc`
 files that concisely specify the properties of, and the relationships
 between, the various tasks managed by the suite.
 
-Here we will look at the format and content of the
-:cylc:conf:`flow.cylc` file and how to configure suites.
+Here we will look at:
+
+- Folders which may (optionally) accompany a workflow configuration.
+- The contents of the :cylc:conf:`flow.cylc` file.
+- How to configure workflows.
 
 
 .. _SuiteDefinitionDirectories:

@@ -817,7 +817,7 @@ Glossary
       .. warning::
 
          Since Cylc 8 suicide triggers have been surpassed by
-         :term:`graph branching` which provides a simpler, superiour
+         :term:`graph branching` which provides a simpler, superior
          solution.
 
       Suicide triggers are denoted using an exclamation mark, ``!foo`` would
