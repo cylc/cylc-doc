@@ -44,7 +44,7 @@ documentation, configuration files, etc.
 flow.cylc File Overview
 -----------------------
 
-:cylc:conf:`flow.cylc` files are an extended-INI format with section nesting.
+The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format.
 
 .. _template processors: https://en.wikipedia.org/wiki/Template_processor
 
@@ -178,7 +178,8 @@ configuration items grouped under several top level section headings:
 :cylc:conf:`[scheduling]`
    Determines when tasks are ready to run.
 
-   - tasks with special behaviour, e.g. clock-trigger tasks
+   - special scheduling constraints e.g.
+     :ref:`external triggers <Section External Triggers>`.
    - the dependency graph, which defines the relationships
      between tasks
 :cylc:conf:`[runtime]`
