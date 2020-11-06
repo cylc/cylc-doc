@@ -36,7 +36,7 @@ trying to roll doubles using two dice:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True # Ignore DST
 
    [scheduling]

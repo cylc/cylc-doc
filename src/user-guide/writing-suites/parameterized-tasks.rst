@@ -31,7 +31,7 @@ For example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            # parameters: "ship", "buoy", "plane"
            # default task suffixes: _ship, _buoy, _plane
@@ -93,14 +93,14 @@ overridden if need be:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            obs = ship, buoy, plane
            run = 1..5
        [[parameter templates]]
            run = -R%(run)s  # Make foo<run> expand to foo-R1 etc.
 
-See :cylc:conf:`[cylc][parameter templates]` for more on the string
+See :cylc:conf:`[scheduler][parameter templates]` for more on the string
 template syntax.
 
 Any number of parameters can be used at once. This parameterization:
@@ -120,7 +120,7 @@ Here's a simple but complete example suite:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = 1..2
    [scheduling]
@@ -148,7 +148,7 @@ omitted):
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = 1..2
            mem = cat, dog
@@ -198,7 +198,7 @@ To get thicker padding and/or alternate suffixes, use a template. E.g.:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            i = 1..9
            p = 3..14
@@ -216,7 +216,7 @@ should be overridden to remove the initial underscore. For example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            i = 1..4
            obs = ship, buoy, plane
@@ -239,7 +239,7 @@ parameter expansion. For example, if we have:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            obs = ship, buoy, plane
            run = 1..5
@@ -290,7 +290,7 @@ set of model runs:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = 1..5
    [scheduling]
@@ -317,7 +317,7 @@ template as the full-range parameter. For example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = 1..10  # 1, 2, ..., 10
            runx = 1..3  # 1, 2, 3
@@ -523,7 +523,7 @@ And here's how to do the same thing with parameterized tasks:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            chunk = 1..6
    [scheduling]
@@ -571,7 +571,7 @@ point:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            chunk = 1..4
    [scheduling]

@@ -48,7 +48,7 @@ Paste the following code into a :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True # Ignore DST
 
    [scheduling]

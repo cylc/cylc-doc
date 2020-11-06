@@ -1,4 +1,4 @@
-[cylc]
+[scheduler]uler]
     UTC mode = True
 
 [scheduling]

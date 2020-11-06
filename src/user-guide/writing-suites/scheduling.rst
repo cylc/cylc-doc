@@ -308,7 +308,7 @@ starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
 limit.
 
 The time is assumed to be in the local time zone unless you set
-:cylc:conf:`[cylc]cycle point time zone` or :cylc:conf:`[cylc]UTC mode`.
+:cylc:conf:`[scheduler]cycle point time zone` or :cylc:conf:`[scheduler]UTC mode`.
 The calendar is assumed to be the proleptic Gregorian calendar unless
 you set :cylc:conf:`[scheduling]cycling mode`.
 
@@ -583,7 +583,7 @@ written using the ``R1`` notation. For example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20130808T00
@@ -605,7 +605,7 @@ Let's suppose that we add the following section to the suite example above:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20130808T00
@@ -635,7 +635,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              UTC mode = True
          [scheduling]
              initial cycle point = 20130808T00
@@ -690,7 +690,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
       .. code-block:: cylc
 
-          [cylc]
+          [scheduler]
               UTC mode = True
           [scheduling]
               initial cycle point = 20130808T00
@@ -724,7 +724,7 @@ used as follows:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20100101T03
@@ -1543,7 +1543,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
       cycle point format = %Y-%m-%dT%H
    [scheduling]
        initial cycle point = 2015-08-15T00

@@ -3,7 +3,7 @@
 [meta]
     title = "User Guide [runtime] example."
 
-[cylc]
+[scheduler]
     required run mode = simulation # (no task implementations)
 
 [scheduling]
