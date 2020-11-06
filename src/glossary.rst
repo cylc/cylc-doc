@@ -445,15 +445,12 @@ Glossary
    suite log
    suite log directory
       A Cylc suite logs events and other information to the suite log files
-      when it runs. There are four log files:
+      when it runs. There are two log files:
 
-      * ``out`` - the stdout of the suite.
-      * ``err`` - the stderr of the suite, which may contain useful debugging
-        information in the event of any error(s).
       * ``log`` - a log of suite events, consisting of information about
         user interaction.
-      * ``file-installation-log`` - a log documenting the file installation 
-        process on the remote platform.
+      * ``file-installation-log`` - a log documenting the file installation
+        process on remote platforms.
 
       The suite log directory lies within the :term:`run directory`:
 
