@@ -16,7 +16,7 @@
 
 # Deploy a new version of the documentation or rebuild an existing one.
 
-# Note: All changes made to the gh-pages branch are non-destructive 
+# Note: All changes made to the gh-pages branch are non-destructive
 #       (i.e. no force pushing) so all changes can be undone.
 
 name: deploy
@@ -35,6 +35,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: configure python
         uses: actions/setup-python@v2
