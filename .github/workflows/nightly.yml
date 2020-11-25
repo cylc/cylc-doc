@@ -29,6 +29,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: configure python
         uses: actions/setup-python@v2
@@ -36,7 +37,7 @@ jobs:
           python-version: '3.7'
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2
         with:
           ref: master
           path: docs
@@ -52,7 +53,7 @@ jobs:
           pip install "${{ github.workspace }}/docs[all]"
 
       - name: checkout cylc-flow
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2
         with:
           repository: cylc/cylc-flow
           ref: master
@@ -65,7 +66,7 @@ jobs:
           pip install './cylc-flow[all]'
 
       - name: checkout gh-pages branch
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2
         with:
           ref: gh-pages
           path: gh-pages
