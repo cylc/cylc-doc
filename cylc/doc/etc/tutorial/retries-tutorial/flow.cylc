@@ -1,4 +1,4 @@
-[scheduler]uler]
+[scheduler]]
     UTC mode = True # Ignore DST
 
 [scheduling]
