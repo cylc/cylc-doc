@@ -6,7 +6,7 @@ User Guide
    :maxdepth: 2
 
    workflows
-   writing-suites/index
+   writing-workflows/index
    running-suites
    suite-name-reg
    suite-storage-etc

@@ -17,7 +17,7 @@ Here we will look at:
 .. _WorkflowDefinitionDirectories:
 
 Workflow Configuration Directories
--------------------------------
+----------------------------------
 
 A Cylc :term:`workflow directory` contains:
 
@@ -129,7 +129,7 @@ e.g.:
 .. _SyntaxHighlighting:
 
 Syntax Highlighting For Workflow Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc provides syntax plugins for the following editors:
 
