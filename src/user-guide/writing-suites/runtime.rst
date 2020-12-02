@@ -5,7 +5,7 @@ Runtime - Task Configuration
 
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 
-The :cylc:conf:`[runtime]` section of a suite configuration configures what
+The :cylc:conf:`[runtime]` section of a workflow configuration configures what
 to execute (and where and how to execute it) when each task is ready to
 run, in a *multiple inheritance hierarchy* of *namespaces* culminating in
 individual tasks. This allows all common configuration detail to be
@@ -31,19 +31,19 @@ Namespace names may contain letters, digits, underscores, and hyphens.
 .. note::
 
    *Task names need not be hardwired into task implementations*
-   because task and suite identity can be extracted portably from the task
+   because task and workflow identity can be extracted portably from the task
    execution environment supplied by the :term:`scheduler`
    (:ref:`TaskExecutionEnvironment`) - then to rename a task you can
-   just change its name in the suite configuration.
+   just change its name in the workflow configuration.
 
 
 Root - Runtime Defaults
 -----------------------
 
 The ``root`` namespace, at the base of the inheritance hierarchy,
-provides default configuration for all tasks in the suite.
+provides default configuration for all tasks in the workflow.
 Most root items are unset by default, but some have default values
-sufficient to allow test suites to be defined by dependency graph alone.
+sufficient to allow test workflows to be defined by dependency graph alone.
 The *script* item, for example, defaults to code that
 prints a message then sleeps for between 1 and 15 seconds and
 exits. Default values are documented with each item in
@@ -61,7 +61,7 @@ then the subsequent configuration applies to each list member.
 Particular tasks can be singled out at run time using the
 ``$CYLC_TASK_NAME`` variable.
 
-As an example, consider a suite containing an ensemble of closely
+As an example, consider a workflow containing an ensemble of closely
 related tasks that each invokes the same script but with a unique
 argument that identifies the calling task name:
 
@@ -81,10 +81,10 @@ automatically generate the member names and associated dependencies
 Runtime Inheritance - Single
 ----------------------------
 
-The following listing of the *inherit.single.one* example suite
+The following listing of the *inherit.single.one* example workflow
 illustrates basic runtime inheritance with single parents.
 
-.. literalinclude:: ../../suites/inherit/single/one/flow.cylc
+.. literalinclude:: ../../workflows/inherit/single/one/flow.cylc
    :language: cylc
 
 
@@ -96,23 +96,23 @@ precedence (which namespace overrides which) is determined by the
 so-called *C3 algorithm* used to find the linear *method
 resolution order* for class hierarchies in Python and several other
 object oriented programming languages. The result of this should be
-fairly obvious for typical use of multiple inheritance in Cylc suites,
+fairly obvious for typical use of multiple inheritance in Cylc workflows,
 but for detailed documentation of how the algorithm works refer to the
 `official Python documentation
 <https://www.python.org/download/releases/2.3/mro/>`_.
 
-The *inherit.multi.one* example suite, listed here, makes use of
+The *inherit.multi.one* example workflow, listed here, makes use of
 multiple inheritance:
 
-.. literalinclude:: ../../suites/inherit/multi/one/flow.cylc
+.. literalinclude:: ../../workflows/inherit/multi/one/flow.cylc
    :language: cylc
 
-``cylc get-suite-config`` provides an easy way to check the result of
-inheritance in a suite. You can extract specific items, e.g.:
+``cylc get-workflow-config`` provides an easy way to check the result of
+inheritance in a workflow. You can extract specific items, e.g.:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --item '[runtime][var_p2]script' \
+   $ cylc get-workflow-config --item '[runtime][var_p2]script' \
        inherit.multi.one
    echo "RUN: run-var.sh"
 
@@ -122,17 +122,17 @@ from the root namespace:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --sparse --item '[runtime]ops_s1' inherit.multi.one
+   $ cylc get-workflow-config --sparse --item '[runtime]ops_s1' inherit.multi.one
    script = echo "RUN: run-ops.sh"
    inherit = ['OPS', 'SERIAL']
    [directives]
       job_type = serial
 
-Suite Visualization And Multiple Inheritance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+workflow Visualization And Multiple Inheritance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The first parent inherited by a namespace is also used as the
-collapsible family group when visualizing the suite. If this is not what
+collapsible family group when visualizing the workflow. If this is not what
 you want, you can demote the first parent for visualization purposes,
 without affecting the order of inheritance of runtime properties:
 
@@ -151,7 +151,7 @@ How Runtime Inheritance Works
 
 The linear precedence order of ancestors is computed for each namespace
 using the C3 algorithm. Then any runtime items that are explicitly
-configured in the suite configuration are "inherited" up the linearized
+configured in the workflow configuration are "inherited" up the linearized
 hierarchy for each task, starting at the root namespace: if a particular
 item is defined at multiple levels in the hierarchy, the level nearest
 the final task namespace takes precedence. Finally, root namespace
@@ -165,12 +165,12 @@ namespace structure through from root from the beginning).
 Task Execution Environment
 --------------------------
 
-The task execution environment contains suite and task identity variables
+The task execution environment contains workflow and task identity variables
 provided by the :term:`scheduler`, and user-defined environment variables.
 The environment is explicitly exported (by the task job script) prior to
 executing the task ``script`` (see :ref:`TaskJobSubmission`).
 
-Suite and task identity are exported first, so that user-defined
+workflow and task identity are exported first, so that user-defined
 variables can refer to them. Order of definition is preserved throughout
 so that variable assignment expressions can safely refer to previously
 defined variables.
@@ -267,25 +267,25 @@ The task job script may export the following environment variables:
    ISODATETIMECALENDAR             # Calendar mode for the `isodatetime` command,
                                    # defined with the value of CYLC_CYCLING_MODE
                                    # when in any date-time cycling mode
-   CYLC_SUITE_FINAL_CYCLE_POINT    # Final cycle point
-   CYLC_SUITE_INITIAL_CYCLE_POINT  # Initial cycle point
-   CYLC_SUITE_NAME                 # Suite name
+   CYLC_workflow_FINAL_CYCLE_POINT    # Final cycle point
+   CYLC_workflow_INITIAL_CYCLE_POINT  # Initial cycle point
+   CYLC_workflow_NAME                 # workflow name
    CYLC_UTC                        # UTC mode, True or False
    CYLC_VERBOSE                    # Verbose mode, True or False
    TZ                              # Set to "UTC" in UTC mode or not defined
 
-   CYLC_SUITE_RUN_DIR              # Location of the suite run directory in
+   CYLC_workflow_RUN_DIR              # Location of the workflow run directory in
                                    # job host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_DEF_PATH             # Location of the suite configuration directory in
+   CYLC_workflow_DEF_PATH             # Location of the workflow configuration directory in
                                    # job host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_HOST                 # Host running the suite process
-   CYLC_SUITE_OWNER                # User ID running the suite process
-   CYLC_SUITE_DEF_PATH_ON_SUITE_HOST
-                                   # Location of the suite configuration directory in
-                                   # suite host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_SHARE_DIR            # Suite (or task!) shared directory (see below)
-   CYLC_SUITE_UUID                 # Suite UUID string
-   CYLC_SUITE_WORK_DIR             # Suite work directory (see below)
+   CYLC_workflow_HOST                 # Host running the workflow process
+   CYLC_workflow_OWNER                # User ID running the workflow process
+   CYLC_workflow_DEF_PATH_ON_workflow_HOST
+                                   # Location of the workflow configuration directory in
+                                   # workflow host, e.g. ~/cylc-run/foo
+   CYLC_workflow_SHARE_DIR            # workflow (or task!) shared directory (see below)
+   CYLC_workflow_UUID                 # workflow UUID string
+   CYLC_workflow_WORK_DIR             # workflow work directory (see below)
 
    CYLC_TASK_JOB                   # Task job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
@@ -315,7 +315,7 @@ The task job script may export the following environment variables:
 
    CYLC_TASK_COMMS_METHOD          # Set to "ssh" if communication method is "ssh"
    CYLC_TASK_SSH_LOGIN_SHELL       # With "ssh" communication, if set to "True",
-                                   # use login shell on suite host
+                                   # use login shell on workflow host
 
 There are also some global shell variables that may be defined in the task job
 script (but not exported to the environment). These include:
@@ -324,20 +324,20 @@ script (but not exported to the environment). These include:
 
    CYLC_FAIL_SIGNALS               # List of signals trapped by the error trap
    CYLC_VACATION_SIGNALS           # List of signals trapped by the vacation trap
-   CYLC_SUITE_WORK_DIR_ROOT        # Root directory above the suite work directory
+   CYLC_workflow_WORK_DIR_ROOT        # Root directory above the workflow work directory
                                    # in the job host
    CYLC_TASK_MESSAGE_STARTED_PID   # PID of "cylc message" job started" command
    CYLC_TASK_WORK_DIR_BASE         # Alternate task work directory,
-                                   # relative to the suite work directory
+                                   # relative to the workflow work directory
 
 
-Suite Share Directories
-^^^^^^^^^^^^^^^^^^^^^^^
+Workflow Share Directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A suite :term:`share directory` is created automatically under the suite run
+A workflow :term:`share directory` is created automatically under the workflow run
 directory as a share space for tasks. The location is available to tasks as
-``$CYLC_SUITE_SHARE_DIR``. In a cycling suite, output files are
-typically held in cycle point sub-directories of the suite share directory.
+``$CYLC_workflow_SHARE_DIR``. In a cycling workflow, output files are
+typically held in cycle point sub-directories of the workflow share directory.
 
 The top level share and work directory (below) location can be changed
 (e.g. to a large data area) by a global config setting
@@ -348,12 +348,12 @@ Task Work Directories
 ^^^^^^^^^^^^^^^^^^^^^
 
 Task job scripts are executed from within
-:term:`work directories <work directory>` created automatically under the suite
+:term:`work directories <work directory>` created automatically under the workflow
 run directory. A task can get its own work directory from
 ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if it does not ``cd`` elsewhere at
 runtime). By default the location contains task name and cycle point, to
 provide a unique workspace for every instance of every task. This can be
-overridden in the suite configuration, however, to get several tasks to share
+overridden in the workflow configuration, however, to get several tasks to share
 the same :cylc:conf:`work directory <global.cylc[platforms][<platform name>]work directory>`.
 
 The top level work and share directory (above) location can be changed
@@ -365,7 +365,7 @@ Environment Variable Evaluation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Variables in the task execution environment are not evaluated in the
-shell in which the suite is running prior to submitting the task. They
+shell in which the workflow is running prior to submitting the task. They
 are written in unevaluated form to the job script that is submitted by
 Cylc to run the task (:ref:`JobScripts`) and are therefore
 evaluated when the task begins executing under the task owner account
@@ -373,74 +373,65 @@ on the task host. Thus ``$HOME``, for instance, evaluates at
 run time to the home directory of task owner on the task host.
 
 
-How Tasks Get Access To The Suite Directory
+How Tasks Get Access To The workflow Directory
 -------------------------------------------
 
-Tasks can use ``$CYLC_SUITE_DEF_PATH`` to access suite files on
-the task host, and the suite bin directory is automatically added
-``$PATH``. If a remote suite configuration directory is not
-specified the local (suite host) path will be assumed with the local
+Tasks can use ``$CYLC_workflow_DEF_PATH`` to access workflow files on
+the task host, and the workflow bin directory is automatically added
+``$PATH``. If a remote workflow configuration directory is not
+specified the local (workflow host) path will be assumed with the local
 home directory, if present, swapped for literal ``$HOME`` for
 evaluation on the task host.
 
 
 .. _RunningTasksOnARemoteHost:
 
-Remote Task Hosting
--------------------
+Remote Task Platforms
+---------------------
 
-If a task declares an owner other than the suite owner and/or
-a host other than the suite host, Cylc will use non-interactive ssh to
-execute the task on the ``owner@host`` account by the configured
-batch system:
+.. note::
+
+   Users of older (<=7) versions of Cylc will be familiar with "task host"
+   settings. Most of these have been amalgamated into Job Platforms, which
+   are set in the global configuration file. In normal usage job platforms
+   should be set up by site administrators.
+
+
+If a task is to do work on a computer other than the workflow host,
+Cylc will use non-interactive ssh to execute the task on a remote 
+"job platform".
 
 .. code-block:: cylc
 
    [runtime]
        [[foo]]
-           [[[remote]]]
-               host = orca.niwa.co.nz
-               owner = bob
-           [[[job]]]
-               batch system = pbs
+           platform = orca
 
-For this to work:
 
-- Non-interactive ssh is required from the suite host to the remote
-  task accounts.
-- Cylc must be installed on task hosts.
-
-  - If polling task communication is used, there is no other
-    requirement.
-  - If SSH task communication is configured, non-interactive ssh is
-    required from the task host to the suite host.
-  - If (default) task communication is configured, the task host
-    should have access to the port on the suite host.
-
-- The suite configuration directory, or some fraction of its
-  content, can be installed on the task host, if needed.
-
-Tasks running on the suite host under another user account are treated as
-remote tasks.
-
-Remote hosting, like all namespace settings, can be declared globally in
+``platform``, like all namespace settings, can be declared globally in
 the root namespace, or per family, or for individual tasks.
 
 
-Dynamic Host Selection
-^^^^^^^^^^^^^^^^^^^^^^
+Dynamic Platform Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Instead of hardwiring host names into the suite configuration you can
-specify a shell command that prints a hostname, or an environment
-variable that holds a hostname, as the value of the
-:cylc:conf:`host config item <[runtime][<namespace>][remote]host>`.
+.. warning::
+
+   This is a legacy feature which should be depracated in favour of setting
+   up platforms which use intelligent selection of hosts.
+
+
+Instead of hardwiring platform names into the workflow configuration you can
+specify a shell command that prints a platform name, or an environment
+variable that holds a platform name, as the value of the
+:cylc:conf:`host config item <[runtime][<namespace>]platform>`.
 
 
 Remote Task Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Task stdout and stderr streams are written to :term:`log files <job log>` in a
-suite-specific sub-directory of the suite :term:`run directory`, as
+workflow-specific sub-directory of the workflow :term:`run directory`, as
 explained in :ref:`WhitherStdoutAndStderr`. For remote tasks
 the same directory is used, but *on the task host*.
 Remote task log directories, like local ones, are created on the fly, if
@@ -450,10 +441,10 @@ necessary, during job submission.
 Naked Dummy Tasks And Strict Validation
 ---------------------------------------
 
-A *naked dummy task* appears in the suite graph but has no
+A *naked dummy task* appears in the workflow graph but has no
 explicit runtime configuration section. Such tasks automatically
 inherit the default "dummy task" configuration from the root
-namespace. This is very useful because it allows functional suites to
+namespace. This is very useful because it allows functional workflows to
 be mocked up quickly for test and demonstration purposes by simply
 defining the graph. It is somewhat dangerous, however, because there
 is no way to distinguish an intentional naked dummy task from one
@@ -463,11 +454,11 @@ affected trigger expression; and misspelling a task name in a runtime
 section heading results in the intended task becoming a dummy task
 itself (by divorcing it from its intended runtime config section).
 
-To avoid this problem any dummy task used in a real suite should not be
+To avoid this problem any dummy task used in a real workflow should not be
 naked - i.e. it should have an explicit entry in under the runtime
-section of the suite configuration, even if the section is empty. This
+section of the workflow configuration, even if the section is empty. This
 results in exactly the same dummy task behaviour, via implicit
 inheritance from root, but it allows use of
 ``cylc validate --strict``
-to catch errors in task names by failing the suite if any naked dummy
+to catch errors in task names by failing the workflow if any naked dummy
 tasks are detected.

@@ -3,9 +3,9 @@
 Workflow Configuration
 ======================
 
-Cylc suites are defined in structured, validated, :cylc:conf:`flow.cylc`
+Cylc workflows are defined in structured, validated, :cylc:conf:`flow.cylc`
 files that concisely specify the properties of, and the relationships
-between, the various tasks managed by the suite.
+between, tasks managed by the workflow.
 
 Here we will look at:
 
@@ -14,12 +14,12 @@ Here we will look at:
 - How to configure workflows.
 
 
-.. _SuiteDefinitionDirectories:
+.. _WorkflowDefinitionDirectories:
 
-Suite Configuration Directories
+Workflow Configuration Directories
 -------------------------------
 
-A Cylc :term:`suite directory` contains:
+A Cylc :term:`workflow directory` contains:
 
 :cylc:conf:`flow.cylc`
    The file which configures the workflow.
@@ -38,7 +38,7 @@ A Cylc :term:`suite directory` contains:
    - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`.
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`).
 
-Other files and folders may be placed in the :term:`suite directory` e.g.
+Other files and folders may be placed in the :term:`workflow directory` e.g.
 documentation, configuration files, etc.
 
 
@@ -86,7 +86,7 @@ The following defines legal :cylc:conf:`flow.cylc` syntax:
 - **Include-files** ``%include inc/foo.cylc`` can be
   used as a verbatim inlining mechanism.
 
-Suites that embed templating code (see :ref:`User Guide Jinja2` and
+Workflows that embed templating code (see :ref:`User Guide Jinja2` and
 :ref:`User Guide EmPy`) must process to raw :cylc:conf:`flow.cylc` syntax.
 
 
@@ -94,11 +94,11 @@ Include-Files
 ^^^^^^^^^^^^^
 
 Cylc has native support for :cylc:conf:`flow.cylc` include-files, which may help to
-organize large suites. Inclusion boundaries are completely arbitrary -
+organize large workflows. Inclusion boundaries are completely arbitrary -
 you can think of include-files as chunks of the :cylc:conf:`flow.cylc` file simply
 cut-and-pasted into another file. Include-files may be included
 multiple times in the same file, and even nested. Include-file paths
-can be specified portably relative to the suite configuration directory,
+can be specified portably relative to the workflow configuration directory,
 e.g.:
 
 .. code-block:: cylc
@@ -118,17 +118,17 @@ e.g.:
 
    .. code-block:: bash
 
-      $ cylc edit --inline SUITE
+      $ cylc edit --inline WORKFLOW
 
-   The suite will be split back into its constituent include-files when you
+   The workflow will be split back into its constituent include-files when you
    exit the edit session. While editing, the inlined file becomes the
-   official suite configuration so that changes take effect whenever you save
+   official workflow configuration so that changes take effect whenever you save
    the file. See ``cylc prep edit --help`` for more information.
 
 
 .. _SyntaxHighlighting:
 
-Syntax Highlighting For Suite Configuration
+Syntax Highlighting For Workflow Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc provides syntax plugins for the following editors:
@@ -173,11 +173,11 @@ WebStorm
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
 
-Cylc :cylc:conf:`flow.cylc` files consist of a suite title and description followed by
+Cylc :cylc:conf:`flow.cylc` files consist of a workflow title and description followed by
 configuration items grouped under several top level section headings:
 
-:cylc:conf:`[cylc]`
-   Non task-specific suite configuration.
+:cylc:conf:`[scheduler]`
+   Non task-specific workflow configuration.
 :cylc:conf:`[scheduling]`
    Determines when tasks are ready to run.
 
@@ -189,11 +189,11 @@ configuration items grouped under several top level section headings:
    Determines how, where, and what to execute when tasks are ready
 
    - script, environment, job submission, remote hosting, etc.
-   - suite-wide defaults in the *root* namespace
+   - workflow-wide defaults in the *root* namespace
    - a nested family hierarchy with common properties
      inherited by related tasks
 :cylc:conf:`[visualization]`
-   Suite graph styling
+   Workflow graph styling
 
 .. _Validation:
 
@@ -210,6 +210,6 @@ These checks are also performed by ``cylc run`` before starting a workflow.
 All legal entries are documented in :cylc:conf:`flow.cylc`.
 
 If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
-show an inlined copy of the suite with correct line numbers
-(you can also edit suites in a temporarily inlined state with
+show an inlined copy of the workflow with correct line numbers
+(you can also edit workflows in a temporarily inlined state with
 ``cylc edit --inline``).

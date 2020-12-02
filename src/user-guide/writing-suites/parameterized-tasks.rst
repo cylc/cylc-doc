@@ -17,7 +17,7 @@ values. Uses for this include:
 
    This can be done with Jinja2 loops too (:ref:`User Guide Jinja2`)
    but parameterization is much cleaner (nested loops can seriously reduce
-   the clarity of a suite configuration).*
+   the clarity of a workflow configuration).*
 
 
 Parameter Expansion
@@ -31,36 +31,35 @@ For example:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           # parameters: "ship", "buoy", "plane"
-           # default task suffixes: _ship, _buoy, _plane
-           obs = ship, buoy, plane
+   [task parameters]
+       # parameters: "ship", "buoy", "plane"
+       # default task suffixes: _ship, _buoy, _plane
+       obs = ship, buoy, plane
 
-           # parameters: 1, 2, 3, 4, 5
-           # default task suffixes: _run1, _run2, _run3, _run4, _run5
-           run = 1..5
+       # parameters: 1, 2, 3, 4, 5
+       # default task suffixes: _run1, _run2, _run3, _run4, _run5
+       run = 1..5
 
-           # parameters: 1, 3, 5, 7, 9
-           # default task suffixes: _idx1, _idx3, _idx5, _idx7, _idx9
-           idx = 1..9..2
+       # parameters: 1, 3, 5, 7, 9
+       # default task suffixes: _idx1, _idx3, _idx5, _idx7, _idx9
+       idx = 1..9..2
 
-           # parameters: -11, -1, 9
-           # default task suffixes: _idx-11, _idx-01, _idx+09
-           idx = -11..9..10
+       # parameters: -11, -1, 9
+       # default task suffixes: _idx-11, _idx-01, _idx+09
+       idx = -11..9..10
 
-           # parameters: 1, 3, 5, 10, 11, 12, 13
-           # default task suffixes: _i01, _i03, _i05, _i10, _i11, _i12, _i13
-           i = 1..5..2, 10, 11..13
+       # parameters: 1, 3, 5, 10, 11, 12, 13
+       # default task suffixes: _i01, _i03, _i05, _i10, _i11, _i12, _i13
+       i = 1..5..2, 10, 11..13
 
-           # parameters: "0", "1", "e", "pi", "i"
-           # default task suffixes: _0, _1, _e, _pi, _i
-           item = 0, 1, e, pi, i
+       # parameters: "0", "1", "e", "pi", "i"
+       # default task suffixes: _0, _1, _e, _pi, _i
+       item = 0, 1, e, pi, i
 
-           # ERROR: mix strings with int range
-           p = one, two, 3..5
+       # ERROR: mix strings with int range
+       p = one, two, 3..5
 
-Then angle brackets denote use of these parameters throughout the suite
+Then angle brackets denote use of these parameters throughout the workflow
 configuration. For the values above, this parameterized name:
 
 .. code-block:: sub
@@ -93,14 +92,13 @@ overridden if need be:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           obs = ship, buoy, plane
-           run = 1..5
-       [[parameter templates]]
+   [task parameters]
+       obs = ship, buoy, plane
+       run = 1..5
+       [[templates]]
            run = -R%(run)s  # Make foo<run> expand to foo-R1 etc.
 
-See :cylc:conf:`[cylc][parameter templates]` for more on the string
+See :cylc:conf:`[task parameters][parameter templates]` for more on the string
 template syntax.
 
 Any number of parameters can be used at once. This parameterization:
@@ -116,13 +114,12 @@ expands to these tasks names:
    model_run1_ship, model_run1_buoy, model_run1_plane,
    model_run2_ship, model_run2_buoy, model_run2_plane
 
-Here's a simple but complete example suite:
+Here's a simple but complete example workflow:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           run = 1..2
+   [task parameters]
+       run = 1..2
    [scheduling]
        [[graph]]
            R1 = "prep => model<run>"
@@ -148,8 +145,7 @@ omitted):
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
+   [task parameters]
            run = 1..2
            mem = cat, dog
    [scheduling]
@@ -198,11 +194,10 @@ To get thicker padding and/or alternate suffixes, use a template. E.g.:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           i = 1..9
-           p = 3..14
-       [[parameter templates]]
+   [task parameters]
+       i = 1..9
+       p = 3..14
+       [[templates]]
            i = _i%(i)02d  # suffixes = _i01, _i02, ..., _i09
            # A double-percent gives a literal percent character
            p = %%p%(p)03d  # suffixes = %p003, %p004, ..., %p013, %p014
@@ -216,11 +211,10 @@ should be overridden to remove the initial underscore. For example:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           i = 1..4
-           obs = ship, buoy, plane
-       [[parameter templates]]
+   [task parameters]
+       i = 1..4
+       obs = ship, buoy, plane
+       [templates]
            i = i%(i)d  # task name must begin with an alphabet
            obs = %(obs)s
    [scheduling]
@@ -239,10 +233,9 @@ parameter expansion. For example, if we have:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           obs = ship, buoy, plane
-           run = 1..5
+   [task parameters]
+       obs = ship, buoy, plane
+       run = 1..5
    [scheduling]
        [[graph]]
            R1 = model<run,obs>
@@ -290,9 +283,8 @@ set of model runs:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           run = 1..5
+   [task parameters]
+       run = 1..5
    [scheduling]
        [[graph]]
            R1 = """
@@ -317,11 +309,10 @@ template as the full-range parameter. For example:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           run = 1..10  # 1, 2, ..., 10
-           runx = 1..3  # 1, 2, 3
-       [[parameter templates]]
+   [task parameters]
+       run = 1..10  # 1, 2, ..., 10
+       runx = 1..3  # 1, 2, 3
+       [templates]
            run = _R%(run)02d   # _R01, _R02, ..., _R10
            runx = _R%(runx)02d  # _R01, _R02, _R03
    [scheduling]
@@ -523,9 +514,8 @@ And here's how to do the same thing with parameterized tasks:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           chunk = 1..6
+   [task parameters]
+       chunk = 1..6
    [scheduling]
        [[graph]]
            R1 = """
@@ -548,7 +538,7 @@ result, and both can include special tasks at the start, end, or
 anywhere in between. But as noted earlier the parameterized version has
 several disadvantages: it must be finite in extent and not too large; the
 date-time arithmetic has to be done by the user; and the full extent of the
-workflow will be visible at all times as the suite runs.
+workflow will be visible at all times as the workflow runs.
 
 .. todo
    Create sub-figures if possible: for now hacked as separate figures with
@@ -566,14 +556,13 @@ workflow will be visible at all times as the suite runs.
    workflow. The first three cycle points are shown in the
    cycling case. The parameterized case does not have "cycle points".
 
-Here's a yearly-cycling suite with four parameterized chunks in each cycle
+Here's a yearly-cycling workflow with four parameterized chunks in each cycle
 point:
 
 .. code-block:: cylc
 
-   [cylc]
-       [[parameters]]
-           chunk = 1..4
+   [task parameters]
+       chunk = 1..4
    [scheduling]
        initial cycle point = 2020-01
        [[graph]]
@@ -598,14 +587,14 @@ point:
 Here's a possible valid use-case for mixed cycling: consider a portable
 date-time cycling workflow of model jobs that can each take too long to run on
 some supported platforms. This could be handled without changing the cycling
-structure of the suite by splitting the run (at each cycle point) into a
+structure of the workflow by splitting the run (at each cycle point) into a
 variable number of shorter steps, using more steps on less powerful hosts.
 
 
 Cycle Point And Parameter Offsets At Start-Up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In cycling workflows cylc ignores anything earlier than the suite initial
+In cycling workflows cylc ignores anything earlier than the workflow initial
 cycle point. So this graph:
 
 .. code-block:: cylc
@@ -634,10 +623,10 @@ simplifies for ``chunk=1`` to this:
 .. note::
 
    The initial cut-off applies to every parameter list, but only
-   to cycle point sequences that start at the suite initial cycle point.
+   to cycle point sequences that start at the workflow initial cycle point.
    Therefore it may be somewhat easier to use parameterized cycling if you
    need multiple date-time sequences *with different start points* in the
-   same suite. We plan to allow this sequence-start simplification for any
-   date-time sequence in the future, not just at the suite initial point,
+   same workflow. We plan to allow this sequence-start simplification for any
+   date-time sequence in the future, not just at the workflow initial point,
    but it needs to be optional because delayed-start cycling tasks
    sometimes need to trigger off earlier cycling tasks.

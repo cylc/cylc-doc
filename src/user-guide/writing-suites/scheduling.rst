@@ -58,7 +58,7 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
 Interpreting Graph Strings
 --------------------------
 
-Suite dependency graphs can be broken down into pairs in which the left
+Workflow dependency graphs can be broken down into pairs in which the left
 side (which may be a single task or family, or several that are
 conditionally related) defines a :term:`trigger` for the task or family on the
 right. For instance the "word graph" *C triggers off B which
@@ -209,15 +209,15 @@ and also to this:
 Graph Types
 -----------
 
-A suite configuration can contain multiple graph strings that are combined
+A workflow configuration can contain multiple graph strings that are combined
 to generate the final graph.
 
 One-off (Non-Cycling)
 ^^^^^^^^^^^^^^^^^^^^^
 
-The following is a small suite of one-off non-cycling
+The following is a small workflow of one-off non-cycling
 tasks; these all share a single cycle point (``1``) and don't spawn
-successors (once they're all finished the suite just exits). The integer
+successors (once they're all finished the workflow just exits). The integer
 ``1`` attached to each graph node is just an arbitrary label here.
 
 .. Need to use a 'container' directive to get centered image with
@@ -249,7 +249,7 @@ Cycling Graphs
 
 For cycling tasks the graph section heading defines a sequence of cycle points
 for which the subsequent graph section is valid, as demonstrated here for a
-small suite of cycling tasks:
+small workflow of cycling tasks:
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -308,7 +308,7 @@ starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
 limit.
 
 The time is assumed to be in the local time zone unless you set
-:cylc:conf:`[cylc]cycle point time zone` or :cylc:conf:`[cylc]UTC mode`.
+:cylc:conf:`[scheduler]cycle point time zone` or :cylc:conf:`[scheduler]UTC mode`.
 The calendar is assumed to be the proleptic Gregorian calendar unless
 you set :cylc:conf:`[scheduling]cycling mode`.
 
@@ -374,7 +374,7 @@ For example, ``R3/P5D/20140430T06`` means:
    20140430T06
 
 This kind of form can be used for specifying special behaviour near the end of
-the suite, at the final cycle point's date-time. We can also represent this in
+the workflow, at the final cycle point's date-time. We can also represent this in
 cylc with a collapsed form:
 
 .. code-block:: none
@@ -479,7 +479,7 @@ the parentheses after the exclamation mark will be excluded.
 
 If using a run limit in combination with an exclusion, the heading might not
 run the number of times specified in the limit. For example in the following
-suite ``foo`` will only run once as its second run has been excluded.
+workflow ``foo`` will only run once as its second run has been excluded.
 
 .. code-block:: cylc
 
@@ -583,7 +583,7 @@ written using the ``R1`` notation. For example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20130808T00
@@ -597,15 +597,15 @@ In the example above, ``R1`` implies ``R1/20130808T00``, so
 At that cycle point, ``foo`` will have a dependence on
 ``prep`` - but not at subsequent cycle points.
 
-However, it is possible to have a suite that has multiple effective initial
+However, it is possible to have a workflow that has multiple effective initial
 cycles - for example, one starting at ``T00`` and another starting
 at ``T12``. What if they need to share an initial task?
 
-Let's suppose that we add the following section to the suite example above:
+Let's suppose that we add the following section to the workflow example above:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20130808T00
@@ -622,7 +622,7 @@ a single ``prep`` task, at a single cycle.
 We can write this using a special case of the ``task[-interval]`` syntax -
 if the interval is null, this implies the task at the initial cycle point.
 
-For example, we can write our suite like so, to produce the graph as shown:
+For example, we can write our workflow like so, to produce the graph as shown:
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -631,11 +631,11 @@ For example, we can write our suite like so, to produce the graph as shown:
 
    .. container:: caption
 
-      *Staggered Start Suite*
+      *Staggered Start Workflow*
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              UTC mode = True
          [scheduling]
              initial cycle point = 20130808T00
@@ -674,7 +674,7 @@ Usually, we want to specify additional tasks and dependencies at the initial
 cycle point. What if we want our first cycle point to be entirely special,
 with some tasks missing compared to subsequent cycle points?
 
-In the suite below, ``bar`` will not be run at the initial
+In the workflow below, ``bar`` will not be run at the initial
 cycle point, but will still run at subsequent cycle points, where
 ``+PT6H/PT6H`` means start at ``+PT6H`` (6 hours after
 the initial cycle point) and then repeat every ``PT6H`` (6 hours):
@@ -686,11 +686,11 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
    .. container:: caption
 
-      *Restricted First Cycle Point Suite*
+      *Restricted First Cycle Point Workflow*
 
       .. code-block:: cylc
 
-          [cylc]
+          [scheduler]
               UTC mode = True
           [scheduling]
               initial cycle point = 20130808T00
@@ -716,7 +716,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
          :align: center
 
 
-Some suites may have staggered start-up sequences where different tasks need
+Some workflows may have staggered start-up sequences where different tasks need
 running once but only at specific cycle points, potentially due to differing
 data sources at different cycle points with different possible initial cycle
 points. To allow this Cylc provides a ``min( )`` function that can be
@@ -724,7 +724,7 @@ used as follows:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 20100101T03
@@ -750,7 +750,7 @@ Integer Cycling
 In addition to non-repeating and :term:`datetime cycling` workflows, Cylc can do
 :term:`integer cycling` for repeating workflows that are not date-time based.
 
-To construct an integer cycling suite, set
+To construct an integer cycling workflow, set
 :cylc:conf:`[scheduling]cycling mode = integer`, and specify integer values
 for the :term:`initial cycle point` and optionally the
 :term:`final cycle point`. The notation for intervals,
@@ -763,7 +763,7 @@ The full integer recurrence expressions supported are:
 - ``Rn/interval/end-point # e.g. R3/P2/9``
 
 But, as for date-time cycling, sequence start and end points can be omitted
-where suite initial and final cycle points can be assumed. Some examples:
+where workflow initial and final cycle points can be assumed. Some examples:
 
 .. code-block:: sub
 
@@ -833,7 +833,7 @@ An Integer Cycling Example
 .. figure::/img/pipe-pub.png
    :align: center
 
-The following suite definition, as :ref:`graphed above <fig-integer-pipeline>`,
+The following workflow definition, as :ref:`graphed above <fig-integer-pipeline>`,
 implements a classical linear pipeline using integer cycling. The workflow
 ensures that one instance each of A, B, and C runs concurrently and the
 pipeline is kept full: when A.1 has finished processing the first dataset, A.2
@@ -844,9 +844,9 @@ compute resource supports more than three concurrent jobs, remove the
 cross-cycle dependence and Cylc will run many cycles at once. Task runtime
 configuration is omitted, but it would likely involve retrieving datasets by
 cycle point and processing them in cycle point-specific shared workspaces under
-the self-contained suite run directory.
+the self-contained workflow run directory.
 
-.. literalinclude:: ../../suites/integer-pipeline/flow.cylc
+.. literalinclude:: ../../workflows/integer-pipeline/flow.cylc
    :language: cylc
 
 
@@ -953,9 +953,9 @@ Tasks can also trigger off custom output messages. These must be registered in
 the :cylc:conf:`[runtime][<namespace>][outputs]` section of the emitting task,
 and reported using the ``cylc message`` command in task scripting.
 The graph trigger notation refers to the item name of the registered
-output message. An example message triggering suite:
+output message. An example message triggering workflow:
 
-.. literalinclude:: ../../suites/message-triggers/flow.cylc
+.. literalinclude:: ../../workflows/message-triggers/flow.cylc
    :language: cylc
 
 
@@ -1057,11 +1057,11 @@ Suicide Triggers
 
 .. tutorial:: Suicide Trigger Tutorial <tut-cylc-suicide-triggers>
 
-Suicide triggers take tasks out of the suite. This can be used for automated
+Suicide triggers take tasks out of the workflow. This can be used for automated
 failure recovery. The following :cylc:conf:`flow.cylc` listing and accompanying
 :term:`graph` show how to define a chain of failure recovery tasks that trigger
-if they're needed but otherwise remove themselves from the suite (you can run
-the *AutoRecover.async* example suite to see how this works). The dashed graph
+if they're needed but otherwise remove themselves from the workflow (you can run
+the *AutoRecover.async* example workflow to see how this works). The dashed graph
 edges ending in solid dots indicate suicide triggers, and the open arrowheads
 indicate conditional triggers as usual.
 
@@ -1081,7 +1081,7 @@ indicate conditional triggers as usual.
               description = """
                   Model task failure triggers diagnosis
                   and recovery tasks, which take themselves
-                  out of the suite if model succeeds. Model
+                  out of the workflow if model succeeds. Model
                   post processing triggers off model OR
                   recovery tasks.
               """
@@ -1123,7 +1123,7 @@ indicate conditional triggers as usual.
       foo & bar => !baz
 
    i.e. both ``foo`` and ``bar`` must succeed for
-   ``baz`` to be taken out of the suite. If you really want a task
+   ``baz`` to be taken out of the workflow. If you really want a task
    to be taken out if any one of several events occurs then be careful to
    write it that way:
 
@@ -1134,7 +1134,7 @@ indicate conditional triggers as usual.
 .. warning::
 
    A word of warning on the meaning of "bare suicide triggers". Consider
-   the following suite:
+   the following workflow:
 
    .. code-block:: cylc
 
@@ -1159,7 +1159,7 @@ indicate conditional triggers as usual.
    and then ``bar`` will be removed if ``foo`` succeeds.
 
 If an active task proxy (currently in the submitted or running states)
-is removed from the suite by a suicide trigger, a warning will be logged.
+is removed from the workflow by a suicide trigger, a warning will be logged.
 
 
 .. _FamilyTriggers:
@@ -1259,7 +1259,7 @@ dependencies this will generate. In the following example, each member of
 Expanding this out, you generate ``N * M`` dependencies, where ``N`` is the
 number of members of ``FAM1`` and ``M`` is the number of members of ``FAM2``.
 This can result in high memory use as the number of members of these families
-grows, potentially rendering the suite impractical for running on some systems.
+grows, potentially rendering the workflow impractical for running on some systems.
 
 You can greatly reduce the number of dependencies generated in these situations
 by putting dummy tasks in the graphing to represent the state of the family you
@@ -1289,7 +1289,7 @@ significantly less memory and CPU to store and evaluate.
 Inter-Cycle Triggers
 ^^^^^^^^^^^^^^^^^^^^
 
-Typically most tasks in a suite will trigger off others in the same
+Typically most tasks in a workflow will trigger off others in the same
 cycle point, but some may depend on others with other cycle points.
 This notably applies to warm-cycled forecast models, which depend on
 their own previous instances (see below); but other kinds of
@@ -1310,7 +1310,7 @@ combined:
    # B triggers if A in the previous cycle point fails:
    PT6H = "A[-PT6H]:fail => B"
 
-At suite start-up inter-cycle triggers refer to a previous cycle point
+At workflow start-up inter-cycle triggers refer to a previous cycle point
 that does not exist. This does not cause the dependent task to wait
 indefinitely, however, because Cylc ignores triggers that reach back
 beyond the initial cycle point. That said, the presence of an
@@ -1319,7 +1319,7 @@ happen at start-up. If a model depends on its own previous instance for
 restart files, for instance, then an initial set of restart files has to be
 generated somehow or the first model task will presumably fail with
 missing input files. There are several ways to handle this in Cylc
-using different kinds of one-off (non-cycling) tasks that run at suite
+using different kinds of one-off (non-cycling) tasks that run at workflow
 start-up.
 
 - ``R1`` tasks (recommended):
@@ -1343,7 +1343,7 @@ satisfied by a previous instance of itself, *or* by an initial task with
 (nominally) the same cycle point.
 
 In effect, the ``R1`` task masquerades as the previous-cycle-point trigger
-of its associated cycling task. At suite start-up initial tasks will
+of its associated cycling task. At workflow start-up initial tasks will
 trigger the first cycling tasks, and thereafter the inter-cycle trigger
 will take effect.
 
@@ -1362,9 +1362,9 @@ the initial cycle point by using the caret symbol: ``^``.
 For example, you can write ``foo[^]`` to mean foo at the initial
 cycle point, and ``foo[^+PT6H]`` to mean foo 6 hours after the initial
 cycle point. Usually, this kind of dependency will only apply in a limited
-number of cycle points near the start of the suite, so you may want to write
+number of cycle points near the start of the workflow, so you may want to write
 it in ``R1``-based graphs. Here's the example inter-cycle
-``R1`` suite from above again.
+``R1`` workflow from above again.
 
 .. code-block:: cylc
 
@@ -1388,7 +1388,7 @@ point.
        [[graph]]
            R1/20200202 = "baz[20200101] => qux"
 
-However, in a long running suite, a repeating cycle should avoid having a
+However, in a long running workflow, a repeating cycle should avoid having a
 dependency on a task with a specific cycle point (including the initial cycle
 point) - as it can currently cause performance issue. In the following example,
 all instances of ``qux`` will depend on ``baz.20200101``, which
@@ -1472,9 +1472,9 @@ wall-clock job submission time unless the task has a clock trigger):
            A[PT6H] => B
        """
 
-Future triggers present a problem at suite shutdown rather than at start-up.
+Future triggers present a problem at workflow shutdown rather than at start-up.
 Here, ``B`` at the final cycle point wants to trigger off an instance
-of ``A`` that will never exist because it is beyond the suite stop
+of ``A`` that will never exist because it is beyond the workflow stop
 point. Consequently Cylc prevents tasks from spawning successors that depend on
 other tasks beyond the final point.
 
@@ -1513,7 +1513,7 @@ when the wall clock time reaches ``2015-08-23T02``. Clock-trigger
 offsets are normally positive, to trigger some time *after* the wall-clock
 time is equal to task cycle point.
 
-Clock-triggers have no effect on scheduling if a suite is running sufficiently
+Clock-triggers have no effect on scheduling if a workflow is running sufficiently
 far behind the clock (e.g. after a delay, or because it is processing archived
 historical data) that the trigger times, which are relative to task cycle
 point, have already passed.
@@ -1530,7 +1530,7 @@ they become ready to run, and other tasks can trigger off this. As a possible
 use case, consider a cycling task that copies the latest of a set of files to
 overwrite the previous set: if the task is delayed by more than one cycle there
 may be no point in running it because the freshly copied files will just be
-overwritten immediately by the next task instance as the suite catches back up
+overwritten immediately by the next task instance as the workflow catches back up
 to real time operation. Clock-expire tasks are configured with
 :cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
 :cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
@@ -1543,7 +1543,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
       cycle point format = %Y-%m-%dT%H
    [scheduling]
        initial cycle point = 2015-08-15T00
@@ -1556,7 +1556,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
            """
 
 
-.. _SuiteConfigExternalTriggers:
+.. _WorkflowConfigExternalTriggers:
 
 External Triggers
 ^^^^^^^^^^^^^^^^^
@@ -1753,7 +1753,7 @@ dependence requires an inter-cycle trigger:
 
 If your model is configured to write out additional restart files
 to allow one or more cycle points to be skipped in an emergency *do not
-represent these potential dependencies in the suite graph* as they
+represent these potential dependencies in the workflow graph* as they
 should not be used under normal circumstances. For example, the
 following graph would result in task ``A`` erroneously
 triggering off ``A[T-24]`` as a matter of course, instead of
@@ -1802,7 +1802,7 @@ interval should generate an error rather than silently creating
 tasks on an erroneous cycling sequence.
 
 As a result you need to be careful not to define inter-cycle dependencies that
-cannot be satisfied at run time. Suite validation catches this kind of error if
+cannot be satisfied at run time. Workflow validation catches this kind of error if
 the existence of the cycle offset task is not defined anywhere at all:
 
 .. code-block:: cylc
@@ -1845,7 +1845,7 @@ is defined only on a different cycling sequence:
                foo[-P1Y] => bar
            """
 
-This suite will validate OK, but it will stall at runtime with ``bar``
+This workflow will validate OK, but it will stall at runtime with ``bar``
 waiting on ``foo[-P1Y]`` at the intermediate years where it does not
 exist. The offset ``[-P1Y]`` is presumably an error (it should be
 ``[-P2Y]``), or else another graph line is needed to generate
@@ -1859,7 +1859,7 @@ exist. The offset ``[-P1Y]`` is presumably an error (it should be
            P1Y = "foo"
            P2Y = "foo[-P1Y] => bar"
 
-Similarly the following suite will validate OK, but it will stall at
+Similarly the following workflow will validate OK, but it will stall at
 runtime with ``bar`` waiting on ``foo[-P1Y]`` in
 every cycle point, when only a single instance of it exists, at the initial
 cycle point:
@@ -1891,35 +1891,35 @@ cycle point:
 Omitting Tasks At Runtime
 -------------------------
 
-It is sometimes convenient to omit certain tasks from the suite at
-runtime without actually deleting their definitions from the suite.
+It is sometimes convenient to omit certain tasks from the workflow at
+runtime without actually deleting their definitions from the workflow.
 
 Defining :cylc:conf:`[runtime]` properties for tasks that do not appear
-in the suite graph results in verbose-mode validation warnings that the
-tasks are disabled. They cannot be used because the suite graph is what
+in the workflow graph results in verbose-mode validation warnings that the
+tasks are disabled. They cannot be used because the workflow graph is what
 defines their dependencies and valid cycle points. Nevertheless, it is
-legal to leave these orphaned runtime sections in the suite
+legal to leave these orphaned runtime sections in the workflow
 configuration because it allows you to temporarily remove tasks from
-the suite by commenting them out of the graph.
+the workflow by commenting them out of the graph.
 
-To omit a task from the suite at runtime but still leave it fully
+To omit a task from the workflow at runtime but still leave it fully
 defined and available for use (by insertion) use one or both of
 :cylc:conf:`[scheduling][special tasks]include at start-up` or
 :cylc:conf:`[scheduling][special tasks]exclude at start-up`.
 Then the graph still defines the
 validity of the tasks and their dependencies, but they are not actually
-loaded into the suite at start-up. Other tasks that depend on the
+loaded into the workflow at start-up. Other tasks that depend on the
 omitted ones, if any, will have to wait on their insertion at a later
 time or otherwise be triggered manually.
 
 Finally, with Jinja2 (:ref:`User Guide Jinja2`) you can radically alter
-suite structure by including or excluding tasks from th
+workflow structure by including or excluding tasks from th
 :cylc:conf:`[scheduling]` and :cylc:conf:`[runtime]` sections according to the
-value of a single logical flag defined at the top of the suite.
+value of a single logical flag defined at the top of the workflow.
 
 
 .. [1] An OR operator on the right doesn't make much sense: if "B or C"
        triggers off A, what exactly should Cylc do when A finishes?
-.. [2] In NWP forecast analysis suites parts of the observation
+.. [2] In NWP forecast analysis workflows parts of the observation
        processing and data assimilation subsystem will typically also
        depend on model background fields generated by the previous forecast.
