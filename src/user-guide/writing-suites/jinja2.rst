@@ -91,7 +91,7 @@ suite. To add a new city and associated tasks and dependencies simply
 add the city name to list at the top of the file. Here is the suite graphed,
 with the New York City task family expanded:
 
-.. literalinclude:: ../../suites/jinja2/cities/flow.cylc
+.. literalinclude:: ../../workflows/jinja2/cities/flow.cylc
    :language: cylc
 
 .. _fig-jinja2-cities:
@@ -246,7 +246,7 @@ The values of Jinja2 variables can be passed in from the Cylc command
 line rather than hardwired in the suite configuration.
 Here's an example:
 
-.. literalinclude:: ../../suites/jinja2/defaults/flow.cylc
+.. literalinclude:: ../../workflows/jinja2/defaults/flow.cylc
    :language: cylc
 
 Here's the result:

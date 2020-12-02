@@ -374,7 +374,7 @@ run time to the home directory of task owner on the task host.
 
 
 How Tasks Get Access To The workflow Directory
--------------------------------------------
+----------------------------------------------
 
 Tasks can use ``$CYLC_workflow_DEF_PATH`` to access workflow files on
 the task host, and the workflow bin directory is automatically added

@@ -571,7 +571,7 @@ queue. The *queues* example suite illustrates how queues work by
 running two task trees side by side each
 limited to 2 and 3 tasks respectively:
 
-.. literalinclude:: ../suites/queues/flow.cylc
+.. literalinclude:: ../workflows/queues/flow.cylc
    :language: cylc
 
 
@@ -602,7 +602,7 @@ Task Event Handling
 * Task events (e.g. task succeeded/failed) are configured by
   :cylc:conf:`task events <[runtime][<namespace>][events]>`.
 * Suite events (e.g. suite started/stopped) are configured by
-  :cylc:conf:`suite events <[cylc][events]>`
+  :cylc:conf:`suite events <[scheduler][events]>`
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
@@ -644,14 +644,13 @@ These can be configured using the settings:
 
 - :cylc:conf:`[mail]to` (list of email addresses)
 - :cylc:conf:`[mail]from`
-- :cylc:conf:`[mail]smtp`
 
 .. cylc-scope::
 
 By default, a cylc suite will send you no more than one task event email every
 5 minutes - this is to prevent your inbox from being flooded by emails should a
 large group of tasks all fail at similar time. This is configured by
-:cylc:conf:`[cylc][mail]task event batch interval`.
+:cylc:conf:`[scheduler][mail]task event batch interval`.
 
 Event handlers can be located in the suite ``bin/`` directory;
 otherwise it is up to you to ensure their location is in ``$PATH`` (in
@@ -694,7 +693,7 @@ Event handler arguments can be constructed from various templates
 representing suite name; task ID, name, cycle point, message, and submit
 number name; and any :cylc:conf:`suite <[meta]>` or
 :cylc:conf:`task <[runtime][<namespace>][meta]>` item.
-See :cylc:conf:`suite events <[cylc][events]>` and
+See :cylc:conf:`suite events <[scheduler][events]>` and
 :cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
 
 If no template arguments are supplied the following default command line

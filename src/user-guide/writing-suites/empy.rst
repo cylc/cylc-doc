@@ -30,7 +30,7 @@ An example suite ``empy.cities`` demonstrating its use is shown below.
 It is a translation of ``jinja2.cities`` example from
 :ref:`User Guide Jinja2` and can be directly compared against it.
 
-.. literalinclude:: ../../suites/empy/cities/flow.cylc
+.. literalinclude:: ../../workflows/empy/cities/flow.cylc
    :language: cylc
 
 For basic usage the difference between Jinja2 and EmPy amounts to a different
