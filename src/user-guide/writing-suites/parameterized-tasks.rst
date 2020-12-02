@@ -98,7 +98,7 @@ overridden if need be:
        [[templates]]
            run = -R%(run)s  # Make foo<run> expand to foo-R1 etc.
 
-See :cylc:conf:`[task parameters][parameter templates]` for more on the string
+See :cylc:conf:`[task parameters][templates]` for more on the string
 template syntax.
 
 Any number of parameters can be used at once. This parameterization:
