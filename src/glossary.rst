@@ -130,7 +130,7 @@ Glossary
       * :term:`family trigger`
 
    cycle
-      In a :term:`cyclijng workflow<cycling>` one cycle is one repetition of the
+      In a :term:`cycling workflow<cycling>` one cycle is one repetition of the
       workflow.
 
       For example, in the following workflow each dotted box represents a cycle
@@ -193,7 +193,7 @@ Glossary
       * :term:`final cycle point`
 
    initial cycle point
-      In a :term:`cyclijng workflow <cycling>` the initial cycle point is the point
+      In a :term:`cycling workflow <cycling>` the initial cycle point is the point
       from which cycling begins.
       It is set by :cylc:conf:`[scheduling]initial cycle point`.
 
@@ -206,7 +206,7 @@ Glossary
       * :term:`final cycle point`
 
    final cycle point
-      In a :term:`cyclijng workflow <cycling>` the final cycle point is the point
+      In a :term:`cycling workflow <cycling>` the final cycle point is the point
       at which cycling ends.
       It is set by :cylc:conf:`[scheduling]final cycle point`.
 
@@ -219,7 +219,7 @@ Glossary
       * :term:`initial cycle point`
 
    integer cycling
-      An integer cyclijng workflow is a :term:`cyclijng workflow<cycling>` which has
+      An integer cycling workflow is a :term:`cycling workflow<cycling>` which has
       been configured to use integer cycling. When a workflow uses integer cycling
       integer :term:`recurrences <recurrence>` may be used in the :term:`graph`,
       e.g. ``P3`` means every third cycle. This is configured by setting
@@ -230,7 +230,7 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-integer-cycling>`
 
    datetime cycling
-      A datetime cycling is the default for a :term:`cyclijng workflow<cycling>`.
+      A datetime cycling is the default for a :term:`cycling workflow<cycling>`.
       When using datetime cycling :term:`cycle points<cycle point>` will be
       :term:`ISO8601 datetimes <ISO8601 datetime>` e.g. ``2000-01-01T00:00Z``
       and ISO8601 :term:`recurrences<recurrence>` can be used e.g. ``P3D``
@@ -286,7 +286,7 @@ Glossary
 
    recurrence
       A recurrence is a repeating sequence which may be used to define a
-      :term:`cyclijng workflow<cycling>`. Recurrences determine how often something
+      :term:`cycling workflow<cycling>`. Recurrences determine how often something
       repeats and take one of two forms depending on whether the
       :term:`workflow<Cylc workflow>` is configured to use :term:`integer cycling`
       or :term:`datetime cycling`.
@@ -298,7 +298,7 @@ Glossary
 
    inter-cycle dependency
    inter-cycle trigger
-      In a :term:`cyclijng workflow <cycling>` an inter-cycle dependency
+      In a :term:`cycling workflow <cycling>` an inter-cycle dependency
       is a :term:`dependency` between two tasks in different cycles.
 
       For example in the following workflow the task ``bar`` is dependent on
@@ -442,7 +442,7 @@ Glossary
       The location of the share directory can be accessed by a :term:`job` via
       the environment variable ``CYLC_workflow_SHARE_DIR``.
 
-      In cyclijng workflows files are typically stored in cycle sub-directories.
+      In cycling workflows files are typically stored in cycle sub-directories.
 
       See also:
 
@@ -614,7 +614,7 @@ Glossary
       * :term:`warm start`
 
    warm start
-      In a :term:`cyclijng workflow <cycling>`
+      In a :term:`cycling workflow <cycling>`
       a warm start is one in which the :term:`workflow` :term:`starts <start>`
       from a :term:`cycle point` after the :term:`initial cycle point`.
       Tasks in cycles before this point as assumed to have succeeded.
