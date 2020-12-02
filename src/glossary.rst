@@ -10,14 +10,14 @@ Glossary
       which contains :term:`graphing<graph>` representing a workflow.
 
    workflow directory
-      The suite directory contains all of the configuration for a suite e.g.
+      The workflow directory contains all of the configuration for a workflow e.g.
       the :cylc:conf:`flow.cylc` file.
 
       This is the directory which is registered using ``cylc reg``.
 
       .. note::
 
-         If a workflow is written in the ``cylc-run`` directory the suite
+         If a workflow is written in the ``cylc-run`` directory the workflow
          directory is also the :term:`run directory`.
 
       See also:
@@ -130,7 +130,7 @@ Glossary
       * :term:`family trigger`
 
    cycle
-      In a :term:`cycling suite<cycling>` one cycle is one repetition of the
+      In a :term:`cyclijng workflow<cycling>` one cycle is one repetition of the
       workflow.
 
       For example, in the following workflow each dotted box represents a cycle
@@ -193,7 +193,7 @@ Glossary
       * :term:`final cycle point`
 
    initial cycle point
-      In a :term:`cycling suite <cycling>` the initial cycle point is the point
+      In a :term:`cyclijng workflow <cycling>` the initial cycle point is the point
       from which cycling begins.
       It is set by :cylc:conf:`[scheduling]initial cycle point`.
 
@@ -206,7 +206,7 @@ Glossary
       * :term:`final cycle point`
 
    final cycle point
-      In a :term:`cycling suite <cycling>` the final cycle point is the point
+      In a :term:`cyclijng workflow <cycling>` the final cycle point is the point
       at which cycling ends.
       It is set by :cylc:conf:`[scheduling]final cycle point`.
 
@@ -219,8 +219,8 @@ Glossary
       * :term:`initial cycle point`
 
    integer cycling
-      An integer cycling suite is a :term:`cycling suite<cycling>` which has
-      been configured to use integer cycling. When a suite uses integer cycling
+      An integer cyclijng workflow is a :term:`cyclijng workflow<cycling>` which has
+      been configured to use integer cycling. When a workflow uses integer cycling
       integer :term:`recurrences <recurrence>` may be used in the :term:`graph`,
       e.g. ``P3`` means every third cycle. This is configured by setting
       :cylc:conf:`[scheduling]cycling mode = integer`.
@@ -230,7 +230,7 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-integer-cycling>`
 
    datetime cycling
-      A datetime cycling is the default for a :term:`cycling suite<cycling>`.
+      A datetime cycling is the default for a :term:`cyclijng workflow<cycling>`.
       When using datetime cycling :term:`cycle points<cycle point>` will be
       :term:`ISO8601 datetimes <ISO8601 datetime>` e.g. ``2000-01-01T00:00Z``
       and ISO8601 :term:`recurrences<recurrence>` can be used e.g. ``P3D``
@@ -241,7 +241,7 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
    wall-clock time
-      In a Cylc suite the wall-clock time refers to the actual time (in the
+      In a Cylc workflow the wall-clock time refers to the actual time (in the
       real world).
 
       See also:
@@ -286,7 +286,7 @@ Glossary
 
    recurrence
       A recurrence is a repeating sequence which may be used to define a
-      :term:`cycling suite<cycling>`. Recurrences determine how often something
+      :term:`cyclijng workflow<cycling>`. Recurrences determine how often something
       repeats and take one of two forms depending on whether the
       :term:`workflow<Cylc workflow>` is configured to use :term:`integer cycling`
       or :term:`datetime cycling`.
@@ -298,10 +298,10 @@ Glossary
 
    inter-cycle dependency
    inter-cycle trigger
-      In a :term:`cycling suite <cycling>` an inter-cycle dependency
+      In a :term:`cyclijng workflow <cycling>` an inter-cycle dependency
       is a :term:`dependency` between two tasks in different cycles.
 
-      For example in the following suite the task ``bar`` is dependent on
+      For example in the following workflow the task ``bar`` is dependent on
       its previous occurrence:
 
       .. code-block:: cylc
@@ -391,22 +391,22 @@ Glossary
 
    run directory
       When a :term:`workflow <Cylc workflow>` is run a directory is created for all
-      of the files generated whilst the suite is running. This is called the
+      of the files generated whilst the workflow is running. This is called the
       run directory and typically resides in the ``cylc-run`` directory:
 
-      ``~/cylc-run/<suite-name>``
+      ``~/cylc-run/<workflow-name>``
 
       .. note::
 
-         If a suite is written in the ``cylc-run`` directory the run
-         directory is also the :term:`suite directory`.
+         If a workflow is written in the ``cylc-run`` directory the run
+         directory is also the :term:`workflow directory`.
 
-      The run directory can be accessed by a running suite using the
-      environment variable ``CYLC_SUITE_RUN_DIR``.
+      The run directory can be accessed by a running workflow using the
+      environment variable ``CYLC_workflow_RUN_DIR``.
 
       See also:
 
-      * :term:`suite directory`
+      * :term:`workflow directory`
       * :ref:`Suite Directory Vs Run Directory`
       * :term:`work directory`
       * :term:`share directory`
@@ -415,7 +415,7 @@ Glossary
    work directory
       When Cylc executes a :term:`job` it does so inside the
       :term:`job's <job>` working directory. This directory is created by Cylc
-      and lies within the directory tree inside the relevant suite's
+      and lies within the directory tree inside the relevant workflow's
       :term:`run directory`.
 
       .. code-block:: sub
@@ -431,7 +431,7 @@ Glossary
       * :term:`share directory`
 
    share directory
-      The share directory resides within a suite's :term:`run directory`. It
+      The share directory resides within a workflow's :term:`run directory`. It
       serves the purpose of providing a storage place for any files which need
       to be shared between different tasks.
 
@@ -440,31 +440,31 @@ Glossary
          <run directory>/share
 
       The location of the share directory can be accessed by a :term:`job` via
-      the environment variable ``CYLC_SUITE_SHARE_DIR``.
+      the environment variable ``CYLC_workflow_SHARE_DIR``.
 
-      In cycling suites files are typically stored in cycle sub-directories.
+      In cyclijng workflows files are typically stored in cycle sub-directories.
 
       See also:
 
       * :term:`run directory`
       * :term:`work directory`
 
-   suite log
-   suite log directory
-      A Cylc suite logs events and other information to the suite log files
+   workflow log
+   workflow log directory
+      A Cylc workflow logs events and other information to the workflow log files
       when it runs. There are three log files:
 
-      * ``out`` - the stdout of the suite.
-      * ``err`` - the stderr of the suite, which may contain useful debugging
+      * ``out`` - the stdout of the workflow.
+      * ``err`` - the stderr of the workflow, which may contain useful debugging
         information in the event of any error(s).
-      * ``log`` - a log of suite events, consisting of information about
+      * ``log`` - a log of workflow events, consisting of information about
         user interaction.
 
-      The suite log directory lies within the :term:`run directory`:
+      The workflow log directory lies within the :term:`run directory`:
 
       .. code-block:: sub
 
-         <run directory>/log/suite
+         <run directory>/log/workflow
 
    job log
    job log directory
@@ -490,20 +490,20 @@ Glossary
       This directory is used to store information for internal use by Cylc.
 
       It is called ``.service`` and is located in the :term:`run directory`, it
-      should exist for all registered suites.
+      should exist for all registered workflows.
 
    contact file
-      The contact file records information about a running suite such as the host it
+      The contact file records information about a running workflow such as the host it
       is running on, the TCP port(s) it is listening on and the process ID.
-      The file is called ``contact`` and lives inside the suite's
+      The file is called ``contact`` and lives inside the workflow's
       :term:`service directory`.
 
-      The contact file only exists when the suite is running, if you delete the
-      contact file, the suite will (after a delay) notice this and shut down.
+      The contact file only exists when the workflow is running, if you delete the
+      contact file, the workflow will (after a delay) notice this and shut down.
 
       .. warning::
 
-         In the event that a suite process dies in an uncontrolled way, for
+         In the event that a workflow process dies in an uncontrolled way, for
          example if the process is killed or the host which is running the
          process crashes, the contact file may be erroneously left behind. Some
          Cylc commands will automatically detect such files and remove them,
@@ -532,7 +532,7 @@ Glossary
    job host
       The job host is the compute platform that a :term:`job` runs on. For
       example ``some-host`` would be the job host for the task ``some-task`` in
-      the following suite:
+      the following workflow:
 
       .. code-block:: cylc
 
@@ -574,11 +574,11 @@ Glossary
       * :term:`batch system`
 
    scheduler
-      When we say that a :term:`suite` is "running" we mean that the cylc
+      When we say that a :term:`workflow` is "running" we mean that the cylc
       scheduler is running.
 
-      The scheduler is responsible for running the suite. It submits
-      :term:`jobs <job>`, monitors their status and maintains the suite state.
+      The scheduler is responsible for running the workflow. It submits
+      :term:`jobs <job>`, monitors their status and maintains the workflow state.
 
       .. _daemon: https://en.wikipedia.org/wiki/Daemon_(computing)
 
@@ -587,16 +587,16 @@ Glossary
 
    start
    startup
-      When a :term:`suite` starts the Cylc :term:`scheduler` is
-      run. This program controls the suite and is what we refer to as
+      When a :term:`workflow` starts the Cylc :term:`scheduler` is
+      run. This program controls the workflow and is what we refer to as
       "running".
 
-      A suite start can be either :term:`cold <cold start>` or :term:`warm <warm
+      A workflow start can be either :term:`cold <cold start>` or :term:`warm <warm
       start>` (cold by default).
 
       See also:
 
-      * :ref:`Starting Suites`
+      * :ref:`Starting suites`
       * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
@@ -605,7 +605,7 @@ Glossary
       * :term:`reload`
 
    cold start
-      A cold start is one in which the :term:`suite` :term:`starts <start>`
+      A cold start is one in which the :term:`workflow` :term:`starts <start>`
       from the :term:`initial cycle point`. This is the default behaviour of
       ``cylc run``.
 
@@ -614,8 +614,8 @@ Glossary
       * :term:`warm start`
 
    warm start
-      In a :term:`cycling suite <cycling>`
-      a warm start is one in which the :term:`suite` :term:`starts <start>`
+      In a :term:`cyclijng workflow <cycling>`
+      a warm start is one in which the :term:`workflow` :term:`starts <start>`
       from a :term:`cycle point` after the :term:`initial cycle point`.
       Tasks in cycles before this point as assumed to have succeeded.
 
@@ -625,7 +625,7 @@ Glossary
 
    stop
    shutdown
-      When a :term:`suite` is shutdown the :term:`scheduler` is
+      When a :term:`workflow` is shutdown the :term:`scheduler` is
       stopped. This means that no further :term:`jobs <job>` will be submitted.
 
       By default Cylc waits for any submitted or running :term:`jobs <job>` to
@@ -633,44 +633,44 @@ Glossary
 
       See also:
 
-      * :ref:`Stopping Suites`
+      * :ref:`Stopping suites`
       * :term:`start`
       * :term:`restart`
       * :term:`reload`
 
    restart
-      When a :term:`stopped <stop>` :term:`suite` is "restarted" Cylc will pick
+      When a :term:`stopped <stop>` :term:`workflow` is "restarted" Cylc will pick
       up where it left off. Cylc will detect any :term:`jobs <job>` which
       have changed state (e.g. succeeded) during the period in which the
-      :term:`suite` was :term:`shutdown`.
+      :term:`workflow` was :term:`shutdown`.
 
       See also:
 
-      * :ref:`Restarting Suites`
+      * :ref:`Restarting suites`
       * :term:`start`
       * :term:`Stop <stop>`
       * :term:`Reload <reload>`
 
    reload
-      Any changes made to the :cylc:conf:`flow.cylc` file whilst the suite is
-      running will not have any effect until the suite is either:
+      Any changes made to the :cylc:conf:`flow.cylc` file whilst the workflow is
+      running will not have any effect until the workflow is either:
 
       * :term:`Shutdown <shutdown>` and :term:`rerun <start>`
       * :term:`Shutdown <shutdown>` and :term:`restarted <restart>`
       * "Reloaded"
 
-      Reloading does not require the suite to be :term:`shutdown`. When a suite
+      Reloading does not require the workflow to be :term:`shutdown`. When a workflow
       is reloaded any currently "active" :term:`tasks <task>` will continue with
       their "pre-reload" configuration, whilst new tasks will use the new
       configuration.
 
       Reloading changes is safe providing they don't affect the
-      :term:`suite's <suite>` :term:`graph`. Changes to the graph have certain
+      :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have certain
       caveats attached, see the `Cylc User Guide`_ for details.
 
       See also:
 
-      * :ref:`Reloading Suites`
+      * :ref:`Reloading suites`
       * `Cylc User Guide`_
 
    parameterisation
@@ -774,7 +774,7 @@ Glossary
 
       We can use :term:`custom task outputs <custom task output>` as triggers.
 
-      Messages should be defined in the runtime section of the suite and
+      Messages should be defined in the runtime section of the workflow and
       the graph trigger notation refers to each message.
 
       See also:
@@ -792,10 +792,10 @@ Glossary
       * `Cylc User Guide`_
       * :term:`message trigger`
 
-   stalled suite
+   stalled workflow
    stalled state
       If Cylc is unable to proceed running a workflow due to unmet dependencies
-      the suite is said to be *stalled*.
+      the workflow is said to be *stalled*.
 
       This usually happens because of a task failure as in the following
       diagram:
@@ -812,7 +812,7 @@ Glossary
       In this example the task ``bar`` has failed meaning that ``baz`` is
       unable to run as its dependency (``bar:succeed``) has not been met.
 
-      When a Cylc detects that a suite has stalled an email will be sent to the
+      When a Cylc detects that a workflow has stalled an email will be sent to the
       user. Human interaction is required to escape a stalled state.
 
    suicide trigger
