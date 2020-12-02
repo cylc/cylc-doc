@@ -404,7 +404,7 @@ Recurrence Sections
 
 .. practical::
 
-   .. rubric:: In this practical we will take the :term:`suite <Cylc suite>`
+   .. rubric:: In this practical we will take the :term:`workflow <Cylc workflow>`
       we wrote in the previous section and turn it into a
       :term:`cycling suite <cycling>`.
 

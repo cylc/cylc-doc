@@ -13,7 +13,7 @@ The :cylc:conf:`flow.cylc` File Format
 
 .. ifnotslides::
 
-   We refer to a Cylc workflow as a :term:`Cylc suite`. A Cylc suite is a
+   We refer to a Cylc workflow as a :term:`Cylc workflow`. A Cylc suite is a
    directory containing a :cylc:conf:`flow.cylc` file. This configuration file is where
    we define our workflow. The :cylc:conf:`flow.cylc` file uses a nested `INI`_-based
    format:
@@ -243,7 +243,7 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   In a :term:`Cylc suite` the :term:`graph` is stored under the
+   In a :term:`Cylc workflow` the :term:`graph` is stored under the
    ``[scheduling][graph]R1`` setting, i.e:
 
 .. code-block:: cylc
@@ -259,7 +259,7 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   This is a minimal :term:`Cylc suite`, in which we have defined a
+   This is a minimal :term:`Cylc workflow`, in which we have defined a
    :term:`graph` representing a workflow for Cylc to run.
    We have not yet provided Cylc with the scripts or binaries to run for
    each task. This will be covered later in the

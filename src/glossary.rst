@@ -4,12 +4,12 @@ Glossary
 .. glossary::
    :sorted:
 
-   suite
-   Cylc suite
-      A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
+   workflow
+   Cylc workflow
+      A Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file
       which contains :term:`graphing<graph>` representing a workflow.
 
-   suite directory
+   workflow directory
       The suite directory contains all of the configuration for a suite e.g.
       the :cylc:conf:`flow.cylc` file.
 
@@ -17,15 +17,22 @@ Glossary
 
       .. note::
 
-         If a suite is written in the ``cylc-run`` directory the suite
+         If a workflow is written in the ``cylc-run`` directory the suite
          directory is also the :term:`run directory`.
 
       See also:
 
       * :term:`run directory`
 
+   suite
+   Cylc suite
+      A term replaced at Cylc 8 with `workflow<Cylc workflow>`.
+
+   suite directory
+      A term replaced at Cylc 8 with `workflow<workflow directory>`.
+
    graph
-      The graph of a :term:`suite<Cylc suite>` refers to the
+      The graph of a :term:`workflow<Cylc workflow>` refers to the
       :term:`graph strings<graph string>` contained within the
       :cylc:conf:`[scheduling][graph]` section. For example the following is,
       collectively, a graph:
@@ -166,7 +173,7 @@ Glossary
          "bar.1" -> "bar.2" -> "bar.3"
 
    cycling
-      A cycling :term:`suite<Cylc suite>` is one in which the workflow repeats.
+      A cycling :term:`workflow<Cylc workflow>` is one in which the workflow repeats.
 
       See also:
 
@@ -175,9 +182,9 @@ Glossary
 
    cycle point
       A cycle point is the unique label given to a particular :term:`cycle`.
-      If the :term:`suite<Cylc suite>` is using :term:`integer cycling` then
+      If the :term:`workflow<Cylc workflow>` is using :term:`integer cycling` then
       the cycle points will be numbers e.g. ``1``, ``2``, ``3``, etc. If the
-      :term:`suite<Cylc suite>` is using :term:`datetime cycling` then the
+      :term:`workflow<Cylc workflow>` is using :term:`datetime cycling` then the
       labels will be :term:`ISO8601` datetimes e.g. ``2000-01-01T00:00Z``.
 
       See also:
@@ -281,7 +288,7 @@ Glossary
       A recurrence is a repeating sequence which may be used to define a
       :term:`cycling suite<cycling>`. Recurrences determine how often something
       repeats and take one of two forms depending on whether the
-      :term:`suite<Cylc suite>` is configured to use :term:`integer cycling`
+      :term:`workflow<Cylc workflow>` is configured to use :term:`integer cycling`
       or :term:`datetime cycling`.
 
       See also:
@@ -383,7 +390,7 @@ Glossary
       * :term:`qualifier`
 
    run directory
-      When a :term:`suite <Cylc suite>` is run a directory is created for all
+      When a :term:`workflow <Cylc workflow>` is run a directory is created for all
       of the files generated whilst the suite is running. This is called the
       run directory and typically resides in the ``cylc-run`` directory:
 
