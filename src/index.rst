@@ -12,6 +12,6 @@ indefinitely.
    introduction/index
    tutorial/index
    user-guide/index
-   suite-design-guide/index
+   workflow-design-guide/index
    reference/index
    glossary

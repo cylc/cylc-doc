@@ -8,8 +8,8 @@ User Guide
    workflows
    writing-workflows/index
    running-workflows
-   suite-name-reg
-   suite-storage-etc
+   workflow-name-reg
+   workflow-storage-etc
    task-implementation
    task-job-submission
    remote-job-management
