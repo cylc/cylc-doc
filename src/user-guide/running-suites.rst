@@ -810,12 +810,12 @@ Job submission commands, event handlers, and job poll and kill commands, are
 executed by the :term:`scheduler` in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
 actively managed to limit it to a configurable size
-:cylc:conf:`global.cylc|process pool size`
+:cylc:conf:`global.cylc[scheduler]process pool size`
 Custom event handlers should be light-weight and quick-running because they
 will tie up a process pool member until they complete, and the suite will
 appear to stall if the pool is saturated with long-running processes. Processes
 are killed after a configurable timeout
-:cylc:conf:`global.cylc|process pool timeout`
+:cylc:conf:`global.cylc[scheduler]process pool timeout`
 , however,
 to guard against rogue commands that hang indefinitely. All process kills are
 logged by the :term:`scheduler`. For killed job submissions the associated
