@@ -21,7 +21,7 @@ TEMPORARYDIRECTORY=$(mktemp -dp "$HOME/cylc-run/")
 cp -r ./* "$TEMPORARYDIRECTORY"
 APIKEY=$(head --lines 1 ../api-keys)
 cd "$TEMPORARYDIRECTORY"
-sed -i '1s;^;[scheduler]]\n    abort if any task fails = True\n;' flow.cylc
+sed -i '1s;^;[scheduler]\n    abort if any task fails = True\n;' flow.cylc
 sed -i "s/DATAPOINT_API_KEY/$APIKEY/" flow.cylc
 cylc validate --strict . --icp=2000
 cylc run --no-detach
