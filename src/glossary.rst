@@ -673,7 +673,7 @@ Glossary
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              [[parameters]]
                  foo = 1..3
          [scheduling]

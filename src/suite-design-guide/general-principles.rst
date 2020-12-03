@@ -18,7 +18,7 @@ different timezones.
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
 
 

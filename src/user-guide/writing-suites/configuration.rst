@@ -176,7 +176,7 @@ Gross File Structure
 Cylc :cylc:conf:`flow.cylc` files consist of a suite title and description followed by
 configuration items grouped under several top level section headings:
 
-:cylc:conf:`[cylc]`
+:cylc:conf:`[scheduler]`
    Non task-specific suite configuration.
 :cylc:conf:`[scheduling]`
    Determines when tasks are ready to run.

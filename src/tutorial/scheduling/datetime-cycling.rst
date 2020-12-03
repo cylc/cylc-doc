@@ -259,12 +259,12 @@ UTC Mode
    When a suite uses UTC all of the cycle points will be written in the
    ``+00`` time zone.
 
-   To make your suite use UTC set the ``[cylc]UTC mode`` setting to ``True``,
+   To make your suite use UTC set the ``[scheduler]UTC mode`` setting to ``True``,
    i.e:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
 
 
@@ -437,7 +437,7 @@ Putting It All Together
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              UTC mode = True
          [scheduling]
              initial cycle point = 20000101T00Z
@@ -464,7 +464,7 @@ Putting It All Together
 
          .. code-block:: diff
 
-             [cylc]
+             [scheduler]
                  UTC mode = True
              [scheduling]
                  initial cycle point = 20000101T00Z
@@ -509,7 +509,7 @@ Putting It All Together
 
          .. code-block:: cylc
 
-           [cylc]
+           [scheduler]
                UTC mode = True
            [scheduling]
                initial cycle point = 20000101T00Z

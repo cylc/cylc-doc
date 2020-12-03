@@ -17,7 +17,7 @@ Cylc Parameters
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            world = Mercury, Venus, Earth
 
@@ -96,7 +96,7 @@ Parameters can be either words or integers:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            foo = 1..5
            bar = 1..5..2
@@ -207,7 +207,7 @@ Parameters can be either words or integers:
 
       .. code-block:: diff
 
-          [cylc]
+          [scheduler]
               UTC mode = True
          +    [[parameters]]
          +        station = belmullet, camborne, heathrow, shetland
@@ -319,7 +319,7 @@ Parameters can be either words or integers:
 
          .. code-block:: diff
 
-             [cylc]
+             [scheduler]
                  UTC mode = True
                  [[parameters]]
                      station = belmullet, camborne, heathrow, shetland

@@ -318,7 +318,7 @@ and batch scheduler directives.
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01
@@ -364,7 +364,7 @@ site-specific settings from an include-file at the end:
    # flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.
    {% set SITE = 'niwa' %}
    {% from 'site/' ~ SITE ~ '-vars.cylc' import HAVE_IDL %}
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01

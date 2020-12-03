@@ -281,7 +281,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
 
    .. code-block:: cylc
 
-      [cylc]
+      [scheduler]
          cycle point format = %Y
          [[parameters]]
             m = 0..5

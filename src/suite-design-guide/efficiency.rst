@@ -255,7 +255,7 @@ example using suite parameters instead of Jinja2 loops:
 .. code-block:: cylc
 
    # Task generation the new way: suite parameters.
-   [cylc]
+   [scheduler]
        [[parameters]]
            p = 1..10
    [scheduling]
@@ -278,7 +278,7 @@ values: ``chunk<p-1> => chunk<p>``. Here's a multi-parameter example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = a, b, c
            m = 1..5
@@ -296,7 +296,7 @@ For example, this:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            n = 1..5
    [scheduling]
@@ -311,7 +311,7 @@ is equivalent to this:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            n = 1..5
    [scheduling]

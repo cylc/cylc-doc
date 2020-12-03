@@ -149,7 +149,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              UTC mode = True
 
          [meta]
@@ -286,7 +286,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          .. code-block:: cylc
 
-            [cylc]
+            [scheduler]
             UTC mode = True
 
             [meta]
@@ -391,7 +391,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          .. code-block:: cylc
 
-            [cylc]
+            [scheduler]
             UTC mode = True
             [meta]
             title = "test suite to demo message triggers"
