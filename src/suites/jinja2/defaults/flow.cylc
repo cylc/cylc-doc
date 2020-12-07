@@ -7,8 +7,6 @@
         --set or --set-file=FILE; but if not a default values is supplied.
     """
 
-{% set N_MEMBERS = N_MEMBERS | default( 3 ) | int %}
-
 [scheduling]
     initial cycle point = 20100808T00
     final cycle point   = 20100816T00
@@ -20,7 +18,7 @@
 
 [runtime]
     [[ENS]]
-{% for I in range( 0, N_MEMBERS ) %}
+{% for I in range( 0, N_MEMBERS | default( 3 )) %}
     [[ mem_{{ I }} ]]
         inherit = ENS
 {% endfor %}
