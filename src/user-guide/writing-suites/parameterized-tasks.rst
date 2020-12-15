@@ -31,34 +31,33 @@ For example:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           # parameters: "ship", "buoy", "plane"
-           # default task suffixes: _ship, _buoy, _plane
-           obs = ship, buoy, plane
+   [[task parameters]]
+       # parameters: "ship", "buoy", "plane"
+       # default task suffixes: _ship, _buoy, _plane
+       obs = ship, buoy, plane
 
-           # parameters: 1, 2, 3, 4, 5
-           # default task suffixes: _run1, _run2, _run3, _run4, _run5
-           run = 1..5
+       # parameters: 1, 2, 3, 4, 5
+       # default task suffixes: _run1, _run2, _run3, _run4, _run5
+       run = 1..5
 
-           # parameters: 1, 3, 5, 7, 9
-           # default task suffixes: _idx1, _idx3, _idx5, _idx7, _idx9
-           idx = 1..9..2
+       # parameters: 1, 3, 5, 7, 9
+       # default task suffixes: _idx1, _idx3, _idx5, _idx7, _idx9
+       idx = 1..9..2
 
-           # parameters: -11, -1, 9
-           # default task suffixes: _idx-11, _idx-01, _idx+09
-           idx = -11..9..10
+       # parameters: -11, -1, 9
+       # default task suffixes: _idx-11, _idx-01, _idx+09
+       idx = -11..9..10
 
-           # parameters: 1, 3, 5, 10, 11, 12, 13
-           # default task suffixes: _i01, _i03, _i05, _i10, _i11, _i12, _i13
-           i = 1..5..2, 10, 11..13
+       # parameters: 1, 3, 5, 10, 11, 12, 13
+       # default task suffixes: _i01, _i03, _i05, _i10, _i11, _i12, _i13
+       i = 1..5..2, 10, 11..13
 
-           # parameters: "0", "1", "e", "pi", "i"
-           # default task suffixes: _0, _1, _e, _pi, _i
-           item = 0, 1, e, pi, i
+       # parameters: "0", "1", "e", "pi", "i"
+       # default task suffixes: _0, _1, _e, _pi, _i
+       item = 0, 1, e, pi, i
 
-           # ERROR: mix strings with int range
-           p = one, two, 3..5
+       # ERROR: mix strings with int range
+       p = one, two, 3..5
 
 Then angle brackets denote use of these parameters throughout the suite
 configuration. For the values above, this parameterized name:
@@ -93,14 +92,13 @@ overridden if need be:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           obs = ship, buoy, plane
-           run = 1..5
-       [[parameter templates]]
+   [task parameters]
+       obs = ship, buoy, plane
+       run = 1..5
+       [[templates]]
            run = -R%(run)s  # Make foo<run> expand to foo-R1 etc.
 
-See :cylc:conf:`[scheduler][parameter templates]` for more on the string
+See :cylc:conf:`[task parameters][templates]` for more on the string
 template syntax.
 
 Any number of parameters can be used at once. This parameterization:
@@ -120,8 +118,7 @@ Here's a simple but complete example suite:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            run = 1..2
    [scheduling]
        [[graph]]
@@ -148,8 +145,7 @@ omitted):
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            run = 1..2
            mem = cat, dog
    [scheduling]
@@ -198,11 +194,10 @@ To get thicker padding and/or alternate suffixes, use a template. E.g.:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           i = 1..9
-           p = 3..14
-       [[parameter templates]]
+   [[task parameters]]
+       i = 1..9
+       p = 3..14
+       [[templates]]
            i = _i%(i)02d  # suffixes = _i01, _i02, ..., _i09
            # A double-percent gives a literal percent character
            p = %%p%(p)03d  # suffixes = %p003, %p004, ..., %p013, %p014
@@ -216,8 +211,7 @@ should be overridden to remove the initial underscore. For example:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            i = 1..4
            obs = ship, buoy, plane
        [[parameter templates]]
@@ -239,8 +233,7 @@ parameter expansion. For example, if we have:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            obs = ship, buoy, plane
            run = 1..5
    [scheduling]
@@ -290,8 +283,7 @@ set of model runs:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            run = 1..5
    [scheduling]
        [[graph]]
@@ -317,10 +309,9 @@ template as the full-range parameter. For example:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           run = 1..10  # 1, 2, ..., 10
-           runx = 1..3  # 1, 2, 3
+   [task parameters]
+       run = 1..10  # 1, 2, ..., 10
+       runx = 1..3  # 1, 2, 3
        [[parameter templates]]
            run = _R%(run)02d   # _R01, _R02, ..., _R10
            runx = _R%(runx)02d  # _R01, _R02, _R03
@@ -523,8 +514,7 @@ And here's how to do the same thing with parameterized tasks:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            chunk = 1..6
    [scheduling]
        [[graph]]
@@ -571,8 +561,7 @@ point:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
+   [task parameters]
            chunk = 1..4
    [scheduling]
        initial cycle point = 2020-01

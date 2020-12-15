@@ -1902,18 +1902,8 @@ legal to leave these orphaned runtime sections in the suite
 configuration because it allows you to temporarily remove tasks from
 the suite by commenting them out of the graph.
 
-To omit a task from the suite at runtime but still leave it fully
-defined and available for use (by insertion) use one or both of
-:cylc:conf:`[scheduling][special tasks]include at start-up` or
-:cylc:conf:`[scheduling][special tasks]exclude at start-up`.
-Then the graph still defines the
-validity of the tasks and their dependencies, but they are not actually
-loaded into the suite at start-up. Other tasks that depend on the
-omitted ones, if any, will have to wait on their insertion at a later
-time or otherwise be triggered manually.
-
-Finally, with Jinja2 (:ref:`User Guide Jinja2`) you can radically alter
-suite structure by including or excluding tasks from th
+With Jinja2 (:ref:`User Guide Jinja2`) you can radically alter
+suite structure by including or excluding tasks from the
 :cylc:conf:`[scheduling]` and :cylc:conf:`[runtime]` sections according to the
 value of a single logical flag defined at the top of the suite.
 

@@ -224,8 +224,8 @@ The default polling intervals can be overridden in the global configuration:
 Or in suite configurations (in which case polling will be done regardless
 of the communication method configured for the platform):
 
-* :cylc:conf:`submission polling intervals<[runtime][<namespace>][job]submission polling intervals>`
-* :cylc:conf:`execution polling intervals<[runtime][<namespace>][job]execution polling intervals>`
+* :cylc:conf:`submission polling intervals<[runtime][<namespace>]submission polling intervals>`
+* :cylc:conf:`execution polling intervals<[runtime][<namespace>]execution polling intervals>`
 
 Note that regular polling is not as efficient as task messaging in updating
 task status, and it should be used sparingly in large suites.
@@ -255,15 +255,14 @@ Execution Time Limit
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
-You can specify an :cylc:conf:`[job]execution time limit` for all supported job
+You can specify an :cylc:conf:`execution time limit` for all supported job
 submission methods. E.g.:
 
 .. code-block:: cylc
 
    [runtime]
        [[task-x]]
-           [[[job]]]
-               execution time limit = PT1H
+           execution time limit = PT1H
 
 For tasks running with
 :py:mod:`background <cylc.flow.batch_sys_handlers.background>` or
@@ -271,12 +270,12 @@ For tasks running with
 will be wrapped using the ``timeout`` command. For all other methods,
 the relevant time limit directive will be added to their job files.
 
-The :cylc:conf:`[job]execution time limit` setting will also inform the suite when a
+The :cylc:conf:`execution time limit` setting will also inform the suite when a
 a task job should complete by. If a task job has not reported completing within
 the specified time, the suite will poll the task job. (The default
 setting is ``PT1M, PT2M, PT7M``. The accumulated times for these intervals will be
 roughly 1 minute, 1 + 2 = 3 minutes and 1 + 2 + 7 = 10 minutes after a task job
-exceeds its :cylc:conf:`[job]execution time limit`.)
+exceeds its :cylc:conf:`execution time limit`.)
 
 .. cylc-scope::
 
@@ -286,7 +285,7 @@ Execution Time Limit and Execution Timeout
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
-If you specify an :cylc:conf:`[job]execution time limit` the
+If you specify an :cylc:conf:`execution time limit` the
 execution timeout event handler will only be called if the job has
 not completed after the final poll (by default, 10 min after the time limit).
 This should only happen if the submission method you are using is not enforcing
@@ -294,7 +293,7 @@ wallclock limits (unlikely) or you are unable to contact the machine to confirm
 the job status.
 
 If you specify an :cylc:conf:`[events]execution timeout` and not an
-:cylc:conf:`[job]execution time limit` then the
+:cylc:conf:`execution time limit` then the
 execution timeout event handler will be called as soon as the
 specified time is reached. The job will also be polled to check its latest
 status (possibly resulting in an update in its status and the calling of the
@@ -302,7 +301,7 @@ relevant event handler). This behaviour is deprecated, which users should avoid
 using.
 
 If you specify an :cylc:conf:`[events]execution timeout` and an
-:cylc:conf:`[job]execution time limit` then the execution timeout setting will be
+:cylc:conf:`execution time limit` then the execution timeout setting will be
 ignored.
 
 .. cylc-scope::
@@ -351,9 +350,9 @@ name in suite configurations:
            R1 = "a"
    [runtime]
        [[root]]
+            execution time limit = PT1M
            [[[job]]]
                batch system = qsub  # <---!
-               execution time limit = PT1M
            [[[directives]]]
                -l nodes = 1
                -q = long

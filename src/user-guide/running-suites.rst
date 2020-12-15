@@ -580,7 +580,7 @@ limited to 2 and 3 tasks respectively:
 Automatic Task Retry On Failure
 -------------------------------
 
-See also :cylc:conf:`[runtime][<namespace>][job]execution retry delays`.
+See also :cylc:conf:`[runtime][<namespace>]execution retry delays`.
 
 Tasks can be configured with a list of "retry delay" intervals, as
 :term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will go
@@ -644,7 +644,6 @@ These can be configured using the settings:
 
 - :cylc:conf:`[mail]to` (list of email addresses)
 - :cylc:conf:`[mail]from`
-- :cylc:conf:`[mail]smtp`
 
 .. cylc-scope::
 
@@ -811,12 +810,12 @@ Job submission commands, event handlers, and job poll and kill commands, are
 executed by the :term:`scheduler` in a "pool" of asynchronous
 subprocesses, in order to avoid holding the suite up. The process pool is
 actively managed to limit it to a configurable size
-:cylc:conf:`global.cylc|process pool size`
+:cylc:conf:`global.cylc[scheduler]process pool size`
 Custom event handlers should be light-weight and quick-running because they
 will tie up a process pool member until they complete, and the suite will
 appear to stall if the pool is saturated with long-running processes. Processes
 are killed after a configurable timeout
-:cylc:conf:`global.cylc|process pool timeout`
+:cylc:conf:`global.cylc[scheduler]process pool timeout`
 , however,
 to guard against rogue commands that hang indefinitely. All process kills are
 logged by the :term:`scheduler`. For killed job submissions the associated
@@ -1045,7 +1044,7 @@ testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
 Proportional Simulated Run Length
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If :cylc:conf:`[runtime][<namespace>][job]execution time limit` is set, Cylc
+If :cylc:conf:`[runtime][<namespace>]execution time limit` is set, Cylc
 divides it by :cylc:conf:`[runtime][<namespace>][simulation]speedup factor` to compute simulated task
 run lengths.
 
@@ -1134,7 +1133,6 @@ you wish:
    [scheduler]
        [[events]]
            timeout = PT5M
-           abort if any task fails = True
            abort if shutdown handler fails = True
            abort on timeout = True
 
