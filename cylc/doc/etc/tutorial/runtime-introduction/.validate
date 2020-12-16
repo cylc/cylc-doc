@@ -21,7 +21,6 @@ set -eux
 TEMPORARYDIRECTORY=$(mktemp -dp "$HOME"/cylc-run/)
 cp -r ./* "$TEMPORARYDIRECTORY"
 cd "$TEMPORARYDIRECTORY"
-sed -i '1s;^;[scheduler]\n    abort if any task fails = True\n;' flow.cylc
 cylc validate --strict . --icp=2000
-cylc run --no-detach
+cylc run --no-detach --abort-if-any-task-fails
 rm -r "$TEMPORARYDIRECTORY"
