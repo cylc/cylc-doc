@@ -3,6 +3,8 @@
 Runtime Configuration
 =====================
 
+.. TODO - platformise all the examples in here
+
 In the last section we associated tasks with scripts and ran a simple suite. In
 this section we will look at how we can configure these tasks.
 
@@ -48,7 +50,7 @@ Environment Variables
    * ``CYLC_TASK_CYCLE_POINT``
 
 
-.. _tutorial-batch-system:
+.. _tutorial-job-runner:
 
 Job Submission
 --------------
@@ -77,8 +79,8 @@ Job Submission
 
    Cylc also executes jobs as `background processes`_ by default.
    When we are running jobs on other compute hosts we will often want to
-   use a :term:`batch system` (`job scheduler`_) to submit our job.
-   Cylc supports the following :term:`batch systems <batch system>`:
+   use a :term:`job runner` to submit our job.
+   Cylc supports the following :term:`job runners <job runner>`:
 
 * at
 * loadleveler
@@ -92,9 +94,9 @@ Job Submission
 
 .. ifnotslides::
 
-   :term:`Batch systems <batch system>` typically require
+   :term:`Job runners <job runner>` typically require
    :term:`directives <directive>` in some form. :term:`Directives <directive>`
-   inform the :term:`batch system` of the requirements of a :term:`job`, for
+   inform the job runner of the requirements of a :term:`job`, for
    example how much memory a given job requires or how many CPUs the job will
    run on. For example:
 
@@ -108,7 +110,7 @@ Job Submission
            [[[remote]]]
                host = big-computer
 
-           # Submit the job using the "slurm" batch system.
+           # Submit the job using the "slurm" job runner.
            [[[job]]]
                batch system = slurm
 
@@ -196,7 +198,7 @@ Start, Stop, Restart
    ``cylc stop --kill``
       When the ``--kill`` option is used Cylc will kill all running jobs
       before stopping. *Cylc can kill jobs on remote hosts and uses the
-      appropriate command when a* :term:`batch system` *is used.*
+      appropriate command when a* :term:`job runner` *is used.*
    ``cylc stop --now --now``
       When the ``--now`` option is used twice Cylc stops straight away, leaving
       any jobs running.
@@ -284,9 +286,9 @@ Start, Stop, Restart
       This sets the :term:`final cycle point` six hours after the
       :term:`initial cycle point`.
 
-      Run `cylc validate` to check for any errors::
+      Run `cylc validate` to check for any errors:
 
-          cylc validate .
+         cylc validate .
 
    #. **Add Runtime Configuration For The** ``get_observations`` **Tasks.**
 
@@ -302,7 +304,7 @@ Start, Stop, Restart
 
       .. TODO: Add instructions for offline configuration
 
-      Generate a Datapoint API key::
+      Generate a Datapoint API key:
 
          rose tutorial api-key
 
@@ -411,7 +413,7 @@ Start, Stop, Restart
       .. spoiler:: Hint hint
 
          If you run ``ls work`` you should see a
-         list of cycles. Pick one of them and open the file::
+         list of cycles. Pick one of them and open the file:
 
             work/<cycle-point>/get_observations_heathrow/wind.csv
 

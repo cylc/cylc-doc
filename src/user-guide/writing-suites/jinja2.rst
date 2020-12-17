@@ -211,6 +211,8 @@ Associative Arrays In Jinja2
 Associative arrays (*dicts* in Python) can be very useful.
 Here's an example:
 
+.. TODO - platformise?
+
 .. code-block:: cylc
 
    #!Jinja2

@@ -545,9 +545,13 @@ Glossary
       * :term:`job`
       * :term:`job script`
 
+   job runner
    batch system
-      A batch system or job scheduler is a system for submitting
-      :term:`jobs <job>` onto a compute platform.
+      A job runner (also known as batch system or job scheduler) is a system
+      for submitting :term:`jobs <job>` onto a compute platform.
+
+      Job runners are set on a per-platform basis in
+      :cylc:conf:`global.cylc[platforms][<platform name>]job runner`.
 
       See also:
 
@@ -556,7 +560,7 @@ Glossary
       * :term:`directive`
 
    directive
-      Directives are used by :term:`batch systems <batch system>` to determine
+      Directives are used by :term:`job runners <job runner>` to determine
       what a :term:`job's <job>` requirements are, e.g. how much memory
       it requires.
 
@@ -564,7 +568,7 @@ Glossary
 
       See also:
 
-      * :term:`batch system`
+      * :term:`job runner`
 
    scheduler
       When we say that a :term:`suite` is "running" we mean that the cylc

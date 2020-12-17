@@ -221,7 +221,7 @@ Avoid Detaching Processes
 -------------------------
 
 If a task script starts background sub-processes and does not wait on them, or
-internally submits jobs to a batch scheduler and then exits immediately, the
+internally submits jobs to a :term:`job runner` and then exits immediately, the
 detached processes will not be visible to Cylc and the task will appear to
 finish when the top-level script finishes. You will need to modify scripts
 like this to make them execute all sub-processes in the foreground (or use the

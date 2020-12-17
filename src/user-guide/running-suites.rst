@@ -3,6 +3,8 @@
 Running Suites
 ==============
 
+.. TODO - platformise
+
 This chapter currently features a diverse collection of topics related
 to running suites.
 
@@ -203,7 +205,7 @@ not automatically resubmitted at restart in case the underlying problem has not
 been addressed yet.
 
 Tasks recorded in the submitted or running states are automatically polled on
-restart, to see if they are still waiting in a batch queue, still running, or
+restart, to see if they are still waiting in a :term:`job runner` queue, still running, or
 if they succeeded or failed while the suite was down. The suite state will be
 updated automatically according to the poll results.
 
@@ -256,9 +258,9 @@ Authentication Files
 Cylc uses `CurveZMQ <http://curvezmq.org/page:read-the-docs/>`_ to ensure that
 any data, sent between the :term:`scheduler <scheduler>` and the client,
 remains protected during transmission. Public keys are used to encrypt the
-data, private keys for decryption. 
+data, private keys for decryption.
 
-Authentication files will be created in your 
+Authentication files will be created in your
 ``$HOME/cylc-run/WORKFLOW/.service/`` directory at start-up. You can expect to
 find one client public key per file system for remote jobs.
 
@@ -304,7 +306,7 @@ outage prevents task success or failure messages getting through, or if the
 :term:`scheduler` itself is down when tasks finish execution.
 
 To poll a task job the :term:`scheduler` interrogates the
-batch system, and the ``job.status`` file, on the job host. This
+:term:`job runner`, and the ``job.status`` file, on the job host. This
 information is enough to determine the final task status even if the
 job finished while the :term:`scheduler` was down or unreachable on
 the network.
@@ -457,7 +459,7 @@ As a suite runs, its task proxies may pass through the following states:
 - **ready** - ready to run (prerequisites satisfied) and
   handed to cylc's job submission sub-system.
 - **submitted** - submitted to run, but not executing yet
-  (could be waiting in an external batch scheduler queue).
+  (could be waiting in an external :term:`job runner` queue).
 - **submit-failed** - job submission failed *or*
   submitted job killed (cancelled) before commencing execution.
 - **submit-retrying** - job submission failed, but a submission retry
@@ -838,11 +840,11 @@ started running, and they still appear in the resource manager queue).
 Loadleveler jobs that are preempted by kill-and-requeue ("job vacation") are
 automatically returned to the submitted state by Cylc. This is possible
 because Loadleveler sends the SIGUSR1 signal before SIGKILL for preemption.
-Other batch schedulers just send SIGTERM before SIGKILL as normal, so Cylc
+Other :term:`job runners <job runner>` just send SIGTERM before SIGKILL as normal, so Cylc
 cannot distinguish a preemption job kill from a normal job kill. After this the
 job will poll as failed (correctly, because it was killed, and the job status
 file records that). To handle this kind of preemption automatically you could
-use a task failed or retry event handler that queries the batch scheduler queue
+use a task failed or retry event handler that queries the job runner queue
 (after an appropriate delay if necessary) and then, if the job has been
 requeued, uses ``cylc reset`` to reset the task to the submitted state.
 
@@ -1052,10 +1054,10 @@ run lengths.
 Limitations Of Suite Simulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Dummy mode ignores batch scheduler settings because Cylc does not know which
+Dummy mode ignores :term:`job runner` settings because Cylc does not know which
 job resource directives (requested memory, number of compute nodes, etc.) would
 need to be changed for the dummy jobs. If you need to dummy-run jobs on a
-batch scheduler manually comment out ``script`` items and modify
+job runner manually comment out ``script`` items and modify
 directives in your live suite, or else use a custom live mode test suite.
 
 .. note::
@@ -1108,7 +1110,7 @@ a cylc upgrade will not break your own complex
 suites - the triggering check will catch any bug that causes a task to
 run when it shouldn't, for instance; even in a dummy mode reference
 test the full task job script (sans ``script`` items) executes on the
-proper task host by the proper batch system.
+proper task host by the proper :term:`job runner`.
 
 Reference tests can be configured with the following settings:
 

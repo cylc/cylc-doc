@@ -15,6 +15,7 @@
             OBS:succeed-all => bar
         """
 
+# TODO: platformise
 [runtime]
     [[root]] # base namespace for all tasks (defines suite-wide defaults)
         [[[job]]]
