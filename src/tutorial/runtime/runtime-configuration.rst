@@ -413,7 +413,7 @@ Start, Stop, Restart
       .. spoiler:: Hint hint
 
          If you run ``ls work`` you should see a
-         list of cycles. Pick one of them and open the file:
+         list of cycles. Pick one of them and open the file::
 
             work/<cycle-point>/get_observations_heathrow/wind.csv
 
