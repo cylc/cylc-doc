@@ -304,7 +304,7 @@ Start, Stop, Restart
 
       .. TODO: Add instructions for offline configuration
 
-      Generate a Datapoint API key:
+      Generate a Datapoint API key::
 
          rose tutorial api-key
 
