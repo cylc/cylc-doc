@@ -523,16 +523,29 @@ Glossary
       * :term:`job submission number`
 
    job host
-      The job host is the compute platform that a :term:`job` runs on. For
-      example ``some-host`` would be the job host for the task ``some-task`` in
-      the following suite:
+      The job host is the compute resource that a :term:`job` runs on. For
+      example ``node_1`` would be one of two possible job hosts on the
+      :term:`platform` ``my_hpc`` for the task ``some-task`` in the
+      following workflow:
 
       .. code-block:: cylc
+         :caption: global.cylc
+
+         [platforms]
+             [[my_hpc]]
+                 hosts = node_1, node_2
+                 job runner = slurm
+
+      .. code-block:: cylc
+         :caption: flow.cylc
 
          [runtime]
              [[some-task]]
-                 [[[remote]]]
-                     host = some-host
+                 platform = my_hpc
+
+      See also:
+
+      * :term:`platform`
 
    job submission number
       Cylc may run multiple :term:`jobs <job>` per :term:`task` (e.g. if the
@@ -545,9 +558,13 @@ Glossary
       * :term:`job`
       * :term:`job script`
 
+   job runner
    batch system
-      A batch system or job scheduler is a system for submitting
-      :term:`jobs <job>` onto a compute platform.
+      A job runner (also known as batch system or job scheduler) is a system
+      for submitting :term:`jobs <job>` to a :term:`job platform <platform>`.
+
+      Job runners are set on a per-platform basis in
+      :cylc:conf:`global.cylc[platforms][<platform name>]job runner`.
 
       See also:
 
@@ -556,7 +573,7 @@ Glossary
       * :term:`directive`
 
    directive
-      Directives are used by :term:`batch systems <batch system>` to determine
+      Directives are used by :term:`job runners <job runner>` to determine
       what a :term:`job's <job>` requirements are, e.g. how much memory
       it requires.
 
@@ -564,7 +581,37 @@ Glossary
 
       See also:
 
-      * :term:`batch system`
+      * :term:`job runner`
+
+   platform
+   job platform
+      A configured setup for running :term:`jobs <job>` on (usually remotely).
+      Platforms are primarily defined by the combination of a
+      :term:`job runner` and a group of :term:`hosts <job host>`
+      (which share a file system).
+
+      For example ``my_hpc`` could be the platform for the task ``some-task``
+      in the following workflow:
+
+      .. code-block:: cylc
+         :caption: global.cylc
+
+         [platforms]
+             [[my_hpc]]
+                 hosts = node_1, node_2
+                 job runner = slurm
+
+      .. code-block:: cylc
+         :caption: flow.cylc
+
+         [runtime]
+             [[some-task]]
+                 platform = my_hpc
+
+      See also:
+
+      * :term:`job host`
+      * :term:`job runner`
 
    scheduler
       When we say that a :term:`suite` is "running" we mean that the cylc

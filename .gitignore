@@ -24,3 +24,4 @@ src/appendices/command-ref.rst
 # auto-generated documentation
 src/user-guide/plugins/main-loop/built-in
 src/user-guide/batch-sys-handlers
+src/user-guide/job-runner-handlers

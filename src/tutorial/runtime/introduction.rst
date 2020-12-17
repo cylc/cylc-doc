@@ -136,9 +136,9 @@ Tasks And Jobs
    Submitted
       When a :term:`task's <task>` dependencies have been met it is ready for
       submission. During this phase the :term:`job script` is created.
-      The :term:`job` is then submitted to the specified batch system.
+      The :term:`job` is then submitted to the specified :term:`job runner`.
       There is more about this in the :ref:`next section
-      <tutorial-batch-system>`.
+      <tutorial-job-runner>`.
    Running
       A :term:`task` is in the "Running" state as soon as the :term:`job` is
       executed.

@@ -8,7 +8,7 @@ reasons:
 
 - In real time forecasting systems, a new forecast may be initiated
   at regular intervals when new real time data comes in.
-- It may be convenient (or necessary, e.g. due to batch scheduler
+- It may be convenient (or necessary, e.g. due to :term:`job runner`
   queue limits) to split single long model runs into many smaller chunks,
   each with associated pre- and post-processing workflows.
 

@@ -273,7 +273,7 @@ submission until the expected data arrival time:
 Clock-triggered tasks typically have to handle late data arrival. Task
 execution *retry delays* can be used to simply retrigger the task at
 intervals until the data is found, but frequently retrying small tasks probably
-should not go to a batch scheduler, and multiple task failures will be logged
+should not go to a :term:`job runner`, and multiple task failures will be logged
 for what is a essentially a normal condition (at least it is normal until the
 data is really late).
 
@@ -300,9 +300,9 @@ so be sure to configure a reasonable interval between polls.
 Task Execution Time Limits
 --------------------------
 
-Instead of setting job wall clock limits directly in batch scheduler
+Instead of setting job wall clock limits directly in :term:`job runner`
 directives, use the ``execution time limit`` suite config item.
-Cylc automatically derives the correct batch scheduler directives from this,
+Cylc automatically derives the correct job runner directives from this,
 and it is also used to run ``background`` and ``at`` jobs via
 the ``timeout`` command, and to poll tasks that haven't reported in
 finished by the configured time limit.
@@ -439,8 +439,8 @@ by the vast majority of tasks. Over-sharing of via root, particularly of
 environment variables, is a maintenance risk because it can be very
 difficult to be sure which tasks are using which global variables.
 
-Any :cylc:conf:`[runtime]` settings can be shared - scripting, host
-and batch scheduler configuration, environment variables, and so on - from
+Any :cylc:conf:`[runtime]` settings can be shared - scripting, platform
+configuration, environment variables, and so on - from
 single items up to complete task or app configurations. At the latter extreme,
 it is quite common to have several tasks that inherit the same complete
 job configuration followed by minor task-specific additions:
@@ -618,7 +618,7 @@ graph:
                RUN_LEN = PT12H
 
 The few differences between ``short_fc`` and ``long_fc``,
-including batch scheduler resource requests, can be configured after common
+including :term:`job runner` resource requests, can be configured after common
 settings are inherited.
 
 At Start-Up

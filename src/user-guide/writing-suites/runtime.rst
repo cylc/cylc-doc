@@ -389,10 +389,12 @@ evaluation on the task host.
 Remote Task Hosting
 -------------------
 
+.. TODO - platformise
+
 If a task declares an owner other than the suite owner and/or
 a host other than the suite host, Cylc will use non-interactive ssh to
 execute the task on the ``owner@host`` account by the configured
-batch system:
+:term:`job runner`:
 
 .. code-block:: cylc
 

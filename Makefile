@@ -18,6 +18,7 @@ clean:
 	# remove auto-generated content
 	rm -rf src/user-guide/plugins/main-loop/built-in
 	rm -rf src/user-guide/batch-sys-handlers
+	rm -rf src/user-guide/job-runner-handlers
 
 cleanall:
 	(cd doc; echo [0-9]*.*)
