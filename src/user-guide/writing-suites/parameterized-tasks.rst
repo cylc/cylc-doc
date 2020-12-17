@@ -366,32 +366,6 @@ expands to:
 
    proc_small => proc_big => proc_huge
 
-However, a quirk in the current system means that you should avoid mixing
-conditional logic in these statements. For example, the following will do the
-unexpected:
-
-.. code-block:: cylc-graph
-
-   foo<m-1> & baz => foo<m>  # for m = cat, dog
-
-currently expands to:
-
-.. code-block:: cylc-graph
-
-   foo_cat & baz => foo_dog
-
-   # when users may expect it to be:
-   #     foo_cat => foo_dog
-   #     foo_cat & foo_dog
-
-For the time being, writing out the logic explicitly will give you the correct
-graph.
-
-.. code-block:: cylc-graph
-
-   foo<m-1> => foo<m>  # for m = cat, dog
-   baz => foo<m>
-
 
 Task Families And Parameterization
 ----------------------------------
