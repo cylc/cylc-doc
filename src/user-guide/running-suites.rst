@@ -395,12 +395,12 @@ repeatedly until finished:
 
    [runtime]
        [[foo]]
-           [[[job]]]
-               # poll every minute in the 'submitted' state:
-               submission polling intervals = PT1M
-               # poll one minute after foo starts running, then every 10
-               # minutes for 50 minutes, then every minute until finished:
-               execution polling intervals = PT1M, 5*PT10M, PT1M
+           # poll every minute in the 'submitted' state:
+           submission polling intervals = PT1M
+
+           # poll one minute after foo starts running, then every 10
+           # minutes for 50 minutes, then every minute until finished:
+           execution polling intervals = PT1M, 5*PT10M, PT1M
 
 .. cylc-scope:: global.cylc[platforms][<platform name>]
 
@@ -627,10 +627,9 @@ this case.) E.g. to send an email on (submission) failed and retry:
                test ${CYLC_TASK_TRY_NUMBER} -eq 3
                cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
+           execution retry delays = PT0S, PT30S
            [[[events]]]
                mail events = submission failed, submission retry, failed, retry, oops
-           [[[job]]]
-               execution retry delays = PT0S, PT30S
            [[[outputs]]]
                oops = oopsy daisy
 
@@ -734,11 +733,10 @@ event handlers using the alternate methods:
    [runtime]
        [[foo]]
            script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
+           execution retry delays = PT0S, PT30S
            [[[events]]]
                retry handler = "echo '!!!!!EVENT!!!!!' "
                failed handler = "echo '!!!!!EVENT!!!!!' "
-           [[[job]]]
-               execution retry delays = PT0S, PT30S
 
 .. code-block:: cylc
 
@@ -748,12 +746,11 @@ event handlers using the alternate methods:
                test ${CYLC_TASK_TRY_NUMBER} -eq 2
                cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
+           execution retry delays = PT0S, PT30S
            [[[events]]]
                handlers = "echo '!!!!!EVENT!!!!!' "
                # Note: task output name can be used as an event in this method
                handler events = retry, failed, oops
-           [[[job]]]
-               execution retry delays = PT0S, PT30S
            [[[outputs]]]
                oops = oopsy daisy
 
