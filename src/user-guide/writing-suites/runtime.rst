@@ -389,9 +389,9 @@ evaluation on the task host.
 Remote Task Hosting
 -------------------
 
-If a task declares a platform other than the platform running the workflow,
+If a task declares a different platform to the one running the workflow,
 Cylc will use non-interactive ssh to execute the task using the 
-:term:`job runner`: and one of the hosts from the platform definition
+:term:`job runner` and one of the hosts from the platform definition
 (platforms are defined in the ``global.cylc`` file at site level).
 
 For example:
