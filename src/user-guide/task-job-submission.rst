@@ -335,7 +335,7 @@ job runner handler to change the directive prefix from ``#PBS`` to
 
 If this is in the Python search path (see
 :ref:`Where To Put Job Runner Handler Modules` below) you can use it by
-name in your user configuration:
+name in your global configuration:
 
 .. code-block:: cylc
 
