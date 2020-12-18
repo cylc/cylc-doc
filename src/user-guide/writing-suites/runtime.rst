@@ -404,8 +404,8 @@ For example:
 
 For this to work:
 
-- Non-interactive ssh is required from the workflow platform to the remote
-  platform's hosts.
+- Non-interactive ssh is required from the platform running the workflow
+  to the remote platform's hosts.
 - Cylc must be installed on the hosts of the destination platform.
 
   - If polling task communication is used, there is no other
