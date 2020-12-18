@@ -3,10 +3,8 @@
 Task Job Submission and Management
 ==================================
 
-.. TODO - platformise all the examples in here
-
-This section explains how :term:`tasks <task>` are submitted by the suite
-server program when they are ready to run, and how to define new
+This section explains how :term:`tasks <task>` are submitted by the workflow
+scheduler program when they are ready to run, and how to define new
 :term:`job runner` handlers.
 
 .. note::
@@ -15,20 +13,18 @@ server program when they are ready to run, and how to define new
    function as a Cylc task, see :ref:`TaskImplementation`.
 
 When a task is ready Cylc generates a :term:`job script` (see :ref:`JobScripts`).
-The job script is submitted to run by the job runner chosen for
-the task. Different tasks can use different job runners. Like
-other runtime properties, you can set a suite default job runner and
+The job script is submitted to be run by the job runner from the
+:term:`platform` chosen for the task.
+Like other runtime properties, you can set a suite default platform and
 override it for specific tasks or families:
 
 .. code-block:: cylc
 
    [runtime]
       [[root]] # suite defaults
-           [[[job]]]
-               batch system = loadleveler
+           platform = platform_with_loadleveler
       [[foo]] # just task foo
-           [[[job]]]
-               batch system = at
+           platform = platform_with_at
 
 
 .. _AvailableMethods:
@@ -159,19 +155,19 @@ config. E.g.:
 Overriding The Job Submission Command
 -------------------------------------
 
-To change the form of the actual command used to submit a job you do not
-need to define a new job runner handler override
-:cylc:conf:`flow.cylc[runtime][<namespace>][job]batch submit command template`.
+To change the form of the actual command used to submit a job you
+need to define a new 
+:cylc:conf:`global.cylc[platform][<namespace>]job runner command template`.
 
 .. code-block:: cylc
 
-   [runtime]
-       [[root]]
-           [[[job]]]
-               batch system = loadleveler
-               # Use '-s' to stop llsubmit returning
-               # until all job steps have completed:
-               batch submit command template = llsubmit -s %(job)s
+   [platform]
+       [[my_custom_platform]]
+           hosts = host1, host2
+           job runner = loadleveler
+           # Use '-s' to stop llsubmit returning
+           # until all job steps have completed:
+           batch submit command template = llsubmit -s %(job)s
 
 The template's ``%(job)s`` will be substituted by the job file path.
 
@@ -339,7 +335,16 @@ job runner handler to change the directive prefix from ``#PBS`` to
 
 If this is in the Python search path (see
 :ref:`Where To Put Job Runner Handler Modules` below) you can use it by
-name in suite configurations:
+name in your user configuration:
+
+.. code-block:: cylc
+
+   [platforms]
+       [[my_platform]]
+           hosts = myhostA, myhostB
+           job runner = qsub  # <---!
+
+Then in your ``flow.cylc`` file you can use this platform:
 
 .. code-block:: cylc
 
@@ -348,9 +353,8 @@ name in suite configurations:
            R1 = "a"
    [runtime]
        [[root]]
-            execution time limit = PT1M
-           [[[job]]]
-               batch system = qsub  # <---!
+           execution time limit = PT1M
+           platform = my_platform
            [[[directives]]]
                -l nodes = 1
                -q = long
