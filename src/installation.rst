@@ -282,23 +282,22 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
    .. code-block:: cylc
 
       [scheduler]
-         cycle point format = %Y
-         [[parameters]]
-            m = 0..5
-            n = 0..2
+          cycle point format = %Y
+          [[parameters]]
+              m = 0..5
+              n = 0..2
       [scheduling]
-         initial cycle point = 3000
-         [[graph]]
-            P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
+          initial cycle point = 3000
+          [[graph]]
+              P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
       [runtime]
-         [[root]]
-            script = """
-               sleep 20
-               # fail 50% of the time if try number is less than 5
-               if (( CYLC_TASK_TRY_NUMBER < 5 )); then
-                 if (( RANDOM % 2 < 1 )); then
-                    exit 1
-                 fi
-               fi"""
-            [[[job]]]
-               execution retry delays = 6*PT2S
+          [[root]]
+              script = """
+                  sleep 20
+                  # fail 50% of the time if try number is less than 5
+                  if (( CYLC_TASK_TRY_NUMBER < 5 )); then
+                      if (( RANDOM % 2 < 1 )); then
+                          exit 1
+                      fi
+                  fi"""
+              execution retry delays = 6*PT2S
