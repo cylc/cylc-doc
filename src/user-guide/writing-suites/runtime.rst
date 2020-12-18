@@ -389,53 +389,48 @@ evaluation on the task host.
 Remote Task Hosting
 -------------------
 
-.. TODO - platformise
+If a task declares a platform other than the platform running the workflow,
+Cylc will use non-interactive ssh to execute the task using the 
+:term:`job runner`: and one of the hosts from the platform definition
+(platforms are defined in the ``global.cylc`` file at site level).
 
-If a task declares an owner other than the suite owner and/or
-a host other than the suite host, Cylc will use non-interactive ssh to
-execute the task on the ``owner@host`` account by the configured
-:term:`job runner`:
+For example:
 
 .. code-block:: cylc
 
    [runtime]
        [[foo]]
-           [[[remote]]]
-               host = orca.niwa.co.nz
-               owner = bob
-           [[[job]]]
-               batch system = pbs
+           platform = orca
 
 For this to work:
 
-- Non-interactive ssh is required from the suite host to the remote
-  task accounts.
-- Cylc must be installed on task hosts.
+- Non-interactive ssh is required from the workflow platform to the remote
+  platform's hosts.
+- Cylc must be installed on the hosts of the destination platform.
 
   - If polling task communication is used, there is no other
     requirement.
   - If SSH task communication is configured, non-interactive ssh is
-    required from the task host to the suite host.
-  - If (default) task communication is configured, the task host
+    required from the task platform to the workflow platform.
+  - If (default) task communication is configured, the task platfom
     should have access to the port on the suite host.
 
 - The suite configuration directory, or some fraction of its
-  content, can be installed on the task host, if needed.
+  content, can be installed on the task platform, if needed.
 
-Tasks running on the suite host under another user account are treated as
-remote tasks.
-
-Remote hosting, like all namespace settings, can be declared globally in
+Platform, like all namespace settings, can be declared globally in
 the root namespace, or per family, or for individual tasks.
 
 
-Dynamic Host Selection
-^^^^^^^^^^^^^^^^^^^^^^
+Dynamic Platform Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Instead of hardwiring host names into the suite configuration you can
-specify a shell command that prints a hostname, or an environment
-variable that holds a hostname, as the value of the
-:cylc:conf:`host config item <[runtime][<namespace>][remote]host>`.
+.. TODO - consider a re-write once dynamic platform selection done
+
+Instead of hardwiring platform names into the suite configuration you can
+specify a shell command that prints a platform name, or an environment
+variable that holds a platform name, as the value of the
+:cylc:conf:`host config item <[runtime][<namespace>]platform>`.
 
 
 Remote Task Log Directories
