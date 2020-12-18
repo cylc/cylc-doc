@@ -167,7 +167,7 @@ need to define a new
            job runner = loadleveler
            # Use '-s' to stop llsubmit returning
            # until all job steps have completed:
-           batch submit command template = llsubmit -s %(job)s
+           job runner command template = llsubmit -s %(job)s
 
 The template's ``%(job)s`` will be substituted by the job file path.
 
