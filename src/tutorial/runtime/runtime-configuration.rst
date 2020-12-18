@@ -59,16 +59,15 @@ Job Submission
 
    By default Cylc runs :term:`jobs <job>` on the machine where the suite is
    running. We can tell Cylc to run jobs on other machines by setting the
-   ``[remote]host`` setting to the name of the host, e.g. to run a task on the
-   host ``computehost`` you might write:
+   ``platform`` setting: If, for example you want to run a task job on a
+   platform called ``powerful_computer`` you would write:
 
 .. code-block:: cylc
 
    [runtime]
        [[hello_computehost]]
            script = echo "Hello Compute Host"
-           [[[remote]]]
-               host = computehost
+           platform = powerful_computer
 
 .. _background processes: https://en.wikipedia.org/wiki/Background_process
 .. _job scheduler: https://en.wikipedia.org/wiki/Job_scheduler
@@ -107,12 +106,7 @@ Job Submission
            script = big-executable
 
            # Submit to the host "big-computer".
-           [[[remote]]]
-               host = big-computer
-
-           # Submit the job using the "slurm" job runner.
-           [[[job]]]
-               batch system = slurm
+           platform = big_computer_platform_with_job_runner
 
            # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
            [[[directives]]]
@@ -135,8 +129,7 @@ Timeouts
    [runtime]
        [[some_task]]
            script = some-executable
-           [[[job]]]
-               execution time limit = PT15M  # 15 minutes.
+           execution time limit = PT15M  # 15 minutes.
 
 
 Retries
@@ -161,8 +154,8 @@ Sometimes jobs fail. This can be caused by two factors:
 .. ifnotslides::
 
    In the event of failure Cylc can automatically re-submit (retry) jobs. We
-   configure retries using the ``[job]execution retry delays`` and
-   ``[job]submission retry delays`` settings. These settings are both set to an
+   configure retries using the ``execution retry delays`` and
+   ``submission retry delays`` settings. These settings are both set to an
    :term:`ISO8601 duration`, e.g. setting ``execution retry delays`` to ``PT10M``
    would cause the job to retry every 10 minutes in the event of execution
    failure.
@@ -175,14 +168,15 @@ Sometimes jobs fail. This can be caused by two factors:
    [runtime]
        [[some-task]]
            script = some-script
-           [[[job]]]
-               # In the event of execution failure, retry a maximum
-               # of three times every 15 minutes.
-               execution retry delays = 3*PT15M
-               # In the event of submission failure, retry a maximum
-               # of two times every ten minutes and then every 30
-               # minutes thereafter.
-               submission retry delays = 2*PT10M, PT30M
+
+           # In the event of execution failure, retry a maximum
+           # of three times every 15 minutes.
+           execution retry delays = 3*PT15M
+
+           # In the event of submission failure, retry a maximum
+           # of two times every ten minutes and then every 30
+           # minutes thereafter.
+           submission retry delays = 2*PT10M, PT30M
 
 
 Start, Stop, Restart
