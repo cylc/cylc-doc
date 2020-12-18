@@ -606,14 +606,12 @@ graph:
            script = run-model.sh
        [[long_fc]]
            inherit = MODEL
-           [[[job]]]
-               execution time limit = PT30M
+           execution time limit = PT30M
            [[[environment]]]
                RUN_LEN = PT48H
        [[short_fc]]
            inherit = MODEL
-           [[[job]]]
-               execution time limit = PT10M
+           execution time limit = PT10M
            [[[environment]]]
                RUN_LEN = PT12H
 
@@ -652,8 +650,7 @@ times at 1 minute intervals, then another 5 times at 1 hour intervals:
 
    [runtime]
        [[HPC]]  # Inherited by all jobs submitted to HPC.
-           [[[job]]]
-               submission retry delays = 10*PT1M, 5*PT1H
+           submission retry delays = 10*PT1M, 5*PT1H
 
 
 Job Execution Retries
@@ -678,8 +675,7 @@ then an automatic retry may be appropriate:
                fi
                model.exe
            """
-           [[[job]]]
-               execution retry delays = 1*PT0M
+           execution retry delays = 1*PT0M
 
 
 Failure Recovery Workflows
