@@ -157,7 +157,7 @@ Overriding The Job Submission Command
 
 To change the form of the actual command used to submit a job you
 need to define a new 
-:cylc:conf:`global.cylc[platform][<namespace>]job runner command template`.
+:cylc:conf:`global.cylc[platform][<platform name>]job runner command template`.
 
 .. code-block:: cylc
 
