@@ -391,8 +391,8 @@ Remote Task Hosting
 
 If a task declares a different platform to the one running the workflow,
 Cylc will use non-interactive ssh to execute the task using the 
-:term:`job runner` and one of the hosts from the platform definition
-(platforms are defined in the ``global.cylc`` file at site level).
+:term:`job runner` and one of the hosts from the :term:`platform` definition
+(platforms are defined in ``global.cylc[platforms]``).
 
 For example:
 
@@ -404,7 +404,7 @@ For example:
 
 For this to work:
 
-- Non-interactive ssh is required from the platform running the workflow
+- Non-interactive ssh is required from the :term:`scheduler` host
   to the remote platform's hosts.
 - Cylc must be installed on the hosts of the destination platform.
 
@@ -412,7 +412,7 @@ For this to work:
     requirement.
   - If SSH task communication is configured, non-interactive ssh is
     required from the task platform to the workflow platform.
-  - If (default) task communication is configured, the task platfom
+  - If TCP (default) task communication is configured, the task platform
     should have access to the port on the suite host.
 
 - The suite configuration directory, or some fraction of its
