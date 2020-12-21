@@ -190,7 +190,7 @@ Tasks can be polled on demand by using the
 
 Tasks are polled automatically, once, if they timeout while queueing in a
 job runner and submission timeout is set.
-(See :cylc:conf:`[runtime][<task name>][events]`
+(See :cylc:conf:`[runtime][<namespace>][events]`
 for how to configure timeouts).
 
 Tasks are polled multiple times, where necessary, when they exceed their
@@ -220,8 +220,8 @@ The default polling intervals can be overridden in the global configuration:
 Or in suite configurations (in which case polling will be done regardless
 of the communication method configured for the platform):
 
-* :cylc:conf:`submission polling intervals<[runtime][<task name>]submission polling intervals>`
-* :cylc:conf:`execution polling intervals<[runtime][<task name>]execution polling intervals>`
+* :cylc:conf:`submission polling intervals<[runtime][<platform name>]submission polling intervals>`
+* :cylc:conf:`execution polling intervals<[runtime][<platform name>]execution polling intervals>`
 
 Note that regular polling is not as efficient as task messaging in updating
 task status, and it should be used sparingly in large suites.
@@ -249,7 +249,7 @@ Tasks can be killed on demand by using the ``cylc kill`` command.
 Execution Time Limit
 --------------------
 
-.. cylc-scope:: flow.cylc[runtime][<task name>]
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
 You can specify an :cylc:conf:`execution time limit` for all supported job
 submission methods. E.g.:
@@ -279,7 +279,7 @@ exceeds its :cylc:conf:`execution time limit`.)
 Execution Time Limit and Execution Timeout
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. cylc-scope:: flow.cylc[runtime][<task name>]
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
 If you specify an :cylc:conf:`execution time limit` the
 execution timeout event handler will only be called if the job has
