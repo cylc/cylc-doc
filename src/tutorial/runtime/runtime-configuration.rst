@@ -106,7 +106,7 @@ Job Submission
            script = big-executable
 
            # Submit to the host "big-computer".
-           platform = big_computer_platform_with_job_runner
+           platform = slurm_platform
 
            # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
            [[[directives]]]
