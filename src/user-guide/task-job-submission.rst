@@ -157,7 +157,7 @@ Overriding The Job Submission Command
 
 To change the form of the actual command used to submit a job you
 need to define a new 
-:cylc:conf:`global.cylc[platform][<platform name>]job runner command template`.
+:cylc:conf:`global.cylc[platforms][<platform name>]job runner command template`.
 
 .. code-block:: cylc
 
@@ -220,8 +220,8 @@ The default polling intervals can be overridden in the global configuration:
 Or in suite configurations (in which case polling will be done regardless
 of the communication method configured for the platform):
 
-* :cylc:conf:`submission polling intervals<[runtime][<platform name>]submission polling intervals>`
-* :cylc:conf:`execution polling intervals<[runtime][<platform name>]execution polling intervals>`
+* :cylc:conf:`submission polling intervals<[runtime][<namespace>]submission polling intervals>`
+* :cylc:conf:`execution polling intervals<[runtime][<namespace>]execution polling intervals>`
 
 Note that regular polling is not as efficient as task messaging in updating
 task status, and it should be used sparingly in large suites.
