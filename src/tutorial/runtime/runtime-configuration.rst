@@ -59,7 +59,7 @@ Job Submission
 
    By default Cylc runs :term:`jobs <job>` on the machine where the suite is
    running. We can tell Cylc to run jobs on other machines by setting the
-   ``platform`` setting: If, for example you want to run a task job on a
+   :term:`platform` setting: If, for example you want to run a task job on a
    platform called ``powerful_computer`` you would write:
 
 .. code-block:: cylc
