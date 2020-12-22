@@ -87,8 +87,7 @@ to the end of the ``[[roll_doubles]]`` task section in the :cylc:conf:`flow.cylc
 
 .. code-block:: cylc
 
-   [[[job]]]
-       execution retry delays = 5*PT6S
+   execution retry delays = 5*PT6S
 
 This means that if the ``roll_doubles`` task fails, Cylc expects to
 retry running it 5 times before finally failing. Each retry will have

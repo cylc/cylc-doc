@@ -224,8 +224,7 @@ Here's an example:
            R1 = OBS
    [runtime]
        [[OBS]]
-           [[[job]]]
-               batch system = pbs
+           platform = platform_using_pbs
        {% for i in obs_types %}
        [[ {{i}} ]]
            inherit = OBS

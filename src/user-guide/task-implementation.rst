@@ -248,5 +248,4 @@ task to repeatedly poll for the results of the detached processes:
            # Fail and retry every minute (for 10 tries at the most) if model's
            # job.done indicator file does not exist yet.
            script = "[[ ! -f $RUN_DIR/job.done ]] && exit 1"
-           [[[job]]]
-               execution retry delays = 10 * PT1M
+           execution retry delays = 10 * PT1M

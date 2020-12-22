@@ -64,8 +64,7 @@ For example, this task definition:
    [runtime]
        [[foo]]
            script = run-foo.sh
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 can equally be written like this:
 
@@ -76,8 +75,7 @@ can equally be written like this:
            script = run-foo.sh
    [runtime]  # Part 2 (site-specific).
        [[foo]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 .. note::
 
@@ -112,8 +110,7 @@ where the site include-file ``site/niwa.cylc`` contains:
    # site/niwa.cylc
    [runtime]
        [[foo]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 
 Site-Specific Graphs
@@ -191,13 +188,11 @@ mess) and it exposes all site configuration to all users:
            script = run-model.sh
    {# Site switch blocks not recommended:#}
    {% if SITE == 'niwa' %}
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                # NIWA Loadleveler directives...
    {% elif SITE == 'metoffice' %}
-           [[[job]]]
-               batch system = pbs
+           platform = metoffice_pbs_platform
            [[[directives]]]
                # Met Office PBS directives...
    {% elif SITE == ... %}
@@ -334,10 +329,7 @@ and batch scheduler directives.
        [[root]]
            script = rose task-run -v
        [[HPC]]  # NIWA job host and batch scheduler settings.
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                account_no = NWP1623
                class = General
@@ -408,10 +400,7 @@ and ``site/niwa.cylc``:
            P1D = postproc => upload_niwa
    [runtime]
        [[HPC]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                account_no = NWP1623
                class = General
