@@ -43,9 +43,13 @@ jobs:
       - name: Update copyright year
         env:
           README_FILE: 'README.md'
+          CONF_FILE: 'src/conf.py'
         run: |
           pattern="(<span actions:bind='current-year'>).*(<\/span>)"
           sed -i -E "s/${pattern}/\1${YEAR}\2/" "$README_FILE"
+
+          pattern="^(__copyright_year ?= ?['\"]?)[0-9]*(.*)$"
+          sed -i -E "s/${pattern}/\1${YEAR}\2/" "$CONF_FILE"
 
       - name: Commit & push
         run : |
