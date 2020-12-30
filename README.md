@@ -65,3 +65,20 @@ and pushes the result up to `upstream/gh-pages`.
 
 This action deletes its previous commits so the nightly build history is not
 preserved and does not require housekeeping.
+
+## Copyright and Terms of Use
+
+[![License](https://img.shields.io/github/license/cylc/cylc-doc.svg?color=lightgrey)](https://github.com/cylc/cylc-doc/blob/master/LICENSE)
+
+Copyright (C) 2008-<span actions:bind='current-year'>2020</span> NIWA & British Crown (Met Office) & Contributors.
+
+Cylc is free software: you can redistribute it and/or modify it under the terms
+of the GNU General Public License as published by the Free Software Foundation,
+either version 3 of the License, or (at your option) any later version.
+
+Cylc is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Cylc.  If not, see [GNU licenses](http://www.gnu.org/licenses/).
