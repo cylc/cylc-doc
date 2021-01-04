@@ -245,6 +245,55 @@ Jinja2 Default Values And Template Inputs
 
 The values of Jinja2 variables can be passed in from the Cylc command
 line rather than hardwired in the suite configuration.
+
+This can be done on a case-by-case basis using the ``-s`` option e.g:
+
+.. code-block:: console
+
+   $ # set the Jinja2 variable "answer" to 42
+   $ cylc run <flow> -s answer=42
+
+Or for multiple options using a Cylc "set file" with ``--set-file``
+e.g:
+
+.. code-block:: console
+
+   $ # create a set file
+   $ cat > my-set-file <<__SET_FILE__
+   question='the meaning of life, the universe and everything'
+   answer=42
+   host='deep-thought'
+   __SET_FILE__
+
+   $ # run using the options in the set file
+   $ cylc run <flow> --set-file my-set-file
+
+Values must be Python literals e.g:
+
+.. code-block:: python
+
+   "string"   # string
+   123        # integer
+   12.34      # float
+   True       # boolean
+   None       # None type
+   [1, 2, 3]  # list
+   (1, 2, 3)  # tuple
+   {1, 2, 3}  # set
+   {"a": 1, "b": 2, "c": 3}  # dictionary
+
+.. note::
+
+   On the command line you may need to wrap strings with an extra
+   pair of quotes as the shell you are using (e.g. Bash) will strip
+   the outer pair of quotes.
+
+   .. code-block:: console
+
+      $ # wrap the key=value pair in single quotes stop the shell from
+      $ # stripping the inner quotes around the string:
+      $ cylc run <flow> -s 'my_string="a b c"'
+
 Here's an example:
 
 .. literalinclude:: ../../suites/jinja2/defaults/flow.cylc
@@ -259,21 +308,23 @@ Here's the result:
    'FIRST_TASK' is undefined
    cylc-list SUITE  failed:  1
 
-   $ cylc list --set FIRST_TASK=bob SUITE
+   $ # Note: quoting "bob" so that it is evaluated as a string
+   $ cylc list --set 'FIRST_TASK="bob"' SUITE
    bob
    baz
    mem_2
    mem_1
    mem_0
 
-   $ cylc list --set FIRST_TASK=bob --set LAST_TASK=alice SUITE
+   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' SUITE
    bob
    alice
    mem_2
    mem_1
    mem_0
 
-   $ cylc list --set FIRST_TASK=bob --set N_MEMBERS=10 SUITE
+   $ # Note: no quotes required for N_MEMBERS since it is an integer
+   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 SUITE
    mem_9
    mem_8
    mem_7
