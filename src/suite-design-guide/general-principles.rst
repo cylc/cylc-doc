@@ -104,14 +104,15 @@ files they need are more robust.
 Installing Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Files can be installed on any remote platforms. As standard, Cylc installs the
+Files can be installed on any remote platform. By default, Cylc installs the
 following directories: ``app``, ``bin``, ``etc``, ``lib``.
 Cylc supports adding custom directories and files to the file installation.
 
-E.g. dir1, dir2, file1, file2, you can add the following configuration to your
+If, for example, you wished to install directories ``dir1``, ``dir2``, and
+files ``file1``, ``file2``, add the following configuration to your
 :cylc:conf:`flow.cylc`, under the section
 :cylc:conf:flow.cylc[scheduler]install.
-To denote a directory, please add a trailing slash.
+To mark an item as a directory, add a trailing slash.
 
 .. code-block:: cylc
 
@@ -120,7 +121,7 @@ To denote a directory, please add a trailing slash.
 
 .. note::
 
-   Please ensure files and directories to be installed are located in the top
+   Ensure files and directories to be installed are located in the top
    level of your workflow.
 
 The file installation will timeout after 10 minutes.

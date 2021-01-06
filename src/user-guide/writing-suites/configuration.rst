@@ -173,11 +173,13 @@ WebStorm
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
 
-Cylc :cylc:conf:`flow.cylc` files consist of a suite title and description followed by
-configuration items grouped under several top level section headings:
+Cylc :cylc:conf:`flow.cylc` files consist of configuration items grouped under
+several top level section headings:
 
+:cylc:conf:`[meta]`
+   Information about the workflow e.g. title and description.
 :cylc:conf:`[scheduler]`
-   Non task-specific suite configuration.
+   Non task-specific workflow configuration.
 :cylc:conf:`[scheduling]`
    Determines when tasks are ready to run.
 
