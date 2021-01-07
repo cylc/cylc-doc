@@ -77,7 +77,10 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-copyright = '2008-2020 NIWA & British Crown (Met Office) & Contributors'
+__copyright_year = 2020  # NOTE: this is automatically set by GH Actions
+copyright = (
+    f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
+)
 
 # Versioning information.
 release = os.environ['CYLC_VERSION']  # set in makefile
