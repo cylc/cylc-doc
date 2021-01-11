@@ -74,7 +74,7 @@ not, they will be ignored.
 Start Cycle Point & Stop Cycle Point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All workflows have a :term:`initial cycle point` and many have a
+All workflows have an :term:`initial cycle point` and many have a
 :term:`final cycle point`. These determine the range between which Cylc will
 schedule tasks to run.
 
@@ -83,7 +83,7 @@ it will start at the :term:`initial cycle point` and stop at the
 :term:`final cycle point`, however, it is possible to start and stop the
 scheduler at any arbitrary point.
 
-To do this we use a :term:`start cycle point` and or :term:`stop cycle point`
+To do this we use a :term:`start cycle point` and/or :term:`stop cycle point`
 when we launch the scheduler
 (e.g. ``--start-cycle-point`` and ``--stop-cycle-point`` CLI arguments).
 
@@ -108,9 +108,8 @@ would only run at cycle ``3``.
 .. image:: ../img/initial-start-stop-final-cp.svg
    :align: center
 
-* The initial and final cycle points affect the scheduling of tasks.
-* The start and stop cycle points determine the points the scheduler runs
-  between.
+* The initial and final cycle points are at the start and end of the graph.
+* The start and stop cycle points determine the part of the graph that the scheduler runs.
 
 
 .. _RestartingSuites:

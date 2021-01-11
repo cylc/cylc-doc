@@ -214,8 +214,7 @@ Glossary
       * :term:`initial cycle point`
 
    start cycle point
-      The "start" :term:`cycle point` is the one at which the :term:`scheduler`
-      starts up at.
+      The "start" :term:`cycle point` is where the :term:`scheduler` starts.
 
       This may be before or after the :term:`initial cycle point`.
 
@@ -229,8 +228,7 @@ Glossary
       * :term:`initial cycle point`
 
    stop cycle point
-      The "stop" :term:`cycle point` is the one at which the :term:`scheduler`
-      shuts down.
+      The "stop" :term:`cycle point` is where the :term:`scheduler` shuts down.
 
       This may be before or after the :term:`final cycle point`.
 
