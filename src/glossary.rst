@@ -188,6 +188,7 @@ Glossary
    initial cycle point
       In a :term:`cycling suite <cycling>` the initial cycle point is the point
       from which cycling begins.
+
       It is set by :cylc:conf:`[scheduling]initial cycle point`.
 
       If the initial cycle point were 2000 then the first cycle would
@@ -201,6 +202,7 @@ Glossary
    final cycle point
       In a :term:`cycling suite <cycling>` the final cycle point is the point
       at which cycling ends.
+
       It is set by :cylc:conf:`[scheduling]final cycle point`.
 
       If the final cycle point were 2001 then the final cycle would be no later
@@ -209,6 +211,34 @@ Glossary
       See also:
 
       * :term:`cycle point`
+      * :term:`initial cycle point`
+
+   start cycle point
+      The "start" :term:`cycle point` is where the :term:`scheduler` starts.
+
+      This may be before or after the :term:`initial cycle point`.
+
+      See :ref:`start_stop_cycle_point` for more information.
+
+      See also:
+
+      * :ref:`start_stop_cycle_point`
+      * :term:`cycle point`
+      * :term:`stop cycle point`
+      * :term:`initial cycle point`
+
+   stop cycle point
+      The "stop" :term:`cycle point` is where the :term:`scheduler` shuts down.
+
+      This may be before or after the :term:`final cycle point`.
+
+      See :ref:`start_stop_cycle_point` for more information.
+
+      See also:
+
+      * :ref:`start_stop_cycle_point`
+      * :term:`cycle point`
+      * :term:`start cycle point`
       * :term:`initial cycle point`
 
    integer cycling
