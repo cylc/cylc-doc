@@ -38,6 +38,17 @@ jobs:
           (cd "$GITHUB_WORKSPACE/cylc-flow"; pip install .[all])
           rm -r cylc-flow  # don't lint or test cylc-flow
 
+      - name: checkout cylc-rose
+        uses: actions/checkout@v2
+        with:
+          repository: 'cylc/cylc-rose'
+          path: 'cylc-rose'
+
+      - name: install cylc-rose
+        run: |
+          (cd "$GITHUB_WORKSPACE/cylc-rose"; pip install .[all])
+          rm -r cylc-rose  # don't lint or test cylc-rose
+
       - name: checkout cylc-doc
         uses: actions/checkout@v2
       - name: install cylc-doc

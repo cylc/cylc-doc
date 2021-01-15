@@ -24,8 +24,11 @@ name: deploy
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Tag present on both cylc-flow and cylc-docs.'
+      cylc-flow-tag:
+        description: 'Cylc Flow pypi release tag (must be present in cylc-docs)'
+        required: true
+      cylc-rose-tag:
+        description: 'Cylc Rose pypi release tag'
         required: true
       set_current:
         description: 'Make this the default documented version.'
@@ -45,7 +48,7 @@ jobs:
       - name: checkout cylc-doc
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.tag }}
+          ref: ${{ github.event.inputs.cylc-flow-tag }}
           path: docs
 
       - name: install graphviz
@@ -59,11 +62,12 @@ jobs:
           sudo apt-get install -y librsvg2-bin ghostscript
           pip install "${{ github.workspace }}/docs[all]"
 
-      - name: install cylc-flow
+      - name: install cylc and plugins
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install "cylc-flow[all]==${{ github.event.inputs.tag }}"
+          pip install "cylc-flow[all]==${{ github.event.inputs.cylc-flow-tag }}"
+          pip install "cylc-rose[all]==${{ github.event.inputs.cylc-rose-tag }}"
 
       - name: checkout gh-pages
         uses: actions/checkout@v2
@@ -114,5 +118,5 @@ jobs:
         run: |
           cd gh-pages
           git add *
-          git commit -m "add: ${{ github.event.inputs.tag }}"
+          git commit -m "add: ${{ github.event.inputs.cylc-flow-tag }}"
           git push origin HEAD

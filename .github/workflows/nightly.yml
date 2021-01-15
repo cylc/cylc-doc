@@ -66,6 +66,19 @@ jobs:
           #       have extra dependencies.
           pip install './cylc-flow[all]'
 
+      - name: checkout cylc-rose
+        uses: actions/checkout@v2
+        with:
+          repository: cylc/cylc-rose
+          ref: master
+          path: cylc-rose
+
+      - name: install cylc-rose
+        run: |
+          # NOTE: Install with [all] so we can import plugins which may
+          #       have extra dependencies.
+          pip install './cylc-rose[all]'
+
       - name: checkout gh-pages branch
         uses: actions/checkout@v2
         with:
