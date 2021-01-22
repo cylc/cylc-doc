@@ -20,14 +20,17 @@ set -eu
 # cd into the root build dir (the one which contains the different versions)
 cd "$1/.."
 
-CYLC_VERSION="$2"
-DEFAULT_FORMAT="$3"
-LATEST="${4:-}"
+BUILD_DIR="${1#*/}"  # build dir minus the root
+DEFAULT_FORMAT="$2"
+LATEST="${3:-}"
+
 
 
 html_redirect () {
-    SRC="$1"   # relative path from $DEST
-    DEST="$2"  # location to write redirect to
+    SRC="$1"   # location to redirect to (relative path from $DEST)
+    DEST="$2"  # location to redirect from
+
+    mkdir -p "$(dirname "$DEST")"
 
     cat >"$DEST" << __HTML__
 <!DOCTYPE html>
@@ -47,12 +50,12 @@ __HTML__
 
 main () {
     # link to the default format in the freshly built documentation
-    html_redirect "${DEFAULT_FORMAT}/index.html" "${CYLC_VERSION}/index.html"
+    html_redirect "${DEFAULT_FORMAT}/index.html" "${BUILD_DIR#*/}/index.html"
 
     if [[ -n $LATEST ]]; then
         # make the specified version of the documentation the default
         rm "${LATEST}" || true
-        ln -s "${CYLC_VERSION}" "${LATEST}"
+        ln -s "${BUILD_DIR#*/}" "${LATEST}"
         html_redirect "${LATEST}/index.html" "index.html"
     fi
 }
