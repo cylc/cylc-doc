@@ -103,15 +103,15 @@ jobs:
 
       - name: build docs
         run: |
-          build_name="nightly.$(isodatetime --utc -f %Y-%m-%d)"
           make -C docs \
             html \
             slides \
             linkcheck \
             SPHINXOPTS='-Wn' \
             SETCURRENT=false \
-            CYLC_VERSION="$build_name"
-          git -C gh-pages add "$build_name" 'versions.json'
+            BUILDDIR='doc/nightly' \
+            CYLC_VERSION="nightly.$(isodatetime --utc -f %Y-%m-%d)"
+          git -C gh-pages add 'nightly' 'versions.json'
 
       - name: push changes
         working-directory: gh-pages
