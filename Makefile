@@ -40,4 +40,4 @@ endif
 	# write out dict of available versions and formats
 	bin/version write > doc/versions.json
 	# setup HTML redirects to point at this version if $(SETCURRENT) == true
-	bin/set-default-path "$(BUILDDIR)" "$(CYLC_VERSION)" html "$(default_version)"
+	bin/set-default-path "$(BUILDDIR)" html "$(default_version)"
