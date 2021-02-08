@@ -52,7 +52,8 @@ EXTRAS_REQUIRE = {
         'pycodestyle'
     ],
     'tutorial': [
-        'pillow'
+        'pillow',
+        'urllib3'
     ]
 
 }

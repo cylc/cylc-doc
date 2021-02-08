@@ -15,13 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 set -eux
-TEMPORARYDIRECTORY=$(mktemp -dp "$HOME/cylc-run/")
-cp -r ./* "$TEMPORARYDIRECTORY"
-APIKEY=$(head --lines 1 ../api-keys)
-cd "$TEMPORARYDIRECTORY"
-sed -i "s/DATAPOINT_API_KEY/$APIKEY/" flow.cylc
-cylc validate --strict . --icp=2000
-cylc run --no-detach --abort-if-any-task-fails
-rm -r "$TEMPORARYDIRECTORY"
+APIKEY="$(head --lines 1 ../api-keys)"
+FLOW_NAME="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c6)"
+cylc install --flow-name "$FLOW_NAME" --no-run-name .
+sed -i "s/DATAPOINT_API_KEY/$APIKEY/" "$HOME/cylc-run/$FLOW_NAME/flow.cylc"
+cylc validate --strict --icp=2000 "$FLOW_NAME"
+cylc run --no-detach --abort-if-any-task-fails "$FLOW_NAME"
+cylc clean "$FLOW_NAME"
