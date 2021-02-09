@@ -50,6 +50,7 @@ jobs:
 
       - name: install cylc-doc
         run: |
+          sudo apt-get install -y librsvg2-bin ghostscript
           pip install "${{ github.workspace }}/docs[all]"
 
       - name: checkout cylc-flow
