@@ -53,31 +53,14 @@ jobs:
           sudo apt-get install -y librsvg2-bin ghostscript
           pip install "${{ github.workspace }}/docs[all]"
 
-      - name: checkout cylc-flow
-        uses: actions/checkout@v2
-        with:
-          repository: cylc/cylc-flow
-          ref: master
-          path: cylc-flow
-
-      - name: install cylc-flow
+      - name: install libs to document
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install './cylc-flow[all]'
-
-      - name: checkout cylc-rose
-        uses: actions/checkout@v2
-        with:
-          repository: cylc/cylc-rose
-          ref: master
-          path: cylc-rose
-
-      - name: install cylc-rose
-        run: |
-          # NOTE: Install with [all] so we can import plugins which may
-          #       have extra dependencies.
-          pip install './cylc-rose[all]'
+          pip install  \
+            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
+            'metomi-rose[all] @ git+https://github.com/metomi/rose@master' \
+            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master'
 
       - name: checkout gh-pages branch
         uses: actions/checkout@v2

@@ -25,10 +25,13 @@ on:
   workflow_dispatch:
     inputs:
       cylc-flow-tag:
-        description: 'Cylc Flow pypi release tag (must be present in cylc-docs)'
+        description: 'Cylc Flow GitHub release tag (must be present in cylc-docs)'
         required: true
       cylc-rose-tag:
-        description: 'Cylc Rose pypi release tag'
+        description: 'Cylc Rose GitHub release tag'
+        required: true
+      metomi-rose-tag:
+        description: 'Rose GitHub release tag (currently only effects cylc-rose install)'
         required: true
       set_current:
         description: 'Make this the default documented version.'
@@ -62,12 +65,17 @@ jobs:
           sudo apt-get install -y librsvg2-bin ghostscript
           pip install "${{ github.workspace }}/docs[all]"
 
-      - name: install cylc and plugins
+      - name: install libs to document
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install "cylc-flow[all]==${{ github.event.inputs.cylc-flow-tag }}"
-          pip install "cylc-rose[all]==${{ github.event.inputs.cylc-rose-tag }}"
+          pip install  \
+            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow'\
+              '@${{ github.event.inputs.cylc-flow-tag }}' \
+            'metomi-rose[all] @ git+https://github.com/metomi/rose'\
+              '@${{ github.event.inputs.metomi-rose-tag }}' \
+            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@'\
+              '${{ github.event.inputs.cylc-rose-tag }}'
 
       - name: checkout gh-pages
         uses: actions/checkout@v2
