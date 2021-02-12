@@ -1311,6 +1311,8 @@ The information logged here includes:
 - Suite stalled warnings.
 - Client commands (e.g. ``cylc hold``)
 - Job IDs.
+- Information relating to the remote file installation, contained in a
+  separate log file, the ``file-installation-log``.
 
 .. note::
 
