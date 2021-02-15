@@ -12,6 +12,7 @@ indefinitely.
    introduction/index
    tutorial/index
    user-guide/index
+   plugins/index
    suite-design-guide/index
    reference/index
    glossary
