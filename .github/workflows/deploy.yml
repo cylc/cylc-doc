@@ -31,7 +31,7 @@ on:
         description: 'Cylc Rose GitHub release tag'
         required: true
       metomi-rose-tag:
-        description: 'Rose GitHub release tag (currently only effects cylc-rose install)'
+        description: 'Rose GitHub release tag (currently only affects cylc-rose install)'
         required: true
       set_current:
         description: 'Make this the default documented version.'
