@@ -21,10 +21,7 @@ import json
 import pathlib
 import sys
 
-from pkg_resources import (
-    parse_requirements,
-    parse_version
-)
+from pkg_resources import parse_version
 
 
 DUMMY_FORMATS = [
@@ -38,8 +35,7 @@ DUMMY_FORMATS = [
 def get_versions(builddir):
     """Yield paths to each documented version."""
     yield from pathlib.Path(builddir).glob('[0-9]*.*')
-    yield from pathlib.Path(builddir).glob('nightly.*')
-    yield from pathlib.Path(builddir).glob('dev*')
+    yield from pathlib.Path(builddir).glob('nightly')
 
 
 def get_formats(builddir):
