@@ -7,6 +7,7 @@ User Guide
 
    workflows
    writing-suites/index
+   installing-workflows
    running-suites
    suite-name-reg
    suite-storage-etc
