@@ -713,6 +713,11 @@ Glossary
       See also:
 
       * :term:`cold start`
+   
+   source directory
+      An arbitrary directory where workflows are written and stored in
+      preparation for installation with `cylc install` or reinstallation with
+      `cylc reinstall`. 
 
    stop
    shutdown
