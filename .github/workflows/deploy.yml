@@ -33,8 +33,12 @@ on:
       metomi-rose-tag:
         description: 'Rose GitHub release tag (currently only affects cylc-rose install)'
         required: true
-      set_current:
-        description: 'Make this the default documented version.'
+      set_stable:
+        description: 'Stable build. Make this the default documented version.'
+        required: false
+        default: true
+      set_latest:
+        description: 'Latest build (but not the default version). If the build is both the Latest and the Stable/default, use `set_stable` as well.'
         required: false
         default: true
 
@@ -84,7 +88,7 @@ jobs:
           path: gh-pages
 
       - name: sync static files
-        if: ${{ github.event.inputs.set_current }}
+        if: ${{ github.event.inputs.set_stable }}
         run: |
           DOCS="${{ github.workspace }}/docs" \
           PAGE="${{ github.workspace }}/gh-pages"  \
@@ -110,12 +114,11 @@ jobs:
             slides \
             linkcheck \
             SPHINXOPTS='-Wn' \
-            SETCURRENT=${{ github.event.inputs.set_current }}
+            STABLE=${{ github.event.inputs.set_stable }} \
+            LATEST=${{ github.event.inputs.set_latest }}
 
       - name: configure git
-        run: |
-          git config --global user.name "action:deploy"
-          git config --global user.email "action:deploy@github.com"
+        uses: cylc/release-actions/configure-git@v1
 
       - name: tidy old versions
         run: |

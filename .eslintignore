@@ -1,2 +1,4 @@
 doc/[0-9]*.*
-doc/current
+doc/stable
+doc/latest
+doc/nightly

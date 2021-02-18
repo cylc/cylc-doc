@@ -49,19 +49,19 @@ jobs:
 
       - name: check tag
         run: |
-          current="$(readlink gh-pages/current)"
-          if [[ -z $current ]]
-          then
-            exit 'could not determine the "current" version.'
-          elif [[ "$current" == '${{ github.event.inputs.tag }}' ]]
-          then
-            exit 'Error: cannot delete the "current" version'
-          fi
+          for ver in stable latest; do
+            ver_link="$(readlink gh-pages/${ver})"
+            if [[ -z "$ver_link" ]]
+            then
+              exit "Error: could not determine the '"$ver"' version"
+            elif [[ "$ver" == '${{ github.event.inputs.tag }}' ]]
+            then
+              exit "Error: cannot delete the '"$ver"' version"
+            fi
+          done
 
       - name: configure git
-        run: |
-          git config --global user.name "action:undeploy"
-          git config --global user.email "action:undeploy@github.com"
+        run: cylc/release-actions/configure-git@v1
 
       - name: remove version
         run: |
