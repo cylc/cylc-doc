@@ -5,7 +5,7 @@ Consolidating Configuration
 
 .. ifnotslides::
 
-   In the last section we wrote out the following code in the ``suite.rc`` file:
+   In the last section we wrote out the following code in the :cylc:conf:`flow.cylc` file:
 
 .. slide:: Weather Forecasting Suite
    :level: 2
@@ -63,11 +63,11 @@ Consolidating Configuration
       [scheduling]
           [[graph]]
               T00/PT3H = """
-                      get_observations_belmullet => consolidate_observations
-                      get_observations_camborne => consolidate_observations
-                      get_observations_heathrow => consolidate_observations
-                      get_observations_shetland => consolidate_observations
-                  """
+                  get_observations_belmullet => consolidate_observations
+                  get_observations_camborne => consolidate_observations
+                  get_observations_heathrow => consolidate_observations
+                  get_observations_shetland => consolidate_observations
+              """
 
 .. nextslide::
 
@@ -87,12 +87,12 @@ The ``cylc get-config`` Command
 
 .. ifnotslides::
 
-   The ``cylc get-config`` command reads in then prints out the ``suite.rc`` file
+   The ``cylc get-config`` command reads in then prints out the :cylc:conf:`flow.cylc` file
    to the terminal.
 
    Throughout this section we will be introducing methods for consolidating
-   the ``suite.rc`` file, the ``cylc get-config`` command can be used to
-   "expand" the ``suite.rc`` file back to its full form.
+   the :cylc:conf:`flow.cylc` file, the ``cylc get-config`` command can be used to
+   "expand" the :cylc:conf:`flow.cylc` file back to its full form.
 
    .. note::
 

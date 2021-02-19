@@ -69,6 +69,7 @@ $(document).ready(function() {
                 }
                 version_div.append(
                     $('<a />')
+                        .attr({'style': 'display: inline-block'})
                         .attr({'href': url(version, vn_fmt)})
                         .css({'padding-left': '1em'})
                         .append(version)

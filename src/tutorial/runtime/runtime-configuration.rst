@@ -3,6 +3,8 @@
 Runtime Configuration
 =====================
 
+.. TODO - platformise all the examples in here
+
 In the last section we associated tasks with scripts and ran a simple suite. In
 this section we will look at how we can configure these tasks.
 
@@ -48,7 +50,7 @@ Environment Variables
    * ``CYLC_TASK_CYCLE_POINT``
 
 
-.. _tutorial-batch-system:
+.. _tutorial-job-runner:
 
 Job Submission
 --------------
@@ -57,16 +59,15 @@ Job Submission
 
    By default Cylc runs :term:`jobs <job>` on the machine where the suite is
    running. We can tell Cylc to run jobs on other machines by setting the
-   ``[remote]host`` setting to the name of the host, e.g. to run a task on the
-   host ``computehost`` you might write:
+   :term:`platform` setting: If, for example you want to run a task job on a
+   platform called ``powerful_computer`` you would write:
 
 .. code-block:: cylc
 
    [runtime]
        [[hello_computehost]]
            script = echo "Hello Compute Host"
-           [[[remote]]]
-               host = computehost
+           platform = powerful_computer
 
 .. _background processes: https://en.wikipedia.org/wiki/Background_process
 .. _job scheduler: https://en.wikipedia.org/wiki/Job_scheduler
@@ -77,8 +78,8 @@ Job Submission
 
    Cylc also executes jobs as `background processes`_ by default.
    When we are running jobs on other compute hosts we will often want to
-   use a :term:`batch system` (`job scheduler`_) to submit our job.
-   Cylc supports the following :term:`batch systems <batch system>`:
+   use a :term:`job runner` to submit our job.
+   Cylc supports the following :term:`job runners <job runner>`:
 
 * at
 * loadleveler
@@ -92,9 +93,9 @@ Job Submission
 
 .. ifnotslides::
 
-   :term:`Batch systems <batch system>` typically require
+   :term:`Job runners <job runner>` typically require
    :term:`directives <directive>` in some form. :term:`Directives <directive>`
-   inform the :term:`batch system` of the requirements of a :term:`job`, for
+   inform the job runner of the requirements of a :term:`job`, for
    example how much memory a given job requires or how many CPUs the job will
    run on. For example:
 
@@ -105,12 +106,7 @@ Job Submission
            script = big-executable
 
            # Submit to the host "big-computer".
-           [[[remote]]]
-               host = big-computer
-
-           # Submit the job using the "slurm" batch system.
-           [[[job]]]
-               batch system = slurm
+           platform = slurm_platform
 
            # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
            [[[directives]]]
@@ -133,8 +129,7 @@ Timeouts
    [runtime]
        [[some_task]]
            script = some-executable
-           [[[job]]]
-               execution time limit = PT15M  # 15 minutes.
+           execution time limit = PT15M  # 15 minutes.
 
 
 Retries
@@ -159,8 +154,8 @@ Sometimes jobs fail. This can be caused by two factors:
 .. ifnotslides::
 
    In the event of failure Cylc can automatically re-submit (retry) jobs. We
-   configure retries using the ``[job]execution retry delays`` and
-   ``[job]submission retry delays`` settings. These settings are both set to an
+   configure retries using the ``execution retry delays`` and
+   ``submission retry delays`` settings. These settings are both set to an
    :term:`ISO8601 duration`, e.g. setting ``execution retry delays`` to ``PT10M``
    would cause the job to retry every 10 minutes in the event of execution
    failure.
@@ -173,14 +168,15 @@ Sometimes jobs fail. This can be caused by two factors:
    [runtime]
        [[some-task]]
            script = some-script
-           [[[job]]]
-               # In the event of execution failure, retry a maximum
-               # of three times every 15 minutes.
-               execution retry delays = 3*PT15M
-               # In the event of submission failure, retry a maximum
-               # of two times every ten minutes and then every 30
-               # minutes thereafter.
-               submission retry delays = 2*PT10M, PT30M
+
+           # In the event of execution failure, retry a maximum
+           # of three times every 15 minutes.
+           execution retry delays = 3*PT15M
+
+           # In the event of submission failure, retry a maximum
+           # of two times every ten minutes and then every 30
+           # minutes thereafter.
+           submission retry delays = 2*PT10M, PT30M
 
 
 Start, Stop, Restart
@@ -196,7 +192,7 @@ Start, Stop, Restart
    ``cylc stop --kill``
       When the ``--kill`` option is used Cylc will kill all running jobs
       before stopping. *Cylc can kill jobs on remote hosts and uses the
-      appropriate command when a* :term:`batch system` *is used.*
+      appropriate command when a* :term:`job runner` *is used.*
    ``cylc stop --now --now``
       When the ``--now`` option is used twice Cylc stops straight away, leaving
       any jobs running.
@@ -286,7 +282,7 @@ Start, Stop, Restart
 
       Run `cylc validate` to check for any errors::
 
-          cylc validate .
+         cylc validate .
 
    #. **Add Runtime Configuration For The** ``get_observations`` **Tasks.**
 
@@ -306,7 +302,7 @@ Start, Stop, Restart
 
          rose tutorial api-key
 
-      Add the following lines to the bottom of the ``suite.rc`` file replacing
+      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
       ``xxx...`` with your API key:
 
       .. code-block:: cylc
@@ -354,7 +350,7 @@ Start, Stop, Restart
                         SITE_ID = 3976
                         API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
-      Check the ``suite.rc`` file is valid by running the command:
+      Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
       .. code-block:: bash
 
@@ -420,9 +416,9 @@ Start, Stop, Restart
       The runtime configuration for the remaining tasks has been written out
       for you in the ``runtime`` file which you will find in the
       :term:`suite directory`. Copy the code in the ``runtime`` file to the
-      bottom of the ``suite.rc`` file.
+      bottom of the :cylc:conf:`flow.cylc` file.
 
-      Check the ``suite.rc`` file is valid by running the command:
+      Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
       .. code-block:: bash
 
@@ -441,7 +437,7 @@ Start, Stop, Restart
             cylc gui runtime-tutorial &
 
          Run the suite either by:
-          
+
          * Pressing the play button in the Cylc GUI. Then, ensuring that
            "Cold Start" is selected within the dialogue window, pressing the
            "Start" button.
@@ -492,4 +488,3 @@ Start, Stop, Restart
            i.e. the final cycle point.
          * ``task-name`` - set this to "forecast".
          * ``submission-number`` - set this to "01".
-

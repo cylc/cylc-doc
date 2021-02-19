@@ -56,9 +56,9 @@ To make a workflow repeat we must tell Cylc three things:
         [[graph]]
    -        R1 = """
    +        P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+            """
 
 .. nextslide::
 
@@ -158,10 +158,10 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-   +                clean_oven[-P1] => pre_heat_oven
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+   +            clean_oven[-P1] => pre_heat_oven
+            """
 
 .. nextslide::
 
@@ -252,11 +252,11 @@ Inter-Cycle Dependencies
         initial cycle point = 1
         [[graph]]
             P1 = """
-                    buy_ingredients => make_dough
-                    pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
-                    clean_oven[-P1] => pre_heat_oven
-   +                sell_bread[-P2] => buy_ingredients
-                """
+                buy_ingredients => make_dough
+                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+                clean_oven[-P1] => pre_heat_oven
+   +            sell_bread[-P2] => buy_ingredients
+            """
 
 .. nextslide::
 
@@ -409,7 +409,7 @@ Recurrence Sections
       :term:`cycling suite <cycling>`.
 
    If you have not completed the previous practical use the following code for
-   your ``suite.rc`` file.
+   your :cylc:conf:`flow.cylc` file.
 
    .. code-block:: cylc
 
@@ -430,7 +430,7 @@ Recurrence Sections
          mkdir -p ~/cylc-run/integer-cycling
          cd ~/cylc-run/integer-cycling
 
-      Copy the above code into a ``suite.rc`` file in that directory.
+      Copy the above code into a :cylc:conf:`flow.cylc` file in that directory.
 
    #. **Make the suite cycle.**
 
@@ -444,9 +444,9 @@ Recurrence Sections
               [[graph]]
          -        R1 = """
          +        P1 = """
-                          a & c => b => d & f
-                          d => e
-                      """
+                      a & c => b => d & f
+                      d => e
+                  """
 
    #. **Visualise the suite.**
 
@@ -479,7 +479,7 @@ Recurrence Sections
       as opposed to every cycle. We can do this by adding another
       recurrence.
 
-      Make the following changes to your ``suite.rc`` file.
+      Make the following changes to your :cylc:conf:`flow.cylc` file.
 
       .. code-block:: diff
 
@@ -488,12 +488,12 @@ Recurrence Sections
               initial cycle point = 1
               [[graph]]
                   P1 = """
-                          a & c => b => d & f
-         -                d => e
-                      """
+                      a & c => b => d & f
+         -            d => e
+                  """
          +        P2 = """
-         +                d => e
-         +            """
+         +            d => e
+         +        """
 
       Use ``cylc graph`` to see the effect this has on the workflow.
 
@@ -508,7 +508,7 @@ Recurrence Sections
       #. Between ``e`` from the previous cycle and ``a``
          *every even cycle* (e.g. e.1 => a.2).
 
-      Have a go at adding inter-cycle dependencies to your ``suite.rc`` file to
+      Have a go at adding inter-cycle dependencies to your :cylc:conf:`flow.cylc` file to
       make your workflow match the diagram below.
 
       .. hint::
@@ -578,13 +578,13 @@ Recurrence Sections
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                            a & c => b => d & f
-                            f[-P1] => c  # (1)
-                        """
+                        a & c => b => d & f
+                        f[-P1] => c  # (1)
+                    """
                     P2 = """
-                            d => e
-                            d[-P1] => a  # (2)
-                        """
+                        d => e
+                        d[-P1] => a  # (2)
+                    """
                     2/P2 = """
-                            e[-P1] => a  # (3)
-                        """
+                        e[-P1] => a  # (3)
+                    """

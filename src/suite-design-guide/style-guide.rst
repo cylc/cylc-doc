@@ -33,7 +33,7 @@ line continuation markers).
 To remove existing trailing whitespace in a file use a ``sed`` or
 ``perl`` one-liner:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ perl -pi -e "s/ +$//g" /path/to/file
    # or:
@@ -49,7 +49,7 @@ Indentation
 
 Consistent indentation makes a suite definition more readable, it shows section
 nesting clearly, and it makes block re-indentation operations easier in text
-editors. Indent suite.rc syntax four spaces per nesting level:
+editors. Indent :cylc:conf:`flow.cylc` syntax four spaces per nesting level:
 
 
 Config Items
@@ -101,10 +101,11 @@ be indented from the left margin:
        [[foo]]
            # Recommended.
            post-script = """
-   if [[ $RESULT == "bad" ]]; then
-       echo Goodbye World!
-       exit 1
-   fi"""
+               if [[ $RESULT == "bad" ]]; then
+                   echo Goodbye World!
+                   exit 1
+               fi
+           """
 
 Indentation is *mostly* ignored by the bash interpreter, but is useful for
 readability. It is *mostly* harmless to indent internal script lines as if
@@ -115,11 +116,10 @@ part of the Cylc syntax, or even out to the triple quotes:
    [runtime]
        [[foo]]
            # OK, but...
-           post-script = """
-               if [[ $RESULT == "bad" ]]; then
-                   echo Goodbye World!
-                   exit 1
-               fi"""
+           post-script = """if [[ $RESULT == "bad" ]]; then
+   echo Goodbye World!
+   exit 1
+   fi"""
 
 On parsing the triple quoted value, Cylc will remove any common leading
 whitespace from each line using the logic of
@@ -137,26 +137,25 @@ have many levels of indentations.
       [runtime]
           [[foo]]
            script = """
-           cat >> log.txt <<_EOF_
+               cat >> log.txt <<_EOF_
+                   The quick brown fox jumped
+                   over the lazy dog.
+               _EOF_
+           """
+
+   Each line in ``log.txt`` would end up with 4 leading white spaces. The
+   following will give you lines with no white spaces.
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[foo]]
+           script = """
+               cat >> log.txt <<_EOF_
                The quick brown fox jumped
                over the lazy dog.
-           _EOF_
-                    """
-
-In the above, each line in ``log.txt`` would end up with 4 leading
-white spaces. The following will give you lines with no white spaces.
-
-.. code-block:: cylc
-
-   [runtime]
-       [[foo]]
-           script = """
-           cat >> log.txt <<_EOF_
-           The quick brown fox jumped
-           over the lazy dog.
-           _EOF_
-                    """
-
+               _EOF_
+           """
 
 Graph String Lines
 ^^^^^^^^^^^^^^^^^^
@@ -175,7 +174,7 @@ Multiline ``graph`` strings can be entirely free-form:
      qux => rose_arch => rose_prune"""
 
 Whitespace is ignored in graph string parsing, however, so internal graph lines
-can be indented as if part of the suite.rc syntax, or even out to the triple
+can be indented as if part of the :cylc:conf:`flow.cylc` syntax, or even out to the triple
 quotes, if you feel it aids readability (but watch line length with large
 indents; see :ref:`Line Length`):
 
@@ -188,7 +187,8 @@ indents; see :ref:`Line Length`):
                FAMILY:succeed-all => bar & baz => qux
 
                # Housekeeping:
-               qux => rose_arch => rose_prune"""
+               qux => rose_arch => rose_prune
+           """
 
 Both styles are acceptable; choose one and use it consistently.
 
@@ -196,9 +196,9 @@ Both styles are acceptable; choose one and use it consistently.
 Jinja2 Code
 ^^^^^^^^^^^
 
-A suite.rc file with embedded Jinja2 code is essentially a Jinja2 program to
+A :cylc:conf:`flow.cylc` file with embedded Jinja2 code is essentially a Jinja2 program to
 generate a Cylc suite definition. It is not possible to consistently indent the
-Jinja2 as if it were part of the suite.rc syntax (which to the Jinja2 processor
+Jinja2 as if it were part of the :cylc:conf:`flow.cylc` syntax (which to the Jinja2 processor
 is just arbitrary text), so it should be indented from the left margin on
 its own terms:
 
@@ -246,7 +246,7 @@ Line Length And Continuation
 Keep to the standard maximum line length of 79 characters where possible. Very
 long lines affect readability and make side-by-side diffs hard to view.
 
-Backslash line continuation markers can be used anywhere in the suite.rc file
+Backslash line continuation markers can be used anywhere in the :cylc:conf:`flow.cylc` file
 but should be avoided if possible because they are easily broken by invisible
 trailing whitespace.
 
@@ -258,13 +258,15 @@ trigger arrows imply line continuation:
    [scheduling]
        [[graph]]
            # No line continuation marker is needed here.
-           R1 = """prep => one => two => three =>
-                   four => five six => seven => eight"""
+           R1 = """
+               prep => one => two => three =>
+               four => five six => seven => eight
+           """
    [runtime]
        [[MY_TASKS]]
        # A line continuation marker *is* needed here:
        [[one, two, three, four, five, six, seven, eight, nine, ten, \
-         eleven, twelve, thirteen ]]
+         eleven, twelve, thirteen]]
            inherit = MY_TASKS
 
 

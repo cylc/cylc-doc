@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # THIS FILE IS PART OF THE CYLC SUITE ENGINE.
-# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,8 @@ import sqlite3
 import tempfile
 from contextlib import closing
 
-import pygraphviz as pgv
 from cylc.flow.rundb import CylcSuiteDAO
-from eralchemy import render_er, main as eralchemy_main
 from eralchemy.main import all_to_intermediary
-from docutils.parsers.rst import directives
 from sphinx.ext.graphviz import Graphviz
 
 __version__ = '1.0.0'
@@ -53,18 +50,6 @@ def get_relationships():
          CylcSuiteDAO.TABLE_TASK_EVENTS],
         [CylcSuiteDAO.TABLE_TASK_STATES, ONE_TO_MANY,
          CylcSuiteDAO.TABLE_TASK_JOBS],
-        [CylcSuiteDAO.TABLE_BROADCAST_STATES, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_BROADCAST_STATES_CHECKPOINTS],
-        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_BROADCAST_STATES_CHECKPOINTS],
-        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_SUITE_PARAMS_CHECKPOINTS],
-        [CylcSuiteDAO.TABLE_CHECKPOINT_ID, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_POOL_CHECKPOINTS],
-        [CylcSuiteDAO.TABLE_SUITE_PARAMS, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_SUITE_PARAMS_CHECKPOINTS],
-        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_POOL_CHECKPOINTS],
         [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
          CylcSuiteDAO.TABLE_TASK_ACTION_TIMERS],
         [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_ONE,
@@ -170,7 +155,7 @@ class CylcRunDBDirective(Graphviz):
 
         # use invisible graph edges to change the graph layout
         dotcode.append(
-            f'"task_pool_checkpoints" -- "inheritance"[style=invis];'
+            '"task_pool_checkpoints" -- "inheritance"[style=invis];'
         )
 
         # graph suffix

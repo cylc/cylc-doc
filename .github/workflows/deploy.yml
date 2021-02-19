@@ -1,0 +1,133 @@
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Deploy a new version of the documentation or rebuild an existing one.
+
+# Note: All changes made to the gh-pages branch are non-destructive
+#       (i.e. no force pushing) so all changes can be undone.
+
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      cylc-flow-tag:
+        description: 'Cylc Flow GitHub release tag (must be present in cylc-docs)'
+        required: true
+      cylc-rose-tag:
+        description: 'Cylc Rose GitHub release tag'
+        required: true
+      metomi-rose-tag:
+        description: 'Rose GitHub release tag (currently only affects cylc-rose install)'
+        required: true
+      set_stable:
+        description: 'Stable build. Make this the default documented version.'
+        required: false
+        default: true
+      set_latest:
+        description: 'Latest build (but not the default version). If the build is both the Latest and the Stable/default, use `set_stable` as well.'
+        required: false
+        default: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.cylc-flow-tag }}
+          path: docs
+
+      - name: install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
+          pip install pygraphviz
+
+      - name: install cylc-doc
+        run: |
+          sudo apt-get install -y librsvg2-bin ghostscript
+          pip install "${{ github.workspace }}/docs[all]"
+
+      - name: install libs to document
+        run: |
+          # NOTE: Install with [all] so we can import plugins which may
+          #       have extra dependencies.
+          pip install  \
+            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow'\
+              '@${{ github.event.inputs.cylc-flow-tag }}' \
+            'metomi-rose[all] @ git+https://github.com/metomi/rose'\
+              '@${{ github.event.inputs.metomi-rose-tag }}' \
+            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@'\
+              '${{ github.event.inputs.cylc-rose-tag }}'
+
+      - name: checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: sync static files
+        if: ${{ github.event.inputs.set_stable }}
+        run: |
+          DOCS="${{ github.workspace }}/docs" \
+          PAGE="${{ github.workspace }}/gh-pages"  \
+
+          rsync -r "$DOCS/doc/" "$PAGE/"
+
+      - name: install gh-pages
+        run: |
+          DOCS="${{ github.workspace }}/docs" \
+          PAGE="${{ github.workspace }}/gh-pages"  \
+
+          cd "$DOCS"
+          rm -r doc
+          ln -s "$PAGE" doc
+
+      - name: build docs
+        run: |
+          # NOTE: Doing a clean build allows up to update docs for a
+          #       deployed version at a later date.
+          make -C docs \
+            clean \
+            html \
+            slides \
+            linkcheck \
+            SPHINXOPTS='-Wn' \
+            STABLE=${{ github.event.inputs.set_stable }} \
+            LATEST=${{ github.event.inputs.set_latest }}
+
+      - name: configure git
+        uses: cylc/release-actions/configure-git@v1
+
+      - name: tidy old versions
+        run: |
+          cd docs
+          git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
+
+      - name: push changes
+        run: |
+          cd gh-pages
+          git add *
+          git commit -m "add: ${{ github.event.inputs.cylc-flow-tag }}"
+          git push origin HEAD

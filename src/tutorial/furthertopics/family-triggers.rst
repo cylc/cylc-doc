@@ -50,11 +50,11 @@ Create a new suite called ``tutorial-family-triggers``::
    mkdir ~/cylc-run/tutorial-family-triggers
    cd ~/cylc-run/tutorial-family-triggers
 
-Paste the following configuration into the ``suite.rc`` file:
+Paste the following configuration into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True # Ignore DST
    [scheduling]
        [[graph]]
@@ -65,13 +65,13 @@ Paste the following configuration into the ``suite.rc`` file:
 
        [[MINERS]]
            script = """
-   sleep 5;
-   if (($RANDOM % 2)); then
-       echo 'Diamonds!'; true;
-   else
-       echo 'Nothing...'; false;
-   fi
-   """
+               sleep 5;
+               if (($RANDOM % 2)); then
+                   echo 'Diamonds!'; true;
+               else
+                   echo 'Nothing...'; false;
+               fi
+           """
        [[doc, grumpy, sleepy, happy, bashful, sneezy, dopey]]
            inherit = MINERS
 
@@ -108,14 +108,16 @@ to use the ``finish-all`` trigger to check for all members of the ``MINERS``
 family finishing, and the ``succeed-any`` trigger to check for any of the
 tasks in the ``MINERS`` family succeeding.
 
-Open your ``suite.rc`` file and change the ``[[graph]]`` to look like
+Open your :cylc:conf:`flow.cylc` file and change the ``[[graph]]`` to look like
 this:
 
 .. code-block:: cylc
 
    [[graph]]
-       R1 = """visit_mine => MINERS
-               MINERS:finish-all & MINERS:succeed-any => sell_diamonds"""
+       R1 = """
+           visit_mine => MINERS
+           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+       """
 
 Then, add the following task to the ``[runtime]`` section:
 
@@ -143,17 +145,18 @@ all the miners have reported back and had time to discuss their findings.
 
 To do this we will make use of family triggers in a similar manner to before.
 
-Open your ``suite.rc`` file and change the ``[[graph]]`` to look like
+Open your :cylc:conf:`flow.cylc` file and change the ``[[graph]]`` to look like
 this:
 
 .. code-block:: cylc
 
    [[graph]]
-       R1 = """visit_mine => MINERS
-               MINERS:finish-all & MINERS:succeed-any => sell_diamonds
-                  MINERS:finish-all & MINERS:fail-any => close_shafts
-                  close_shafts => !MINERS
-                  """
+       R1 = """
+           visit_mine => MINERS
+           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+           MINERS:finish-all & MINERS:fail-any => close_shafts
+           close_shafts => !MINERS
+       """
 
 Alter the ``[[sell_diamonds]]`` section to look like this:
 

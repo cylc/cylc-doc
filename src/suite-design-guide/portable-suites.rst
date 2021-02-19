@@ -3,9 +3,11 @@
 Portable Suites
 ===============
 
+.. TODO - platformise all the examples in here
+
 A *portable* or *interoperable* suite can run "out of the box" at
 different sites, or in different environments such as research and operations
-within a site.  For convenience we just use the term *site portability*.
+within a site. For convenience we just use the term *site portability*.
 
 Lack of portability is a major barrier to collaborative development when
 sites need to run more or less the same workflow, because it is very
@@ -52,9 +54,9 @@ This will be used to select site-specific configuration, as described below.
 Site Include-Files
 ------------------
 
-If a section heading in a suite.rc file is repeated the items under it simply
-add to or override those defined under the same section earlier in the file
-(but note :ref:`List Item Override In Site Include-Files`).
+If a section heading in a :cylc:conf:`flow.cylc` file is repeated the items
+under it simply add to or override those defined under the same section earlier
+in the file (but note :ref:`List Item Override In Site Include-Files`).
 For example, this task definition:
 
 .. code-block:: cylc
@@ -62,8 +64,7 @@ For example, this task definition:
    [runtime]
        [[foo]]
            script = run-foo.sh
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 can equally be written like this:
 
@@ -74,8 +75,7 @@ can equally be written like this:
            script = run-foo.sh
    [runtime]  # Part 2 (site-specific).
        [[foo]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 .. note::
 
@@ -101,17 +101,16 @@ out into an include-file (file inclusion is essentially just literal inlining):
    #...
 
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-where the site include-file ``site/niwa.rc`` contains:
+where the site include-file ``site/niwa.cylc`` contains:
 
 .. code-block:: cylc
 
-   # site/niwa.rc
+   # site/niwa.cylc
    [runtime]
        [[foo]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
+           platform = niwa_hpc
 
 
 Site-Specific Graphs
@@ -153,13 +152,13 @@ and again, the site-specific part can be taken out to a site include-file:
            P1Y = "pre => model => post"
    #...
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-where the site include-file ``site/niwa.rc`` contains:
+where the site include-file ``site/niwa.cylc`` contains:
 
 .. code-block:: cylc
 
-   # site/niwa.rc
+   # site/niwa.cylc
    [scheduling]
        [[graph]]
            P1Y = "post => niwa_archive"
@@ -189,13 +188,11 @@ mess) and it exposes all site configuration to all users:
            script = run-model.sh
    {# Site switch blocks not recommended:#}
    {% if SITE == 'niwa' %}
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                # NIWA Loadleveler directives...
    {% elif SITE == 'metoffice' %}
-           [[[job]]]
-               batch system = pbs
+           platform = metoffice_pbs_platform
            [[[directives]]]
                # Met Office PBS directives...
    {% elif SITE == ... %}
@@ -211,7 +208,7 @@ But be wary of accumulating too many of these switches:
 
 .. code-block:: cylc
 
-   # (core suite.rc file)
+   # (core flow.cylc file)
    #...
    {% if SITE == 'small' %}
       {# We can't run 100 members... #}
@@ -234,24 +231,24 @@ Site-Specific Suite Variables
 It can sometimes be useful to set site-specific values of suite variables that
 aren't exposed to users via ``rose-suite.conf``. For example, consider
 a suite that can run a special post-processing workflow of some kind at sites
-where IDL is available. The IDL-dependence switch can be set per site like this: 
+where IDL is available. The IDL-dependence switch can be set per site like this:
 
 .. code-block:: cylc
 
    #...
-   {% from SITE ~ '-vars.rc' import HAVE_IDL, OTHER_VAR %}
+   {% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
    R1 = """
-     pre => model => post
+       pre => model => post
    {% if HAVE_IDL %}
-         post => idl-1 => idl-2 => idl-3
+       post => idl-1 => idl-2 => idl-3
    {% endif %}
-           """
+   """
 
-where for ``SITE = niwa`` the file ``niwa-vars.rc`` contains:
+where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
 
 .. code-block:: cylc
 
-   {# niwa-vars.rc #}
+   {# niwa-vars.cylc #}
    {% set HAVE_IDL = True %}
    {% set OTHER_VAR = "the quick brown fox" %}
 
@@ -298,7 +295,7 @@ built-in *optional app config* capability:
        [[root]]
            script = rose task-run -v -O '({{SITE}})'
 
-Normally a missing optional app config is considered to be an error, but the 
+Normally a missing optional app config is considered to be an error, but the
 round parentheses here mean the named optional config is optional - i.e.
 use it if it exists, otherwise ignore.
 
@@ -310,7 +307,7 @@ An Example
 ----------
 
 The following small suite is not portable because all of its tasks are
-submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they 
+submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they
 respectively install files from a local database and upload products to a local
 distribution system; and one task runs a somewhat NIWA-specific configuration
 of a model. The remaining tasks are site-agnostic apart from local job host
@@ -318,7 +315,7 @@ and batch scheduler directives.
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01
@@ -332,10 +329,7 @@ and batch scheduler directives.
        [[root]]
            script = rose task-run -v
        [[HPC]]  # NIWA job host and batch scheduler settings.
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                account_no = NWP1623
                class = General
@@ -355,16 +349,16 @@ and batch scheduler directives.
        [[upload_niwa]]  # NIWA-specific product upload.
            inherit = HPC
 
-To make this portable, refactor it into a core suite.rc file that contains the
-clean site-independent workflow configuration and loads all site-specific
-settings from an include-file at the end:
+To make this portable, refactor it into a core :cylc:conf:`flow.cylc` file that
+contains the clean site-independent workflow configuration and loads all
+site-specific settings from an include-file at the end:
 
 .. code-block:: cylc
 
-   # suite.rc: CORE SITE-INDEPENDENT CONFIGURATION.
+   # flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.
    {% set SITE = 'niwa' %}
-   {% from 'site/' ~ SITE ~ '-vars.rc' import HAVE_IDL %}
-   [cylc]
+   {% from 'site/' ~ SITE ~ '-vars.cylc' import HAVE_IDL %}
+   [scheduler]
        UTC mode = True
    [scheduling]
        initial cycle point = 2017-01-01
@@ -386,30 +380,27 @@ settings from an include-file at the end:
            inherit = HPC
            [[[environment]]]
                SPEED = fast
-   {% include 'site/' ~ SITE ~ '.rc' %}
+   {% include 'site/' ~ SITE ~ '.cylc' %}
 
-plus site files ``site/niwa-vars.rc``:
+plus site files ``site/niwa-vars.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa-vars.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa-vars.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    {% set HAVE_IDL = True %}
 
-and ``site/niwa.rc``:
+and ``site/niwa.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa.rc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
    [scheduling]
        [[graph]]
            R1 = install_niwa => preproc
            P1D = postproc => upload_niwa
    [runtime]
        [[HPC]]
-           [[[remote]]]
-               host = hpc1.niwa.co.nz
-           [[[job]]]
-               batch system = loadleveler
+           platform = niwa_loadleveler_platform
            [[[directives]]]
                account_no = NWP1623
                class = General
@@ -453,12 +444,13 @@ Official releases of a portable suite should be made from the suite trunk.
 Changes should be developed on feature branches so as not to affect other users
 of the suite.
 
-Site-specific changes shouldn't touch the core suite.rc file, just the relevant
-site include-file, and therefore should not need close scrutiny from other
-sites.
+Site-specific changes shouldn't touch the core :cylc:conf:`flow.cylc` file,
+just the relevant site include-file, and therefore should not need close
+scrutiny from other sites.
 
-Changes to the core suite.rc file should be agreed by all stakeholders, and
-should be carefully checked for effects on site include-files:
+Changes to the core :cylc:conf:`flow.cylc` file should be agreed by all
+stakeholders, and should be carefully checked for effects on site
+include-files:
 
 - Changing the name of tasks or families in the core suite may break
   sites that add configuration to the original runtime namespace.

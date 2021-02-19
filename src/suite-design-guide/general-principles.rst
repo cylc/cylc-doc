@@ -18,7 +18,7 @@ different timezones.
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
 
 
@@ -60,7 +60,7 @@ Inter-Suite Triggering
 A task in one suite can explicitly trigger off of a task in another suite. The
 full range of possible triggering conditions is supported, including custom
 message triggers. Remote triggering involves repeatedly querying ("polling")
-the remote suite run database, not the suite server program, so it works even
+the remote suite run database, not the :term:`scheduler`, so it works even
 if the other suite is down at the time.
 
 There is special graph syntax to support triggering off of a task in another
@@ -104,9 +104,28 @@ files they need are more robust.
 Installing Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Use ``rose suite-run`` *file creation mode* or ``R1``
-install tasks to copy files to the self-contained suite run directory at
-start-up.  Install tasks are preferred for time-consuming installations because
+Files can be installed on any remote platform. By default, Cylc installs the
+following directories: ``app``, ``bin``, ``etc``, ``lib``.
+Cylc supports adding custom directories and files to the file installation.
+
+If, for example, you wished to install directories ``dir1``, ``dir2``, and
+files ``file1``, ``file2``, add the following configuration to your
+:cylc:conf:`flow.cylc`, under the section
+:cylc:conf:flow.cylc[scheduler]install.
+To mark an item as a directory, add a trailing slash.
+
+.. code-block:: cylc
+
+    [scheduler]
+        install = dir1/, dir2/, file1, file2
+
+.. note::
+
+   Ensure files and directories to be installed are located in the top
+   level of your workflow.
+
+The file installation will timeout after 10 minutes.
+Install tasks are preferred for time-consuming installations because
 they don't slow the suite start-up process, they can be monitored,
 they can run directly on target platforms, and you can rerun them later without
 restarting the suite. If you are using symbolic links to install files under
@@ -144,10 +163,10 @@ Task Scripting
 --------------
 
 Non-trivial task scripting should be held in external files rather than
-inlined in the suite.rc. This keeps the suite definition tidy, and it
+inlined in :cylc:conf:`flow.cylc`. This keeps the suite definition tidy, and it
 allows proper shell-mode text editing and independent testing of task scripts.
 
-For automatic access by task jobs, task-specific scripts should be kept in 
+For automatic access by task jobs, task-specific scripts should be kept in
 Rose app bin directories, and shared scripts kept in (or installed to) the
 suite bin directory.
 
@@ -176,7 +195,7 @@ suite and its tasks, all task scripts should:
   expected location.
 - Always return correct shell exit status - zero for success, non-zero
   for failure. This is used by Cylc job wrapper code to detect success and
-  failure and report it back to the suite server program.
+  failure and report it back to the :term:`scheduler`.
 - In shell scripts use ``set -u`` to abort on any reference to
   an undefined variable. If you really need an undefined variable to evaluate
   to an empty string, make it explicit: ``FOO=${FOO:-}``.
@@ -226,7 +245,7 @@ and override it for the occasional non Rose app task:
 
 Rose Metadata Compliance
 ------------------------
- 
+
 Rose metadata drives page layout and sort order in ``rose edit``, plus
 help information, input validity checking, macros for advanced checking and app
 version upgrades, and more.
@@ -273,7 +292,7 @@ submission until the expected data arrival time:
 Clock-triggered tasks typically have to handle late data arrival. Task
 execution *retry delays* can be used to simply retrigger the task at
 intervals until the data is found, but frequently retrying small tasks probably
-should not go to a batch scheduler, and multiple task failures will be logged
+should not go to a :term:`job runner`, and multiple task failures will be logged
 for what is a essentially a normal condition (at least it is normal until the
 data is really late).
 
@@ -294,15 +313,15 @@ check-and-wait functionality in clock-triggered tasks
 (:ref:`Clock-Triggered Tasks`), for example.
 
 It is important to note that frequent polling may be bad for some filesystems,
-so be sure to configure a reasonable interval between polls. 
+so be sure to configure a reasonable interval between polls.
 
 
 Task Execution Time Limits
 --------------------------
 
-Instead of setting job wall clock limits directly in batch scheduler
+Instead of setting job wall clock limits directly in :term:`job runner`
 directives, use the ``execution time limit`` suite config item.
-Cylc automatically derives the correct batch scheduler directives from this,
+Cylc automatically derives the correct job runner directives from this,
 and it is also used to run ``background`` and ``at`` jobs via
 the ``timeout`` command, and to poll tasks that haven't reported in
 finished by the configured time limit.
@@ -332,7 +351,7 @@ queues*, respectively.
 Runahead Limiting
 ^^^^^^^^^^^^^^^^^
 
-By default Cylc allows a maximum of three cycle points to be active at the same
+By default Cylc allows a maximum of five cycle points to be active at the same
 time, but this value is configurable:
 
 .. code-block:: cylc
@@ -340,7 +359,7 @@ time, but this value is configurable:
    [scheduling]
        initial cycle point = 2020-01-01T00
        # Don't allow any cycle interleaving:
-       max active cycle points = 1
+       runahead limit = P1
 
 
 Internal Queues
@@ -398,7 +417,7 @@ easy to modify for other purposes, rather than extremely complicated suites
 that attempt do everything out of the box but are hard to maintain and modify.
 
 Note that use of Jinja2 loops for generating tasks is now deprecated in favour
-of built-in parameterized tasks - see :ref:`Parameterized Tasks Label`.
+of built-in parameterized tasks - see :ref:`User Guide Param`.
 
 
 Shared Configuration
@@ -433,15 +452,15 @@ Sharing by inheritance of task families is recommended when more than a few
 configuration items are involved.
 
 The simplest application of inheritance is to set global defaults in the
-``[[runtime]][root]`` namespace that is inherited by all tasks.
+``[runtime][root]`` namespace that is inherited by all tasks.
 However, this should only be done for settings that really are used
 by the vast majority of tasks. Over-sharing of via root, particularly of
 environment variables, is a maintenance risk because it can be very
-difficult to be sure which tasks are *using* which global variables.
+difficult to be sure which tasks are using which global variables.
 
-Any ``[runtime]`` settings can be shared - scripting, host
-and batch scheduler configuration, environment variables, and so on - from
-single items up to complete task or app configurations.  At the latter extreme,
+Any :cylc:conf:`[runtime]` settings can be shared - scripting, platform
+configuration, environment variables, and so on - from
+single items up to complete task or app configurations. At the latter extreme,
 it is quite common to have several tasks that inherit the same complete
 job configuration followed by minor task-specific additions:
 
@@ -529,8 +548,9 @@ by inheritance:
        [[write_data]]
            inherit = WORKSPACE
            script = """
-   mkdir -p $DATA_DIR
-   write-data.exe -o ${DATA_DIR}"""
+               mkdir -p $DATA_DIR
+               write-data.exe -o ${DATA_DIR}
+           """
        [[read_data]]
            inherit = WORKSPACE
            script = read-data.exe -i ${DATA_DIR}
@@ -548,8 +568,9 @@ be shared via Jinja variables:
    [runtime]
        [[write_data]]
            script = """
-   mkdir -p {{DATA_DIR}}
-   write-data.exe -o {{DATA_DIR}}"""
+               mkdir -p {{DATA_DIR}}
+               write-data.exe -o {{DATA_DIR}}
+           """
        [[read_data]]
            script = read-data.exe -i {{DATA_DIR}}
 
@@ -604,19 +625,17 @@ graph:
            script = run-model.sh
        [[long_fc]]
            inherit = MODEL
-           [[[job]]]
-               execution time limit = PT30M
+           execution time limit = PT30M
            [[[environment]]]
                RUN_LEN = PT48H
        [[short_fc]]
            inherit = MODEL
-           [[[job]]]
-               execution time limit = PT10M
+           execution time limit = PT10M
            [[[environment]]]
                RUN_LEN = PT12H
 
 The few differences between ``short_fc`` and ``long_fc``,
-including batch scheduler resource requests, can be configured after common
+including :term:`job runner` resource requests, can be configured after common
 settings are inherited.
 
 At Start-Up
@@ -642,16 +661,15 @@ distinct from job retries for job execution failure (just below).
 
 Job submission retries should normally be host (or host-group for
 ``rose host-select``) specific, not task-specific, so configure them in
-a host (or host-group) specific family. The following suite.rc fragment
-configures all HPC jobs to retry on job submission failure up to 10
+a host (or host-group) specific family. The following :cylc:conf:`flow.cylc`
+fragment configures all HPC jobs to retry on job submission failure up to 10
 times at 1 minute intervals, then another 5 times at 1 hour intervals:
 
 .. code-block:: cylc
 
    [runtime]
        [[HPC]]  # Inherited by all jobs submitted to HPC.
-           [[[job]]]
-               submission retry delays = 10*PT1M, 5*PT1H
+           submission retry delays = 10*PT1M, 5*PT1H
 
 
 Job Execution Retries
@@ -669,14 +687,14 @@ then an automatic retry may be appropriate:
    [runtime]
        [[model]]
            script = """
-   if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
-       SHORT_TIMESTEP=true
-   else
-       SHORT_TIMESTEP=false
-   fi
-   model.exe"""
-           [[[job]]]
-               execution retry delays = 1*PT0M
+               if [[ $CYLC_TASK_TRY_NUMBER > 1 ]]; then
+                   SHORT_TIMESTEP=true
+               else
+                   SHORT_TIMESTEP=false
+               fi
+               model.exe
+           """
+           execution retry delays = 1*PT0M
 
 
 Failure Recovery Workflows
@@ -714,7 +732,8 @@ path from the workflow:
                      model:fail => diagnose => model_short
                        # Clean up with suicide triggers:
                      model => ! diagnose & ! model_short
-                     model_short => ! model"""
+                     model_short => ! model
+                 """
 
 
 Include Files
@@ -726,7 +745,7 @@ Include-files should not be overused, but they can sometimes be useful
 .. code-block:: cylc
 
    #...
-   {% include 'inc/foo.rc' %}
+   {% include 'inc/foo.cylc' %}
 
 (Technically this inserts a Jinja2-rendered file template). Cylc also has a
 native include mechanism that pre-dates Jinja2 support and literally inlines
@@ -735,7 +754,7 @@ the include-file:
 .. code-block:: cylc
 
    #...
-   %include 'inc/foo.rc'
+   %include 'inc/foo.cylc'
 
 The two methods normally produce the same result, but use the Jinja2 version if
 you need to construct an include-file name from a variable (because Cylc
@@ -744,4 +763,4 @@ include-files get inlined before Jinja2 processing is done):
 .. code-block:: cylc
 
    #...
-   {% include 'inc/' ~ SITE ~ '.rc' %}
+   {% include 'inc/' ~ SITE ~ '.cylc' %}

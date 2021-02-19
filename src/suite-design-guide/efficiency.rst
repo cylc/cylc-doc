@@ -113,8 +113,10 @@ member-triggering semantics:
 
    [scheduling]
        [[graph]]
-           R1 = """pre => MODELS
-                   MODELS:succeed-all => post"""
+           R1 = """
+              pre => MODELS
+              MODELS:succeed-all => post
+           """
 
 Note that this can be simplified further because Cylc ignores trigger
 qualifiers like ``:succeed-all`` on the right of trigger arrows
@@ -221,10 +223,10 @@ like this:
        [[graph]]
            R1 = """
    {% for P in PARAMS %}
-         pre => model_p{{P}} => post
-         {% if P == 5 %}
-             model_p{{P}} => check
-         {% endif %}
+               pre => model_p{{P}} => post
+       {% if P == 5 %}
+               model_p{{P}} => check
+       {% endif %}
    {% endfor %}    """
    [runtime]
    {% for P in PARAMS %}
@@ -253,13 +255,15 @@ example using suite parameters instead of Jinja2 loops:
 .. code-block:: cylc
 
    # Task generation the new way: suite parameters.
-   [cylc]
+   [scheduler]
        [[parameters]]
            p = 1..10
    [scheduling]
        [[graph]]
-           R1 = """pre => model<p> => post
-                   model<p=5> => check"""
+           R1 = """
+               pre => model<p> => post
+               model<p=5> => check
+           """
    [runtime]
        [[model<p>]]
            script = echo "my parameter value is ${CYLC_TASK_PARAM_p}"
@@ -270,11 +274,11 @@ Here ``model<p>`` expands to ``model_p7`` for ``p=7``,
 and so on, via the default expansion template for integer-valued parameters,
 but custom templates can be defined if necessary. Parameters can also be
 defined as lists of strings, and you can define dependencies between different
-values: ``chunk<p-1> => chunk<p>``.  Here's a multi-parameter example:
+values: ``chunk<p-1> => chunk<p>``. Here's a multi-parameter example:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            run = a, b, c
            m = 1..5
@@ -292,7 +296,7 @@ For example, this:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            n = 1..5
    [scheduling]
@@ -307,7 +311,7 @@ is equivalent to this:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            n = 1..5
    [scheduling]

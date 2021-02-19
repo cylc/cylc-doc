@@ -17,7 +17,7 @@ Cylc Parameters
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            world = Mercury, Venus, Earth
 
@@ -40,7 +40,7 @@ Cylc Parameters
 
 .. ifnotslides::
 
-   When the ``suite.rc`` file is read by Cylc, the parameters will be expanded.
+   When the :cylc:conf:`flow.cylc` file is read by Cylc, the parameters will be expanded.
    For example the code above is equivalent to:
 
 .. code-block:: cylc
@@ -96,7 +96,7 @@ Parameters can be either words or integers:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        [[parameters]]
            foo = 1..5
            bar = 1..5..2
@@ -155,8 +155,8 @@ Parameters can be either words or integers:
    [scheduling]
       [[graph]]
           T00/PT3H = """
-                  get_observations<station> => consolidate_observations
-              """
+              get_observations<station> => consolidate_observations
+          """
    [runtime]
        [[get_observations<station>]]
            script = get-observations
@@ -207,7 +207,7 @@ Parameters can be either words or integers:
 
       .. code-block:: diff
 
-          [cylc]
+          [scheduler]
               UTC mode = True
          +    [[parameters]]
          +        station = belmullet, camborne, heathrow, shetland
@@ -281,12 +281,12 @@ Parameters can be either words or integers:
 
           # Repeat every three hours starting at the initial cycle point.
           PT3H = """
-         -        get_observations_belmullet => consolidate_observations
-         -        get_observations_camborne => consolidate_observations
-         -        get_observations_heathrow => consolidate_observations
-         -        get_observations_shetland => consolidate_observations
-         +        get_observations<station> => consolidate_observations
-              """
+         -    get_observations_belmullet => consolidate_observations
+         -    get_observations_camborne => consolidate_observations
+         -    get_observations_heathrow => consolidate_observations
+         -    get_observations_shetland => consolidate_observations
+         +    get_observations<station> => consolidate_observations
+          """
 
       .. hint::
 
@@ -319,7 +319,7 @@ Parameters can be either words or integers:
 
          .. code-block:: diff
 
-             [cylc]
+             [scheduler]
                  UTC mode = True
                  [[parameters]]
                      station = belmullet, camborne, heathrow, shetland

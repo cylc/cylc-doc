@@ -259,12 +259,12 @@ UTC Mode
    When a suite uses UTC all of the cycle points will be written in the
    ``+00`` time zone.
 
-   To make your suite use UTC set the ``[cylc]UTC mode`` setting to ``True``,
+   To make your suite use UTC set the ``[scheduler]UTC mode`` setting to ``True``,
    i.e:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True
 
 
@@ -433,11 +433,11 @@ Putting It All Together
          mkdir ~/cylc-run/datetime-cycling
          cd ~/cylc-run/datetime-cycling
 
-      Create a ``suite.rc`` file and paste the following code into it:
+      Create a :cylc:conf:`flow.cylc` file and paste the following code into it:
 
       .. code-block:: cylc
 
-         [cylc]
+         [scheduler]
              UTC mode = True
          [scheduling]
              initial cycle point = 20000101T00Z
@@ -464,7 +464,7 @@ Putting It All Together
 
          .. code-block:: diff
 
-             [cylc]
+             [scheduler]
                  UTC mode = True
              [scheduling]
                  initial cycle point = 20000101T00Z
@@ -503,29 +503,29 @@ Putting It All Together
 
          .. code-block:: sub
 
-            cylc graph <path/to/suite.rc>
+            cylc graph <path/to/flow.cylc>
 
       .. spoiler:: Solution warning
 
          .. code-block:: cylc
 
-           [cylc]
+           [scheduler]
                UTC mode = True
            [scheduling]
                initial cycle point = 20000101T00Z
                [[graph]]
                    PT3H = """
-                           get_observations_belmullet => consolidate_observations
-                           get_observations_camborne => consolidate_observations
-                           get_observations_heathrow => consolidate_observations
-                           get_observations_shetland => consolidate_observations
-                       """
+                       get_observations_belmullet => consolidate_observations
+                       get_observations_camborne => consolidate_observations
+                       get_observations_heathrow => consolidate_observations
+                       get_observations_shetland => consolidate_observations
+                   """
                    +PT6H/PT6H = """
-                           consolidate_observations => forecast
-                           consolidate_observations[-PT3H] => forecast
-                           consolidate_observations[-PT6H] => forecast
-                           get_rainfall => forecast => post_process_exeter
-                       """
+                       consolidate_observations => forecast
+                       consolidate_observations[-PT3H] => forecast
+                       consolidate_observations[-PT6H] => forecast
+                       get_rainfall => forecast => post_process_exeter
+                   """
 
    #. **Inter-Cycle Offsets.**
 
@@ -602,9 +602,9 @@ Putting It All Together
       .. code-block:: diff
 
                     +PT6H/PT6H = """
-                            ...
-         -                  forecast[-PT6H] => forecast
-                        """
+                        ...
+         -              forecast[-PT6H] => forecast
+                    """
          +          +PT12H/PT6H = """
-         +                  forecast[-PT6H] => forecast
-         +              """
+         +              forecast[-PT6H] => forecast
+         +          """

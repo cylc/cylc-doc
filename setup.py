@@ -2,7 +2,7 @@
 # coding=utf-8
 
 # THIS FILE IS PART OF THE CYLC SUITE ENGINE.
-# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,12 +39,12 @@ VERSION = get_version(
 )
 
 INSTALL_REQUIRES = [
-    'sphinx>=2.0.0,<3.0.0',
-    'sphinx_rtd_theme',
-    'sphinxcontrib-svg2pdfconverter',
-    'hieroglyph',
+    'cylc-sphinx-extensions>=1.3',
     'eralchemy==1.2.*',
-    'cylc-sphinx-extensions'
+    'hieroglyph>=2.1.0',
+    'sphinx>=3.0.0',
+    'sphinx_rtd_theme>=0.5.0',
+    'sphinxcontrib-svg2pdfconverter',
 ]
 
 EXTRAS_REQUIRE = {
@@ -52,7 +52,8 @@ EXTRAS_REQUIRE = {
         'pycodestyle'
     ],
     'tutorial': [
-        'pillow'
+        'pillow',
+        'urllib3'
     ]
 
 }

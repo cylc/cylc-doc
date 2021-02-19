@@ -1,5 +1,5 @@
 # THIS FILE IS PART OF THE CYLC SUITE ENGINE.
-# Copyright (C) 2008-2019 NIWA & British Crown (Met Office) & Contributors.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,13 +17,9 @@
 from distutils.spawn import find_executable as which
 import sys
 import os
-from cylc.flow import __version__ as CYLC_VERSION
 
 
 # -- General configuration ------------------------------------------------
-
-# minimal Sphinx version required.
-needs_sphinx = '1.5.3'
 
 # Sphinx extension module names.
 sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
@@ -41,11 +37,13 @@ extensions = [
     'database_diagram',
     # cylc-sphinx-extensions
     'cylc.sphinx_ext.cylc_lang',
+    'cylc.sphinx_ext.diff_selection',
+    'cylc.sphinx_ext.grid_table',
+    'cylc.sphinx_ext.hieroglyph_addons',
     'cylc.sphinx_ext.minicylc',
     'cylc.sphinx_ext.practical',
+    'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
-    # https://github.com/nyergler/hieroglyph/issues/148
-    'cylc.sphinx_ext.hieroglyph_patch'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
@@ -79,16 +77,21 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-copyright = '2008-2019 NIWA & British Crown (Met Office) & Contributors'
+__copyright_year = 2021  # NOTE: this is automatically set by GH Actions
+copyright = (
+    f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
+)
 
-# Versioning information. Sphinx advises version strictly meaning X.Y.
-version = '.'.join(CYLC_VERSION.split('.')[:2])  # The short X.Y version.
-release = CYLC_VERSION  # The full version, including alpha/beta/rc tags.
+# Versioning information.
+release = os.environ['CYLC_VERSION']  # set in makefile
+version = '.'.join(release.split('.')[:2])  # short version for display
 
+# Autosummary opts (for auto generation of docs from source code).
 autosummary_generate = True
 autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
+# Mapping to other Sphinx projects we want to import references from.
 intersphinx_mapping = {
     'rose': (
         'http://metomi.github.io/rose/doc/html', None
@@ -100,7 +103,7 @@ intersphinx_mapping = {
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+# exclude_patterns = ['_build']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'autumn'
@@ -109,6 +112,11 @@ pygments_style = 'autumn'
 graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
+
+linkcheck_ignore = [
+    # linkcheck has trouble handling RH readme pages
+    r'https://github.com/metomi/isodatetime.*#.*'
+]
 
 # -- Options for Slides output ----------------------------------------------
 
@@ -129,12 +137,6 @@ html_logo = "img/cylc-logo-white.svg"
 html_favicon = "img/cylc-favicon.ico"  # sphinx specifies .ico format
 html_show_sphinx = False
 html_show_copyright = True
-html_js_files = [
-    'js/cylc.js'
-]
-html_css_files = [
-    'css/cylc.css'
-]
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
@@ -147,6 +149,10 @@ html_sidebars = {
 }
 
 html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+html_css_files = ['css/custom.css']
 
 # Disable timestamp otherwise inserted at bottom of every page.
 html_last_updated_fmt = ''

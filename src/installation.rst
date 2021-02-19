@@ -1,9 +1,11 @@
+.. _installation:
+
 Installation
 ============
 
 .. warning::
 
-   **Cylc-8.0a1 is an early full-system Cylc 8 preview release**
+   **Cylc** |version| **is an early full-system Cylc 8 preview release**
 
    It has a fully functional Python 3 workflow service and CLI that can run
    existing Cylc workflows.
@@ -11,8 +13,10 @@ Installation
    **BUT:**
 
    - It is not production-ready yet
-     - Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
-       for production systems.
+
+     Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
+     for production systems.
+
    - Do not use it where security is a concern
    - The UI includes a prototype "tree view" with no control capability
      - we are working on other views, and controls
@@ -30,7 +34,7 @@ Via Conda (recommended):
 
 .. code-block:: console
 
-   # install cylc with the browser-GUI
+   # install cylc with the browser-GUI
    $ conda install cylc
 
 Via pip:
@@ -46,7 +50,7 @@ Via pip:
 .. code-block:: console
 
    # install the "core" cylc package
-   $ pip install cylc-flow
+   $ pip install cylc-flow
 
    # install the browser-GUI
    $ pip install cylc-uiserver
@@ -201,10 +205,13 @@ however, many things may need to be configured e.g:
 Cylc Flow
 ^^^^^^^^^
 
-`Cylc Flow`_ is configured by the :cylc:conf:`flow.rc` file which supports
-both global (site) and local (user) configuration of the system.
+`Cylc Flow`_ is configured by the :cylc:conf:`global.cylc` file which supports
+configuration of the system on both a site and user basis.
 
-See the :cylc:conf:`flow.rc` section for details.
+.. note::
+
+   Prior to Cylc 8, ``global.cylc`` was named ``global.rc``, but that name is
+   no longer supported.
 
 Bash Profile
 ^^^^^^^^^^^^
@@ -218,7 +225,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
 
    Start the Hub (JupyterHub gets installed with the "cylc" package):
 
-   ::
+   .. code-block:: console
 
       $ mkdir -p "${HOME}/srv/cylc/"  # the hub will store session information here
       $ cd "${HOME}/srv/cylc/"
@@ -262,7 +269,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
 
    To deactivate and/or remove the conda environment:
 
-   ::
+   .. code-block:: console
 
       (cylc1) $ conda deactivate
       $ conda env remove -n cylc1
@@ -274,26 +281,25 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
    fail before succeeding after a random number of retries (this shows
    the new "Cylc 8 task/job separation" nicely):
 
-   ::
+   .. code-block:: cylc
 
-      [cylc]
-         cycle point format = %Y
-         [[parameters]]
-            m = 0..5
-            n = 0..2
+      [scheduler]
+          cycle point format = %Y
+          [[parameters]]
+              m = 0..5
+              n = 0..2
       [scheduling]
-         initial cycle point = 3000
-         [[graph]]
-            P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
+          initial cycle point = 3000
+          [[graph]]
+              P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
       [runtime]
-         [[root]]
-            script = """
-               sleep 20
-               # fail 50% of the time if try number is less than 5
-               if (( CYLC_TASK_TRY_NUMBER < 5 )); then
-                 if (( RANDOM % 2 < 1 )); then
-                    exit 1
-                 fi
-               fi"""
-            [[[job]]]
-               execution retry delays = 6*PT2S
+          [[root]]
+              script = """
+                  sleep 20
+                  # fail 50% of the time if try number is less than 5
+                  if (( CYLC_TASK_TRY_NUMBER < 5 )); then
+                      if (( RANDOM % 2 < 1 )); then
+                          exit 1
+                      fi
+                  fi"""
+              execution retry delays = 6*PT2S

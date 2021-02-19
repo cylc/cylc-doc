@@ -4,10 +4,12 @@ on:
   push:
     branches: [master]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: configure python
         uses: actions/setup-python@v2
@@ -15,7 +17,7 @@ jobs:
           python-version: '3.7'
 
       - name: configure node
-        uses: actions/setup-node@v1.4.2
+        uses: actions/setup-node@v1
         with:
             node-version: '10.x'
 
@@ -25,22 +27,21 @@ jobs:
           sudo apt-get install -y graphviz pkg-config libgraphviz-dev
           pip install pygraphviz
 
-      - name: checkout cylc-flow
-        uses: actions/checkout@v2
-        with:
-          repository: 'cylc/cylc-flow'
-          path: 'cylc-flow'
-
-      - name: install cylc-flow
-        run: |
-          (cd "$GITHUB_WORKSPACE/cylc-flow"; pip install .[all])
-          rm -r cylc-flow  # don't lint or test cylc-flow
-
       - name: checkout cylc-doc
         uses: actions/checkout@v2
       - name: install cylc-doc
         run: |
+          sudo apt-get install -y librsvg2-bin ghostscript
           pip install .[all]
+
+      - name: install libs to document
+        run: |
+          # NOTE: Install with [all] so we can import plugins which may
+          #       have extra dependencies.
+          pip install  \
+            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
+            'metomi-rose[all] @ git+https://github.com/metomi/rose@master' \
+            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master'
 
       - name: install eslint
         run: |
@@ -53,7 +54,7 @@ jobs:
 
       - name: build
         run: |
-          make html slides linkcheck SPHINXOPTS='-Wn'
+          make html slides linkcheck doctest SPHINXOPTS='-Wn'
 
       - name: tutorial suite
         run: |

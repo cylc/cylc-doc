@@ -5,7 +5,7 @@ Retries allow us to automatically re-submit tasks which have failed due to
 failure in submission or execution.
 
 
-Purpose 
+Purpose
 -------
 
 Retries can be useful for tasks that may occasionally fail due to external
@@ -36,7 +36,7 @@ trying to roll doubles using two dice:
 
 .. code-block:: cylc
 
-   [cylc]
+   [scheduler]
        UTC mode = True # Ignore DST
 
    [scheduling]
@@ -48,17 +48,17 @@ trying to roll doubles using two dice:
        [[win]]
        [[roll_doubles]]
            script = """
-   sleep 10
-   RANDOM=$$  # Seed $RANDOM
-   DIE_1=$((RANDOM%6 + 1))
-   DIE_2=$((RANDOM%6 + 1))
-   echo "Rolled $DIE_1 and $DIE_2..."
-   if (($DIE_1 == $DIE_2)); then
-      echo "doubles!"
-   else
-      exit 1
-   fi
-   """
+               sleep 10
+               RANDOM=$$  # Seed $RANDOM
+               DIE_1=$((RANDOM%6 + 1))
+               DIE_2=$((RANDOM%6 + 1))
+               echo "Rolled $DIE_1 and $DIE_2..."
+               if (($DIE_1 == $DIE_2)); then
+                   echo "doubles!"
+               else
+                   exit 1
+               fi
+           """
 
 
 Running Without Retries
@@ -83,12 +83,11 @@ Configuring Retries
 -------------------
 
 We need to tell Cylc to retry it a few times. To do this, add the following
-to the end of the ``[[roll_doubles]]`` task section in the ``suite.rc`` file:
+to the end of the ``[[roll_doubles]]`` task section in the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
-   [[[job]]]
-       execution retry delays = 5*PT6S
+   execution retry delays = 5*PT6S
 
 This means that if the ``roll_doubles`` task fails, Cylc expects to
 retry running it 5 times before finally failing. Each retry will have

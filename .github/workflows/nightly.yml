@@ -1,0 +1,117 @@
+# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Deploy a new version of the documentation or rebuild an existing one.
+
+# Note: This action deletes its previous commits so the nightly build history
+# is not preserved and does not require housekeeping.
+
+name: nightly
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 0 * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: docs
+
+      - name: install graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
+          pip install pygraphviz
+
+      - name: install cylc-doc
+        run: |
+          sudo apt-get install -y librsvg2-bin ghostscript
+          pip install "${{ github.workspace }}/docs[all]"
+
+      - name: install libs to document
+        run: |
+          # NOTE: Install with [all] so we can import plugins which may
+          #       have extra dependencies.
+          pip install  \
+            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
+            'metomi-rose[all] @ git+https://github.com/metomi/rose@master' \
+            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master'
+
+      - name: checkout gh-pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: gh-pages
+          fetch-depth: 0 # all history (unfortunately all branches too)
+
+      - name: install gh-pages
+        run: |
+          DOCS="${{ github.workspace }}/docs" \
+          PAGE="${{ github.workspace }}/gh-pages"  \
+
+          cd "$DOCS"
+          rm -r doc
+          ln -s "$PAGE" doc
+
+      - name: configure git
+        uses: cylc/release-actions/configure-git@v1
+
+      - name: remove previous nightly build
+        run: |
+          cd gh-pages
+          echo "::group::History before rebase: (you can still fetch these commits for recovery)"
+          git log --oneline --graph --no-abbrev-commit gh-pages
+          echo "::endgroup::"
+          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
+            git rebase -i --root
+          # if versions have been added/removed since the last build we
+          # will get conflicts on the versions.json file so we rebuild it
+          # now just in case
+          ../docs/bin/version write > versions.json
+          git add versions.json
+          git rebase --continue || true  # true incase there wasn't a conflict
+
+      - name: build docs
+        run: |
+          make -C docs \
+            html \
+            slides \
+            linkcheck \
+            SPHINXOPTS='-Wn' \
+            STABLE=false \
+            LATEST=false \
+            BUILDDIR='doc/nightly' \
+            CYLC_VERSION="nightly.$(isodatetime --utc -f %Y-%m-%d)"
+          git -C gh-pages add 'nightly' 'versions.json'
+
+      - name: push changes
+        working-directory: gh-pages
+        run: |
+          git status
+          git commit -m '-nightly build-'
+          git push --force-with-lease origin gh-pages

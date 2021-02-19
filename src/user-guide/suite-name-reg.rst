@@ -13,7 +13,7 @@ Suite names are validated by
 
 Suites can be grouped together under sub-directories. E.g.:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc print -t nwp
    nwp

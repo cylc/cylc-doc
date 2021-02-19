@@ -15,7 +15,7 @@ The triggering mechanism described in this section replaces an older and less
 powerful one documented in :ref:`Old-Style External Triggers`.
 
 If you can write a Python function to check the status of an external
-condition or event, the suite server program can call it at configurable
+condition or event, the :term:`scheduler` can call it at configurable
 intervals until it reports success, at which point dependent tasks can trigger
 and data returned by the function will be passed to the job environments of
 those tasks. Functions can be written for triggering off of almost anything,
@@ -23,15 +23,19 @@ such as delivery of a new dataset, creation of a new entry in a database
 table, or appearance of new data availability notifications in a message
 broker.
 
-External triggers are visible in suite visualizations as bare graph nodes (just
-the trigger names). They are plotted against all dependent tasks, not in a
-cycle point specific way like tasks. This is because external triggers may or
-may not be cycle point (or even task name) specific - it depends on the
-arguments passed to the corresponding trigger functions. For example, if an
-external trigger does not depend on task name or cycle point it will only be
-called once - albeit repeatedly until satisfied - for the entire suite run,
-after which the function result will be remembered for all dependent tasks
-throughout the suite run.
+.. TODO - update this once we have static visualisation
+
+   External triggers are visible in suite visualizations as bare graph nodes (just
+   the trigger names). They are plotted against all dependent tasks, not in a
+   cycle point specific way like tasks. This is because external triggers may or
+   may not be cycle point (or even task name) specific - it depends on the
+   arguments passed to the corresponding trigger functions. For example, if an
+   external trigger does not depend on task name or cycle point it will only be
+   called once - albeit repeatedly until satisfied - for the entire suite run,
+   after which the function result will be remembered for all dependent tasks
+   throughout the suite run.
+
+.. TODO - auto-document these once we have a python endpoint for them
 
 Cylc has several built-in external trigger functions:
 
@@ -42,6 +46,13 @@ Trigger functions are normal Python functions, with certain constraints as
 described below in:
 
 - custom trigger functions - see :ref:`Custom Trigger Functions`
+
+External triggers are configured in the
+:cylc:conf:`flow.cylc[scheduling][xtriggers]` section.
+
+.. NOTE - from here on all references can start [xtriggers]
+
+.. cylc-scope:: flow.cylc[scheduling]
 
 
 .. _Built-in Clock Triggers:
@@ -84,7 +95,7 @@ cycle point value by one hour:
 
 Notice that the short label ``clock_1`` is used to represent the
 trigger function in the graph. The function call interval, which determines how
-often the suite server program checks the clock, is optional.  Here it is
+often the :term:`scheduler` checks the clock, is optional. Here it is
 ``PT10S`` (i.e. 10 seconds, which is also the default value).
 
 Argument keywords can be omitted if called in the right order, so the
@@ -95,8 +106,8 @@ Argument keywords can be omitted if called in the right order, so the
    [[xtriggers]]
        clock_1 = wall_clock(PT1H)
 
-Finally, a zero-offset clock trigger does not need to be declared under
-the ``[xtriggers]`` section:
+A zero-offset clock trigger does not need to be declared under
+the :cylc:conf:`[xtriggers]` section:
 
 .. code-block:: cylc
 
@@ -108,6 +119,11 @@ the ``[xtriggers]`` section:
    [runtime]
        [[foo]]
            script = run-foo.sh
+
+However, when xtriggers are declared the name used must adhere to the following
+rules:
+
+.. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
 
 
 .. _Built-in Suite State Triggers:
@@ -137,13 +153,13 @@ the ``cylc suite-state`` command - see
 As a simple example, consider the following "upstream"
 suite (which we want to trigger off of):
 
-.. literalinclude:: ../suites/xtrigger/suite_state/upstream/suite.rc
+.. literalinclude:: ../suites/xtrigger/suite_state/upstream/flow.cylc
    :language: cylc
 
 It must be registered and run under the name *up*, as referenced in the
 "downstream" suite that depends on it:
 
-.. literalinclude:: ../suites/xtrigger/suite_state/downstream/suite.rc
+.. literalinclude:: ../suites/xtrigger/suite_state/downstream/flow.cylc
    :language: cylc
 
 Try starting the downstream suite first, then the upstream, and
@@ -154,13 +170,13 @@ suite to emit the *data ready* message.
 
 Some important points to note about this:
 
-- the function call interval, which determines how often the suite
+- The function call interval, which determines how often the suite
   server program checks the clock, is optional. Here it is
   ``PT10S`` (i.e. 10 seconds, which is also the default value).
-- the ``suite_state`` trigger function, like the
+- The ``suite_state`` trigger function, like the
   ``cylc suite-state`` command, must have read-access to the upstream
   suite's public database.
-- the cycle point argument is supplied by a string template
+- The cycle point argument is supplied by a string template
   ``%(point)s``. The string templates available to trigger function
   arguments are described in :ref:`Custom Trigger Functions`).
 
@@ -188,7 +204,7 @@ unique trigger label ("upstream" here) and passed to the environment of
 dependent task jobs (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
 
-.. code-block:: bash
+.. code-block:: console
 
    % cylc cat-log -f j dn f2.2011
    ...
@@ -287,7 +303,7 @@ dependent tasks, which in terms of format must:
 See :ref:`Built-in Suite State Triggers` for an example of one such
 ``results`` dictionary and how it gets processed by the suite.
 
-The suite server program manages trigger functions as follows:
+The :term:`scheduler` manages trigger functions as follows:
 
 - they are called asynchronously in the process pool
   - (except for clock triggers, which are called from the main process)
@@ -364,7 +380,7 @@ the appropriate string templates in the suite configuration for this).
 
 An example xrandom trigger suite:
 
-.. literalinclude:: ../suites/xtrigger/xrandom/suite.rc
+.. literalinclude:: ../suites/xtrigger/xrandom/flow.cylc
    :language: cylc
 
 .. _Current Trigger Function Limitations:
@@ -378,7 +394,7 @@ The following issues may be addressed in future Cylc releases:
   in the graph; attempts to do so will fail validation.
 - aside from the predefined zero-offset ``wall_clock`` trigger, all
   unique trigger function calls must be declared *with all of
-  their arguments* under the ``[scheduling][xtriggers]`` section, and
+  their arguments* under the :cylc:conf:`[xtriggers]` section, and
   referred to by label alone in the graph. It would be convenient (and less
   verbose, although no more functional) if we could just declare a label
   against the *common* arguments, and give remaining arguments (such as
@@ -427,7 +443,7 @@ distinguishes one instance of the event from another (the name of the target
 task and its current cycle point are not required). The event ID is just an
 arbitrary string to Cylc, but it can be used to identify something associated
 with the event to the suite - such as the filename of a new
-externally-generated dataset. When the suite server program receives the event
+externally-generated dataset. When the :term:`scheduler` receives the event
 notification it will trigger the next instance of any task waiting on that
 trigger (whatever its cycle point) and then broadcast
 (see :ref:`cylc-broadcast`) the event ID to the cycle point of the triggered
@@ -454,7 +470,7 @@ scheduling section:
 Then, each time a new dataset arrives the external detection system should
 notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger sat-proc "new sat X data avail" passX12334a
 
@@ -469,7 +485,7 @@ the new event. The suite passphrase must be installed on triggering account.
 
 Here is a working example of a simulated satellite processing suite:
 
-.. literalinclude:: ../suites/satellite/ext-trigger/suite.rc
+.. literalinclude:: ../suites/satellite/ext-trigger/flow.cylc
    :language: cylc
 
 External triggers are not normally needed in date-time cycling suites driven
@@ -494,7 +510,7 @@ message:
 Once the variable-length waiting is finished, an external detection system
 should notify the suite like this:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc ext-trigger data-proc "data arrived for 20150126T00" passX12334a
 

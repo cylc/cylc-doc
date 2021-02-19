@@ -7,13 +7,12 @@ indefinitely.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Table Of Contents
 
    installation
-   introduction
-   architecture
+   introduction/index
    tutorial/index
    user-guide/index
+   plugins/index
    suite-design-guide/index
    reference/index
    glossary

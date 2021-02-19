@@ -105,18 +105,19 @@ Create a new suite called ``suicide-triggers``::
    mkdir -p ~/cylc-run/suicide-triggers
    cd ~/cylc-run/suicide-triggers
 
-Paste the following code into the ``suite.rc`` file:
+Paste the following code into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
    [scheduling]
       cycling mode = integer
       initial cycle point = 1
+      runahead limit = P3
       [[graph]]
           P1 = """
-                  make_cake_mixture => bake_cake => sell_cake
-                  bake_cake:fail => eat_cake
-              """
+              make_cake_mixture => bake_cake => sell_cake
+              bake_cake:fail => eat_cake
+          """
    [runtime]
        [[root]]
            script = sleep 2
@@ -129,9 +130,11 @@ Open the ``cylc gui`` and run the suite::
    cylc gui suicide-triggers &
    cylc run suicide-triggers
 
-The suite will run for three cycles then get stuck. You should see something
-similar to the diagram below. As the ``bake_cake`` task fails randomly what
-you see might differ slightly. You may receive a "suite stalled" email.
+The suite will run for three cycles then get stuck (because of the
+:cylc:conf:`[scheduling]runahead limit`).
+You should see something similar to the diagram below. As the ``bake_cake``
+task fails randomly what you see might differ slightly. You may receive a
+"suite stalled" email.
 
 .. digraph:: Example
    :align: center
@@ -211,19 +214,16 @@ you see might differ slightly. You may receive a "suite stalled" email.
    "bake_cake.3" -> "eat_cake.3"
 
 The reason the suite stalls is that, by default, Cylc will run a maximum of
-three cycles concurrently. As each cycle has at least one task which hasn't
+five cycles concurrently. As each cycle has at least one task which hasn't
 either succeeded or failed Cylc cannot move onto the next cycle.
 
 .. tip::
-   
-   For more information search ``max active cycle points`` in the
-   `Cylc User Guide`_.
+
+   For more information see the :cylc:conf:`[scheduling]runahead limit`.
 
 You will also notice that some of the tasks (e.g. ``eat_cake`` in cycle ``2``
 in the above example) are drawn in a faded gray. This is because these tasks
 have not yet been run in earlier cycles and as such cannot run.
-
-.. TODO - Spawn On Demand!
 
 
 Removing Tasks From The Graph
@@ -374,7 +374,7 @@ Add the following :term:`graph string` to your suite.
    eat_cake[-P1] | sell_cake[-P1] => make_cake_mixture
 
 Open the ``cylc gui`` and run the suite. You should see that if the
-``bake_cake`` task fails both it and the ``sell_cake`` task disappear and 
+``bake_cake`` task fails both it and the ``sell_cake`` task disappear and
 are replaced by the ``eat_cake`` task.
 
 
