@@ -9,11 +9,11 @@ Glossary
       A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
       which contains :term:`graphing<graph>` representing a workflow.
 
-   suite directory
-      The suite directory contains all of the configuration for a suite e.g.
-      the :cylc:conf:`flow.cylc` file.
+   Workflow directory
+      The workflow directory contains all of the configuration for a workflow
+      e.g. the :cylc:conf:`flow.cylc` file.
 
-      This is the directory which is registered using ``cylc reg``.
+      This is the directory which created by ``cylc install``.
 
       .. note::
 
@@ -441,18 +441,12 @@ Glossary
 
       ``~/cylc-run/<suite-name>``
 
-      .. note::
-
-         If a suite is written in the ``cylc-run`` directory the run
-         directory is also the :term:`suite directory`.
-
       The run directory can be accessed by a running suite using the
       environment variable ``CYLC_SUITE_RUN_DIR``.
 
       See also:
 
-      * :term:`suite directory`
-      * :ref:`Suite Directory Vs Run Directory`
+      * :term:`source directory`
       * :term:`work directory`
       * :term:`share directory`
       * :term:`job log directory`
@@ -716,8 +710,13 @@ Glossary
    
    source directory
       An arbitrary directory where workflows are written and stored in
-      preparation for installation with `cylc install` or reinstallation with
-      `cylc reinstall`. 
+      preparation for installation with ``cylc install`` or reinstallation with
+      ``cylc reinstall``.
+      See also:
+
+      * :term:`run directory`
+      * :ref: `Installing-workflows`
+
 
    stop
    shutdown

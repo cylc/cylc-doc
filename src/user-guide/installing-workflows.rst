@@ -3,6 +3,21 @@
 Installing Workflows
 ====================
 
+Cylc commands identify workflows via their names, which are relative path names
+under the workflow run directory (``~/cylc-run/`` by default).
+
+Workflows can be grouped together under sub-directories. E.g.:
+
+.. code-block:: console
+
+   $ cylc scan --state=all --name nwp
+   nwp
+    |-oper
+    | |-region1  Local Model Region1       /home/oliverh/cylc-run/nwp/oper/region1
+    | `-region2  Local Model Region2       /home/oliverh/cylc-run/nwp/oper/region2
+    `-test
+      `-region1  Local Model TEST Region1  /home/oliverh/cylc-run/nwp/test/region1
+
 This chapter will demonstrate how to install a workflow from an arbitrary
 location, called a :term:`source directory`.
 ``cylc install`` will create a new directory in the :term:`run directory` for
@@ -12,6 +27,10 @@ each installation of a workflow.
 
 The Cylc Install Command
 ------------------------
+
+Workflow names can be installed with the ``cylc install`` command,
+which creates the workflow run directory structure and some service files
+underneath it. Otherwise, ``cylc play`` will do this at workflow start up.
 
 Once you have written your workflow, you can have Cylc install the workflow for
 you, using the ``cylc install`` command.
@@ -329,8 +348,12 @@ If:
 
 - the run-name is specified as ``_cylc-install``
 
-- the workflow name is invalid, for example it is an absolute path or it starts
-  with `.` or a `-`
+- the workflow name is an absolute path or invalid
+
+  Workflow names are validated by
+  :py:class:`cylc.flow.unicode_rules.SuiteNameValidator`.
+
+  .. autoclass:: cylc.flow.unicode_rules.SuiteNameValidator
 
 - the install will create nested run directories, i.e. installing a
   workflow in a subdirectory of an existing run directory.
