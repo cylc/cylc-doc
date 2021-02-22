@@ -77,7 +77,7 @@ in the workflow directory, ``runN``.
 Example: A typical run directory structure, after three exectutions of 
 ``cylc install`` will look as follows. 
 
-.. code-block:: bash
+.. code-block:: none
 
    ├── _cylc-install
    │   └── source -> /home/cylc-sources/test-flow
@@ -125,7 +125,7 @@ There are two main parts of the ``cylc install`` process.
 1. File Installation
 ^^^^^^^^^^^^^^^^^^^^
 
-Installation will involved copying the files found in the source directory into
+Installation will involve copying the files found in the source directory into
 a new run directory. If you wish to install files into an existing run
 directory, use ``cylc reinstall``, see :ref:`Reinstalling a Workflow`.
 
@@ -135,21 +135,21 @@ directory, use ``cylc reinstall``, see :ref:`Reinstalling a Workflow`.
 Excluding Items From Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By default, cylc install will exclude `.git`, `.svn` directories.
+By default, cylc install will exclude ``.git``, ``.svn`` directories.
 To configure excluded files and directories from the file installation,
-create a `.cylcignore` file in your source directory, this supports
+create a ``.cylcignore`` file in your source directory, this supports
 pattern matching.
 
 For example:
 We will look at running the cylc install command inside the directory
-`~/cylc-sources/test-flow` with the following directory structure:
+``~/cylc-sources/test-flow`` with the following directory structure:
 
-.. code-block:: bash
+.. code-block:: console
          
    $ pwd
    /home/cylc-sources/test-flow
 
-.. code-block:: bash
+.. code-block:: console
 
    $ tree -all
    ├── .cylcignore
@@ -170,7 +170,7 @@ We wish to omit any files matching the pattern ``*.txt``,  the file
 ``file1``, the contents of ``dir1`` and the contents of ``dir2`` including the
 directory itself.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cat .cylcignore
    *.txt
@@ -181,14 +181,14 @@ directory itself.
 
 Now we are ready to install our workflow.
       
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc install
    INSTALLED test-flow from home/cylc-sources/test-flow -> home/cylc-run/test-flow/run1
 
 Looking at the directory structure that has been created
 
-.. code-block:: bash
+.. code-block:: console
 
    $ tree -all home/cylc-run/test-flow/run1
    ├── dir1
@@ -224,21 +224,15 @@ directory.
 - The :term:`service directory` will be created in preparation for running the 
   workflow. This is needed to store essential files used by Cylc. 
 
-- A `_cylc-install` directory containing a `source` symlink to the
+- A ``_cylc-install`` directory containing a ``source`` symlink to the
   :term:`source directory`.
   This is needed to enable Cylc to determine the original workflow source
   for ``cylc reinstall``.
 
-- A new `install` directory in the workflow's log directory, with a
+- A new ``install`` directory in the workflow's log directory, with a
   time-stamped install log file containing information about the installation.
 
-If a compatible version of Cylc-Rose is installed, ``cylc install`` will
-generate additional files/directories. 
-
-- A directory ``opt`` containing a file ``rose-suite-cylc-install.conf`` 
-
-- A ``rose-suite.conf`` file will also be created in the workflow run
-  directory.
+Cylc plugins e.g. :ref:`cylc-rose` may generate additional files.
 
 
 .. _Reinstalling a Workflow:
@@ -256,16 +250,16 @@ changes made.
 provide the named run you wish to reinstall.
 For example:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cylc reinstall myflow/run1
 
 Cylc will determine the source directory and update your workflow. 
 
 Returning to the example from above (see example_installation_). The source
-directory, `~/cylc-sources/test-flow` has been altered as follows:
+directory, ``~/cylc-sources/test-flow`` has been altered as follows:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ tree -all ~/cylc-sources/test-flow
    ├── .cylcignore
@@ -285,36 +279,27 @@ directory, `~/cylc-sources/test-flow` has been altered as follows:
    ├── textfile1.txt
    └── textfile2.txt
 
-.. code-block:: bash
+.. code-block:: console
 
    $ cat .cylcignore
    *.txt
    file1
    dir2
 
-We wish to update our ~/cylc-run/test-flow/run1 with the directories ``dir1``
-and ``dir3``. There are two ways Cylc can be used to achieve this change.
-
-1. From anywhere in the file system
-
-.. code-block:: bash
+We wish to update our ``~/cylc-run/test-flow/run1`` with the directories ``dir1``
+and ``dir3``:
+.. code-block:: console
 
     $ cylc reinstall test-flow/run1
+    # or just cylc reinstall from within the workflow run directory
 
-2. From the workflow run directory.
-
-.. code-block:: bash
-
-    $ pwd
-    /home/cylc-run/test-flow/run1
-
-.. code-block:: bash
+.. code-block:: console
 
     $ cylc reinstall
           
 The workflow run directory now looks as follows:
 
-.. code-block:: bash
+.. code-block:: console
 
    $ tree -all home/cylc-run/test-flow/run1
    ├── dir1

@@ -717,7 +717,6 @@ Glossary
       * :term:`run directory`
       * :ref: `Installing-workflows`
 
-
    stop
    shutdown
       When a :term:`suite` is shutdown the :term:`scheduler` is
