@@ -14,17 +14,18 @@ Suite Start-Up
 --------------
 
 There are three ways to start a suite running: *cold start* and *warm start*,
-which start from scratch; and *restart*, which starts from a prior
-suite state checkpoint. The only difference between cold starts and warm starts
-is that warm starts start from a point beyond the suite initial cycle point.
+which start from scratch; and *restart*, which continues from the prior
+suite state. The only difference between cold starts and warm starts
+is that warm starts start from a point beyond the initial cycle point.
 
-Once a suite is up and running it is typically a restart that is needed most
-often (but see also ``cylc reload``).
+Once a suite has been started, it cannot start from scratch again without a
+re-install. At this point, it is typically a restart that is needed most
+often (but see also :ref:`Reloading The Suite Configuration At Runtime`).
 
-.. warning::
+.. note::
 
-   Cold and warm starts wipe out prior suite state, so you can't go back to a
-   restart if you decide you made a mistake.
+   The ability to cold/warm start a previously-run suite was removed in Cylc 8.
+   This was because cold/warm starts would wipe out prior suite state.
 
 
 .. _Cold Start:
@@ -32,7 +33,7 @@ often (but see also ``cylc reload``).
 Cold Start
 ^^^^^^^^^^
 
-A cold start is the primary way to start a suite run from scratch:
+A cold start is the primary way to run a freshly-installed suite from scratch:
 
 .. code-block:: console
 
@@ -48,20 +49,17 @@ suite initial cycle point, or at the next valid point for the task.
 Warm Start
 ^^^^^^^^^^
 
-A warm start runs a suite from scratch like a cold start, but from the
-beginning of a given :term:`cycle point` that is beyond the suite
-:term:`initial cycle point`. This is generally inferior to a *restart* (which
-loads a previously recorded suite state - see :ref:`RestartingSuites`) because
-it may result in some tasks rerunning. However, a warm start may be required if
-a restart is not possible, e.g. because the suite run database was accidentally
-deleted. The warm start cycle point must be given on the command line:
+A warm start runs a freshly-installed suite from scratch, like a cold start,
+but from the beginning of a given :term:`start cycle point` that is beyond the
+suite :term:`initial cycle point`. The warm start cycle point must be given
+on the command line:
 
 .. code-block:: console
 
    $ cylc play SUITE --start-cycle-point=CYCLE_POINT
 
-The original suite initial cycle point is preserved, but all tasks and
-dependencies before the given warm start cycle point are ignored.
+The initial cycle point defined in :cylc:conf:`flow.cylc` is preserved, but
+all tasks and dependencies before the start cycle point are ignored.
 
 The scheduler starts by loading a first instance of each task at the warm
 start cycle point, or at the next valid point for the task.
@@ -117,9 +115,9 @@ would only run at cycle ``3``.
 Restart
 ^^^^^^^
 
-At restart (see ``cylc play --help``), the :term:`scheduler`
-initializes its task pool from the previous state at shutdown. This allows the
-suite to carry on exactly as it was just before being shut down or killed.
+At restart, the :term:`scheduler` initializes its task pool from the previous
+state at shutdown. This allows the suite to carry on exactly as it was just
+before being shut down or killed.
 
 .. code-block:: console
 
@@ -158,6 +156,8 @@ very difficult in general to automatically determine the cycle point of
 the first instance. Instead, the first instance of a new task should be
 inserted manually at the right cycle point, with ``cylc insert``.
 
+
+.. _Reloading The Suite Configuration At Runtime:
 
 Reloading The Suite Configuration At Runtime
 --------------------------------------------
