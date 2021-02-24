@@ -72,11 +72,14 @@ of times equal to the (cycle point) hour.
 
 Run your suite using::
 
-   cylc run clock-trigger
+   cylc play clock-trigger
 
 Stop the suite after a few cycles using ``cylc stop --now --now clock-trigger``.
 Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.
+
+.. TODO - check this tutorial still works now that cylc run/restart has been
+   replaced by cylc play
 
 
 Clock-Triggering Tasks
@@ -146,7 +149,7 @@ Note the different values used for the cycle offsets of the clock-trigger tasks.
 
 Save your changes and run your suite using::
 
-   cylc run clock-trigger now
+   cylc play clock-trigger now
 
 .. note::
 
@@ -165,7 +168,7 @@ and then shut it down using the :guilabel:`stop` button in the ``cylc gui``.
    definition. This how often the :ref:`Section External Triggers` is checked.
    By default external triggers are checked every 10 seconds, but if there
    are a lot of external triggers this can be hard work for the computer
-   running the workflow and it may not be necessary to check this often. 
+   running the workflow and it may not be necessary to check this often.
 
 
 Summary

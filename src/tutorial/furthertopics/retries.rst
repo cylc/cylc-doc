@@ -70,7 +70,10 @@ Let's see what happens when we run the suite as it is. Open the ``cylc gui``::
 
 Then run the suite::
 
-   cylc run retries-tutorial
+   cylc play retries-tutorial
+
+.. TODO - check this tutorial still works now that cylc run/restart has been
+   replaced by cylc play
 
 Unless you're lucky, the suite should fail at the roll_doubles task.
 
@@ -112,7 +115,7 @@ If you closed it, re-open the ``cylc gui``::
 
 Re-run the suite::
 
-   cylc run retries-tutorial
+   cylc play retries-tutorial
 
 What you should see is Cylc retrying the ``roll_doubles`` task. Hopefully,
 it will succeed (there is only about a about a 1 in 3 chance of every task

@@ -354,7 +354,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       .. code-block:: bash
 
-         cylc run message-triggers
+         cylc play message-triggers
 
       Your suite should now run, the tasks should succeed.
 
@@ -439,4 +439,3 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       Note that the second email automatically bundles the messages to prevent
       your inbox from being flooded.
-

@@ -36,7 +36,7 @@ A cold start is the primary way to start a suite run from scratch:
 
 .. code-block:: console
 
-   $ cylc run SUITE [INITIAL_CYCLE_POINT]
+   $ cylc play SUITE
 
 The initial cycle point may be specified on the command line or in the :cylc:conf:`flow.cylc`
 file. The scheduler starts by loading the first instance of each task at the
@@ -58,7 +58,7 @@ deleted. The warm start cycle point must be given on the command line:
 
 .. code-block:: console
 
-   $ cylc run --warm SUITE [START_CYCLE_POINT]
+   $ cylc play SUITE --start-cycle-point=CYCLE_POINT
 
 The original suite initial cycle point is preserved, but all tasks and
 dependencies before the given warm start cycle point are ignored.
@@ -125,7 +125,7 @@ before being shut down or killed.
 
 .. code-block:: console
 
-   $ cylc restart SUITE
+   $ cylc play SUITE
 
 Tasks recorded in the "submitted" or "running" states are automatically polled
 (see :ref:`Task Job Polling`) at start-up to determine what happened to
@@ -956,13 +956,13 @@ should be used sparingly.
 The Meaning And Use Of Initial Cycle Point
 ------------------------------------------
 
-When a suite is started with the ``cylc run`` command (cold or
+When a suite is started with the ``cylc play`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
-line or hardwired into the :cylc:conf:`flow.cylc` file:
+line or hardcoded into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: console
 
-   $ cylc run foo 20120808T06Z
+   $ cylc play foo --initial-cycle-point=20120808T06Z
 
 or:
 
@@ -1103,8 +1103,7 @@ Set the run mode (default ``live``) on the command line:
 
 .. code-block:: console
 
-   $ cylc run --mode=dummy SUITE
-   $ cylc restart --mode=dummy SUITE
+   $ cylc play --mode=dummy SUITE
 
 You can get specified tasks to fail in these modes, for more flexible suite
 testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
@@ -1516,7 +1515,7 @@ does not finish until the sub-workflow does, and they should be non-cycling
 or have a ``final cycle point`` so they don't keep on running indefinitely.
 
 Sub-workflow names should normally incorporate the main-workflow cycle point (use
-``$CYLC_TASK_CYCLE_POINT`` in the ``cylc run`` command line to start the
+``$CYLC_TASK_CYCLE_POINT`` in the ``cylc play`` command line to start the
 sub-workflow), so that successive sub-workflows can run concurrently if necessary and
 do not compete for the same workflow run directory. This will generate a new
 sub-workflow run directory for every main-workflow cycle point, so you may want to

@@ -207,7 +207,7 @@ against a specification that defines all legal entries, values and options.
 It also performs some integrity checks designed to catch certain configuration
 issues and impossible scheduling constraints.
 
-These checks are also performed by ``cylc run`` before starting a workflow.
+These checks are also performed by ``cylc play`` before starting a workflow.
 
 All legal entries are documented in :cylc:conf:`flow.cylc`.
 

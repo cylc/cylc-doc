@@ -184,7 +184,7 @@ Start, Stop, Restart
 
 .. ifnotslides::
 
-   We have seen how to start and stop Cylc suites with ``cylc run`` and
+   We have seen how to start and stop Cylc suites with ``cylc play`` and
    ``cylc stop`` respectively. The ``cylc stop`` command causes Cylc to wait
    for all running jobs to finish before it stops the suite. There are two
    options which change this behaviour:
@@ -197,26 +197,26 @@ Start, Stop, Restart
       When the ``--now`` option is used twice Cylc stops straight away, leaving
       any jobs running.
 
-   Once a suite has stopped it is possible to restart it using the
-   ``cylc restart`` command. When the suite restarts it picks up where it left
+   Once a suite has stopped it is possible to restart it using
+   ``cylc play`` command. When the suite restarts it picks up where it left
    off and carries on as normal.
 
    .. code-block:: bash
 
       # Run the suite "name".
-      cylc run <name>
+      cylc play <name>
       # Stop the suite "name", killing any running tasks.
       cylc stop <name> --kill
       # Restart the suite "name", picking up where it left off.
-      cylc restart <name>
+      cylc play <name>
 
 .. ifslides::
 
    .. code-block:: sub
 
-      cylc run <name>
+      cylc play <name>
       cylc stop <name>
-      cylc restart <name>
+      cylc play <name>
 
       cylc stop <name> --kill
       cylc stop <name> --now --now
@@ -373,7 +373,7 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
-         cylc run runtime-tutorial
+         cylc play runtime-tutorial
 
       If all goes well the suite will startup and the tasks will run and
       succeed. Note that the tasks which do not have a ``[runtime]`` section
@@ -441,7 +441,7 @@ Start, Stop, Restart
          * Pressing the play button in the Cylc GUI. Then, ensuring that
            "Cold Start" is selected within the dialogue window, pressing the
            "Start" button.
-         * Running the command ``cylc run runtime-tutorial``.
+         * Running the command ``cylc play runtime-tutorial``.
 
    #. **View The Forecast Summary.**
 
