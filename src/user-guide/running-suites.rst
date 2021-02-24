@@ -114,14 +114,12 @@ would only run at cycle ``3``.
 
 .. _RestartingSuites:
 
-Restart and Suite State Checkpoints
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Restart
+^^^^^^^
 
-At restart (see ``cylc restart --help``) a :term:`scheduler`
-initializes its task pool from a previously recorded checkpoint state. By
-default the latest automatic checkpoint - which is updated with every task
-state change - is loaded so that the suite can carry on exactly as it was just
-before being shut down or killed.
+At restart (see ``cylc play --help``), the :term:`scheduler`
+initializes its task pool from the previous state at shutdown. This allows the
+suite to carry on exactly as it was just before being shut down or killed.
 
 .. code-block:: console
 
@@ -131,118 +129,16 @@ Tasks recorded in the "submitted" or "running" states are automatically polled
 (see :ref:`Task Job Polling`) at start-up to determine what happened to
 them while the suite was down.
 
-
-Restart From Latest Checkpoint
-""""""""""""""""""""""""""""""
-
-To restart from the latest checkpoint simply invoke the ``cylc restart``
-command with the suite name.
-
-.. code-block:: console
-
-   $ cylc restart SUITE
-
-
-Restart From Another Checkpoint
-"""""""""""""""""""""""""""""""
-
-Suite server programs automatically update the "latest" checkpoint every time
-a task changes state, and at every suite restart, but you can also take
-checkpoints at other times. To tell a :term:`scheduler` to checkpoint its
-current state:
-
-.. code-block:: console
-
-   $ cylc checkpoint SUITE-NAME CHECKPOINT-NAME
-
-The 2nd argument is a name to identify the checkpoint later with:
-
-.. code-block:: console
-
-   $ cylc ls-checkpoints SUITE-NAME
-
-For example, with checkpoints named "bob", "alice", and "breakfast":
-
-.. code-block:: console
-
-   $ cylc ls-checkpoints SUITE-NAME
-   #######################################################################
-   # CHECKPOINT ID (ID|TIME|EVENT)
-   1|2017-11-01T15:48:34+13|bob
-   2|2017-11-01T15:48:47+13|alice
-   3|2017-11-01T15:49:00+13|breakfast
-   ...
-   0|2017-11-01T17:29:19+13|latest
-
-To see the actual task state content of a given checkpoint ID (if you need to),
-for the moment you have to interrogate the suite DB, e.g.:
-
-.. code-block:: console
-
-   $ sqlite3 ~/cylc-run/SUITE-NAME/log/db \
-       'select * from task_pool_checkpoints where id == 3;'
-   3|2012|model|1|running|
-   3|2013|pre|0|waiting|
-   3|2013|post|0|waiting|
-   3|2013|model|0|waiting|
-   3|2013|upload|0|waiting|
-
 .. note::
 
-   A checkpoint captures the instantaneous state of every task in the
-   suite, including any tasks that are currently active, so you may want
-   to be careful where you do it. Tasks recorded as active are polled
-   automatically on restart to determine what happened to them.
-
-The checkpoint ID 0 (zero) is always used for latest state of the suite, which
-is updated continuously as the suite progresses. The checkpoint IDs of earlier
-states are positive integers starting from 1, incremented each time a new
-checkpoint is stored. Currently suites automatically store checkpoints before
-and after reloads, and on restarts (using the latest checkpoints before the
-restarts).
-
-Once you have identified the right checkpoint, restart the suite like this:
-
-.. code-block:: console
-
-   $ cylc restart --checkpoint=CHECKPOINT-ID SUITE
-
-
-Checkpointing With A Task
-"""""""""""""""""""""""""
-
-Checkpoints can be generated automatically at particular points in the
-workflow by coding tasks that run the ``cylc checkpoint`` command:
-
-.. code-block:: cylc
-
-   [scheduling]
-      [[graph]]
-         PT6H = "pre => model => post => checkpointer"
-   [runtime]
-      # ...
-      [[checkpointer]]
-         script = """
-             wait "${CYLC_TASK_MESSAGE_STARTED_PID}" 2>/dev/null || true
-             cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
-         """
-
-.. note::
-
-   We need to "wait" on the "task started" message - which
-   is sent in the background to avoid holding tasks up in a network
-   outage - to ensure that the checkpointer task is correctly recorded
-   as running in the checkpoint (at restart the :term:`scheduler` will
-   poll to determine that that task job finished successfully). Otherwise
-   it may be recorded in the waiting state and, if its upstream dependencies
-   have already been cleaned up, it will need to be manually reset from waiting
-   to succeeded after the restart to avoid stalling the suite.
-
+   In Cylc 7, it was possible to restart a suite from "checkpoints" other than
+   the last shutdown state. However, this was removed in Cylc 8 as it was a
+   seldom-used feature.
 
 Behaviour of Tasks on Restart
 """""""""""""""""""""""""""""
 
-All tasks are reloaded in exactly their checkpointed states. Failed tasks are
+All tasks are reloaded in exactly their recorded states. Failed tasks are
 not automatically resubmitted at restart in case the underlying problem has not
 been addressed yet.
 
@@ -359,7 +255,7 @@ Routine Polling
 
 Task jobs are automatically polled at certain times: once on job submission
 timeout; several times on exceeding the job execution time limit; and at suite
-restart any tasks recorded as active in the suite state checkpoint are polled
+restart any tasks recorded as active are polled
 to find out what happened to them while the suite was down.
 
 Finally, in necessary routine polling can be configured as a way to track job
@@ -1355,7 +1251,7 @@ Suite Run Databases
 -------------------
 
 Suite server programs maintain two ``sqlite`` databases to record
-restart checkpoints and various other aspects of run history:
+certain aspects of run history:
 
 .. code-block:: console
 
@@ -1364,8 +1260,8 @@ restart checkpoints and various other aspects of run history:
 
 The private DB is for use only by the :term:`scheduler`. The identical
 public DB is provided for use by external commands such as
-``cylc suite-state``, ``cylc ls-checkpoints``, and
-``cylc report-timings``. If the public DB gets locked for too long by
+``cylc suite-state``, and ``cylc report-timings``.
+If the public DB gets locked for too long by
 an external reader, the :term:`scheduler` will eventually delete it and
 replace it with a new copy of the private DB, to ensure that both correctly
 reflect the suite state.
@@ -1408,9 +1304,8 @@ are:
 - re-install from source, and warm start from the beginning of the
   current cycle point
 
-A warm start (see :ref:`Warm Start`) does not need a suite state
-checkpoint, but it wipes out prior run history, and it could re-run
-a significant number of tasks that had already completed.
+A warm start (see :ref:`Warm Start`) does not need the suite database, but it
+could re-run a significant number of tasks that had already completed.
 
 To restart the suite, the critical Cylc files that must be restored are:
 
@@ -1445,12 +1340,10 @@ need to be restored if you restart with ``rose suite-run`` - which re-installs
 suite source files to the run directory).
 
 The public DB is not strictly required for a restart - the :term:`scheduler`
-will recreate it if need be - but it is required by
-``cylc ls-checkpoints`` if you need to identify the right restart
-checkpoint.
+will recreate it if needed.
 
-The job status files are only needed if the restart suite state checkpoint
-contains active tasks that need to be polled to determine what happened to them
+The job status files are only needed if the suite state at last shutdown
+contained active tasks that now need to be polled to determine what happened to them
 while the suite was down. Without them, polling will fail and those tasks will
 need to be manually set to the correct state.
 
