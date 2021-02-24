@@ -46,7 +46,7 @@ jobs:
       - name: install libs to document
         env:
           cylc_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
-          rose_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
+          rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
           cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
         run: |
           # NOTE: Install with [all] so we can import plugins which may
