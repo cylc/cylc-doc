@@ -33,14 +33,18 @@ jobs:
       - name: install graphviz
         run: |
           sudo apt-get update
-          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
+          sudo apt-get install -y \
+            librsvg2-bin \
+            ghostscript \
+            graphviz \
+            pkg-config \
+            libgraphviz-dev
           pip install pygraphviz
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2
       - name: install cylc-doc
         run: |
-          sudo apt-get install -y librsvg2-bin ghostscript
           pip install .[all]
 
       - name: install libs to document
