@@ -45,6 +45,12 @@ jobs:
         uses: actions/checkout@v2
       - name: install cylc-doc
         run: |
+          # https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
+          sudo apt-get install -y \
+            librsvg2-bin \
+            ghostscript \
+            libfreetype6-dev \
+            libfontconfig1-dev
           pip install .[all]
 
       - name: install libs to document
