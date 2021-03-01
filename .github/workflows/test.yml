@@ -30,29 +30,14 @@ jobs:
         with:
             node-version: '10.x'
 
-      - name: install graphviz
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            librsvg2-bin \
-            ghostscript \
-            graphviz \
-            pkg-config \
-            libgraphviz-dev
-          pip install pygraphviz
-
       - name: checkout cylc-doc
         uses: actions/checkout@v2
+
+      - name: install dependencies
+        uses: ./.github/actions/install-dependencies
+
       - name: install cylc-doc
-        run: |
-          # https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
-          sudo apt-get install -y \
-            librsvg2-bin \
-            ghostscript \
-            gsfonts \
-            libfreetype6-dev \
-            libfontconfig1-dev
-          pip install .[all]
+        run: pip install .[all]
 
       - name: install libs to document
         env:
