@@ -1,0 +1,29 @@
+name: Install dependencies
+description: apt-get dependencies plus pygraphviz
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        echo "[command]sudo apt-get update"
+        sudo apt-get update
+
+    - shell: bash
+      run: |
+        echo "[command]sudo apt-get install -y ..."
+        sudo apt-get install -y \
+          librsvg2-bin \
+          ghostscript \
+          graphviz \
+          pkg-config \
+          libgraphviz-dev \
+          gsfonts \
+          libfreetype6-dev \
+          libfontconfig1-dev
+      # https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
+
+    - shell: bash
+      run: |
+        echo "[command]pip install pygraphviz"
+        pip install pygraphviz
