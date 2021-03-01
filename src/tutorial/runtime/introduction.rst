@@ -324,23 +324,8 @@ Running A Suite
    In this tutorial we are writing our suites in the ``cylc-run`` directory.
 
    It is possible to write them elsewhere on the system. If we do so we
-   must install the suite with ``cylc install`` before use. For more
-   information, see 
-
-   We do this using the ``cylc reg`` command which we supply with a name which
-   will be used to refer to the suite in place of the path i.e:
-
-   .. code-block:: sub
-
-      cylc reg <name> <path/to/suite>
-      cylc validate <name>
-      cylc run <name>
-
-   The ``cylc reg`` command will create a directory for the suite in the
-   ``cylc-run`` directory meaning that we will have separate
-   :term:`suite directories <suite directory>` and
-   :term:`run directories <run directory>`.
-
+   must install the workflow with ``cylc install`` before use. For more
+   information, see :ref:`Installing-workflows`.
 
 Suite Files
 -----------

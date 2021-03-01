@@ -31,8 +31,8 @@ Environment Variables
    Each job is also provided with some standard environment variables e.g:
 
    ``CYLC_SUITE_RUN_DIR``
-       The path to the suite's :term:`run directory`
-       *(e.g. ~/cylc-run/suite)*.
+       The path to the :term:`workflow run directory`
+       *(e.g. ~/cylc-run/workflow)*.
    ``CYLC_TASK_WORK_DIR``
        The path to the associated task's :term:`work directory`
        *(e.g. run-directory/work/cycle/task)*.

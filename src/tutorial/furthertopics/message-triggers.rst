@@ -106,8 +106,9 @@ triggers another task bar and when fully completed triggers another task, baz.
       task is run.
 
       Scripts should be kept in the ``bin`` sub-directory within the
-      :term:`suite directory <suite directory>`. If a ``/bin`` exists in the
-      suite directory, it will be prepended $PATH at run time.
+      :term:`workflow run directory <workflow run directory>`. If a ``/bin``
+      exists in the workflow run directory, it will be prepended $PATH at run
+      time.
 
       Create a ``/bin`` directory.
 

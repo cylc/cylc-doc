@@ -4,7 +4,7 @@ Installing Workflows
 ====================
 
 Cylc commands identify workflows via their names, which are relative path names
-under the workflow run directory (``~/cylc-run/`` by default).
+under the :term:`cylc run directory`, ``~/cylc-run/`` by default.
 
 Workflows can be grouped together under sub-directories. E.g.:
 
@@ -20,8 +20,8 @@ Workflows can be grouped together under sub-directories. E.g.:
 
 This chapter will demonstrate how to install a workflow from an arbitrary
 location, called a :term:`source directory`.
-``cylc install`` will create a new directory in the :term:`run directory` for
-each installation of a workflow.
+``cylc install`` will create a new directory in the :term:`cylc run directory`
+for each installation of a workflow.
 
 .. _Install-Workflow:
 
@@ -29,8 +29,9 @@ The Cylc Install Command
 ------------------------
 
 Workflow names can be installed with the ``cylc install`` command,
-which creates the workflow run directory structure and some service files
-underneath it. Otherwise, ``cylc play`` will do this at workflow start up.
+which creates the :term:`workflow run directory` structure and some service
+files underneath it. Otherwise, ``cylc play`` will do this at workflow start
+up.
 
 Once you have written your workflow, you can have Cylc install the workflow for
 you, using the ``cylc install`` command.
@@ -256,8 +257,9 @@ For example:
 
 Cylc will determine the source directory and update your workflow. 
 
-Returning to the example from above (see example_installation_). The source
-directory, ``~/cylc-sources/test-flow`` has been altered as follows:
+Returning to the example from above (see example_installation_).
+
+The source directory, ``~/cylc-sources/test-flow`` has been altered as follows:
 
 .. code-block:: console
 
@@ -288,10 +290,12 @@ directory, ``~/cylc-sources/test-flow`` has been altered as follows:
 
 We wish to update our ``~/cylc-run/test-flow/run1`` with the directories ``dir1``
 and ``dir3``:
+
 .. code-block:: console
 
     $ cylc reinstall test-flow/run1
-    # or just cylc reinstall from within the workflow run directory
+    
+or cylc reinstall from within the workflow run directory
 
 .. code-block:: console
 
@@ -341,7 +345,7 @@ If:
   .. autoclass:: cylc.flow.unicode_rules.SuiteNameValidator
 
 - the install will create nested run directories, i.e. installing a
-  workflow in a subdirectory of an existing run directory.
+  workflow in a subdirectory of an existing workflow run directory.
 
 - trying to install a workflow into an already existing workflow run directory,
   ``cylc reinstall`` should be used for this, see
