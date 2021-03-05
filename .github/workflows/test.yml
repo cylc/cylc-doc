@@ -5,6 +5,7 @@ on:
     branches: [master]
   pull_request:
   workflow_dispatch:
+    inputs:
       rose_ref:
         description: The Rose branch to test against
         required: false
