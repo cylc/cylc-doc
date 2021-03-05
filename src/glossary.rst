@@ -413,10 +413,9 @@ Glossary
       * :term:`qualifier`
 
    implicit task
-   naked task
-      An implicit task is a task in the graph that does not have an explicit
-      runtime definition. For example, ``bar`` is an implicit task in the
-      following workflow:
+      An implicit task (previously known as a naked task) is a task in the
+      graph that does not have an explicit runtime definition.
+      For example, ``bar`` is an implicit task in the following workflow:
 
       .. code-block:: cylc
 

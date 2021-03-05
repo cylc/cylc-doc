@@ -451,8 +451,8 @@ Implicit Tasks
 
 An :term:`implicit task` appears in the workflow graph but has no
 explicit runtime configuration section. Such tasks automatically
-inherit the default "dummy task" configuration from the root
-namespace. This is very useful because it allows functional suites to
+inherit the configuration from the root namespace.
+This is very useful because it allows functional suites to
 be mocked up quickly for test and demonstration purposes by simply
 defining the graph. It is somewhat dangerous, however, because there
 is no way to distinguish an intentional implicit task from one
