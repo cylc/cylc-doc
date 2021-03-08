@@ -585,6 +585,7 @@ written using the ``R1`` notation. For example:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -607,6 +608,7 @@ Let's suppose that we add the following section to the suite example above:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -637,6 +639,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
          [scheduler]
              UTC mode = True
+             allow implicit tasks = True
          [scheduling]
              initial cycle point = 20130808T00
              final cycle point = 20130812T00
@@ -692,6 +695,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
           [scheduler]
               UTC mode = True
+              allow implicit tasks = True
           [scheduling]
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
@@ -726,6 +730,7 @@ used as follows:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20100101T03
        [[graph]]
@@ -1544,6 +1549,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
 .. code-block:: cylc
 
    [scheduler]
+      allow implicit tasks = True
       cycle point format = %Y-%m-%dT%H
    [scheduling]
        initial cycle point = 2015-08-15T00

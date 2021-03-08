@@ -413,6 +413,8 @@ Recurrence Sections
 
    .. code-block:: cylc
 
+      [scheduler]
+          allow implicit tasks = True
       [scheduling]
           [[graph]]
               R1 = """
@@ -572,7 +574,8 @@ Recurrence Sections
 
          .. code-block:: cylc
 
-
+            [scheduler]
+                allow implicit tasks = True
             [scheduling]
                 cycling mode = integer
                 initial cycle point = 1

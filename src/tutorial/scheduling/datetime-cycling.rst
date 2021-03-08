@@ -439,6 +439,7 @@ Putting It All Together
 
          [scheduler]
              UTC mode = True
+             allow implicit tasks = True
          [scheduling]
              initial cycle point = 20000101T00Z
              [[graph]]
@@ -466,6 +467,7 @@ Putting It All Together
 
              [scheduler]
                  UTC mode = True
+                 allow implicit tasks = True
              [scheduling]
                  initial cycle point = 20000101T00Z
                  [[graph]]
@@ -511,6 +513,7 @@ Putting It All Together
 
            [scheduler]
                UTC mode = True
+               allow implicit tasks = True
            [scheduling]
                initial cycle point = 20000101T00Z
                [[graph]]

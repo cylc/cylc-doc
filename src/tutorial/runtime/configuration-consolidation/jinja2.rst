@@ -136,6 +136,9 @@ This would result in:
                       'heathrow': 3772,
                       'shetland': 3005} %}
 
+   [scheduler]
+       allow implicit tasks = True
+
    [scheduling]
        [[graph]]
            T00/PT3H = """
