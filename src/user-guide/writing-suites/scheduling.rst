@@ -1248,6 +1248,8 @@ failed):
 Efficient Inter-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. TODO: Is this section still true post-SoD?
+
 While Cylc allows writing :term:`dependencies <dependency>` between two
 :term:`families <family>` it is important to consider the number of
 dependencies this will generate. In the following example, each member of
@@ -1267,9 +1269,9 @@ This can result in high memory use as the number of members of these families
 grows, potentially rendering the suite impractical for running on some systems.
 
 You can greatly reduce the number of dependencies generated in these situations
-by putting dummy tasks in the graphing to represent the state of the family you
+by putting blank tasks in the graphing to represent the state of the family you
 want to trigger off. For example, if ``FAM2`` should trigger off any
-member of ``FAM1`` succeeding you can create a dummy task
+member of ``FAM1`` succeeding you can create a blank task
 ``FAM1_succeed_any_marker`` and place a dependency on it as follows:
 
 .. code-block:: cylc

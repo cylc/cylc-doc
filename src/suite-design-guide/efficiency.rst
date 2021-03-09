@@ -132,6 +132,8 @@ to allow chaining of dependencies:
 Family-to-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. TODO: Is this section still true post-SoD?
+
 .. code-block:: cylc
 
    [scheduling]
@@ -142,7 +144,7 @@ This means every member of ``BIG_FAM_2`` depends on every member
 of ``BIG_FAM_1`` succeeding. For very large families this can create so
 many dependencies that it affects the performance of Cylc at run time, as
 well as cluttering graph visualizations with unnecessary edges. Instead,
-interpose a dummy task that signifies completion of the first family:
+interpose a blank task that signifies completion of the first family:
 
 .. code-block:: cylc
 

@@ -467,7 +467,7 @@ You can allow implicit tasks during development of a workflow using
 the problems mentioned above, any task used in a production/operational
 workflow should not be implicit, i.e. it should have an explicit entry in under
 the runtime section of ``flow.cylc``, even if the section is empty. This
-results in exactly the same dummy task behaviour, via inheritance from root,
+results in exactly the same task behaviour, via inheritance from root,
 but adds a layer of protection against mistakes. Thus, it is recommended to
 turn off :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` when the
 :cylc:conf:`flow.cylc[runtime]` section has been written.
