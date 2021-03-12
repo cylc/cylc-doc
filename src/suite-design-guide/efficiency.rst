@@ -49,7 +49,7 @@ factored out into a task family inherited by all.
            inherit = OBSPROC
 
 If several families have settings in common, they can in turn can inherit
-from higher-level families. 
+from higher-level families.
 
 Multiple inheritance allows efficient sharing even for overlapping categories
 of tasks. For example consider that some obs processing tasks in the following
@@ -132,6 +132,8 @@ to allow chaining of dependencies:
 Family-to-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. TODO: Is this section still true post-SoD?
+
 .. code-block:: cylc
 
    [scheduling]
@@ -142,7 +144,7 @@ This means every member of ``BIG_FAM_2`` depends on every member
 of ``BIG_FAM_1`` succeeding. For very large families this can create so
 many dependencies that it affects the performance of Cylc at run time, as
 well as cluttering graph visualizations with unnecessary edges. Instead,
-interpose a dummy task that signifies completion of the first family:
+interpose a blank task that signifies completion of the first family:
 
 .. code-block:: cylc
 
@@ -150,7 +152,7 @@ interpose a dummy task that signifies completion of the first family:
        [[graph]]
            R1 = BIG_FAM_1:succeed-all => big_fam_1_done => BIG_FAM_2
 
-For families with ``M`` and ``N`` members respectively, this 
+For families with ``M`` and ``N`` members respectively, this
 reduces the number of dependencies from ``M*N`` to ``M+N``
 without affecting the scheduling.
 
@@ -265,6 +267,7 @@ example using suite parameters instead of Jinja2 loops:
                model<p=5> => check
            """
    [runtime]
+       [[pre, post, check]]
        [[model<p>]]
            script = echo "my parameter value is ${CYLC_TASK_PARAM_p}"
        [[model<p=7>]]
@@ -279,6 +282,7 @@ values: ``chunk<p-1> => chunk<p>``. Here's a multi-parameter example:
 .. code-block:: cylc
 
    [scheduler]
+       allow implicit tasks = True
        [[parameters]]
            run = a, b, c
            m = 1..5
@@ -303,6 +307,7 @@ For example, this:
        [[graph]]
            R1 = pre => model<n> => post
    [runtime]
+       [[pre, post]]
        [[MODELS]]
        [[model<n>]]
            inherit = MODELS
@@ -318,6 +323,7 @@ is equivalent to this:
        [[graph]]
            R1 = pre => MODELS:succeed-all => post
    [runtime]
+       [[pre, post]]
        [[MODELS]]
        [[model<n>]]
            inherit = MODELS
@@ -360,7 +366,7 @@ or by environment variable:
    ROSE_APP_OPT_CONF_KEYS = key1 key2
 
 The environment variable is generally preferred in suites because you don't
-have to repeat and override the root-level script configuration: 
+have to repeat and override the root-level script configuration:
 
 .. code-block:: cylc
 

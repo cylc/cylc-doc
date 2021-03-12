@@ -20,6 +20,7 @@
     [[root]]
         [[[environment]]]
             ROOT = "the quick brown fox"
+    [[foo]]
     [[GEN]]
         [[[environment]]]
             GEN_A = gen_a

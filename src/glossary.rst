@@ -412,6 +412,28 @@ Glossary
       * :term:`job`
       * :term:`qualifier`
 
+   implicit task
+      An implicit task (previously known as a naked task) is a task in the
+      graph that does not have an explicit runtime definition.
+      For example, ``bar`` is an implicit task in the following workflow:
+
+      .. code-block:: cylc
+
+         [scheduling]
+             [[graph]]
+                 R1 = foo & bar
+         [runtime]
+             [[foo]]
+
+      Implicit tasks are not allowed by default, as they are often typos.
+      However, it is possible to allow them using
+      :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` during
+      development of a workflow.
+
+      See also:
+
+      * :ref:`ImplicitTasks`
+
    run directory
       When a :term:`suite <Cylc suite>` is run a directory is created for all
       of the files generated whilst the suite is running. This is called the

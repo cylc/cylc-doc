@@ -585,6 +585,7 @@ written using the ``R1`` notation. For example:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -607,6 +608,7 @@ Let's suppose that we add the following section to the suite example above:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -637,6 +639,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
          [scheduler]
              UTC mode = True
+             allow implicit tasks = True
          [scheduling]
              initial cycle point = 20130808T00
              final cycle point = 20130812T00
@@ -692,6 +695,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
           [scheduler]
               UTC mode = True
+              allow implicit tasks = True
           [scheduling]
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
@@ -726,6 +730,7 @@ used as follows:
 
    [scheduler]
        UTC mode = True
+       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20100101T03
        [[graph]]
@@ -1243,6 +1248,8 @@ failed):
 Efficient Inter-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. TODO: Is this section still true post-SoD?
+
 While Cylc allows writing :term:`dependencies <dependency>` between two
 :term:`families <family>` it is important to consider the number of
 dependencies this will generate. In the following example, each member of
@@ -1262,9 +1269,9 @@ This can result in high memory use as the number of members of these families
 grows, potentially rendering the suite impractical for running on some systems.
 
 You can greatly reduce the number of dependencies generated in these situations
-by putting dummy tasks in the graphing to represent the state of the family you
+by putting blank tasks in the graphing to represent the state of the family you
 want to trigger off. For example, if ``FAM2`` should trigger off any
-member of ``FAM1`` succeeding you can create a dummy task
+member of ``FAM1`` succeeding you can create a blank task
 ``FAM1_succeed_any_marker`` and place a dependency on it as follows:
 
 .. code-block:: cylc
@@ -1544,6 +1551,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
 .. code-block:: cylc
 
    [scheduler]
+      allow implicit tasks = True
       cycle point format = %Y-%m-%dT%H
    [scheduling]
        initial cycle point = 2015-08-15T00

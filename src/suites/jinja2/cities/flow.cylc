@@ -6,6 +6,9 @@
         generation of groups of related dependencies and runtime properties.
     """
 
+[scheduler]
+    allow implicit tasks = True
+
 {% set HOST = "SuperComputer" %}
 {% set CITIES = 'NewYork', 'Philadelphia', 'Newark', 'Houston', 'SantaFe', 'Chicago' %}
 {% set CITYJOBS = 'one', 'two', 'three', 'four' %}
@@ -55,4 +58,4 @@
         cleaning = clean, cleanup
     [[node attributes]]
         cleaning = 'style=filled', 'fillcolor=yellow'
-        NewYork = 'style=filled', 'fillcolor=lightblue'        
+        NewYork = 'style=filled', 'fillcolor=lightblue'

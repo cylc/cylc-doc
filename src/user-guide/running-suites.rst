@@ -78,9 +78,9 @@ All workflows have an :term:`initial cycle point` and many have a
 :term:`final cycle point`. These determine the range between which Cylc will
 schedule tasks to run.
 
-By default when you launch a Cylc :term:`scheduler` to run the workflow 
+By default when you launch a Cylc :term:`scheduler` to run the workflow,
 it will start at the :term:`initial cycle point` and stop at the
-:term:`final cycle point`, however, it is possible to start and stop the
+:term:`final cycle point`. However, it is possible to start and stop the
 scheduler at any arbitrary point.
 
 To do this we use a :term:`start cycle point` and/or :term:`stop cycle point`
@@ -1057,12 +1057,12 @@ Several suite run modes allow you to simulate suite behaviour quickly without
 running the suite's real jobs - which may be long-running and resource-hungry:
 
 dummy mode
-   Runs dummy tasks as background jobs on configured job hosts.
+   Runs tasks as background jobs on configured job hosts.
 
    This simulates scheduling, job host connectivity, and generates all job
    files on suite and job hosts.
 dummy-local mode
-   Runs real dummy tasks as background jobs on the suite host, which allows
+   Runs real tasks as background jobs on the suite host, which allows
    dummy-running suites from other sites.
 
    This simulates scheduling and generates all job files on the suite host.
@@ -1103,7 +1103,7 @@ directives in your live suite, or else use a custom live mode test suite.
 
    The dummy modes ignore all configured task ``script`` items
    including ``init-script``. If your ``init-script`` is required
-   to run even dummy tasks on a job host, note that host environment
+   to run even blank/empty tasks on a job host, note that host environment
    setup should be done elsewhere.
 
 

@@ -109,15 +109,17 @@ Paste the following code into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
+   [scheduler]
+       allow implicit tasks = True
    [scheduling]
-      cycling mode = integer
-      initial cycle point = 1
-      runahead limit = P3
-      [[graph]]
-          P1 = """
-              make_cake_mixture => bake_cake => sell_cake
-              bake_cake:fail => eat_cake
-          """
+       cycling mode = integer
+       initial cycle point = 1
+       runahead limit = P3
+       [[graph]]
+           P1 = """
+               make_cake_mixture => bake_cake => sell_cake
+               bake_cake:fail => eat_cake
+           """
    [runtime]
        [[root]]
            script = sleep 2

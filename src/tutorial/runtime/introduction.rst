@@ -37,6 +37,13 @@ The Task Section
    [runtime]
        [[hello_world]]
 
+.. note::
+
+   This runtime sub-section is normally required, even if it is empty. However,
+   in the previous tutorials, we disabled this requirement using the setting
+   :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`.
+   See :ref:`ImplicitTasks` for more details.
+
 
 The ``script`` Setting
 ----------------------

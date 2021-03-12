@@ -6,6 +6,9 @@
         generation of groups of related dependencies and runtime properties.
     """
 
+[scheduler]
+    allow implicit tasks = True
+
 @{
 HOST = "SuperComputer"
 CITIES = 'NewYork', 'Philadelphia', 'Newark', 'Houston', 'SantaFe', 'Chicago'
