@@ -9,21 +9,6 @@ Glossary
       A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
       which contains :term:`graphing<graph>` representing a workflow.
 
-   suite directory
-      The suite directory contains all of the configuration for a suite e.g.
-      the :cylc:conf:`flow.cylc` file.
-
-      This is the directory which is registered using ``cylc reg``.
-
-      .. note::
-
-         If a suite is written in the ``cylc-run`` directory the suite
-         directory is also the :term:`run directory`.
-
-      See also:
-
-      * :term:`run directory`
-
    graph
       The graph of a :term:`suite<Cylc suite>` refers to the
       :term:`graph strings<graph string>` contained within the
@@ -435,27 +420,24 @@ Glossary
       * :ref:`ImplicitTasks`
 
    run directory
-      When a :term:`suite <Cylc suite>` is run a directory is created for all
-      of the files generated whilst the suite is running. This is called the
-      run directory and typically resides in the ``cylc-run`` directory:
+      The run directory contains all of the configuration for a workflow, e.g.
+      the :cylc:conf:`flow.cylc` file.
 
-      ``~/cylc-run/<suite-name>``
+      It contains all the necessary files to run the workflow and typically
+      resides in the :term:`cylc-run directory`:
 
-      .. note::
-
-         If a suite is written in the ``cylc-run`` directory the run
-         directory is also the :term:`suite directory`.
-
-      The run directory can be accessed by a running suite using the
-      environment variable ``CYLC_SUITE_RUN_DIR``.
+      ``~/cylc-run/<workflow-name>``
+      
+      The run directory can be accessed by a running workflow using
+      the environment variable ``CYLC_SUITE_RUN_DIR``.
 
       See also:
 
-      * :term:`suite directory`
-      * :ref:`Suite Directory Vs Run Directory`
+      * :term:`source directory`
       * :term:`work directory`
       * :term:`share directory`
       * :term:`job log directory`
+      * :term:`cylc-run directory`
 
    work directory
       When Cylc executes a :term:`job` it does so inside the
@@ -476,9 +458,10 @@ Glossary
       * :term:`share directory`
 
    share directory
-      The share directory resides within a suite's :term:`run directory`. It
-      serves the purpose of providing a storage place for any files which need
-      to be shared between different tasks.
+      The share directory resides within a suite's
+      :term:`run directory`. It serves the purpose of providing a
+      storage place for any files which need to be shared between different
+      tasks.
 
       .. code-block:: sub
 
@@ -533,8 +516,9 @@ Glossary
    service directory
       This directory is used to store information for internal use by Cylc.
 
-      It is called ``.service`` and is located in the :term:`run directory`, it
-      should exist for all registered suites.
+      It is called ``.service`` and is located in the
+      :term:`run directory`, it should exist for all installed
+      workflows.
 
    contact file
       The contact file records information about a running suite such as the host it
@@ -713,6 +697,24 @@ Glossary
       See also:
 
       * :term:`cold start`
+
+   cylc-run directory
+      The directory that contains workflows. This is, by default, ``~/cylc-run``
+      but may be configured using :cylc:conf:`global.cylc[symlink dirs]`.
+
+      See also:
+
+      * :term:`run directory`
+   
+   source directory
+      Any directory where workflows are written and stored in preparation for
+      installation with ``cylc install`` or reinstallation with
+      ``cylc reinstall``.
+
+      See also:
+
+      * :term:`run directory`
+      * :ref: `Installing-workflows`
 
    stop
    shutdown

@@ -481,7 +481,7 @@ Cylc client programs connect to running suites using information stored in
 the :term:`contact file` in the suite :term:`run directory`.
 
 This means that Cylc can interact with suites running on another host provided
-that they share the filesystem on which the :term:`run directory`
+that they share the filesystem on which the :term:`cylc-run directory`
 (``cylc-run``) is located.
 
 If the hosts do not share a filesystem you must use SSH when calling Cylc client
@@ -1374,7 +1374,7 @@ to interpret the diagram, refer to the
 Disaster Recovery
 -----------------
 
-If a suite run directory gets deleted or corrupted, the options for recovery
+If a run directory gets deleted or corrupted, the options for recovery
 are:
 
 - restore the run directory from back-up, and restart the suite
@@ -1453,10 +1453,9 @@ See :py:mod:`cylc.flow.main_loop.auto_restart` for details.
 Alternate Run Directories
 -------------------------
 
-The ``cylc register`` command normally creates a run directory at
-the standard location ``~/cylc-run/<WORKFLOW-NAME>/``. With the ``--run-dir``
-option it can create the run directory at some other location, with a symlink
-from ``~/cylc-run/<WORKFLOW-NAME>`` to allow access via the standard file path.
+The ``cylc install`` command normally creates a worflow run directory at
+the standard location ``~/cylc-run/<WORKFLOW-NAME>/``. Configure the run
+directory in the ``global.cylc`` file: :cylc:conf:`global.cylc[symlink dirs]`.
 
 This may be useful for quick-running :ref:`Sub-Workflows` that generate large
 numbers of files - you could put their run directories on fast local disk or
@@ -1491,9 +1490,9 @@ or have a ``final cycle point`` so they don't keep on running indefinitely.
 Sub-workflow names should normally incorporate the main-workflow cycle point (use
 ``$CYLC_TASK_CYCLE_POINT`` in the ``cylc run`` command line to start the
 sub-workflow), so that successive sub-workflows can run concurrently if necessary and
-do not compete for the same run directory. This will generate a new sub-workflow
-run directory for every main-workflow cycle point, so you may want to put
-housekeeping tasks in the main workflow to extract the useful products from each
+do not compete for the same workflow run directory. This will generate a new
+sub-workflow run directory for every main-workflow cycle point, so you may want to
+put housekeeping tasks in the main workflow to extract the useful products from each
 sub-workflow run and then delete the sub-workflow run directory.
 
 For quick-running sub-workflows that generate large numbers of files, consider
