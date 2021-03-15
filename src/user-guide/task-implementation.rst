@@ -38,7 +38,9 @@ The parent shell sets trap handlers for some signals (the exact list depends on
 a particular batch system being used) and typically resends any received signal
 to the subshell and its children (the whole process group, to be precise), unless
 the batch system doesn't execute the job script as process leader, in which case
-the signal is resent to the subshell process only.
+the signal is resent to the subshell process only. Immediately after that
+:cylc:conf:`err-script` is executed without waiting for the subshell process to
+finish, unless you start it with the ``wait`` command to prevent that.
 
 .. digraph:: example
 
