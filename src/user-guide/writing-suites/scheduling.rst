@@ -849,7 +849,7 @@ compute resource supports more than three concurrent jobs, remove the
 cross-cycle dependence and Cylc will run many cycles at once. Task runtime
 configuration is omitted, but it would likely involve retrieving datasets by
 cycle point and processing them in cycle point-specific shared workspaces under
-the self-contained workflow run directory.
+the self-contained run directory.
 
 .. literalinclude:: ../../suites/integer-pipeline/flow.cylc
    :language: cylc

@@ -420,19 +420,15 @@ Glossary
       * :ref:`ImplicitTasks`
 
    run directory
-      When a :term:`suite <Cylc suite>` is run a directory is created for all
-      of the files generated whilst the suite is running. This is called the
-      run directory and typically resides in the ``cylc-run`` directory:
-
-      The workflow run directory contains all of the configuration for a
-      workflow, e.g. the :cylc:conf:`flow.cylc` file.
+      The run directory contains all of the configuration for a workflow, e.g.
+      the :cylc:conf:`flow.cylc` file.
 
       It contains all the necessary files to run the workflow and typically
-      resides in the :term:`cylc run directory`:
+      resides in the :term:`cylc-run directory`:
 
       ``~/cylc-run/<workflow-name>``
       
-      The workflow run directory can be accessed by a running workflow using
+      The run directory can be accessed by a running workflow using
       the environment variable ``CYLC_SUITE_RUN_DIR``.
 
       See also:
@@ -441,34 +437,35 @@ Glossary
       * :term:`work directory`
       * :term:`share directory`
       * :term:`job log directory`
+      * :term:`cylc-run directory`
 
    work directory
       When Cylc executes a :term:`job` it does so inside the
       :term:`job's <job>` working directory. This directory is created by Cylc
       and lies within the directory tree inside the relevant suite's
-      :term:`workflow run directory`.
+      :term:`run directory`.
 
       .. code-block:: sub
 
-         <workflow run directory>/work/<cycle>/<task-name>
+         <run directory>/work/<cycle>/<task-name>
 
       The location of the work directory can be accessed by a :term:`job` via
       the environment variable ``CYLC_TASK_WORK_DIR``.
 
       See also:
 
-      * :term:`workflow run directory`
+      * :term:`run directory`
       * :term:`share directory`
 
    share directory
       The share directory resides within a suite's
-      :term:`workflow run directory`. It serves the purpose of providing a
+      :term:`run directory`. It serves the purpose of providing a
       storage place for any files which need to be shared between different
       tasks.
 
       .. code-block:: sub
 
-         <workflow run directory>/share
+         <run directory>/share
 
       The location of the share directory can be accessed by a :term:`job` via
       the environment variable ``CYLC_SUITE_SHARE_DIR``.
@@ -477,7 +474,7 @@ Glossary
 
       See also:
 
-      * :term:`workflow run directory`
+      * :term:`run directory`
       * :term:`work directory`
 
    suite log
@@ -490,11 +487,11 @@ Glossary
       * ``file-installation-log`` - a log documenting the file installation
         process on remote platforms.
 
-      The suite log directory lies within the :term:`workflow run directory`:
+      The suite log directory lies within the :term:`run directory`:
 
       .. code-block:: sub
 
-         <workflow run directory>/log/suite
+         <run directory>/log/suite
 
    job log
    job log directory
@@ -502,11 +499,11 @@ Glossary
       ``job.out`` and ``job.err`` files which are stored in the job log
       directory.
 
-      The job log directory lies within the :term:`workflow run directory`:
+      The job log directory lies within the :term:`run directory`:
 
       .. code-block:: sub
 
-         <workflow run directory>/log/job/<cycle>/<task-name>/<submission-no>
+         <run directory>/log/job/<cycle>/<task-name>/<submission-no>
 
       Other files stored in the job log directory:
 
@@ -520,7 +517,7 @@ Glossary
       This directory is used to store information for internal use by Cylc.
 
       It is called ``.service`` and is located in the
-      :term:`workflow run directory`, it should exist for all installed
+      :term:`run directory`, it should exist for all installed
       workflows.
 
    contact file
@@ -701,22 +698,22 @@ Glossary
 
       * :term:`cold start`
 
-   cylc run directory
+   cylc-run directory
       The directory that contains workflows. This is, by default, ``~/cylc-run``
       but may be configured using :cylc:conf:`global.cylc[symlink dirs]`.
 
       See also:
 
-      * :term:`workflow run directory`
+      * :term:`run directory`
    
    source directory
-      An arbitrary directory where workflows are written and stored in
-      preparation for installation with ``cylc install`` or reinstallation with
+      Any directory where workflows are written and stored in preparation for
+      installation with ``cylc install`` or reinstallation with
       ``cylc reinstall``.
 
       See also:
 
-      * :term:`workflow run directory`
+      * :term:`run directory`
       * :ref: `Installing-workflows`
 
    stop

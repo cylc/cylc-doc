@@ -276,7 +276,7 @@ and less commonly needed:
 
 - ``%(user_name)s`` - suite owner's user name
 - ``%(suite_name)s`` - installed workflow name
-- ``%(suite_run_dir)s`` - workflow run directory
+- ``%(suite_run_dir)s`` - run directory
 - ``%(suite_share_dir)s`` - suite share directory
 
 If you need to pass a string template into an xtrigger function as a string

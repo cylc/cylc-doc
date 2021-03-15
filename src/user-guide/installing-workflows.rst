@@ -4,42 +4,49 @@ Installing Workflows
 ====================
 
 Cylc commands identify workflows via their names, which are relative path names
-under the :term:`cylc run directory`, ``~/cylc-run/`` by default.
+under the :term:`cylc-run directory`, ``~/cylc-run/`` by default.
 
 Workflows can be grouped together under sub-directories. E.g.:
 
 .. code-block:: console
 
-   $ cylc scan --state=all --name nwp
+   $ cylc scan --state=all --name nwp --format=tree
    nwp
-    |-oper
-    | |-region1  Local Model Region1       /home/oliverh/cylc-run/nwp/oper/region1
-    | `-region2  Local Model Region2       /home/oliverh/cylc-run/nwp/oper/region2
-    `-test
-      `-region1  Local Model TEST Region1  /home/oliverh/cylc-run/nwp/test/region1
+   ├─oper
+   │ ├─ region1
+   │ └─ region2
+   └─test
+      └─ region1
 
 This chapter will demonstrate how to install a workflow from an arbitrary
 location, called a :term:`source directory`.
-``cylc install`` will create a new directory in the :term:`cylc run directory`
+``cylc install`` will create a new directory in the :term:`cylc-run directory`
 for each installation of a workflow.
+
+It is considered best practice to design your workflow in a source directory
+and use ``cylc install`` to create a fresh run directory for you.
 
 .. _Install-Workflow:
 
 The Cylc Install Command
 ------------------------
 
-Workflow names can be installed with the ``cylc install`` command,
-which creates the :term:`workflow run directory` structure and some service
-files underneath it. Otherwise, ``cylc play`` will do this at workflow start
-up.
+Workflows can be installed with the ``cylc install`` command, which creates
+the :term:`run directory` structure and some service files underneath it. 
+
+.. note::
+
+   It remains possible to run a workflow, written directly in the
+   :term:`run directory` with ``cylc play``, without first installing it with
+   ``cylc install``.
 
 Once you have written your workflow, you can have Cylc install the workflow for
 you, using the ``cylc install`` command.
 
-.. _Command Line Options:
+.. _Using Cylc Install:
 
-Command Line Options
---------------------
+Using Cylc Install
+------------------
 
 The following commands, executed from :term:`source directory` e.g.
 ``~/cylc-sources/my-flow`` result in the following installations.
@@ -70,12 +77,12 @@ run3,...
 
 ``cylc install`` will automatically increment the run number of each install,
 provided the options ``--no-run-name`` or ``--run-name`` are not used. See
-:ref:`Command Line Options` for example behaviour.
+:ref:`Using Cylc Install` for example behaviour.
 
-For convenience, a symlink to the highest (latest) numbered run will be created
-in the workflow directory, ``runN``.
+For convenience, a symlink to the most recent (highest numbered) run will be
+created in the workflow directory, ``runN``.
 
-Example: A typical run directory structure, after three exectutions of 
+Example: A typical run directory structure, after three executions of 
 ``cylc install`` will look as follows. 
 
 .. code-block:: none
@@ -130,9 +137,6 @@ Installation will involve copying the files found in the source directory into
 a new run directory. If you wish to install files into an existing run
 directory, use ``cylc reinstall``, see :ref:`Reinstalling a Workflow`.
 
-
-.. _example_installation:
-
 Excluding Items From Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -140,6 +144,14 @@ By default, cylc install will exclude ``.git``, ``.svn`` directories.
 To configure excluded files and directories from the file installation,
 create a ``.cylcignore`` file in your source directory, this supports
 pattern matching.
+
+The following example will detail how to install a workflow, including
+configuring files to be excluded from the installation.
+
+.. _Example Installation:
+
+Example Installation
+^^^^^^^^^^^^^^^^^^^^
 
 For example:
 We will look at running the cylc install command inside the directory
@@ -233,7 +245,7 @@ directory.
 - A new ``install`` directory in the workflow's log directory, with a
   time-stamped install log file containing information about the installation.
 
-Cylc plugins e.g. :ref:`cylc-rose` may generate additional files.
+Cylc plugins (such as :ref:`cylc-rose`) may generate additional files.
 
 
 .. _Reinstalling a Workflow:
@@ -247,7 +259,7 @@ directory.
 A new log file will be created in the workflow install log directory, detailing
 changes made.
 
-``cylc reinstall`` can be exectued from anywhere on the file system. To do this
+``cylc reinstall`` can be executed from anywhere on the file system. To do this
 provide the named run you wish to reinstall.
 For example:
 
@@ -257,7 +269,7 @@ For example:
 
 Cylc will determine the source directory and update your workflow. 
 
-Returning to the example from above (see example_installation_).
+Returning to the example from above (see :ref:`Example Installation`).
 
 The source directory, ``~/cylc-sources/test-flow`` has been altered as follows:
 
@@ -295,13 +307,13 @@ and ``dir3``:
 
     $ cylc reinstall test-flow/run1
     
-or cylc reinstall from within the workflow run directory
+or cylc reinstall from within the run directory
 
 .. code-block:: console
 
     $ cylc reinstall
           
-The workflow run directory now looks as follows:
+The run directory now looks as follows:
 
 .. code-block:: console
 
@@ -345,9 +357,9 @@ If:
   .. autoclass:: cylc.flow.unicode_rules.SuiteNameValidator
 
 - the install will create nested run directories, i.e. installing a
-  workflow in a subdirectory of an existing workflow run directory.
+  workflow in a subdirectory of an existing run directory.
 
-- trying to install a workflow into an already existing workflow run directory,
+- trying to install a workflow into an already existing run directory,
   ``cylc reinstall`` should be used for this, see
   :ref:`Reinstalling a Workflow`.
 
@@ -356,7 +368,7 @@ If:
   ``~/cylc-sources/my-flow``, followed by running ``cylc install`` from
   ``~/cylc-different-sources/my-flow``.
 
-.. note::
+.. warning::
 
     The following combinations of ``cylc install`` are forbidden and will
     result in error.

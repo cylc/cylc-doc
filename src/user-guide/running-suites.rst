@@ -478,10 +478,10 @@ Remote Control
 --------------
 
 Cylc client programs connect to running suites using information stored in
-the :term:`contact file` in the suite :term:`workflow run directory`.
+the :term:`contact file` in the suite :term:`run directory`.
 
 This means that Cylc can interact with suites running on another host provided
-that they share the filesystem on which the :term:`cylc run directory`
+that they share the filesystem on which the :term:`cylc-run directory`
 (``cylc-run``) is located.
 
 If the hosts do not share a filesystem you must use SSH when calling Cylc client
@@ -1374,10 +1374,10 @@ to interpret the diagram, refer to the
 Disaster Recovery
 -----------------
 
-If a workflow run directory gets deleted or corrupted, the options for recovery
+If a run directory gets deleted or corrupted, the options for recovery
 are:
 
-- restore the workflow run directory from back-up, and restart the suite
+- restore the run directory from back-up, and restart the suite
 - re-install from source, and warm start from the beginning of the
   current cycle point
 

@@ -274,7 +274,7 @@ The task job script may export the following environment variables:
    CYLC_VERBOSE                    # Verbose mode, True or False
    TZ                              # Set to "UTC" in UTC mode or not defined
 
-   CYLC_SUITE_RUN_DIR              # Location of the workflow run directory in
+   CYLC_SUITE_RUN_DIR              # Location of the run directory in
                                    # job host, e.g. ~/cylc-run/foo
    CYLC_SUITE_DEF_PATH             # Location of the suite configuration directory in
                                    # job host, e.g. ~/cylc-run/foo
@@ -437,7 +437,7 @@ Remote Task Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Task stdout and stderr streams are written to :term:`log files <job log>` in a
-suite-specific sub-directory of the suite :term:`workflow run directory`, as
+suite-specific sub-directory of the suite :term:`run directory`, as
 explained in :ref:`WhitherStdoutAndStderr`. For remote tasks
 the same directory is used, but *on the task host*.
 Remote task log directories, like local ones, are created on the fly, if
