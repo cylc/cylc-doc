@@ -395,7 +395,7 @@ solution - this has been investigated and will not be implemented at this time.
 Organisations often have port forwarding disabled for security reasons.
 
 .. note::
-   It is recommended you use platform configuration within your workflows
+   It is recommended that you use platform configuration within your workflows
    :cylc:conf:`flow.cylc[runtime][<namespace>]platform`, rather than the
    deprecated ``host`` setting to ensure the intended task communication method
    is applied.
