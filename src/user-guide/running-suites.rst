@@ -426,7 +426,7 @@ method of communication, when
 :cylc:conf:`global.cylc[platforms][<platform name>]communication method` is
 configured to ``ssh``.
 
-This is less efficient than ZMQ protocol messaging, but it may be useful at
+This is less efficient than direct ZMQ protocol messaging, but it may be useful at
 sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
 
 .. warning::
