@@ -22,6 +22,6 @@ src/appendices/command-ref.rst
 .vscode
 
 # auto-generated documentation
-src/user-guide/plugins/main-loop/built-in
+src/plugins/main-loop/built-in
 src/user-guide/batch-sys-handlers
 src/user-guide/job-runner-handlers
