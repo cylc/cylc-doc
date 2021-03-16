@@ -13,5 +13,5 @@ The following are "core" plugins maintained by the Cylc team:
 
 .. warning::
 
-   Plugins are a new feature of Cylc8 and the interface is likely to change in
+   Plugins are a new feature of Cylc 8 and the interface is likely to change in
    future releases.

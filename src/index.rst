@@ -7,7 +7,7 @@ indefinitely.
 
 .. warning::
 
-   Cylc8 is beta software that is not yet recommended for production use.
+   Cylc 8 is beta software that is not yet recommended for production use.
 
    This documentation has not yet been fully updated and may contain errors.
 

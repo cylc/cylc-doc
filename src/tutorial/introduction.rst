@@ -7,7 +7,7 @@ Introduction
 
 .. warning::
 
-   This section has not yet been upgraded to match Cylc8 changes.
+   This section has not yet been upgraded to match Cylc 8 changes.
 
 
 What Is A Workflow?

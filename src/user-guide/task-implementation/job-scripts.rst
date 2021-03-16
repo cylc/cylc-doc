@@ -260,7 +260,7 @@ In bash, the return status of a pipeline is normally the exit status of the
 last command. This is unsafe, because if any command in the pipeline fails, the
 script will continue nevertheless.
 
-For safety, a cylc task job script running in bash will have the
+For safety, a Cylc task job script running in bash will have the
 ``set -o pipefail`` option turned on automatically. If a pipeline
 exists in a task's ``script``, etc section, the failure of any part of
 a pipeline will cause the command to return a non-zero code at the end, which
