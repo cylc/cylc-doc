@@ -3,6 +3,12 @@
 Scheduling
 ==========
 
+.. TODO
+
+.. warning::
+
+   This section has not yet been upgraded to match Cylc 8 changes.
+
 This section looks at how to write workflows in cylc.
 
 .. toctree::

@@ -9,3 +9,9 @@ The following are "core" plugins maintained by the Cylc team:
    :maxdepth: 1
 
    cylc-rose
+   main-loop/index
+
+.. warning::
+
+   Plugins are a new feature of Cylc 8 and the interface is likely to change in
+   future releases.
