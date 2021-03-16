@@ -372,25 +372,33 @@ for task messaging by TCP or SSH. See :ref:`Polling To Track Job Status`.
 Tracking Task State
 -------------------
 
-Cylc supports two ways of tracking task state on job hosts:
+Cylc supports three ways of tracking task state on job hosts:
 
-- task-to-suite messaging via TCP (using ZMQ protocol)
+- task-to-workflow messaging via TCP (using ZMQ protocol)
+- task-to-workflow messaging via non-interactive SSH to the workflow host, then
+  local tcp.
 - regular polling by the :term:`scheduler`
 
-These can be configured per job host using
+These can be configured per platform using
 :cylc:conf:`global.cylc[platforms][<platform name>]communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
-suite hosts, before resorting to the polling method you should
+workflow hosts, before resorting to the polling method you should
 consider installing dedicated Cylc servers or
 VMs inside the HPC trust zone (where TCP and SSH should be allowed).
 
 It is also possible to run Cylc :term:`schedulers <scheduler>` on HPC login
-nodes, but this is not recommended for load and run duration,
+nodes, but this is not recommended for load and run duration.
 
 Finally, it has been suggested that *port forwarding* may provide another
-solution - but that is beyond the scope of this document.
+solution - this has been investigated and will not be implemented at this time.
+Organisations often have port forwarding disabled for security reasons.
 
+.. note::
+   It is recommended that you use platform configuration within your workflows
+   :cylc:conf:`flow.cylc[runtime][<namespace>]platform`, rather than the
+   deprecated ``host`` setting to ensure the intended task communication method
+   is applied.
 
 TCP Task Messaging
 ^^^^^^^^^^^^^^^^^^
@@ -407,6 +415,26 @@ Suite server programs automatically install suite :term:`contact information
 <contact file>` and credentials on job hosts. Users only need to do this
 manually for remote access to suites on other hosts, or suites owned by other
 users - see :ref:`RemoteControl`.
+
+SSH Task Communication
+^^^^^^^^^^^^^^^^^^^^^^
+Cylc can be configured to re-invoke task messaging commands on the workflow
+host via non-interactive SSH (from job platform to workflow host).
+
+User-invoked client commands have been automatically enabled to support this
+method of communication, when
+:cylc:conf:`global.cylc[platforms][<platform name>]communication method` is
+configured to ``ssh``.
+
+This is less efficient than direct ZMQ protocol messaging, but it may be useful at
+sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
+
+.. warning::
+
+   Ensure SSH keys are in place for the remote task platform(s) before enabling
+   this feature. Failure to do so, will result in
+   ``Host key verification failed`` error.
+
 
 .. _Polling To Track Job Status:
 
