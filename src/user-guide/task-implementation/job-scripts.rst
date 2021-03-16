@@ -253,7 +253,7 @@ task to repeatedly poll for the results of the detached processes:
 
 .. _PipeInJobScripts:
 
-Use of pipes in job scripts
+Use of Pipes in Job Scripts
 ---------------------------
 
 In bash, the return status of a pipeline is normally the exit status of the
