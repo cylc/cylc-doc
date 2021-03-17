@@ -103,7 +103,7 @@ e.g.:
 
 .. code-block:: cylc
 
-   # include the file inc/foo.cylc:
+   # include the file ~/cylc-run/workflow/inc/foo.cylc:
    %include inc/foo.cylc
 
 .. note::
