@@ -427,7 +427,7 @@ Glossary
       resides in the :term:`cylc-run directory`:
 
       ``~/cylc-run/<workflow-name>``
-      
+
       The run directory can be accessed by a running workflow using
       the environment variable ``CYLC_SUITE_RUN_DIR``.
 
@@ -705,7 +705,7 @@ Glossary
       See also:
 
       * :term:`run directory`
-   
+
    source directory
       Any directory where workflows are written and stored in preparation for
       installation with ``cylc install`` or reinstallation with
@@ -714,7 +714,7 @@ Glossary
       See also:
 
       * :term:`run directory`
-      * :ref: `Installing-workflows`
+      * :ref:`Installing-workflows`
 
    stop
    shutdown
