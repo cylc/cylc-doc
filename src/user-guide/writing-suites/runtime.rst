@@ -372,7 +372,7 @@ run time to the home directory of task owner on the task host.
 How Tasks Get Access To The Suite Directory
 -------------------------------------------
 
-The suite bin directory is automatically added
+The workflow bin directory is automatically added
 ``$PATH``. If a remote suite configuration directory is not
 specified the local (suite host) path will be assumed with the local
 home directory, if present, swapped for literal ``$HOME`` for
