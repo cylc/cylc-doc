@@ -131,9 +131,6 @@ prior to configuration parsing to provide suite context:
 
    CYLC_SUITE_NAME                 # Suite name
 
-   CYLC_SUITE_DEF_PATH             # Location of the suite configuration
-                                   # source path on suite host,
-                                   # e.g. ~/cylc-run/foo
    CYLC_SUITE_LOG_DIR              # Suite log directory.
    CYLC_SUITE_RUN_DIR              # Location of the run directory in
                                    # suite host, e.g. ~/cylc-run/foo

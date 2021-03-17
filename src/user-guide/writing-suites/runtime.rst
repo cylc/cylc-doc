@@ -276,13 +276,9 @@ The task job script may export the following environment variables:
 
    CYLC_SUITE_RUN_DIR              # Location of the run directory in
                                    # job host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_DEF_PATH             # Location of the suite configuration directory in
-                                   # job host, e.g. ~/cylc-run/foo
    CYLC_SUITE_HOST                 # Host running the suite process
    CYLC_SUITE_OWNER                # User ID running the suite process
-   CYLC_SUITE_DEF_PATH_ON_SUITE_HOST
-                                   # Location of the suite configuration directory in
-                                   # suite host, e.g. ~/cylc-run/foo
+
    CYLC_SUITE_SHARE_DIR            # Suite (or task!) shared directory (see below)
    CYLC_SUITE_UUID                 # Suite UUID string
    CYLC_SUITE_WORK_DIR             # Suite work directory (see below)
@@ -376,8 +372,7 @@ run time to the home directory of task owner on the task host.
 How Tasks Get Access To The Suite Directory
 -------------------------------------------
 
-Tasks can use ``$CYLC_SUITE_DEF_PATH`` to access suite files on
-the task host, and the suite bin directory is automatically added
+The workflow bin directory is automatically added
 ``$PATH``. If a remote suite configuration directory is not
 specified the local (suite host) path will be assumed with the local
 home directory, if present, swapped for literal ``$HOME`` for
