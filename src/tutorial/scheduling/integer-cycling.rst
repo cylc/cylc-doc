@@ -13,7 +13,7 @@ Repeating Workflows
 
 .. ifnotslides::
 
-   Often, we will want to repeat the same workflow multiple times. In Cylc this
+   Often, we want to repeat the same workflow multiple times. In Cylc this
    "repetition" is called :term:`cycling` and each repetition of the workflow is
    referred to as a :term:`cycle`.
 
@@ -68,8 +68,8 @@ To make a workflow repeat we must tell Cylc three things:
      :term:`cycle points <cycle point>` to be numbered.
    * The ``initial cycle point = 1`` setting tells Cylc to start counting
      from 1.
-   * ``P1`` is the :term:`recurrence`. The :term:`graph` within the ``[[[P1]]]``
-     section will be repeated at each :term:`cycle point`.
+   * ``P1`` is the :term:`recurrence`.
+   * The :term:`graph` for this workflow is set out in the value for setting ``P1``
 
    The first three :term:`cycles<cycle>` would look like this, with the entire
    workflow repeated at each cycle point:
@@ -121,8 +121,7 @@ To make a workflow repeat we must tell Cylc three things:
 
 .. ifnotslides::
 
-   Note the numbers under each task which represent the :term:`cycle point` each
-   task is in.
+   Note that the :term:`cycle point` number is shown under each task in the GUI
 
 
 Inter-Cycle Dependencies
@@ -148,7 +147,7 @@ Inter-Cycle Dependencies
 
       clean_oven[-P1] => pre_heat_oven
 
-   This dependency can be added to the suite by adding it to the other graph
+   This dependency can be added to the workflow by adding it to the other graph
    lines:
 
 .. code-block:: diff
@@ -167,7 +166,7 @@ Inter-Cycle Dependencies
 
 .. ifnotslides::
 
-   The resulting suite would look like this:
+   The resulting workflow would look like this:
 
 .. digraph:: example
    :align: center
@@ -343,11 +342,11 @@ Recurrence Sections
 
 .. ifnotslides::
 
-   In the previous examples we made the workflow repeat by placing the graph
-   within the ``[[[P1]]]`` section. Here ``P1`` is a :term:`recurrence` meaning
-   repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
-   *other* cycle, and so on. To build more complex workflows we can use multiple
-   recurrences:
+   In the previous examples we made the workflow repeat every cycle by
+   writing the graph as the value of the ``P1`` setting. Here ``P1``
+   is a :term:`recurrence` meaning repeat every cycle, where ``P1``
+   means every cycle, ``P2`` means every *other* cycle, and so on. To
+   build more complex workflows we can use multiple recurrences:
 
 .. code-block:: cylc
 
@@ -394,9 +393,9 @@ Recurrence Sections
 
    .. nextslide::
 
-   .. rubric:: In this practical we will take the :term:`suite <Cylc suite>`
+   .. rubric:: In this practical we will take the :term:`workflow <workflow>`
       we wrote in the previous section and turn it into a
-      :term:`cycling suite <cycling>`.
+      :term:`cycling workflow <cycling>`.
 
    Next section: :ref:`tutorial-datetime-cycling`
 
@@ -404,9 +403,9 @@ Recurrence Sections
 
 .. practical::
 
-   .. rubric:: In this practical we will take the :term:`suite <Cylc suite>`
+   .. rubric:: In this practical we will take the :term:`workflow <workflow>`
       we wrote in the previous section and turn it into a
-      :term:`cycling suite <cycling>`.
+      :term:`cycling workflow <cycling>`.
 
    If you have not completed the previous practical use the following code for
    your :cylc:conf:`flow.cylc` file.
@@ -422,19 +421,19 @@ Recurrence Sections
                   d => e
               """
 
-   #. **Create a new suite.**
+   #. **Create a new workflow.**
 
-      Within your ``~/cylc-run/`` directory create a new (sub-)directory called
+      Within your ``~/cylc-src/`` directory create a new (sub-)directory called
       ``integer-cycling`` and move into it:
 
       .. code-block:: bash
 
-         mkdir -p ~/cylc-run/integer-cycling
-         cd ~/cylc-run/integer-cycling
+         mkdir -p ~/cylc-src/integer-cycling
+         cd ~/cylc-src/integer-cycling
 
       Copy the above code into a :cylc:conf:`flow.cylc` file in that directory.
 
-   #. **Make the suite cycle.**
+   #. **Make the workflow cycle.**
 
       Add in the following lines.
 
@@ -450,15 +449,17 @@ Recurrence Sections
                       d => e
                   """
 
-   #. **Visualise the suite.**
+   #. **Visualise the workflow.**
 
-      Try visualising the suite using ``cylc graph``.
+      Try visualising the workflow using ``cylc gui``.
 
       .. code-block:: none
 
-         cylc graph .
+         cylc gui
 
       .. tip::
+
+         .. TODO Implemented yet?
 
          You can get Cylc graph to draw dotted boxes around the cycles by
          clicking the "Organise by cycle point" button on the toolbar:
@@ -468,7 +469,7 @@ Recurrence Sections
 
       .. tip::
 
-         By default ``cylc graph`` displays the first three cycles of a suite.
+         By default ``cylc graph`` displays the first three cycles of a workflow.
          You can tell ``cylc graph`` to visualise the cycles between two points
          by providing them as arguments, for instance the following example
          would show all cycles between ``1`` and ``5`` (inclusive)::
