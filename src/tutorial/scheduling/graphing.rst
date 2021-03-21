@@ -13,21 +13,22 @@ The :cylc:conf:`flow.cylc` File Format
 
 .. ifnotslides::
 
-   We refer to a Cylc workflow as a :term:`Cylc suite`. A Cylc suite is a
+   We refer to a Cylc workflow as a :term:`Cylc workflow`. A Cylc workflow is a
    directory containing a :cylc:conf:`flow.cylc` file. This configuration file is where
    we define our workflow. The :cylc:conf:`flow.cylc` file uses a nested `INI`_-based
    format:
 
 .. ifslides::
 
-   * Cylc workflow == Cylc suite
-   * Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
-   * The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format
+   * A Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file.
+   * The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format.
+   * Cylc 8 Workflow == Cylc 7 Suite. 
+
 
 .. ifnotslides::
 
    * Comments start with a ``#`` character.
-   * Settings are written as ``key = value`` pairs.
+   * Settings are written as ``key = value`` pairs (space insentive).
    * Settings can be contained within sections.
    * Sections are written inside square brackets i.e. ``[section-name]``.
    * Sections can be nested, by adding an extra square bracket with each level,
@@ -121,7 +122,7 @@ Duplicate settings get overwritten:
 Indentation
 ^^^^^^^^^^^
 
-It is advisable to indent :cylc:conf:`flow.cylc` files.
+It is a good idea to indent :cylc:conf:`flow.cylc`.
 
 However, Cylc ignores this indentation meaning the following two examples
 are equivalent:
@@ -243,7 +244,7 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   In a :term:`Cylc suite` the :term:`graph` is stored under the
+   In a :term:`Cylc workflow` the :term:`graph` is stored under the
    ``[scheduling][graph]R1`` setting, i.e:
 
 .. code-block:: cylc
@@ -259,22 +260,24 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   This is a minimal :term:`Cylc suite`, in which we have defined a
+   This is a minimal :term:`Cylc workflow`, in which we have defined a
    :term:`graph` representing a workflow for Cylc to run.
    We have not yet provided Cylc with the scripts or binaries to run for
    each task. This will be covered later in the
    :ref:`runtime tutorial <tutorial-runtime>`.
 
-   Cylc provides a GUI for visualising :term:`graphs <graph>`. It is run on the
-   command line using the ``cylc graph <path>`` command where the path ``path``
-   is to the :cylc:conf:`flow.cylc` file you wish to visualise.
+..
 
-   When run, ``cylc graph`` will display a diagram similar to the ones you have
-   seen so far. The number ``1`` which appears below each task is the
-   :term:`cycle point`. We will explain what this means in the next section.
+   .. TODO - include more detail on how to use the new gui...
 
-.. image:: ../img/cylc-graph.png
-   :align: center
+      Cylc GUI allows you to visualize :term:`graphs <graph>`.
+
+      The Cylc GUI will display a diagram similar to the ones you have
+      seen so far. The number ``1`` which appears below each task is the
+      :term:`cycle point`. We will explain what this means in the next section.
+
+   .. image:: ../img/cylc-graph.png
+      :align: center
 
 .. nextslide::
 
@@ -294,7 +297,7 @@ Cylc Graphs
 
    .. ifnotslides::
 
-      The graph drawn by ``cylc graph`` may vary slightly from one run to
+      The graph drawn by Cylc GUI may vary slightly from one run to
       another but the tasks and dependencies will always be the same.
 
 .. nextslide::
@@ -315,20 +318,20 @@ Cylc Graphs
 
       A Cylc suite is just a directory containing a :cylc:conf:`flow.cylc` file.
 
-      If you don't have one already, create a ``cylc-run`` directory in your
+      If you don't have one already, create a ``cylc-src`` directory in your
       user space i.e.
 
       .. code-block::
 
-         ~/cylc-run
+         mkdir ~/cylc-src
 
       Within this directory create a new folder called ``graph-introduction``,
-      which is to be our :term:`suite directory`. Move into it:
+      which is to be our :term:`source directory`. Move into it:
 
       .. code-block:: bash
 
-         mkdir ~/cylc-run/graph-introduction
-         cd ~/cylc-run/graph-introduction
+         mkdir ~/cylc-src/graph-introduction
+         cd ~/cylc-src/graph-introduction
 
       Inside this directory create a :cylc:conf:`flow.cylc` file and paste in the
       following text:
@@ -345,7 +348,7 @@ Cylc Graphs
 
    #. **Write a graph.**
 
-      We now have a blank Cylc suite, next we need to define a workflow.
+      We now have a blank Cylc workflow, next we need to define a graph.
 
       Edit your :cylc:conf:`flow.cylc` file to add graph strings representing the
       following graph:
@@ -356,38 +359,29 @@ Cylc Graphs
          a -> b -> d -> e
          c -> b -> f
 
-   #. **Use** ``cylc graph`` **to visualise the workflow.**
+.. TODO update with instructions on opening in Cylc GUI.
 
-      Once you have written some graph strings try using ``cylc graph`` to
+   #. **Use** ``Cylc GUI`` **to visualise the workflow.**
+
+      Once you have written some graph strings try using ``Cylc GUI`` to
       display the workflow. Run the following command:
 
       .. code-block:: bash
 
-         cylc graph .
-
-      .. admonition:: Note
-         :class: hint
-
-         ``cylc graph`` takes the path to the suite as an argument. As we are
-         inside the :term:`suite directory` we can run ``cylc graph .``.
+         cylc gui
 
       If the results don't match the diagram above try going back to the
       :cylc:conf:`flow.cylc` file and making changes.
 
       .. tip::
 
-         In the top right-hand corner of the ``cylc graph`` window there is a
-         refresh button which will reload the GUI with any changes you have
-         made.
-
-         .. image:: ../img/cylc-graph-refresh.png
-            :align: center
+         - What do you do to refresh the GUI?
 
 
       .. spoiler:: Solution warning
 
          There are multiple correct ways to write this graph. So long as what
-         you see in ``cylc graph`` matches the above diagram then you have a
+         you see in Cylc GUI matches the above diagram then you have a
          correct solution.
 
          Two valid examples:
@@ -402,7 +396,7 @@ Cylc Graphs
             a => b => d => e
             c => b => f
 
-         The whole suite should look something like this:
+         The whole workflow should look something like this:
 
          .. code-block:: cylc
 

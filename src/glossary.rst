@@ -6,6 +6,9 @@ Glossary
 
    suite
    Cylc suite
+   flow
+   workflow
+   Cylc workflow
       A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
       which contains :term:`graphing<graph>` representing a workflow.
 
