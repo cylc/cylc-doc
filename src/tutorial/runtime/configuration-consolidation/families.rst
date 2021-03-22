@@ -311,12 +311,12 @@ Families and ``cylc graph``
          -        DOMAIN = -12,48,5,61  # Do not change!
 
       To ensure that the environment variables are being inherited correctly
-      by the tasks, inspect the ``[runtime]`` section using ``cylc get-config``
+      by the tasks, inspect the ``[runtime]`` section using ``cylc config``
       by running the following command:
 
       .. code-block:: bash
 
-         cylc get-config . --sparse -i "[runtime]"
+         cylc config . --sparse -i "[runtime]"
 
       You should see the environment variables from the ``[root]`` section
       in the ``[environment]`` section for all tasks.
@@ -326,4 +326,4 @@ Families and ``cylc graph``
          You may find it easier to open the output of this command in a text
          editor, e.g::
 
-            cylc get-config . --sparse -i "[runtime]" | gvim -
+            cylc config . --sparse -i "[runtime]" | gvim -

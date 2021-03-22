@@ -233,7 +233,7 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc get-suite-config -i [runtime][airs]directives SUITE
+   $ cylc config -i [runtime][airs]directives SUITE
    -I = ncpus=9
 
 

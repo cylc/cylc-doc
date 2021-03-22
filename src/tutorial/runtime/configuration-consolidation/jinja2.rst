@@ -232,5 +232,5 @@ This would result in:
          -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
          +            API_KEY = {{ API_KEY }}
 
-      Check the result with ``cylc get-config``. The Jinja2 will be processed
+      Check the result with ``cylc config``. The Jinja2 will be processed
       so you should not see any difference after making these changes.

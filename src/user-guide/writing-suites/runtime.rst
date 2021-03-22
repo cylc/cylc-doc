@@ -107,13 +107,12 @@ multiple inheritance:
 .. literalinclude:: ../../suites/inherit/multi/one/flow.cylc
    :language: cylc
 
-``cylc get-suite-config`` provides an easy way to check the result of
+``cylc config`` provides an easy way to check the result of
 inheritance in a suite. You can extract specific items, e.g.:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --item '[runtime][var_p2]script' \
-       inherit.multi.one
+   $ cylc config --item '[runtime][var_p2]script' inherit.multi.one
    echo "RUN: run-var.sh"
 
 or use the ``--sparse`` option to print entire namespaces
@@ -122,7 +121,7 @@ from the root namespace:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --sparse --item '[runtime]ops_s1' inherit.multi.one
+   $ cylc config --sparse --item '[runtime]ops_s1' inherit.multi.one
    script = echo "RUN: run-ops.sh"
    inherit = ['OPS', 'SERIAL']
    [directives]
