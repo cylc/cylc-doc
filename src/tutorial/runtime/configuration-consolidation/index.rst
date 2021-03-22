@@ -104,7 +104,7 @@ The ``cylc config`` Command
       graphing use the ``cylc graph`` command.
 
    Call ``cylc config`` with the path of the workflow (``.`` if you are already
-   in the :term:`suite directory`) and the ``--sparse`` option which hides
+   in the :term:`run directory`) and the ``--sparse`` option which hides
    default values.
 
 .. code-block:: sub
