@@ -24,9 +24,9 @@ often (but see also :ref:`Reloading The Suite Configuration At Runtime`).
 
 .. note::
 
-   The ability to cold/warm start a previously-run suite was removed in Cylc 8.
-   This was because cold/warm starts would wipe out prior suite state.
-
+   In Cylc 7 it was posssible to cold/warm start a suite without having to
+   reinstall it. In Cylc 8, you must reinstall the suite or remove its
+   database in order to cold/warm start it.
 
 .. _Cold Start:
 
@@ -127,11 +127,6 @@ Tasks recorded in the "submitted" or "running" states are automatically polled
 (see :ref:`Task Job Polling`) at start-up to determine what happened to
 them while the suite was down.
 
-.. note::
-
-   In Cylc 7, it was possible to restart a suite from "checkpoints" other than
-   the last shutdown state. However, this was removed in Cylc 8 as it was a
-   seldom-used feature.
 
 Behaviour of Tasks on Restart
 """""""""""""""""""""""""""""

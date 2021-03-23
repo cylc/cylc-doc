@@ -322,7 +322,6 @@ Running A Suite
 .. note::
 
    In this tutorial we are writing our suites in the ``cylc-run`` directory.
-.. TODO: rewrite based on new commands cylc install + cylc play
 
    It is possible to write them elsewhere on the system. If we do so we
    must install the workflow with ``cylc install`` before use. For more

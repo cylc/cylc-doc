@@ -664,12 +664,12 @@ Glossary
 
    start
    startup
-      A start is when the Cylc :term:`scheduler` runs a freshly-installed
-      :term:`suite` runs for the first time. The scheduler is the program that
+      A start is when the Cylc :term:`scheduler` runs a :term:`suite`
+      for the first time. The scheduler is the program that
       controls the suite and is what we refer to as "running".
 
-      A suite start can be either :term:`cold <cold start>` or :term:`warm <warm
-      start>` (cold by default).
+      A suite start can be either :term:`cold <cold start>` or
+      :term:`warm <warm start>` (cold by default).
 
       See also:
 
@@ -755,7 +755,8 @@ Glossary
 
    pause
       Pausing a :term:`suite` prevents all submission of :term:`jobs <job>`.
-      However, any already submitted jobs will still run to completion.
+      However, any already-running or submitted jobs will still run to
+      completion.
 
       See also:
 
