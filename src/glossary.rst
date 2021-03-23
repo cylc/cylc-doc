@@ -795,6 +795,37 @@ Glossary
       * :ref:`Reloading Suites`
       * `Cylc User Guide`_
 
+   hold
+   held task
+   hold after cycle point
+      A :term:`task` can be held using ``cylc hold``, which prevents it from
+      submitting :term:`jobs <job>`.
+
+      It is also possible to set a "hold after cycle point"; all tasks after
+      this cycle point will be held.
+
+      .. note::
+
+         While similar to :term:`pausing a workflow <pause>`, holding a task(s)
+         is slightly different. Pausing a workflow does not hold tasks or
+         affect task states. Any held tasks are not :term:`released <release>`
+         when :term:`resuming <resume>` a paused workflow.
+
+      See also:
+
+      * :term:`release`
+
+   release
+      :term:`Held tasks <hold>` can be released using ``cylc release``,
+      allowing submission of :term:`jobs <job>` once again.
+
+      It is also possible to remove the "hold after cycle point" if set,
+      using ``cylc release --all``. This will also release all held tasks.
+
+      See also:
+
+      * :term:`hold`
+
    parameterisation
       Parameterisation is a way to consolidate configuration in the Cylc
       :cylc:conf:`flow.cylc` file by implicitly looping over a set of
