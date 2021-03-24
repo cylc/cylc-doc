@@ -1,14 +1,18 @@
 {
-    "7.8.6": [
-        "html",
-        "singlehtml"
-    ],
     "7.9.1": [
-        "html",
-        "singlehtml"
+        "singlehtml",
+        "html"
+    ],
+    "7.8.6": [
+        "singlehtml",
+        "html"
     ],
     "8.0a2": [
-        "html",
-        "slides"
+        "slides",
+        "html"
+    ],
+    "nightly": [
+        "slides",
+        "html"
     ]
 }

@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Parameterized Tasks &mdash; Cylc nightly.2021-03-24 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Jinja2" href="jinja2.html" />
+    <link rel="prev" title="Runtime - Task Configuration" href="runtime.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                nightly.2021-03-24
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../workflows.html">Workflows For Cycling Systems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Suites</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling - Dependency Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Runtime - Task Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parameterized Tasks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parameter-expansion">Parameter Expansion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#passing-parameter-values-to-tasks">Passing Parameter Values To Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-specific-parameter-values">Selecting Specific Parameter Values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-partial-parameter-ranges">Selecting Partial Parameter Ranges</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameter-offsets-in-the-graph">Parameter Offsets In The Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#task-families-and-parameterization">Task Families And Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameterized-cycling">Parameterized Cycling</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-suites.html">Running Suites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../suite-storage-etc.html">Suite Storage, Discovery, Revision Control, and Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">User Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Writing Suites</a> &raquo;</li>
+        
+      <li>Parameterized Tasks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/user-guide/writing-suites/parameterized-tasks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="parameterized-tasks">
+<span id="user-guide-param"></span><h1>Parameterized Tasks<a class="headerlink" href="#parameterized-tasks" title="Permalink to this headline">¶</a></h1>
+<p>Cylc can automatically generate tasks and dependencies by expanding
+<a class="reference internal" href="../../glossary.html#term-parameterisation"><span class="xref std std-term">parameterized</span></a> task names over lists of parameter
+values. Uses for this include:</p>
+<ul class="simple">
+<li><p>generating an ensemble of similar model runs</p></li>
+<li><p>generating chains of tasks to process similar datasets</p></li>
+<li><p>replicating an entire workflow, or part thereof, over several runs</p></li>
+<li><p>splitting a long model run into smaller steps or <code class="docutils literal notranslate"><span class="pre">chunks</span></code>
+(parameterized cycling)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This can be done with Jinja2 loops too (<a class="reference internal" href="jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a>)
+but parameterization is much cleaner (nested loops can seriously reduce
+the clarity of a suite configuration).*</p>
+</div>
+<div class="section" id="parameter-expansion">
+<h2>Parameter Expansion<a class="headerlink" href="#parameter-expansion" title="Permalink to this headline">¶</a></h2>
+<p>Parameter values can be lists of strings, or lists of integers and
+integer ranges (with inclusive bounds). Numeric values in a list of strings are
+considered strings. It is not possible to mix strings with integer ranges.</p>
+<p>For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[task parameters]]</span>
+    <span class="c1"># parameters: &quot;ship&quot;, &quot;buoy&quot;, &quot;plane&quot;</span>
+    <span class="c1"># default task suffixes: _ship, _buoy, _plane</span>
+    <span class="nv">obs </span><span class="o">=</span><span class="s"> ship, buoy, plane</span>
+
+    <span class="c1"># parameters: 1, 2, 3, 4, 5</span>
+    <span class="c1"># default task suffixes: _run1, _run2, _run3, _run4, _run5</span>
+    <span class="nv">run </span><span class="o">=</span><span class="s"> 1..5</span>
+
+    <span class="c1"># parameters: 1, 3, 5, 7, 9</span>
+    <span class="c1"># default task suffixes: _idx1, _idx3, _idx5, _idx7, _idx9</span>
+    <span class="nv">idx </span><span class="o">=</span><span class="s"> 1..9..2</span>
+
+    <span class="c1"># parameters: -11, -1, 9</span>
+    <span class="c1"># default task suffixes: _idx-11, _idx-01, _idx+09</span>
+    <span class="nv">idx </span><span class="o">=</span><span class="s"> -11..9..10</span>
+
+    <span class="c1"># parameters: 1, 3, 5, 10, 11, 12, 13</span>
+    <span class="c1"># default task suffixes: _i01, _i03, _i05, _i10, _i11, _i12, _i13</span>
+    <span class="nv">i </span><span class="o">=</span><span class="s"> 1..5..2, 10, 11..13</span>
+
+    <span class="c1"># parameters: &quot;0&quot;, &quot;1&quot;, &quot;e&quot;, &quot;pi&quot;, &quot;i&quot;</span>
+    <span class="c1"># default task suffixes: _0, _1, _e, _pi, _i</span>
+    <span class="nv">item </span><span class="o">=</span><span class="s"> 0, 1, e, pi, i</span>
+
+    <span class="c1"># ERROR: mix strings with int range</span>
+    <span class="nv">p </span><span class="o">=</span><span class="s"> one, two, 3..5</span>
+</pre></div>
+</div>
+<p>Then angle brackets denote use of these parameters throughout the suite
+configuration. For the values above, this parameterized name:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>model<span class="s">&lt;run&gt;</span>  <span class="c"># for run = 1..5</span>
+</pre></div>
+</div>
+<p>expands to these concrete task names:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model_run1, model_run2, model_run3, model_run4, model_run5
+</pre></div>
+</div>
+<p>and this parameterized name:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>proc<span class="s">&lt;obs&gt;</span>  <span class="c"># for obs = ship, buoy, plane</span>
+</pre></div>
+</div>
+<p>expands to these concrete task names:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>proc_ship, proc_buoy, proc_plane
+</pre></div>
+</div>
+<p>By default, to avoid any ambiguity, the parameter name appears in the expanded
+task names for integer values, but not for string values. For example,
+<code class="docutils literal notranslate"><span class="pre">model_run1</span></code> for <code class="docutils literal notranslate"><span class="pre">run</span> <span class="pre">=</span> <span class="pre">1</span></code>, but <code class="docutils literal notranslate"><span class="pre">proc_ship</span></code> for
+<code class="docutils literal notranslate"><span class="pre">obs</span> <span class="pre">=</span> <span class="pre">ship</span></code>. However, the default expansion templates can be
+overridden if need be:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+    <span class="nv">obs </span><span class="o">=</span><span class="s"> ship, buoy, plane</span>
+    <span class="nv">run </span><span class="o">=</span><span class="s"> 1..5</span>
+    <span class="nt">[[templates]]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> -R%(run)s</span>  <span class="c1"># Make foo&lt;run&gt; expand to foo-R1 etc.</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../../reference/config/suite.html#flow.cylc[task parameters][templates]" title="flow.cylc[task parameters][templates]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[task</span> <span class="pre">parameters][templates]</span></code></a> for more on the string
+template syntax.</p>
+<p>Any number of parameters can be used at once. This parameterization:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>model<span class="s">&lt;run,obs&gt;</span>  <span class="c"># for run = 1..2 and obs = ship, buoy, plane</span>
+</pre></div>
+</div>
+<p>expands to these tasks names:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model_run1_ship, model_run1_buoy, model_run1_plane,
+model_run2_ship, model_run2_buoy, model_run2_plane
+</pre></div>
+</div>
+<p>Here’s a simple but complete example suite:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> 1..2</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;prep =&gt; model&lt;run&gt;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">run</span>&gt;<span class="nt">]]</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>The result, post parameter expansion, is this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;prep =&gt; model_run1 &amp; model_run2&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model_run1]]</span>
+        <span class="c1"># ...</span>
+    <span class="nt">[[model_run2]]</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Here’s a more complex graph using two parameters (<a class="reference internal" href="../../reference/config/suite.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a>
+omitted):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> 1..2</span>
+        <span class="nv">mem </span><span class="o">=</span><span class="s"> cat, dog</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            prep =&gt; init&lt;run&gt; =&gt; model&lt;run,mem&gt; =&gt;</span>
+<span class="s2">            post&lt;run,mem&gt; =&gt; wrap&lt;run&gt; =&gt; done</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The result as visualized by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> is:</p>
+<div class="figure align-center" id="id2">
+<span id="fig-params-1"></span><img alt="../../_images/params1.png" src="../../_images/params1.png" />
+<p class="caption"><span class="caption-text">Parameter expansion example.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="zero-padded-integer-values">
+<h3>Zero-Padded Integer Values<a class="headerlink" href="#zero-padded-integer-values" title="Permalink to this headline">¶</a></h3>
+<p>Integer parameter values are given a default template for generating task
+suffixes that are zero-padded according to the longest size of their values.
+For example, the default template for <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">9..10</span></code> would be
+<code class="docutils literal notranslate"><span class="pre">_p%(p)02d</span></code>, so that <code class="docutils literal notranslate"><span class="pre">foo&lt;p&gt;</span></code> would become <code class="docutils literal notranslate"><span class="pre">foo_p09,</span> <span class="pre">foo_p10</span></code>.
+If negative values are present in the parameter list, the
+default template will include the sign.
+For example, the default template for <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">-1..1</span></code> would be
+<code class="docutils literal notranslate"><span class="pre">_p%(p)+02d</span></code>, so that <code class="docutils literal notranslate"><span class="pre">foo&lt;p&gt;</span></code> would become
+<code class="docutils literal notranslate"><span class="pre">foo_p-1,</span> <span class="pre">foo_p+0,</span> <span class="pre">foo_p+1</span></code>.</p>
+<p>To get thicker padding and/or alternate suffixes, use a template. E.g.:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[task parameters]]</span>
+    <span class="nv">i </span><span class="o">=</span><span class="s"> 1..9</span>
+    <span class="nv">p </span><span class="o">=</span><span class="s"> 3..14</span>
+    <span class="nt">[[templates]]</span>
+        <span class="nv">i </span><span class="o">=</span><span class="s"> _i%(i)02d</span>  <span class="c1"># suffixes = _i01, _i02, ..., _i09</span>
+        <span class="c1"># A double-percent gives a literal percent character</span>
+        <span class="nv">p </span><span class="o">=</span><span class="s"> %%p%(p)03d</span>  <span class="c1"># suffixes = %p003, %p004, ..., %p013, %p014</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters-as-full-task-names">
+<h3>Parameters as Full Task Names<a class="headerlink" href="#parameters-as-full-task-names" title="Permalink to this headline">¶</a></h3>
+<p>Parameter values can be used as full task names, but the default template
+should be overridden to remove the initial underscore. For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">i </span><span class="o">=</span><span class="s"> 1..4</span>
+        <span class="nv">obs </span><span class="o">=</span><span class="s"> ship, buoy, plane</span>
+    <span class="nt">[[parameter templates]]</span>
+        <span class="nv">i </span><span class="o">=</span><span class="s"> i%(i)d</span>  <span class="c1"># task name must begin with an alphabet</span>
+        <span class="nv">obs </span><span class="o">=</span><span class="s"> %(obs)s</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            foo =&gt; &lt;i&gt;</span>  <span class="c1"># foo =&gt; i1 &amp; i2 &amp; i3 &amp; i4</span><span class="s2"></span>
+<span class="s2">            &lt;obs&gt; =&gt; bar</span>  <span class="c1"># ship &amp; buoy &amp; plane =&gt; bar</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="passing-parameter-values-to-tasks">
+<h2>Passing Parameter Values To Tasks<a class="headerlink" href="#passing-parameter-values-to-tasks" title="Permalink to this headline">¶</a></h2>
+<p>Parameter values are passed as environment variables to tasks generated by
+parameter expansion. For example, if we have:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">obs </span><span class="o">=</span><span class="s"> ship, buoy, plane</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> 1..5</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> model&lt;run,obs&gt;</span>
+</pre></div>
+</div>
+<p>Then task <code class="docutils literal notranslate"><span class="pre">model_run2_ship</span></code> would get the following standard
+environment variables:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In a job script of an instance of the &quot;model_run2_ship&quot; task:</span>
+<span class="nb">export</span> <span class="nv">CYLC_TASK_PARAM_run</span><span class="o">=</span><span class="s2">&quot;2&quot;</span>
+<span class="nb">export</span> <span class="nv">CYLC_TASK_PARAM_obs</span><span class="o">=</span><span class="s2">&quot;ship&quot;</span>
+</pre></div>
+</div>
+<p>These variables allow tasks to determine which member of a parameterized
+group they are, and so to vary their behaviour accordingly.</p>
+<p>You can also define custom variables and string templates for parameter value
+substitution. For example, if we add this to the above configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">run,obs</span>&gt;<span class="nt">]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">MYNAME </span><span class="o">=</span><span class="s"> %(obs)sy-mc%(obs)sface</span>
+            <span class="nv">MYFILE </span><span class="o">=</span><span class="s"> /path/to/run%(run)03d/%(obs)s</span>
+</pre></div>
+</div>
+<p>Then task <code class="docutils literal notranslate"><span class="pre">model_run2_ship</span></code> would get the following custom
+environment variables:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># In a job script of an instance of the &quot;model_run2_ship&quot; task:</span>
+<span class="nb">export</span> <span class="nv">MYNAME</span><span class="o">=</span>shipy-mcshipface
+<span class="nb">export</span> <span class="nv">MYFILE</span><span class="o">=</span>/path/to/run002/ship
+</pre></div>
+</div>
+</div>
+<div class="section" id="selecting-specific-parameter-values">
+<h2>Selecting Specific Parameter Values<a class="headerlink" href="#selecting-specific-parameter-values" title="Permalink to this headline">¶</a></h2>
+<p>Specific parameter values can be singled out in the graph and under
+<a class="reference internal" href="../../reference/config/suite.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> with the notation <code class="docutils literal notranslate"><span class="pre">&lt;p=5&gt;</span></code> (for example).
+Here’s how to make a special task trigger off just the first of a
+set of model runs:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> 1..5</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            model&lt;run&gt; =&gt; post_proc&lt;run&gt;</span>  <span class="c1"># general case</span><span class="s2"></span>
+<span class="s2">            model&lt;run=1&gt; =&gt; check_first_run</span>  <span class="c1"># special case</span><span class="s2"></span>
+<span class="s2">         &quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">run</span>&gt;<span class="nt">]]</span>
+        <span class="c1"># config for all &quot;model&quot; runs...</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">run=1</span>&gt;<span class="nt">]]</span>
+        <span class="c1"># special config (if any) for the first model run...</span>
+    <span class="c1">#...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="selecting-partial-parameter-ranges">
+<h2>Selecting Partial Parameter Ranges<a class="headerlink" href="#selecting-partial-parameter-ranges" title="Permalink to this headline">¶</a></h2>
+<p>The parameter notation does not currently support partial range selection such
+as <code class="docutils literal notranslate"><span class="pre">foo&lt;p=5..10&gt;</span></code>, but you can achieve the same result by defining a
+second parameter that covers the partial range and giving it the same expansion
+template as the full-range parameter. For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+    <span class="nv">run </span><span class="o">=</span><span class="s"> 1..10</span>  <span class="c1"># 1, 2, ..., 10</span>
+    <span class="nv">runx </span><span class="o">=</span><span class="s"> 1..3</span>  <span class="c1"># 1, 2, 3</span>
+    <span class="nt">[[parameter templates]]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> _R%(run)02d</span>   <span class="c1"># _R01, _R02, ..., _R10</span>
+        <span class="nv">runx </span><span class="o">=</span><span class="s"> _R%(runx)02d</span>  <span class="c1"># _R01, _R02, _R03</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;model&lt;run&gt; =&gt; post&lt;run&gt;</span>
+<span class="s2">                model&lt;runx&gt; =&gt; checkx&lt;runx&gt;&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">run</span>&gt;<span class="nt">]]</span>
+        <span class="c1"># ...</span>
+    <span class="c1">#...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameter-offsets-in-the-graph">
+<h2>Parameter Offsets In The Graph<a class="headerlink" href="#parameter-offsets-in-the-graph" title="Permalink to this headline">¶</a></h2>
+<p>A negative offset notation <code class="docutils literal notranslate"><span class="pre">&lt;NAME-1&gt;</span></code> is interpreted as the previous
+value in the ordered list of parameter values, while a positive offset is
+interpreted as the next value. For example, to split a model run into multiple
+steps with each step depending on the previous one, either of these graph lines:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">model</span>&lt;<span class="nb">run-1</span>&gt; <span class="o">=&gt;</span> <span class="kd">model</span>&lt;<span class="nb">run</span>&gt;  <span class="c1"># for run = 1, 2, 3</span>
+<span class="kd">model</span>&lt;<span class="nb">run</span>&gt; <span class="o">=&gt;</span> <span class="kd">model</span>&lt;<span class="nb">run+1</span>&gt;  <span class="c1"># for run = 1, 2, 3</span>
+</pre></div>
+</div>
+<p>expands to:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">model_run1</span> <span class="o">=&gt;</span> <span class="kd">model_run2</span>
+<span class="kd">model_run2</span> <span class="o">=&gt;</span> <span class="kd">model_run3</span>
+
+<span class="c1"># or equivalently:</span>
+
+<span class="kd">model_run1</span> <span class="o">=&gt;</span> <span class="kd">model_run2</span> <span class="o">=&gt;</span> <span class="kd">model_run3</span>
+</pre></div>
+</div>
+<p>And this graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">proc</span>&lt;<span class="nb">size-1</span>&gt; <span class="o">=&gt;</span> <span class="kd">proc</span>&lt;<span class="nb">size</span>&gt;  <span class="c1"># for size = small, big, huge</span>
+</pre></div>
+</div>
+<p>expands to:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">proc_small</span> <span class="o">=&gt;</span> <span class="kd">proc_big</span>
+<span class="kd">proc_big</span> <span class="o">=&gt;</span> <span class="kd">proc_huge</span>
+
+<span class="c1"># or equivalently:</span>
+
+<span class="kd">proc_small</span> <span class="o">=&gt;</span> <span class="kd">proc_big</span> <span class="o">=&gt;</span> <span class="kd">proc_huge</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-families-and-parameterization">
+<h2>Task Families And Parameterization<a class="headerlink" href="#task-families-and-parameterization" title="Permalink to this headline">¶</a></h2>
+<p>Task family members can be generated by parameter expansion:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[FAM]]</span>
+    <span class="nt">[[member</span>&lt;<span class="nb">r</span>&gt;<span class="nt">]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM</span>
+<span class="c1"># Result: family FAM contains member_r1, member_r2, etc.</span>
+</pre></div>
+</div>
+<p>Family names can be parameterized too, just like task names:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[RUN</span>&lt;<span class="nb">r</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">r</span>&gt;<span class="nt">]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> RUN&lt;r&gt;</span>
+    <span class="nt">[[post_proc</span>&lt;<span class="nb">r</span>&gt;<span class="nt">]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> RUN&lt;r&gt;</span>
+<span class="c1"># Result: family RUN_r1 contains model_r1 and post_proc_r1,</span>
+<span class="c1">#         family RUN_r2 contains model_r2 and post_proc_r1, etc.</span>
+</pre></div>
+</div>
+<p>As described in <a class="reference internal" href="scheduling.html#familytriggers"><span class="std std-ref">Family Triggers</span></a> family names can be used to
+trigger all members at once:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">FAMILY</span>
+</pre></div>
+</div>
+<p>or to trigger off all members:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAMILY</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>or to trigger off any members:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAMILY</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>If the members of <code class="docutils literal notranslate"><span class="pre">FAMILY</span></code> were generated with parameters, you can
+also trigger them all at once with parameter notation:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">member</span>&lt;<span class="nb">m</span>&gt;
+</pre></div>
+</div>
+<p>Similarly, to trigger off all members:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">member</span>&lt;<span class="nb">m</span>&gt; <span class="o">=&gt;</span> <span class="kd">bar</span>
+<span class="c1"># (member&lt;m&gt;:fail etc., for other trigger types)</span>
+</pre></div>
+</div>
+<p>Family names are still needed in the graph, however, to succinctly express
+“succeed-any” triggering semantics, and all-to-all or any-to-all triggering:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAM1</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">FAM2</span>
+</pre></div>
+</div>
+<p>(Direct all-to-all and any-to-all family triggering is not recommended for
+efficiency reasons though - see <a class="reference internal" href="scheduling.html#efficientinterfamilytriggering"><span class="std std-ref">Efficient Inter-Family Triggering</span></a>).</p>
+<p>For family <em>member-to-member</em> triggering use parameterized members.
+For example, if family <code class="docutils literal notranslate"><span class="pre">OBS_GET</span></code> has members <code class="docutils literal notranslate"><span class="pre">get&lt;obs&gt;</span></code> and
+family <code class="docutils literal notranslate"><span class="pre">OBS_PROC</span></code> has members <code class="docutils literal notranslate"><span class="pre">proc&lt;obs&gt;</span></code> then this graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">get</span>&lt;<span class="nb">obs</span>&gt; <span class="o">=&gt;</span> <span class="kd">proc</span>&lt;<span class="nb">obs</span>&gt;  <span class="c1"># for obs = ship, buoy, plane</span>
+</pre></div>
+</div>
+<p>expands to:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">get_ship</span> <span class="o">=&gt;</span> <span class="kd">proc_ship</span>
+<span class="kd">get_buoy</span> <span class="o">=&gt;</span> <span class="kd">proc_buoy</span>
+<span class="kd">get_plane</span> <span class="o">=&gt;</span> <span class="kd">proc_plane</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameterized-cycling">
+<span id="id1"></span><h2>Parameterized Cycling<a class="headerlink" href="#parameterized-cycling" title="Permalink to this headline">¶</a></h2>
+<p>Two ways of constructing cycling systems are described and contrasted in
+<a class="reference internal" href="../workflows.html#workflows-for-cycling-systems"><span class="std std-ref">Workflows For Cycling Systems</span></a>. For most purposes use of
+a proper <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling</span></a> workflow is recommended, wherein Cylc incrementally
+generates the date-time sequence and extends the workflow, potentially
+indefinitely, at run time. For smaller systems of finite duration, however,
+parameter expansion can be used to generate a sequence of pre-defined tasks
+as a proxy for cycling.</p>
+<p>Here’s a cycling workflow of two-monthly model runs for one year,
+with previous-instance model dependence (e.g. for model restart files):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2020-12</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># Run once, at the initial point.</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;prep =&gt; model&quot;</span>
+        <span class="c1"># Run at 2-month intervals between the initial and final points.</span>
+        <span class="nv">P2M </span><span class="o">=</span><span class="s"> &quot;model[-P2M] =&gt; model =&gt; post_proc &amp; archive&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;run-model $CYLC_TASK_CYCLE_POINT&quot;</span>
+</pre></div>
+</div>
+<p>And here’s how to do the same thing with parameterized tasks:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">chunk </span><span class="o">=</span><span class="s"> 1..6</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            prep =&gt; model&lt;chunk=1&gt;</span>
+<span class="s2">            model&lt;chunk-1&gt; =&gt; model&lt;chunk&gt; =&gt;</span>
+<span class="s2">            post_proc&lt;chunk&gt; &amp; archive&lt;chunk&gt;</span>
+<span class="s2">         &quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">chunk</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="c1"># Compute start date from chunk index and interval, then run the model.</span><span class="s2"></span>
+<span class="s2">INITIAL_POINT=2020-01</span>
+<span class="s2">INTERVAL_MONTHS=2</span>
+<span class="s2">OFFSET_MONTHS=(( (CYLC_TASK_PARAM_chunk - 1)*INTERVAL_MONTHS ))</span>
+<span class="s2">OFFSET=P${OFFSET_MONTHS}M</span>  <span class="c1"># e.g. P4M for chunk=3</span><span class="s2"></span>
+<span class="s2">run-model $(cylc cyclepoint --offset=$OFFSET $INITIAL_POINT)&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The two workflows are shown together below. They both achieve the same
+result, and both can include special tasks at the start, end, or
+anywhere in between. But as noted earlier the parameterized version has
+several disadvantages: it must be finite in extent and not too large; the
+date-time arithmetic has to be done by the user; and the full extent of the
+workflow will be visible at all times as the suite runs.</p>
+<div class="figure align-center">
+<img alt="../../_images/eg2-static.png" src="../../_images/eg2-static.png" />
+</div>
+<div class="figure align-center" id="id3">
+<span id="fig-eg2"></span><img alt="../../_images/eg2-dynamic.png" src="../../_images/eg2-dynamic.png" />
+<p class="caption"><span class="caption-text">Parameterized (top) and cycling (bottom) versions of the same
+workflow. The first three cycle points are shown in the
+cycling case. The parameterized case does not have “cycle points”.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Here’s a yearly-cycling suite with four parameterized chunks in each cycle
+point:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+        <span class="nv">chunk </span><span class="o">=</span><span class="s"> 1..4</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1Y </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            model&lt;chunk-1&gt; =&gt; model&lt;chunk&gt;</span>
+<span class="s2">            model&lt;chunk=4&gt;[-P1Y] =&gt; model&lt;chunk=1&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The inter-cycle trigger connects the first chunk in each cycle point
+to the last chunk in the previous cycle point. Of course it would be simpler
+to just use 3-monthly cycling:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P3M </span><span class="o">=</span><span class="s"> &quot;model[-P3M] =&gt; model&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Here’s a possible valid use-case for mixed cycling: consider a portable
+date-time cycling workflow of model jobs that can each take too long to run on
+some supported platforms. This could be handled without changing the cycling
+structure of the suite by splitting the run (at each cycle point) into a
+variable number of shorter steps, using more steps on less powerful hosts.</p>
+<div class="section" id="cycle-point-and-parameter-offsets-at-start-up">
+<h3>Cycle Point And Parameter Offsets At Start-Up<a class="headerlink" href="#cycle-point-and-parameter-offsets-at-start-up" title="Permalink to this headline">¶</a></h3>
+<p>In cycling workflows cylc ignores anything earlier than the suite initial
+cycle point. So this graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">P1D </span><span class="o">=</span><span class="s"> &quot;model[-P1D] =&gt; model&quot;</span>
+</pre></div>
+</div>
+<p>simplifies at the initial cycle point to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">P1D </span><span class="o">=</span><span class="s"> &quot;model&quot;</span>
+</pre></div>
+</div>
+<p>Similarly, parameter offsets are ignored if they extend beyond the start
+of the parameter value list. So this graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;model&lt;chunk-1&gt; =&gt; model&lt;chunk&gt;&quot;</span>
+</pre></div>
+</div>
+<p>simplifies for <code class="docutils literal notranslate"><span class="pre">chunk=1</span></code> to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;model_chunk1&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The initial cut-off applies to every parameter list, but only
+to cycle point sequences that start at the suite initial cycle point.
+Therefore it may be somewhat easier to use parameterized cycling if you
+need multiple date-time sequences <em>with different start points</em> in the
+same suite. We plan to allow this sequence-start simplification for any
+date-time sequence in the future, not just at the suite initial point,
+but it needs to be optional because delayed-start cycling tasks
+sometimes need to trigger off earlier cycling tasks.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="jinja2.html" class="btn btn-neutral float-right" title="Jinja2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="runtime.html" class="btn btn-neutral float-left" title="Runtime - Task Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">
+        Last updated on Mar 24, 2021.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly.2021-03-24";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-suites/parameterized-tasks";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

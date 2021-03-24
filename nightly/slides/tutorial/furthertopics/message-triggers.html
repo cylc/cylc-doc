@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Message Triggers &mdash; Cylc nightly.2021-03-24 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'nightly.2021-03-24',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc nightly.2021-03-24 documentation" href="../../index.html" />
+    <link rel="up" title="Further Topics" href="index.html" />
+    <link rel="next" title="User Guide" href="../../user-guide/index.html" />
+    <link rel="prev" title="Suicide Triggers" href="suicide-triggers.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="message-triggers">
+
+<h1>Message Triggers<a class="headerlink" href="../../../html/tutorial/furthertopics/message-triggers.html#message-triggers" title="View HTML">§</a></h1>
+
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> allow us to trigger dependent tasks
+before the upstream task has completed.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="explanation">
+
+<h2>Explanation<a class="headerlink" href="../../../html/tutorial/furthertopics/message-triggers.html#explanation" title="View HTML">§</a></h2>
+
+<p>We have seen <a class="reference internal" href="../scheduling/further-scheduling.html#tutorial-qualifiers"><span class="std std-ref">before</span></a> that tasks can have
+<a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifiers</span></a> for different
+<a class="reference internal" href="../../glossary.html#term-task-state"><span class="xref std std-term">task states</span></a>.
+<a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> are essentially custom qualifiers.
+We can produce a bespoke output while our task is still running.
+This output could be, for example, a report or perhaps another task.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="usage">
+
+<h2>Usage<a class="headerlink" href="../../../html/tutorial/furthertopics/message-triggers.html#usage" title="View HTML">§</a></h2>
+
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> are particularly useful if we have
+a long running task and we want to produce multiple tailored outputs whilst
+this task is running, rather than having to wait for the task to
+complete.</p>
+<p>We could also set up <a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">message triggers</span></a> to, for example,
+send an email to inform us that a submission has failed, making use of Cylc’s
+task event handling system. More information is available on these in the
+<a class="reference external" href="https://cylc.github.io/documentation/">Cylc User Guide</a>.</p>
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> provide a superior solution to
+the problem of file system polling. We could, for example, design our suite
+such that we check if our task is finished by polling at intervals.
+It is inefficient to ‘spam’ task hosts with polling commands, it is preferable
+to set up a message trigger.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="how-to-create-a-message-trigger">
+
+<h2>How to create a message trigger<a class="headerlink" href="../../../html/tutorial/furthertopics/message-triggers.html#how-to-create-a-message-trigger" title="View HTML">§</a></h2>
+
+<p>In order to get our suite to trigger messages, we need to:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>specify our custom message in a section called <code class="docutils literal notranslate"><span class="pre">[[outputs]]</span></code> within the</dt><dd><code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section of our suite,</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>add <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span> <span class="pre">--</span> <span class="pre">&quot;${CYLC_SUITE_NAME}&quot;</span> <span class="pre">&quot;${CYLC_TASK_JOB}&quot;</span> <span class="pre">&quot;YOUR</span> <span class="pre">CHOSEN</span> <span class="pre">TRIGGER</span> <span class="pre">MESSAGE&quot;</span></code></dt><dd>to the <code class="docutils literal notranslate"><span class="pre">script</span></code> section of <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code>, your chosen trigger message
+should be unique and should exactly match the message defined in
+<code class="docutils literal notranslate"><span class="pre">[[outputs]]</span></code>.</dd>
+</dl>
+</li>
+<li>Refer to these messages in the <code class="docutils literal notranslate"><span class="pre">[dependencies]</span></code> section of our suite.</li>
+</ul>
+<p>These outputs are then triggered during the running of the task.
+We can use these to manage tasks dependent on partially completed tasks.</p>
+<p>So, a basic example, where we have a task foo, that when partially completed
+triggers another task bar and when fully completed triggers another task, baz.</p>
+<blockquote>
+<div><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nv">graph</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span><span class="c">:</span><span class="kd">out1</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+            <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 5</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; &quot;file 1 done&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;file 1 done&quot;</span>
+
+    <span class="nt">[[bar, baz]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 10</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="note admonition" id="message-triggers-practical">
+<p class="first admonition-title">Practical<a class="headerlink" href="../../../html/tutorial/furthertopics/message-triggers.html#message-triggers-practical" title="View HTML">§</a></p>
+<p class="rubric">In this practical example, we will create a suite to demonstrate
+<a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">message triggers</span></a>. We will use message triggers
+to both produce a report and trigger a new task from a partially completed
+task.</p>
+<ol class="last arabic">
+<li><p class="first"><strong>Create a new directory.</strong></p>
+<p>Within your <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> directory create a new directory called</p>
+<p><code class="docutils literal notranslate"><span class="pre">message-triggers</span></code> and move into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/cylc-run/message-triggers
+<span class="nb">cd</span> ~/cylc-run/message-triggers
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Install the script needed for our suite</strong></p>
+<p>The suite we will be designing requires a bash script, <code class="docutils literal notranslate"><span class="pre">random.sh</span></code>,
+to produce our report. It will simply create a text file <code class="docutils literal notranslate"><span class="pre">report.txt</span></code>
+with some random numbers in it. This will be executed when the associated
+task is run.</p>
+<p>Scripts should be kept in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> sub-directory within the
+<a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>. If a <code class="docutils literal notranslate"><span class="pre">/bin</span></code>
+exists in the run directory, it will be prepended $PATH at run
+time.</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">/bin</span></code> directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/cylc-run/message-triggers/bin
+</pre></div>
+</div>
+<p>Create a bash script in the bin directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch bin/random.sh
+</pre></div>
+</div>
+<p>We will need to make this script executable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x bin/random.sh
+</pre></div>
+</div>
+<p>Open the file and paste the following basic bash script into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="nb">set</span> -eu
+
+<span class="nv">counter</span><span class="o">=</span><span class="m">1</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="nv">$counter</span> -le <span class="m">10</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+   <span class="nv">newrand</span><span class="o">=</span>$<span class="o">[</span> <span class="o">((</span> <span class="nv">$RANDOM</span> % <span class="m">40</span><span class="o">)</span> + <span class="m">1</span> <span class="o">)</span> <span class="o">]</span><span class="p">;</span>
+   <span class="nb">echo</span> <span class="nv">$newrand</span> &gt;&gt; report.txt<span class="p">;</span>
+   <span class="nv">counter</span><span class="o">=</span>$<span class="o">[(</span><span class="nv">$counter</span> + <span class="m">1</span><span class="o">)]</span><span class="p">;</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Create a new suite.</strong></p>
+<p>Create a <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file and paste the following basic suite into it:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test suite to demo message triggers&quot;</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+
+    <span class="nt">[[dependencies]]</span>
+
+        <span class="nt">[[[P2M]]]</span>
+            <span class="nv">graph</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+                <span class="kd">long_forecasting_task</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+                <span class="kd">long_forecasting_task</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+                <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+            <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>This is a basic suite, currently it does not have any message triggers
+attached to any task.</p>
+</li>
+<li><p class="first"><strong>Define our tasks in the runtime section.</strong></p>
+<p>Next we want to create our <code class="docutils literal notranslate"><span class="pre">runtime</span></code> section of our suite.
+First we define what the tasks do. In this example
+<code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> will sleep, create a file containing some
+random numbers and produce a message.
+(Note that the random number generator bash script has already been
+preloaded into your <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory.)
+<code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code> simply sleep.</p>
+<p>Add the following code to the  <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Create message triggers.</strong></p>
+<p>We now have a suite with a task, <code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> which, after
+it has fully completed, triggers two more tasks, <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code>
+and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code>.</p>
+<p>Suppose we want <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code>
+to start before <code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> has fully completed, perhaps
+after some data has become available.</p>
+<p>In this case, we shall trigger <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> after one set of
+random numbers has been created
+and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code> after a second set of random numbers has
+been created.</p>
+<p>There are three aspects of creating messsage triggers.
+The first is to create the messages. Within <code class="docutils literal notranslate"><span class="pre">runtime</span></code>, <code class="docutils literal notranslate"><span class="pre">TASK</span></code> in our
+suite, we need to create a sub-section called <code class="docutils literal notranslate"><span class="pre">outputs</span></code>. Here we create
+our custom outputs.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+        [[[outputs]]]</span>
+<span class="gi">+            update1 = &quot;Task partially complete, report ready to view&quot;</span>
+<span class="gi">+            update2 = &quot;Task partially complete, report updated&quot;</span>
+</pre></div>
+</div>
+<p>The second thing we need to do is to create a cylc message in our script.
+This should be placed where you want the message to be called. In our
+case, this is after each of the first two set of random numbers are
+generated.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Remember that the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> should exactly match the outputs
+stated in our <code class="docutils literal notranslate"><span class="pre">[[[outputs]]]</span></code> section.</p>
+</div>
+<p>Modify the <code class="docutils literal notranslate"><span class="pre">[[long_forecasting_task]]</span></code> script in the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+as follows:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>[runtime]
+
+    [[long_forecasting_task]]
+        script = &quot;&quot;&quot;
+            sleep 2
+            random.sh
+<span class="gi">+           cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+                 &quot;Task partially complete, report ready to view&quot;
+            sleep 2
+            random.sh
+<span class="gi">+           cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+                 &quot;Task partially complete, report updated&quot;
+            sleep 2
+            random.sh
+        &quot;&quot;&quot;
+</pre></div>
+</div>
+<p>Lastly, we need to make reference to the messages in the
+graph section.
+This will ensure your tasks trigger off of the messages correctly.</p>
+<p>Adapt the <code class="docutils literal notranslate"><span class="pre">[[dependencies]]</span></code> section in the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file to read as
+follows:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>         [[[P2M]]]
+             graph = &quot;&quot;&quot;
+<span class="gd">-               long_forecasting_task =&gt;  another_weather_task</span>
+<span class="gd">-               long_forecasting_task =&gt; different_weather_task</span>
+<span class="gi">+               long_forecasting_task:update1 =&gt;  another_weather_task</span>
+<span class="gi">+               long_forecasting_task:update2 =&gt; different_weather_task</span>
+                long_forecasting_task[-P2M] =&gt; long_forecasting_task
+            &quot;&quot;&quot;
+</pre></div>
+</div>
+<p>This completes our <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>Our final suite should look like this:</p>
+<div class="spoiler warning admonition">
+<p class="first admonition-title">Solution</p>
+<div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+<span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[meta]</span>
+<span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test suite to demo message triggers&quot;</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+
+    <span class="nt">[[dependencies]]</span>
+
+        <span class="nt">[[[P2M]]]</span>
+            <span class="nv">graph</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+                <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update1</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+                <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update2</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+                <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+            <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report ready to view&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report updated&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">update1 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report ready to view&quot;</span>
+            <span class="nv">update2 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report updated&quot;</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p class="first"><strong>Validate the suite.</strong></p>
+<p>It is a good idea to check that our <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file does not have any
+configuration issues.</p>
+<p>Run <cite>cylc validate</cite> to check for any errors:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc validate .
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Run the suite.</strong></p>
+<p>Now we are ready to run our suite. Open the Cylc GUI by running the
+following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc gui message-triggers <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>Run the suite either by pressing the play button in the Cylc GUI or by
+running the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc run message-triggers
+</pre></div>
+</div>
+<p>Your suite should now run, the tasks should succeed.</p>
+</li>
+<li><p class="first"><strong>Inspect the work directory.</strong></p>
+<p>You can now check for your report outputs. These should appear in the
+<a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a> of the suite. All being well, our first cycle
+point should produce a test file with some random numbers, and each
+subsequent cycle point file should have more random numbers added.</p>
+</li>
+<li><p class="first"><strong>Extension.</strong></p>
+<p>Suppose now we would like to send an email alerting us to the reports
+being ready to view.</p>
+<p>We will need to add to our <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> section, add a sub-section called <code class="docutils literal notranslate"><span class="pre">[[[events]]]</span></code>.
+Within this section we will make use of the built-in setting
+<code class="docutils literal notranslate"><span class="pre">mail</span> <span class="pre">events</span></code>.
+Here, we specify a list of events for which notifications should be sent.</p>
+<p>The events we are interested in are, in this case, our outputs.</p>
+<p>Add the following code to your <code class="docutils literal notranslate"><span class="pre">[[[events]]]</span></code> section.</p>
+<blockquote>
+<div><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[[events]]]</span>
+    <span class="nv">mail events </span><span class="o">=</span><span class="s"> update1, update2</span>
+</pre></div>
+</div>
+<p>Our updated suite should look like this:</p>
+</div></blockquote>
+<div class="spoiler warning admonition">
+<p class="first admonition-title">Solution</p>
+<div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+<span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[meta]</span>
+<span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test suite to demo message triggers&quot;</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+
+    <span class="nt">[[dependencies]]</span>
+
+        <span class="nt">[[[P2M]]]</span>
+            <span class="nv">graph</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+                <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update1</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+                <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update2</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+                <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+            <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report ready to view&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report updated&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">update1 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report ready to view&quot;</span>
+            <span class="nv">update2 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report updated&quot;</span>
+
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">mail events </span><span class="o">=</span><span class="s"> update1, update2</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</div>
+<p>Save your changes and run your suite.
+Check your emails and you should have, one email for the first update and,
+a second email alerting you to the subsequent updated reports being ready.</p>
+<p>Note that the second email automatically bundles the messages to prevent
+your inbox from being flooded.</p>
+</li>
+</ol>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
