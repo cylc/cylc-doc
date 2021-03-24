@@ -13,10 +13,11 @@ to running suites.
 Suite Start-Up
 --------------
 
-There are three ways to start a suite running: *cold start* and *warm start*,
-which start from scratch; and *restart*, which continues from the prior
-suite state. The only difference between cold starts and warm starts
-is that warm starts start from a point beyond the initial cycle point.
+There are three ways to start a suite running:
+
+* Cold start: start from scratch
+* Warm start: start from scratch, but after the initial cycle point
+* Restart: continue from prior suite state
 
 Once a suite has been started, it cannot start from scratch again without a
 re-install. At this point, it is typically a restart that is needed most
@@ -33,7 +34,7 @@ often (but see also :ref:`Reloading The Suite Configuration At Runtime`).
 Cold Start
 ^^^^^^^^^^
 
-A cold start is the primary way to run a freshly-installed suite from scratch:
+A cold start is the primary way to run a suite for the first time:
 
 .. code-block:: console
 
@@ -43,13 +44,12 @@ The initial cycle point may be specified on the command line or in the :cylc:con
 file. The scheduler starts by loading the first instance of each task at the
 suite initial cycle point, or at the next valid point for the task.
 
-
 .. _Warm Start:
 
 Warm Start
 ^^^^^^^^^^
 
-A warm start runs a freshly-installed suite from scratch, like a cold start,
+A warm start runs a suite for the first time, like a cold start,
 but from the beginning of a given :term:`start cycle point` that is beyond the
 suite :term:`initial cycle point`. The warm start cycle point must be given
 on the command line:
@@ -1246,7 +1246,7 @@ Suite Run Databases
 -------------------
 
 Suite server programs maintain two ``sqlite`` databases to record
-certain aspects of run history:
+information on run history:
 
 .. code-block:: console
 
@@ -1334,8 +1334,8 @@ selective about that. (Also in a Rose suite, the ``flow.cylc`` file does not
 need to be restored if you restart with ``rose suite-run`` - which re-installs
 suite source files to the run directory).
 
-The public DB is not strictly required for a restart - the :term:`scheduler`
-will recreate it if needed.
+The public DB is not strictly required for a restart; if it is absent,
+the :term:`scheduler` will recreate it.
 
 The job status files are only needed if the suite state at last shutdown
 contained active tasks that now need to be polled to determine what happened to them
