@@ -335,6 +335,8 @@ Cylc Graphs
 
       .. code-block:: cylc
 
+         [scheduler]
+             allow implicit tasks = True
          [scheduling]
              [[graph]]
                  R1 = """
@@ -404,6 +406,8 @@ Cylc Graphs
 
          .. code-block:: cylc
 
+            [scheduler]
+                allow implicit tasks = True
             [scheduling]
                 [[graph]]
                     R1 = """

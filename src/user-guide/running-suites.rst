@@ -78,9 +78,9 @@ All workflows have an :term:`initial cycle point` and many have a
 :term:`final cycle point`. These determine the range between which Cylc will
 schedule tasks to run.
 
-By default when you launch a Cylc :term:`scheduler` to run the workflow 
+By default when you launch a Cylc :term:`scheduler` to run the workflow,
 it will start at the :term:`initial cycle point` and stop at the
-:term:`final cycle point`, however, it is possible to start and stop the
+:term:`final cycle point`. However, it is possible to start and stop the
 scheduler at any arbitrary point.
 
 To do this we use a :term:`start cycle point` and/or :term:`stop cycle point`
@@ -372,25 +372,33 @@ for task messaging by TCP or SSH. See :ref:`Polling To Track Job Status`.
 Tracking Task State
 -------------------
 
-Cylc supports two ways of tracking task state on job hosts:
+Cylc supports three ways of tracking task state on job hosts:
 
-- task-to-suite messaging via TCP (using ZMQ protocol)
+- task-to-workflow messaging via TCP (using ZMQ protocol)
+- task-to-workflow messaging via non-interactive SSH to the workflow host, then
+  local tcp.
 - regular polling by the :term:`scheduler`
 
-These can be configured per job host using
+These can be configured per platform using
 :cylc:conf:`global.cylc[platforms][<platform name>]communication method`.
 
 If your site prohibits TCP and SSH back from job hosts to
-suite hosts, before resorting to the polling method you should
+workflow hosts, before resorting to the polling method you should
 consider installing dedicated Cylc servers or
 VMs inside the HPC trust zone (where TCP and SSH should be allowed).
 
 It is also possible to run Cylc :term:`schedulers <scheduler>` on HPC login
-nodes, but this is not recommended for load and run duration,
+nodes, but this is not recommended for load and run duration.
 
 Finally, it has been suggested that *port forwarding* may provide another
-solution - but that is beyond the scope of this document.
+solution - this has been investigated and will not be implemented at this time.
+Organisations often have port forwarding disabled for security reasons.
 
+.. note::
+   It is recommended that you use platform configuration within your workflows
+   :cylc:conf:`flow.cylc[runtime][<namespace>]platform`, rather than the
+   deprecated ``host`` setting to ensure the intended task communication method
+   is applied.
 
 TCP Task Messaging
 ^^^^^^^^^^^^^^^^^^
@@ -407,6 +415,26 @@ Suite server programs automatically install suite :term:`contact information
 <contact file>` and credentials on job hosts. Users only need to do this
 manually for remote access to suites on other hosts, or suites owned by other
 users - see :ref:`RemoteControl`.
+
+SSH Task Communication
+^^^^^^^^^^^^^^^^^^^^^^
+Cylc can be configured to re-invoke task messaging commands on the workflow
+host via non-interactive SSH (from job platform to workflow host).
+
+User-invoked client commands have been automatically enabled to support this
+method of communication, when
+:cylc:conf:`global.cylc[platforms][<platform name>]communication method` is
+configured to ``ssh``.
+
+This is less efficient than direct ZMQ protocol messaging, but it may be useful at
+sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
+
+.. warning::
+
+   Ensure SSH keys are in place for the remote task platform(s) before enabling
+   this feature. Failure to do so, will result in
+   ``Host key verification failed`` error.
+
 
 .. _Polling To Track Job Status:
 
@@ -481,7 +509,7 @@ Cylc client programs connect to running suites using information stored in
 the :term:`contact file` in the suite :term:`run directory`.
 
 This means that Cylc can interact with suites running on another host provided
-that they share the filesystem on which the :term:`run directory`
+that they share the filesystem on which the :term:`cylc-run directory`
 (``cylc-run``) is located.
 
 If the hosts do not share a filesystem you must use SSH when calling Cylc client
@@ -1057,12 +1085,12 @@ Several suite run modes allow you to simulate suite behaviour quickly without
 running the suite's real jobs - which may be long-running and resource-hungry:
 
 dummy mode
-   Runs dummy tasks as background jobs on configured job hosts.
+   Runs tasks as background jobs on configured job hosts.
 
    This simulates scheduling, job host connectivity, and generates all job
    files on suite and job hosts.
 dummy-local mode
-   Runs real dummy tasks as background jobs on the suite host, which allows
+   Runs real tasks as background jobs on the suite host, which allows
    dummy-running suites from other sites.
 
    This simulates scheduling and generates all job files on the suite host.
@@ -1103,7 +1131,7 @@ directives in your live suite, or else use a custom live mode test suite.
 
    The dummy modes ignore all configured task ``script`` items
    including ``init-script``. If your ``init-script`` is required
-   to run even dummy tasks on a job host, note that host environment
+   to run even blank/empty tasks on a job host, note that host environment
    setup should be done elsewhere.
 
 
@@ -1374,7 +1402,7 @@ to interpret the diagram, refer to the
 Disaster Recovery
 -----------------
 
-If a suite run directory gets deleted or corrupted, the options for recovery
+If a run directory gets deleted or corrupted, the options for recovery
 are:
 
 - restore the run directory from back-up, and restart the suite
@@ -1453,10 +1481,9 @@ See :py:mod:`cylc.flow.main_loop.auto_restart` for details.
 Alternate Run Directories
 -------------------------
 
-The ``cylc register`` command normally creates a run directory at
-the standard location ``~/cylc-run/<WORKFLOW-NAME>/``. With the ``--run-dir``
-option it can create the run directory at some other location, with a symlink
-from ``~/cylc-run/<WORKFLOW-NAME>`` to allow access via the standard file path.
+The ``cylc install`` command normally creates a worflow run directory at
+the standard location ``~/cylc-run/<WORKFLOW-NAME>/``. Configure the run
+directory in the ``global.cylc`` file: :cylc:conf:`global.cylc[symlink dirs]`.
 
 This may be useful for quick-running :ref:`Sub-Workflows` that generate large
 numbers of files - you could put their run directories on fast local disk or
@@ -1491,9 +1518,9 @@ or have a ``final cycle point`` so they don't keep on running indefinitely.
 Sub-workflow names should normally incorporate the main-workflow cycle point (use
 ``$CYLC_TASK_CYCLE_POINT`` in the ``cylc run`` command line to start the
 sub-workflow), so that successive sub-workflows can run concurrently if necessary and
-do not compete for the same run directory. This will generate a new sub-workflow
-run directory for every main-workflow cycle point, so you may want to put
-housekeeping tasks in the main workflow to extract the useful products from each
+do not compete for the same workflow run directory. This will generate a new
+sub-workflow run directory for every main-workflow cycle point, so you may want to
+put housekeeping tasks in the main workflow to extract the useful products from each
 sub-workflow run and then delete the sub-workflow run directory.
 
 For quick-running sub-workflows that generate large numbers of files, consider

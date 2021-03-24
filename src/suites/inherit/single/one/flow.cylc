@@ -3,9 +3,6 @@
 [meta]
     title = "User Guide [runtime] example."
 
-[scheduler]
-    required run mode = simulation # (no task implementations)
-
 [scheduling]
     initial cycle point = 20110101T06
     final cycle point = 20110102T00
@@ -39,8 +36,5 @@
         [[[environment]]]
             RUNNING_DIR = $HOME/running/ship  # override OBS environment
             OUTPUT_DIR = $HOME/output/ship    # add to OBS environment
-    [[foo]]
-        # (just inherits from root)
-
-    # The task [[bar]] is implicitly defined by its presence in the
-    # graph; it is also a dummy task that just inherits from root.
+    [[foo, bar]]
+        # (just inherit from root)

@@ -106,8 +106,9 @@ triggers another task bar and when fully completed triggers another task, baz.
       task is run.
 
       Scripts should be kept in the ``bin`` sub-directory within the
-      :term:`suite directory <suite directory>`. If a ``/bin`` exists in the
-      suite directory, it will be prepended $PATH at run time.
+      :term:`run directory <run directory>`. If a ``/bin``
+      exists in the run directory, it will be prepended $PATH at run
+      time.
 
       Create a ``/bin`` directory.
 
@@ -121,7 +122,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          touch bin/random.sh
 
-      We will need to make this script exectuable.
+      We will need to make this script executable.
 
       .. code-block:: bash
 

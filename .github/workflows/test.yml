@@ -5,6 +5,16 @@ on:
     branches: [master]
   pull_request:
   workflow_dispatch:
+    inputs:
+      rose_ref:
+        description: The Rose branch to test against
+        required: false
+      cylc_ref:
+        description: The Cylc branch to test against
+        required: false
+      cylc_rose_ref:
+        description: The Cylc branch to test against
+        required: false
 
 jobs:
   test:
@@ -21,27 +31,27 @@ jobs:
         with:
             node-version: '10.x'
 
-      - name: install graphviz
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
-          pip install pygraphviz
-
       - name: checkout cylc-doc
         uses: actions/checkout@v2
+
+      - name: install dependencies
+        uses: ./.github/actions/install-dependencies
+
       - name: install cylc-doc
-        run: |
-          sudo apt-get install -y librsvg2-bin ghostscript
-          pip install .[all]
+        run: pip install .[all]
 
       - name: install libs to document
+        env:
+          cylc_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
+          rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
+          cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
           pip install  \
-            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
-            'metomi-rose[all] @ git+https://github.com/metomi/rose@master' \
-            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master'
+            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
+            "metomi-rose[all] @ git+https://github.com/metomi/rose@${rose_ref}" \
+            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"
 
       - name: install eslint
         run: |

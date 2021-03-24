@@ -6,6 +6,9 @@
         active tasks at once.
     """
 
+[scheduler]
+    allow implicit tasks = True
+
 [scheduling]
     [[queues]]
         [[[default]]]

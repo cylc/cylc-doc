@@ -10,3 +10,4 @@ Writing Suites
    parameterized-tasks
    jinja2
    empy
+   external-triggers

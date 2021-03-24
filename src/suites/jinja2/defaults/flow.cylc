@@ -17,6 +17,7 @@
         """
 
 [runtime]
+    [[foo, bar]]
     [[ENS]]
 {% for I in range( 0, N_MEMBERS | default( 3 )) %}
     [[ mem_{{ I }} ]]

@@ -153,13 +153,13 @@ the ``cylc suite-state`` command - see
 As a simple example, consider the following "upstream"
 suite (which we want to trigger off of):
 
-.. literalinclude:: ../suites/xtrigger/suite_state/upstream/flow.cylc
+.. literalinclude:: ../../suites/xtrigger/suite_state/upstream/flow.cylc
    :language: cylc
 
-It must be registered and run under the name *up*, as referenced in the
+It must be installed and run under the name *up*, as referenced in the
 "downstream" suite that depends on it:
 
-.. literalinclude:: ../suites/xtrigger/suite_state/downstream/flow.cylc
+.. literalinclude:: ../../suites/xtrigger/suite_state/downstream/flow.cylc
    :language: cylc
 
 Try starting the downstream suite first, then the upstream, and
@@ -275,8 +275,8 @@ needs any of this information, in function arguments in the suite configuration:
 and less commonly needed:
 
 - ``%(user_name)s`` - suite owner's user name
-- ``%(suite_name)s`` - registered suite name
-- ``%(suite_run_dir)s`` - suite run directory
+- ``%(suite_name)s`` - installed workflow name
+- ``%(suite_run_dir)s`` - run directory
 - ``%(suite_share_dir)s`` - suite share directory
 
 If you need to pass a string template into an xtrigger function as a string
@@ -380,7 +380,7 @@ the appropriate string templates in the suite configuration for this).
 
 An example xrandom trigger suite:
 
-.. literalinclude:: ../suites/xtrigger/xrandom/flow.cylc
+.. literalinclude:: ../../suites/xtrigger/xrandom/flow.cylc
    :language: cylc
 
 .. _Current Trigger Function Limitations:
@@ -485,7 +485,7 @@ the new event. The suite passphrase must be installed on triggering account.
 
 Here is a working example of a simulated satellite processing suite:
 
-.. literalinclude:: ../suites/satellite/ext-trigger/flow.cylc
+.. literalinclude:: ../../suites/satellite/ext-trigger/flow.cylc
    :language: cylc
 
 External triggers are not normally needed in date-time cycling suites driven

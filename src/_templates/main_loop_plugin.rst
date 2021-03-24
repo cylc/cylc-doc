@@ -7,6 +7,10 @@
       otherwise you can end up with imported modules and mess like that
 
    {% block functions %}
+
+   Python API
+   ----------
+
    {% if functions %}
    .. rubric:: Coroutines
 

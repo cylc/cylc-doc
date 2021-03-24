@@ -18,4 +18,4 @@
 
 set -eux
 
-cylc validate --strict . --icp=2000
+cylc validate --check-circular . --icp=2000

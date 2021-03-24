@@ -42,16 +42,11 @@ jobs:
           ref: master
           path: docs
 
-      - name: install graphviz
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz pkg-config libgraphviz-dev
-          pip install pygraphviz
+      - name: install dependencies
+        uses: ./docs/.github/actions/install-dependencies
 
       - name: install cylc-doc
-        run: |
-          sudo apt-get install -y librsvg2-bin ghostscript
-          pip install "${{ github.workspace }}/docs[all]"
+        run: pip install "${{ github.workspace }}/docs[all]"
 
       - name: install libs to document
         run: |

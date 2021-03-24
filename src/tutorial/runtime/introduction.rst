@@ -37,6 +37,13 @@ The Task Section
    [runtime]
        [[hello_world]]
 
+.. note::
+
+   This runtime sub-section is normally required, even if it is empty. However,
+   in the previous tutorials, we disabled this requirement using the setting
+   :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`.
+   See :ref:`ImplicitTasks` for more details.
+
 
 The ``script`` Setting
 ----------------------
@@ -317,22 +324,8 @@ Running A Suite
    In this tutorial we are writing our suites in the ``cylc-run`` directory.
 
    It is possible to write them elsewhere on the system. If we do so we
-   must register the suite with Cylc before use.
-
-   We do this using the ``cylc reg`` command which we supply with a name which
-   will be used to refer to the suite in place of the path i.e:
-
-   .. code-block:: sub
-
-      cylc reg <name> <path/to/suite>
-      cylc validate <name>
-      cylc run <name>
-
-   The ``cylc reg`` command will create a directory for the suite in the
-   ``cylc-run`` directory meaning that we will have separate
-   :term:`suite directories <suite directory>` and
-   :term:`run directories <run directory>`.
-
+   must install the workflow with ``cylc install`` before use. For more
+   information, see :ref:`Installing-workflows`.
 
 Suite Files
 -----------
