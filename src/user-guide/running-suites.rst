@@ -223,9 +223,9 @@ workflow by coding tasks that run the ``cylc checkpoint`` command:
       # ...
       [[checkpointer]]
          script = """
-   cylc__job__wait_cylc_message_started
-   cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
-   """
+             cylc__job__wait_cylc_message_started
+             cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
+         """
 
 .. note::
 
