@@ -308,11 +308,11 @@ Running A Suite
    filesystem (so if we create a suite in ``~/cylc-run/foo`` we would put
    ``~/cylc-run/foo/flow.cylc``).
 
-   Next we can run the suite using the ``cylc run`` command.
+   Next we can run the suite using the ``cylc play`` command.
 
 .. code-block:: sub
 
-   cylc run <name>
+   cylc play <name>
 
 .. ifnotslides::
 
@@ -419,7 +419,7 @@ Suite Files
 
       .. code-block:: bash
 
-         cylc run runtime-introduction
+         cylc play runtime-introduction
 
       The tasks will start to run - you should see them going through the
       "Waiting", "Running" and "Succeeded" states.

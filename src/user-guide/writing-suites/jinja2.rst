@@ -248,7 +248,7 @@ This can be done on a case-by-case basis using the ``-s`` option e.g:
 .. code-block:: console
 
    $ # set the Jinja2 variable "answer" to 42
-   $ cylc run <flow> -s answer=42
+   $ cylc play <flow> -s answer=42
 
 Or for multiple options using a Cylc "set file" with ``--set-file``
 e.g:
@@ -263,7 +263,7 @@ e.g:
    __SET_FILE__
 
    $ # run using the options in the set file
-   $ cylc run <flow> --set-file my-set-file
+   $ cylc play <flow> --set-file my-set-file
 
 Values must be Python literals e.g:
 
@@ -289,7 +289,7 @@ Values must be Python literals e.g:
 
       $ # wrap the key=value pair in single quotes stop the shell from
       $ # stripping the inner quotes around the string:
-      $ cylc run <flow> -s 'my_string="a b c"'
+      $ cylc play <flow> -s 'my_string="a b c"'
 
 Here's an example:
 
@@ -341,8 +341,8 @@ will show the suite with the Jinja2 variables as set.
 .. note::
 
    Suites started with template variables set on the command
-   line will *restart* with the same settings. However, you can set
-   them again on the ``cylc restart`` command line if they need to
+   line will :term:`restart` with the same settings. However, you can set
+   them again on the ``cylc play`` command line if they need to
    be overridden.
 
 

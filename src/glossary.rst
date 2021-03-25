@@ -199,7 +199,8 @@ Glossary
       * :term:`initial cycle point`
 
    start cycle point
-      The "start" :term:`cycle point` is where the :term:`scheduler` starts.
+      The start cycle point is the :term:`cycle point` where the
+      :term:`scheduler` :term:`starts <start>` running from.
 
       This may be before or after the :term:`initial cycle point`.
 
@@ -213,7 +214,8 @@ Glossary
       * :term:`initial cycle point`
 
    stop cycle point
-      The "stop" :term:`cycle point` is where the :term:`scheduler` shuts down.
+      The stop cycle point is the :term:`cycle point` at which the
+      :term:`scheduler` :term:`shuts down <shutdown>`.
 
       This may be before or after the :term:`final cycle point`.
 
@@ -224,7 +226,7 @@ Glossary
       * :ref:`start_stop_cycle_point`
       * :term:`cycle point`
       * :term:`start cycle point`
-      * :term:`initial cycle point`
+      * :term:`final cycle point`
 
    integer cycling
       An integer cycling suite is a :term:`cycling suite<cycling>` which has
@@ -662,12 +664,12 @@ Glossary
 
    start
    startup
-      When a :term:`suite` starts the Cylc :term:`scheduler` is
-      run. This program controls the suite and is what we refer to as
-      "running".
+      A start is when the Cylc :term:`scheduler` runs a :term:`suite`
+      for the first time. The scheduler is the program that
+      controls the suite and is what we refer to as "running".
 
-      A suite start can be either :term:`cold <cold start>` or :term:`warm <warm
-      start>` (cold by default).
+      A suite start can be either :term:`cold <cold start>` or
+      :term:`warm <warm start>` (cold by default).
 
       See also:
 
@@ -681,21 +683,25 @@ Glossary
 
    cold start
       A cold start is one in which the :term:`suite` :term:`starts <start>`
-      from the :term:`initial cycle point`. This is the default behaviour of
-      ``cylc run``.
+      from the :term:`initial cycle point`. This is the default behaviour
+      of ``cylc play`` for a suite that hasn't been run before.
 
       See also:
 
+      * :term:`start`
       * :term:`warm start`
 
    warm start
-      In a :term:`cycling suite <cycling>`
-      a warm start is one in which the :term:`suite` :term:`starts <start>`
-      from a :term:`cycle point` after the :term:`initial cycle point`.
-      Tasks in cycles before this point as assumed to have succeeded.
+      In a :term:`cycling suite <cycling>`, a warm start
+      is one in which a :term:`suite` (that hasn't been run before)
+      :term:`starts <start>` from a :term:`start cycle point` that is after the
+      :term:`initial cycle point`. Tasks in cycles before this point are
+      treated as if they have succeeded.
 
       See also:
 
+      * :term:`start`
+      * :term:`start cycle point`
       * :term:`cold start`
 
    cylc-run directory
@@ -718,7 +724,7 @@ Glossary
 
    stop
    shutdown
-      When a :term:`suite` is shutdown the :term:`scheduler` is
+      When a :term:`suite` is shut down the :term:`scheduler` is
       stopped. This means that no further :term:`jobs <job>` will be submitted.
 
       By default Cylc waits for any submitted or running :term:`jobs <job>` to
@@ -732,17 +738,40 @@ Glossary
       * :term:`reload`
 
    restart
-      When a :term:`stopped <stop>` :term:`suite` is "restarted" Cylc will pick
+      When a :term:`stopped <stop>` :term:`suite` is restarted, Cylc will pick
       up where it left off. Cylc will detect any :term:`jobs <job>` which
       have changed state (e.g. succeeded) during the period in which the
-      :term:`suite` was :term:`shutdown`.
+      :term:`suite` was stopped.
+
+      A restart is the behaviour of ``cylc play`` for a suite that has been
+      previously run.
 
       See also:
 
       * :ref:`Restarting Suites`
       * :term:`start`
-      * :term:`Stop <stop>`
-      * :term:`Reload <reload>`
+      * :term:`stop`
+      * :term:`reload`
+
+   pause
+      Pausing a :term:`suite` prevents all submission of :term:`jobs <job>`.
+      However, any already-running or submitted jobs will still run to
+      completion.
+
+      See also:
+
+      * :term:`resume`
+
+   resume
+      When a :term:`paused <pause>` :term:`suite` is resumed, :term:`jobs <job>`
+      will be allowed to be submitted once again.
+
+      Resuming the workflow is the behaviour of ``cylc play`` for a paused (but
+      not :term:`stopped <stop>`) workflow.
+
+      See also:
+
+      * :term:`pause`
 
    reload
       Any changes made to the :cylc:conf:`flow.cylc` file whilst the suite is
@@ -765,6 +794,37 @@ Glossary
 
       * :ref:`Reloading Suites`
       * `Cylc User Guide`_
+
+   hold
+   held task
+   hold after cycle point
+      A :term:`task` can be held using ``cylc hold``, which prevents it from
+      submitting :term:`jobs <job>`.
+
+      It is also possible to set a "hold after cycle point"; all tasks after
+      this cycle point will be held.
+
+      .. note::
+
+         While similar to :term:`pausing a workflow <pause>`, holding a task(s)
+         is slightly different. Pausing a workflow does not hold tasks or
+         affect task states. Any held tasks are not :term:`released <release>`
+         when :term:`resuming <resume>` a paused workflow.
+
+      See also:
+
+      * :term:`release`
+
+   release
+      :term:`Held tasks <hold>` can be released using ``cylc release``,
+      allowing submission of :term:`jobs <job>` once again.
+
+      It is also possible to remove the "hold after cycle point" if set,
+      using ``cylc release --all``. This will also release all held tasks.
+
+      See also:
+
+      * :term:`hold`
 
    parameterisation
       Parameterisation is a way to consolidate configuration in the Cylc
