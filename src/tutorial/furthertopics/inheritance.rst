@@ -132,9 +132,9 @@ Cylc handles inheritance by starting with the root family and working down the
 inheritance tree applying each section in turn.
 
 To see the resulting configuration for the ``a380`` task use the
-``cylc get-config`` command::
+``cylc config`` command::
 
-   cylc get-config . --sparse -i "[runtime][a380]"
+   cylc config . --sparse -i "[runtime][a380]"
 
 You should see some settings which have been inherited from the ``VEHICLE`` and
 ``AIRPLANE`` families as well as a couple defined in the ``a380`` task.
@@ -227,14 +227,14 @@ The inheritance hierarchy should now look like this:
    AIR_VEHICLE -> AIRPLANE  [color=royalblue];
    AIR_VEHICLE -> HELICOPTER   [color=royalblue];
 
-Inspect the configuration of the ``v22`` task using the ``cylc get-config``
+Inspect the configuration of the ``v22`` task using the ``cylc config``
 command.
 
 .. spoiler:: Hint warning
 
    .. code-block:: bash
 
-      cylc get-config . --sparse -i "[runtime][v22]"
+      cylc config . --sparse -i "[runtime][v22]"
 
 You should see that the ``CAN_TASK_OFF_VERTICALLY`` environment variable has
 been set to ``false`` which isn't right. This is because of the order in which
@@ -273,7 +273,7 @@ in the ``AIRPLANE`` family.
    HELICOPTER   # sets "CAN_TAKE_OFF_VERTICALLY to "true"
    v22
 
-Inspect the configuration of the ``v22`` task using ``cylc get-config`` to
+Inspect the configuration of the ``v22`` task using ``cylc config`` to
 confirm this.
 
 
@@ -414,7 +414,7 @@ task.
                  title = An old-fashioned bicycle.
 
 
-Using ``cylc get-config`` to inspect the configuration of the ``penny_farthing``
+Using ``cylc config`` to inspect the configuration of the ``penny_farthing``
 task we can see that it inherits settings from the ``VEHICLE``,
 ``BICYCLE`` and ``HUMAN_ENGINE`` families.
 
@@ -434,7 +434,7 @@ task we can see that it inherits settings from the ``VEHICLE``,
 
    .. code-block:: bash
 
-      cylc get-config . --sparse -i "[runtime]penny_farthing"
+      cylc config . --sparse -i "[runtime]penny_farthing"
 
 Hovercraft
 ^^^^^^^^^^

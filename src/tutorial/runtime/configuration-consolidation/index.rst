@@ -82,33 +82,34 @@ structure of a suite and avoid duplication.
    parameters
 
 
-The ``cylc get-config`` Command
--------------------------------
+The ``cylc config`` Command
+---------------------------
 
 .. ifnotslides::
 
-   The ``cylc get-config`` command reads in then prints out the :cylc:conf:`flow.cylc` file
-   to the terminal.
+   The ``cylc config`` command reads in either the
+   :cylc:conf:`global.cylc` file, or a specific workflow's :cylc:conf:`flow.cylc`
+   file, and it prints out the configuration to the terminal.
 
    Throughout this section we will be introducing methods for consolidating
-   the :cylc:conf:`flow.cylc` file, the ``cylc get-config`` command can be used to
+   the :cylc:conf:`flow.cylc` file, the ``cylc config`` command can be used to
    "expand" the :cylc:conf:`flow.cylc` file back to its full form.
 
    .. note::
 
-      The main use of ``cylc get-config`` is inspecting the
-      ``[runtime]`` section of a suite. The ``cylc get-config`` command does not
+      Often, the main use of ``cylc config`` is inspecting the
+      ``[runtime]`` section of a workflow. The ``cylc config`` command does not
       expand :term:`parameterisations <parameterisation>` and
-      :term:`families <family>` in the suite's :term:`graph`. To inspect the
+      :term:`families <family>` in the workflow's :term:`graph`. To inspect the
       graphing use the ``cylc graph`` command.
 
-   Call ``cylc get-config`` with the path of the suite (``.`` if you are already
-   in the :term:`suite directory`) and the ``--sparse`` option which hides
+   Call ``cylc config`` with the path of the workflow (``.`` if you are already
+   in the :term:`run directory`) and the ``--sparse`` option which hides
    default values.
 
 .. code-block:: sub
 
-   cylc get-config <path> --sparse
+   cylc config <path> --sparse
 
 .. ifnotslides::
 
@@ -118,20 +119,20 @@ The ``cylc get-config`` Command
 .. code-block:: sub
 
    # Print the contents of the [scheduling] section.
-   cylc get-config <path> --sparse -i '[scheduling]'
+   cylc config <path> --sparse -i '[scheduling]'
    # Print the contents of the get_observations_heathrow task.
-   cylc get-config <path> --sparse -i '[runtime][get_observations_heathrow]'
+   cylc config <path> --sparse -i '[runtime][get_observations_heathrow]'
    # Print the value of the script setting in the get_observations_heathrow task
-   cylc get-config <path> --sparse -i '[runtime][get_observations_heathrow]script'
+   cylc config <path> --sparse -i '[runtime][get_observations_heathrow]script'
 
 .. nextslide::
 
 .. ifslides::
 
-   Note that ``cylc get-config`` doesn't expand families or parameterisations
+   Note that ``cylc config`` doesn't expand families or parameterisations
    in the :term:`graph`. Use ``cylc graph`` to visualise these.
 
-   .. TODO - Raise and issue for this, note cylc get-config and cylc view.
+   .. TODO - Raise and issue for this, note cylc config and cylc view.
 
 
 The Three Approaches

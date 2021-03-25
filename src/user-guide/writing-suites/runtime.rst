@@ -107,13 +107,12 @@ multiple inheritance:
 .. literalinclude:: ../../suites/inherit/multi/one/flow.cylc
    :language: cylc
 
-``cylc get-suite-config`` provides an easy way to check the result of
+``cylc config`` provides an easy way to check the result of
 inheritance in a suite. You can extract specific items, e.g.:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --item '[runtime][var_p2]script' \
-       inherit.multi.one
+   $ cylc config --item '[runtime][var_p2]script' inherit.multi.one
    echo "RUN: run-var.sh"
 
 or use the ``--sparse`` option to print entire namespaces
@@ -122,7 +121,7 @@ from the root namespace:
 
 .. code-block:: console
 
-   $ cylc get-suite-config --sparse --item '[runtime]ops_s1' inherit.multi.one
+   $ cylc config --sparse --item '[runtime]ops_s1' inherit.multi.one
    script = echo "RUN: run-ops.sh"
    inherit = ['OPS', 'SERIAL']
    [directives]
@@ -369,12 +368,12 @@ on the task host. Thus ``$HOME``, for instance, evaluates at
 run time to the home directory of task owner on the task host.
 
 
-How Tasks Get Access To The Suite Directory
--------------------------------------------
+How Tasks Get Access To The Run Directory
+-----------------------------------------
 
 The workflow bin directory is automatically added
 ``$PATH``. If a remote suite configuration directory is not
-specified the local (suite host) path will be assumed with the local
+specified, the local (suite host) path will be assumed with the local
 home directory, if present, swapped for literal ``$HOME`` for
 evaluation on the task host.
 

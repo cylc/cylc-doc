@@ -84,7 +84,7 @@ We can also call other scripts or executables in this way, e.g:
    It is often a good idea to keep our scripts with the Cylc suite rather than
    leaving them somewhere else on the system.
 
-   If you create a ``bin/`` sub-directory within the :term:`suite directory`
+   If you create a ``bin/`` sub-directory within the :term:`source directory`,
    Cylc will automatically prepend it to the ``PATH`` environment
    variable when the task runs.
 
@@ -316,7 +316,7 @@ Running A Suite
 
 .. ifnotslides::
 
-   The ``name`` is the name of the :term:`suite directory` (i.e. ``<name>``
+   The ``name`` is the name of the :term:`run directory` (i.e. ``<name>``
    would be ``foo`` in the above example).
 
 .. note::

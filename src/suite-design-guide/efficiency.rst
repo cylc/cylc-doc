@@ -78,7 +78,7 @@ Cylc provides tools to help make sense of your inheritance hierarchy:
 
 - ``cylc graph -n/--namespaces`` - plot the full multiple
   inheritance graph (not the dependency graph)
-- ``cylc get-config SUITE`` - print selected sections or items
+- ``cylc config SUITE`` - print selected sections or items
   after inheritance processing
 - ``cylc graph SUITE`` - plot the dependency graph, with
   collapsible first-parent families

@@ -415,7 +415,7 @@ Start, Stop, Restart
 
       The runtime configuration for the remaining tasks has been written out
       for you in the ``runtime`` file which you will find in the
-      :term:`suite directory`. Copy the code in the ``runtime`` file to the
+      :term:`run directory`. Copy the code in the ``runtime`` file to the
       bottom of the :cylc:conf:`flow.cylc` file.
 
       Check the :cylc:conf:`flow.cylc` file is valid by running the command:
