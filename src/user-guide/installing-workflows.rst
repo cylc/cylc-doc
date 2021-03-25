@@ -6,7 +6,9 @@ Installing Workflows
 Cylc commands identify workflows via their names, which are relative path names
 under the :term:`cylc-run directory`, ``~/cylc-run/`` by default.
 
-Workflows can be grouped together under sub-directories. E.g.:
+Workflows can be grouped together under sub-directories. E.g. there are three
+workflows in the example below: ``nwp/oper/region1``, ``nwp/oper/region2`` and
+``nwp/test/region1``.
 
 .. code-block:: console
 
@@ -23,34 +25,28 @@ location, called a :term:`source directory`.
 ``cylc install`` will create a new directory in the :term:`cylc-run directory`
 for each installation of a workflow.
 
-It is considered best practice to design your workflow in a source directory
-and use ``cylc install`` to create a fresh run directory for you.
-
 .. _Install-Workflow:
 
 The Cylc Install Command
 ------------------------
 
 Workflows can be installed with the ``cylc install`` command, which creates
-the :term:`run directory` structure and some service files underneath it. 
+the :term:`run directory` structure and some service files underneath it.
 
 .. note::
 
-   It remains possible to run a workflow, written directly in the
-   :term:`run directory` with ``cylc play``, without first installing it with
-   ``cylc install``.
-
-Once you have written your workflow, you can have Cylc install the workflow for
-you, using the ``cylc install`` command.
+   It is possible to run a workflow without installation by writing it
+   directly in the :term:`run directory`.
+   However, it is considered best practice to write your workflow in a source
+   directory and use ``cylc install`` to create a fresh run directory for you.
 
 .. _Using Cylc Install:
 
 Using Cylc Install
 ------------------
 
-The following commands, executed from :term:`source directory` e.g.
-``~/cylc-sources/my-flow`` result in the following installations.
-
+The following commands, executed from the :term:`source directory`
+``~/cylc-src/my-flow``, result in the following installations:
 
 +--------------------------------------+--------------------------------------+
 | Command                              | Results in Installation in Directory |
@@ -65,14 +61,31 @@ The following commands, executed from :term:`source directory` e.g.
 +--------------------------------------+--------------------------------------+
 
 Any of the above commands may be run from anywhere on the file system with the
-addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY``, alternatively
-use ``-C PATH/TO/SOURCE/DIRECTORY``.
+addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
+``-C PATH/TO/SOURCE/DIRECTORY``).
+
+Configurable Source Directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is also possible to configure a list of directories that ``cylc install``
+and the GUI will search for source directories inside, using
+:cylc:conf:`global.cylc[install]source dirs`. For example, if you have
+
+.. code-block:: cylc
+
+   # global.cylc
+   [install]
+       source dirs = ~/cylc-src, ~/roses
+
+then ``cylc install dogs/fido`` will search for a workflow source directory
+``~/cylc-src/dogs/fido``, or, failing that, ``~/roses/dogs/fido``, and install
+the first match (into ``~/cylc-run/dogs/fido/run1``).
 
 Numbered Runs
 ^^^^^^^^^^^^^
 
 By default, cylc install will install the workflow found in the current working
-directory into ``~/cylc-run/$(basename $PWD)/runN``, where runN = run1, run2, 
+directory into ``~/cylc-run/$(basename $PWD)/runN``, where runN = run1, run2,
 run3,...
 
 ``cylc install`` will automatically increment the run number of each install,
@@ -82,13 +95,13 @@ provided the options ``--no-run-name`` or ``--run-name`` are not used. See
 For convenience, a symlink to the most recent (highest numbered) run will be
 created in the workflow directory, ``runN``.
 
-Example: A typical run directory structure, after three executions of 
-``cylc install`` will look as follows. 
+Example: A typical run directory structure, after three executions of
+``cylc install`` will look as follows.
 
 .. code-block:: none
 
    ├── _cylc-install
-   │   └── source -> /home/cylc-sources/test-flow
+   │   └── source -> /home/cylc-src/test-flow
    ├── run1
    │   ├── flow.cylc
    │   └── log
@@ -116,7 +129,7 @@ Named Runs
 As an alternative to numbered runs, it is possible to name the runs, using the
 ``--run-name`` option.
 In this case, the runN symlink will not be created.
-This option cannot be used in conjunction with numbered runs. 
+This option cannot be used in conjunction with numbered runs.
 
 
 The Cylc Install Process
@@ -155,12 +168,12 @@ Example Installation
 
 For example:
 We will look at running the cylc install command inside the directory
-``~/cylc-sources/test-flow`` with the following directory structure:
+``~/cylc-src/test-flow`` with the following directory structure:
 
 .. code-block:: console
-         
+
    $ pwd
-   /home/cylc-sources/test-flow
+   /home/cylc-src/test-flow
 
 .. code-block:: console
 
@@ -179,7 +192,7 @@ We will look at running the cylc install command inside the directory
    ├── textfile1.txt
    └── textfile2.txt
 
-We wish to omit any files matching the pattern ``*.txt``,  the file 
+We wish to omit any files matching the pattern ``*.txt``,  the file
 ``file1``, the contents of ``dir1`` and the contents of ``dir2`` including the
 directory itself.
 
@@ -193,11 +206,11 @@ directory itself.
 
 
 Now we are ready to install our workflow.
-      
+
 .. code-block:: console
 
    $ cylc install
-   INSTALLED test-flow from home/cylc-sources/test-flow -> home/cylc-run/test-flow/run1
+   INSTALLED test-flow from home/cylc-src/test-flow -> home/cylc-run/test-flow/run1
 
 Looking at the directory structure that has been created
 
@@ -222,9 +235,9 @@ Looking at the directory structure that has been created
 Upon running ``cylc install``, symlinks for the directories ``run``, ``log``,
 ``share``, ``share/cycle`` and ``work`` will be created in accordance with
 the symlink rules for ``localhost`` as defined in
-:cylc:conf:`global.cylc[symlink dirs]`. 
+:cylc:conf:`global.cylc[symlink dirs]`.
 
-This is overridable via the command line option ``--no-symlinks``, where the 
+This is overridable via the command line option ``--no-symlinks``, where the
 directories will not be symlinked.
 
 
@@ -232,10 +245,10 @@ Automatically Generated Directories and Files
 ---------------------------------------------
 
 Running ``cylc install`` will generate some extra files in your workflow run
-directory. 
+directory.
 
-- The :term:`service directory` will be created in preparation for running the 
-  workflow. This is needed to store essential files used by Cylc. 
+- The :term:`service directory` will be created in preparation for running the
+  workflow. This is needed to store essential files used by Cylc.
 
 - A ``_cylc-install`` directory containing a ``source`` symlink to the
   :term:`source directory`.
@@ -255,7 +268,7 @@ Reinstalling a Workflow
 
 To apply changes made in your workflow source directory to the installed
 workflow directory, run ``cylc reinstall`` from within the workflow run
-directory. 
+directory.
 A new log file will be created in the workflow install log directory, detailing
 changes made.
 
@@ -267,15 +280,15 @@ For example:
 
    $ cylc reinstall myflow/run1
 
-Cylc will determine the source directory and update your workflow. 
+Cylc will determine the source directory and update your workflow.
 
 Returning to the example from above (see :ref:`Example Installation`).
 
-The source directory, ``~/cylc-sources/test-flow`` has been altered as follows:
+The source directory, ``~/cylc-src/test-flow`` has been altered as follows:
 
 .. code-block:: console
 
-   $ tree -all ~/cylc-sources/test-flow
+   $ tree -all ~/cylc-src/test-flow
    ├── .cylcignore
    ├── dir1
    │   ├── another-file
@@ -285,7 +298,7 @@ The source directory, ``~/cylc-sources/test-flow`` has been altered as follows:
    │   └── file
    ├── dir3
    │   ├── another-file
-   │   └── file         
+   │   └── file
    ├── file1
    ├── file2
    ├── file3
@@ -306,13 +319,13 @@ and ``dir3``:
 .. code-block:: console
 
     $ cylc reinstall test-flow/run1
-    
+
 or cylc reinstall from within the run directory
 
 .. code-block:: console
 
     $ cylc reinstall
-          
+
 The run directory now looks as follows:
 
 .. code-block:: console
@@ -323,14 +336,14 @@ The run directory now looks as follows:
    │   └── file
    ├── dir3
    │   ├── another-file
-   │   └── file   
+   │   └── file
    ├── file2
    ├── file3
    ├── flow.cylc
    ├── log
    │   └── install
    │       └── <time-stamp>-install.log
-   │       └── <time-stamp>-reinstall.log         
+   │       └── <time-stamp>-reinstall.log
    └── .service
 
 
@@ -339,7 +352,7 @@ Expected Errors
 
 There are some occasions when installation is expected to fail.
 
-If: 
+If:
 
 - ``log``, ``share``, ``work`` or ``_cylc-install`` directories exist in the
   :term:`source directory`
@@ -365,7 +378,7 @@ If:
 
 - the source directory path does not match the source directory path of a
   previous installation. i.e. running ``cylc install`` in
-  ``~/cylc-sources/my-flow``, followed by running ``cylc install`` from
+  ``~/cylc-src/my-flow``, followed by running ``cylc install`` from
   ``~/cylc-different-sources/my-flow``.
 
 .. warning::
