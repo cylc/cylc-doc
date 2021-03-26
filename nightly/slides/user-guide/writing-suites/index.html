@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing Suites &mdash; Cylc nightly.2021-03-26 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'nightly.2021-03-26',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc nightly.2021-03-26 documentation" href="../../index.html" />
+    <link rel="up" title="User Guide" href="../index.html" />
+    <link rel="next" title="Workflow Configuration" href="configuration.html" />
+    <link rel="prev" title="Workflows For Cycling Systems" href="../workflows.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="writing-suites">
+
+<h1>Writing Suites<a class="headerlink" href="../../../html/user-guide/writing-suites/index.html#writing-suites" title="View HTML">§</a></h1>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Workflow Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#suite-configuration-directories">Suite Configuration Directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#flow-cylc-file-overview">flow.cylc File Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scheduling.html">Scheduling - Dependency Graphs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-syntax">Graph Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#interpreting-graph-strings">Interpreting Graph Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-types">Graph Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-section-headings">Graph Section Headings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#task-triggering">Task Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-branching">Graph Branching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#model-restart-dependencies">Model Restart Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#how-the-graph-determines-task-instantiation">How The Graph Determines Task Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#omitting-tasks-at-runtime">Omitting Tasks At Runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Runtime - Task Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#namespace-names">Namespace Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#root-runtime-defaults">Root - Runtime Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#defining-multiple-namespaces-at-once">Defining Multiple Namespaces At Once</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#runtime-inheritance-single">Runtime Inheritance - Single</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#runtime-inheritance-multiple">Runtime Inheritance - Multiple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#how-runtime-inheritance-works">How Runtime Inheritance Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#task-execution-environment">Task Execution Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#how-tasks-get-access-to-the-run-directory">How Tasks Get Access To The Run Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#remote-task-hosting">Remote Task Hosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#implicit-tasks">Implicit Tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameterized-tasks.html">Parameterized Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#parameter-expansion">Parameter Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#passing-parameter-values-to-tasks">Passing Parameter Values To Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#selecting-specific-parameter-values">Selecting Specific Parameter Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#selecting-partial-parameter-ranges">Selecting Partial Parameter Ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#parameter-offsets-in-the-graph">Parameter Offsets In The Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#task-families-and-parameterization">Task Families And Parameterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#parameterized-cycling">Parameterized Cycling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jinja2.html">Jinja2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#accessing-environment-variables-with-jinja2">Accessing Environment Variables With Jinja2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#custom-jinja2-filters-tests-and-globals">Custom Jinja2 Filters, Tests and Globals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#associative-arrays-in-jinja2">Associative Arrays In Jinja2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#jinja2-default-values-and-template-inputs">Jinja2 Default Values And Template Inputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#jinja2-variable-scope">Jinja2 Variable Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#raising-exceptions">Raising Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#importing-additional-python-modules">Importing additional Python modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external-triggers.html">External Triggers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#built-in-clock-triggers">Built-in Clock Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#built-in-suite-state-triggers">Built-in Suite State Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#custom-trigger-functions">Custom Trigger Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#current-limitations">Current Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#filesystem-events">Filesystem Events?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#continuous-event-watchers">Continuous Event Watchers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#old-style-external-triggers-deprecated">Old-Style External Triggers (Deprecated)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

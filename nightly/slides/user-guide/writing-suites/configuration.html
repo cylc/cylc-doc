@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflow Configuration &mdash; Cylc nightly.2021-03-26 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'nightly.2021-03-26',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc nightly.2021-03-26 documentation" href="../../index.html" />
+    <link rel="up" title="Writing Suites" href="index.html" />
+    <link rel="next" title="Scheduling - Dependency Graphs" href="scheduling.html" />
+    <link rel="prev" title="Writing Suites" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="workflow-configuration">
+
+<h1>Workflow Configuration<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#workflow-configuration" title="View HTML">§</a></h1>
+
+<p>Cylc suites are defined in structured, validated, <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>
+files that concisely specify the properties of, and the relationships
+between, the various tasks managed by the suite.</p>
+<p>Here we will look at:</p>
+<ul class="simple">
+<li>Folders which may (optionally) accompany a workflow configuration.</li>
+<li>The contents of the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</li>
+<li>How to configure workflows.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="suite-configuration-directories">
+
+<h2>Suite Configuration Directories<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#suite-configuration-directories" title="View HTML">§</a></h2>
+
+<p>A Cylc <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> contains:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a></dt><dd>The file which configures the workflow.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bin/</span></code> (optional)</dt><dd><p>A directory where you can put scripts and executables for use
+in the workflow. It is automatically added to <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in the job
+execution environment.</p>
+<p>Alternatively, tasks can call external commands; or they can be
+scripted entirely within the flow.cylc file.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">lib/python/</span></code> (optional)</dt><dd><p>A directory for Python modules which can be used for:</p>
+<ul class="simple">
+<li>Tasks; this directory is automatically added to <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code>
+in the job execution environment.</li>
+<li>Custom <a class="reference internal" href="../task-implementation/job-submission.html#customjobsubmissionmethods"><span class="std std-ref">job submission modules</span></a>.</li>
+<li>Custom <a class="reference internal" href="jinja2.html#customjinja2filters"><span class="std std-ref">Jinja2 Filters</span></a>).</li>
+</ul>
+</dd>
+</dl>
+<p>Other files and folders may be placed in the <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> e.g.
+documentation, configuration files, etc.</p>
+<p>When the workflow is <a class="reference internal" href="../installing-workflows.html#installing-workflows"><span class="std std-ref">installed</span></a>, these
+directories and files will be copied over to the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="flow-cylc-file-overview">
+
+<h2>flow.cylc File Overview<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#flow-cylc-file-overview" title="View HTML">§</a></h2>
+
+<p>The <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is written in a nested <a class="reference external" href="https://en.wikipedia.org/wiki/INI_file">INI</a>-based format.</p>
+<p>Cylc supports two <a class="reference external" href="https://en.wikipedia.org/wiki/Template_processor">template processors</a> for use in the flow.cylc file:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://jinja.palletsprojects.com/">Jinja2</a></li>
+<li><a class="reference external" href="http://www.alcyone.com/software/empy/">EmPy</a></li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="syntax">
+
+<h3>Syntax<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#syntax" title="View HTML">§</a></h3>
+
+<p>The following defines legal <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> syntax:</p>
+<ul class="simple">
+<li><strong>Items</strong> are of the form <code class="docutils literal notranslate"><span class="pre">item</span> <span class="pre">=</span> <span class="pre">value</span></code>.</li>
+<li><strong>[Section]</strong> headings are enclosed in square brackets.</li>
+<li><strong>Sub-section [[nesting]]</strong> is defined by repeated square brackets.<ul>
+<li>Sections are <strong>closed</strong> by the next section heading.</li>
+</ul>
+</li>
+<li><strong>Comments</strong> (line and trailing) follow a hash character: <code class="docutils literal notranslate"><span class="pre">#</span></code></li>
+<li><strong>List values</strong> are comma-separated.</li>
+<li><strong>Single-line string values</strong> can be single-, double-, or un-quoted.</li>
+<li><strong>Multi-line string values</strong> are triple-quoted (using
+single or double quote characters).</li>
+<li><strong>Boolean values</strong> are capitalized: True, False.</li>
+<li><strong>Leading and trailing whitespace</strong> is ignored.</li>
+<li><strong>Indentation</strong> is optional but should be used for clarity.</li>
+<li><strong>Continuation lines</strong> follow a trailing backslash: <code class="docutils literal notranslate"><span class="pre">\</span></code></li>
+<li><strong>Duplicate sections</strong> add their items to those previously
+defined under the same section.</li>
+<li><strong>Duplicate items</strong> override, <em>except for dependency
+``graph`` strings, which are additive</em>.</li>
+<li><strong>Include-files</strong> <code class="docutils literal notranslate"><span class="pre">%include</span> <span class="pre">inc/foo.cylc</span></code> can be
+used as a verbatim inlining mechanism.</li>
+</ul>
+<p>Suites that embed templating code (see <a class="reference internal" href="jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a> and
+<a class="reference internal" href="empy.html#user-guide-empy"><span class="std std-ref">EmPy</span></a>) must process to raw <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> syntax.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="include-files">
+
+<h3>Include-Files<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#include-files" title="View HTML">§</a></h3>
+
+<p>Cylc has native support for <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> include-files, which may help to
+organize large suites. Inclusion boundaries are completely arbitrary -
+you can think of include-files as chunks of the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file simply
+cut-and-pasted into another file. Include-files may be included
+multiple times in the same file, and even nested. Include-file paths
+can be specified portably relative to the suite configuration directory,
+e.g.:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># include the file ~/cylc-run/workflow/inc/foo.cylc:</span>
+<span class="o">%include</span> <span class="s">inc/foo.cylc</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Template processors may have their own include functionality
+which can also be used.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Cylc’s native file inclusion mechanism supports optional inlined
+editing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cylc edit --inline SUITE
+</pre></div>
+</div>
+<p class="last">The suite will be split back into its constituent include-files when you
+exit the edit session. While editing, the inlined file becomes the
+official suite configuration so that changes take effect whenever you save
+the file. See <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">prep</span> <span class="pre">edit</span> <span class="pre">--help</span></code> for more information.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="syntax-highlighting-for-suite-configuration">
+
+<h3>Syntax Highlighting For Suite Configuration<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#syntax-highlighting-for-suite-configuration" title="View HTML">§</a></h3>
+
+<p>Cylc provides syntax plugins for the following editors:</p>
+<dl class="docutils">
+<dt>Atom</dt><dd>install the <a class="reference external" href="https://atom.io/packages/language-cylc">language-cylc</a> extension.</dd>
+<dt>Emacs</dt><dd>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">extract-resources</span> <span class="pre">.</span> <span class="pre">etc/syntax/cylc-mode.el</span></code>
+installation instructions are at the top of the file.</dd>
+<dt>Gedit</dt><dd>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">extract-resources</span> <span class="pre">.</span> <span class="pre">etc/syntax/cylc.lang</span></code>
+installation instructions are at the top of the file.</dd>
+<dt>Kate</dt><dd>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">extract-resources</span> <span class="pre">.</span> <span class="pre">etc/syntax/cylc.xml</span></code>
+installation instructions are at the top of the file.</dd>
+<dt>PyCharm</dt><dd>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</dd>
+<dt>Vim</dt><dd>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">extract-resources</span> <span class="pre">.</span> <span class="pre">etc/syntax/cylc.vim</span></code>
+installation instructions are at the top of the file.</dd>
+<dt>Visual Studio Code</dt><dd>Install the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc">vscode-cylc</a> extension.</dd>
+<dt>Sublime Text 3</dt><dd>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</dd>
+<dt>TextMate</dt><dd>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</dd>
+<dt>WebStorm</dt><dd>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="gross-file-structure">
+
+<h3>Gross File Structure<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#gross-file-structure" title="View HTML">§</a></h3>
+
+<p>Cylc <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files consist of configuration items grouped under
+several top level section headings:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc[meta]" title="flow.cylc[meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[meta]</span></code></a></dt><dd>Information about the workflow e.g. title and description.</dd>
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc[scheduler]" title="flow.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]</span></code></a></dt><dd>Non task-specific workflow configuration.</dd>
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc[scheduling]" title="flow.cylc[scheduling]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]</span></code></a></dt><dd><p>Determines when tasks are ready to run.</p>
+<ul class="simple">
+<li>special scheduling constraints e.g.
+<a class="reference internal" href="external-triggers.html#section-external-triggers"><span class="std std-ref">external triggers</span></a>.</li>
+<li>the dependency graph, which defines the relationships
+between tasks</li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a></dt><dd><p>Determines how, where, and what to execute when tasks are ready</p>
+<ul class="simple">
+<li>script, environment, job submission, remote hosting, etc.</li>
+<li>suite-wide defaults in the <em>root</em> namespace</li>
+<li>a nested family hierarchy with common properties
+inherited by related tasks</li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/suite.html#flow.cylc[visualization]" title="flow.cylc[visualization]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[visualization]</span></code></a></dt><dd>Suite graph styling</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="validation">
+
+<h3>Validation<a class="headerlink" href="../../../html/user-guide/writing-suites/configuration.html#validation" title="View HTML">§</a></h3>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> command evaluates the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+against a specification that defines all legal entries, values and options.
+It also performs some integrity checks designed to catch certain configuration
+issues and impossible scheduling constraints.</p>
+<p>These checks are also performed by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> before starting a workflow.</p>
+<p>All legal entries are documented in <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>.</p>
+<p>If the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file uses include-files <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">view</span></code> will
+show an inlined copy of the suite with correct line numbers
+(you can also edit suites in a temporarily inlined state with
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">edit</span> <span class="pre">--inline</span></code>).</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
