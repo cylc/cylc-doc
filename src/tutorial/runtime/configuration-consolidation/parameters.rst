@@ -222,13 +222,13 @@ Parameters can be either words or integers:
              [[[environment]]]
                  API_KEY = {{ API_KEY }}
 
-      Using ``cylc get-config`` you should see that Cylc replaces the
+      Using ``cylc config`` you should see that Cylc replaces the
       ``<station>`` with each of the stations in turn, creating a new task for
       each:
 
       .. code-block:: bash
 
-         cylc get-config . --sparse -i "[runtime]"
+         cylc config . --sparse -i "[runtime]"
 
       The ``get_observations`` tasks are now missing the ``SITE_ID``
       environment variable. Add a new section for each station with a
@@ -266,12 +266,12 @@ Parameters can be either words or integers:
                 [[[environment]]]
                     SITE_ID = 3005
 
-      Using ``cylc get-config`` you should now see four ``get_observations``
+      Using ``cylc config`` you should now see four ``get_observations``
       tasks, each with a ``script``, an ``API_KEY`` and a ``SITE_ID``:
 
       .. code-block:: bash
 
-         cylc get-config . --sparse -i "[runtime]"
+         cylc config . --sparse -i "[runtime]"
 
       Finally we can use this parameterisation to simplify the suite's
       graphing. Replace the ``get_observations`` lines in the graph with
@@ -290,7 +290,7 @@ Parameters can be either words or integers:
 
       .. hint::
 
-         The ``cylc get-config`` command does not expand parameters or families
+         The ``cylc config`` command does not expand parameters or families
          in the graph so you must use ``cylc graph`` to inspect changes to the
          graphing.
 

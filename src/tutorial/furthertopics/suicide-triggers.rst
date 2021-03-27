@@ -130,7 +130,7 @@ Paste the following code into the :cylc:conf:`flow.cylc` file:
 Open the ``cylc gui`` and run the suite::
 
    cylc gui suicide-triggers &
-   cylc run suicide-triggers
+   cylc play suicide-triggers
 
 The suite will run for three cycles then get stuck (because of the
 :cylc:conf:`[scheduling]runahead limit`).

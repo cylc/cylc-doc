@@ -19,7 +19,7 @@ Here we will look at:
 Suite Configuration Directories
 -------------------------------
 
-A Cylc :term:`suite directory` contains:
+A Cylc :term:`source directory` contains:
 
 :cylc:conf:`flow.cylc`
    The file which configures the workflow.
@@ -38,9 +38,11 @@ A Cylc :term:`suite directory` contains:
    - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`.
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`).
 
-Other files and folders may be placed in the :term:`suite directory` e.g.
+Other files and folders may be placed in the :term:`source directory` e.g.
 documentation, configuration files, etc.
 
+When the workflow is :ref:`installed <Installing-workflows>`, these
+directories and files will be copied over to the :term:`run directory`.
 
 .. _FlowConfigFile:
 
@@ -207,7 +209,7 @@ against a specification that defines all legal entries, values and options.
 It also performs some integrity checks designed to catch certain configuration
 issues and impossible scheduling constraints.
 
-These checks are also performed by ``cylc run`` before starting a workflow.
+These checks are also performed by ``cylc play`` before starting a workflow.
 
 All legal entries are documented in :cylc:conf:`flow.cylc`.
 

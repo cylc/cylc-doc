@@ -323,7 +323,7 @@ Cylc Graphs
          ~/cylc-run
 
       Within this directory create a new folder called ``graph-introduction``,
-      which is to be our :term:`suite directory`. Move into it:
+      which is to be our :term:`run directory`. Move into it:
 
       .. code-block:: bash
 
@@ -369,7 +369,7 @@ Cylc Graphs
          :class: hint
 
          ``cylc graph`` takes the path to the suite as an argument. As we are
-         inside the :term:`suite directory` we can run ``cylc graph .``.
+         inside the :term:`run directory` we can run ``cylc graph .``.
 
       If the results don't match the diagram above try going back to the
       :cylc:conf:`flow.cylc` file and making changes.

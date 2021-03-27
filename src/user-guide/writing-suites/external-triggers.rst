@@ -355,7 +355,7 @@ Here's an example echo trigger suite:
            script = exit 1
 
 To see the result, run this suite in debug mode and take a look at the
-suite log (or run ``cylc run --debug --no-detach <suite>`` and watch
+suite log (or run ``cylc play --debug --no-detach <suite>`` and watch
 your terminal).
 
 

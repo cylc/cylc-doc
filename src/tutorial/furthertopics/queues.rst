@@ -64,7 +64,7 @@ You will now have a :cylc:conf:`flow.cylc` file that looks like this:
 Open the ``cylc gui`` then run the suite::
 
    cylc gui queues-tutorial &
-   cylc run queues-tutorial
+   cylc play queues-tutorial
 
 You will see that all the ``steak``, ``pasta``, and ``pizza`` tasks are run
 at once, swiftly followed by all the ``ice_cream``, ``cheesecake``,

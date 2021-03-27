@@ -84,7 +84,7 @@ We can also call other scripts or executables in this way, e.g:
    It is often a good idea to keep our scripts with the Cylc suite rather than
    leaving them somewhere else on the system.
 
-   If you create a ``bin/`` sub-directory within the :term:`suite directory`
+   If you create a ``bin/`` sub-directory within the :term:`source directory`,
    Cylc will automatically prepend it to the ``PATH`` environment
    variable when the task runs.
 
@@ -308,15 +308,15 @@ Running A Suite
    filesystem (so if we create a suite in ``~/cylc-run/foo`` we would put
    ``~/cylc-run/foo/flow.cylc``).
 
-   Next we can run the suite using the ``cylc run`` command.
+   Next we can run the suite using the ``cylc play`` command.
 
 .. code-block:: sub
 
-   cylc run <name>
+   cylc play <name>
 
 .. ifnotslides::
 
-   The ``name`` is the name of the :term:`suite directory` (i.e. ``<name>``
+   The ``name`` is the name of the :term:`run directory` (i.e. ``<name>``
    would be ``foo`` in the above example).
 
 .. note::
@@ -419,7 +419,7 @@ Suite Files
 
       .. code-block:: bash
 
-         cylc run runtime-introduction
+         cylc play runtime-introduction
 
       The tasks will start to run - you should see them going through the
       "Waiting", "Running" and "Succeeded" states.

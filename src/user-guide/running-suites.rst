@@ -13,55 +13,53 @@ to running suites.
 Suite Start-Up
 --------------
 
-There are three ways to start a suite running: *cold start* and *warm start*,
-which start from scratch; and *restart*, which starts from a prior
-suite state checkpoint. The only difference between cold starts and warm starts
-is that warm starts start from a point beyond the suite initial cycle point.
+There are three ways to start a suite running:
 
-Once a suite is up and running it is typically a restart that is needed most
-often (but see also ``cylc reload``).
+* Cold start: start from scratch
+* Warm start: start from scratch, but after the initial cycle point
+* Restart: continue from prior suite state
 
-.. warning::
+Once a suite has been started, it cannot start from scratch again without a
+re-install. At this point, it is typically a restart that is needed most
+often (but see also :ref:`Reloading The Suite Configuration At Runtime`).
 
-   Cold and warm starts wipe out prior suite state, so you can't go back to a
-   restart if you decide you made a mistake.
+.. note::
 
+   In Cylc 7 it was posssible to cold/warm start a suite without having to
+   reinstall it. In Cylc 8, you must reinstall the suite or remove its
+   database in order to cold/warm start it.
 
 .. _Cold Start:
 
 Cold Start
 ^^^^^^^^^^
 
-A cold start is the primary way to start a suite run from scratch:
+A cold start is the primary way to run a suite for the first time:
 
 .. code-block:: console
 
-   $ cylc run SUITE [INITIAL_CYCLE_POINT]
+   $ cylc play SUITE
 
 The initial cycle point may be specified on the command line or in the :cylc:conf:`flow.cylc`
 file. The scheduler starts by loading the first instance of each task at the
 suite initial cycle point, or at the next valid point for the task.
-
 
 .. _Warm Start:
 
 Warm Start
 ^^^^^^^^^^
 
-A warm start runs a suite from scratch like a cold start, but from the
-beginning of a given :term:`cycle point` that is beyond the suite
-:term:`initial cycle point`. This is generally inferior to a *restart* (which
-loads a previously recorded suite state - see :ref:`RestartingSuites`) because
-it may result in some tasks rerunning. However, a warm start may be required if
-a restart is not possible, e.g. because the suite run database was accidentally
-deleted. The warm start cycle point must be given on the command line:
+A warm start runs a suite for the first time, like a cold start,
+but from the beginning of a given :term:`start cycle point` that is beyond the
+suite :term:`initial cycle point`. The warm start cycle point must be given
+on the command line:
 
 .. code-block:: console
 
-   $ cylc run --warm SUITE [START_CYCLE_POINT]
+   $ cylc play SUITE --start-cycle-point=CYCLE_POINT
 
-The original suite initial cycle point is preserved, but all tasks and
-dependencies before the given warm start cycle point are ignored.
+The initial cycle point defined in :cylc:conf:`flow.cylc` is preserved, but
+all tasks and dependencies before the start cycle point are ignored.
 
 The scheduler starts by loading a first instance of each task at the warm
 start cycle point, or at the next valid point for the task.
@@ -114,135 +112,26 @@ would only run at cycle ``3``.
 
 .. _RestartingSuites:
 
-Restart and Suite State Checkpoints
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Restart
+^^^^^^^
 
-At restart (see ``cylc restart --help``) a :term:`scheduler`
-initializes its task pool from a previously recorded checkpoint state. By
-default the latest automatic checkpoint - which is updated with every task
-state change - is loaded so that the suite can carry on exactly as it was just
+At restart, the :term:`scheduler` initializes its task pool from the previous
+state at shutdown. This allows the suite to carry on exactly as it was just
 before being shut down or killed.
 
 .. code-block:: console
 
-   $ cylc restart SUITE
+   $ cylc play SUITE
 
 Tasks recorded in the "submitted" or "running" states are automatically polled
 (see :ref:`Task Job Polling`) at start-up to determine what happened to
 them while the suite was down.
 
 
-Restart From Latest Checkpoint
-""""""""""""""""""""""""""""""
-
-To restart from the latest checkpoint simply invoke the ``cylc restart``
-command with the suite name.
-
-.. code-block:: console
-
-   $ cylc restart SUITE
-
-
-Restart From Another Checkpoint
-"""""""""""""""""""""""""""""""
-
-Suite server programs automatically update the "latest" checkpoint every time
-a task changes state, and at every suite restart, but you can also take
-checkpoints at other times. To tell a :term:`scheduler` to checkpoint its
-current state:
-
-.. code-block:: console
-
-   $ cylc checkpoint SUITE-NAME CHECKPOINT-NAME
-
-The 2nd argument is a name to identify the checkpoint later with:
-
-.. code-block:: console
-
-   $ cylc ls-checkpoints SUITE-NAME
-
-For example, with checkpoints named "bob", "alice", and "breakfast":
-
-.. code-block:: console
-
-   $ cylc ls-checkpoints SUITE-NAME
-   #######################################################################
-   # CHECKPOINT ID (ID|TIME|EVENT)
-   1|2017-11-01T15:48:34+13|bob
-   2|2017-11-01T15:48:47+13|alice
-   3|2017-11-01T15:49:00+13|breakfast
-   ...
-   0|2017-11-01T17:29:19+13|latest
-
-To see the actual task state content of a given checkpoint ID (if you need to),
-for the moment you have to interrogate the suite DB, e.g.:
-
-.. code-block:: console
-
-   $ sqlite3 ~/cylc-run/SUITE-NAME/log/db \
-       'select * from task_pool_checkpoints where id == 3;'
-   3|2012|model|1|running|
-   3|2013|pre|0|waiting|
-   3|2013|post|0|waiting|
-   3|2013|model|0|waiting|
-   3|2013|upload|0|waiting|
-
-.. note::
-
-   A checkpoint captures the instantaneous state of every task in the
-   suite, including any tasks that are currently active, so you may want
-   to be careful where you do it. Tasks recorded as active are polled
-   automatically on restart to determine what happened to them.
-
-The checkpoint ID 0 (zero) is always used for latest state of the suite, which
-is updated continuously as the suite progresses. The checkpoint IDs of earlier
-states are positive integers starting from 1, incremented each time a new
-checkpoint is stored. Currently suites automatically store checkpoints before
-and after reloads, and on restarts (using the latest checkpoints before the
-restarts).
-
-Once you have identified the right checkpoint, restart the suite like this:
-
-.. code-block:: console
-
-   $ cylc restart --checkpoint=CHECKPOINT-ID SUITE
-
-
-Checkpointing With A Task
-"""""""""""""""""""""""""
-
-Checkpoints can be generated automatically at particular points in the
-workflow by coding tasks that run the ``cylc checkpoint`` command:
-
-.. code-block:: cylc
-
-   [scheduling]
-      [[graph]]
-         PT6H = "pre => model => post => checkpointer"
-   [runtime]
-      # ...
-      [[checkpointer]]
-         script = """
-             cylc__job__wait_cylc_message_started
-             cylc checkpoint ${CYLC_SUITE_NAME} CP-${CYLC_TASK_CYCLE_POINT}
-         """
-
-.. note::
-
-   We need to "wait" on the "task started" message - which
-   is sent in the background to avoid holding tasks up in a network
-   outage - to ensure that the checkpointer task is correctly recorded
-   as running in the checkpoint (at restart the :term:`scheduler` will
-   poll to determine that that task job finished successfully). Otherwise
-   it may be recorded in the waiting state and, if its upstream dependencies
-   have already been cleaned up, it will need to be manually reset from waiting
-   to succeeded after the restart to avoid stalling the suite.
-
-
 Behaviour of Tasks on Restart
 """""""""""""""""""""""""""""
 
-All tasks are reloaded in exactly their checkpointed states. Failed tasks are
+All tasks are reloaded in exactly their recorded states. Failed tasks are
 not automatically resubmitted at restart in case the underlying problem has not
 been addressed yet.
 
@@ -262,6 +151,8 @@ very difficult in general to automatically determine the cycle point of
 the first instance. Instead, the first instance of a new task should be
 inserted manually at the right cycle point, with ``cylc insert``.
 
+
+.. _Reloading The Suite Configuration At Runtime:
 
 Reloading The Suite Configuration At Runtime
 --------------------------------------------
@@ -359,7 +250,7 @@ Routine Polling
 
 Task jobs are automatically polled at certain times: once on job submission
 timeout; several times on exceeding the job execution time limit; and at suite
-restart any tasks recorded as active in the suite state checkpoint are polled
+restart any tasks recorded as active are polled
 to find out what happened to them while the suite was down.
 
 Finally, in necessary routine polling can be configured as a way to track job
@@ -956,13 +847,13 @@ should be used sparingly.
 The Meaning And Use Of Initial Cycle Point
 ------------------------------------------
 
-When a suite is started with the ``cylc run`` command (cold or
+When a suite is started with the ``cylc play`` command (cold or
 warm start) the cycle point at which it starts can be given on the command
-line or hardwired into the :cylc:conf:`flow.cylc` file:
+line or hardcoded into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: console
 
-   $ cylc run foo 20120808T06Z
+   $ cylc play foo --initial-cycle-point=20120808T06Z
 
 or:
 
@@ -1103,8 +994,7 @@ Set the run mode (default ``live``) on the command line:
 
 .. code-block:: console
 
-   $ cylc run --mode=dummy SUITE
-   $ cylc restart --mode=dummy SUITE
+   $ cylc play --mode=dummy SUITE
 
 You can get specified tasks to fail in these modes, for more flexible suite
 testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
@@ -1356,7 +1246,7 @@ Suite Run Databases
 -------------------
 
 Suite server programs maintain two ``sqlite`` databases to record
-restart checkpoints and various other aspects of run history:
+information on run history:
 
 .. code-block:: console
 
@@ -1365,8 +1255,8 @@ restart checkpoints and various other aspects of run history:
 
 The private DB is for use only by the :term:`scheduler`. The identical
 public DB is provided for use by external commands such as
-``cylc suite-state``, ``cylc ls-checkpoints``, and
-``cylc report-timings``. If the public DB gets locked for too long by
+``cylc suite-state``, and ``cylc report-timings``.
+If the public DB gets locked for too long by
 an external reader, the :term:`scheduler` will eventually delete it and
 replace it with a new copy of the private DB, to ensure that both correctly
 reflect the suite state.
@@ -1409,9 +1299,8 @@ are:
 - re-install from source, and warm start from the beginning of the
   current cycle point
 
-A warm start (see :ref:`Warm Start`) does not need a suite state
-checkpoint, but it wipes out prior run history, and it could re-run
-a significant number of tasks that had already completed.
+A warm start (see :ref:`Warm Start`) does not need the suite database, but it
+could re-run a significant number of tasks that had already completed.
 
 To restart the suite, the critical Cylc files that must be restored are:
 
@@ -1445,13 +1334,11 @@ selective about that. (Also in a Rose suite, the ``flow.cylc`` file does not
 need to be restored if you restart with ``rose suite-run`` - which re-installs
 suite source files to the run directory).
 
-The public DB is not strictly required for a restart - the :term:`scheduler`
-will recreate it if need be - but it is required by
-``cylc ls-checkpoints`` if you need to identify the right restart
-checkpoint.
+The public DB is not strictly required for a restart; if it is absent,
+the :term:`scheduler` will recreate it.
 
-The job status files are only needed if the restart suite state checkpoint
-contains active tasks that need to be polled to determine what happened to them
+The job status files are only needed if the suite state at last shutdown
+contained active tasks that now need to be polled to determine what happened to them
 while the suite was down. Without them, polling will fail and those tasks will
 need to be manually set to the correct state.
 
@@ -1516,7 +1403,7 @@ does not finish until the sub-workflow does, and they should be non-cycling
 or have a ``final cycle point`` so they don't keep on running indefinitely.
 
 Sub-workflow names should normally incorporate the main-workflow cycle point (use
-``$CYLC_TASK_CYCLE_POINT`` in the ``cylc run`` command line to start the
+``$CYLC_TASK_CYCLE_POINT`` in the ``cylc play`` command line to start the
 sub-workflow), so that successive sub-workflows can run concurrently if necessary and
 do not compete for the same workflow run directory. This will generate a new
 sub-workflow run directory for every main-workflow cycle point, so you may want to

@@ -3,7 +3,7 @@
 
     description = """
         This suite illustrates several tiers of task runtime inheritance.
-        To see the result, use 'cylc get-config'.
+        To see the result, use 'cylc config SUITE'.
     """
 
 [scheduling]

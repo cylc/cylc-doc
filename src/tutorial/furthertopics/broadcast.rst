@@ -69,7 +69,7 @@ whilst the suite is running. For instance we could change the value of the
 Run the suite then try using the ``cylc broadcast`` command to change the
 message::
 
-   cylc run tutorial-broadcast
+   cylc play tutorial-broadcast
    cylc broadcast tutorial-broadcast -n announce -s "[environment]WORD=it"
 
 Inspect the ``share/knights`` file, you should see the message change at
