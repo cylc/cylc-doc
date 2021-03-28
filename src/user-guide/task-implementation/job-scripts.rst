@@ -22,39 +22,66 @@ generates a *job script* for the task, and submits it to run (see
 
 :term:`Job scripts <job script>` encapsulate configured task runtime settings:
 :cylc:conf:`script` and :cylc:conf:`[environment]` items, if defined, are just
-concatenated in the order shown below, to make the job script. Everything
-executes in the same shell, so each part of the script can potentially affect
-the environment of subsequent parts.
+concatenated in the order shown below, to make the job script.
+
+The job script is separated into two parts. User scripts and environment
+(:cylc:conf:`env-script`, :cylc:conf:`[environment]`, :cylc:conf:`pre-script`,
+:cylc:conf:`script` and :cylc:conf:`post-script`) are isolated and executed in
+a separate subshell process. Any changes to environment, traps, etc., done in
+any of them are visible in subsequent parts, but will not interfere with the
+parent shell process. This parent shell executes and shares environment with
+:cylc:conf:`init-script`, :cylc:conf:`exit-script` and :cylc:conf:`err-script`.
+In particular, any environment changes in :cylc:conf:`init-script` will be
+visible in the parent shell, as well as in the subshell hosting user scripts.
+
+The parent shell sets trap handlers for some signals (the exact list depends on
+a particular batch system being used) and typically resends any received signal
+to the subshell and its children (the whole process group, to be precise), unless
+the batch system doesn't execute the job script as process leader, in which case
+the signal is resent to the subshell process only. Immediately after that
+:cylc:conf:`err-script` is executed without waiting for the subshell process to
+finish, unless you start it with the ``wait`` command to prevent that.
 
 .. digraph:: example
 
-   rankdir="LR"
+    rankdir="LR"
+    packmode="array_u";
 
-   subgraph cluster_legend {
-      style="dashed"
-      label="Legend"
+    subgraph cluster_legend {
+        style="dashed"
+        label="Legend"
 
-      "user defined script"
-      "cylc defined script" [shape="rect"]
+        "user defined script"
+        "cylc defined script" [shape="rect"]
 
-      "user defined script" -> "cylc defined script" [style="invis"]
-   }
+        "user defined script" -> "cylc defined script" [style="invis"]
+    }
 
-   subgraph cluster_diagram {
-      style="invis"
+    subgraph cluster_diagram {
+        style="invis"
+        margin=20
 
-      "cylc-env" [shape="rect"]
-      "user-env" [shape="rect"]
+        "cylc-env" [shape="rect"]
+        "user-env" [shape="rect"]
 
-      "init-script" ->
-      "cylc-env" ->
-      "env-script" ->
-      "user-env" ->
-      "pre-script" ->
-      "script" ->
-      "post-script" -> "err-script"
-      "post-script" -> "exit-script"
-   }
+        "init-script" ->
+        "cylc-env" ->
+        "env-script"
+
+        subgraph cluster_subshell {
+            style="dashed"
+            label="Subshell process"
+
+            "env-script" ->
+            "user-env" ->
+            "pre-script" ->
+            "script" ->
+            "post-script"
+        }
+
+        "post-script" -> "err-script"
+        "post-script" -> "exit-script"
+    }
 
 The two "Cylc defined scripts" are:
 
