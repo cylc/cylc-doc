@@ -77,19 +77,30 @@ jobs:
         uses: cylc/release-actions/configure-git@v1
 
       - name: remove previous nightly build
+        id: remove-prev-build
+        working-directory: gh-pages
+        continue-on-error: true
         run: |
-          cd gh-pages
           echo "::group::History before rebase: (you can still fetch these commits for recovery)"
           git log --oneline --graph --no-abbrev-commit gh-pages
           echo "::endgroup::"
+          echo "[command]git rebase -i --root"
           EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
             git rebase -i --root
-          # if versions have been added/removed since the last build we
-          # will get conflicts on the versions.json file so we rebuild it
-          # now just in case
-          ../docs/bin/version write > versions.json
+
+      # if versions have been added/removed since the last build, we will
+      # get conflicts on the versions.json file, so need to rebuild it
+      - name: fix rebase conflict
+        if: steps.remove-prev-build.outcome == 'failure'
+        working-directory: gh-pages
+        run: |
+          git diff --diff-filter=U
+          echo "[command]../docs/bin/version . write > versions.json"
+          ../docs/bin/version . write > versions.json
+          echo "[command]git add versions.json"
           git add versions.json
-          git rebase --continue || true  # true incase there wasn't a conflict
+          echo "[command]git rebase --continue"
+          EDITOR=: git rebase --continue
 
       - name: build docs
         run: |
