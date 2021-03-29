@@ -65,16 +65,17 @@ jobs:
         run: pip install "${{ github.workspace }}/docs[all]"
 
       - name: install libs to document
+        env:
+          cylc_flow: ${{ github.event.inputs.cylc-flow-tag }}
+          meto_rose: ${{ github.event.inputs.metomi-rose-tag }}
+          cylc_rose: ${{ github.event.inputs.cylc-rose-tag }}
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
           pip install  \
-            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow'\
-              '@${{ github.event.inputs.cylc-flow-tag }}' \
-            'metomi-rose[all] @ git+https://github.com/metomi/rose'\
-              '@${{ github.event.inputs.metomi-rose-tag }}' \
-            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@'\
-              '${{ github.event.inputs.cylc-rose-tag }}'
+            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}"
+            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}"
+            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}"
 
       - name: checkout gh-pages
         uses: actions/checkout@v2
