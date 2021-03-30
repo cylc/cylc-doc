@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running Suites &mdash; Cylc 8.0b0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0b0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0b0 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Suite Storage, Discovery, Revision Control, and Deployment" href="suite-storage-etc.html" />
+    <link rel="prev" title="Installing Workflows" href="installing-workflows.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="running-suites">
+
+<h1>Running Suites<a class="headerlink" href="../../html/user-guide/running-suites.html#running-suites" title="View HTML">§</a></h1>
+
+<p>This chapter currently features a diverse collection of topics related
+to running suites.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="suite-start-up">
+
+<h2>Suite Start-Up<a class="headerlink" href="../../html/user-guide/running-suites.html#suite-start-up" title="View HTML">§</a></h2>
+
+<p>There are three ways to start a suite running:</p>
+<ul class="simple">
+<li>Cold start: start from scratch</li>
+<li>Warm start: start from scratch, but after the initial cycle point</li>
+<li>Restart: continue from prior suite state</li>
+</ul>
+<p>Once a suite has been started, it cannot start from scratch again without a
+re-install. At this point, it is typically a restart that is needed most
+often (but see also <a class="reference internal" href="#reloading-the-suite-configuration-at-runtime"><span class="std std-ref">Reloading The Suite Configuration At Runtime</span></a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Cylc 7 it was posssible to cold/warm start a suite without having to
+reinstall it. In Cylc 8, you must reinstall the suite or remove its
+database in order to cold/warm start it.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="cold-start">
+
+<h3>Cold Start<a class="headerlink" href="../../html/user-guide/running-suites.html#cold-start" title="View HTML">§</a></h3>
+
+<p>A cold start is the primary way to run a suite for the first time:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play SUITE
+</pre></div>
+</div>
+<p>The initial cycle point may be specified on the command line or in the <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>
+file. The scheduler starts by loading the first instance of each task at the
+suite initial cycle point, or at the next valid point for the task.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="warm-start">
+
+<h3>Warm Start<a class="headerlink" href="../../html/user-guide/running-suites.html#warm-start" title="View HTML">§</a></h3>
+
+<p>A warm start runs a suite for the first time, like a cold start,
+but from the beginning of a given <a class="reference internal" href="../glossary.html#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a> that is beyond the
+suite <a class="reference internal" href="../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>. The warm start cycle point must be given
+on the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play SUITE --start-cycle-point<span class="o">=</span>CYCLE_POINT
+</pre></div>
+</div>
+<p>The initial cycle point defined in <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> is preserved, but
+all tasks and dependencies before the start cycle point are ignored.</p>
+<p>The scheduler starts by loading a first instance of each task at the warm
+start cycle point, or at the next valid point for the task.
+<code class="docutils literal notranslate"><span class="pre">R1</span></code> type tasks behave exactly the same as other tasks - if their
+cycle point is at or later than the given start cycle point, they will run; if
+not, they will be ignored.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="start-cycle-point-stop-cycle-point">
+
+<h3>Start Cycle Point &amp; Stop Cycle Point<a class="headerlink" href="../../html/user-guide/running-suites.html#start-cycle-point-stop-cycle-point" title="View HTML">§</a></h3>
+
+<p>All workflows have an <a class="reference internal" href="../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> and many have a
+<a class="reference internal" href="../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>. These determine the range between which Cylc will
+schedule tasks to run.</p>
+<p>By default when you launch a Cylc <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to run the workflow,
+it will start at the <a class="reference internal" href="../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> and stop at the
+<a class="reference internal" href="../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>. However, it is possible to start and stop the
+scheduler at any arbitrary point.</p>
+<p>To do this we use a <a class="reference internal" href="../glossary.html#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a> and/or <a class="reference internal" href="../glossary.html#term-stop-cycle-point"><span class="xref std std-term">stop cycle point</span></a>
+when we launch the scheduler
+(e.g. <code class="docutils literal notranslate"><span class="pre">--start-cycle-point</span></code> and <code class="docutils literal notranslate"><span class="pre">--stop-cycle-point</span></code> CLI arguments).</p>
+<p>For example if we were to run the following workflow:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 5</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># every cycle: 1, 2, 3, 4, 5</span>
+        <span class="nv">P1 </span><span class="o">=</span><span class="s"> foo</span>
+        <span class="c1"># every other cycle: 1, 3, 5</span>
+        <span class="nv">P2 </span><span class="o">=</span><span class="s"> bar</span>
+</pre></div>
+</div>
+<p>With a <a class="reference internal" href="../glossary.html#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a> of <code class="docutils literal notranslate"><span class="pre">2</span></code> and a <a class="reference internal" href="../glossary.html#term-stop-cycle-point"><span class="xref std std-term">stop cycle point</span></a> of
+<code class="docutils literal notranslate"><span class="pre">4</span></code>, then the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> would run at cycles 2, 3 &amp; 4 and the task <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+would only run at cycle <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<img alt="../_images/initial-start-stop-final-cp.png" class="align-center" src="../_images/initial-start-stop-final-cp.png" />
+<ul class="simple">
+<li>The initial and final cycle points are at the start and end of the graph.</li>
+<li>The start and stop cycle points determine the part of the graph that the scheduler runs.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="restart">
+
+<h3>Behaviour of Tasks on Restart<a class="headerlink" href="../../html/user-guide/running-suites.html#behaviour-of-tasks-on-restart" title="View HTML">§</a></h3>
+
+<p>At restart, the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> initializes its task pool from the previous
+state at shutdown. This allows the suite to carry on exactly as it was just
+before being shut down or killed.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play SUITE
+</pre></div>
+</div>
+<p>Tasks recorded in the “submitted” or “running” states are automatically polled
+(see <a class="reference internal" href="#task-job-polling"><span class="std std-ref">Task Job Polling</span></a>) at start-up to determine what happened to
+them while the suite was down.</p>
+<div class="section level-4" id="behaviour-of-tasks-on-restart">
+<p>All tasks are reloaded in exactly their recorded states. Failed tasks are
+not automatically resubmitted at restart in case the underlying problem has not
+been addressed yet.</p>
+<p>Tasks recorded in the submitted or running states are automatically polled on
+restart, to see if they are still waiting in a <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> queue, still running, or
+if they succeeded or failed while the suite was down. The suite state will be
+updated automatically according to the poll results.</p>
+<p>Existing instances of tasks removed from the suite configuration before restart
+are not removed from the task pool automatically, but they will not spawn new
+instances. They can be removed manually if necessary,
+with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code>.</p>
+<p>Similarly, instances of new tasks added to the suite configuration before
+restart are not inserted into the task pool automatically, because it is
+very difficult in general to automatically determine the cycle point of
+the first instance. Instead, the first instance of a new task should be
+inserted manually at the right cycle point, with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code>.</p>
+</div>
+
+
+
+</article>
+<article class="slide level-2" id="reloading-the-suite-configuration-at-runtime">
+
+<h2>Reloading The Suite Configuration At Runtime<a class="headerlink" href="../../html/user-guide/running-suites.html#reloading-the-suite-configuration-at-runtime" title="View HTML">§</a></h2>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code> command tells a <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to reload its
+suite configuration at run time. This is an alternative to shutting a
+suite down and restarting it after making changes.</p>
+<p>As for a restart, existing instances of tasks removed from the suite
+configuration before reload are not removed from the task pool
+automatically, but they will not spawn new instances. They can be removed
+manually if necessary, with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code>.</p>
+<p>Similarly, instances of new tasks added to the suite configuration before
+reload are not inserted into the pool automatically. The first instance of each
+must be inserted manually at the right cycle point, with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-suite-contact-file">
+
+<h2>The Suite Contact File<a class="headerlink" href="../../html/user-guide/running-suites.html#the-suite-contact-file" title="View HTML">§</a></h2>
+
+<p>At start-up, <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> write a <a class="reference internal" href="../glossary.html#term-contact-file"><span class="xref std std-term">contact file</span></a>
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/SUITE/.service/contact</span></code> that records suite host,
+user, port number, process ID, Cylc version, and other information. Client
+commands can read this file, if they have access to it, to find the target
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="authentication-files">
+
+<h2>Authentication Files<a class="headerlink" href="../../html/user-guide/running-suites.html#authentication-files" title="View HTML">§</a></h2>
+
+<p>Cylc uses <a class="reference external" href="http://curvezmq.org/page:read-the-docs/">CurveZMQ</a> to ensure that
+any data, sent between the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> and the client,
+remains protected during transmission. Public keys are used to encrypt the
+data, private keys for decryption.</p>
+<p>Authentication files will be created in your
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/WORKFLOW/.service/</span></code> directory at start-up. You can expect to
+find one client public key per file system for remote jobs.</p>
+<p>On the workflow host, the directory structure should contain:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/cylc-run/workflow_x
+|__.service
+   |__client_public_keys
+   |  \-- client_localhost.key
+   |  \-- &lt;any further client keys&gt;
+|  \-- client.key_secret
+|  \-- server.key
+|  \-- server.key_secret
+</pre></div>
+</div>
+</div></blockquote>
+<p>On the remote job host, the directory structure should contain:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/cylc-run/workflow_x
+|__.service
+   \-- client.key
+   \-- client.key_secret
+   \-- server.key
+</pre></div>
+</div>
+</div></blockquote>
+<p>Keys are removed as soon as they are no longer required.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-job-polling">
+
+<h2>Task Job Polling<a class="headerlink" href="../../html/user-guide/running-suites.html#task-job-polling" title="View HTML">§</a></h2>
+
+<p>At any point after job submission task jobs can be <em>polled</em> to check that
+their true state conforms to what is currently recorded by the suite server
+program. See <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">poll</span> <span class="pre">--help</span></code> for how to poll one or more tasks
+manually.</p>
+<p>Polling may be necessary if, for example, a task job gets killed by the
+untrappable SIGKILL signal (e.g. <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-9</span> <span class="pre">PID</span></code>), or if a network
+outage prevents task success or failure messages getting through, or if the
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> itself is down when tasks finish execution.</p>
+<p>To poll a task job the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> interrogates the
+<a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>, and the <code class="docutils literal notranslate"><span class="pre">job.status</span></code> file, on the job host. This
+information is enough to determine the final task status even if the
+job finished while the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> was down or unreachable on
+the network.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="routine-polling">
+
+<h3>Routine Polling<a class="headerlink" href="../../html/user-guide/running-suites.html#routine-polling" title="View HTML">§</a></h3>
+
+<p>Task jobs are automatically polled at certain times: once on job submission
+timeout; several times on exceeding the job execution time limit; and at suite
+restart any tasks recorded as active are polled
+to find out what happened to them while the suite was down.</p>
+<p>Finally, in necessary routine polling can be configured as a way to track job
+status on job hosts that do not allow networking routing back to the suite host
+for task messaging by TCP or SSH. See <a class="reference internal" href="#polling-to-track-job-status"><span class="std std-ref">Polling to Track Job Status</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="tracking-task-state">
+
+<h2>Tracking Task State<a class="headerlink" href="../../html/user-guide/running-suites.html#tracking-task-state" title="View HTML">§</a></h2>
+
+<p>Cylc supports three ways of tracking task state on job hosts:</p>
+<ul class="simple">
+<li>task-to-workflow messaging via TCP (using ZMQ protocol)</li>
+<li>task-to-workflow messaging via non-interactive SSH to the workflow host, then
+local tcp.</li>
+<li>regular polling by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a></li>
+</ul>
+<p>These can be configured per platform using
+<a class="reference internal" href="../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]communication</span> <span class="pre">method</span></code></a>.</p>
+<p>If your site prohibits TCP and SSH back from job hosts to
+workflow hosts, before resorting to the polling method you should
+consider installing dedicated Cylc servers or
+VMs inside the HPC trust zone (where TCP and SSH should be allowed).</p>
+<p>It is also possible to run Cylc <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> on HPC login
+nodes, but this is not recommended for load and run duration.</p>
+<p>Finally, it has been suggested that <em>port forwarding</em> may provide another
+solution - this has been investigated and will not be implemented at this time.
+Organisations often have port forwarding disabled for security reasons.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is recommended that you use platform configuration within your workflows
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;]platform" title="flow.cylc[runtime][&lt;namespace&gt;]platform"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]platform</span></code></a>, rather than the
+deprecated <code class="docutils literal notranslate"><span class="pre">host</span></code> setting to ensure the intended task communication method
+is applied.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="tcp-task-messaging">
+
+<h3>TCP Task Messaging<a class="headerlink" href="../../html/user-guide/running-suites.html#tcp-task-messaging" title="View HTML">§</a></h3>
+
+<p>Task job wrappers automatically invoke <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> to report
+progress back to the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> when they begin executing,
+at normal exit (success) and abnormal exit (failure).</p>
+<p>By default the messaging occurs via an authenticated, TCP connection to the
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> using the ZMQ protocol.
+This is the preferred task communications method - it is efficient and direct.</p>
+<p>Suite server programs automatically install suite <a class="reference internal" href="../glossary.html#term-contact-file"><span class="xref std std-term">contact information</span></a> and credentials on job hosts. Users only need to do this
+manually for remote access to suites on other hosts, or suites owned by other
+users - see <a class="reference internal" href="#remotecontrol"><span class="std std-ref">Remote Control</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="ssh-task-communication">
+
+<h3>SSH Task Communication<a class="headerlink" href="../../html/user-guide/running-suites.html#ssh-task-communication" title="View HTML">§</a></h3>
+
+<p>Cylc can be configured to re-invoke task messaging commands on the workflow
+host via non-interactive SSH (from job platform to workflow host).</p>
+<p>User-invoked client commands have been automatically enabled to support this
+method of communication, when
+<a class="reference internal" href="../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]communication</span> <span class="pre">method</span></code></a> is
+configured to <code class="docutils literal notranslate"><span class="pre">ssh</span></code>.</p>
+<p>This is less efficient than direct ZMQ protocol messaging, but it may be useful at
+sites where the ZMQ ports are blocked but non-interactive SSH is allowed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Ensure SSH keys are in place for the remote task platform(s) before enabling
+this feature. Failure to do so, will result in
+<code class="docutils literal notranslate"><span class="pre">Host</span> <span class="pre">key</span> <span class="pre">verification</span> <span class="pre">failed</span></code> error.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="polling-to-track-job-status">
+
+<h3>Polling to Track Job Status<a class="headerlink" href="../../html/user-guide/running-suites.html#polling-to-track-job-status" title="View HTML">§</a></h3>
+
+<p>Suite server programs can actively poll task jobs at configurable intervals,
+via non-interactive SSH to the job host.</p>
+<p>Polling is the least efficient task communications method because task state is
+updated only at intervals, not when task events actually occur. However, it
+may be needed at sites that do not allow TCP or non-interactive SSH from job
+host to suite host.</p>
+<p>Be careful to avoid spamming task hosts with polling commands. Each poll
+opens (and then closes) a new SSH connection.</p>
+<p>Polling intervals are configurable under <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> because
+they should may depend on the expected execution time. For instance, a
+task that typically takes an hour to run might be polled every 10
+minutes initially, and then every minute toward the end of its run.
+Interval values are used in turn until the last value, which is used
+repeatedly until finished:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="c1"># poll every minute in the &#39;submitted&#39; state:</span>
+        <span class="nv">submission polling intervals </span><span class="o">=</span><span class="s"> PT1M</span>
+
+        <span class="c1"># poll one minute after foo starts running, then every 10</span>
+        <span class="c1"># minutes for 50 minutes, then every minute until finished:</span>
+        <span class="nv">execution polling intervals </span><span class="o">=</span><span class="s"> PT1M, 5*PT10M, PT1M</span>
+</pre></div>
+</div>
+<p>A list of intervals with optional multipliers can be used for both submission
+and execution polling, although a single value is probably sufficient for
+submission polling. If these items are not configured default values from
+site and user global config will be used for
+<a class="reference internal" href="../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">communication</span> <span class="pre">method=polling</span></code></a>; polling is not done by default
+under the other task communications methods (but it can still be used
+if you like).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="client-server-interaction">
+
+<h2>Client-Server Interaction<a class="headerlink" href="../../html/user-guide/running-suites.html#client-server-interaction" title="View HTML">§</a></h2>
+
+<p>Cylc server programs listen on dedicated network ports for
+TCP communications from Cylc clients (task jobs and user-invoked commands)</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span></code> to see which suites are listening on which ports on
+scanned hosts.</p>
+<p>Cylc generates public-private key pairs on the suite server and job hosts
+which are used for authentication.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="remote-control">
+
+<h2>Remote Control<a class="headerlink" href="../../html/user-guide/running-suites.html#remote-control" title="View HTML">§</a></h2>
+
+<p>Cylc client programs connect to running suites using information stored in
+the <a class="reference internal" href="../glossary.html#term-contact-file"><span class="xref std std-term">contact file</span></a> in the suite <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
+<p>This means that Cylc can interact with suites running on another host provided
+that they share the filesystem on which the <a class="reference internal" href="../glossary.html#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>
+(<code class="docutils literal notranslate"><span class="pre">cylc-run</span></code>) is located.</p>
+<p>If the hosts do not share a filesystem you must use SSH when calling Cylc client
+commands.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-states-explained">
+
+<h2>Task States Explained<a class="headerlink" href="../../html/user-guide/running-suites.html#task-states-explained" title="View HTML">§</a></h2>
+
+<p>As a suite runs, its task proxies may pass through the following states:</p>
+<ul class="simple">
+<li><strong>waiting</strong> - still waiting for prerequisites (e.g. dependence on
+other tasks, and clock triggers) to be satisfied.</li>
+<li><strong>queued</strong> - ready to run (prerequisites satisfied) but
+temporarily held back by an <em>internal cylc queue</em>
+(see <a class="reference internal" href="#internalqueues"><span class="std std-ref">Limiting Activity With Internal Queues</span></a>).</li>
+<li><strong>ready</strong> - ready to run (prerequisites satisfied) and
+handed to cylc’s job submission sub-system.</li>
+<li><strong>submitted</strong> - submitted to run, but not executing yet
+(could be waiting in an external <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> queue).</li>
+<li><strong>submit-failed</strong> - job submission failed <em>or</em>
+submitted job killed (cancelled) before commencing execution.</li>
+<li><strong>submit-retrying</strong> - job submission failed, but a submission retry
+was configured. Will only enter the <em>submit-failed</em> state if all
+configured submission retries are exhausted.</li>
+<li><strong>running</strong> - currently executing (a <em>task started</em>
+message was received, or the task polled as running).</li>
+<li><strong>succeeded</strong> - finished executing successfully (a <em>task
+succeeded</em> message was received, or the task polled as succeeded).</li>
+<li><strong>failed</strong> - aborted execution due to some error condition (a
+<em>task failed</em> message was received, or the task polled as failed).</li>
+<li><strong>retrying</strong> - job execution failed, but an execution retry
+was configured. Will only enter the <em>failed</em> state if all configured
+execution retries are exhausted.</li>
+<li><strong>runahead</strong> - will not have prerequisites checked (and so
+automatically held, in effect) until the rest of the suite catches up
+sufficiently. The amount of runahead allowed is configurable - see
+<a class="reference internal" href="#runaheadlimit"><span class="std std-ref">Runahead Limiting</span></a>.</li>
+<li><strong>expired</strong> - will not be submitted to run, due to falling too far
+behind the wall-clock relative to its cycle point -
+see <a class="reference internal" href="writing-suites/scheduling.html#clockexpiretasks"><span class="std std-ref">Clock-Expire Triggers</span></a>.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="runahead-limiting">
+
+<h2>Runahead Limiting<a class="headerlink" href="../../html/user-guide/running-suites.html#runahead-limiting" title="View HTML">§</a></h2>
+
+<p>Runahead limiting prevents the fastest tasks in a suite from getting too far
+ahead of the slowest ones.</p>
+<p>For example in the following workflow the runahead limit of <code class="docutils literal notranslate"><span class="pre">P5</span></code> restricts the
+workflow so that only five consecutive cycles may run simultaneously.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">runahead limit </span><span class="o">=</span><span class="s"> P5</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 </span><span class="o">=</span><span class="s"> foo</span>
+</pre></div>
+</div>
+<p>When this workflow is started the tasks <code class="docutils literal notranslate"><span class="pre">foo.1</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">foo.5</span></code> will be submitted,
+however, the tasks from <code class="docutils literal notranslate"><span class="pre">foo.6</span></code> onwards are said to be “runahead limited”
+and will not be submitted.</p>
+<p>Succeeded and failed tasks are ignored when computing the runahead limit. This
+functionality is controlled by the <a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduling]runahead limit" title="flow.cylc[scheduling]runahead limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]runahead</span> <span class="pre">limit</span></code></a>
+which can be set to either:</p>
+<ul class="simple">
+<li>A number of consecutive cycles.</li>
+<li>Or a time interval between the oldest and newest cycles.</li>
+</ul>
+<p>A low runahead limit can prevent Cylc from interleaving cycles, but it will not
+stall a suite unless it fails to extend out past a future trigger (see
+<a class="reference internal" href="writing-suites/scheduling.html#intercyclepointtriggers"><span class="std std-ref">Inter-Cycle Triggers</span></a>).</p>
+<p>A high runahead limit may allow fast tasks
+that are not constrained by dependencies or clock-triggers to spawn far ahead
+of the pack, which could have performance implications for the
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> when running very large suites.</p>
+<p>See the <a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduling]runahead limit" title="flow.cylc[scheduling]runahead limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]runahead</span> <span class="pre">limit</span></code></a> configuration for more details.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="limiting-activity-with-internal-queues">
+
+<h2>Limiting Activity With Internal Queues<a class="headerlink" href="../../html/user-guide/running-suites.html#limiting-activity-with-internal-queues" title="View HTML">§</a></h2>
+
+<p>Large suites can potentially overwhelm task hosts by submitting too many
+tasks at once. You can prevent this with <em>internal queues</em>, which
+limit the number of tasks that can be active (submitted or running)
+at the same time.</p>
+<p>Internal queues behave in the first-in-first-out (FIFO) manner, i.e. tasks are
+released from a queue in the same order that they were queued.</p>
+<p>A queue is defined by a <em>name</em>; a <em>limit</em>, which is the maximum
+number of active tasks allowed for the queue; and a list of <em>members</em>,
+assigned by task or family name.</p>
+<p>Queue configuration is done in the <a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduling][queues]" title="flow.cylc[scheduling][queues]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][queues]</span></code></a> section.</p>
+<p>By default every task is assigned to the <code class="docutils literal notranslate"><span class="pre">default</span></code> queue, which by default
+has a zero limit (interpreted by cylc as no limit). To use a single queue for
+the whole suite just set the default queue limit:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="c1"># limit the entire suite to 5 active tasks at once</span>
+        <span class="nt">[[[default]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 5</span>
+</pre></div>
+</div>
+<p>To use additional queues just name each one, set their limits, and assign
+members:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="nt">[[[q_foo]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 5</span>
+            <span class="nv">members </span><span class="o">=</span><span class="s"> foo, bar, baz</span>
+</pre></div>
+</div>
+<p>Any tasks not assigned to a particular queue will remain in the default
+queue. The <em>queues</em> example suite illustrates how queues work by
+running two task trees side by side each
+limited to 2 and 3 tasks respectively:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> demonstrates internal queueing</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Two trees of tasks: the first uses the default queue set to a limit of</span>
+<span class="s2">        two active tasks at once; the second uses another queue limited to three</span>
+<span class="s2">        active tasks at once.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="nt">[[[default]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 2</span>
+        <span class="nt">[[[foo]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 3</span>
+            <span class="nv">members </span><span class="o">=</span><span class="s"> n, o, p, FAM2, u, v, w, x, y, z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            a =&gt; b &amp; c =&gt; FAM1</span>
+<span class="s2">            n =&gt; o &amp; p =&gt; FAM2</span>
+<span class="s2">            FAM1:succeed-all =&gt; h &amp; i &amp; j &amp; k &amp; l &amp; m</span>
+<span class="s2">            FAM2:succeed-all =&gt; u &amp; v &amp; w &amp; x &amp; y &amp; z</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[FAM1, FAM2]]</span>
+    <span class="nt">[[d,e,f,g]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM1</span>
+    <span class="nt">[[q,r,s,t]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM2</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="automatic-task-retry-on-failure">
+
+<h2>Automatic Task Retry On Failure<a class="headerlink" href="../../html/user-guide/running-suites.html#automatic-task-retry-on-failure" title="View HTML">§</a></h2>
+
+<p>See also <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;]execution retry delays" title="flow.cylc[runtime][&lt;namespace&gt;]execution retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">retry</span> <span class="pre">delays</span></code></a>.</p>
+<p>Tasks can be configured with a list of “retry delay” intervals, as
+<a class="reference internal" href="../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 durations</span></a>. If the task job fails it will go
+into the <em>retrying</em> state and resubmit after the next configured delay
+interval. An example is shown in the suite listed below under
+<a class="reference internal" href="#eventhandling"><span class="std std-ref">Task Event Handling</span></a>.</p>
+<p>If a task with configured retries is <em>killed</em> (by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">kill</span></code>
+it goes to the <em>held</em> state so that the operator can decide
+whether to release it and continue the retry sequence or to abort the retry
+sequence by manually resetting it to the <em>failed</em> state.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-event-handling">
+
+<h2>Task Event Handling<a class="headerlink" href="../../html/user-guide/running-suites.html#task-event-handling" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>Task events (e.g. task succeeded/failed) are configured by
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">task</span> <span class="pre">events</span></code></a>.</li>
+<li>Suite events (e.g. suite started/stopped) are configured by
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduler][events]" title="flow.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite</span> <span class="pre">events</span></code></a></li>
+</ul>
+<p>Cylc can call nominated event handlers - to do whatever you like - when certain
+suite or task events occur. This facilitates centralized alerting and automated
+handling of critical events. Event handlers can be used to send a message, call
+a pager, or whatever; they can even intervene in the operation of their own
+suite using cylc commands.</p>
+<p>To send an email, use the built-in setting <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][events]mail events" title="flow.cylc[runtime][&lt;namespace&gt;][events]mail events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[events]mail</span> <span class="pre">events</span></code></a>
+to specify a list of events for which notifications should be sent. (The
+name of a registered task output can also be used as an event name in
+this case.) E.g. to send an email on (submission) failed and retry:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            test ${CYLC_TASK_TRY_NUMBER} -eq 3</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; &#39;oopsy daisy&#39;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">mail events </span><span class="o">=</span><span class="s"> submission failed, submission retry, failed, retry, oops</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">oops </span><span class="o">=</span><span class="s"> oopsy daisy</span>
+</pre></div>
+</div>
+<p>By default, the emails will be sent to the current user with:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">to:</span></code> set as <code class="docutils literal notranslate"><span class="pre">$USER</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">from:</span></code> set as <code class="docutils literal notranslate"><span class="pre">notifications&#64;$(hostname)</span></code></li>
+<li>SMTP server at <code class="docutils literal notranslate"><span class="pre">localhost:25</span></code></li>
+</ul>
+<p>These can be configured using the settings:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][mail]to" title="flow.cylc[runtime][&lt;namespace&gt;][mail]to"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[mail]to</span></code></a> (list of email addresses)</li>
+<li><a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][mail]from" title="flow.cylc[runtime][&lt;namespace&gt;][mail]from"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[mail]from</span></code></a></li>
+</ul>
+<p>By default, a cylc suite will send you no more than one task event email every
+5 minutes - this is to prevent your inbox from being flooded by emails should a
+large group of tasks all fail at similar time. This is configured by
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduler][mail]task event batch interval" title="flow.cylc[scheduler][mail]task event batch interval"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][mail]task</span> <span class="pre">event</span> <span class="pre">batch</span> <span class="pre">interval</span></code></a>.</p>
+<p>Event handlers can be located in the suite <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory;
+otherwise it is up to you to ensure their location is in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> (in
+the shell in which the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> runs). They should require little
+resource and return quickly - see <a class="reference internal" href="#managing-external-command-execution"><span class="std std-ref">Managing External Command Execution</span></a>.</p>
+<p>Task event handlers can be specified using the
+<code class="docutils literal notranslate"><span class="pre">[events]&lt;event&gt;</span> <span class="pre">handler</span></code> settings, where
+<code class="docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code> is one of:</p>
+<ul class="simple">
+<li>‘submitted’ - the job submit command was successful</li>
+<li>‘submission failed’ - the job submit command failed</li>
+<li>‘submission timeout’ - task job submission timed out</li>
+<li>‘submission retry’ - task job submission failed, but will retry after
+a configured delay</li>
+<li>‘started’ - the task reported commencement of execution</li>
+<li>‘succeeded’ - the task reported successful completion</li>
+<li>‘warning’ - the task reported a WARNING severity message</li>
+<li>‘critical’ - the task reported a CRITICAL severity message</li>
+<li>‘custom’ - the task reported a CUSTOM severity message</li>
+<li>‘late’ - the task is never active and is late</li>
+<li>‘failed’ - the task failed</li>
+<li>‘retry’ - the task failed but will retry after a configured delay</li>
+<li>‘execution timeout’ - task execution timed out</li>
+</ul>
+<p>The value of each setting should be a list of command lines or command line
+templates (see below).</p>
+<p>Alternatively you can use <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][events]handlers" title="flow.cylc[runtime][&lt;namespace&gt;][events]handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[events]handlers</span></code></a> and
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][events]handler events" title="flow.cylc[runtime][&lt;namespace&gt;][events]handler events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[events]handler</span> <span class="pre">events</span></code></a>, where the former is a list of command
+lines or command line templates (see below) and the latter is a list of events
+for which these commands should be invoked. (The name of a registered task
+output can also be used as an event name in this case.)</p>
+<p>Event handler arguments can be constructed from various templates
+representing suite name; task ID, name, cycle point, message, and submit
+number name; and any <a class="reference internal" href="../reference/config/suite.html#flow.cylc[meta]" title="flow.cylc[meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite</span></code></a> or
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][meta]" title="flow.cylc[runtime][&lt;namespace&gt;][meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">task</span></code></a> item.
+See <a class="reference internal" href="../reference/config/suite.html#flow.cylc[scheduler][events]" title="flow.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">suite</span> <span class="pre">events</span></code></a> and
+<a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">task</span> <span class="pre">events</span></code></a> for options.</p>
+<p>If no template arguments are supplied the following default command line
+will be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;task-event-handler&gt; %(event)s %(suite)s %(id)s %(message)s
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Substitution patterns should not be quoted in the template strings.
+This is done automatically where required.</p>
+</div>
+<p>For an explanation of the substitution syntax, see
+<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#string-formatting">String Formatting Operations</a>
+in the Python documentation.</p>
+<p>The retry event occurs if a task fails and has any remaining retries
+configured (see <a class="reference internal" href="#taskretries"><span class="std std-ref">Automatic Task Retry On Failure</span></a>).
+The event handler will be called as soon as the task fails, not after
+the retry delay period when it is resubmitted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Event handlers are called by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, not by
+task jobs. If you wish to pass additional information to them use
+<code class="docutils literal notranslate"><span class="pre">[scheduler]</span> <span class="pre">-&gt;</span> <span class="pre">[[environment]]</span></code>, not task runtime environment.</p>
+</div>
+<p>The following two <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> snippets are examples on how to specify
+event handlers using the alternate methods:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> test ${CYLC_TASK_TRY_NUMBER} -eq 2</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">retry handler </span><span class="o">=</span><span class="s"> &quot;echo &#39;!!!!!EVENT!!!!!&#39; &quot;</span>
+            <span class="nv">failed handler </span><span class="o">=</span><span class="s"> &quot;echo &#39;!!!!!EVENT!!!!!&#39; &quot;</span>
+</pre></div>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            test ${CYLC_TASK_TRY_NUMBER} -eq 2</span>
+<span class="s2">            cylc message -- &quot;${CYLC_SUITE_NAME}&quot; &quot;${CYLC_TASK_JOB}&quot; &#39;oopsy daisy&#39;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">handlers </span><span class="o">=</span><span class="s"> &quot;echo &#39;!!!!!EVENT!!!!!&#39; &quot;</span>
+            <span class="c1"># Note: task output name can be used as an event in this method</span>
+            <span class="nv">handler events </span><span class="o">=</span><span class="s"> retry, failed, oops</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">oops </span><span class="o">=</span><span class="s"> oopsy daisy</span>
+</pre></div>
+</div>
+<p>The handler command here - specified with no arguments - is called with the
+default arguments, like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s1">&#39;!!!!!EVENT!!!!!&#39;</span> %<span class="o">(</span>event<span class="o">)</span>s %<span class="o">(</span>suite<span class="o">)</span>s %<span class="o">(</span>id<span class="o">)</span>s %<span class="o">(</span>message<span class="o">)</span>s
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="late-events">
+
+<h3>Late Events<a class="headerlink" href="../../html/user-guide/running-suites.html#late-events" title="View HTML">§</a></h3>
+
+<p>You may want to be notified when certain tasks are running late in a real time
+production system - i.e. when they have not triggered by <em>the usual time</em>.
+Tasks of primary interest are not normally clock-triggered however, so their
+trigger times are mostly a function of how the suite runs in its environment,
+and even external factors such as contention with other suites <a class="footnote-reference" href="#id18" id="id9">[3]</a> .</p>
+<p>But if your system is reasonably stable from one cycle to the next such that a
+given task has consistently triggered by some interval beyond its cycle point,
+you can configure Cylc to emit a <em>late event</em> if it has not triggered by
+that time. For example, if a task <code class="docutils literal notranslate"><span class="pre">forecast</span></code> normally triggers by 30
+minutes after its cycle point, configure late notification for it like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[forecast]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> run-model.sh</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">late offset </span><span class="o">=</span><span class="s"> PT30M</span>
+            <span class="nv">late handler </span><span class="o">=</span><span class="s"> my-handler %(message)s</span>
+</pre></div>
+</div>
+<p><em>Late offset intervals are not computed automatically so be careful
+to update them after any change that affects triggering times.</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cylc can only check for lateness in tasks that it is currently aware
+of. If a suite gets delayed over many cycles the next tasks coming up
+can be identified as late immediately, and subsequent tasks can be
+identified as late as the suite progresses to subsequent cycle points,
+until it catches up to the clock.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="managing-external-command-execution">
+
+<h2>Managing External Command Execution<a class="headerlink" href="../../html/user-guide/running-suites.html#managing-external-command-execution" title="View HTML">§</a></h2>
+
+<p>Job submission commands, event handlers, and job poll and kill commands, are
+executed by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> in a “pool” of asynchronous
+subprocesses, in order to avoid holding the suite up. The process pool is
+actively managed to limit it to a configurable size
+<a class="reference internal" href="../reference/config/global.html#global.cylc[scheduler]process pool size" title="global.cylc[scheduler]process pool size"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]process</span> <span class="pre">pool</span> <span class="pre">size</span></code></a>
+Custom event handlers should be light-weight and quick-running because they
+will tie up a process pool member until they complete, and the suite will
+appear to stall if the pool is saturated with long-running processes. Processes
+are killed after a configurable timeout
+<a class="reference internal" href="../reference/config/global.html#global.cylc[scheduler]process pool timeout" title="global.cylc[scheduler]process pool timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]process</span> <span class="pre">pool</span> <span class="pre">timeout</span></code></a>
+, however,
+to guard against rogue commands that hang indefinitely. All process kills are
+logged by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>. For killed job submissions the associated
+tasks also go to the <em>submit-failed</em> state.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="handling-job-preemption">
+
+<h2>Handling Job Preemption<a class="headerlink" href="../../html/user-guide/running-suites.html#handling-job-preemption" title="View HTML">§</a></h2>
+
+<p>Some HPC facilities allow job preemption: the resource manager can kill
+or suspend running low priority jobs in order to make way for high
+priority jobs. The preempted jobs may then be automatically restarted
+by the resource manager, from the same point (if suspended) or requeued
+to run again from the start (if killed).</p>
+<p>Suspended jobs will poll as still running (their job status file says they
+started running, and they still appear in the resource manager queue).
+Loadleveler jobs that are preempted by kill-and-requeue (“job vacation”) are
+automatically returned to the submitted state by Cylc. This is possible
+because Loadleveler sends the SIGUSR1 signal before SIGKILL for preemption.
+Other <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a> just send SIGTERM before SIGKILL as normal, so Cylc
+cannot distinguish a preemption job kill from a normal job kill. After this the
+job will poll as failed (correctly, because it was killed, and the job status
+file records that). To handle this kind of preemption automatically you could
+use a task failed or retry event handler that queries the job runner queue
+(after an appropriate delay if necessary) and then, if the job has been
+requeued, uses <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reset</span></code> to reset the task to the submitted state.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="manual-task-triggering-and-edit-run">
+
+<h2>Manual Task Triggering and Edit-Run<a class="headerlink" href="../../html/user-guide/running-suites.html#manual-task-triggering-and-edit-run" title="View HTML">§</a></h2>
+
+<p>Any task proxy currently present in the suite can be manually triggered at any
+time using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> command.
+If the task belongs to a limited internal queue
+(see <a class="reference internal" href="#internalqueues"><span class="std std-ref">Limiting Activity With Internal Queues</span></a>), this will queue it; if not, or if it is already
+queued, it will submit immediately.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--edit</span></code>
+you can edit the generated task job script to make one-off changes before the
+task submits.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-broadcast">
+
+<h2>Cylc Broadcast<a class="headerlink" href="../../html/user-guide/running-suites.html#cylc-broadcast" title="View HTML">§</a></h2>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> command overrides <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a>
+settings in a running suite. This can
+be used to communicate information to downstream tasks by broadcasting
+environment variables (communication of information from one task to
+another normally takes place via the filesystem, i.e. the input/output
+file relationships embodied in inter-task dependencies). Variables (and
+any other runtime settings) may be broadcast to all subsequent tasks,
+or targeted specifically at a specific task, all subsequent tasks with a
+given name, or all tasks with a given cycle point; see broadcast command help
+for details.</p>
+<p>Broadcast settings targeted at a specific task ID or cycle point expire and
+are forgotten as the suite moves on. Un-targeted variables and those
+targeted at a task name persist throughout the suite run, even across
+restarts, unless manually cleared using the broadcast command - and so
+should be used sparingly.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-meaning-and-use-of-initial-cycle-point">
+
+<h2>The Meaning And Use Of Initial Cycle Point<a class="headerlink" href="../../html/user-guide/running-suites.html#the-meaning-and-use-of-initial-cycle-point" title="View HTML">§</a></h2>
+
+<p>When a suite is started with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command (cold or
+warm start) the cycle point at which it starts can be given on the command
+line or hardcoded into the <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play foo --initial-cycle-point<span class="o">=</span>20120808T06Z
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20100808T06Z</span>
+</pre></div>
+</div>
+<p>An initial cycle given on the command line will override one in the
+flow.cylc file.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="setting-the-initial-cycle-point-relative-to-the-current-time">
+
+<h3>Setting The Initial Cycle Point Relative To The Current Time<a class="headerlink" href="../../html/user-guide/running-suites.html#setting-the-initial-cycle-point-relative-to-the-current-time" title="View HTML">§</a></h3>
+
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Setting the initial cycle point relative to the current time only works
+for <a class="reference internal" href="../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> suites which use the Gregorian calendar and
+will not work for alternative calendars like the 360, 365 or 366 day
+calendars.</p>
+</div>
+<p>Two additional commands, <code class="docutils literal notranslate"><span class="pre">next</span></code> and <code class="docutils literal notranslate"><span class="pre">previous</span></code>, can be used when setting
+the initial cycle point.</p>
+<p>The syntax uses truncated ISO8601 time representations, and is of the style:
+<code class="docutils literal notranslate"><span class="pre">next(Thh:mmZ)</span></code>, <code class="docutils literal notranslate"><span class="pre">previous(T-mm)</span></code>; e.g.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T15:00Z)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T09:00)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T12)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T-20)</span></code></li>
+</ul>
+<p>A list of times, separated by semicolons, can be provided, e.g.
+<code class="docutils literal notranslate"><span class="pre">next(T-00;T-15;T-30;T-45)</span></code>. At least one time is required within the
+brackets, and if more than one is given, the major time unit in each (hours
+or minutes) should all be of the same type.</p>
+<p>If an offset from the specified date or time is required, this should be
+used in the form: <code class="docutils literal notranslate"><span class="pre">previous(Thh:mm)</span> <span class="pre">+/-</span> <span class="pre">PxTy</span></code> in the same way as is used
+for determining cycle periods, e.g.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T06)</span> <span class="pre">+P1D</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T-30)</span> <span class="pre">-PT1H</span></code></li>
+</ul>
+<p>The section in the bracket attached to the next/previous command is
+interpreted first, and then the offset is applied.</p>
+<p>The offset can also be used independently without a <code class="docutils literal notranslate"><span class="pre">next</span></code> or <code class="docutils literal notranslate"><span class="pre">previous</span></code>
+command, and will be interpreted as an offset from “now”.</p>
+<table border="1" class="docutils align-default" id="id19">
+<caption><span class="caption-text">Examples of setting relative initial cycle point for times and offsets using <code class="docutils literal notranslate"><span class="pre">now</span> <span class="pre">=</span> <span class="pre">2018-03-14T15:12Z</span></code> (and UTC mode)<a class="headerlink" href="../../html/user-guide/running-suites.html#id19" title="View HTML">§</a></span></caption>
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Syntax</th>
+<th class="head">Interpretation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T-00)</span></code></td>
+<td>2018-03-14T16:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(T-00)</span></code></td>
+<td>2018-03-14T15:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T-00;</span> <span class="pre">T-15;</span> <span class="pre">T-30;</span> <span class="pre">T-45)</span></code></td>
+<td>2018-03-14T15:15Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(T-00;</span> <span class="pre">T-15;</span> <span class="pre">T-30;</span> <span class="pre">T-45)</span></code></td>
+<td>2018-03-14T15:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T00)</span></code></td>
+<td>2018-03-15T00:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(T00)</span></code></td>
+<td>2018-03-14T00:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T06:30Z)</span></code></td>
+<td>2018-03-15T06:30Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(T06:30)</span> <span class="pre">-P1D</span></code></td>
+<td>2018-03-13T06:30Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span></code></td>
+<td>2018-03-14T18:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span></code></td>
+<td>2018-03-14T12:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span> <span class="pre">+P1W</span></code></td>
+<td>2018-03-21T18:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">PT1H</span></code></td>
+<td>2018-03-14T16:12Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">-P1M</span></code></td>
+<td>2018-02-14T15:12Z</td>
+</tr>
+</tbody>
+</table>
+<p>The relative initial cycle point also works with truncated dates, including
+weeks and ordinal date, using ISO8601 truncated date representations.
+Note that day-of-week should always be specified when using weeks. If a time
+is not included, the calculation of the next or previous corresponding
+point will be done from midnight of the current day.</p>
+<table border="1" class="docutils align-default" id="id20">
+<caption><span class="caption-text">Examples of setting relative initial cycle point for dates using <code class="docutils literal notranslate"><span class="pre">now</span> <span class="pre">=</span> <span class="pre">2018-03-14T15:12Z</span></code> (and UTC mode)<a class="headerlink" href="../../html/user-guide/running-suites.html#id20" title="View HTML">§</a></span></caption>
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Syntax</th>
+<th class="head">Interpretation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(-00)</span></code></td>
+<td>2100-01-01T00:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(--01)</span></code></td>
+<td>2018-01-01T00:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(---01)</span></code></td>
+<td>2018-04-01T00:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(--1225)</span></code></td>
+<td>2017-12-25T00:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(-2006)</span></code></td>
+<td>2020-06-01T00:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">previous(-W101)</span></code></td>
+<td>2018-03-05T00:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">next(-W-1;</span> <span class="pre">-W-3;</span> <span class="pre">-W-5)</span></code></td>
+<td>2018-03-14T00:00Z</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">next(-001;</span> <span class="pre">-091;</span> <span class="pre">-181;</span> <span class="pre">-271)</span></code></td>
+<td>2018-04-01T00:00Z</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">previous(-365T12Z)</span></code></td>
+<td>2017-12-31T12:00Z</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+</article>
+<article class="slide level-3" id="the-environment-variable-cylc-suite-initial-cycle-point">
+
+<h3>The Environment Variable CYLC_SUITE_INITIAL_CYCLE_POINT<a class="headerlink" href="../../html/user-guide/running-suites.html#the-environment-variable-cylc-suite-initial-cycle-point" title="View HTML">§</a></h3>
+
+<p>In the case of a <em>cold start only</em> the initial cycle point is passed
+through to task execution environments as
+<code class="docutils literal notranslate"><span class="pre">$CYLC_SUITE_INITIAL_CYCLE_POINT</span></code>. The value is then stored in
+suite database files and persists across restarts, but it does get wiped out
+(set to <code class="docutils literal notranslate"><span class="pre">None</span></code>) after a warm start, because a warm start is really an
+implicit restart in which all state information is lost (except that the
+previous cycle is assumed to have completed).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$CYLC_SUITE_INITIAL_CYCLE_POINT</span></code> variable allows tasks to
+determine if they are running in the initial cold-start cycle point, when
+different behaviour may be required, or in a normal mid-run cycle point.
+Note however that an initial <code class="docutils literal notranslate"><span class="pre">R1</span></code> graph section is now the preferred
+way to get different behaviour at suite start-up.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="simulating-suite-behaviour">
+
+<h2>Simulating Suite Behaviour<a class="headerlink" href="../../html/user-guide/running-suites.html#simulating-suite-behaviour" title="View HTML">§</a></h2>
+
+<p>Several suite run modes allow you to simulate suite behaviour quickly without
+running the suite’s real jobs - which may be long-running and resource-hungry:</p>
+<dl class="docutils">
+<dt>dummy mode</dt><dd><p>Runs tasks as background jobs on configured job hosts.</p>
+<p>This simulates scheduling, job host connectivity, and generates all job
+files on suite and job hosts.</p>
+</dd>
+<dt>dummy-local mode</dt><dd><p>Runs real tasks as background jobs on the suite host, which allows
+dummy-running suites from other sites.</p>
+<p>This simulates scheduling and generates all job files on the suite host.</p>
+</dd>
+<dt>simulation mode</dt><dd><p>Does not run any real tasks.</p>
+<p>This simulates scheduling without generating any job files.</p>
+</dd>
+</dl>
+<p>Set the run mode (default <code class="docutils literal notranslate"><span class="pre">live</span></code>) on the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play --mode<span class="o">=</span>dummy SUITE
+</pre></div>
+</div>
+<p>You can get specified tasks to fail in these modes, for more flexible suite
+testing. See cylc:conf:<cite>[runtime][&lt;namespace&gt;][simulation]</cite>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="proportional-simulated-run-length">
+
+<h3>Proportional Simulated Run Length<a class="headerlink" href="../../html/user-guide/running-suites.html#proportional-simulated-run-length" title="View HTML">§</a></h3>
+
+<p>If <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is set, Cylc
+divides it by <a class="reference internal" href="../reference/config/suite.html#flow.cylc[runtime][&lt;namespace&gt;][simulation]speedup factor" title="flow.cylc[runtime][&lt;namespace&gt;][simulation]speedup factor"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][simulation]speedup</span> <span class="pre">factor</span></code></a> to compute simulated task
+run lengths.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="limitations-of-suite-simulation">
+
+<h3>Limitations Of Suite Simulation<a class="headerlink" href="../../html/user-guide/running-suites.html#limitations-of-suite-simulation" title="View HTML">§</a></h3>
+
+<p>Dummy mode ignores <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> settings because Cylc does not know which
+job resource directives (requested memory, number of compute nodes, etc.) would
+need to be changed for the dummy jobs. If you need to dummy-run jobs on a
+job runner manually comment out <code class="docutils literal notranslate"><span class="pre">script</span></code> items and modify
+directives in your live suite, or else use a custom live mode test suite.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The dummy modes ignore all configured task <code class="docutils literal notranslate"><span class="pre">script</span></code> items
+including <code class="docutils literal notranslate"><span class="pre">init-script</span></code>. If your <code class="docutils literal notranslate"><span class="pre">init-script</span></code> is required
+to run even blank/empty tasks on a job host, note that host environment
+setup should be done elsewhere.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="restarting-suites-with-a-different-run-mode">
+
+<h3>Restarting Suites With A Different Run Mode?<a class="headerlink" href="../../html/user-guide/running-suites.html#restarting-suites-with-a-different-run-mode" title="View HTML">§</a></h3>
+
+<p>The run mode is recorded in the suite run database files. Cylc will not let
+you <em>restart</em> a non-live mode suite in live mode, or vice versa. To
+test a live suite in simulation mode just take a quick copy of it and run the
+the copy in simulation mode.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="automated-reference-test-suites">
+
+<h2>Automated Reference Test Suites<a class="headerlink" href="../../html/user-guide/running-suites.html#automated-reference-test-suites" title="View HTML">§</a></h2>
+
+<p>Reference tests are finite-duration suite runs that abort with non-zero
+exit status if any of the following conditions occur (by default):</p>
+<ul class="simple">
+<li>cylc fails</li>
+<li>any task fails</li>
+<li>the suite times out (e.g. a task dies without reporting failure)</li>
+<li>a nominated shutdown event handler exits with error status</li>
+</ul>
+<p>When a reference test suite shuts down, it compares task triggering
+information (what triggers off what at run time) in the test run suite
+log to that from an earlier reference run, disregarding the timing and
+order of events - which can vary according to the external queueing
+conditions, runahead limit, and so on.</p>
+<p>To prepare a reference log for a suite, run it with the
+<code class="docutils literal notranslate"><span class="pre">--reference-log</span></code> option, and manually verify the
+correctness of the reference run.</p>
+<p>To reference test a suite, just run it (in dummy mode for the most
+comprehensive test without running real tasks) with the
+<code class="docutils literal notranslate"><span class="pre">--reference-test</span></code> option.</p>
+<p>A battery of automated reference tests is used to test cylc before
+posting a new release version. Reference tests can also be used to check that
+a cylc upgrade will not break your own complex
+suites - the triggering check will catch any bug that causes a task to
+run when it shouldn’t, for instance; even in a dummy mode reference
+test the full task job script (sans <code class="docutils literal notranslate"><span class="pre">script</span></code> items) executes on the
+proper task host by the proper <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>.</p>
+<p>Reference tests can be configured with the following settings:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[reference test]]</span>
+        <span class="nv">expected task failures </span><span class="o">=</span><span class="s"> t1.1</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="roll-your-own-reference-tests">
+
+<h3>Roll-your-own Reference Tests<a class="headerlink" href="../../html/user-guide/running-suites.html#roll-your-own-reference-tests" title="View HTML">§</a></h3>
+
+<p>If the default reference test is not sufficient for your needs, firstly
+note that you can override the default shutdown event handler, and
+secondly that the <code class="docutils literal notranslate"><span class="pre">--reference-test</span></code> option is merely a short
+cut to the following <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> settings which can also be set manually if
+you wish:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[events]]</span>
+        <span class="nv">timeout </span><span class="o">=</span><span class="s"> PT5M</span>
+        <span class="nv">abort if shutdown handler fails </span><span class="o">=</span><span class="s"> True</span>
+        <span class="nv">abort on timeout </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="triggering-off-of-tasks-in-other-suites">
+
+<h2>Triggering Off Of Tasks In Other Suites<a class="headerlink" href="../../html/user-guide/running-suites.html#triggering-off-of-tasks-in-other-suites" title="View HTML">§</a></h2>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please read <a class="reference internal" href="writing-suites/external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a> before using
+the older inter-suite triggering mechanism described in this section.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code> command interrogates suite run databases. It
+has a polling mode that waits for a given task in the target suite to achieve a
+given state, or receive a given message. This can be used to make task
+scripting wait for a remote task to succeed (for example).</p>
+<p>Automatic suite-state polling tasks can be defined with in the graph. They get
+automatically-generated task scripting that uses <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code>
+appropriately (it is an error to give your own <code class="docutils literal notranslate"><span class="pre">script</span></code> item for these
+tasks).</p>
+<p>Here’s how to trigger a task <code class="docutils literal notranslate"><span class="pre">bar</span></code> off a task <code class="docutils literal notranslate"><span class="pre">foo</span></code> in
+a remote suite called <code class="docutils literal notranslate"><span class="pre">other.suite</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00, T12 </span><span class="o">=</span><span class="s"> &quot;my-foo&lt;other.suite::foo&gt; =&gt; bar&quot;</span>
+</pre></div>
+</div>
+<p>Local task <code class="docutils literal notranslate"><span class="pre">my-foo</span></code> will poll for the success of <code class="docutils literal notranslate"><span class="pre">foo</span></code>
+in suite <code class="docutils literal notranslate"><span class="pre">other.suite</span></code>, at the same cycle point, succeeding only when
+or if it succeeds. Other task states can also be polled:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">T00, T12 </span><span class="o">=</span><span class="s"> &quot;my-foo&lt;other.suite::foo:fail&gt; =&gt; bar&quot;</span>
+</pre></div>
+</div>
+<p>The default polling parameters (e.g. maximum number of polls and the interval
+between them) are printed by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span> <span class="pre">--help</span></code> and can be
+configured if necessary under the local polling task runtime section:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T12 </span><span class="o">=</span><span class="s"> &quot;my-foo&lt;other.suite::foo&gt; =&gt; bar&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[my-foo]]</span>
+        <span class="nt">[[[suite state polling]]]</span>
+            <span class="nv">max-polls </span><span class="o">=</span><span class="s"> 100</span>
+            <span class="nv">interval </span><span class="o">=</span><span class="s"> PT10S</span>
+</pre></div>
+</div>
+<p>To poll for the target task to receive a message rather than achieve a state,
+give the message in the runtime configuration (in which case the task status
+inferred from the graph syntax will be ignored):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my-foo]]</span>
+        <span class="nt">[[[suite state polling]]]</span>
+            <span class="nv">message </span><span class="o">=</span><span class="s"> &quot;the quick brown fox&quot;</span>
+</pre></div>
+</div>
+<p>For suites owned by others, or those with run databases in non-standard
+locations, use the <code class="docutils literal notranslate"><span class="pre">--run-dir</span></code> option, or in-suite:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my-foo]]</span>
+        <span class="nt">[[[suite state polling]]]</span>
+            <span class="nv">run-dir </span><span class="o">=</span><span class="s"> /path/to/top/level/cylc/run-directory</span>
+</pre></div>
+</div>
+<p>If the remote task has a different cycling sequence, just arrange for the
+local polling task to be on the same sequence as the remote task that it
+represents. For instance, if local task <code class="docutils literal notranslate"><span class="pre">cat</span></code> cycles 6-hourly at
+<code class="docutils literal notranslate"><span class="pre">0,6,12,18</span></code> but needs to trigger off a remote task <code class="docutils literal notranslate"><span class="pre">dog</span></code>
+at <code class="docutils literal notranslate"><span class="pre">3,9,15,21</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T03,T09,T15,T21 </span><span class="o">=</span><span class="s"> &quot;my-dog&lt;other.suite::dog&gt;&quot;</span>
+        <span class="nv">T00,T06,T12,T18 </span><span class="o">=</span><span class="s"> &quot;my-dog[-PT3H] =&gt; cat&quot;</span>
+</pre></div>
+</div>
+<p>For suite-state polling, the cycle point is automatically converted to the
+cycle point format of the target suite.</p>
+<p>The remote suite does not have to be running when polling commences because the
+command interrogates the suite run database, not the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The graph syntax for suite polling tasks cannot be combined with
+cycle point offsets, family triggers, or parameterized task notation.
+This does not present a problem because suite polling tasks can be put on
+the same cycling sequence as the remote-suite target task (as recommended
+above), and there is no point in having multiple tasks (family members or
+parameterized tasks) performing the same polling operation. Task state
+triggers can be used with suite polling, e.g. to trigger another task if
+polling fails after 10 tries at 10 second intervals:</p>
+<div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;poller&lt;other-suite::foo:succeed&gt;:fail =&gt; another-task&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[my-foo]]</span>
+        <span class="nt">[[[suite state polling]]]</span>
+            <span class="nv">max-polls </span><span class="o">=</span><span class="s"> 10</span>
+            <span class="nv">interval </span><span class="o">=</span><span class="s"> PT10S</span>
+</pre></div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="suite-server-logs">
+
+<h2>Suite Server Logs<a class="headerlink" href="../../html/user-guide/running-suites.html#suite-server-logs" title="View HTML">§</a></h2>
+
+<p>Each suite maintains its own log of time-stamped events in the
+<a class="reference internal" href="../glossary.html#term-suite-log-directory"><span class="xref std std-term">suite log directory</span></a> (<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/SUITE-NAME/log/suite/</span></code>).</p>
+<p>The information logged here includes:</p>
+<ul class="simple">
+<li>Event timestamps, at the start of each line</li>
+<li>Suite server host, port and process ID</li>
+<li>Suite initial and final cycle points</li>
+<li>Suite start type (i.e. cold start, warn start, restart)</li>
+<li>Task events (task started, succeeded, failed, etc.)</li>
+<li>Suite stalled warnings.</li>
+<li>Client commands (e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code>)</li>
+<li>Job IDs.</li>
+<li>Information relating to the remote file installation, contained in a
+separate log file, the <code class="docutils literal notranslate"><span class="pre">file-installation-log</span></code>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Suite log files are primarily intended for human eyes. If you need
+to have an external system to monitor suite events automatically,
+interrogate the sqlite <em>suite run database</em>
+(see <a class="reference internal" href="#suite-run-databases"><span class="std std-ref">Suite Run Databases</span></a>) rather than parse the log files.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="suite-run-databases">
+
+<h2>Suite Run Databases<a class="headerlink" href="../../html/user-guide/running-suites.html#suite-run-databases" title="View HTML">§</a></h2>
+
+<p>Suite server programs maintain two <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> databases to record
+information on run history:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>HOME/cylc-run/SUITE-NAME/log/db  <span class="c1"># public suite DB</span>
+<span class="gp">$</span>HOME/cylc-run/SUITE-NAME/.service/db  <span class="c1"># private suite DB</span>
+</pre></div>
+</div>
+<p>The private DB is for use only by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>. The identical
+public DB is provided for use by external commands such as
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code>, and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">report-timings</span></code>.
+If the public DB gets locked for too long by
+an external reader, the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> will eventually delete it and
+replace it with a new copy of the private DB, to ensure that both correctly
+reflect the suite state.</p>
+<p>You can interrogate the public DB with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> command line tool,
+the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> module in the Python standard library, or any other
+sqlite interface.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sqlite3 ~/cylc-run/foo/log/db <span class="s">&lt;&lt; _END_</span>
+<span class="go">&gt; .headers on</span>
+<span class="go">&gt; select * from task_events where name is &quot;foo&quot;;</span>
+<span class="go">&gt; _END_</span>
+<span class="go">name|cycle|time|submit_num|event|message</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|submitted|</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|output completed|started</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|started|</span>
+<span class="go">foo|1|2017-03-12T11:06:19Z|1|output completed|succeeded</span>
+<span class="go">foo|1|2017-03-12T11:06:19Z|1|succeeded|</span>
+</pre></div>
+</div>
+<p>The diagram shown below contains the database tables, their columns,
+and how the tables are related to each other. For more details on how
+to interpret the diagram, refer to the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model">Entity–relationship model Wikipedia article</a>.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-1e6ccd5eb2e48e76f05e4e337c24ea5c12d4d41e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">graph {
+node [label = &quot;\N&quot;, shape = plaintext];
+edge [color = gray50, minlen = 2, style = dashed];
+rankdir = &quot;LR&quot;;
+&quot;absolute_outputs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;absolute_outputs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;output&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;broadcast_events&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;broadcast_events&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;change&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;point&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;broadcast_states&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;broadcast_states&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;point&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;inheritance&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;inheritance&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;inheritance&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;suite_params&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;suite_params&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;suite_template_vars&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;suite_template_vars&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_action_timers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_action_timers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;ctx_key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;ctx&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;delays&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;delay&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;timeout&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_events&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_events&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;event&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;message&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_jobs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_jobs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;is_manual_submit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;try_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_submit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_submit_exit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_run&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_run_exit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;run_signal&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;run_status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;platform_name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;job_runner_name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;job_id&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_late_flags&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_late_flags&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_outputs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_outputs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;outputs&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_pool&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_label&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;is_held&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_prerequisites&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_prerequisites&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_output&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;satisfied&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_states&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_label&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_created&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_updated&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_timeout_timers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_timeout_timers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;timeout&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;xtriggers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;xtriggers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;signature&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;results&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;absolute_outputs&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;broadcast_events&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;broadcast_states&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;inheritance&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;suite_params&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;suite_template_vars&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;task_prerequisites&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;xtriggers&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; -- &quot;task_events&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; -- &quot;task_jobs&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_action_timers&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_late_flags&quot; [taillabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_outputs&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_timeout_timers&quot; [taillabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+subgraph {
+rank=same
+rankdir=LR
+&quot;absolute_outputs&quot;
+&quot;broadcast_events&quot;
+&quot;broadcast_states&quot;
+&quot;inheritance&quot;
+&quot;suite_params&quot;
+&quot;suite_template_vars&quot;
+&quot;task_prerequisites&quot;
+&quot;xtriggers&quot;
+}
+&quot;task_pool_checkpoints&quot; -- &quot;inheritance&quot;[style=invis];
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="disaster-recovery">
+
+<h2>Disaster Recovery<a class="headerlink" href="../../html/user-guide/running-suites.html#disaster-recovery" title="View HTML">§</a></h2>
+
+<p>If a run directory gets deleted or corrupted, the options for recovery
+are:</p>
+<ul class="simple">
+<li>restore the run directory from back-up, and restart the suite</li>
+<li>re-install from source, and warm start from the beginning of the
+current cycle point</li>
+</ul>
+<p>A warm start (see <a class="reference internal" href="#warm-start"><span class="std std-ref">Warm Start</span></a>) does not need the suite database, but it
+could re-run a significant number of tasks that had already completed.</p>
+<p>To restart the suite, the critical Cylc files that must be restored are:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># On the suite host:</span>
+~/cylc-run/SUITE-NAME/
+    flow.cylc   <span class="c"># live suite configuration (located here in Rose suites)</span>
+    log/db  <span class="c"># public suite DB (can just be a copy of the private DB)</span>
+    log/rose-suite-run.conf  <span class="c"># (needed to restart a Rose suite)</span>
+    .service/db  <span class="c"># private suite DB</span>
+    .service/source -&gt; PATH-TO-SUITE-DIR  <span class="c"># symlink to live suite directory</span>
+
+<span class="c"># On job hosts (if no shared filesystem):</span>
+~/cylc-run/SUITE-NAME/
+    log/job/CYCLE-POINT/TASK-NAME/SUBMIT-NUM/job.status
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This discussion does not address restoration of files generated and
+consumed by task jobs at run time. How suite data is stored and recovered
+in your environment is a matter of suite and system design.</p>
+</div>
+<p>In short, you can simply restore the suite <a class="reference internal" href="../glossary.html#term-service-directory"><span class="xref std std-term">service directory</span></a>, the
+<a class="reference internal" href="../glossary.html#term-suite-log-directory"><span class="xref std std-term">suite log directory</span></a>, and the <a class="reference internal" href="../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file that is the
+target of the symlink in the service directory. The <a class="reference internal" href="../glossary.html#term-service-directory"><span class="xref std std-term">service directory</span></a>
+and <a class="reference internal" href="../glossary.html#term-suite-log-directory"><span class="xref std std-term">suite log directory</span></a> will come with extra files that aren’t strictly
+needed for a restart, but that doesn’t matter - although depending on your log
+housekeeping the <code class="docutils literal notranslate"><span class="pre">log/job</span></code> directory could be huge, so you might want to be
+selective about that. (Also in a Rose suite, the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file does not
+need to be restored if you restart with <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> - which re-installs
+suite source files to the run directory).</p>
+<p>The public DB is not strictly required for a restart; if it is absent,
+the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> will recreate it.</p>
+<p>The job status files are only needed if the suite state at last shutdown
+contained active tasks that now need to be polled to determine what happened to them
+while the suite was down. Without them, polling will fail and those tasks will
+need to be manually set to the correct state.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">It is not safe to copy or rsync a potentially-active sqlite DB - the copy
+might end up corrupted. It is best to stop the suite before copying
+a DB, or else write a back-up utility using the
+<a class="reference external" href="https://www.sqlite.org/backup.html">official sqlite backup API</a>.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="auto-stop-restart">
+
+<h2>Auto Stop-Restart<a class="headerlink" href="../../html/user-guide/running-suites.html#auto-stop-restart" title="View HTML">§</a></h2>
+
+<p>Cylc has the ability to automatically stop suites running on a particular host
+and optionally, restart them on a different host.
+This is useful if a host needs to be taken off-line e.g. for
+scheduled maintenance.</p>
+<p>See <a class="reference internal" href="../plugins/main-loop/built-in/cylc.flow.main_loop.auto_restart.html#module-cylc.flow.main_loop.auto_restart" title="cylc.flow.main_loop.auto_restart"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cylc.flow.main_loop.auto_restart</span></code></a> for details.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="alternate-run-directories">
+
+<h2>Alternate Run Directories<a class="headerlink" href="../../html/user-guide/running-suites.html#alternate-run-directories" title="View HTML">§</a></h2>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command normally creates a worflow run directory at
+the standard location <code class="docutils literal notranslate"><span class="pre">~/cylc-run/&lt;WORKFLOW-NAME&gt;/</span></code>. Configure the run
+directory in the <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> file: <a class="reference internal" href="../reference/config/global.html#global.cylc[symlink dirs]" title="global.cylc[symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[symlink</span> <span class="pre">dirs]</span></code></a>.</p>
+<p>This may be useful for quick-running <a class="reference internal" href="#sub-workflows"><span class="std std-ref">Sub-Workflows</span></a> that generate large
+numbers of files - you could put their run directories on fast local disk or
+RAM disk, for performance and housekeeping reasons.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="sub-workflows">
+
+<h2>Sub-Workflows<a class="headerlink" href="../../html/user-guide/running-suites.html#sub-workflows" title="View HTML">§</a></h2>
+
+<p>A single Cylc workflow can configure multiple cycling sequences in the graph,
+but cycles can’t be nested. If you need <em>cycles within cycles</em> - e.g. to
+iterate over many files generated by each run of a cycling task - current
+options are:</p>
+<ul class="simple">
+<li>parameterize the sub-cycles<ul>
+<li>this is easy but it makes more tasks-per-cycle, which is the primary
+determinant of workflow size and server program efficiency</li>
+</ul>
+</li>
+<li>run a separate cycling workflow over the sub-cycle, inside a main-workflow
+task, for each main-workflow cycle point - i.e. use <strong>sub-workflows</strong><ul>
+<li>this is very efficient, but monitoring and run-directory housekeeping may
+be more difficult because it creates multiple workflows and run directories</li>
+</ul>
+</li>
+</ul>
+<p>Sub-workflows must be started with <code class="docutils literal notranslate"><span class="pre">--no-detach</span></code> so that the containing task
+does not finish until the sub-workflow does, and they should be non-cycling
+or have a <code class="docutils literal notranslate"><span class="pre">final</span> <span class="pre">cycle</span> <span class="pre">point</span></code> so they don’t keep on running indefinitely.</p>
+<p>Sub-workflow names should normally incorporate the main-workflow cycle point (use
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_CYCLE_POINT</span></code> in the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command line to start the
+sub-workflow), so that successive sub-workflows can run concurrently if necessary and
+do not compete for the same workflow run directory. This will generate a new
+sub-workflow run directory for every main-workflow cycle point, so you may want to
+put housekeeping tasks in the main workflow to extract the useful products from each
+sub-workflow run and then delete the sub-workflow run directory.</p>
+<p>For quick-running sub-workflows that generate large numbers of files, consider
+using <a class="reference internal" href="#alternate-run-directories"><span class="std std-ref">Alternate Run Directories</span></a> for better performance and easier housekeeping.</p>
+<table class="docutils footnote" frame="void" id="id18" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[3]</a></td><td>Late notification of clock-triggered tasks is not very useful in
+any case because they typically do not depend on other tasks, and as
+such they can often trigger on time even if the suite is delayed to
+the point that downstream tasks are late due to their dependence on
+previous-cycle tasks that are delayed.</td></tr>
+</tbody>
+</table>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

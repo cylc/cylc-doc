@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cylc.flow.main_loop.auto_restart &mdash; Cylc 8.0b0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '8.0b0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Cylc 8.0b0 documentation" href="../../../index.html" />
+    <link rel="up" title="Main Loop Plugins" href="../index.html" />
+    <link rel="next" title="cylc.flow.main_loop.health_check" href="cylc.flow.main_loop.health_check.html" />
+    <link rel="prev" title="Main Loop Plugins" href="../index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.main_loop.auto_restart">
+
+<h1>cylc.flow.main_loop.auto_restart<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.auto_restart.html#module-cylc.flow.main_loop.auto_restart" title="View HTML">§</a></h1>
+
+<p>Automatically restart suites if they are running on bad servers.</p>
+<p>Loads in the global configuration to check if the server a suite is running
+on is listed in <a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>.</p>
+<p>This is useful if a host needs to be taken off-line e.g. for scheduled
+maintenance.</p>
+<p>This functionality is configured via the following site configuration
+settings:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a></li>
+<li><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a></li>
+<li><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a></li>
+</ul>
+<p>The auto stop-restart feature has two modes:</p>
+<dl class="docutils">
+<dt>Normal Mode</dt><dd><p>When a host is added to the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a> list, any suites
+running on that host will automatically shutdown then restart selecting a
+new host from <a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a>.</p>
+<p>For safety, before attempting to stop the suite Cylc will first wait
+for any jobs running locally (under background or at) to complete.</p>
+<p>In order for Cylc to be able to restart suites the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a> hosts must all be on a
+shared filesystem.</p>
+</dd>
+<dt>Force Mode</dt><dd>If a host is suffixed with an exclamation mark then Cylc will not attempt
+to automatically restart the workflow and any local jobs (running under
+background or at) will be left running.</dd>
+</dl>
+<p>For example in the following configuration any suites running on
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> will attempt to restart on <code class="docutils literal notranslate"><span class="pre">pub</span></code> whereas any suites
+running on <code class="docutils literal notranslate"><span class="pre">bar</span></code> will stop immediately, making no attempt to restart.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+     <span class="nt">[[run hosts]]</span>
+         <span class="nv">available </span><span class="o">=</span><span class="s"> pub</span>
+         <span class="nv">condemned </span><span class="o">=</span><span class="s"> foo, bar!</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Cylc will reject hosts with ambiguous names such as <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or
+<code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> for this configuration as
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>
+are evaluated on the suite host server.</p>
+</div>
+<p>To prevent large numbers of suites attempting to restart simultaneously the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a> setting defines a period
+of time in seconds.
+Suites will wait for a random period of time between zero and
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a> seconds before
+attempting to stop and restart.</p>
+<p>Suites that are started up in no-detach mode cannot auto stop-restart on a
+different host - as it will still end up attached to the condemned host.
+Therefore, a suite in no-detach mode running on a condemned host will abort
+with a non-zero return code. The parent process should manually handle the
+restart of the suite if desired.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="python-api">
+
+<h2>Python API<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.auto_restart.html#python-api" title="View HTML">§</a></h2>
+
+<p class="rubric">Coroutines</p>
+<table border="1" class="longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#cylc.flow.main_loop.auto_restart.auto_restart" title="cylc.flow.main_loop.auto_restart.auto_restart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">auto_restart</span></code></a></td>
+<td>Automatically restart the suite if configured to do so.</td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="cylc.flow.main_loop.auto_restart.auto_restart">
+<em class="property"><span class="pre">async</span> </em><code class="descclassname"><span class="pre">cylc.flow.main_loop.auto_restart.</span></code><code class="descname"><span class="pre">auto_restart</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">scheduler</span></span></em>, <em><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Automatically restart the suite if configured to do so.</p>
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

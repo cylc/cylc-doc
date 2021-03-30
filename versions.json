@@ -1,11 +1,15 @@
 {
-    "7.9.3": [
-        "html",
-        "singlehtml"
+    "8.0b0": [
+        "slides",
+        "html"
     ],
     "8.0a2": [
         "slides",
         "html"
+    ],
+    "7.9.3": [
+        "html",
+        "singlehtml"
     ],
     "7.8.8": [
         "html",

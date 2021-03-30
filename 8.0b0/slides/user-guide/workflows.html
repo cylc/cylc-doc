@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflows For Cycling Systems &mdash; Cylc 8.0b0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0b0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0b0 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Writing Suites" href="writing-suites/index.html" />
+    <link rel="prev" title="User Guide" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="workflows-for-cycling-systems">
+
+<h1>Workflows For Cycling Systems<a class="headerlink" href="../../html/user-guide/workflows.html#workflows-for-cycling-systems" title="View HTML">§</a></h1>
+
+<p>A model run and associated processing may need to be cycled for the following
+reasons:</p>
+<ul class="simple">
+<li>In real time forecasting systems, a new forecast may be initiated
+at regular intervals when new real time data comes in.</li>
+<li>It may be convenient (or necessary, e.g. due to <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>
+queue limits) to split single long model runs into many smaller chunks,
+each with associated pre- and post-processing workflows.</li>
+</ul>
+<p>Cylc provides two ways of constructing workflows for cycling systems:
+<em>cycling workflows</em> and <em>parameterized tasks</em>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cycling-workflows">
+
+<h2>Cycling Workflows<a class="headerlink" href="../../html/user-guide/workflows.html#cycling-workflows" title="View HTML">§</a></h2>
+
+<p>This is Cylc’s classic cycling mode as described in the Introduction. Each
+instance of a cycling job is represented by a new instance of <em>the same task</em>,
+with a new cycle point. The suite configuration defines patterns for
+extending the workflow on the fly, so it can keep running indefinitely if
+necessary. For example, to cycle <code class="docutils literal notranslate"><span class="pre">model.exe</span></code> on a monthly sequence we
+could define a single task <code class="docutils literal notranslate"><span class="pre">model</span></code>, an initial cycle point, and a
+monthly sequence. Cylc then generates the date-time sequence and creates a new
+task instance for each cycle point as it comes up. Workflow dependencies are
+defined generically with respect to the “current cycle point” of the tasks
+involved.</p>
+<p>This is the only sensible way to run very large suites or operational suites
+that need to continue cycling indefinitely. The cycling is configured with
+standards-based ISO 8601 date-time <em>recurrence expressions</em>. Multiple
+cycling sequences can be used at once in the same suite. See
+<a class="reference internal" href="writing-suites/scheduling.html#user-guide-scheduling"><span class="std std-ref">Scheduling - Dependency Graphs</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="parameterized-tasks-as-a-proxy-for-cycling">
+
+<h2>Parameterized Tasks as a Proxy for Cycling<a class="headerlink" href="../../html/user-guide/workflows.html#parameterized-tasks-as-a-proxy-for-cycling" title="View HTML">§</a></h2>
+
+<p>It is also possible to run cycling jobs with a pre-defined static workflow in
+which each instance of a cycling job is represented by <em>a different task</em>:
+as far as the abstract workflow is concerned there is no cycling. The sequence
+of tasks can be constructed efficiently, however, using Cylc’s built-in suite
+parameters (<a class="reference internal" href="writing-suites/parameterized-tasks.html#parameterized-cycling"><span class="std std-ref">Parameterized Cycling</span></a>) or explicit Jinja2 loops
+(<a class="reference internal" href="writing-suites/jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a>).</p>
+<p>For example, to run <code class="docutils literal notranslate"><span class="pre">model.exe</span></code> 12 times on a monthly cycle we could
+loop over an integer parameter <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...,</span> <span class="pre">11</span></code> to define tasks
+<code class="docutils literal notranslate"><span class="pre">model-R0,</span> <span class="pre">model-R1,</span> <span class="pre">model-R2,</span> <span class="pre">...model-R11</span></code>, and the parameter
+values could be multiplied by the interval <code class="docutils literal notranslate"><span class="pre">P1M</span></code> (one month) to get
+the start point for the corresponding model run.</p>
+<p>This method is only good for smaller workflows of finite duration because every
+single task has to be mapped out in advance, and Cylc has to be aware of all of
+them throughout the entire run. Additionally Cylc’s <em>cycling workflow</em>
+capabilities (above) are more powerful, more flexible, and generally easier to
+use (Cylc will generate the cycle point date-times for you, for instance), so
+that is the recommended way to drive most cycling systems.</p>
+<p>The primary use for parameterized tasks in Cylc is to generate ensembles and
+other groups of related tasks at the same cycle point, not as a proxy for
+cycling.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="mixed-cycling-workflows">
+
+<h2>Mixed Cycling Workflows<a class="headerlink" href="../../html/user-guide/workflows.html#mixed-cycling-workflows" title="View HTML">§</a></h2>
+
+<p>For completeness we note that parameterized cycling can be used within a
+cycling workflow. For example, in a daily cycling workflow long (daily)
+model runs could be split into four shorter runs by parameterized cycling.
+A simpler six-hourly cycling workflow should be considered first, however.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

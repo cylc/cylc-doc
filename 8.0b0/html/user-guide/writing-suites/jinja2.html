@@ -1,0 +1,934 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Jinja2 &mdash; Cylc 8.0b0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="EmPy" href="empy.html" />
+    <link rel="prev" title="Parameterized Tasks" href="parameterized-tasks.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0b0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../workflows.html">Workflows For Cycling Systems</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Suites</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling - Dependency Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Runtime - Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Parameterized Tasks</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Jinja2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-environment-variables-with-jinja2">Accessing Environment Variables With Jinja2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-jinja2-filters-tests-and-globals">Custom Jinja2 Filters, Tests and Globals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#associative-arrays-in-jinja2">Associative Arrays In Jinja2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jinja2-default-values-and-template-inputs">Jinja2 Default Values And Template Inputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jinja2-variable-scope">Jinja2 Variable Scope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raising-exceptions">Raising Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#importing-additional-python-modules">Importing additional Python modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-suites.html">Running Suites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../suite-storage-etc.html">Suite Storage, Discovery, Revision Control, and Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">User Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Writing Suites</a> &raquo;</li>
+        
+      <li>Jinja2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/user-guide/writing-suites/jinja2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="jinja2">
+<span id="user-guide-jinja2"></span><span id="jinja"></span><h1>Jinja2<a class="headerlink" href="#jinja2" title="Permalink to this headline">¶</a></h1>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/runtime/configuration-consolidation/index.html#tutorial-cylc-consolidating-configuration"><span class="std std-ref">Configuration Consolidation Tutorial</span></a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section needs to be revised - the Parameterized Task feature
+introduced in cylc-6.11.0 (see <a class="reference internal" href="parameterized-tasks.html#user-guide-param"><span class="std std-ref">Parameterized Tasks</span></a>) provides
+a cleaner way to auto-generate tasks without coding messy Jinja2 loops.</p>
+</div>
+<p>Cylc has built in support for the <a class="reference external" href="https://jinja.palletsprojects.com/">Jinja2</a> template processor in suite
+configurations. Jinja2 variables, mathematical expressions, loop control
+structures, conditional logic, etc., are automatically processed to
+generate the final suite configuration seen by Cylc.</p>
+<p>The need for Jinja2 processing must be declared with a hash-bang
+comment as the first line of the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Potential uses for this include automatic generation of repeated groups
+of similar tasks and dependencies, and inclusion or exclusion of entire
+suite sections according to the value of a single flag. Consider a
+large complicated operational suite and several related parallel test
+suites with slightly different task content and structure (the parallel
+suites, for instance, might take certain large input files from the
+operation or the archive rather than downloading them again) - these can
+now be maintained as a single master suite configuration that reconfigures
+itself according to the value of a flag variable indicating the intended use.</p>
+<p>Template processing is the first thing done on parsing a suite
+configuration so Jinja2 expressions can appear anywhere in the file (inside
+strings and namespace headings, for example).</p>
+<p>Jinja2 is <a class="reference external" href="https://jinja.palletsprojects.com/">well documented</a>, so here
+we just provide an example suite that uses it. The meaning of the
+embedded Jinja2 code should be reasonably self-evident to anyone familiar
+with standard programming techniques.</p>
+<div class="figure align-center" id="id2">
+<span id="fig-jinja2-ensemble"></span><img alt="../../_images/jinja2-ensemble-graph.png" src="../../_images/jinja2-ensemble-graph.png" />
+<p class="caption"><span class="caption-text">The Jinja2 ensemble example suite graph.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">jinja2.ensemble</span></code> example <a class="reference internal" href="#fig-jinja2-ensemble"><span class="std std-ref">graphed above</span></a>
+shows an ensemble of similar tasks generated using Jinja2:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
+<span class="cp">{% set N_MEMBERS = 5 %}</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="c c-Multi">{# generate ensemble dependencies #}</span><span class="s2"></span>
+<span class="cp">{% for I in range( 0, N_MEMBERS ) %}</span><span class="s2"></span>
+<span class="s2">            foo =&gt; mem_</span><span class="cp">{{ I }}</span><span class="s2"> =&gt; post_</span><span class="cp">{{ I }}</span><span class="s2"> =&gt; bar</span>
+<span class="cp">{% endfor %}</span><span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Here is the generated suite configuration, after Jinja2 processing:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">          foo =&gt; mem_0 =&gt; post_0 =&gt; bar</span>
+<span class="s2">          foo =&gt; mem_1 =&gt; post_1 =&gt; bar</span>
+<span class="s2">          foo =&gt; mem_2 =&gt; post_2 =&gt; bar</span>
+<span class="s2">          foo =&gt; mem_3 =&gt; post_3 =&gt; bar</span>
+<span class="s2">          foo =&gt; mem_4 =&gt; post_4 =&gt; bar</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>And finally, the <code class="docutils literal notranslate"><span class="pre">jinja2.cities</span></code> example uses variables,
+includes or excludes special cleanup tasks according to the value of a
+logical flag, and it automatically generates all dependencies and family
+relationships for a group of tasks that is repeated for each city in the
+suite. To add a new city and associated tasks and dependencies simply
+add the city name to list at the top of the file. Here is the suite graphed,
+with the New York City task family expanded:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;Jinja2 city suite example.&quot;</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Illustrates use of variables and math expressions, and programmatic</span>
+<span class="s2">        generation of groups of related dependencies and runtime properties.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="cp">{% set HOST = &quot;SuperComputer&quot; %}</span>
+<span class="cp">{% set CITIES = &#39;NewYork&#39;, &#39;Philadelphia&#39;, &#39;Newark&#39;, &#39;Houston&#39;, &#39;SantaFe&#39;, &#39;Chicago&#39; %}</span>
+<span class="cp">{% set CITYJOBS = &#39;one&#39;, &#39;two&#39;, &#39;three&#39;, &#39;four&#39; %}</span>
+<span class="cp">{% set LIMIT_MINS = 20 %}</span>
+
+<span class="cp">{% set CLEANUP = True %}</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2011-08-08T12</span>
+    <span class="nt">[[graph]]</span>
+<span class="cp">{% if CLEANUP %}</span>
+        <span class="nv">T23 </span><span class="o">=</span><span class="s"> &quot;clean&quot;</span>
+<span class="cp">{% endif %}</span>
+        <span class="nv">T00,T12 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            setup =&gt; get_lbc &amp; get_ic</span> <span class="c1"># foo</span><span class="s2"></span>
+<span class="s2">    </span><span class="cp">{% for CITY in CITIES %}</span><span class="s2"> </span><span class="c c-Multi">{# comment #}</span><span class="s2"></span>
+<span class="s2">            get_lbc =&gt; </span><span class="cp">{{ CITY }}</span><span class="s2">_one</span>
+<span class="s2">            get_ic =&gt; </span><span class="cp">{{ CITY }}</span><span class="s2">_two</span>
+<span class="s2">            </span><span class="cp">{{ CITY }}</span><span class="s2">_one &amp; </span><span class="cp">{{ CITY }}</span><span class="s2">_two =&gt; </span><span class="cp">{{ CITY }}</span><span class="s2">_three &amp; </span><span class="cp">{{ CITY }}</span><span class="s2">_four</span>
+<span class="s2">        </span><span class="cp">{% if CLEANUP %}</span><span class="s2"></span>
+<span class="s2">            </span><span class="cp">{{ CITY }}</span><span class="s2">_three &amp; </span><span class="cp">{{ CITY }}</span><span class="s2">_four =&gt; cleanup</span>
+<span class="s2">    </span><span class="cp">{% endif %}</span><span class="s2"></span>
+<span class="cp">{% endfor %}</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[on_</span><span class="cp">{{ HOST }}</span><span class="nt"> ]]</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> </span><span class="cp">{{ HOST }}</span>
+            <span class="c1"># (remote cylc directory is set in site/user config for this host)</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">wall_clock_limit </span><span class="o">=</span><span class="s"> &quot;00:</span><span class="cp">{{ LIMIT_MINS|int() + 2 }}</span><span class="s">:00,00:</span><span class="cp">{{ LIMIT_MINS }}</span><span class="s">:00&quot;</span>
+
+<span class="cp">{% for CITY in CITIES %}</span>
+    <span class="nt">[[ </span><span class="cp">{{ CITY }}</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> on_</span><span class="cp">{{ HOST }}</span>
+    <span class="cp">{% for JOB in CITYJOBS %}</span>
+    <span class="nt">[[ </span><span class="cp">{{ CITY }}</span><span class="nt">_</span><span class="cp">{{ JOB }}</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> </span><span class="cp">{{ CITY }}</span>
+    <span class="cp">{% endfor %}</span>
+<span class="cp">{% endfor %}</span>
+
+<span class="nt">[visualization]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2011-08-08T12</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2011-08-08T23</span>
+    <span class="nt">[[node groups]]</span>
+        <span class="nv">cleaning </span><span class="o">=</span><span class="s"> clean, cleanup</span>
+    <span class="nt">[[node attributes]]</span>
+        <span class="nv">cleaning </span><span class="o">=</span><span class="s"> &#39;style=filled&#39;, &#39;fillcolor=yellow&#39;</span>
+        <span class="nv">NewYork </span><span class="o">=</span><span class="s"> &#39;style=filled&#39;, &#39;fillcolor=lightblue&#39;</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<span id="fig-jinja2-cities"></span><img alt="../../_images/jinja2-suite-graph.png" src="../../_images/jinja2-suite-graph.png" />
+<p class="caption"><span class="caption-text">The Jinja2 cities example suite graph, with the
+New York City task family expanded.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="accessing-environment-variables-with-jinja2">
+<h2>Accessing Environment Variables With Jinja2<a class="headerlink" href="#accessing-environment-variables-with-jinja2" title="Permalink to this headline">¶</a></h2>
+<p>This functionality is not provided by Jinja2 by default, but Cylc
+automatically imports the user environment to template’s global namespace
+(see <a class="reference internal" href="#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a>) in a dictionary structure called
+<em>environ</em>. A usage example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="c1">#...</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SUITE_OWNER_HOME_DIR_ON_SUITE_HOST </span><span class="o">=</span><span class="s"> </span><span class="cp">{{environ[&#39;HOME&#39;]}}</span>
+</pre></div>
+</div>
+<p>In addition, the following variables are exported to this environment
+prior to configuration parsing to provide suite context:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_DEBUG                      <span class="c"># Debug mode, true or not defined</span>
+CYLC_VERBOSE                    <span class="c"># Verbose mode, True or False</span>
+CYLC_VERSION                    <span class="c"># Version of cylc installation used</span>
+
+CYLC_SUITE_NAME                 <span class="c"># Suite name</span>
+
+CYLC_SUITE_LOG_DIR              <span class="c"># Suite log directory.</span>
+CYLC_SUITE_RUN_DIR              <span class="c"># Location of the run directory in</span>
+                                <span class="c"># suite host, e.g. ~/cylc-run/foo</span>
+CYLC_SUITE_SHARE_DIR            <span class="c"># Suite (or task post parsing!)</span>
+                                <span class="c"># shared directory.</span>
+CYLC_SUITE_WORK_DIR             <span class="c"># Suite work directory.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The example above emphasizes that <em>the environment - including the suite
+context variables - is read on the suite host when the suite configuration
+is parsed</em>, not at task run time on job hosts.</p>
+</div>
+</div>
+<div class="section" id="custom-jinja2-filters-tests-and-globals">
+<span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this headline">¶</a></h2>
+<p>Jinja2 has three different namespaces used to separate “globals”,
+“filters” and “tests”. Globals are template-wide accessible variables
+and functions. Cylc extends this namespace with “environ” dictionary and
+<a class="reference internal" href="#jinja2-raise"><span class="std std-ref">raise</span></a> and <a class="reference internal" href="#jinja2-assert"><span class="std std-ref">assert</span></a>
+functions for raising exceptions.</p>
+<p>Filters can be used to modify variable values and are applied using pipe
+notation. For example, the built-in <code class="docutils literal notranslate"><span class="pre">trim</span></code> filter strips leading
+and trailing white space from a string:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set MyString = &quot;   dog   &quot; %}</span>
+<span class="cp">{{ MyString | trim() }}</span>  <span class="c1"># &quot;dog&quot;</span>
+</pre></div>
+</div>
+<p>Variable values can be tested using the <code class="docutils literal notranslate"><span class="pre">is</span></code> keyword followed by
+the name of the test, e.g. <code class="docutils literal notranslate"><span class="pre">VARIABLE</span> <span class="pre">is</span> <span class="pre">defined</span></code>.
+See official Jinja2 documentation for available built-in globals, filters
+and tests.</p>
+<p>Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
+filter or test is a single Python function in a source file with the same name
+as the function (plus <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension) and stored in one of the following
+locations:</p>
+<p>In the argument list of filter or test function, the first argument is
+the variable value to be “filtered” or “tested”, respectively, and
+subsequent arguments can be whatever else is needed. Currently there are three
+custom filters:</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cylc.flow.jinja.filters.pad.pad" title="cylc.flow.jinja.filters.pad.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.jinja.filters.pad.pad</span></code></a></p></td>
+<td><p>Pads a string to some length with a fill character</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cylc.flow.jinja.filters.strftime.strftime" title="cylc.flow.jinja.filters.strftime.strftime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.jinja.filters.strftime.strftime</span></code></a></p></td>
+<td><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-datetime"><span class="xref std std-term">ISO8601 datetime</span></a> string using an strftime string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cylc.flow.jinja.filters.duration_as.duration_as" title="cylc.flow.jinja.filters.duration_as.duration_as"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.jinja.filters.duration_as.duration_as</span></code></a></p></td>
+<td><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 duration</span></a> string as the specified units.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="cylc.flow.jinja.filters.pad.pad">
+<code class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.pad.</span></code><code class="sig-name descname"><span class="pre">pad</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.pad.pad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pads a string to some length with a fill character</p>
+<p>Useful for generating task names and related values in ensemble suites.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>value (str):</dt><dd><p>The string to pad.</p>
+</dd>
+<dt>length (int/str):</dt><dd><p>The length for the returned string.</p>
+</dd>
+<dt>fillchar (str - optional):</dt><dd><p>The character to fill in surplus space (space by default).</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>str: value padded to the left with fillchar to length length.</p>
+</dd>
+<dt>Python Examples:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pad</span><span class="p">(</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="go">&#39;013&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">&#39;   foo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pad</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&#39;foo&#39;</span>
+</pre></div>
+</div>
+</dd>
+<dt>Jinja2 Examples:</dt><dd><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% for i in range(0,100) %}</span>  <span class="c1"># 0, 1, ..., 99</span>
+    <span class="cp">{% set j = i | pad(2,&#39;0&#39;) %}</span>
+    <span class="nt">[[A_</span><span class="cp">{{j}}</span><span class="nt">]]</span>         <span class="c1"># [[A_00]], [[A_01]], ..., [[A_99]]</span>
+<span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.jinja.filters.strftime.strftime">
+<code class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.strftime.</span></code><code class="sig-name descname"><span class="pre">strftime</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strftime_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strptime_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.strftime.strftime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-datetime"><span class="xref std std-term">ISO8601 datetime</span></a> string using an strftime string.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{{ &#39;10661004T08+01&#39; | strftime(&#39;%H&#39;) }}</span>  <span class="c1"># 00</span>
+</pre></div>
+</div>
+<p>It is also possible to parse non-standard date-time strings by passing a
+strptime string as the second argument.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>iso8601_datetime (str):</dt><dd><p>Any valid ISO8601 datetime as a string.</p>
+</dd>
+<dt>strftime_str (str):</dt><dd><p>A valid strftime string to format the output datetime.</p>
+</dd>
+<dt>strptime_str (str - optional):</dt><dd><p>A valid strptime string defining the format of the provided
+iso8601_datetime.</p>
+</dd>
+</dl>
+</dd>
+<dt>Return:</dt><dd><p>The result of applying the strftime to the iso8601_datetime as parsed
+by the strptime string if provided.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ISO8601SyntaxError: In the event of an invalid datetime string.
+StrftimeSyntaxError: In the event of an invalid strftime string.</p>
+</dd>
+<dt>Python Examples:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic usage.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;2000-01-01T00Z&#39;</span><span class="p">,</span> <span class="s1">&#39;%H&#39;</span><span class="p">)</span>
+<span class="go">&#39;00&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">,</span> <span class="s1">&#39;%H&#39;</span><span class="p">)</span>
+<span class="go">&#39;00&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;2000&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="go">&#39;2000/01/01 00:00:00&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;10661014T08+01&#39;</span><span class="p">,</span> <span class="s1">&#39;%z&#39;</span><span class="p">)</span>  <span class="c1"># Timezone offset.</span>
+<span class="go">&#39;+0100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;10661014T08+01&#39;</span><span class="p">,</span> <span class="s1">&#39;%j&#39;</span><span class="p">)</span>  <span class="c1"># Day of the year</span>
+<span class="go">&#39;287&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Strptime.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;12,30,2000&#39;</span><span class="p">,</span> <span class="s1">&#39;%m&#39;</span><span class="p">,</span> <span class="s1">&#39;%m,</span><span class="si">%d</span><span class="s1">,%Y&#39;</span><span class="p">)</span>
+<span class="go">&#39;12&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;1066/10/14 08:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">T%H&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+<span class="go">&#39;10661014T08&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; # Exceptions.
+&gt;&gt;&gt; strftime(&#39;invalid&#39;, &#39;%H&#39;)  
+Traceback (most recent call last):
+&lt;class &#39;metomi.isodatetime.exceptions.ISO8601SyntaxError&#39;&gt;
+metomi.isodatetime.exceptions.ISO8601SyntaxError: Invalid ISO 8601         date representation: invalid
+&gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%invalid&#39;)  
+Traceback (most recent call last):
+metomi.isodatetime.exceptions.StrftimeSyntaxError: Invalid         strftime/strptime representation: %i
+&gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%Y&#39;, &#39;%invalid&#39;)
+... 
+Traceback (most recent call last):
+metomi.isodatetime.exceptions.StrftimeSyntaxError: Invalid         strftime/strptime representation: %i
+</pre></div>
+</div>
+</dd>
+<dt>Jinja2 Examples:</dt><dd><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set START_CYCLE = &#39;10661004T08+01&#39; %}</span>
+
+<span class="cp">{{START_CYCLE | strftime(&#39;%Y&#39;)}}</span>  <span class="c1"># 1066</span>
+<span class="cp">{{START_CYCLE | strftime(&#39;%m&#39;)}}</span>  <span class="c1"># 10</span>
+<span class="cp">{{START_CYCLE | strftime(&#39;%d&#39;)}}</span>  <span class="c1"># 14</span>
+<span class="cp">{{START_CYCLE | strftime(&#39;%H:%M:%S %z&#39;)}}</span>  <span class="c1"># 08:00:00 +01</span>
+<span class="cp">{{&#39;12,30,2000&#39; | strftime(&#39;%m&#39;, &#39;%m,%d,%Y&#39;)}}</span>  <span class="c1"># 12</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.jinja.filters.duration_as.duration_as">
+<code class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.duration_as.</span></code><code class="sig-name descname"><span class="pre">duration_as</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.duration_as.duration_as" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 duration</span></a> string as the specified units.</p>
+<p>Units for the conversion can be specified in a case-insensitive short or
+long form:</p>
+<ul class="simple">
+<li><p>Seconds - “s” or “seconds”</p></li>
+<li><p>Minutes - “m” or “minutes”</p></li>
+<li><p>Hours - “h” or “hours”</p></li>
+<li><p>Days - “d” or “days”</p></li>
+<li><p>Weeks - “w” or “weeks”</p></li>
+</ul>
+<p>While the filtered value is a floating-point number, it is often required
+to supply an integer to suite entities (e.g. environment variables) that
+require it.  This is accomplished by chaining filters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{{CYCLE_INTERVAL</span> <span class="pre">|</span> <span class="pre">duration_as('h')</span> <span class="pre">|</span> <span class="pre">int}}</span></code> - 24</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{CYCLE_SUBINTERVAL</span> <span class="pre">|</span> <span class="pre">duration_as('h')</span> <span class="pre">|</span> <span class="pre">int}}</span></code> - 0</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{CYCLE_INTERVAL</span> <span class="pre">|</span> <span class="pre">duration_as('s')</span> <span class="pre">|</span> <span class="pre">int}}</span></code> - 86400</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{{CYCLE_SUBINTERVAL</span> <span class="pre">|</span> <span class="pre">duration_as('s')</span> <span class="pre">|</span> <span class="pre">int}}</span></code> - 1800</p></li>
+</ul>
+<dl>
+<dt>Args:</dt><dd><p>iso8601_duration (str): Any valid ISO8601 duration as a string.
+units (str): Destination unit for the duration conversion</p>
+</dd>
+<dt>Return:</dt><dd><p>The total number of the specified unit contained in the specified
+duration as a floating-point number.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ISO8601SyntaxError: In the event of an invalid datetime string.</p>
+</dd>
+<dt>Python Examples:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic usage.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration_as</span><span class="p">(</span><span class="s1">&#39;PT1M&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">)</span>
+<span class="go">60.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration_as</span><span class="p">(</span><span class="s1">&#39;PT1H&#39;</span><span class="p">,</span> <span class="s1">&#39;seconds&#39;</span><span class="p">)</span>
+<span class="go">3600.0</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Exceptions.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration_as</span><span class="p">(</span><span class="s1">&#39;invalid value&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">)</span>  
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">metomi.isodatetime.exceptions.ISO8601SyntaxError</span>: <span class="n">Invalid ISO 8601        duration representation: invalid value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration_as</span><span class="p">(</span><span class="s1">&#39;invalid unit&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>  
+<span class="gt">Traceback (most recent call last):</span>
+<span class="gr">ValueError</span>: <span class="n">No matching units found for #</span>
+</pre></div>
+</div>
+</dd>
+<dt>Jinja2 Examples:</dt><dd><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set CYCLE_INTERVAL = &#39;PT1D&#39; %}</span>
+<span class="cp">{{ CYCLE_INTERVAL | duration_as(&#39;h&#39;) }}</span>  <span class="c1"># 24.0</span>
+<span class="cp">{% set CYCLE_SUBINTERVAL = &#39;PT30M&#39; %}</span>
+<span class="cp">{{ CYCLE_SUBINTERVAL | duration_as(&#39;hours&#39;) }}</span>  <span class="c1"># 0.5</span>
+<span class="cp">{% set CYCLE_INTERVAL = &#39;PT1D&#39; %}</span>
+<span class="cp">{{ CYCLE_INTERVAL | duration_as(&#39;s&#39;) }}</span>  <span class="c1"># 86400.0</span>
+<span class="cp">{% set CYCLE_SUBINTERVAL = &#39;PT30M&#39; %}</span>
+<span class="cp">{{ CYCLE_SUBINTERVAL | duration_as(&#39;seconds&#39;) }}</span>  <span class="c1"># 1800.0</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="associative-arrays-in-jinja2">
+<h2>Associative Arrays In Jinja2<a class="headerlink" href="#associative-arrays-in-jinja2" title="Permalink to this headline">¶</a></h2>
+<p>Associative arrays (<em>dicts</em> in Python) can be very useful.
+Here’s an example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="cp">{% set obs_types = [&#39;airs&#39;, &#39;iasi&#39;] %}</span>
+<span class="cp">{% set resource = { &#39;airs&#39;:&#39;ncpus=9&#39;, &#39;iasi&#39;:&#39;ncpus=20&#39; } %}</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> OBS</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[OBS]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> platform_using_pbs</span>
+    <span class="cp">{% for i in obs_types %}</span>
+    <span class="nt">[[ </span><span class="cp">{{i}}</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> OBS</span>
+        <span class="nt">[[[directives]]]</span>
+             <span class="nv">-I </span><span class="o">=</span><span class="s"> </span><span class="cp">{{ resource[i] }}</span>
+     <span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+<p>Here’s the result:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc config -i <span class="o">[</span>runtime<span class="o">][</span>airs<span class="o">]</span>directives SUITE
+<span class="go">-I = ncpus=9</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="jinja2-default-values-and-template-inputs">
+<h2>Jinja2 Default Values And Template Inputs<a class="headerlink" href="#jinja2-default-values-and-template-inputs" title="Permalink to this headline">¶</a></h2>
+<p>The values of Jinja2 variables can be passed in from the Cylc command
+line rather than hardwired in the suite configuration.</p>
+<p>This can be done on a case-by-case basis using the <code class="docutils literal notranslate"><span class="pre">-s</span></code> option e.g:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># set the Jinja2 variable &quot;answer&quot; to 42</span>
+<span class="gp">$ </span>cylc play &lt;flow&gt; -s <span class="nv">answer</span><span class="o">=</span><span class="m">42</span>
+</pre></div>
+</div>
+<p>Or for multiple options using a Cylc “set file” with <code class="docutils literal notranslate"><span class="pre">--set-file</span></code>
+e.g:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># create a set file</span>
+<span class="gp">$ </span>cat &gt; my-set-file <span class="s">&lt;&lt;__SET_FILE__</span>
+<span class="go">question=&#39;the meaning of life, the universe and everything&#39;</span>
+<span class="go">answer=42</span>
+<span class="go">host=&#39;deep-thought&#39;</span>
+<span class="go">__SET_FILE__</span>
+
+<span class="gp">$ </span><span class="c1"># run using the options in the set file</span>
+<span class="gp">$ </span>cylc play &lt;flow&gt; --set-file my-set-file
+</pre></div>
+</div>
+<p>Values must be Python literals e.g:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;string&quot;</span>   <span class="c1"># string</span>
+<span class="mi">123</span>        <span class="c1"># integer</span>
+<span class="mf">12.34</span>      <span class="c1"># float</span>
+<span class="kc">True</span>       <span class="c1"># boolean</span>
+<span class="kc">None</span>       <span class="c1"># None type</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># list</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># tuple</span>
+<span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>  <span class="c1"># set</span>
+<span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>  <span class="c1"># dictionary</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On the command line you may need to wrap strings with an extra
+pair of quotes as the shell you are using (e.g. Bash) will strip
+the outer pair of quotes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># wrap the key=value pair in single quotes stop the shell from</span>
+<span class="gp">$ </span><span class="c1"># stripping the inner quotes around the string:</span>
+<span class="gp">$ </span>cylc play &lt;flow&gt; -s <span class="s1">&#39;my_string=&quot;a b c&quot;&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Here’s an example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;Jinja2 example: use of defaults and external input&quot;</span>
+
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        The template variable N_MEMBERS can be set on the command line with</span>
+<span class="s2">        --set or --set-file=FILE; but if not a default values is supplied.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20100808T00</span>
+    <span class="nv">final cycle point   </span><span class="o">=</span><span class="s"> 20100816T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            foo =&gt; ENS</span>
+<span class="s2">            ENS:succeed-all =&gt; bar</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo, bar]]</span>
+    <span class="nt">[[ENS]]</span>
+<span class="cp">{% for I in range( 0, N_MEMBERS | default( 3 )) %}</span>
+    <span class="nt">[[ mem_</span><span class="cp">{{ I }}</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> ENS</span>
+<span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+<p>Here’s the result:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc list SUITE
+<span class="go">Jinja2 Template Error</span>
+<span class="go">&#39;FIRST_TASK&#39; is undefined</span>
+<span class="go">cylc-list SUITE  failed:  1</span>
+
+<span class="gp">$ </span><span class="c1"># Note: quoting &quot;bob&quot; so that it is evaluated as a string</span>
+<span class="gp">$ </span>cylc list --set <span class="s1">&#39;FIRST_TASK=&quot;bob&quot;&#39;</span> SUITE
+<span class="go">bob</span>
+<span class="go">baz</span>
+<span class="go">mem_2</span>
+<span class="go">mem_1</span>
+<span class="go">mem_0</span>
+
+<span class="gp">$ </span>cylc list --set <span class="s1">&#39;FIRST_TASK=&quot;bob&quot;&#39;</span> --set <span class="s1">&#39;LAST_TASK=&quot;alice&quot;&#39;</span> SUITE
+<span class="go">bob</span>
+<span class="go">alice</span>
+<span class="go">mem_2</span>
+<span class="go">mem_1</span>
+<span class="go">mem_0</span>
+
+<span class="gp">$ </span><span class="c1"># Note: no quotes required for N_MEMBERS since it is an integer</span>
+<span class="gp">$ </span>cylc list --set <span class="s1">&#39;FIRST_TASK=&quot;bob&quot;&#39;</span> --set <span class="nv">N_MEMBERS</span><span class="o">=</span><span class="m">10</span> SUITE
+<span class="go">mem_9</span>
+<span class="go">mem_8</span>
+<span class="go">mem_7</span>
+<span class="go">mem_6</span>
+<span class="go">mem_5</span>
+<span class="go">mem_4</span>
+<span class="go">mem_3</span>
+<span class="go">mem_2</span>
+<span class="go">mem_1</span>
+<span class="go">mem_0</span>
+<span class="go">baz</span>
+<span class="go">bob</span>
+</pre></div>
+</div>
+<p>Note also that <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">view</span> <span class="pre">--set</span> <span class="pre">FIRST_TASK=bob</span> <span class="pre">--jinja2</span> <span class="pre">SUITE</span></code>
+will show the suite with the Jinja2 variables as set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Suites started with template variables set on the command
+line will <a class="reference internal" href="../../glossary.html#term-restart"><span class="xref std std-term">restart</span></a> with the same settings. However, you can set
+them again on the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command line if they need to
+be overridden.</p>
+</div>
+</div>
+<div class="section" id="jinja2-variable-scope">
+<h2>Jinja2 Variable Scope<a class="headerlink" href="#jinja2-variable-scope" title="Permalink to this headline">¶</a></h2>
+<p>Jinja2 variable scoping rules may be surprising. Variables set inside a
+<em>for loop</em> block, for instance, are not accessible outside of the block,
+so the following will print <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">FOO</span> <span class="pre">is</span> <span class="pre">0</span></code>, not <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">FOO</span> <span class="pre">is</span> <span class="pre">9</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set FOO = false %}</span>
+<span class="cp">{% for item in items %}</span>
+    <span class="cp">{% if item.check_something() %}</span>
+        <span class="cp">{% set FOO = true %}</span>
+    <span class="cp">{% endif %}</span>
+<span class="cp">{% endfor %}</span>
+<span class="c1"># FOO is {{FOO}}</span>
+</pre></div>
+</div>
+<p>Jinja2 documentation suggests using alternative constructs like the loop else
+block or the special <code class="docutils literal notranslate"><span class="pre">loop</span></code> variable. More complex use cases can be
+handled using <code class="docutils literal notranslate"><span class="pre">namespace</span></code> objects which allow propagating of changes
+across scopes:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set ns = namespace(foo=false) %}</span>
+<span class="cp">{% for item in items %}</span>
+    <span class="cp">{% if item.check_something() %}</span>
+        <span class="cp">{% set ns.foo = true %}</span>
+    <span class="cp">{% endif %}</span>
+<span class="cp">{% endfor %}</span>
+<span class="c1"># FOO is {{ns.foo}}</span>
+</pre></div>
+</div>
+<p>For detail, see
+<a class="reference external" href="https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments">Jinja2 Template Designer Documentation - Assignments</a></p>
+</div>
+<div class="section" id="raising-exceptions">
+<span id="jinja2raisingexceptions"></span><h2>Raising Exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Cylc provides two functions for raising exceptions using Jinja2. These
+exceptions are raised when the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is loaded and will prevent a suite
+from running.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These functions must be contained within <code class="docutils literal notranslate"><span class="pre">{{</span></code> Jinja2
+blocks as opposed to <code class="docutils literal notranslate"><span class="pre">{%</span></code> blocks.</p>
+</div>
+<div class="section" id="raise">
+<span id="jinja2-raise"></span><h3>Raise<a class="headerlink" href="#raise" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">raise</span></code> function will result in an error containing the provided text.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% if not VARIABLE is defined %}</span>
+    <span class="cp">{{ raise(&#39;VARIABLE must be defined for this suite.&#39;) }}</span>
+<span class="cp">{% endif %}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="assert">
+<span id="jinja2-assert"></span><h3>Assert<a class="headerlink" href="#assert" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">assert</span></code> function will raise an exception containing the text provided in
+the second argument providing that the first argument evaluates as False. The
+following example is equivalent to the “raise” example above.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{{ assert(VARIABLE is defined, &#39;VARIABLE must be defined for this suite.&#39;) }}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="importing-additional-python-modules">
+<h2>Importing additional Python modules<a class="headerlink" href="#importing-additional-python-modules" title="Permalink to this headline">¶</a></h2>
+<p>Jinja2 allows to gather variable and macro definitions in a separate template
+that can be imported into (and thus shared among) other templates.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% import &quot;flow-utils.cylc&quot; as utils %}</span>
+<span class="cp">{% from &quot;flow-utils.cylc&quot; import VARIABLE as ALIAS %}</span>
+<span class="cp">{{ utils.VARIABLE is equalto(ALIAS)) }}</span>
+</pre></div>
+</div>
+<p>Cylc extends this functionality to allow import of arbitrary Python modules.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% from &quot;itertools&quot; import product %}</span>
+<span class="nt">[runtime]</span>
+<span class="cp">{% for group, member in product([&#39;a&#39;, &#39;b&#39;], [0, 1, 2]) %}</span>
+    <span class="nt">[[</span><span class="cp">{{group}}</span><span class="nt">_</span><span class="cp">{{member}}</span><span class="nt">]]</span>
+<span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+<p>For better clarity and disambiguation Python modules can be prefixed with
+<code class="docutils literal notranslate"><span class="pre">__python__</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% from &quot;__python__.itertools&quot; import product %}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to output messages to the Cylc log from within Jinja2, these
+messages will appear on the console when running or validating a suite.
+This can be useful for development or debugging.</p>
+<p>Example <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="cp">{% from &quot;cylc.flow&quot; import LOG %}</span>
+<span class="cp">{% do LOG.debug(&quot;Hello World!&quot;) %}</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc validate . --debug
+<span class="go">DEBUG - Loading site/user config files</span>
+<span class="go">DEBUG - Reading file &lt;file&gt;</span>
+<span class="go">DEBUG - Processing with Jinja2</span>
+<span class="go">DEBUG - Hello World!</span>
+<span class="go">...</span>
+<span class="go">Valid for cylc-&lt;version&gt;</span>
+</pre></div>
+</div>
+<p>Log messages will appear whenever the suite configuration is loaded so it is
+advisable to use the <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> logging level which is suppressed unless the
+<code class="docutils literal notranslate"><span class="pre">--debug</span></code> option is provided.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="empy.html" class="btn btn-neutral float-right" title="EmPy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="parameterized-tasks.html" class="btn btn-neutral float-left" title="Parameterized Tasks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">
+        Last updated on Mar 30, 2021.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0b0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-suites/jinja2";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

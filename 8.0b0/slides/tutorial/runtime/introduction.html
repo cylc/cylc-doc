@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Cylc 8.0b0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b0 documentation" href="../../index.html" />
+    <link rel="up" title="Runtime" href="index.html" />
+    <link rel="next" title="Runtime Configuration" href="runtime-configuration.html" />
+    <link rel="prev" title="Runtime" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="introduction">
+
+<h1>Introduction<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#introduction" title="View HTML">§</a></h1>
+
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">[scheduling]</span></code></dt><dd>Defines the workflow in terms of <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> and
+<a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[runtime]</span></code></dt><dd>Defines what runs, where and how it runs.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-task-section">
+
+<h2>The Task Section<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#the-task-section" title="View HTML">§</a></h2>
+
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello_world]]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This runtime sub-section is normally required, even if it is empty. However,
+in the previous tutorials, we disabled this requirement using the setting
+<a class="reference internal" href="../../reference/config/suite.html#flow.cylc[scheduler]allow implicit tasks" title="flow.cylc[scheduler]allow implicit tasks"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]allow</span> <span class="pre">implicit</span> <span class="pre">tasks</span></code></a>.
+See <a class="reference internal" href="../../user-guide/writing-suites/runtime.html#implicittasks"><span class="std std-ref">Implicit Tasks</span></a> for more details.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-script-setting">
+
+<h2>The <code class="docutils literal notranslate"><span class="pre">script</span></code> Setting<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#the-script-setting" title="View HTML">§</a></h2>
+
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello_world]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you do not set the <code class="docutils literal notranslate"><span class="pre">script</span></code> for a task then nothing will be run.</p>
+</div>
+<p>We can also call other scripts or executables in this way, e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello_world]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> ~/foo/bar/baz/hello_world</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="path-and-pythonpath">
+
+<h2><code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <span class="target" id="index-0"></span><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" title="(in Python v3.9)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a><a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#path-and-pythonpath" title="View HTML">§</a></h2>
+
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">bin/hello_world</span></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s1">&#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello_world]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> hello_world</span>
+</pre></div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id8">
+
+<h2><code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <span class="target" id="index-0"></span><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" title="(in Python v3.9)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a><a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#id8" title="View HTML">§</a></h2>
+
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">lib/python/hello.py</span></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">world</span><span class="p">():</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[hello_world]]</span>
+      <span class="nv">script </span><span class="o">=</span><span class="s"> python -c &#39;import hello; hello.world()&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="tasks-and-jobs">
+
+<h2>Tasks And Jobs<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#tasks-and-jobs" title="View HTML">§</a></h2>
+
+<p>When a <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> is “Run” it creates a <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">job</span></a>.</p>
+<p>The life-cycle of a job:</p>
+<ul class="simple">
+<li>Waiting</li>
+<li>Submitted</li>
+<li>Running</li>
+<li>Succeeded / Failed</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-cylc-gui">
+
+<h2>The Cylc GUI<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#the-cylc-gui" title="View HTML">§</a></h2>
+
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-3c5cd7b1aa121b274d5536181e78394537ad236e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+Waiting [color=&quot;#88c6ff&quot;]
+Running [style=&quot;filled&quot; color=&quot;#00c410&quot;]
+Succeeded [style=&quot;filled&quot; color=&quot;#ada5a5&quot;]
+}</p></object></div>
+</div>
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="default" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-51920c93ab049253f5f56cc623ef216fe3e4a7c3.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Mini_Cylc {
+b -&gt; d
+c
+d -&gt; f
+f
+e -&gt; f
+b -&gt; c
+a -&gt; b
+}</p></object></div>
+</div>
+</div>
+
+
+
+</article>
+<article class="slide level-2" id="id9">
+
+<h2>The Cylc GUI<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#id9" title="View HTML">§</a></h2>
+
+<div class="figure align-center" id="id5" style="width: 75%">
+<img alt="../../_images/cylc-gui-graph.png" src="../../_images/cylc-gui-graph.png" />
+<p class="caption"><span class="caption-text">Screenshot of the Cylc GUI in “Graph View” mode.</span></p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id10">
+
+<h2>The Cylc GUI<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#id10" title="View HTML">§</a></h2>
+
+<div class="figure align-center" id="id6" style="width: 75%">
+<img alt="../../_images/cylc-gui-tree.png" src="../../_images/cylc-gui-tree.png" />
+<p class="caption"><span class="caption-text">Screenshot of the Cylc GUI in “Tree View” mode.</span></p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id11">
+
+<h2>The Cylc GUI<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#id11" title="View HTML">§</a></h2>
+
+<div class="figure align-center" id="id7" style="width: 75%">
+<img alt="../../_images/cylc-gui-dot.png" src="../../_images/cylc-gui-dot.png" />
+<p class="caption"><span class="caption-text">Screenshot of the Cylc GUI in “Dot View” mode.</span></p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="where-do-all-the-files-go">
+
+<h2>Where Do All The Files Go?<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#where-do-all-the-files-go" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt>The Work Directory</dt><dd><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>~/cylc-run/<span class="s">&lt;suite-name&gt;</span>/work/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>
+</pre></div>
+</div>
+</dd>
+<dt>The Job Log Directory</dt><dd><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>~/cylc-run/<span class="s">&lt;suite-name&gt;</span>/log/job/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>/<span class="s">&lt;job-submission-num&gt;</span>/
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/cylc-gui-view-log.png"><img alt="../../_images/cylc-gui-view-log.png" class="align-center" src="../../_images/cylc-gui-view-log.png" style="width: 345.0px; height: 174.0px;" /></a>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="running-a-suite">
+
+<h2>Running A Suite<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#running-a-suite" title="View HTML">§</a></h2>
+
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc validate <span class="s">&lt;path/to/suite&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In this tutorial we are writing our suites in the <code class="docutils literal notranslate"><span class="pre">cylc-run</span></code> directory.</p>
+<p class="last">It is possible to write them elsewhere on the system. If we do so we
+must install the workflow with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> before use. For more
+information, see <a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">Installing Workflows</span></a>.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="suite-files">
+
+<h2>Suite Files<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#suite-files" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">log/</span></code></dt><dd><ul>
+<li><code class="docutils literal notranslate"><span class="pre">log/db</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">log/job</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">log/suite</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">flow.cylc.processed</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">share/</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">work/</span></code></li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="id12">
+
+<h2>Suite Files<a class="headerlink" href="../../../html/tutorial/runtime/introduction.html#id12" title="View HTML">§</a></h2>
+
+<p class="rubric">In this practical we will add some scripts to, and run, the
+<a class="reference internal" href="../scheduling/datetime-cycling.html#tutorial-datetime-cycling-practical"><span class="std std-ref">weather forecasting suite</span></a>
+from the <a class="reference internal" href="../scheduling/index.html#tutorial-scheduling"><span class="std std-ref">scheduling tutorial</span></a>.</p>
+<p>Next section: <a class="reference internal" href="runtime-configuration.html#tutorial-cylc-runtime-configuration"><span class="std std-ref">Runtime Configuration</span></a></p>
+<div class="note admonition">
+<p class="first admonition-title">Practical</p>
+<p class="rubric">In this practical we will add some scripts to, and run, the
+<a class="reference internal" href="../scheduling/datetime-cycling.html#tutorial-datetime-cycling-practical"><span class="std std-ref">weather forecasting suite</span></a>
+from the <a class="reference internal" href="../scheduling/index.html#tutorial-scheduling"><span class="std std-ref">scheduling tutorial</span></a>.</p>
+<ol class="last arabic">
+<li><p class="first"><strong>Create A New Suite.</strong></p>
+<p>The following command will copy some files for us to work with into
+a new suite called <code class="docutils literal notranslate"><span class="pre">runtime-introduction</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rose tutorial runtime-introduction
+<span class="nb">cd</span> ~/cylc-run/runtime-introduction
+</pre></div>
+</div>
+<p>In this directory we have the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file from the
+<a class="reference internal" href="../scheduling/datetime-cycling.html#tutorial-datetime-cycling-practical"><span class="std std-ref">weather forecasting suite</span></a>
+with some runtime configuration added to it.</p>
+<p>There is also a script called <code class="docutils literal notranslate"><span class="pre">get-observations</span></code> located in the bin
+directory.</p>
+<p>Take a look at the <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section in the <a class="reference internal" href="../../reference/config/suite.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+</li>
+<li><p class="first"><strong>Run The Suite.</strong></p>
+<p>First validate the suite by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc validate .
+</pre></div>
+</div>
+<p>Open the Cylc GUI (in the background) by running the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc gui runtime-introduction <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>Finally run the suite by executing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc play runtime-introduction
+</pre></div>
+</div>
+<p>The tasks will start to run - you should see them going through the
+“Waiting”, “Running” and “Succeeded” states.</p>
+<p>When the suite reaches the final cycle point and all tasks have succeeded
+it will shutdown automatically and the GUI will go blank.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can also run a suite from the Cylc GUI by pressing the “play”
+button.</p>
+<img alt="../../_images/gcylc-play.png" class="align-center" src="../../_images/gcylc-play.png" />
+<p>A box will appear. Ensure that “Cold Start” is selected then press
+“Start”.</p>
+<img alt="../../_images/cylc-gui-suite-start.png" class="last align-center" src="../../_images/cylc-gui-suite-start.png" />
+</div>
+</li>
+<li><p class="first"><strong>Inspect A Job Log.</strong></p>
+<p>Try opening the file <code class="docutils literal notranslate"><span class="pre">job.out</span></code> for one of the
+<code class="docutils literal notranslate"><span class="pre">get_observations</span></code> jobs in a text editor. The file will be
+located within the <a class="reference internal" href="../../glossary.html#term-job-log-directory"><span class="xref std std-term">job log directory</span></a>:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>log/job/<span class="s">&lt;cycle-point&gt;</span>/get_observations_heathrow/01/job.out
+</pre></div>
+</div>
+<p>You should see something like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Suite    : runtime-introduction
+Task Job : 20000101T0000Z/get_observations_heathrow/01 (try 1)
+User@Host: username@hostname
+
+Guessing Weather Conditions
+Writing Out Wind Data
+1970-01-01T00:00:00Z NORMAL - started
+2038-01-19T03:14:08Z NORMAL - succeeded
+</pre></div>
+</div>
+<ul class="simple">
+<li>The first three lines are information which Cylc has written to the file
+to provide information about the job.</li>
+<li>The last two lines were also written by cylc. They provide timestamps
+marking the stages in the job’s life.</li>
+<li>The lines in the middle are the stdout of the job itself.</li>
+</ul>
+</li>
+<li><p class="first"><strong>Inspect A Work Directory.</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_rainfall</span></code> task should create a file called <code class="docutils literal notranslate"><span class="pre">rainfall</span></code> in its
+<a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a>. Try opening this file, recalling that the
+format of the relevant path from within the work directory will be:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>work/<span class="s">&lt;cycle-point&gt;</span>/get_rainfall/rainfall
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">get_rainfall</span></code> task only runs every third cycle.</p>
+</div>
+</li>
+<li><p class="first"><strong>Extension: Explore The Cylc GUI</strong></p>
+<ul>
+<li><p class="first">Try re-running the suite.</p>
+</li>
+<li><p class="first">Try changing the current view(s).</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can do this from the “View” menu or from the toolbar:</p>
+<a class="last reference internal image-reference" href="../../_images/cylc-gui-view-selector.png"><img alt="../../_images/cylc-gui-view-selector.png" class="align-center" src="../../_images/cylc-gui-view-selector.png" style="width: 389.25px; height: 27.0px;" /></a>
+</div>
+</li>
+<li><p class="first">Try pressing the “Pause” button which is found in the top left-hand
+corner of the GUI.</p>
+</li>
+<li><p class="first">Try right-clicking on a task. From the right-click menu you could try:</p>
+<ul class="simple">
+<li>“Trigger (run now)”</li>
+<li>“Reset State”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
