@@ -152,7 +152,7 @@ def get_archived_radar_image(filename, time):
 
     """
     shutil.copyfile(
-        os.path.join(os.environ['CYLC_SUITE_DEF_PATH'], 'data', time,
+        os.path.join(os.environ['CYLC_SUITE_RUN_DIR'], 'data', time,
                      filename),
         filename)
 
