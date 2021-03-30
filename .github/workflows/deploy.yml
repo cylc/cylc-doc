@@ -73,8 +73,8 @@ jobs:
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
           pip install  \
-            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}"
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}"
+            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
+            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
             "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}"
 
       - name: checkout gh-pages
