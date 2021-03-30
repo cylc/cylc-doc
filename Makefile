@@ -36,13 +36,13 @@ cleanall:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats
 	bin/version write > doc/versions.json
-	# Redirect e.g. doc/8.0/index.html -> doc/8.0/html/index.html
+	# Redirect doc/<version>/index.html -> doc/<version>/html/index.html
 	bin/create-html-redirect "html/index.html" "$(BUILDDIR)/index.html"
 ifeq ($(STABLE),true)  # makefile conditionals in recipe must be unindented
 	# Link e.g. doc/stable/ -> doc/7.0/
 	rm "$(BUILDDIR)/../stable" || true
 	ln -sr "$(BUILDDIR)" "$(BUILDDIR)/../stable"
-	# Redirect e.g. doc/index.html -> doc/stable/index.html
+	# Redirect doc/index.html -> doc/stable/index.html
 	bin/create-html-redirect "stable/index.html" "$(BUILDDIR)/../index.html"
 endif
 ifeq ($(LATEST),true)
