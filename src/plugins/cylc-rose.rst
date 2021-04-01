@@ -1,4 +1,4 @@
-.. _cylc-rose:
+.. _Cylc Rose:
 
 Cylc Rose
 =========

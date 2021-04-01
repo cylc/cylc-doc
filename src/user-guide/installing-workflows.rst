@@ -258,7 +258,7 @@ directory.
 - A new ``install`` directory in the workflow's log directory, with a
   time-stamped install log file containing information about the installation.
 
-Cylc plugins (such as :ref:`cylc-rose`) may generate additional files.
+Cylc plugins (such as :ref:`Cylc Rose`) may generate additional files.
 
 
 .. _Reinstalling a Workflow:

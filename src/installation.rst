@@ -30,46 +30,68 @@ present Cylc only tested on Linux.
 Quick Installation
 ------------------
 
-Via Conda (recommended):
+Conda (recommended)
+^^^^^^^^^^^^^^^^^^^
+
+Base installation (just the :term:`scheduler`):
 
 .. code-block:: console
 
-   # install cylc with the browser-GUI
    $ conda install cylc
 
-Via pip:
-
-.. note::
-
-   We recommend using a virtual environment.
-
-.. note::
-
-   Requires Python 3.7
+Full installation with the UI Server and Rose
+:ref:`Cylc components <Cylc components>`.
 
 .. code-block:: console
 
-   # install the "core" cylc package
-   $ pip install cylc-flow
+   $ conda install cylc cylc.uiserver cylc.rose
 
-   # install the browser-GUI
-   $ pip install cylc-uiserver
+Pip
+^^^
+
+.. warning::
+
+   You must ensure :ref:`non-Python dependencies` have been installed via
+   other means.
+
+.. tip::
+   .. _venv: https://docs.python.org/3/tutorial/venv.html
+   .. _pipenv: https://pipenv.pypa.io/en/latest/
+
+   We recommend using a virtual Python environement such as `venv`_ or
+   `pipenv`_.
+
+Base installation (just the :term:`scheduler`):
+
+.. code-block:: console
+
+   $ pip install cylc
+
+Full installation with the UI Server and Rose
+:ref:`Cylc components <Cylc components>`.
+
+.. code-block:: console
+
+   $ pip install cylc[uiserver,rose]
 
 
-Non-Python Requirements
+.. _non-Python dependencies:
+
+Non-Python Dependencies
 -----------------------
 
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
+
+The following dependencies are installed by Conda but not by pip:
+
+* `configurable-http-proxy`_
+* Python
 
 The following dependencies are not installed by Conda or pip:
 
 * ``bash``
 * GNU `coreutils`_
 * ``mail`` (for automated email functionality)
-
-The following dependencies are installed by Conda but not by pip:
-
-* `configurable-http-proxy`_
 
 
 Installing On Mac OS
@@ -136,19 +158,23 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 Site Installation
 -----------------
 
-
 For multi-user installation we recommend using Conda and installing
 Cylc components only where required.
 
-The Cylc Packages
-^^^^^^^^^^^^^^^^^
 
-Cylc is split into a number of packages providing different functionality:
+.. _Cylc components:
+
+The Cylc Components
+^^^^^^^^^^^^^^^^^^^
+
+Cylc is split into a number of sub-packages providing different functionality:
 
 `Cylc Flow`_
    Provides the scheduler "kernel" of Cylc along with the command-line.
 `Cylc UI Server`_
    Provides the "Cylc Hub" and the browser-based "Cylc GUI".
+:ref:`Cylc Rose`
+   Integrates with `Rose`_ providing support for Rose configurations.
 
 Installation Types
 ^^^^^^^^^^^^^^^^^^
@@ -171,13 +197,16 @@ Job Hosts
 Recommended Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-User Machines
+User Machines:
    * `Cylc Flow`_
-Cylc Servers
+   * :ref:`Cylc Rose`
+Cylc Servers:
    * `Cylc Flow`_
    * `Cylc UI Server`_
+   * :ref:`Cylc Rose`
 Job Hosts:
    * `Cylc Flow`_
+   * :ref:`Cylc Rose`
 
 .. _managing environments:
 
@@ -204,11 +233,15 @@ however, many things may need to be configured e.g:
 * Communication methods
 * User/Site preferences
 
-Cylc Flow
-^^^^^^^^^
+.. _config.py: https://github.com/cylc/cylc-uiserver#configuring
 
-`Cylc Flow`_ is configured by the :cylc:conf:`global.cylc` file which supports
-configuration of the system on both a site and user basis.
+Cylc Flow
+   Configured by the :cylc:conf:`global.cylc` file.
+Cylc UI Server
+   Configured by the `config.py`_ file.
+Rose / Cylc Rose
+   Configured by the
+   :ref:`rose.conf <rose:Site And User Configuration>` file.
 
 .. note::
 
