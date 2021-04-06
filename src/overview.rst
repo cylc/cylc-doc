@@ -28,7 +28,7 @@ Terminology and Config File Name
 --------------------------------
 
 - *suite* is now **workflow** - a more widely understood term
-   - the `suite.rc` config file is now `flow.cylc`
+   - the ``suite.rc`` config file is now ``flow.cylc``
    - *suite daemon* (or *suite server program*) is now **scheduler**
 - *batch system* is now **job runner**
    - our job runners are not all "batch systems"
