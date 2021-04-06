@@ -226,7 +226,7 @@ the intended restart.
 
 Cylc 8 has ``cylc play`` to *start*, *restart*, or *unpause* a workflow, so
 "restart" is now the safe default behaviour. For a new run from scratch,
-do a fresh `cylc install` and run it safely in the new run directory.
+do a fresh ``cylc install`` and run it safely in the new run directory.
 
 Security
 --------
