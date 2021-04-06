@@ -125,7 +125,7 @@ or even infinite in extent in cycling systems. The Cylc 8 UI shows:
   - plus waiting tasks that are only waiting on non-task dependencies: queues,
   runahead limit, clock-triggers, or xtriggers
 
-- tasks up to `n` graph edges away from active tasks (default `1` edge) 
+- tasks up to ``n`` graph edges away from active tasks (default ``1`` edge) 
 
 Platform Awareness
 ------------------
