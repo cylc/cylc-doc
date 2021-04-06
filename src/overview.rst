@@ -181,7 +181,7 @@ Cylc 8 cleans this up:
 Workflow Installation
 ---------------------
 
-The functionality of `rose suite-run` has been migrated into Cylc 8. This
+The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
 cleanly separates workflow source directory from run directory, and installs
 workflow files into the run directory at start-up
 
