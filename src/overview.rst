@@ -44,7 +44,7 @@ Cylc has been re-architected to support a remote web UI:
 - a new UI Server component that runs as the user
 
 - new network layers to feed scheduler and filesystem data to the UI Server and UI
-   - efficient incremental push updates (c.f. polled global updates in Cylc 7)
+  - efficient incremental push updates (c.f. polled global updates in Cylc 7)
 
 - a new in-browser UI
    - a front dashboard page with documentation links (etc.)
