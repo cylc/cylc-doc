@@ -39,7 +39,7 @@ Architecture
 Cylc has been re-architected to support a remote web UI:
 
 - a new Hub component, where you authenticate
-   - can run as a regular or privileged user
+  - can run as a regular or privileged user
 
 - a new UI Server component that runs as the user
 
