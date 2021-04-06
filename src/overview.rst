@@ -192,13 +192,13 @@ workflow files into the run directory at start-up
 
 .. code-block:: bash
 
-   (venv) $ pwd
-   /home/oliverh/cylc-src/democ8
+   $ pwd
+   ~/cylc-src/democ8
 
-   (venv) $ cylc install
-   INSTALLED democ8 from /home/oliverh/cylc-src/democ8 -> /home/oliverh/cylc-run/democ8/run1
+   $ cylc install
+   INSTALLED democ8 from ~/cylc-src/democ8 -> ~/cylc-run/democ8/run1
 
-   (venv) $ cylc play democ8/run1
+   $ cylc play democ8/run1
                 ._.
                 | |
     ._____._. ._| |_____.
@@ -210,10 +210,10 @@ workflow files into the run directory at start-up
 
    ...
 
-   (venv) $ cylc install
-   INSTALLED democ8 from /home/oliverh/cylc-src/democ8 -> /home/oliverh/cylc-run/democ8/run2
+   $ cylc install
+   INSTALLED democ8 from ~/cylc-src/democ8 -> ~/cylc-run/democ8/run2
 
-   (venv) $ cylc play democ8/run2
+   $ cylc play democ8/run2
    # etc.
 
 Safe Run Semantics
