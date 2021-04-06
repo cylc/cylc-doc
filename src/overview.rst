@@ -254,7 +254,7 @@ Cylc 8 can be installed from **Conda Forge**, into a conda environment:
 
 .. code-block:: bash
 
-   $ conda create -n cylc8 python=3.8
+   $ conda create -n cylc8
    $ conda activate cylc8
    (cylc8) $ conda install cylc
    (cylc8) $ cylc --version
