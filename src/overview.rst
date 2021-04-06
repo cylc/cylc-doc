@@ -185,7 +185,7 @@ The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
 cleanly separates workflow source directory from run directory, and installs
 workflow files into the run directory at start-up
 
-- `cylc install` copies all workflow source files into a dedicated
+- ``cylc install`` copies all workflow source files into a dedicated
   run-directory
 - each new install creates a new numbered run-directory (by default)
 - (workflow files are automatically installed onto job platforms too)
