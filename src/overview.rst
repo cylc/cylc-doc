@@ -220,7 +220,7 @@ Safe Run Semantics
 ------------------
 
 Cylc 7 run semantics were dangerous: if you accidentally typed `cylc run`
-instead of `cylc restart` a new from-scratch run would overwrite the existing
+instead of ``cylc restart`` a new from-scratch run would overwrite the existing
 run directory, including the run database, so that you could not go back and do
 the intended restart.
 
