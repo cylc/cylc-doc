@@ -47,11 +47,11 @@ Cylc has been re-architected to support a remote web UI:
   - efficient incremental push updates (c.f. polled global updates in Cylc 7)
 
 - a new in-browser UI
-   - a front dashboard page with documentation links (etc.)
-   - integrated gscan side-panel
-   - responsive web design (from desktop to table to mobile)
-   - a tabbed interface to display multiple workflow views
-   - command integration, for interacting with task, jobs, and schedulers
+  - a front dashboard page with documentation links (etc.)
+  - integrated gscan side-panel
+  - responsive web design (from desktop to table to mobile)
+  - a tabbed interface to display multiple workflow views
+  - command integration, for interacting with task, jobs, and schedulers
 
 - a new terminal UI (TUI) as part of the CLI
 
