@@ -24,48 +24,75 @@ To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
    But please take action on any deprecation warnings.
 
 
-Terminology and Config File Name
---------------------------------
+Terminology
+-----------
 
-- *suite* is now **workflow** - a more widely understood term
-   - the ``suite.rc`` config file is now ``flow.cylc``
-   - *suite daemon* (or *suite server program*) is now **scheduler**
-- *batch system* is now **job runner**
+- *suite* is now *workflow*
+   - workflow is a more widely understood term
+- *suite daemon* (or *suite server program*) is now *scheduler*
+   - (ditto)
+- *batch system* is now *job runner*
    - our job runners are not all "batch systems"
+
+.. note::
+
+   - the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
 
 Architecture
 ------------
 
-Cylc has been re-architected to support a remote web UI:
+Cylc has been re-architected to support a remote web UI. The main Cylc 8 system
+components are:
 
-- a new Hub component, where you authenticate
-  - can run as a regular or privileged user
+- **Cylc Hub**
+   - authenticates users, and spawns and proxies Cylc UI Servers
+   - a `Jupyterhub <https://jupyter.org/hub>`_ instance configured to launch 
+     Cylc UI Servers
+   - can run as a regular or privileged user
 
-- a new UI Server component that runs as the user
+- **Cylc UI Server**
+   - collates workflow data from Schedulers and filesystem
+   - serves the UI
 
-- new network layers to feed scheduler and filesystem data to the UI Server and UI
-  - efficient incremental push updates (c.f. polled global updates in Cylc 7)
+- **Cylc Scheduler**
+     - the workflow engine core, Python 3 based
+     - includes the **CLI** (Command Line Interface)
+     - and **TUI** a new Terminal UI application
 
-- a new in-browser UI
-  - a front dashboard page with documentation links (etc.)
-  - integrated gscan side-panel
-  - responsive web design (from desktop to table to mobile)
-  - a tabbed interface to display multiple workflow views
-  - command integration, for interacting with task, jobs, and schedulers
+- **Cylc UI**
+   - in-browser web UI, includes:
+   - a dashboard with summary information and documentation links
+   - integrated gscan (multi-workflow) side-panel
+   - responsive web design (from desktop to table to mobile)
+   - tabbed interface to display multiple workflow views
+   - command integration for interacting with task, jobs, and schedulers
 
-- a new terminal UI (TUI) as part of the CLI
+- **Network layers**
+   - incremental push updates (c.f. polled full-state updates in Cylc 7)
 
-.. image:: img/hub.png
+.. figure:: img/hub.png
+   :figwidth: 75%
    :align: center
 
-.. image:: img/cylc-ui-dash.png
+   Cylc 8 Hub authentication page
+
+.. figure:: img/cylc-ui-dash.png
+   :figwidth: 75%
    :align: center
 
-.. image:: img/cylc-ui-tree.png
+   Cylc 8 UI dashboard
+
+.. figure:: img/cylc-ui-tree.png
+   :figwidth: 75%
    :align: center
 
-.. image:: img/cylc-tui.png
+   Cylc 8 UI workflow tree view
+
+.. figure:: img/cylc-tui.png
+   :figwidth: 75%
    :align: center
+
+   Cylc 8 TUI application
 
 Scheduling Algorithm
 --------------------
@@ -75,23 +102,19 @@ Cylc has to be able to manage infinite workflows of repeating tasks:
 .. image:: img/cycling.png
    :align: center
 
-See :ref:`Cylc 7 Scheduling Deficiencies Fixed by Cylc 8`
+See :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
 
-Cylc 8 hsa an efficient new **Spawn on Demand scheduler** which,
-- only needs to be aware of current active tasks, and what comes next
-- no implicit dependence on previous-instance job submit
-- handles alternate path branching without the need for suicide triggers
-- can run tasks out of cycle point order
-- enables a sensible active-task based window on the evolving workflow
+Cylc 8 has an efficient new **Spawn on Demand** scheduling algorithm which,
+   - only needs to be aware of current active tasks, and what comes next
+   - handles alternate path branching without suicide triggers
+   - can run tasks out of cycle point order
+   - enables a sensible active-task based window on the evolving workflow
+   - supports a powerful new capability called **reflow**: you can trigger
+     multiple "wavefronts" of activity in the graph at once, in the same
+     scheduler
 
-It also supports a powerful new capability called **reflow** (you can trigger
-multiple "wavefronts" of activity at once, in the same workflow graph). And
-users no longer need to know about the "scheduler task pool" or "insertion"
-of task proxy objects into it (the ``cylc insert`` and ``cylc reset`` commands are
-gone).
-
-Task/Job Separation and Task States
------------------------------------
+Task/Job Separation and States
+------------------------------
 
 A "task" represents a node in your abstract workflow graph. A job is a real
 process that runs on a computer. Tasks can submit multiple jobs to run, through
@@ -149,6 +172,7 @@ other hosts on the same platform to interact with task jobs.
    [runtime]
       [[model]]
           platform = hpc1  # Cylc 8
+          # (Platform hosts and job runner defined in global config).
       [[model_cleanup]]
           # Platforms can have the same hosts with different job runners.
           platform = hpc1_background
@@ -286,43 +310,42 @@ The following dependencies are not installed by Conda or pip:
 What's Still Missing From Cylc 8?
 ---------------------------------
 
-Some major features still in progress or yet to be started:
+Some features are still in progress or yet to be started:
 
 - Other UI workflow views:
    - graph view
    - table view
    - dot view
-- Static graph visualization
-- UI view workflow and job logs
-   - for the moment, go to the job log directories or use cylc-7.9.3/7.8.8 Cylc
-     Review to view Cylc 8 logs
+- Static workflow graph visualization
+- Cross-user functionality and fine-grained authorization
+- UI presentation of workflow and job logs
+   - for the moment look in your ``cylc-run`` directory, or use
+     ``cylc cat-log``, or use Cylc Review from cylc-7.9.3/7.8.8 
+     to view Cylc 8 logs
 - UI/CLI "edit run"
-- Cross-user functionality
-- UI Server fine-grained authorization
-- The User Guide has not been completely overhauled yet
-- UI Server services to:
-   - Install new workflows
-   - Start stopped workflows
+- UI Server:
+   - sub-service to install new workflows
+   - sub-service to start stopped workflows
+   - populate historic task data from run DBs
 
-- UI Server to populate historic task data from run DBs
-- Efficient delta-driven TUI
+- Delta-driven TUI, for large workflows
 
-.. _Cylc 7 Scheduling Deficiencies Fixed by Cylc 8:
+.. _Cylc 7 Scheduler Deficiencies Fixed by Cylc 8:
 
-Cylc 7 Scheduling Deficiencies Fixed by Cylc 8
+Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
 ----------------------------------------------
 
 - Every task implicitly depedended on previous-instance (same task, previous
   cycle point) job submission
-- The scheduler had to be aware of at least one active and one waiting instance
-  of every task in the workflow, plus all succeeded tasks in the current
-  active task window
+- The scheduler had to be aware of at least one active and one waiting
+  instance of every task in the workflow, plus all succeeded tasks in the
+  current active task window
 - The indiscriminate dependency matching process was costly
 - To fully understand what tasks appeared in the GUI (why particular
   *waiting* or *succeeded* tasks appeared in some cycles but not in others, for
   instance) you had to understand the scheduling algorithm
-- *Suicide triggers* were needed to clear unused graph paths and avoid stalling
-  the scheduler
+- *Suicide triggers* were needed to clear unused graph paths and avoid
+  stalling the scheduler
 - Tasks could not run out of cycle point order
 - The scheduler could stall with next-cycle-point successors not spawned
   downstream of failed tasks
