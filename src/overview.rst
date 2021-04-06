@@ -296,7 +296,7 @@ Some major features still in progress or yet to be started:
 - UI view workflow and job logs
    - for the moment, go to the job log directories or use cylc-7.9.3/7.8.8 Cylc
      Review to view Cylc 8 logs
-- UI "edit run"
+- UI/CLI "edit run"
 - Cross-user functionality
 - UI Server fine-grained authorization
 - The User Guide has not been completely overhauled yet
