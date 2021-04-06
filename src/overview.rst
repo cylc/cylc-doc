@@ -87,7 +87,7 @@ Cylc 8 hsa an efficient new **Spawn on Demand scheduler** which,
 It also supports a powerful new capability called **reflow** (you can trigger
 multiple "wavefronts" of activity at once, in the same workflow graph). And
 users no longer need to know about the "scheduler task pool" or "insertion"
-of task proxy objects into it (the `cylc insert` and `cylc reset` commands are
+of task proxy objects into it (the ``cylc insert`` and ``cylc reset`` commands are
 gone).
 
 Task/Job Separation and Task States
