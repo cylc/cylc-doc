@@ -224,7 +224,7 @@ instead of ``cylc restart`` a new from-scratch run would overwrite the existing
 run directory, including the run database, so that you could not go back and do
 the intended restart.
 
-Cylc 8 has `cylc play` to *start*, *restart*, or *unpause* a workflow, so
+Cylc 8 has ``cylc play`` to *start*, *restart*, or *unpause* a workflow, so
 "restart" is now the safe default behaviour. For a new run from scratch,
 do a fresh `cylc install` and run it safely in the new run directory.
 
