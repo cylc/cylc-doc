@@ -4,7 +4,6 @@ Introduction
 .. toctree::
    :maxdepth: 2
 
-   how-cylc-works
    architecture
 
 Cylc is open source and licensed under the

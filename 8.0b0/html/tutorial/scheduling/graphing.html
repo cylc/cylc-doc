@@ -105,6 +105,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">What’s New in Cylc 8.0b0?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
@@ -363,10 +364,10 @@ following text defines two tasks where <code class="docutils literal notranslate
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-ef2dddb2d1e236bd5f1ad509bb4a2ff37c434c50.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough
 buy_ingredients -&gt; make_dough
+make_dough
 }</p></object></div>
 </div>
 </div><p>In a Cylc workflow this would mean that <code class="docutils literal notranslate"><span class="pre">make_dough</span></code> would only run when
@@ -374,12 +375,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-d42311cae20983e3c14428d21c8d53deaaea9662.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7ae688027192c38130d17a7cfd128b2402215f6f.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread -&gt; sell_bread
-sell_bread
 buy_ingredients -&gt; make_dough
+bake_bread -&gt; sell_bread
 make_dough -&gt; bake_bread
+sell_bread
 }</p></object></div>
 </div>
 </div><p>This line of text is referred to as a <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph string</span></a>. These graph
@@ -389,15 +390,15 @@ strings can be combined to form more complex workflows:</p>
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-771a2dd154f471a3bdb9eb25a3ad60f00537c701.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-491aa53f268bc08c5501106f1b1950f9afdabf7c.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
-bake_bread -&gt; clean_oven
-buy_ingredients -&gt; make_dough
-clean_oven
-pre_heat_oven -&gt; bake_bread
-make_dough -&gt; bake_bread
 bake_bread
+bake_bread -&gt; clean_oven
+make_dough -&gt; bake_bread
+sell_bread
+pre_heat_oven -&gt; bake_bread
+clean_oven
+buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
@@ -564,7 +565,7 @@ correct solution.</p>
     <p>
         &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
       <span class="lastupdated">
-        Last updated on Mar 30, 2021.
+        Last updated on Apr 07, 2021.
       </span>
 
     </p>

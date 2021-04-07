@@ -105,6 +105,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">What’s New in Cylc 8.0b0?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
@@ -225,15 +226,15 @@ arrows.</p>
 executes tasks according to their schedules and dependencies.</p>
 <p>In a Cylc workflow each step is a computational task, a script to execute.
 Cylc runs each task as soon as it is appropriate to do so.</p>
-<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-0ec8ecb7669c05b747465577ccef50ea1c19c8be.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-4cc2996cde4c296bbdb17d4b55c72bd58e562050.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
 a -&gt; b
-c
-b -&gt; c
-b -&gt; d
-f
-e -&gt; f
 d -&gt; f
+b -&gt; d
+b -&gt; c
+f
+c
+e -&gt; f
 }</p></object></div>
 </div>
 </div><p>Cylc can automatically:</p>
@@ -270,7 +271,7 @@ interacting with workflows.</p>
     <p>
         &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
       <span class="lastupdated">
-        Last updated on Mar 30, 2021.
+        Last updated on Apr 07, 2021.
       </span>
 
     </p>
