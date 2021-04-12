@@ -226,15 +226,15 @@ arrows.</p>
 executes tasks according to their schedules and dependencies.</p>
 <p>In a Cylc workflow each step is a computational task, a script to execute.
 Cylc runs each task as soon as it is appropriate to do so.</p>
-<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-4cc2996cde4c296bbdb17d4b55c72bd58e562050.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-225ff27479ce1c903657e9199a4c2ab6c09cd4cd.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-a -&gt; b
-d -&gt; f
-b -&gt; d
 b -&gt; c
-f
-c
 e -&gt; f
+c
+d -&gt; f
+f
+a -&gt; b
+b -&gt; d
 }</p></object></div>
 </div>
 </div><p>Cylc can automatically:</p>
@@ -271,7 +271,7 @@ interacting with workflows.</p>
     <p>
         &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
       <span class="lastupdated">
-        Last updated on Apr 07, 2021.
+        Last updated on Apr 12, 2021.
       </span>
 
     </p>
