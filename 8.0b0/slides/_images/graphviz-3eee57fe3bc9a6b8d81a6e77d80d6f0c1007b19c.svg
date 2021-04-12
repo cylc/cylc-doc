@@ -9,17 +9,17 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
 <title>Mini_Cylc</title>
 <polygon fill="transparent" stroke="transparent" points="-4,4 -4,-184 201.58,-184 201.58,4 -4,4"/>
-<!-- sell_cake -->
-<g id="node1" class="node">
-<title>sell_cake</title>
-<ellipse fill="none" stroke="black" cx="98.79" cy="-18" rx="50.89" ry="18"/>
-<text text-anchor="middle" x="98.79" y="-14.3" font-family="sans" font-size="14.00">sell_cake</text>
-</g>
 <!-- bake_cake -->
-<g id="node2" class="node">
+<g id="node1" class="node">
 <title>bake_cake</title>
 <ellipse fill="none" stroke="black" cx="98.79" cy="-90" rx="57.39" ry="18"/>
 <text text-anchor="middle" x="98.79" y="-86.3" font-family="sans" font-size="14.00">bake_cake</text>
+</g>
+<!-- sell_cake -->
+<g id="node2" class="node">
+<title>sell_cake</title>
+<ellipse fill="none" stroke="black" cx="98.79" cy="-18" rx="50.89" ry="18"/>
+<text text-anchor="middle" x="98.79" y="-14.3" font-family="sans" font-size="14.00">sell_cake</text>
 </g>
 <!-- bake_cake&#45;&gt;sell_cake -->
 <g id="edge1" class="edge">

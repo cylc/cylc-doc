@@ -21,7 +21,7 @@ To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
 
 .. warning::
 
-   But please take action on any deprecation warnings emitted by by `cylc
+   But please take action on any deprecation warnings emitted by `cylc
    validate`.
 
 

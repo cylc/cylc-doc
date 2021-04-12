@@ -375,12 +375,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e7592365f69b0c9ee84d141dc6fc25f40cc2c1ce.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7ae688027192c38130d17a7cfd128b2402215f6f.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
-make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
+make_dough -&gt; bake_bread
+sell_bread
 }</p></object></div>
 </div>
 </div><p>This line of text is referred to as a <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph string</span></a>. These graph
@@ -390,16 +390,16 @@ strings can be combined to form more complex workflows:</p>
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-21c448553e9f92f3abe6f366559c7128877a3dc2.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-540b768b505d46437fe57eb8c77ae1bd9b892b3f.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-pre_heat_oven -&gt; bake_bread
-bake_bread -&gt; sell_bread
-clean_oven
 bake_bread -&gt; clean_oven
-bake_bread
 buy_ingredients -&gt; make_dough
-sell_bread
+bake_bread -&gt; sell_bread
+pre_heat_oven -&gt; bake_bread
+bake_bread
 make_dough -&gt; bake_bread
+sell_bread
+clean_oven
 }</p></object></div>
 </div>
 </div><p>Graph strings can also contain “and” (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>) and “or” (<code class="docutils literal notranslate"><span class="pre">|</span></code>) operators, for

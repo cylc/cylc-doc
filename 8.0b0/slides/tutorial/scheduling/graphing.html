@@ -254,10 +254,10 @@ are equivalent:</p>
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-ef2dddb2d1e236bd5f1ad509bb4a2ff37c434c50.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-buy_ingredients -&gt; make_dough
 make_dough
+buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
 </div>
@@ -272,12 +272,12 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e26f8ce6dee3a7dc0406bd6d3398fca124d5a8b9.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7ccba40a02871f25b497c686c0fa8907aea5f097.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
 sell_bread
+bake_bread -&gt; sell_bread
 buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
-bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
 </div>
@@ -294,15 +294,15 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-2a5c0599fd56932d66f0471dedb903d963f43bd9.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-453b20837ca60a83ac7c49f07f0d86d52d1b3205.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-clean_oven
-make_dough -&gt; bake_bread
-bake_bread -&gt; clean_oven
 sell_bread
-bake_bread
-bake_bread -&gt; sell_bread
+bake_bread -&gt; clean_oven
+clean_oven
 pre_heat_oven -&gt; bake_bread
+bake_bread -&gt; sell_bread
+bake_bread
+make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
