@@ -28,7 +28,7 @@
 <polygon fill="black" stroke="black" points="114.99,-114.44 107.3,-107.15 108.77,-117.64 114.99,-114.44"/>
 </g>
 <!-- d -->
-<g id="node5" class="node">
+<g id="node6" class="node">
 <title>d</title>
 <ellipse fill="none" stroke="black" cx="171" cy="-90" rx="27" ry="18"/>
 <text text-anchor="middle" x="171" y="-86.3" font-family="sans" font-size="14.00">d</text>
@@ -39,17 +39,17 @@
 <path fill="none" stroke="black" d="M143.35,-144.76C147.71,-136.28 153.15,-125.71 158.04,-116.2"/>
 <polygon fill="black" stroke="black" points="161.23,-117.64 162.7,-107.15 155.01,-114.44 161.23,-117.64"/>
 </g>
-<!-- e -->
-<g id="node3" class="node">
-<title>e</title>
-<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"/>
-<text text-anchor="middle" x="27" y="-86.3" font-family="sans" font-size="14.00">e</text>
-</g>
 <!-- f -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>f</title>
 <ellipse fill="none" stroke="black" cx="99" cy="-18" rx="27" ry="18"/>
 <text text-anchor="middle" x="99" y="-14.3" font-family="sans" font-size="14.00">f</text>
+</g>
+<!-- e -->
+<g id="node4" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-86.3" font-family="sans" font-size="14.00">e</text>
 </g>
 <!-- e&#45;&gt;f -->
 <g id="edge2" class="edge">
@@ -57,23 +57,23 @@
 <path fill="none" stroke="black" d="M41.57,-74.83C51.75,-64.94 65.52,-51.55 77.03,-40.36"/>
 <polygon fill="black" stroke="black" points="79.47,-42.87 84.2,-33.38 74.59,-37.85 79.47,-42.87"/>
 </g>
-<!-- d&#45;&gt;f -->
-<g id="edge3" class="edge">
-<title>d&#45;&gt;f</title>
-<path fill="none" stroke="black" d="M156.43,-74.83C146.25,-64.94 132.48,-51.55 120.97,-40.36"/>
-<polygon fill="black" stroke="black" points="123.41,-37.85 113.8,-33.38 118.53,-42.87 123.41,-37.85"/>
-</g>
 <!-- a -->
-<g id="node6" class="node">
+<g id="node5" class="node">
 <title>a</title>
 <ellipse fill="none" stroke="black" cx="135" cy="-234" rx="27" ry="18"/>
 <text text-anchor="middle" x="135" y="-230.3" font-family="sans" font-size="14.00">a</text>
 </g>
 <!-- a&#45;&gt;b -->
-<g id="edge4" class="edge">
+<g id="edge3" class="edge">
 <title>a&#45;&gt;b</title>
 <path fill="none" stroke="black" d="M135,-215.7C135,-207.98 135,-198.71 135,-190.11"/>
 <polygon fill="black" stroke="black" points="138.5,-190.1 135,-180.1 131.5,-190.1 138.5,-190.1"/>
+</g>
+<!-- d&#45;&gt;f -->
+<g id="edge4" class="edge">
+<title>d&#45;&gt;f</title>
+<path fill="none" stroke="black" d="M156.43,-74.83C146.25,-64.94 132.48,-51.55 120.97,-40.36"/>
+<polygon fill="black" stroke="black" points="123.41,-37.85 113.8,-33.38 118.53,-42.87 123.41,-37.85"/>
 </g>
 </g>
 </svg>

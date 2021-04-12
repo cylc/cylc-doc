@@ -7,12 +7,12 @@ What's New in Cylc 8.0b0?
 
 .. tip::
 
-   If you need help using Cylc 8 please post questions to the
+   If you need help using or understanding Cylc 8 please post questions to the
    `Cylc Forum <https://cylc.discourse.group/>`_
 
 
 Cylc 8 differs from Cylc 7 in many ways: architecture, scheduling
-algorithm, security, UIs, and working practices, and more.
+algorithm, security, UIs, working practices, and more.
 
 Backward Compatibility
 ----------------------
@@ -21,22 +21,21 @@ To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
 
 .. warning::
 
-   But please take action on any deprecation warnings.
+   But please take action on any deprecation warnings emitted by by `cylc
+   validate`.
 
 
 Terminology
 -----------
 
-- *suite* is now *workflow*
-   - workflow is a more widely understood term
-- *suite daemon* (or *suite server program*) is now *scheduler*
-   - (ditto)
-- *batch system* is now *job runner*
-   - our job runners are not all "batch systems"
+- **Suite** is now **WORKFLOW** (a more widely understood term)
+- **Suite daemon** (or **suite server program**) is now **SCHEDULER** (ditto)
+- **Batch system** is now **JOB RUNNER** (not all of our job runners are "batch
+  systems")
 
 .. note::
 
-   - the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
+   - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
 
 Architecture
 ------------
@@ -45,51 +44,51 @@ Cylc has been re-architected to support a remote web UI. The main Cylc 8 system
 components are:
 
 - **Cylc Hub**
-   - authenticates users, and spawns and proxies Cylc UI Servers
-   - a `Jupyterhub <https://jupyter.org/hub>`_ instance configured to launch 
-     Cylc UI Servers
-   - can run as a regular or privileged user
+   - Authenticates users, spawns and proxies Cylc UI Servers
+   - (A `Jupyterhub <https://jupyter.org/hub>`_ instance)
+   - Can run as a regular or privileged user
 
 - **Cylc UI Server**
-   - collates workflow data from Schedulers and filesystem
-   - serves the UI
+   - Launched by the Hub
+   - Interacts with Schedulers and the filesystem
+   - Serves the UI to users
 
 - **Cylc Scheduler**
-     - the workflow engine core, Python 3 based
-     - includes the **CLI** (Command Line Interface)
-     - and **TUI** a new Terminal UI application
+     - The workflow engine core, Python 3 based
+     - Includes the **CLI** (Command Line Interface)
+     - And **TUI**, a new Terminal UI application
 
 - **Cylc UI**
-   - in-browser web UI, includes:
-   - a dashboard with summary information and documentation links
-   - integrated gscan (multi-workflow) side-panel
-   - responsive web design (from desktop to table to mobile)
-   - tabbed interface to display multiple workflow views
-   - command integration for interacting with task, jobs, and schedulers
+   - In-browser web UI, includes:
+   - A dashboard with summary information and documentation links
+   - Integrated gscan (multi-workflow) side-panel
+   - Responsive web design (from desktop to table to mobile)
+   - Tabbed interface to display multiple workflow views
+   - Command integration for interacting with task, jobs, and schedulers
 
 - **Network layers**
-   - incremental push updates (c.f. polled full-state updates in Cylc 7)
+   - Incremental push updates (c.f. polled full-state updates in Cylc 7)
 
 .. figure:: img/hub.png
-   :figwidth: 75%
+   :figwidth: 100%
    :align: center
 
    Cylc 8 Hub authentication page
 
 .. figure:: img/cylc-ui-dash.png
-   :figwidth: 75%
+   :figwidth: 100%
    :align: center
 
    Cylc 8 UI dashboard
 
 .. figure:: img/cylc-ui-tree.png
-   :figwidth: 75%
+   :figwidth: 100%
    :align: center
 
    Cylc 8 UI workflow tree view
 
 .. figure:: img/cylc-tui.png
-   :figwidth: 75%
+   :figwidth: 100%
    :align: center
 
    Cylc 8 TUI application
@@ -104,21 +103,21 @@ Cylc has to be able to manage infinite workflows of repeating tasks:
 
 See :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
 
-Cylc 8 has an efficient new **Spawn on Demand** scheduling algorithm which,
-   - only needs to be aware of current active tasks, and what comes next
-   - handles alternate path branching without suicide triggers
-   - can run tasks out of cycle point order
-   - enables a sensible active-task based window on the evolving workflow
-   - supports a powerful new capability called **reflow**: you can trigger
+Cylc 8 has an efficient new **Spawn on Demand** scheduler that:
+   - Only needs to be aware of current active tasks, and what comes next
+   - Handles alternate path branching without suicide triggers
+   - Can run tasks out of cycle point order
+   - Enables a sensible active-task based window on the evolving workflow
+   - Supports a powerful new capability called **reflow**: you can trigger
      multiple "wavefronts" of activity in the graph at once, in the same
      scheduler
 
 Task/Job Separation and States
 ------------------------------
 
-A "task" represents a node in your abstract workflow graph. A job is a real
-process that runs on a computer. Tasks can submit multiple jobs to run, through
-automatic retries or manual re-triggering.
+**Tasks** are nodes in the abstract workflow graph, representing processes
+you want to run on computers, and **jobs are the real processes**. Tasks can
+have multiple jobs, thanks to automatic retries and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.
@@ -130,10 +129,10 @@ task icon incorporates a radial progress indicator.
 .. image:: img/task-job.png
    :align: center
 
-Most of the missing Cylc 7 task states are now just plain old *waiting*, but
-you can now see or infer what the task is waiting on: a queue, xtrigger, or
-retry timer. For instance, a waiting task that already has one or more jobs
-must be about to retry.
+The removed Cylc 7 task states have been absorbed into the *waiting* state, but
+you can see or infer what is being waited on: e.g. a queue, xtrigger, or
+retry timer. For instance, a waiting task that already has one or more
+associated jobs must be about to retry.
 
 Window on the Workflow
 ----------------------

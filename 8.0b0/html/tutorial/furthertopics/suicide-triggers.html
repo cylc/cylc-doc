@@ -221,11 +221,11 @@ suite is running.</p>
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">make_cake_mixture</span> <span class="o">=&gt;</span> <span class="kd">bake_cake</span> <span class="o">=&gt;</span> <span class="kd">sell_cake</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="make_cake_mixture => bake_cake => sell_cake" data-theme="none" ><div class="graphviz"><object data="../../_images/graphviz-1529cf72de3301b3ec037e3fc1d09e999e781b3a.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="make_cake_mixture => bake_cake => sell_cake" data-theme="none" ><div class="graphviz"><object data="../../_images/graphviz-e6631b2601b50cbc36d7a2e5ef9da5efbe5ef0ea.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
 sell_cake
-make_cake_mixture -&gt; bake_cake
 bake_cake -&gt; sell_cake
+make_cake_mixture -&gt; bake_cake
 }</p></object></div>
 </div><p>There is a 50% chance that the cake will turn out fine, and a 50% chance that
 it will get burnt. In the case that we burn the cake the workflow gets stuck.</p>

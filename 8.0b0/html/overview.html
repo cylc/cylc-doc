@@ -202,48 +202,32 @@
 <p><strong>A quick guide for Cylc 7 users.</strong></p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you need help using Cylc 8 please post questions to the
+<p>If you need help using or understanding Cylc 8 please post questions to the
 <a class="reference external" href="https://cylc.discourse.group/">Cylc Forum</a></p>
 </div>
 <p>Cylc 8 differs from Cylc 7 in many ways: architecture, scheduling
-algorithm, security, UIs, and working practices, and more.</p>
+algorithm, security, UIs, working practices, and more.</p>
 <div class="section" id="backward-compatibility">
 <h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this headline">¶</a></h2>
 <p>To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>But please take action on any deprecation warnings.</p>
+<p>But please take action on any deprecation warnings emitted by by <cite>cylc
+validate</cite>.</p>
 </div>
 </div>
 <div class="section" id="terminology">
 <h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><dl class="simple">
-<dt><em>suite</em> is now <em>workflow</em></dt><dd><ul>
-<li><p>workflow is a more widely understood term</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><em>suite daemon</em> (or <em>suite server program</em>) is now <em>scheduler</em></dt><dd><ul>
-<li><p>(ditto)</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt><em>batch system</em> is now <em>job runner</em></dt><dd><ul>
-<li><p>our job runners are not all “batch systems”</p></li>
-</ul>
-</dd>
-</dl>
-</li>
+<li><p><strong>Suite</strong> is now <strong>WORKFLOW</strong> (a more widely understood term)</p></li>
+<li><p><strong>Suite daemon</strong> (or <strong>suite server program</strong>) is now <strong>SCHEDULER</strong> (ditto)</p></li>
+<li><p><strong>Batch system</strong> is now <strong>JOB RUNNER</strong> (not all of our job runners are “batch
+systems”)</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul class="simple">
-<li><p>the Cylc config filename is now <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, not <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></p></li>
+<li><p>And the Cylc config filename is now <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, not <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></p></li>
 </ul>
 </div>
 </div>
@@ -254,64 +238,64 @@ components are:</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt><strong>Cylc Hub</strong></dt><dd><ul>
-<li><p>authenticates users, and spawns and proxies Cylc UI Servers</p></li>
-<li><p>a <a class="reference external" href="https://jupyter.org/hub">Jupyterhub</a> instance configured to launch
-Cylc UI Servers</p></li>
-<li><p>can run as a regular or privileged user</p></li>
+<li><p>Authenticates users, spawns and proxies Cylc UI Servers</p></li>
+<li><p>(A <a class="reference external" href="https://jupyter.org/hub">Jupyterhub</a> instance)</p></li>
+<li><p>Can run as a regular or privileged user</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><strong>Cylc UI Server</strong></dt><dd><ul>
-<li><p>collates workflow data from Schedulers and filesystem</p></li>
-<li><p>serves the UI</p></li>
+<li><p>Launched by the Hub</p></li>
+<li><p>Interacts with Schedulers and the filesystem</p></li>
+<li><p>Serves the UI to users</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><strong>Cylc Scheduler</strong></dt><dd><ul>
-<li><p>the workflow engine core, Python 3 based</p></li>
-<li><p>includes the <strong>CLI</strong> (Command Line Interface)</p></li>
-<li><p>and <strong>TUI</strong> a new Terminal UI application</p></li>
+<li><p>The workflow engine core, Python 3 based</p></li>
+<li><p>Includes the <strong>CLI</strong> (Command Line Interface)</p></li>
+<li><p>And <strong>TUI</strong>, a new Terminal UI application</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><strong>Cylc UI</strong></dt><dd><ul>
-<li><p>in-browser web UI, includes:</p></li>
-<li><p>a dashboard with summary information and documentation links</p></li>
-<li><p>integrated gscan (multi-workflow) side-panel</p></li>
-<li><p>responsive web design (from desktop to table to mobile)</p></li>
-<li><p>tabbed interface to display multiple workflow views</p></li>
-<li><p>command integration for interacting with task, jobs, and schedulers</p></li>
+<li><p>In-browser web UI, includes:</p></li>
+<li><p>A dashboard with summary information and documentation links</p></li>
+<li><p>Integrated gscan (multi-workflow) side-panel</p></li>
+<li><p>Responsive web design (from desktop to table to mobile)</p></li>
+<li><p>Tabbed interface to display multiple workflow views</p></li>
+<li><p>Command integration for interacting with task, jobs, and schedulers</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="simple">
 <dt><strong>Network layers</strong></dt><dd><ul>
-<li><p>incremental push updates (c.f. polled full-state updates in Cylc 7)</p></li>
+<li><p>Incremental push updates (c.f. polled full-state updates in Cylc 7)</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
-<div class="figure align-center" id="id2" style="width: 75%">
+<div class="figure align-center" id="id2" style="width: 100%">
 <img alt="_images/hub.png" src="_images/hub.png" />
 <p class="caption"><span class="caption-text">Cylc 8 Hub authentication page</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
-<div class="figure align-center" id="id3" style="width: 75%">
+<div class="figure align-center" id="id3" style="width: 100%">
 <img alt="_images/cylc-ui-dash.png" src="_images/cylc-ui-dash.png" />
 <p class="caption"><span class="caption-text">Cylc 8 UI dashboard</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
-<div class="figure align-center" id="id4" style="width: 75%">
+<div class="figure align-center" id="id4" style="width: 100%">
 <img alt="_images/cylc-ui-tree.png" src="_images/cylc-ui-tree.png" />
 <p class="caption"><span class="caption-text">Cylc 8 UI workflow tree view</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
-<div class="figure align-center" id="id5" style="width: 75%">
+<div class="figure align-center" id="id5" style="width: 100%">
 <img alt="_images/cylc-tui.png" src="_images/cylc-tui.png" />
 <p class="caption"><span class="caption-text">Cylc 8 TUI application</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
@@ -322,12 +306,12 @@ Cylc UI Servers</p></li>
 <img alt="_images/cycling.png" class="align-center" src="_images/cycling.png" />
 <p>See <a class="reference internal" href="#cylc-7-scheduler-deficiencies-fixed-by-cylc-8"><span class="std std-ref">Cylc 7 Scheduler Deficiencies Fixed by Cylc 8</span></a></p>
 <dl class="simple">
-<dt>Cylc 8 has an efficient new <strong>Spawn on Demand</strong> scheduling algorithm which,</dt><dd><ul class="simple">
-<li><p>only needs to be aware of current active tasks, and what comes next</p></li>
-<li><p>handles alternate path branching without suicide triggers</p></li>
-<li><p>can run tasks out of cycle point order</p></li>
-<li><p>enables a sensible active-task based window on the evolving workflow</p></li>
-<li><p>supports a powerful new capability called <strong>reflow</strong>: you can trigger
+<dt>Cylc 8 has an efficient new <strong>Spawn on Demand</strong> scheduler that:</dt><dd><ul class="simple">
+<li><p>Only needs to be aware of current active tasks, and what comes next</p></li>
+<li><p>Handles alternate path branching without suicide triggers</p></li>
+<li><p>Can run tasks out of cycle point order</p></li>
+<li><p>Enables a sensible active-task based window on the evolving workflow</p></li>
+<li><p>Supports a powerful new capability called <strong>reflow</strong>: you can trigger
 multiple “wavefronts” of activity in the graph at once, in the same
 scheduler</p></li>
 </ul>
@@ -336,19 +320,19 @@ scheduler</p></li>
 </div>
 <div class="section" id="task-job-separation-and-states">
 <h2>Task/Job Separation and States<a class="headerlink" href="#task-job-separation-and-states" title="Permalink to this headline">¶</a></h2>
-<p>A “task” represents a node in your abstract workflow graph. A job is a real
-process that runs on a computer. Tasks can submit multiple jobs to run, through
-automatic retries or manual re-triggering.</p>
+<p><strong>Tasks</strong> are nodes in the abstract workflow graph, representing processes
+you want to run on computers, and <strong>jobs are the real processes</strong>. Tasks can
+have multiple jobs, thanks to automatic retries and manual re-triggering.</p>
 <p>Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.</p>
 <p>Cylc 8 has only 8 task/job states. The Cylc 8 UI shows both task and jobs.
 Task icons are monochrome circles; job icons are coloured squares. The running
 task icon incorporates a radial progress indicator.</p>
 <img alt="_images/task-job.png" class="align-center" src="_images/task-job.png" />
-<p>Most of the missing Cylc 7 task states are now just plain old <em>waiting</em>, but
-you can now see or infer what the task is waiting on: a queue, xtrigger, or
-retry timer. For instance, a waiting task that already has one or more jobs
-must be about to retry.</p>
+<p>The removed Cylc 7 task states have been absorbed into the <em>waiting</em> state, but
+you can see or infer what is being waited on: e.g. a queue, xtrigger, or
+retry timer. For instance, a waiting task that already has one or more
+associated jobs must be about to retry.</p>
 </div>
 <div class="section" id="window-on-the-workflow">
 <h2>Window on the Workflow<a class="headerlink" href="#window-on-the-workflow" title="Permalink to this headline">¶</a></h2>
