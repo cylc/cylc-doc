@@ -14,7 +14,7 @@ doc/*
 !doc/joss-paper
 
 # derived files
-src/appendices/command-ref.rst
+src/reference/command-help.rst
 
 # editor stuff
 *.swp

@@ -21,6 +21,7 @@ clean:
 	# remove auto-generated content
 	rm -rf src/plugins/main-loop/built-in
 	rm -rf src/user-guide/task-implementation/job-runner-handlers
+	rm -rf src/reference/command-help.rst
 
 cleanall:
 	(cd doc; echo [0-9]*.*)
@@ -32,6 +33,8 @@ cleanall:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 # NOTE: EXPORT_ALL_VARIABLES exports make vars as env vars
 %: Makefile .EXPORT_ALL_VARIABLES
+	# generate command help transcripts
+	bin/autodoc-cli
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats

@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Create appendices/command-ref.rst for inclusion in HTML doc.
+# Create command help transcripts for inclusion in HTML doc.
 
 # All paths relative to 'doc/src/custom/' directory:
-COMMAND_REF_FILE="$(dirname "$0")/../src/appendices/command-ref.rst"
-CYLC="cylc"
+COMMAND_REF_FILE="$(dirname "$0")/../src/reference/command-help.rst"
 
 cat > "$COMMAND_REF_FILE" <<END
 .. _CommandReference:
@@ -27,54 +26,19 @@ cat > "$COMMAND_REF_FILE" <<END
 Command Reference
 =================
 
-.. _help:
-
-Help
-----
-
-.. code-block:: none
-
-   $("${CYLC}" --help | awk '{print "   " $0}')
-
-Command Categories
-------------------
-
 END
 
-for CAT in $($CYLC categories); do
-	cat >> "$COMMAND_REF_FILE" <<END
-
-.. _command-cat-${CAT}:
-
-${CAT}
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: none
-
-   $("$CYLC" "$CAT" --help | awk '{print "   " $0}')
-
-END
-
-done
-
-cat >> "$COMMAND_REF_FILE" <<END
-
-Commands
---------
-
-END
-
-for COM in $($CYLC commands); do
+for COM in $(cylc help all | awk '{print $1}' | sort); do
 	cat >> "$COMMAND_REF_FILE" <<END
 
 .. _command-${COM}:
 
-${COM}
+cylc ${COM}
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: none
 
-   $("$CYLC" "$COM" --help  | awk '{print "   " $0}')
+   $(cylc "$COM" --color=never --help  | awk '{print "   " $0}')
 
 END
 
