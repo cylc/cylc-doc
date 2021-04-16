@@ -386,14 +386,14 @@ plus site files ``site/niwa-vars.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa-vars.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa-vars.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
    {% set HAVE_IDL = True %}
 
 and ``site/niwa.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE SUITE.
+   # site/niwa.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
    [scheduling]
        [[graph]]
            R1 = install_niwa => preproc

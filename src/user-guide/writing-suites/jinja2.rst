@@ -118,7 +118,7 @@ automatically imports the user environment to template's global namespace
    [runtime]
        [[root]]
            [[[environment]]]
-               SUITE_OWNER_HOME_DIR_ON_SUITE_HOST = {{environ['HOME']}}
+               WORKFLOW_OWNER_HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
 
 In addition, the following variables are exported to this environment
 prior to configuration parsing to provide suite context:
@@ -129,14 +129,14 @@ prior to configuration parsing to provide suite context:
    CYLC_VERBOSE                    # Verbose mode, True or False
    CYLC_VERSION                    # Version of cylc installation used
 
-   CYLC_SUITE_NAME                 # Suite name
+   CYLC_WORKFLOW_NAME                 # Suite name
 
-   CYLC_SUITE_LOG_DIR              # Suite log directory.
-   CYLC_SUITE_RUN_DIR              # Location of the run directory in
+   CYLC_WORKFLOW_LOG_DIR              # Suite log directory.
+   CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
                                    # suite host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_SHARE_DIR            # Suite (or task post parsing!)
+   CYLC_WORKFLOW_SHARE_DIR            # Suite (or task post parsing!)
                                    # shared directory.
-   CYLC_SUITE_WORK_DIR             # Suite work directory.
+   CYLC_WORKFLOW_WORK_DIR             # Suite work directory.
 
 
 .. note::
@@ -233,7 +233,7 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc config -i [runtime][airs]directives SUITE
+   $ cylc config -i [runtime][airs]directives WORKFLOW
    -I = ncpus=9
 
 
@@ -300,20 +300,20 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc list SUITE
+   $ cylc list WORKFLOW
    Jinja2 Template Error
    'FIRST_TASK' is undefined
-   cylc-list SUITE  failed:  1
+   cylc-list WORKFLOW  failed:  1
 
    $ # Note: quoting "bob" so that it is evaluated as a string
-   $ cylc list --set 'FIRST_TASK="bob"' SUITE
+   $ cylc list --set 'FIRST_TASK="bob"' WORKFLOW
    bob
    baz
    mem_2
    mem_1
    mem_0
 
-   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' SUITE
+   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' WORKFLOW
    bob
    alice
    mem_2
@@ -321,7 +321,7 @@ Here's the result:
    mem_0
 
    $ # Note: no quotes required for N_MEMBERS since it is an integer
-   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 SUITE
+   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 WORKFLOW
    mem_9
    mem_8
    mem_7
@@ -335,7 +335,7 @@ Here's the result:
    baz
    bob
 
-Note also that ``cylc view --set FIRST_TASK=bob --jinja2 SUITE``
+Note also that ``cylc view --set FIRST_TASK=bob --jinja2 WORKFLOW``
 will show the suite with the Jinja2 variables as set.
 
 .. note::

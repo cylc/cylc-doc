@@ -78,14 +78,14 @@ Cylc provides tools to help make sense of your inheritance hierarchy:
 
 - ``cylc graph -n/--namespaces`` - plot the full multiple
   inheritance graph (not the dependency graph)
-- ``cylc config SUITE`` - print selected sections or items
+- ``cylc config WORKFLOW`` - print selected sections or items
   after inheritance processing
-- ``cylc graph SUITE`` - plot the dependency graph, with
+- ``cylc graph WORKFLOW`` - plot the dependency graph, with
   collapsible first-parent families
   (see :ref:`Task Families And Visualization`)
-- ``cylc list -t/--tree SUITE`` - print the first-parent
+- ``cylc list -t/--tree WORKFLOW`` - print the first-parent
   inheritance hierarchy
-- ``cylc list -m/--mro SUITE`` - print the inheritance
+- ``cylc list -m/--mro WORKFLOW`` - print the inheritance
   precedence order for each runtime namespace
 
 

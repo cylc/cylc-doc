@@ -375,11 +375,11 @@ Where To Put Job Runner Handler Modules
 Custom job runner handlers must be installed on suite and job
 hosts in one of these locations:
 
-- under ``SUITE-DEF-PATH/lib/python/``
+- under ``WORKFLOW-DEF-PATH/lib/python/``
 - under ``CYLC-PATH/cylc/flow/job_runner_handlers/``
 - or anywhere in ``$PYTHONPATH``
 
 .. note::
 
    For Rose users: ``rose suite-run`` automatically installs
-   ``SUITE-DEF-PATH/lib/python/`` to job hosts).
+   ``WORKFLOW-DEF-PATH/lib/python/`` to job hosts).

@@ -19,13 +19,13 @@
 
 # you can monitor output processing with:
 # $ watch -n 1 \
-#    "find ~/cylc-run/<SUITE>/share; find ~/cylc-run/<SUITE>/work"
+#    "find ~/cylc-run/<WORKFLOW>/share; find ~/cylc-run/<WORKFLOW>/work"
 
 {% set N_DATASETS = 5 %}
 
 # define shared directories (could use runtime namespaces for this)
-{% set DATA_IN_DIR = "$CYLC_SUITE_SHARE_DIR/incoming" %}
-{% set PRODUCT_DIR = "$CYLC_SUITE_SHARE_DIR/products" %}
+{% set DATA_IN_DIR = "$CYLC_WORKFLOW_SHARE_DIR/incoming" %}
+{% set PRODUCT_DIR = "$CYLC_WORKFLOW_SHARE_DIR/products" %}
 
 [scheduling]
     cycling mode = integer
@@ -48,7 +48,7 @@
 [runtime]
     [[prep]]
         script = \
-rm -rf $CYLC_SUITE_SHARE_DIR $CYLC_SUITE_WORK_DIR
+rm -rf $CYLC_WORKFLOW_SHARE_DIR $CYLC_WORKFLOW_WORK_DIR
         [[[meta]]]
             title = clean the suite output directories
     [[satsim]]
@@ -65,7 +65,7 @@ rm -rf $CYLC_SUITE_SHARE_DIR $CYLC_SUITE_WORK_DIR
                 ((COUNT += 1))
                 # (required to distinguish fast-arriving messages).
                 # Trigger downstream processing in the suite.
-                cylc ext-trigger $CYLC_SUITE_NAME \
+                cylc ext-trigger $CYLC_WORKFLOW_NAME \
                    "new dataset ready for processing" $DATA_ID
             done
         """

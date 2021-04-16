@@ -431,7 +431,7 @@ Glossary
       ``~/cylc-run/<workflow-name>``
 
       The run directory can be accessed by a running workflow using
-      the environment variable ``CYLC_SUITE_RUN_DIR``.
+      the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
 
       See also:
 
@@ -470,7 +470,7 @@ Glossary
          <run directory>/share
 
       The location of the share directory can be accessed by a :term:`job` via
-      the environment variable ``CYLC_SUITE_SHARE_DIR``.
+      the environment variable ``CYLC_WORKFLOW_SHARE_DIR``.
 
       In cycling suites files are typically stored in cycle sub-directories.
 

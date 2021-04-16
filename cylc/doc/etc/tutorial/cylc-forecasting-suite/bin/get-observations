@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
-# THIS FILE IS PART OF THE CYLC SUITE ENGINE.
+# THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
 # Copyright (C) NIWA & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -92,9 +92,9 @@ def get_datapoint_data(site_id, time, api_key):
 
 def get_archived_data(site_id, time):
     """Return archived weather data from the suite directory."""
-    print([os.environ['CYLC_SUITE_RUN_DIR'], 'data', time, site_id + '.json'])
+    print([os.environ['CYLC_WORKFLOW_RUN_DIR'], 'data', time, site_id + '.json'])
     path = os.path.join(
-        os.environ['CYLC_SUITE_RUN_DIR'], 'data', time, site_id + '.json')
+        os.environ['CYLC_WORKFLOW_RUN_DIR'], 'data', time, site_id + '.json')
     print('Opening File: %s' % path)
     return json.load(open(path, 'r'))['SiteRep']['DV']['Location']
 

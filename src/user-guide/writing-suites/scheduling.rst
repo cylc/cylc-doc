@@ -1823,7 +1823,7 @@ the existence of the cycle offset task is not defined anywhere at all:
 
 .. code-block:: console
 
-   $ cylc validate SUITE
+   $ cylc validate WORKFLOW
    'ERROR: No cycling sequences defined for foo'
 
 To fix this, use another line in the graph to tell Cylc to define

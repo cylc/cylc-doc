@@ -120,7 +120,7 @@ e.g.:
 
    .. code-block:: bash
 
-      $ cylc edit --inline SUITE
+      $ cylc edit --inline WORKFLOW
 
    The suite will be split back into its constituent include-files when you
    exit the edit session. While editing, the inlined file becomes the

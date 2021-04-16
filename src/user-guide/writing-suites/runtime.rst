@@ -266,21 +266,21 @@ The task job script may export the following environment variables:
    ISODATETIMECALENDAR             # Calendar mode for the `isodatetime` command,
                                    # defined with the value of CYLC_CYCLING_MODE
                                    # when in any date-time cycling mode
-   CYLC_SUITE_FINAL_CYCLE_POINT    # Final cycle point
-   CYLC_SUITE_INITIAL_CYCLE_POINT  # Initial cycle point
-   CYLC_SUITE_NAME                 # Suite name
+   CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
+   CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
+   CYLC_WORKFLOW_NAME                 # Suite name
    CYLC_UTC                        # UTC mode, True or False
    CYLC_VERBOSE                    # Verbose mode, True or False
    TZ                              # Set to "UTC" in UTC mode or not defined
 
-   CYLC_SUITE_RUN_DIR              # Location of the run directory in
+   CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
                                    # job host, e.g. ~/cylc-run/foo
-   CYLC_SUITE_HOST                 # Host running the suite process
-   CYLC_SUITE_OWNER                # User ID running the suite process
+   CYLC_WORKFLOW_HOST                 # Host running the suite process
+   CYLC_WORKFLOW_OWNER                # User ID running the suite process
 
-   CYLC_SUITE_SHARE_DIR            # Suite (or task!) shared directory (see below)
-   CYLC_SUITE_UUID                 # Suite UUID string
-   CYLC_SUITE_WORK_DIR             # Suite work directory (see below)
+   CYLC_WORKFLOW_SHARE_DIR            # Suite (or task!) shared directory (see below)
+   CYLC_WORKFLOW_UUID                 # Suite UUID string
+   CYLC_WORKFLOW_WORK_DIR             # Suite work directory (see below)
 
    CYLC_TASK_JOB                   # Task job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
@@ -319,7 +319,7 @@ script (but not exported to the environment). These include:
 
    CYLC_FAIL_SIGNALS               # List of signals trapped by the error trap
    CYLC_VACATION_SIGNALS           # List of signals trapped by the vacation trap
-   CYLC_SUITE_WORK_DIR_ROOT        # Root directory above the suite work directory
+   CYLC_WORKFLOW_WORK_DIR_ROOT        # Root directory above the suite work directory
                                    # in the job host
    CYLC_TASK_MESSAGE_STARTED_PID   # PID of "cylc message" job started" command
    CYLC_TASK_WORK_DIR_BASE         # Alternate task work directory,
@@ -331,7 +331,7 @@ Suite Share Directories
 
 A suite :term:`share directory` is created automatically under the suite run
 directory as a share space for tasks. The location is available to tasks as
-``$CYLC_SUITE_SHARE_DIR``. In a cycling suite, output files are
+``$CYLC_WORKFLOW_SHARE_DIR``. In a cycling suite, output files are
 typically held in cycle point sub-directories of the suite share directory.
 
 The top level share and work directory (below) location can be changed

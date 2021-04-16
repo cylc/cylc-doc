@@ -39,14 +39,14 @@ Copy the following configuration into a :cylc:conf:`flow.cylc` file:
    [runtime]
        [[wipe_log]]
            # Delete any files in the suite's "share" directory.
-           script = rm "${CYLC_SUITE_SHARE_DIR}/knights" || true
+           script = rm "${CYLC_WORKFLOW_SHARE_DIR}/knights" || true
 
        [[announce]]
            script = echo "${CYLC_TASK_CYCLE_POINT} - ${MESSAGE}" >> "${FILE}"
            [[[environment]]]
                WORD = ni
                MESSAGE = We are the knights who say \"${WORD}\"!
-               FILE = "${CYLC_SUITE_SHARE_DIR}/knights"
+               FILE = "${CYLC_WORKFLOW_SHARE_DIR}/knights"
 
 We now have a suite with an ``announce`` task which runs every hour, writing a
 message to a log file (``share/knights``) when it does so. For the first cycle
@@ -113,7 +113,7 @@ Add the following runtime configuration to the ``runtime`` section:
                WORD=${WORDS[$(date +%s) % ${#WORDS[@]}]}
 
                # Broadcast random word to the announce task.
-               cylc broadcast $CYLC_SUITE_NAME -n announce -s "[environment]WORD=${WORD}"
+               cylc broadcast $CYLC_WORKFLOW_NAME -n announce -s "[environment]WORD=${WORD}"
            """
            [[[environment]]]
                WORDS = ni, it, ekke ekke ptang zoo boing

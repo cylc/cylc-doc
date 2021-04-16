@@ -38,7 +38,7 @@ A cold start is the primary way to run a suite for the first time:
 
 .. code-block:: console
 
-   $ cylc play SUITE
+   $ cylc play WORKFLOW
 
 The initial cycle point may be specified on the command line or in the :cylc:conf:`flow.cylc`
 file. The scheduler starts by loading the first instance of each task at the
@@ -56,7 +56,7 @@ on the command line:
 
 .. code-block:: console
 
-   $ cylc play SUITE --start-cycle-point=CYCLE_POINT
+   $ cylc play WORKFLOW --start-cycle-point=CYCLE_POINT
 
 The initial cycle point defined in :cylc:conf:`flow.cylc` is preserved, but
 all tasks and dependencies before the start cycle point are ignored.
@@ -121,7 +121,7 @@ before being shut down or killed.
 
 .. code-block:: console
 
-   $ cylc play SUITE
+   $ cylc play WORKFLOW
 
 Tasks recorded in the "submitted" or "running" states are automatically polled
 (see :ref:`Task Job Polling`) at start-up to determine what happened to
@@ -177,7 +177,7 @@ The Suite Contact File
 ----------------------
 
 At start-up, :term:`schedulers <scheduler>` write a :term:`contact file`
-``$HOME/cylc-run/SUITE/.service/contact`` that records suite host,
+``$HOME/cylc-run/WORKFLOW/.service/contact`` that records suite host,
 user, port number, process ID, Cylc version, and other information. Client
 commands can read this file, if they have access to it, to find the target
 :term:`scheduler`.
@@ -586,7 +586,7 @@ this case.) E.g. to send an email on (submission) failed and retry:
        [[foo]]
            script = """
                test ${CYLC_TASK_TRY_NUMBER} -eq 3
-               cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
            execution retry delays = PT0S, PT30S
            [[[events]]]
@@ -705,7 +705,7 @@ event handlers using the alternate methods:
        [[foo]]
            script = """
                test ${CYLC_TASK_TRY_NUMBER} -eq 2
-               cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
            execution retry delays = PT0S, PT30S
            [[[events]]]
@@ -949,18 +949,18 @@ point will be done from midnight of the current day.
    ====================================  ==================
 
 
-The Environment Variable CYLC\_SUITE\_INITIAL\_CYCLE\_POINT
+The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the case of a *cold start only* the initial cycle point is passed
 through to task execution environments as
-``$CYLC_SUITE_INITIAL_CYCLE_POINT``. The value is then stored in
+``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT``. The value is then stored in
 suite database files and persists across restarts, but it does get wiped out
 (set to ``None``) after a warm start, because a warm start is really an
 implicit restart in which all state information is lost (except that the
 previous cycle is assumed to have completed).
 
-The ``$CYLC_SUITE_INITIAL_CYCLE_POINT`` variable allows tasks to
+The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
 determine if they are running in the initial cold-start cycle point, when
 different behaviour may be required, or in a normal mid-run cycle point.
 Note however that an initial ``R1`` graph section is now the preferred
@@ -994,7 +994,7 @@ Set the run mode (default ``live``) on the command line:
 
 .. code-block:: console
 
-   $ cylc play --mode=dummy SUITE
+   $ cylc play --mode=dummy WORKFLOW
 
 You can get specified tasks to fail in these modes, for more flexible suite
 testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
@@ -1217,7 +1217,7 @@ Suite Server Logs
 -----------------
 
 Each suite maintains its own log of time-stamped events in the
-:term:`suite log directory` (``$HOME/cylc-run/SUITE-NAME/log/suite/``).
+:term:`suite log directory` (``$HOME/cylc-run/WORKFLOW-NAME/log/suite/``).
 
 The information logged here includes:
 
@@ -1250,8 +1250,8 @@ information on run history:
 
 .. code-block:: console
 
-   $HOME/cylc-run/SUITE-NAME/log/db  # public suite DB
-   $HOME/cylc-run/SUITE-NAME/.service/db  # private suite DB
+   $HOME/cylc-run/WORKFLOW-NAME/log/db  # public suite DB
+   $HOME/cylc-run/WORKFLOW-NAME/.service/db  # private suite DB
 
 The private DB is for use only by the :term:`scheduler`. The identical
 public DB is provided for use by external commands such as
@@ -1307,15 +1307,15 @@ To restart the suite, the critical Cylc files that must be restored are:
 .. code-block:: sub
 
    # On the suite host:
-   ~/cylc-run/SUITE-NAME/
+   ~/cylc-run/WORKFLOW-NAME/
        flow.cylc   # live suite configuration (located here in Rose suites)
        log/db  # public suite DB (can just be a copy of the private DB)
        log/rose-suite-run.conf  # (needed to restart a Rose suite)
        .service/db  # private suite DB
-       .service/source -> PATH-TO-SUITE-DIR  # symlink to live suite directory
+       .service/source -> PATH-TO-WORKFLOW-DIR  # symlink to live suite directory
 
    # On job hosts (if no shared filesystem):
-   ~/cylc-run/SUITE-NAME/
+   ~/cylc-run/WORKFLOW-NAME/
        log/job/CYCLE-POINT/TASK-NAME/SUBMIT-NUM/job.status
 
 .. note::
