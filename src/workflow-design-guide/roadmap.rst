@@ -76,7 +76,7 @@ on-site rather than polluting the source and revision control record of
 the core workflow that everyone sees.
 
 We note that this can already be done to a limited extent by using 
-``rose workflow-run`` to install flow.cylc fragments from an external
+``rose suite-run`` to install flow.cylc fragments from an external
 location. However, as a literal inlining mechanism with no encapsulation or 
 interface, the internals of the "imported" fragments would have to be
 compatible with the workflow definition in every respect.

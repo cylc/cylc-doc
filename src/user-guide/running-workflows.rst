@@ -1310,7 +1310,7 @@ To restart the workflow, the critical Cylc files that must be restored are:
    ~/cylc-run/WORKFLOW-NAME/
        flow.cylc   # live workflow configuration (located here in Rose workflows)
        log/db  # public workflow DB (can just be a copy of the private DB)
-       log/rose-workflow-run.conf  # (needed to restart a Rose workflow)
+       log/rose-suite-run.conf  # (needed to restart a Rose workflow)
        .service/db  # private workflow DB
        .service/source -> PATH-TO-WORKFLOW-DIR  # symlink to live workflow directory
 
@@ -1331,7 +1331,7 @@ and :term:`workflow log directory` will come with extra files that aren't strict
 needed for a restart, but that doesn't matter - although depending on your log
 housekeeping the ``log/job`` directory could be huge, so you might want to be
 selective about that. (Also in a Rose workflow, the ``flow.cylc`` file does not
-need to be restored if you restart with ``rose workflow-run`` - which re-installs
+need to be restored if you restart with ``rose suite-run`` - which re-installs
 workflow source files to the run directory).
 
 The public DB is not strictly required for a restart; if it is absent,

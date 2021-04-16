@@ -381,5 +381,5 @@ hosts in one of these locations:
 
 .. note::
 
-   For Rose users: ``rose workflow-run`` automatically installs
+   For Rose users: ``rose suite-run`` automatically installs
    ``WORKFLOW-DEF-PATH/lib/python/`` to job hosts).
