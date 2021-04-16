@@ -91,7 +91,7 @@ The two "Cylc defined scripts" are:
 ``user-env``
    Which is the contents of the :cylc:conf:`[environment]` section.
 
-Task job scripts are written to the suite's job log directory. They can be
+Task job scripts are written to the workflow's job log directory. They can be
 printed with ``cylc cat-log``.
 
 .. cylc-scope::
@@ -293,6 +293,6 @@ exists in a task's ``script``, etc section, the failure of any part of
 a pipeline will cause the command to return a non-zero code at the end, which
 will be reported as a task job failure. Due to the unique nature of a pipeline,
 the job file will trap the failure of the individual commands, as well as the
-whole pipeline, and will attempt to report a failure back to the suite twice.
-The second message is ignored by the suite, and so the behaviour can be safely
+whole pipeline, and will attempt to report a failure back to the workflow twice.
+The second message is ignored by the workflow, and so the behaviour can be safely
 ignored. (You should probably still investigate the failure, however!)

@@ -7,11 +7,11 @@
     site = exeter
 
 [scheduling]
-    # Start the suite 7 hours before now ignoring minutes and seconds
+    # Start the workflow 7 hours before now ignoring minutes and seconds
     # * previous(T-00) takes the current time ignoring minutes and seconds.
     # * - PT7H subtracts 7 hours from the time.
     initial cycle point = previous(T-00) - PT7H
-    # Stop the suite 6 hours after the initial cycle point.
+    # Stop the workflow 6 hours after the initial cycle point.
     final cycle point = +PT6H
     [[graph]]
         # Repeat every three hours starting at the initial cycle point.

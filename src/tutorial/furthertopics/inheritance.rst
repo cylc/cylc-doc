@@ -11,7 +11,7 @@ multiple inheritance.
 Inheritance Hierarchy
 ---------------------
 
-Create a new suite by running the command::
+Create a new workflow by running the command::
 
    rose tutorial inheritance-tutorial
    cd ~/cylc-run/inheritance-tutorial
@@ -68,7 +68,7 @@ a different aircraft, the Airbus A380 jumbo jet and the Robson R44 helicopter:
 .. note::
 
    The ``[meta]`` section is a freeform section where we can define metadata
-   to be associated with a task, family or the suite itself.
+   to be associated with a task, family or the workflow itself.
 
    This metadata should not be mistaken with Rose :ref:`conf-meta`.
 
@@ -158,7 +158,7 @@ family but is overwritten by the value specified in the ``AIRPLANE`` family.
 Multiple Inheritance
 --------------------
 
-Next we want to add a vehicle called the V-22 Osprey to the suite. The V-22
+Next we want to add a vehicle called the V-22 Osprey to the workflow. The V-22
 is a cross between a plane and a helicopter - it has wings but can take-off and
 land vertically.
 
@@ -280,7 +280,7 @@ confirm this.
 More Inheritance
 ----------------
 
-We will now add some more families and tasks to the suite.
+We will now add some more families and tasks to the workflow.
 
 Engine Type
 ^^^^^^^^^^^
@@ -500,7 +500,7 @@ Add a description (``[meta]description``) to the ``WATER_VEHICLE`` and
 Finished Workflow
 --------------
 
-You should now have a suite with an inheritance hierarchy which looks like
+You should now have a workflow with an inheritance hierarchy which looks like
 this:
 
 .. digraph:: Example

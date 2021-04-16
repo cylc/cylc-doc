@@ -148,7 +148,7 @@ Inter-Cycle Dependencies
 
       clean_oven[-P1] => pre_heat_oven
 
-   This dependency can be added to the suite by adding it to the other graph
+   This dependency can be added to the workflow by adding it to the other graph
    lines:
 
 .. code-block:: diff
@@ -167,7 +167,7 @@ Inter-Cycle Dependencies
 
 .. ifnotslides::
 
-   The resulting suite would look like this:
+   The resulting workflow would look like this:
 
 .. digraph:: example
    :align: center
@@ -394,9 +394,9 @@ Recurrence Sections
 
    .. nextslide::
 
-   .. rubric:: In this practical we will take the :term:`suite <Cylc suite>`
+   .. rubric:: In this practical we will take the :term:`workflow <Cylc workflow>`
       we wrote in the previous section and turn it into a
-      :term:`cycling suite <cycling>`.
+      :term:`cycling workflow <cycling>`.
 
    Next section: :ref:`tutorial-datetime-cycling`
 
@@ -404,9 +404,9 @@ Recurrence Sections
 
 .. practical::
 
-   .. rubric:: In this practical we will take the :term:`suite <Cylc suite>`
+   .. rubric:: In this practical we will take the :term:`workflow <Cylc workflow>`
       we wrote in the previous section and turn it into a
-      :term:`cycling suite <cycling>`.
+      :term:`cycling workflow <cycling>`.
 
    If you have not completed the previous practical use the following code for
    your :cylc:conf:`flow.cylc` file.
@@ -422,7 +422,7 @@ Recurrence Sections
                   d => e
               """
 
-   #. **Create a new suite.**
+   #. **Create a new workflow.**
 
       Within your ``~/cylc-run/`` directory create a new (sub-)directory called
       ``integer-cycling`` and move into it:
@@ -434,7 +434,7 @@ Recurrence Sections
 
       Copy the above code into a :cylc:conf:`flow.cylc` file in that directory.
 
-   #. **Make the suite cycle.**
+   #. **Make the workflow cycle.**
 
       Add in the following lines.
 
@@ -450,9 +450,9 @@ Recurrence Sections
                       d => e
                   """
 
-   #. **Visualise the suite.**
+   #. **Visualise the workflow.**
 
-      Try visualising the suite using ``cylc graph``.
+      Try visualising the workflow using ``cylc graph``.
 
       .. code-block:: none
 
@@ -468,7 +468,7 @@ Recurrence Sections
 
       .. tip::
 
-         By default ``cylc graph`` displays the first three cycles of a suite.
+         By default ``cylc graph`` displays the first three cycles of a workflow.
          You can tell ``cylc graph`` to visualise the cycles between two points
          by providing them as arguments, for instance the following example
          would show all cycles between ``1`` and ``5`` (inclusive)::

@@ -195,7 +195,7 @@ def get_cyclepoint(offset_hours):
 
 
 def main(forecast_interval, forecast_iterations):
-    # Get suite settings.
+    # Get workflow settings.
     domain = util.parse_domain(os.environ['DOMAIN'])
     resolution = float(os.environ['RESOLUTION'])
 

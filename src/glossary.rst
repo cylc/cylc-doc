@@ -4,13 +4,13 @@ Glossary
 .. glossary::
    :sorted:
 
-   suite
-   Cylc suite
-      A Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
+   workflow
+   Cylc workflow
+      A Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file
       which contains :term:`graphing<graph>` representing a workflow.
 
    graph
-      The graph of a :term:`suite<Cylc suite>` refers to the
+      The graph of a :term:`workflow<Cylc workflow>` refers to the
       :term:`graph strings<graph string>` contained within the
       :cylc:conf:`[scheduling][graph]` section. For example the following is,
       collectively, a graph:
@@ -108,7 +108,7 @@ Glossary
       * :term:`family trigger`
 
    cycle
-      In a :term:`cycling suite<cycling>` one cycle is one repetition of the
+      In a :term:`cycling workflow<cycling>` one cycle is one repetition of the
       workflow.
 
       For example, in the following workflow each dotted box represents a cycle
@@ -151,7 +151,7 @@ Glossary
          "bar.1" -> "bar.2" -> "bar.3"
 
    cycling
-      A cycling :term:`suite<Cylc suite>` is one in which the workflow repeats.
+      A cycling :term:`workflow<Cylc workflow>` is one in which the workflow repeats.
 
       See also:
 
@@ -160,9 +160,9 @@ Glossary
 
    cycle point
       A cycle point is the unique label given to a particular :term:`cycle`.
-      If the :term:`suite<Cylc suite>` is using :term:`integer cycling` then
+      If the :term:`workflow<Cylc workflow>` is using :term:`integer cycling` then
       the cycle points will be numbers e.g. ``1``, ``2``, ``3``, etc. If the
-      :term:`suite<Cylc suite>` is using :term:`datetime cycling` then the
+      :term:`workflow<Cylc workflow>` is using :term:`datetime cycling` then the
       labels will be :term:`ISO8601` datetimes e.g. ``2000-01-01T00:00Z``.
 
       See also:
@@ -171,7 +171,7 @@ Glossary
       * :term:`final cycle point`
 
    initial cycle point
-      In a :term:`cycling suite <cycling>` the initial cycle point is the point
+      In a :term:`cycling workflow <cycling>` the initial cycle point is the point
       from which cycling begins.
 
       It is set by :cylc:conf:`[scheduling]initial cycle point`.
@@ -185,7 +185,7 @@ Glossary
       * :term:`final cycle point`
 
    final cycle point
-      In a :term:`cycling suite <cycling>` the final cycle point is the point
+      In a :term:`cycling workflow <cycling>` the final cycle point is the point
       at which cycling ends.
 
       It is set by :cylc:conf:`[scheduling]final cycle point`.
@@ -229,8 +229,8 @@ Glossary
       * :term:`final cycle point`
 
    integer cycling
-      An integer cycling suite is a :term:`cycling suite<cycling>` which has
-      been configured to use integer cycling. When a suite uses integer cycling
+      An integer cycling workflow is a :term:`cycling workflow<cycling>` which has
+      been configured to use integer cycling. When a workflow uses integer cycling
       integer :term:`recurrences <recurrence>` may be used in the :term:`graph`,
       e.g. ``P3`` means every third cycle. This is configured by setting
       :cylc:conf:`[scheduling]cycling mode = integer`.
@@ -240,7 +240,7 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-integer-cycling>`
 
    datetime cycling
-      A datetime cycling is the default for a :term:`cycling suite<cycling>`.
+      A datetime cycling is the default for a :term:`cycling workflow<cycling>`.
       When using datetime cycling :term:`cycle points<cycle point>` will be
       :term:`ISO8601 datetimes <ISO8601 datetime>` e.g. ``2000-01-01T00:00Z``
       and ISO8601 :term:`recurrences<recurrence>` can be used e.g. ``P3D``
@@ -251,7 +251,7 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
    wall-clock time
-      In a Cylc suite the wall-clock time refers to the actual time (in the
+      In a Cylc workflow the wall-clock time refers to the actual time (in the
       real world).
 
       See also:
@@ -296,9 +296,9 @@ Glossary
 
    recurrence
       A recurrence is a repeating sequence which may be used to define a
-      :term:`cycling suite<cycling>`. Recurrences determine how often something
+      :term:`cycling workflow<cycling>`. Recurrences determine how often something
       repeats and take one of two forms depending on whether the
-      :term:`suite<Cylc suite>` is configured to use :term:`integer cycling`
+      :term:`workflow<Cylc workflow>` is configured to use :term:`integer cycling`
       or :term:`datetime cycling`.
 
       See also:
@@ -308,10 +308,10 @@ Glossary
 
    inter-cycle dependency
    inter-cycle trigger
-      In a :term:`cycling suite <cycling>` an inter-cycle dependency
+      In a :term:`cycling workflow <cycling>` an inter-cycle dependency
       is a :term:`dependency` between two tasks in different cycles.
 
-      For example in the following suite the task ``bar`` is dependent on
+      For example in the following workflow the task ``bar`` is dependent on
       its previous occurrence:
 
       .. code-block:: cylc
@@ -444,7 +444,7 @@ Glossary
    work directory
       When Cylc executes a :term:`job` it does so inside the
       :term:`job's <job>` working directory. This directory is created by Cylc
-      and lies within the directory tree inside the relevant suite's
+      and lies within the directory tree inside the relevant workflow's
       :term:`run directory`.
 
       .. code-block:: sub
@@ -460,7 +460,7 @@ Glossary
       * :term:`share directory`
 
    share directory
-      The share directory resides within a suite's
+      The share directory resides within a workflow's
       :term:`run directory`. It serves the purpose of providing a
       storage place for any files which need to be shared between different
       tasks.
@@ -472,28 +472,28 @@ Glossary
       The location of the share directory can be accessed by a :term:`job` via
       the environment variable ``CYLC_WORKFLOW_SHARE_DIR``.
 
-      In cycling suites files are typically stored in cycle sub-directories.
+      In cycling workflows files are typically stored in cycle sub-directories.
 
       See also:
 
       * :term:`run directory`
       * :term:`work directory`
 
-   suite log
-   suite log directory
-      A Cylc suite logs events and other information to the suite log files
+   workflow log
+   workflow log directory
+      A Cylc workflow logs events and other information to the workflow log files
       when it runs. There are two log files:
 
-      * ``log`` - a log of suite events, consisting of information about
+      * ``log`` - a log of workflow events, consisting of information about
         user interaction.
       * ``file-installation-log`` - a log documenting the file installation
         process on remote platforms.
 
-      The suite log directory lies within the :term:`run directory`:
+      The workflow log directory lies within the :term:`run directory`:
 
       .. code-block:: sub
 
-         <run directory>/log/suite
+         <run directory>/log/workflow
 
    job log
    job log directory
@@ -523,17 +523,17 @@ Glossary
       workflows.
 
    contact file
-      The contact file records information about a running suite such as the host it
+      The contact file records information about a running workflow such as the host it
       is running on, the TCP port(s) it is listening on and the process ID.
-      The file is called ``contact`` and lives inside the suite's
+      The file is called ``contact`` and lives inside the workflow's
       :term:`service directory`.
 
-      The contact file only exists when the suite is running, if you delete the
-      contact file, the suite will (after a delay) notice this and shut down.
+      The contact file only exists when the workflow is running, if you delete the
+      contact file, the workflow will (after a delay) notice this and shut down.
 
       .. warning::
 
-         In the event that a suite process dies in an uncontrolled way, for
+         In the event that a workflow process dies in an uncontrolled way, for
          example if the process is killed or the host which is running the
          process crashes, the contact file may be erroneously left behind. Some
          Cylc commands will automatically detect such files and remove them,
@@ -651,11 +651,11 @@ Glossary
       * :term:`job runner`
 
    scheduler
-      When we say that a :term:`suite` is "running" we mean that the cylc
+      When we say that a :term:`workflow` is "running" we mean that the cylc
       scheduler is running.
 
-      The scheduler is responsible for running the suite. It submits
-      :term:`jobs <job>`, monitors their status and maintains the suite state.
+      The scheduler is responsible for running the workflow. It submits
+      :term:`jobs <job>`, monitors their status and maintains the workflow state.
 
       .. _daemon: https://en.wikipedia.org/wiki/Daemon_(computing)
 
@@ -664,11 +664,11 @@ Glossary
 
    start
    startup
-      A start is when the Cylc :term:`scheduler` runs a :term:`suite`
+      A start is when the Cylc :term:`scheduler` runs a :term:`workflow`
       for the first time. The scheduler is the program that
-      controls the suite and is what we refer to as "running".
+      controls the workflow and is what we refer to as "running".
 
-      A suite start can be either :term:`cold <cold start>` or
+      A workflow start can be either :term:`cold <cold start>` or
       :term:`warm <warm start>` (cold by default).
 
       See also:
@@ -682,9 +682,9 @@ Glossary
       * :term:`reload`
 
    cold start
-      A cold start is one in which the :term:`suite` :term:`starts <start>`
+      A cold start is one in which the :term:`workflow` :term:`starts <start>`
       from the :term:`initial cycle point`. This is the default behaviour
-      of ``cylc play`` for a suite that hasn't been run before.
+      of ``cylc play`` for a workflow that hasn't been run before.
 
       See also:
 
@@ -692,8 +692,8 @@ Glossary
       * :term:`warm start`
 
    warm start
-      In a :term:`cycling suite <cycling>`, a warm start
-      is one in which a :term:`suite` (that hasn't been run before)
+      In a :term:`cycling workflow <cycling>`, a warm start
+      is one in which a :term:`workflow` (that hasn't been run before)
       :term:`starts <start>` from a :term:`start cycle point` that is after the
       :term:`initial cycle point`. Tasks in cycles before this point are
       treated as if they have succeeded.
@@ -724,7 +724,7 @@ Glossary
 
    stop
    shutdown
-      When a :term:`suite` is shut down the :term:`scheduler` is
+      When a :term:`workflow` is shut down the :term:`scheduler` is
       stopped. This means that no further :term:`jobs <job>` will be submitted.
 
       By default Cylc waits for any submitted or running :term:`jobs <job>` to
@@ -738,12 +738,12 @@ Glossary
       * :term:`reload`
 
    restart
-      When a :term:`stopped <stop>` :term:`suite` is restarted, Cylc will pick
+      When a :term:`stopped <stop>` :term:`workflow` is restarted, Cylc will pick
       up where it left off. Cylc will detect any :term:`jobs <job>` which
       have changed state (e.g. succeeded) during the period in which the
-      :term:`suite` was stopped.
+      :term:`workflow` was stopped.
 
-      A restart is the behaviour of ``cylc play`` for a suite that has been
+      A restart is the behaviour of ``cylc play`` for a workflow that has been
       previously run.
 
       See also:
@@ -754,7 +754,7 @@ Glossary
       * :term:`reload`
 
    pause
-      Pausing a :term:`suite` prevents all submission of :term:`jobs <job>`.
+      Pausing a :term:`workflow` prevents all submission of :term:`jobs <job>`.
       However, any already-running or submitted jobs will still run to
       completion.
 
@@ -763,7 +763,7 @@ Glossary
       * :term:`resume`
 
    resume
-      When a :term:`paused <pause>` :term:`suite` is resumed, :term:`jobs <job>`
+      When a :term:`paused <pause>` :term:`workflow` is resumed, :term:`jobs <job>`
       will be allowed to be submitted once again.
 
       Resuming the workflow is the behaviour of ``cylc play`` for a paused (but
@@ -774,20 +774,20 @@ Glossary
       * :term:`pause`
 
    reload
-      Any changes made to the :cylc:conf:`flow.cylc` file whilst the suite is
-      running will not have any effect until the suite is either:
+      Any changes made to the :cylc:conf:`flow.cylc` file whilst the workflow is
+      running will not have any effect until the workflow is either:
 
       * :term:`Shutdown <shutdown>` and :term:`rerun <start>`
       * :term:`Shutdown <shutdown>` and :term:`restarted <restart>`
       * "Reloaded"
 
-      Reloading does not require the suite to be :term:`shutdown`. When a suite
+      Reloading does not require the workflow to be :term:`shutdown`. When a workflow
       is reloaded any currently "active" :term:`tasks <task>` will continue with
       their "pre-reload" configuration, whilst new tasks will use the new
       configuration.
 
       Reloading changes is safe providing they don't affect the
-      :term:`suite's <suite>` :term:`graph`. Changes to the graph have certain
+      :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have certain
       caveats attached, see the `Cylc User Guide`_ for details.
 
       See also:
@@ -927,7 +927,7 @@ Glossary
 
       We can use :term:`custom task outputs <custom task output>` as triggers.
 
-      Messages should be defined in the runtime section of the suite and
+      Messages should be defined in the runtime section of the workflow and
       the graph trigger notation refers to each message.
 
       See also:
@@ -945,10 +945,10 @@ Glossary
       * `Cylc User Guide`_
       * :term:`message trigger`
 
-   stalled suite
+   stalled workflow
    stalled state
       If Cylc is unable to proceed running a workflow due to unmet dependencies
-      the suite is said to be *stalled*.
+      the workflow is said to be *stalled*.
 
       This usually happens because of a task failure as in the following
       diagram:
@@ -965,7 +965,7 @@ Glossary
       In this example the task ``bar`` has failed meaning that ``baz`` is
       unable to run as its dependency (``bar:succeed``) has not been met.
 
-      When a Cylc detects that a suite has stalled an email will be sent to the
+      When a Cylc detects that a workflow has stalled an email will be sent to the
       user. Human interaction is required to escape a stalled state.
 
    suicide trigger

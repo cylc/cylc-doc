@@ -13,15 +13,15 @@ The :cylc:conf:`flow.cylc` File Format
 
 .. ifnotslides::
 
-   We refer to a Cylc workflow as a :term:`Cylc suite`. A Cylc suite is a
+   We refer to a Cylc workflow as a :term:`Cylc workflow`. A Cylc workflow is a
    directory containing a :cylc:conf:`flow.cylc` file. This configuration file is where
    we define our workflow. The :cylc:conf:`flow.cylc` file uses a nested `INI`_-based
    format:
 
 .. ifslides::
 
-   * Cylc workflow == Cylc suite
-   * Cylc suite is a directory containing a :cylc:conf:`flow.cylc` file
+   * Cylc workflow == Cylc workflow
+   * Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file
    * The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format
 
 .. ifnotslides::
@@ -36,7 +36,7 @@ The :cylc:conf:`flow.cylc` File Format
 
    .. note::
 
-      Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
+      Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``workflow.rc``,
       but that name is now deprecated.
 
 Example
@@ -243,7 +243,7 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   In a :term:`Cylc suite` the :term:`graph` is stored under the
+   In a :term:`Cylc workflow` the :term:`graph` is stored under the
    ``[scheduling][graph]R1`` setting, i.e:
 
 .. code-block:: cylc
@@ -259,7 +259,7 @@ Cylc Graphs
 
 .. ifnotslides::
 
-   This is a minimal :term:`Cylc suite`, in which we have defined a
+   This is a minimal :term:`Cylc workflow`, in which we have defined a
    :term:`graph` representing a workflow for Cylc to run.
    We have not yet provided Cylc with the scripts or binaries to run for
    each task. This will be covered later in the
@@ -301,19 +301,19 @@ Cylc Graphs
 
 .. ifslides::
 
-   .. rubric:: In this practical we will create a new Cylc suite and write a
+   .. rubric:: In this practical we will create a new Cylc workflow and write a
       graph for it to use.
 
    Next session: :ref:`tutorial-integer-cycling`
 
 .. practical::
 
-   .. rubric:: In this practical we will create a new Cylc suite and write a
+   .. rubric:: In this practical we will create a new Cylc workflow and write a
       graph for it to use.
 
-   #. **Create a Cylc suite.**
+   #. **Create a Cylc workflow.**
 
-      A Cylc suite is just a directory containing a :cylc:conf:`flow.cylc` file.
+      A Cylc workflow is just a directory containing a :cylc:conf:`flow.cylc` file.
 
       If you don't have one already, create a ``cylc-run`` directory in your
       user space i.e.
@@ -345,7 +345,7 @@ Cylc Graphs
 
    #. **Write a graph.**
 
-      We now have a blank Cylc suite, next we need to define a workflow.
+      We now have a blank Cylc workflow, next we need to define a workflow.
 
       Edit your :cylc:conf:`flow.cylc` file to add graph strings representing the
       following graph:
@@ -368,7 +368,7 @@ Cylc Graphs
       .. admonition:: Note
          :class: hint
 
-         ``cylc graph`` takes the path to the suite as an argument. As we are
+         ``cylc graph`` takes the path to the workflow as an argument. As we are
          inside the :term:`run directory` we can run ``cylc graph .``.
 
       If the results don't match the diagram above try going back to the
@@ -402,7 +402,7 @@ Cylc Graphs
             a => b => d => e
             c => b => f
 
-         The whole suite should look something like this:
+         The whole workflow should look something like this:
 
          .. code-block:: cylc
 

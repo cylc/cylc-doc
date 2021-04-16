@@ -4,6 +4,6 @@ Configuration
 .. toctree::
    :maxdepth: 2
 
-   suite
+   workflow
    global
    types

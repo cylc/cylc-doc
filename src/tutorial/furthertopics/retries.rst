@@ -26,12 +26,12 @@ Example
    :align: right
    :alt: Two dice both showing the number six
 
-Create a new suite by running the following commands::
+Create a new workflow by running the following commands::
 
    rose tutorial retries-tutorial
    cd retries-tutorial
 
-You will now have a suite with a ``roll_doubles`` task which simulates
+You will now have a workflow with a ``roll_doubles`` task which simulates
 trying to roll doubles using two dice:
 
 .. code-block:: cylc
@@ -64,20 +64,20 @@ trying to roll doubles using two dice:
 Running Without Retries
 -----------------------
 
-Let's see what happens when we run the suite as it is. Open the ``cylc gui``::
+Let's see what happens when we run the workflow as it is. Open the ``cylc gui``::
 
    cylc gui retries-tutorial &
 
-Then run the suite::
+Then run the workflow::
 
    cylc play retries-tutorial
 
 .. TODO - check this tutorial still works now that cylc run/restart has been
    replaced by cylc play
 
-Unless you're lucky, the suite should fail at the roll_doubles task.
+Unless you're lucky, the workflow should fail at the roll_doubles task.
 
-Stop the suite::
+Stop the workflow::
 
    cylc stop retries-tutorial
 
@@ -113,13 +113,13 @@ If you closed it, re-open the ``cylc gui``::
 
    cylc gui retries-tutorial &
 
-Re-run the suite::
+Re-run the workflow::
 
    cylc play retries-tutorial
 
 What you should see is Cylc retrying the ``roll_doubles`` task. Hopefully,
 it will succeed (there is only about a about a 1 in 3 chance of every task
-failing) and the suite will continue.
+failing) and the workflow will continue.
 
 
 Altering Behaviour
@@ -144,7 +144,7 @@ Change the ``script`` setting for the ``roll_doubles`` task to this::
        exit 1
    fi
 
-If your suite is still running, stop it, then run it again.
+If your workflow is still running, stop it, then run it again.
 
 This time, the task should definitely succeed before the third retry.
 

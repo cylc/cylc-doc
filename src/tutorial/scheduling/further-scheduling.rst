@@ -59,7 +59,7 @@ Clock Triggers
    using clock triggers. This is necessary for certain operational and
    monitoring systems.
 
-   For example in the following suite the cycle ``2000-01-01T12Z`` will wait
+   For example in the following workflow the cycle ``2000-01-01T12Z`` will wait
    until 11:00 on the 1st of January 2000 before running:
 
 .. code-block:: cylc

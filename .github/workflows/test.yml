@@ -66,7 +66,7 @@ jobs:
         run: |
           make html slides linkcheck doctest SPHINXOPTS='-Wn'
 
-      - name: tutorial suite
+      - name: tutorial workflow
         run: |
           mkdir -p "${HOME}/cylc-run"
           bin/run-validate

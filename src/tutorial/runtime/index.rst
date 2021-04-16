@@ -13,7 +13,7 @@ This section covers:
 
 * Associating tasks with scripts and executables.
 * Providing executables with runtime configurations.
-* Running Cylc suites.
+* Running Cylc workflows.
 
 .. toctree::
    :name: rug-runtime-toc

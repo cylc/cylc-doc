@@ -2,7 +2,7 @@ Cylc Documentation
 ==================
 
 Cylc ("*silk*") is a workflow engine for cycling systems - it orchestrates
-distributed suites of interdependent cycling tasks that may continue to run
+distributed workflows of interdependent cycling tasks that may continue to run
 indefinitely.
 
 .. warning::
@@ -20,6 +20,6 @@ indefinitely.
    tutorial/index
    user-guide/index
    plugins/index
-   suite-design-guide/index
+   workflow-design-guide/index
    reference/index
    glossary

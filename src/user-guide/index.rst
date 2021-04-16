@@ -6,8 +6,8 @@ User Guide
    :maxdepth: 2
 
    workflows
-   writing-suites/index
+   writing-workflows/index
    installing-workflows
-   running-suites
-   suite-storage-etc
+   running-workflows
+   workflow-storage-etc
    task-implementation/index

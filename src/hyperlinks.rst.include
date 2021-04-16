@@ -3,8 +3,8 @@
 
 .. _coreutils: https://www.gnu.org/software/coreutils/coreutils.html
 .. _Cylc: https://cylc.github.io/
-.. _Cylc User Guide: https://cylc.github.io/documentation/
-.. _Cylc Workflow Design Guide: https://cylc.github.io/doc/built-sphinx/suite-design-guide/suite-design-guide-master.html
+.. _Cylc User Guide: https://cylc.github.io/cylc-doc/latest/html/index.html
+.. _Cylc Workflow Design Guide: https://cylc.github.io/cylc-doc/latest/html/workflow-design-guide/index.html
 .. _DataPoint: https://www.metoffice.gov.uk/services/data/datapoint
 .. _EmPy: http://www.alcyone.com/software/empy/
 .. _extglob pattern matching: https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching

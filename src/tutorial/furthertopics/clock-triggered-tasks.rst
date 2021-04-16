@@ -3,7 +3,7 @@
 Clock Triggered Tasks
 =====================
 
-In a :term:`datetime cycling` suite the time represented by the
+In a :term:`datetime cycling` workflow the time represented by the
 :term:`cycle points <cycle point>` bear no relation to the real-world time.
 Using clock-triggers we can make tasks wait until their cycle point time before
 running.
@@ -36,7 +36,7 @@ When clock-triggering tasks we can use different
 Example
 -------
 
-Our example suite will simulate a clock chiming on the hour.
+Our example workflow will simulate a clock chiming on the hour.
 
 Within your ``~/cylc-run`` directory create a new directory called
 ``clock-trigger``::
@@ -67,14 +67,14 @@ Paste the following code into a ``flow.cylc`` file:
 Change the initial cycle point to 00:00 this morning (e.g. if it was
 the first of January 2000 we would write ``2000-01-01T00Z``).
 
-We now have a simple suite with a single task that prints "bong" a number
+We now have a simple workflow with a single task that prints "bong" a number
 of times equal to the (cycle point) hour.
 
-Run your suite using::
+Run your workflow using::
 
    cylc play clock-trigger
 
-Stop the suite after a few cycles using ``cylc stop --now --now clock-trigger``.
+Stop the workflow after a few cycles using ``cylc stop --now --now clock-trigger``.
 Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.
 
@@ -95,19 +95,19 @@ your ``flow.cylc``:
 
    PT1H = @wall_clock  => bell
 
-This tells the suite to clock trigger the ``bell`` task with a cycle
+This tells the workflow to clock trigger the ``bell`` task with a cycle
 offset of ``0`` hours.
 
-Save your changes and run your suite.
+Save your changes and run your workflow.
 
-Your suite should now be running the ``bell`` task in real-time. Any cycle times
+Your workflow should now be running the ``bell`` task in real-time. Any cycle times
 that have already passed (such as the one defined by ``initial cycle time``)
 will be run as soon as possible, while those in the future will wait for that
 time to pass.
 
-At this point you may want to leave your suite running until the next hour
+At this point you may want to leave your workflow running until the next hour
 has passed in order to confirm the clock triggering is working correctly.
-Once you are satisfied, stop your suite.
+Once you are satisfied, stop your workflow.
 
 By making the ``bell`` task a clock triggered task we have made it run in
 real-time. Thus, when the wall-clock time caught up with the cycle time, the
@@ -118,7 +118,7 @@ Adding More Clock-Triggered Tasks
 ---------------------------------
 
 Running clock triggered tests at the cycle time is a special case:
-We will now modify our suite to run tasks at quarter-past, half-past and
+We will now modify our workflow to run tasks at quarter-past, half-past and
 quarter-to the hour.
 
 Open your ``flow.cylc`` and modify the ``[runtime]`` section by adding the
@@ -147,18 +147,18 @@ Edit the ``[[scheduling]]`` section to read:
 
 Note the different values used for the cycle offsets of the clock-trigger tasks.
 
-Save your changes and run your suite using::
+Save your changes and run your workflow using::
 
    cylc play clock-trigger now
 
 .. note::
 
-   The ``now`` argument will run your suite using the current time for the
+   The ``now`` argument will run your workflow using the current time for the
    initial cycle point.
 
 Again, notice how the tasks trigger until the current time is reached.
 
-Leave your suite running for a while to confirm it is working as expected
+Leave your workflow running for a while to confirm it is working as expected
 and then shut it down using the :guilabel:`stop` button in the ``cylc gui``.
 
 
@@ -178,6 +178,6 @@ Summary
   :term:`tasks <task>` to wait for the :term:`wall-clock time` to reach the
   :term:`cycle point` time.
 * Clock triggers are a built in example of :ref:`Section External Triggers`.
-* Clock triggers can only be used in datetime cycling suites.
+* Clock triggers can only be used in datetime cycling workflows.
 
 For more information see the `Cylc User Guide`_.

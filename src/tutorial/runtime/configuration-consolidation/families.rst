@@ -110,7 +110,7 @@ Graphing
 
 .. ifnotslides::
 
-   :term:`Families <family>` can be used in the suite's :term:`graph`, e.g:
+   :term:`Families <family>` can be used in the workflow's :term:`graph`, e.g:
 
 .. code-block:: cylc-graph
 
@@ -212,7 +212,7 @@ Families and ``cylc graph``
 .. ifslides::
 
    .. rubric:: In this practical we will consolidate the configuration of the
-      :ref:`weather-forecasting suite <tutorial-cylc-runtime-forecasting-suite>`
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
       from the previous section.
 
    Next section: :ref:`Jinja2 <tutorial-cylc-jinja2>`
@@ -223,12 +223,12 @@ Families and ``cylc graph``
 .. practical::
 
    .. rubric:: In this practical we will consolidate the configuration of the
-      :ref:`weather-forecasting suite <tutorial-cylc-runtime-forecasting-suite>`
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
       from the previous section.
 
    1. **Create A New Workflow.**
 
-      To make a new copy of the forecasting suite run the following commands:
+      To make a new copy of the forecasting workflow run the following commands:
 
       .. code-block:: bash
 
