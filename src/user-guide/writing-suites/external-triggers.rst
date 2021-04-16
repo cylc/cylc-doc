@@ -40,7 +40,7 @@ broker.
 Cylc has several built-in external trigger functions:
 
 - clock triggers - see :ref:`Built-in Clock Triggers`
-- inter-suite triggers - see :ref:`Built-in Suite State Triggers`
+- inter-suite triggers - see :ref:`Built-in Workflow State Triggers`
 
 Trigger functions are normal Python functions, with certain constraints as
 described below in:
@@ -126,13 +126,13 @@ rules:
 .. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
 
 
-.. _Built-in Suite State Triggers:
+.. _Built-in Workflow State Triggers:
 
-Built-in Suite State Triggers
+Built-in Workflow State Triggers
 -----------------------------
 
 These can be used instead of the older suite state polling tasks described
-in :ref:`SuiteStatePolling` for inter-suite triggering - i.e. to trigger local
+in :ref:`WorkflowStatePolling` for inter-suite triggering - i.e. to trigger local
 tasks off of remote task statuses or messages in other suites. (However we
 don't recommend wholesale conversion to the new method yet, until its
 interface has stabilized - see :ref:`Current Trigger Function Limitations`.)
@@ -300,7 +300,7 @@ dependent tasks, which in terms of format must:
 - contain *only* keys which are
   `valid <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_ as environment variable names.
 
-See :ref:`Built-in Suite State Triggers` for an example of one such
+See :ref:`Built-in Workflow State Triggers` for an example of one such
 ``results`` dictionary and how it gets processed by the suite.
 
 The :term:`scheduler` manages trigger functions as follows:

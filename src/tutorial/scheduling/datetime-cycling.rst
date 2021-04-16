@@ -423,7 +423,7 @@ Putting It All Together
    .. rubric:: In this practical we will create a dummy forecasting suite
       using date-time cycling.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
       Within your ``~/cylc-run`` directory create a new directory called
       ``datetime-cycling`` and move into it:

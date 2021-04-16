@@ -1,16 +1,16 @@
-Suite Runtime Interface
+Workflow Runtime Interface
 =======================
 
 Cylc suites are TCP servers which use the ZeroMQ protocol to communicate with
 clients and jobs.
 
 Cylc provides a Python client to communicate with this server
-:py:class:`cylc.flow.network.client.SuiteRuntimeClient`
+:py:class:`cylc.flow.network.client.WorkflowRuntimeClient`
 
 .. code-block:: python
 
-   >>> from cylc.flow.network.client import SuiteRuntimeClient
-   >>> client = SuiteRuntimeClient('my-suite')
+   >>> from cylc.flow.network.client import WorkflowRuntimeClient
+   >>> client = WorkflowRuntimeClient('my-suite')
    >>> client('ping_suite')
    True
 
@@ -23,17 +23,17 @@ wrapper of the Python client.
    true
 
 The available "commands" or ("endpoints") are contained in
-:py:class:`cylc.flow.network.server.SuiteRuntimeServer` class.
+:py:class:`cylc.flow.network.server.WorkflowRuntimeServer` class.
 
 
 Client
 ------
 
-.. autoclass:: cylc.flow.network.client.SuiteRuntimeClient
+.. autoclass:: cylc.flow.network.client.WorkflowRuntimeClient
 
 
 Server
 ------
 
-.. autoclass:: cylc.flow.network.server.SuiteRuntimeServer
+.. autoclass:: cylc.flow.network.server.WorkflowRuntimeServer
    :members:

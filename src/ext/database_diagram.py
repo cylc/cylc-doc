@@ -23,7 +23,7 @@ import sqlite3
 import tempfile
 from contextlib import closing
 
-from cylc.flow.rundb import CylcSuiteDAO
+from cylc.flow.rundb import CylcWorkflowDAO
 from eralchemy.main import all_to_intermediary
 from sphinx.ext.graphviz import Graphviz
 
@@ -46,18 +46,18 @@ def get_relationships():
     """
     # TODO: remove this once the relationships are in the DB, and then automate
     return [
-        [CylcSuiteDAO.TABLE_TASK_STATES, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_EVENTS],
-        [CylcSuiteDAO.TABLE_TASK_STATES, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_JOBS],
-        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_ACTION_TIMERS],
-        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_ONE,
-         CylcSuiteDAO.TABLE_TASK_LATE_FLAGS],
-        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_MANY,
-         CylcSuiteDAO.TABLE_TASK_OUTPUTS],
-        [CylcSuiteDAO.TABLE_TASK_POOL, ONE_TO_ONE,
-         CylcSuiteDAO.TABLE_TASK_TIMEOUT_TIMERS]
+        [CylcWorkflowDAO.TABLE_TASK_STATES, ONE_TO_MANY,
+         CylcWorkflowDAO.TABLE_TASK_EVENTS],
+        [CylcWorkflowDAO.TABLE_TASK_STATES, ONE_TO_MANY,
+         CylcWorkflowDAO.TABLE_TASK_JOBS],
+        [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcWorkflowDAO.TABLE_TASK_ACTION_TIMERS],
+        [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_ONE,
+         CylcWorkflowDAO.TABLE_TASK_LATE_FLAGS],
+        [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcWorkflowDAO.TABLE_TASK_OUTPUTS],
+        [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_ONE,
+         CylcWorkflowDAO.TABLE_TASK_TIMEOUT_TIMERS]
     ]
 
 
@@ -134,7 +134,7 @@ class CylcRunDBDirective(Graphviz):
         # get markdown
         with tempfile.NamedTemporaryFile() as tf_db:
             # is_public=False triggers the creation of tables
-            CylcSuiteDAO(db_file_name=tf_db.name, is_public=False)
+            CylcWorkflowDAO(db_file_name=tf_db.name, is_public=False)
             schema, orphans = schema_to_markdown(db_name=tf_db.name)
 
         # graph prefix

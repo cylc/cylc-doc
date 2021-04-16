@@ -226,7 +226,7 @@ Families and ``cylc graph``
       :ref:`weather-forecasting suite <tutorial-cylc-runtime-forecasting-suite>`
       from the previous section.
 
-   1. **Create A New Suite.**
+   1. **Create A New Workflow.**
 
       To make a new copy of the forecasting suite run the following commands:
 

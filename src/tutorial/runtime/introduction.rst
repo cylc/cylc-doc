@@ -289,7 +289,7 @@ Where Do All The Files Go?
          :scale: 75%
 
 
-Running A Suite
+Running A Workflow
 ---------------
 
 .. ifnotslides::
@@ -327,7 +327,7 @@ Running A Suite
    must install the workflow with ``cylc install`` before use. For more
    information, see :ref:`Installing-workflows`.
 
-Suite Files
+Workflow Files
 -----------
 
 .. ifnotslides::
@@ -382,7 +382,7 @@ Suite Files
       :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
       The following command will copy some files for us to work with into
       a new suite called ``runtime-introduction``:
@@ -401,7 +401,7 @@ Suite Files
 
       Take a look at the ``[runtime]`` section in the :cylc:conf:`flow.cylc` file.
 
-   #. **Run The Suite.**
+   #. **Run The Workflow.**
 
       First validate the suite by running:
 
@@ -455,7 +455,7 @@ Suite Files
 
       .. code-block:: none
 
-         Suite    : runtime-introduction
+         Workflow    : runtime-introduction
          Task Job : 20000101T0000Z/get_observations_heathrow/01 (try 1)
          User@Host: username@hostname
 

@@ -238,7 +238,7 @@ Start, Stop, Restart
       :ref:`weather-forecasting suite <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
       Create a new suite by running the command:
 
@@ -426,7 +426,7 @@ Start, Stop, Restart
 
       .. TODO: Add advice on what to do if the command fails.
 
-   #. **Run The Suite.**
+   #. **Run The Workflow.**
 
       Open the Cylc GUI (if not already open) and run the suite.
 

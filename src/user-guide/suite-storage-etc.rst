@@ -1,6 +1,6 @@
-.. _SuiteStorageEtc:
+.. _WorkflowStorageEtc:
 
-Suite Storage, Discovery, Revision Control, and Deployment
+Workflow Storage, Discovery, Revision Control, and Deployment
 ==========================================================
 
 Cylc does not have a built-in solution for suite storage and discovery,

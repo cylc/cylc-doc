@@ -14,9 +14,9 @@ Here we will look at:
 - How to configure workflows.
 
 
-.. _SuiteDefinitionDirectories:
+.. _WorkflowDefinitionDirectories:
 
-Suite Configuration Directories
+Workflow Configuration Directories
 -------------------------------
 
 A Cylc :term:`source directory` contains:
@@ -88,7 +88,7 @@ The following defines legal :cylc:conf:`flow.cylc` syntax:
 - **Include-files** ``%include inc/foo.cylc`` can be
   used as a verbatim inlining mechanism.
 
-Suites that embed templating code (see :ref:`User Guide Jinja2` and
+Workflows that embed templating code (see :ref:`User Guide Jinja2` and
 :ref:`User Guide EmPy`) must process to raw :cylc:conf:`flow.cylc` syntax.
 
 
@@ -130,7 +130,7 @@ e.g.:
 
 .. _SyntaxHighlighting:
 
-Syntax Highlighting For Suite Configuration
+Syntax Highlighting For Workflow Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc provides syntax plugins for the following editors:
@@ -197,7 +197,7 @@ several top level section headings:
    - a nested family hierarchy with common properties
      inherited by related tasks
 :cylc:conf:`[visualization]`
-   Suite graph styling
+   Workflow graph styling
 
 .. _Validation:
 

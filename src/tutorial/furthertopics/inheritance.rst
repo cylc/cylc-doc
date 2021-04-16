@@ -497,7 +497,7 @@ Add a description (``[meta]description``) to the ``WATER_VEHICLE`` and
                  title = Griffon Hoverwork BHT130 (Isle Of Whight Ferry).
 
 
-Finished Suite
+Finished Workflow
 --------------
 
 You should now have a suite with an inheritance hierarchy which looks like

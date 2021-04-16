@@ -9,7 +9,7 @@ suite is running.
 The main use of suicide triggers is for handling failures in the workflow.
 
 
-Stalled Suites
+Stalled Workflows
 --------------
 
 Imagine a bakery which has a workflow that involves making cake.

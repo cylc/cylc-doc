@@ -365,9 +365,9 @@ If:
 - the workflow name is an absolute path or invalid
 
   Workflow names are validated by
-  :py:class:`cylc.flow.unicode_rules.SuiteNameValidator`.
+  :py:class:`cylc.flow.unicode_rules.WorkflowNameValidator`.
 
-  .. autoclass:: cylc.flow.unicode_rules.SuiteNameValidator
+  .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
 - the install will create nested run directories, i.e. installing a
   workflow in a subdirectory of an existing run directory.

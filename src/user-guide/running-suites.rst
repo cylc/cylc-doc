@@ -1,6 +1,6 @@
-.. _RunningSuites:
+.. _RunningWorkflows:
 
-Running Suites
+Running Workflows
 ==============
 
 .. TODO - platformise
@@ -8,9 +8,9 @@ Running Suites
 This chapter currently features a diverse collection of topics related
 to running suites.
 
-.. _SuiteStartUp:
+.. _WorkflowStartUp:
 
-Suite Start-Up
+Workflow Start-Up
 --------------
 
 There are three ways to start a suite running:
@@ -21,7 +21,7 @@ There are three ways to start a suite running:
 
 Once a suite has been started, it cannot start from scratch again without a
 re-install. At this point, it is typically a restart that is needed most
-often (but see also :ref:`Reloading The Suite Configuration At Runtime`).
+often (but see also :ref:`Reloading The Workflow Configuration At Runtime`).
 
 .. note::
 
@@ -110,7 +110,7 @@ would only run at cycle ``3``.
 * The start and stop cycle points determine the part of the graph that the scheduler runs.
 
 
-.. _RestartingSuites:
+.. _RestartingWorkflows:
 
 Restart
 ^^^^^^^
@@ -152,9 +152,9 @@ the first instance. Instead, the first instance of a new task should be
 inserted manually at the right cycle point, with ``cylc insert``.
 
 
-.. _Reloading The Suite Configuration At Runtime:
+.. _Reloading The Workflow Configuration At Runtime:
 
-Reloading The Suite Configuration At Runtime
+Reloading The Workflow Configuration At Runtime
 --------------------------------------------
 
 The ``cylc reload`` command tells a :term:`scheduler` to reload its
@@ -171,9 +171,9 @@ reload are not inserted into the pool automatically. The first instance of each
 must be inserted manually at the right cycle point, with ``cylc insert``.
 
 
-.. _The Suite Contact File:
+.. _The Workflow Contact File:
 
-The Suite Contact File
+The Workflow Contact File
 ----------------------
 
 At start-up, :term:`schedulers <scheduler>` write a :term:`contact file`
@@ -302,7 +302,7 @@ By default the messaging occurs via an authenticated, TCP connection to the
 :term:`scheduler` using the ZMQ protocol.
 This is the preferred task communications method - it is efficient and direct.
 
-Suite server programs automatically install suite :term:`contact information
+Workflow server programs automatically install suite :term:`contact information
 <contact file>` and credentials on job hosts. Users only need to do this
 manually for remote access to suites on other hosts, or suites owned by other
 users - see :ref:`RemoteControl`.
@@ -332,7 +332,7 @@ sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
 Polling to Track Job Status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Suite server programs can actively poll task jobs at configurable intervals,
+Workflow server programs can actively poll task jobs at configurable intervals,
 via non-interactive SSH to the job host.
 
 Polling is the least efficient task communications method because task state is
@@ -564,7 +564,7 @@ Task Event Handling
 
 * Task events (e.g. task succeeded/failed) are configured by
   :cylc:conf:`task events <[runtime][<namespace>][events]>`.
-* Suite events (e.g. suite started/stopped) are configured by
+* Workflow events (e.g. suite started/stopped) are configured by
   :cylc:conf:`suite events <[scheduler][events]>`
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
@@ -969,7 +969,7 @@ way to get different behaviour at suite start-up.
 
 .. _SimulationMode:
 
-Simulating Suite Behaviour
+Simulating Workflow Behaviour
 --------------------------
 
 Several suite run modes allow you to simulate suite behaviour quickly without
@@ -1008,7 +1008,7 @@ divides it by :cylc:conf:`[runtime][<namespace>][simulation]speedup factor` to c
 run lengths.
 
 
-Limitations Of Suite Simulation
+Limitations Of Workflow Simulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dummy mode ignores :term:`job runner` settings because Cylc does not know which
@@ -1025,7 +1025,7 @@ directives in your live suite, or else use a custom live mode test suite.
    setup should be done elsewhere.
 
 
-Restarting Suites With A Different Run Mode?
+Restarting Workflows With A Different Run Mode?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The run mode is recorded in the suite run database files. Cylc will not let
@@ -1036,7 +1036,7 @@ the copy in simulation mode.
 
 .. _AutoRefTests:
 
-Automated Reference Test Suites
+Automated Reference Test Workflows
 -------------------------------
 
 Reference tests are finite-duration suite runs that abort with non-zero
@@ -1096,9 +1096,9 @@ you wish:
            abort on timeout = True
 
 
-.. _SuiteStatePolling:
+.. _WorkflowStatePolling:
 
-Triggering Off Of Tasks In Other Suites
+Triggering Off Of Tasks In Other Workflows
 ---------------------------------------
 
 .. note::
@@ -1211,9 +1211,9 @@ command interrogates the suite run database, not the :term:`scheduler`.
                   interval = PT10S
 
 
-.. _Suite Server Logs:
+.. _Workflow Server Logs:
 
-Suite Server Logs
+Workflow Server Logs
 -----------------
 
 Each suite maintains its own log of time-stamped events in the
@@ -1222,11 +1222,11 @@ Each suite maintains its own log of time-stamped events in the
 The information logged here includes:
 
 - Event timestamps, at the start of each line
-- Suite server host, port and process ID
-- Suite initial and final cycle points
-- Suite start type (i.e. cold start, warn start, restart)
+- Workflow server host, port and process ID
+- Workflow initial and final cycle points
+- Workflow start type (i.e. cold start, warn start, restart)
 - Task events (task started, succeeded, failed, etc.)
-- Suite stalled warnings.
+- Workflow stalled warnings.
 - Client commands (e.g. ``cylc hold``)
 - Job IDs.
 - Information relating to the remote file installation, contained in a
@@ -1234,18 +1234,18 @@ The information logged here includes:
 
 .. note::
 
-   Suite log files are primarily intended for human eyes. If you need
+   Workflow log files are primarily intended for human eyes. If you need
    to have an external system to monitor suite events automatically,
    interrogate the sqlite *suite run database*
-   (see :ref:`Suite Run Databases`) rather than parse the log files.
+   (see :ref:`Workflow Run Databases`) rather than parse the log files.
 
 
-.. _Suite Run Databases:
+.. _Workflow Run Databases:
 
-Suite Run Databases
+Workflow Run Databases
 -------------------
 
-Suite server programs maintain two ``sqlite`` databases to record
+Workflow server programs maintain two ``sqlite`` databases to record
 information on run history:
 
 .. code-block:: console

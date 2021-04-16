@@ -58,7 +58,7 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
 Interpreting Graph Strings
 --------------------------
 
-Suite dependency graphs can be broken down into pairs in which the left
+Workflow dependency graphs can be broken down into pairs in which the left
 side (which may be a single task or family, or several that are
 conditionally related) defines a :term:`trigger` for the task or family on the
 right. For instance the "word graph" *C triggers off B which
@@ -633,7 +633,7 @@ For example, we can write our suite like so, to produce the graph as shown:
 
    .. container:: caption
 
-      *Staggered Start Suite*
+      *Staggered Start Workflow*
 
       .. code-block:: cylc
 
@@ -689,7 +689,7 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
    .. container:: caption
 
-      *Restricted First Cycle Point Suite*
+      *Restricted First Cycle Point Workflow*
 
       .. code-block:: cylc
 
@@ -1564,7 +1564,7 @@ workflow is skipped, if it is more than one day behind the wall-clock:
            """
 
 
-.. _SuiteConfigExternalTriggers:
+.. _WorkflowConfigExternalTriggers:
 
 External Triggers
 ^^^^^^^^^^^^^^^^^
@@ -1810,7 +1810,7 @@ interval should generate an error rather than silently creating
 tasks on an erroneous cycling sequence.
 
 As a result you need to be careful not to define inter-cycle dependencies that
-cannot be satisfied at run time. Suite validation catches this kind of error if
+cannot be satisfied at run time. Workflow validation catches this kind of error if
 the existence of the cycle offset task is not defined anywhere at all:
 
 .. code-block:: cylc

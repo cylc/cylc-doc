@@ -1,6 +1,6 @@
-.. _Portable Suites Label:
+.. _Portable Workflows Label:
 
-Portable Suites
+Portable Workflows
 ===============
 
 .. TODO - platformise all the examples in here
@@ -225,7 +225,7 @@ need to update all site include-files before getting agreement from the suite
 owner and collaborators.
 
 
-Site-Specific Suite Variables
+Site-Specific Workflow Variables
 -----------------------------
 
 It can sometimes be useful to set site-specific values of suite variables that
@@ -257,7 +257,7 @@ case) than sites, otherwise the IDL workflow should just go in the site
 include-files of the sites that need it.
 
 
-Site-Specific Optional Suite Configs
+Site-Specific Optional Workflow Configs
 ------------------------------------
 
 During development and testing of a portable suite you can use an optional Rose

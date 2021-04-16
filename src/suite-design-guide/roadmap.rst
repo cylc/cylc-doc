@@ -61,7 +61,7 @@ Until this problem is solved we recommend that:
   configs <https://github.com/metomi/rose/issues/1685>`_.
 
 
-Modular Suite Design
+Modular Workflow Design
 --------------------
 
 The `modular suite design concept <https://github.com/cylc/cylc-flow/issues/1829>`_
@@ -81,5 +81,5 @@ location. However, as a literal inlining mechanism with no encapsulation or
 interface, the internals of the "imported" fragments would have to be
 compatible with the suite definition in every respect.
 
-See also :ref:`Monolithic Or Interdependent Suites` on modular *systems of
+See also :ref:`Monolithic Or Interdependent Workflows` on modular *systems of
 suites* connected by inter-suite triggering.

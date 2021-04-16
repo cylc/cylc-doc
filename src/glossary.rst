@@ -673,7 +673,7 @@ Glossary
 
       See also:
 
-      * :ref:`Starting Suites`
+      * :ref:`Starting Workflows`
       * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
@@ -732,7 +732,7 @@ Glossary
 
       See also:
 
-      * :ref:`Stopping Suites`
+      * :ref:`Stopping Workflows`
       * :term:`start`
       * :term:`restart`
       * :term:`reload`
@@ -748,7 +748,7 @@ Glossary
 
       See also:
 
-      * :ref:`Restarting Suites`
+      * :ref:`Restarting Workflows`
       * :term:`start`
       * :term:`stop`
       * :term:`reload`
@@ -792,7 +792,7 @@ Glossary
 
       See also:
 
-      * :ref:`Reloading Suites`
+      * :ref:`Reloading Workflows`
       * `Cylc User Guide`_
 
    hold

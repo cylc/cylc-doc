@@ -127,7 +127,7 @@ from the root namespace:
    [directives]
       job_type = serial
 
-Suite Visualization And Multiple Inheritance
+Workflow Visualization And Multiple Inheritance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The first parent inherited by a namespace is also used as the
@@ -169,7 +169,7 @@ provided by the :term:`scheduler`, and user-defined environment variables.
 The environment is explicitly exported (by the task job script) prior to
 executing the task ``script`` (see :ref:`TaskJobSubmission`).
 
-Suite and task identity are exported first, so that user-defined
+Workflow and task identity are exported first, so that user-defined
 variables can refer to them. Order of definition is preserved throughout
 so that variable assignment expressions can safely refer to previously
 defined variables.
@@ -268,7 +268,7 @@ The task job script may export the following environment variables:
                                    # when in any date-time cycling mode
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
-   CYLC_WORKFLOW_NAME                 # Suite name
+   CYLC_WORKFLOW_NAME                 # Workflow name
    CYLC_UTC                        # UTC mode, True or False
    CYLC_VERBOSE                    # Verbose mode, True or False
    TZ                              # Set to "UTC" in UTC mode or not defined
@@ -278,9 +278,9 @@ The task job script may export the following environment variables:
    CYLC_WORKFLOW_HOST                 # Host running the suite process
    CYLC_WORKFLOW_OWNER                # User ID running the suite process
 
-   CYLC_WORKFLOW_SHARE_DIR            # Suite (or task!) shared directory (see below)
-   CYLC_WORKFLOW_UUID                 # Suite UUID string
-   CYLC_WORKFLOW_WORK_DIR             # Suite work directory (see below)
+   CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory (see below)
+   CYLC_WORKFLOW_UUID                 # Workflow UUID string
+   CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
    CYLC_TASK_JOB                   # Task job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
@@ -326,7 +326,7 @@ script (but not exported to the environment). These include:
                                    # relative to the suite work directory
 
 
-Suite Share Directories
+Workflow Share Directories
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 A suite :term:`share directory` is created automatically under the suite run

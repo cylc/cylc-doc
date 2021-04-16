@@ -7,7 +7,7 @@ Consolidating Configuration
 
    In the last section we wrote out the following code in the :cylc:conf:`flow.cylc` file:
 
-.. slide:: Weather Forecasting Suite
+.. slide:: Weather Forecasting Workflow
    :level: 2
    :inline-contents: True
 
@@ -46,7 +46,7 @@ Consolidating Configuration
 
 .. ifslides::
 
-   .. slide:: Weather Forecasting Suite
+   .. slide:: Weather Forecasting Workflow
       :level: 2
 
       Repetition
@@ -54,7 +54,7 @@ Consolidating Configuration
       * ``script``
       * ``API_KEY``
 
-.. slide:: Weather Forecasting Suite
+.. slide:: Weather Forecasting Workflow
    :level: 2
    :inline-contents: True
 

@@ -1,4 +1,4 @@
-Writing Suites
+Writing Workflows
 ==============
 
 .. toctree::

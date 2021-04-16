@@ -129,14 +129,14 @@ prior to configuration parsing to provide suite context:
    CYLC_VERBOSE                    # Verbose mode, True or False
    CYLC_VERSION                    # Version of cylc installation used
 
-   CYLC_WORKFLOW_NAME                 # Suite name
+   CYLC_WORKFLOW_NAME                 # Workflow name
 
-   CYLC_WORKFLOW_LOG_DIR              # Suite log directory.
+   CYLC_WORKFLOW_LOG_DIR              # Workflow log directory.
    CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
                                    # suite host, e.g. ~/cylc-run/foo
-   CYLC_WORKFLOW_SHARE_DIR            # Suite (or task post parsing!)
+   CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task post parsing!)
                                    # shared directory.
-   CYLC_WORKFLOW_WORK_DIR             # Suite work directory.
+   CYLC_WORKFLOW_WORK_DIR             # Workflow work directory.
 
 
 .. note::
@@ -340,7 +340,7 @@ will show the suite with the Jinja2 variables as set.
 
 .. note::
 
-   Suites started with template variables set on the command
+   Workflows started with template variables set on the command
    line will :term:`restart` with the same settings. However, you can set
    them again on the ``cylc play`` command line if they need to
    be overridden.
