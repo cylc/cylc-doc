@@ -129,7 +129,7 @@ rules:
 .. _Built-in Workflow State Triggers:
 
 Built-in Workflow State Triggers
------------------------------
+--------------------------------
 
 These can be used instead of the older workflow state polling tasks described
 in :ref:`WorkflowStatePolling` for inter-workflow triggering - i.e. to trigger local

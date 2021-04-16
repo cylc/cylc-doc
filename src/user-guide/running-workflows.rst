@@ -1,7 +1,7 @@
 .. _RunningWorkflows:
 
 Running Workflows
-==============
+=================
 
 .. TODO - platformise
 
@@ -11,7 +11,7 @@ to running workflows.
 .. _WorkflowStartUp:
 
 Workflow Start-Up
---------------
+-----------------
 
 There are three ways to start a workflow running:
 
@@ -155,7 +155,7 @@ inserted manually at the right cycle point, with ``cylc insert``.
 .. _Reloading The Workflow Configuration At Runtime:
 
 Reloading The Workflow Configuration At Runtime
---------------------------------------------
+-----------------------------------------------
 
 The ``cylc reload`` command tells a :term:`scheduler` to reload its
 workflow configuration at run time. This is an alternative to shutting a
@@ -174,7 +174,7 @@ must be inserted manually at the right cycle point, with ``cylc insert``.
 .. _The Workflow Contact File:
 
 The Workflow Contact File
-----------------------
+-------------------------
 
 At start-up, :term:`schedulers <scheduler>` write a :term:`contact file`
 ``$HOME/cylc-run/WORKFLOW/.service/contact`` that records workflow host,
@@ -950,7 +950,7 @@ point will be done from midnight of the current day.
 
 
 The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the case of a *cold start only* the initial cycle point is passed
 through to task execution environments as
@@ -970,7 +970,7 @@ way to get different behaviour at workflow start-up.
 .. _SimulationMode:
 
 Simulating Workflow Behaviour
---------------------------
+-----------------------------
 
 Several workflow run modes allow you to simulate workflow behaviour quickly without
 running the workflow's real jobs - which may be long-running and resource-hungry:
@@ -1009,7 +1009,7 @@ run lengths.
 
 
 Limitations Of Workflow Simulation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dummy mode ignores :term:`job runner` settings because Cylc does not know which
 job resource directives (requested memory, number of compute nodes, etc.) would
@@ -1026,7 +1026,7 @@ directives in your live workflow, or else use a custom live mode test workflow.
 
 
 Restarting Workflows With A Different Run Mode?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The run mode is recorded in the workflow run database files. Cylc will not let
 you *restart* a non-live mode workflow in live mode, or vice versa. To
@@ -1037,7 +1037,7 @@ the copy in simulation mode.
 .. _AutoRefTests:
 
 Automated Reference Test Workflows
--------------------------------
+----------------------------------
 
 Reference tests are finite-duration workflow runs that abort with non-zero
 exit status if any of the following conditions occur (by default):
@@ -1099,7 +1099,7 @@ you wish:
 .. _WorkflowStatePolling:
 
 Triggering Off Of Tasks In Other Workflows
----------------------------------------
+------------------------------------------
 
 .. note::
 
@@ -1214,7 +1214,7 @@ command interrogates the workflow run database, not the :term:`scheduler`.
 .. _Workflow Server Logs:
 
 Workflow Server Logs
------------------
+--------------------
 
 Each workflow maintains its own log of time-stamped events in the
 :term:`workflow log directory` (``$HOME/cylc-run/WORKFLOW-NAME/log/workflow/``).
@@ -1243,7 +1243,7 @@ The information logged here includes:
 .. _Workflow Run Databases:
 
 Workflow Run Databases
--------------------
+----------------------
 
 Workflow server programs maintain two ``sqlite`` databases to record
 information on run history:

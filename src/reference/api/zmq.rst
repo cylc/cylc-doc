@@ -1,5 +1,5 @@
 Workflow Runtime Interface
-=======================
+==========================
 
 Cylc workflows are TCP servers which use the ZeroMQ protocol to communicate with
 clients and jobs.

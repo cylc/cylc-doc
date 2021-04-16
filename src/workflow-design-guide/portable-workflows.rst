@@ -1,7 +1,7 @@
 .. _Portable Workflows Label:
 
 Portable Workflows
-===============
+==================
 
 .. TODO - platformise all the examples in here
 
@@ -226,7 +226,7 @@ owner and collaborators.
 
 
 Site-Specific Workflow Variables
------------------------------
+--------------------------------
 
 It can sometimes be useful to set site-specific values of workflow variables that
 aren't exposed to users via ``rose-workflow.conf``. For example, consider
@@ -258,7 +258,7 @@ include-files of the sites that need it.
 
 
 Site-Specific Optional Workflow Configs
-------------------------------------
+---------------------------------------
 
 During development and testing of a portable workflow you can use an optional Rose
 workflow config file to automatically set site-specific workflow inputs and thereby

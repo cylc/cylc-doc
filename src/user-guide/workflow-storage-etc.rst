@@ -1,7 +1,7 @@
 .. _WorkflowStorageEtc:
 
 Workflow Storage, Discovery, Revision Control, and Deployment
-==========================================================
+=============================================================
 
 Cylc does not have a built-in solution for workflow storage and discovery,
 revision control, and deployment, on a network.

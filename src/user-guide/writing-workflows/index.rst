@@ -1,5 +1,5 @@
 Writing Workflows
-==============
+=================
 
 .. toctree::
    :maxdepth: 2

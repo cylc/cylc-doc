@@ -62,7 +62,7 @@ Until this problem is solved we recommend that:
 
 
 Modular Workflow Design
---------------------
+-----------------------
 
 The `modular workflow design concept <https://github.com/cylc/cylc-flow/issues/1829>`_
 is that we should be able to import common workflow segments at install time

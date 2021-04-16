@@ -128,7 +128,7 @@ from the root namespace:
       job_type = serial
 
 Workflow Visualization And Multiple Inheritance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The first parent inherited by a namespace is also used as the
 collapsible family group when visualizing the workflow. If this is not what
@@ -259,22 +259,22 @@ The task job script may export the following environment variables:
 
 .. code-block:: sub
 
-   CYLC_DEBUG                      # Debug mode, true or not defined
-   CYLC_VERSION                    # Version of cylc installation used
+   CYLC_DEBUG                         # Debug mode, true or not defined
+   CYLC_VERSION                       # Version of cylc installation used
 
-   CYLC_CYCLING_MODE               # Cycling mode, e.g. gregorian
-   ISODATETIMECALENDAR             # Calendar mode for the `isodatetime` command,
-                                   # defined with the value of CYLC_CYCLING_MODE
-                                   # when in any date-time cycling mode
+   CYLC_CYCLING_MODE                  # Cycling mode, e.g. gregorian
+   ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command,
+                                      # defined with the value of CYLC_CYCLING_MODE
+                                      # when in any date-time cycling mode
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
    CYLC_WORKFLOW_NAME                 # Workflow name
-   CYLC_UTC                        # UTC mode, True or False
-   CYLC_VERBOSE                    # Verbose mode, True or False
-   TZ                              # Set to "UTC" in UTC mode or not defined
+   CYLC_UTC                           # UTC mode, True or False
+   CYLC_VERBOSE                       # Verbose mode, True or False
+   TZ                                 # Set to "UTC" in UTC mode or not defined
 
    CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
-                                   # job host, e.g. ~/cylc-run/foo
+                                      # job host, e.g. ~/cylc-run/foo
    CYLC_WORKFLOW_HOST                 # Host running the workflow process
    CYLC_WORKFLOW_OWNER                # User ID running the workflow process
 
@@ -282,35 +282,35 @@ The task job script may export the following environment variables:
    CYLC_WORKFLOW_UUID                 # Workflow UUID string
    CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
-   CYLC_TASK_JOB                   # Task job identifier expressed as
-                                   # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
-                                   # e.g. 20110511T1800Z/t1/01
-   CYLC_TASK_CYCLE_POINT           # Cycle point, e.g. 20110511T1800Z
-   ISODATETIMEREF                  # Reference time for the `isodatetime` command,
-                                   # defined with the value of CYLC_TASK_CYCLE_POINT
-                                   # when in any date-time cycling mode
-   CYLC_TASK_NAME                  # Job's task name, e.g. t1
-   CYLC_TASK_SUBMIT_NUMBER         # Job's submit number, e.g. 1,
-                                   # increments with every submit
-   CYLC_TASK_TRY_NUMBER            # Number of execution tries, e.g. 1
-                                   # increments with automatic retry-on-fail
-   CYLC_TASK_ID                    # Task instance identifier expressed as
-                                   # TASK-NAME.CYCLE-POINT
-                                   # e.g. t1.20110511T1800Z
-   CYLC_TASK_LOG_DIR               # Location of the job log directory
-                                   # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
-   CYLC_TASK_LOG_ROOT              # The task job file path
-                                   # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
-   CYLC_TASK_WORK_DIR              # Location of task work directory (see below)
-                                   # e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
-   CYLC_TASK_NAMESPACE_HIERARCHY   # Linearised family namespace of the task,
-                                   # e.g. root postproc t1
-   CYLC_TASK_DEPENDENCIES          # List of met dependencies that triggered the task
-                                   # e.g. foo.1 bar.1
+   CYLC_TASK_JOB                      # Task job identifier expressed as
+                                      # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
+                                      # e.g. 20110511T1800Z/t1/01
+   CYLC_TASK_CYCLE_POINT              # Cycle point, e.g. 20110511T1800Z
+   ISODATETIMEREF                     # Reference time for the `isodatetime` command,
+                                      # defined with the value of CYLC_TASK_CYCLE_POINT
+                                      # when in any date-time cycling mode
+   CYLC_TASK_NAME                     # Job's task name, e.g. t1
+   CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
+                                      # increments with every submit
+   CYLC_TASK_TRY_NUMBER               # Number of execution tries, e.g. 1
+                                      # increments with automatic retry-on-fail
+   CYLC_TASK_ID                       # Task instance identifier expressed as
+                                      # TASK-NAME.CYCLE-POINT
+                                      # e.g. t1.20110511T1800Z
+   CYLC_TASK_LOG_DIR                  # Location of the job log directory
+                                      # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
+   CYLC_TASK_LOG_ROOT                 # The task job file path
+                                      # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
+   CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
+                                      # e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
+   CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
+                                      # e.g. root postproc t1
+   CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task
+                                      # e.g. foo.1 bar.1
 
-   CYLC_TASK_COMMS_METHOD          # Set to "ssh" if communication method is "ssh"
-   CYLC_TASK_SSH_LOGIN_SHELL       # With "ssh" communication, if set to "True",
-                                   # use login shell on workflow host
+   CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
+   CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
+                                      # use login shell on workflow host
 
 There are also some global shell variables that may be defined in the task job
 script (but not exported to the environment). These include:
@@ -327,7 +327,7 @@ script (but not exported to the environment). These include:
 
 
 Workflow Share Directories
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A workflow :term:`share directory` is created automatically under the workflow run
 directory as a share space for tasks. The location is available to tasks as

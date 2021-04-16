@@ -1,7 +1,7 @@
 .. SDG:
 
 Workflow Design Guide
-==================
+=====================
 
 .. rubric:: Cylc/Rose Workflow Design Best Practice Guide.
 
