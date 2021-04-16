@@ -290,7 +290,7 @@ Where Do All The Files Go?
 
 
 Running A Workflow
----------------
+------------------
 
 .. ifnotslides::
 
@@ -328,7 +328,7 @@ Running A Workflow
    information, see :ref:`Installing-workflows`.
 
 Workflow Files
------------
+--------------
 
 .. ifnotslides::
 

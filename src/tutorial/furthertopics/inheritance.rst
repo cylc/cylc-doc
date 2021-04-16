@@ -498,7 +498,7 @@ Add a description (``[meta]description``) to the ``WATER_VEHICLE`` and
 
 
 Finished Workflow
---------------
+-----------------
 
 You should now have a workflow with an inheritance hierarchy which looks like
 this:

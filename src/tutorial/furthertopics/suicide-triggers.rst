@@ -10,7 +10,7 @@ The main use of suicide triggers is for handling failures in the workflow.
 
 
 Stalled Workflows
---------------
+-----------------
 
 Imagine a bakery which has a workflow that involves making cake.
 
