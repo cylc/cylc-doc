@@ -671,9 +671,11 @@ Glossary
       A workflow start can be either :term:`cold <cold start>` or
       :term:`warm <warm start>` (cold by default).
 
+      .. TODO Suites -> Workflows once metomi cheat-sheet is updated
+
       See also:
 
-      * :ref:`Starting Workflows`
+      * :ref:`Starting Suites`
       * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
@@ -730,9 +732,11 @@ Glossary
       By default Cylc waits for any submitted or running :term:`jobs <job>` to
       complete (either succeed or fail) before shutting down.
 
+      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+
       See also:
 
-      * :ref:`Stopping Workflows`
+      * :ref:`Stopping Suites`
       * :term:`start`
       * :term:`restart`
       * :term:`reload`
@@ -746,9 +750,11 @@ Glossary
       A restart is the behaviour of ``cylc play`` for a workflow that has been
       previously run.
 
+      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+
       See also:
 
-      * :ref:`Restarting Workflows`
+      * :ref:`Restarting Suites`
       * :term:`start`
       * :term:`stop`
       * :term:`reload`
@@ -790,9 +796,11 @@ Glossary
       :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have certain
       caveats attached, see the `Cylc User Guide`_ for details.
 
+      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+
       See also:
 
-      * :ref:`Reloading Workflows`
+      * :ref:`Reloading Suites`
       * `Cylc User Guide`_
 
    hold
