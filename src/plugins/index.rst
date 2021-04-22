@@ -10,7 +10,7 @@ The following are "core" plugins maintained by the Cylc team:
 
    cylc-rose
    main-loop/index
-   post-install/index
+   install/index
 
 .. warning::
 
