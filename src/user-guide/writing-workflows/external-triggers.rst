@@ -170,8 +170,8 @@ workflow to emit the *data ready* message.
 
 Some important points to note about this:
 
-- The function call interval, which determines how often the workflow
-  server program checks the clock, is optional. Here it is
+- The function call interval, which determines how often the scheduler
+  checks the clock, is optional. Here it is
   ``PT10S`` (i.e. 10 seconds, which is also the default value).
 - The ``workflow_state`` trigger function, like the
   ``cylc workflow-state`` command, must have read-access to the upstream
@@ -240,9 +240,8 @@ properties:
 - they must:
 
   - be defined in a module with the same name as the function;
-  - be compatible with the same Python version that runs the Cylc workflow
-    server program (see :ref:`Requirements` for the latest version
-    specification).
+  - be compatible with the same Python version that runs the scheduler
+    (see :ref:`Requirements` for the latest version specification).
 
 - they can be located either:
 

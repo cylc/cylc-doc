@@ -302,7 +302,7 @@ By default the messaging occurs via an authenticated, TCP connection to the
 :term:`scheduler` using the ZMQ protocol.
 This is the preferred task communications method - it is efficient and direct.
 
-Workflow server programs automatically install workflow :term:`contact information
+Schedulers automatically install workflow :term:`contact information
 <contact file>` and credentials on job hosts. Users only need to do this
 manually for remote access to workflows on other hosts, or workflows owned by other
 users - see :ref:`RemoteControl`.
@@ -332,7 +332,7 @@ sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
 Polling to Track Job Status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Workflow server programs can actively poll task jobs at configurable intervals,
+Schedulers can actively poll task jobs at configurable intervals,
 via non-interactive SSH to the job host.
 
 Polling is the least efficient task communications method because task state is
@@ -381,7 +381,7 @@ if you like).
 Client-Server Interaction
 -------------------------
 
-Cylc server programs listen on dedicated network ports for
+Scedulers listen on dedicated network ports for
 TCP communications from Cylc clients (task jobs and user-invoked commands)
 
 Use ``cylc scan`` to see which workflows are listening on which ports on
@@ -1245,7 +1245,7 @@ The information logged here includes:
 Workflow Run Databases
 ----------------------
 
-Workflow server programs maintain two ``sqlite`` databases to record
+Schedulers maintain two ``sqlite`` databases to record
 information on run history:
 
 .. code-block:: console
@@ -1390,7 +1390,8 @@ options are:
 - parameterize the sub-cycles
 
   - this is easy but it makes more tasks-per-cycle, which is the primary
-    determinant of workflow size and server program efficiency
+    determinant of workflow size and scheduler efficiency (this has a much
+    smaller impact from Cylc 8 on, however).
 
 - run a separate cycling workflow over the sub-cycle, inside a main-workflow
   task, for each main-workflow cycle point - i.e. use **sub-workflows**
