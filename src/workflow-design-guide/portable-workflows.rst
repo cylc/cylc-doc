@@ -229,7 +229,7 @@ Site-Specific Workflow Variables
 --------------------------------
 
 It can sometimes be useful to set site-specific values of workflow variables that
-aren't exposed to users via ``rose-workflow.conf``. For example, consider
+aren't exposed to users via ``rose-suite.conf``. For example, consider
 a workflow that can run a special post-processing workflow of some kind at sites
 where IDL is available. The IDL-dependence switch can be set per site like this:
 
