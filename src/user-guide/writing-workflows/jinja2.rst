@@ -131,10 +131,10 @@ prior to configuration parsing to provide workflow context:
 
    CYLC_WORKFLOW_NAME              # Workflow name
 
-   CYLC_WORKFLOW_LOG_DIR              # Workflow log directory.
-   CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
+   CYLC_WORKFLOW_LOG_DIR           # Workflow log directory.
+   CYLC_WORKFLOW_RUN_DIR           # Location of the run directory in
                                    # workflow host, e.g. ~/cylc-run/foo
-   CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task post parsing!)
+   CYLC_WORKFLOW_SHARE_DIR         # Workflow (or task post parsing!)
                                    # shared directory.
    CYLC_WORKFLOW_WORK_DIR             # Workflow work directory.
 
