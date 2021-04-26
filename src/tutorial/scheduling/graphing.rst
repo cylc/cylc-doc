@@ -36,7 +36,7 @@ The :cylc:conf:`flow.cylc` File Format
 
    .. note::
 
-      Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``workflow.rc``,
+      Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
       but that name is now deprecated.
 
 Example
