@@ -335,8 +335,8 @@ directory as a share space for tasks. The location is available to tasks as
 typically held in cycle point sub-directories of the workflow share directory.
 
 The top level share and work directory (below) location can be changed
-(e.g. to a large data area) by a global config setting
-:cylc:conf:`global.cylc[platforms][<platform name>]work directory`.
+(e.g. to a large data area) by global config settings in
+:cylc:conf:`global.cylc[symlink dirs]`.
 
 
 Task Work Directories
@@ -347,13 +347,11 @@ Task job scripts are executed from within
 run directory. A task can get its own work directory from
 ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if it does not ``cd`` elsewhere at
 runtime). By default the location contains task name and cycle point, to
-provide a unique workspace for every instance of every task. This can be
-overridden in the workflow configuration, however, to get several tasks to share
-the same :cylc:conf:`work directory <global.cylc[platforms][<platform name>]work directory>`.
+provide a unique workspace for every instance of every task.
 
 The top level work and share directory (above) location can be changed
-(e.g. to a large data area) by a global config setting
-:cylc:conf:`global.cylc[platforms][<platform name>]work directory`.
+(e.g. to a large data area) by global config settings in
+:cylc:conf:`global.cylc[symlink dirs]`.
 
 
 Environment Variable Evaluation
