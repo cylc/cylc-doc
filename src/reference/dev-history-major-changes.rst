@@ -16,7 +16,7 @@ Cylc Development History - Major Changes
 
   - a new workflow design interface: dependency graph and task runtime properties
     defined in a single structured, validated, configuration file - the
-    workflow.rc file
+    suite.rc file
   - graphical user interface
   - workflow graphing.
 
