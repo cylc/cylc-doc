@@ -319,7 +319,7 @@ script (but not exported to the environment). These include:
 
    CYLC_FAIL_SIGNALS               # List of signals trapped by the error trap
    CYLC_VACATION_SIGNALS           # List of signals trapped by the vacation trap
-   CYLC_WORKFLOW_WORK_DIR_ROOT        # Root directory above the workflow work directory
+   CYLC_WORKFLOW_WORK_DIR_ROOT     # Root directory above the workflow work directory
                                    # in the job host
    CYLC_TASK_MESSAGE_STARTED_PID   # PID of "cylc message" job started" command
    CYLC_TASK_WORK_DIR_BASE         # Alternate task work directory,
