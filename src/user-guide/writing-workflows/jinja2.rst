@@ -136,7 +136,7 @@ prior to configuration parsing to provide workflow context:
                                    # workflow host, e.g. ~/cylc-run/foo
    CYLC_WORKFLOW_SHARE_DIR         # Workflow (or task post parsing!)
                                    # shared directory.
-   CYLC_WORKFLOW_WORK_DIR             # Workflow work directory.
+   CYLC_WORKFLOW_WORK_DIR          # Workflow work directory.
 
 
 .. note::
