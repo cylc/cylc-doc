@@ -129,7 +129,7 @@ prior to configuration parsing to provide workflow context:
    CYLC_VERBOSE                    # Verbose mode, True or False
    CYLC_VERSION                    # Version of cylc installation used
 
-   CYLC_WORKFLOW_NAME                 # Workflow name
+   CYLC_WORKFLOW_NAME              # Workflow name
 
    CYLC_WORKFLOW_LOG_DIR              # Workflow log directory.
    CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
