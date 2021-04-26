@@ -357,7 +357,7 @@ If:
 - ``log``, ``share``, ``work`` or ``_cylc-install`` directories exist in the
   :term:`source directory`
 
-- neither :cylc:conf:`flow.cylc` nor the deprecated workflow.rc are found in
+- neither :cylc:conf:`flow.cylc` nor the deprecated suite.rc are found in
   the :term:`source directory`
 
 - the run-name is specified as ``_cylc-install``
