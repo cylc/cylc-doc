@@ -39,7 +39,7 @@ The Jinja2 SITE Variable
 ------------------------
 
 First a workflow Jinja2 variable called ``SITE`` should be set to the site
-name, either in ``rose-workflow.conf``, or in the workflow definition itself
+name, either in ``rose-suite.conf``, or in the workflow definition itself
 (perhaps automatically, by querying the local environment in some way).
 
 .. code-block:: cylc
