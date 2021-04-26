@@ -6,8 +6,9 @@ Glossary
 
    workflow
    Cylc workflow
-      A Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file
-      which contains :term:`graphing<graph>` representing a workflow.
+      A Cylc workflow is defined by a :cylc:conf:`flow.cylc` file
+      containing a dependency :term:`graph<graph>` and :term:`task`
+      definitions.
 
    graph
       The graph of a :term:`workflow<Cylc workflow>` refers to the

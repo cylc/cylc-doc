@@ -381,7 +381,7 @@ if you like).
 Client-Server Interaction
 -------------------------
 
-Scedulers listen on dedicated network ports for
+Schedulers listen on dedicated network ports for
 TCP communications from Cylc clients (task jobs and user-invoked commands)
 
 Use ``cylc scan`` to see which workflows are listening on which ports on
@@ -1308,11 +1308,11 @@ To restart the workflow, the critical Cylc files that must be restored are:
 
    # On the workflow host:
    ~/cylc-run/WORKFLOW-NAME/
-       flow.cylc   # live workflow configuration (located here in Rose workflows)
+       flow.cylc  # installed workflow configuration
        log/db  # public workflow DB (can just be a copy of the private DB)
        log/rose-suite-run.conf  # (needed to restart a Rose workflow)
        .service/db  # private workflow DB
-       .service/source -> PATH-TO-WORKFLOW-DIR  # symlink to live workflow directory
+       .service/source -> PATH-TO-WORKFLOW-DIR  # symlink to workflow source
 
    # On job hosts (if no shared filesystem):
    ~/cylc-run/WORKFLOW-NAME/
