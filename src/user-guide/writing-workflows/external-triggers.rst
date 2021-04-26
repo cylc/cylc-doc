@@ -142,7 +142,7 @@ The workflow state trigger function signature looks like this:
 .. code-block:: python
 
    workflow_state(workflow, task, point, offset=None, status='succeeded',
-               message=None, cylc_run_dir=None, debug=False)
+                  message=None, cylc_run_dir=None, debug=False)
 
 The first three arguments are compulsory; they single out the target workflow name
 (``workflow``) task name (``task``) and cycle point
