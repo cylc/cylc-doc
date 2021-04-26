@@ -365,7 +365,7 @@ directive format, and PBS does not accept ``#QSUB`` directives in
 reality.
 
 
-.. TODO - update with rose-workflow run migration
+.. TODO - update with rose suite-run migration
 
 .. _Where To Put Job Runner Handler Modules:
 
