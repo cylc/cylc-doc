@@ -22,7 +22,7 @@ Cylc Development History - Major Changes
 
 - **cylc-4**
 
-  - refined and organized the workflow.rc file structure
+  - refined and organized the suite.rc file structure
   - task runtime properties defined by an efficient inheritance hierarchy
   - support for the Jinja2 template processor in workflow configurations.
 
