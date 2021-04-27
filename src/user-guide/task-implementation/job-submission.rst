@@ -382,4 +382,4 @@ hosts in one of these locations:
 .. note::
 
    For Rose users: ``rose suite-run`` automatically installs
-   ``WORKFLOW-DEF-PATH/lib/python/`` to job hosts).
+   ``WORKFLOW-RUN-DIR/lib/python/`` to job hosts).
