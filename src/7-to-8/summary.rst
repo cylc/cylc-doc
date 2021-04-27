@@ -1,18 +1,8 @@
 .. _overview:
 
-What's New in Cylc 8.0b0?
-=========================
+Quick Summary Of Changes
+========================
 
-**A quick guide for Cylc 7 users.**
-
-.. tip::
-
-   If you need help using or understanding Cylc 8 please post questions to the
-   `Cylc Forum <https://cylc.discourse.group/>`_
-
-
-Cylc 8 differs from Cylc 7 in many ways: architecture, scheduling
-algorithm, security, UIs, working practices, and more.
 
 Backward Compatibility
 ----------------------
@@ -43,6 +33,11 @@ Architecture
 Cylc has been re-architected to support a remote web UI. The main Cylc 8 system
 components are:
 
+- **Cylc Scheduler**
+     - The workflow engine core, Python 3 based
+     - Includes the **CLI** (Command Line Interface)
+     - And **TUI**, a new Terminal UI application
+
 - **Cylc Hub**
    - Authenticates users, spawns and proxies Cylc UI Servers
    - (A `Jupyterhub <https://jupyter.org/hub>`_ instance)
@@ -52,11 +47,6 @@ components are:
    - Launched by the Hub
    - Interacts with Schedulers and the filesystem
    - Serves the UI to users
-
-- **Cylc Scheduler**
-     - The workflow engine core, Python 3 based
-     - Includes the **CLI** (Command Line Interface)
-     - And **TUI**, a new Terminal UI application
 
 - **Cylc UI**
    - In-browser web UI, includes:
@@ -69,25 +59,25 @@ components are:
 - **Network layers**
    - Incremental push updates (c.f. polled full-state updates in Cylc 7)
 
-.. figure:: img/hub.png
+.. figure:: ../img/hub.png
    :figwidth: 100%
    :align: center
 
    Cylc 8 Hub authentication page
 
-.. figure:: img/cylc-ui-dash.png
+.. figure:: ../img/cylc-ui-dash.png
    :figwidth: 100%
    :align: center
 
    Cylc 8 UI dashboard
 
-.. figure:: img/cylc-ui-tree.png
+.. figure:: ../img/cylc-ui-tree.png
    :figwidth: 100%
    :align: center
 
    Cylc 8 UI workflow tree view
 
-.. figure:: img/cylc-tui.png
+.. figure:: ../img/cylc-tui.png
    :figwidth: 100%
    :align: center
 
@@ -98,7 +88,7 @@ Scheduling Algorithm
 
 Cylc has to be able to manage infinite workflows of repeating tasks:
 
-.. image:: img/cycling.png
+.. image:: ../img/cycling.png
    :align: center
 
 See :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
@@ -126,7 +116,7 @@ Cylc 8 has only 8 task/job states. The Cylc 8 UI shows both task and jobs.
 Task icons are monochrome circles; job icons are coloured squares. The running
 task icon incorporates a radial progress indicator.
 
-.. image:: img/task-job.png
+.. image:: ../img/task-job.png
    :align: center
 
 The removed Cylc 7 task states have been absorbed into the *waiting* state, but
@@ -137,7 +127,7 @@ associated jobs must be about to retry.
 Window on the Workflow
 ----------------------
 
-.. image:: img/n-window.png
+.. image:: ../img/n-window.png
    :align: center
 
 The Cylc UI can't show "all the tasks" at once because the graph may be huge,
