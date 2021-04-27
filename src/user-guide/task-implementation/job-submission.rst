@@ -375,7 +375,7 @@ Where To Put Job Runner Handler Modules
 Custom job runner handlers must be installed on workflow and job
 hosts in one of these locations:
 
-- under ``WORKFLOW-DEF-PATH/lib/python/``
+- under ``WORKFLOW-RUN-DIR/lib/python/``
 - under ``CYLC-PATH/cylc/flow/job_runner_handlers/``
 - or anywhere in ``$PYTHONPATH``
 
