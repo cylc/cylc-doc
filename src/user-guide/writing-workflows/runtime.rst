@@ -26,7 +26,7 @@ see :ref:`FamilyTriggers`.
 Namespace Names
 ---------------
 
-Namespace names may contain letters, digits, underscores, and hyphens.
+.. autoclass:: cylc.flow.unicode_rules.TaskNameValidator
 
 .. note::
 
