@@ -14,7 +14,7 @@ indefinitely.
 .. toctree::
    :maxdepth: 2
 
-   overview
+   7-to-8/index
    installation
    introduction/index
    tutorial/index
