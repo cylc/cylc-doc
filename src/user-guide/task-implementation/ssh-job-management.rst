@@ -13,7 +13,7 @@ Some sites may want to restrict access to job hosts by whitelisting SSH
 connections to allow only ``rsync`` for file transfer, and allowing job
 execution only via a local :term:`job runner` that sees the job hosts [1]_ .
 We are investigating the feasibility of SSH-free job management when a local
-job runner is available, but this is not yet possible unless your suite
+job runner is available, but this is not yet possible unless your workflow
 and job hosts also share a filesystem, which allows Cylc to treat jobs as
 entirely local [2]_ .
 
@@ -27,13 +27,13 @@ management commands directly on job hosts over SSH. Reasons for this include:
 
 - It works equally for :term:`job runner` and background jobs.
 - SSH is *required* for background jobs, and for jobs in other job runners if the
-  job runner is not available on the suite host.
+  job runner is not available on the workflow host.
 - Querying the job runner alone is not sufficient for full job
   polling functionality.
 
   - This is because jobs can complete (and then be forgotten by
-    the job runner) while the network, suite host, or :term:`scheduler` is
-    down (e.g. between suite shutdown and restart).
+    the job runner) while the network, workflow host, or :term:`scheduler` is
+    down (e.g. between workflow shutdown and restart).
   - To handle this we get the automatic job wrapper code to write
     job messages and exit status to *job status files* that are
     interrogated by :term:`schedulers <scheduler>` during job polling
@@ -51,8 +51,8 @@ Other Cases Where Cylc Uses SSH Directly
 .. TODO - do a scan through the codebase to assert that this is still the only
           uses of SSH in Cylc Flow.
 
-- To see if a suite is running on another host with a shared
-  filesystem - see ``cylc/flow/suite_files:detect_old_contact_file``.
+- To see if a workflow is running on another host with a shared
+  filesystem - see ``cylc/flow/workflow_files:detect_old_contact_file``.
 
 
 .. [1] A malicious script could be ``rsync``'d and run from a batch

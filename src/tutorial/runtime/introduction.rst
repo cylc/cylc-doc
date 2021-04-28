@@ -81,7 +81,7 @@ We can also call other scripts or executables in this way, e.g:
 
 .. ifnotslides::
 
-   It is often a good idea to keep our scripts with the Cylc suite rather than
+   It is often a good idea to keep our scripts with the Cylc workflow rather than
    leaving them somewhere else on the system.
 
    If you create a ``bin/`` sub-directory within the :term:`source directory`,
@@ -174,7 +174,7 @@ The Cylc GUI
 
 .. ifnotslides::
 
-   To help you to keep track of a running suite Cylc has a graphical user
+   To help you to keep track of a running workflow Cylc has a graphical user
    interface (the Cylc GUI) which can be used for monitoring and
    interaction.
 
@@ -241,7 +241,7 @@ Where Do All The Files Go?
 
    .. code-block:: sub
 
-      ~/cylc-run/<suite-name>/work/<cycle-point>/<task-name>
+      ~/cylc-run/<workflow-name>/work/<cycle-point>/<task-name>
 
    The Job Log Directory
    ^^^^^^^^^^^^^^^^^^^^^
@@ -258,7 +258,7 @@ Where Do All The Files Go?
 
    .. code-block:: sub
 
-      ~/cylc-run/<suite-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
+      ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
 
    The :term:`job submission number` starts at 1 and increments by 1 each time
    a task is re-run.
@@ -278,37 +278,37 @@ Where Do All The Files Go?
    The Work Directory
       .. code-block:: sub
 
-         ~/cylc-run/<suite-name>/work/<cycle-point>/<task-name>
+         ~/cylc-run/<workflow-name>/work/<cycle-point>/<task-name>
    The Job Log Directory
       .. code-block:: sub
 
-         ~/cylc-run/<suite-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
+         ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
 
       .. image:: ../img/cylc-gui-view-log.png
          :align: center
          :scale: 75%
 
 
-Running A Suite
----------------
+Running A Workflow
+------------------
 
 .. ifnotslides::
 
-   It is a good idea to check a suite for errors before running it.
+   It is a good idea to check a workflow for errors before running it.
    Cylc provides a command which automatically checks for any obvious
    configuration issues called ``cylc validate``, run via:
 
 .. code-block:: sub
 
-   cylc validate <path/to/suite>
+   cylc validate <path/to/workflow>
 
 .. ifnotslides::
 
-   Here ``<path/to/suite>`` is the path to the suite's location within the
-   filesystem (so if we create a suite in ``~/cylc-run/foo`` we would put
+   Here ``<path/to/workflow>`` is the path to the workflow's location within the
+   filesystem (so if we create a workflow in ``~/cylc-run/foo`` we would put
    ``~/cylc-run/foo/flow.cylc``).
 
-   Next we can run the suite using the ``cylc play`` command.
+   Next we can run the workflow using the ``cylc play`` command.
 
 .. code-block:: sub
 
@@ -321,29 +321,29 @@ Running A Suite
 
 .. note::
 
-   In this tutorial we are writing our suites in the ``cylc-run`` directory.
+   In this tutorial we are writing our workflows in the ``cylc-run`` directory.
 
    It is possible to write them elsewhere on the system. If we do so we
    must install the workflow with ``cylc install`` before use. For more
    information, see :ref:`Installing-workflows`.
 
-Suite Files
------------
+Workflow Files
+--------------
 
 .. ifnotslides::
 
-   Cylc generates files and directories when it runs a suite, namely:
+   Cylc generates files and directories when it runs a workflow, namely:
 
    ``log/``
       Directory containing log files, including:
 
       ``log/db``
-         The database which Cylc uses to record the state of the suite;
+         The database which Cylc uses to record the state of the workflow;
       ``log/job``
          The directory where the :term:`job log files <job log>` live;
-      ``log/suite``
-         The directory where the :term:`suite log files <suite log>` live.
-         These files are written by Cylc as the suite is run and are useful for
+      ``log/workflow``
+         The directory where the :term:`workflow log files <workflow log>` live.
+         These files are written by Cylc as the workflow is run and are useful for
          debugging purposes in the event of error.
 
    ``flow.cylc.processed``
@@ -362,7 +362,7 @@ Suite Files
    * ``log/``
       * ``log/db``
       * ``log/job``
-      * ``log/suite``
+      * ``log/workflow``
    * ``flow.cylc.processed``
    * ``share/``
    * ``work/``
@@ -370,7 +370,7 @@ Suite Files
    .. nextslide::
 
    .. rubric:: In this practical we will add some scripts to, and run, the
-      :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
+      :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
    Next section: :ref:`tutorial-cylc-runtime-configuration`
@@ -379,13 +379,13 @@ Suite Files
 .. practical::
 
    .. rubric:: In this practical we will add some scripts to, and run, the
-      :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
+      :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
       The following command will copy some files for us to work with into
-      a new suite called ``runtime-introduction``:
+      a new workflow called ``runtime-introduction``:
 
       .. code-block:: bash
 
@@ -393,7 +393,7 @@ Suite Files
          cd ~/cylc-run/runtime-introduction
 
       In this directory we have the :cylc:conf:`flow.cylc` file from the
-      :ref:`weather forecasting suite <tutorial-datetime-cycling-practical>`
+      :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
       with some runtime configuration added to it.
 
       There is also a script called ``get-observations`` located in the bin
@@ -401,9 +401,9 @@ Suite Files
 
       Take a look at the ``[runtime]`` section in the :cylc:conf:`flow.cylc` file.
 
-   #. **Run The Suite.**
+   #. **Run The Workflow.**
 
-      First validate the suite by running:
+      First validate the workflow by running:
 
       .. code-block:: bash
 
@@ -415,7 +415,7 @@ Suite Files
 
          cylc gui runtime-introduction &
 
-      Finally run the suite by executing:
+      Finally run the workflow by executing:
 
       .. code-block:: bash
 
@@ -424,12 +424,12 @@ Suite Files
       The tasks will start to run - you should see them going through the
       "Waiting", "Running" and "Succeeded" states.
 
-      When the suite reaches the final cycle point and all tasks have succeeded
+      When the workflow reaches the final cycle point and all tasks have succeeded
       it will shutdown automatically and the GUI will go blank.
 
       .. tip::
 
-         You can also run a suite from the Cylc GUI by pressing the "play"
+         You can also run a workflow from the Cylc GUI by pressing the "play"
          button.
 
          .. image:: ../img/gcylc-play.png
@@ -438,7 +438,7 @@ Suite Files
          A box will appear. Ensure that "Cold Start" is selected then press
          "Start".
 
-         .. image:: ../img/cylc-gui-suite-start.png
+         .. image:: ../img/cylc-gui-workflow-start.png
             :align: center
 
    #. **Inspect A Job Log.**
@@ -455,7 +455,7 @@ Suite Files
 
       .. code-block:: none
 
-         Suite    : runtime-introduction
+         Workflow    : runtime-introduction
          Task Job : 20000101T0000Z/get_observations_heathrow/01 (try 1)
          User@Host: username@hostname
 
@@ -486,7 +486,7 @@ Suite Files
 
    #. **Extension: Explore The Cylc GUI**
 
-      * Try re-running the suite.
+      * Try re-running the workflow.
 
       * Try changing the current view(s).
 

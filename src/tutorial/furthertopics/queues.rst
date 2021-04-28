@@ -9,9 +9,9 @@ systems with too many tasks at once.
 Example
 -------
 
-In this example, our suite manages a particularly understaffed restaurant.
+In this example, our workflow manages a particularly understaffed restaurant.
 
-Create a new suite called ``queues-tutorial``::
+Create a new workflow called ``queues-tutorial``::
 
    rose tutorial queues-tutorial
    cd ~/cylc-run/queues-tutorial
@@ -61,7 +61,7 @@ You will now have a :cylc:conf:`flow.cylc` file that looks like this:
 
       foo => bar & baz
 
-Open the ``cylc gui`` then run the suite::
+Open the ``cylc gui`` then run the workflow::
 
    cylc gui queues-tutorial &
    cylc play queues-tutorial
@@ -88,7 +88,7 @@ section like so:
                limit = 2  # Only 2 dessert dishes at one time.
                members = DESSERT
 
-Re-open the ``cylc gui`` if you have closed it and re-run the suite.
+Re-open the ``cylc gui`` if you have closed it and re-run the workflow.
 
 You should see that there are now never more than 3 active ``MAINS`` tasks
 running and never more than 2 active ``DESSERT`` tasks running.

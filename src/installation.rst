@@ -249,7 +249,7 @@ for use with Cylc and don't source unwanted systems or echo to stdout.
    - Note that much of the UI Dashboard is not functional yet. The functional
      links are:
      - Cylc Hub
-     - Suite Design Guide (web link)
+     - Workflow Design Guide (web link)
      - Documentation (web link)
 
    .. figure:: img/installation/conda/dashboard.png

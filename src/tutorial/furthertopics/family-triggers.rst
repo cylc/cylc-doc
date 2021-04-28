@@ -45,7 +45,7 @@ Foo ``cylc gui`` bar
 Example
 -------
 
-Create a new suite called ``tutorial-family-triggers``::
+Create a new workflow called ``tutorial-family-triggers``::
 
    mkdir ~/cylc-run/tutorial-family-triggers
    cd ~/cylc-run/tutorial-family-triggers
@@ -75,7 +75,7 @@ Paste the following configuration into the :cylc:conf:`flow.cylc` file:
        [[doc, grumpy, sleepy, happy, bashful, sneezy, dopey]]
            inherit = MINERS
 
-You have now created a suite that:
+You have now created a workflow that:
 
 * Has a ``visit_mine`` task that sleeps for 5 seconds then outputs a
   message.
@@ -83,21 +83,21 @@ You have now created a suite that:
   or fails.
 * Has 7 tasks that inherit from the ``MINERS`` family.
 
-Open the ``cylc gui`` then run the suite by pressing the "play" button
+Open the ``cylc gui`` then run the workflow by pressing the "play" button
 (top left hand corner) then clicking :guilabel:`Start`::
 
    cylc gui tutorial-family-triggers &
 
 You should see the ``visit_mine`` task run, then trigger the members of the
 ``MINERS`` family. Note that some of the ``MINERS`` tasks may fail so you
-will need to stop your suite using the "stop" button in the ``cylc gui`` in
+will need to stop your workflow using the "stop" button in the ``cylc gui`` in
 order to allow it to shutdown.
 
 
 Family Triggering: Success
 --------------------------
 
-As you will have noticed by watching the suite run, some of the tasks in the
+As you will have noticed by watching the workflow run, some of the tasks in the
 ``MINERS`` family succeed and some fail.
 
 We would like to add a task to sell any diamonds we find, but wait for all
@@ -126,12 +126,12 @@ Then, add the following task to the ``[runtime]`` section:
    [[sell_diamonds]]
       script = sleep 5
 
-These changes add a ``sell_diamonds`` task to the suite which is run once
+These changes add a ``sell_diamonds`` task to the workflow which is run once
 all the ``MINERS`` tasks have finished and if any of them have succeeded.
 
-Save your changes and run your suite. You should see the new
+Save your changes and run your workflow. You should see the new
 ``sell_diamonds`` task being run once all the miners have finished and at
-least one of them has succeeded. As before, stop your suite using the "stop"
+least one of them has succeeded. As before, stop your workflow using the "stop"
 button in the ``cylc gui``.
 
 
@@ -168,9 +168,9 @@ Alter the ``[[sell_diamonds]]`` section to look like this:
 These changes add a ``close_shafts`` task which is run once all the
 ``MINERS`` tasks have finished and any of them have failed. On completion
 it applies a *suicide trigger* to the ``MINERS`` family in order to allow
-the suite to shutdown.
+the workflow to shutdown.
 
-Save your changes and run your suite. You should see the new
+Save your changes and run your workflow. You should see the new
 ``close_shafts`` run should any of the ``MINERS`` tasks be in the failed
 state once they have all finished.
 

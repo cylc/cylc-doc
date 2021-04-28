@@ -96,7 +96,7 @@ ISO8601 Durations
 Date-Time Recurrences
 ---------------------
 
-In :term:`integer cycling`, suites' recurrences are written ``P1``, ``P2``,
+In :term:`integer cycling`, workflows' recurrences are written ``P1``, ``P2``,
 etc.
 
 In :term:`date-time cycling <datetime cycling>` there are two ways to write
@@ -254,12 +254,12 @@ UTC Mode
 
    Due to all of the difficulties caused by time zones, particularly with
    respect to daylight savings, we typically use UTC (that's the ``+00`` time
-   zone) in Cylc suites.
+   zone) in Cylc workflows.
 
-   When a suite uses UTC all of the cycle points will be written in the
+   When a workflow uses UTC all of the cycle points will be written in the
    ``+00`` time zone.
 
-   To make your suite use UTC set the ``[scheduler]UTC mode`` setting to ``True``,
+   To make your workflow use UTC set the ``[scheduler]UTC mode`` setting to ``True``,
    i.e:
 
 .. code-block:: cylc
@@ -275,17 +275,17 @@ Putting It All Together
 
 .. ifslides::
 
-   We will now develop a simple weather forecasting suite.
+   We will now develop a simple weather forecasting workflow.
 
 .. ifnotslides::
 
    Cylc was originally developed for running operational weather forecasting. In
-   this section we will outline a basic (dummy) weather-forecasting suite and
+   this section we will outline a basic (dummy) weather-forecasting workflow and
    explain how to implement it in cylc.
 
    .. note::
 
-      Technically the suite outlined in this section is a `nowcasting`_ suite.
+      Technically the workflow outlined in this section is a `nowcasting`_ workflow.
       We will refer to it as forecasting for simplicity.
 
    A basic weather-forecasting workflow consists of three main steps:
@@ -420,10 +420,10 @@ Putting It All Together
 
 .. practical::
 
-   .. rubric:: In this practical we will create a dummy forecasting suite
+   .. rubric:: In this practical we will create a dummy forecasting workflow
       using date-time cycling.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
       Within your ``~/cylc-run`` directory create a new directory called
       ``datetime-cycling`` and move into it:
@@ -446,7 +446,7 @@ Putting It All Together
 
    #. **Add The Recurrences.**
 
-      The weather-forecasting suite will require two
+      The weather-forecasting workflow will require two
       recurrences. Add sections under the ``graph`` section for these,
       based on the information given above.
 
@@ -477,7 +477,7 @@ Putting It All Together
    #. **Write The Graphing.**
 
       With the help of the graphs and the information above add dependencies to
-      your suite to implement the weather-forecasting workflow.
+      your workflow to implement the weather-forecasting workflow.
 
       You will need to consider the inter-cycle dependencies between tasks.
 
@@ -564,7 +564,7 @@ Putting It All Together
 
       We can express this dependency as ``forecast[-PT6H] => forecast``.
 
-      Try adding this line to your suite then visualising it with ``cylc
+      Try adding this line to your workflow then visualising it with ``cylc
       graph``.
 
       .. hint::
@@ -599,7 +599,7 @@ Putting It All Together
       must add a new dependency section which repeats every six hours
       **starting 12 hours after the initial cycle point**.
 
-      Make the following changes to your suite and the grey task should
+      Make the following changes to your workflow and the grey task should
       disappear:
 
       .. code-block:: diff

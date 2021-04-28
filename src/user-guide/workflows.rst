@@ -23,7 +23,7 @@ Cycling Workflows
 
 This is Cylc's classic cycling mode as described in the Introduction. Each
 instance of a cycling job is represented by a new instance of *the same task*,
-with a new cycle point. The suite configuration defines patterns for
+with a new cycle point. The workflow configuration defines patterns for
 extending the workflow on the fly, so it can keep running indefinitely if
 necessary. For example, to cycle ``model.exe`` on a monthly sequence we
 could define a single task ``model``, an initial cycle point, and a
@@ -32,10 +32,10 @@ task instance for each cycle point as it comes up. Workflow dependencies are
 defined generically with respect to the "current cycle point" of the tasks
 involved.
 
-This is the only sensible way to run very large suites or operational suites
+This is the only sensible way to run very large workflows or operational workflows
 that need to continue cycling indefinitely. The cycling is configured with
 standards-based ISO 8601 date-time *recurrence expressions*. Multiple
-cycling sequences can be used at once in the same suite. See
+cycling sequences can be used at once in the same workflow. See
 :ref:`User Guide Scheduling`.
 
 
@@ -47,7 +47,7 @@ Parameterized Tasks as a Proxy for Cycling
 It is also possible to run cycling jobs with a pre-defined static workflow in
 which each instance of a cycling job is represented by *a different task*:
 as far as the abstract workflow is concerned there is no cycling. The sequence
-of tasks can be constructed efficiently, however, using Cylc's built-in suite
+of tasks can be constructed efficiently, however, using Cylc's built-in workflow
 parameters (:ref:`Parameterized Cycling`) or explicit Jinja2 loops
 (:ref:`User Guide Jinja2`).
 

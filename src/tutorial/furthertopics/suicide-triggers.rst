@@ -3,14 +3,14 @@
 Suicide Triggers
 ================
 
-Suicide triggers allow us to remove a task from the suite's graph whilst the
-suite is running.
+Suicide triggers allow us to remove a task from the workflow's graph whilst the
+workflow is running.
 
 The main use of suicide triggers is for handling failures in the workflow.
 
 
-Stalled Suites
---------------
+Stalled Workflows
+-----------------
 
 Imagine a bakery which has a workflow that involves making cake.
 
@@ -33,15 +33,15 @@ it will get burnt. In the case that we burn the cake the workflow gets stuck.
    make_cake_mixture -> bake_cake -> sell_cake
 
 In this event the ``sell_cake`` task will be unable to run as it depends on
-``bake_cake``. We would say that this suite has :term:`stalled <stalled suite>`.
-When Cylc detects that a suite has stalled it sends you an email to let you
-know that the suite has got stuck and requires human intervention to proceed.
+``bake_cake``. We would say that this workflow has :term:`stalled <stalled workflow>`.
+When Cylc detects that a workflow has stalled it sends you an email to let you
+know that the workflow has got stuck and requires human intervention to proceed.
 
 
 Handling Failures
 -----------------
 
-In order to prevent the suite from entering a stalled state we need to handle
+In order to prevent the workflow from entering a stalled state we need to handle
 the failure of the ``bake_cake`` task.
 
 At the bakery if they burn a cake they eat it and make another.
@@ -100,7 +100,7 @@ We can add this logic to our workflow using the ``fail`` :term:`qualifier`.
 Why Do We Need To Remove Tasks From The Graph?
 ----------------------------------------------
 
-Create a new suite called ``suicide-triggers``::
+Create a new workflow called ``suicide-triggers``::
 
    mkdir -p ~/cylc-run/suicide-triggers
    cd ~/cylc-run/suicide-triggers
@@ -127,16 +127,16 @@ Paste the following code into the :cylc:conf:`flow.cylc` file:
            # Random outcome 50% chance of success 50% chance of failure.
            script = sleep 2; if (( $RANDOM % 2 )); then true; else false; fi
 
-Open the ``cylc gui`` and run the suite::
+Open the ``cylc gui`` and run the workflow::
 
    cylc gui suicide-triggers &
    cylc play suicide-triggers
 
-The suite will run for three cycles then get stuck (because of the
+The workflow will run for three cycles then get stuck (because of the
 :cylc:conf:`[scheduling]runahead limit`).
 You should see something similar to the diagram below. As the ``bake_cake``
 task fails randomly what you see might differ slightly. You may receive a
-"suite stalled" email.
+"workflow stalled" email.
 
 .. digraph:: Example
    :align: center
@@ -215,7 +215,7 @@ task fails randomly what you see might differ slightly. You may receive a
    "make_cake_mixture.3" -> "bake_cake.3" -> "sell_cake.3"
    "bake_cake.3" -> "eat_cake.3"
 
-The reason the suite stalls is that, by default, Cylc will run a maximum of
+The reason the workflow stalls is that, by default, Cylc will run a maximum of
 five cycles concurrently. As each cycle has at least one task which hasn't
 either succeeded or failed Cylc cannot move onto the next cycle.
 
@@ -231,7 +231,7 @@ have not yet been run in earlier cycles and as such cannot run.
 Removing Tasks From The Graph
 -----------------------------
 
-In order to get around these problems and prevent the suite from stalling we
+In order to get around these problems and prevent the workflow from stalling we
 must remove the tasks that are no longer needed. We do this using suicide
 triggers.
 
@@ -264,13 +264,13 @@ example:
       bake_cake:fail => ! sell_cake
 
 #. If the ``bake_cake`` task fails then we will need to remove it else the
-   suite will stall. We can do this after the ``eat_cake`` task has succeeded.
+   workflow will stall. We can do this after the ``eat_cake`` task has succeeded.
 
    .. code-block:: cylc-graph
 
       eat_cake => ! bake_cake
 
-Add the following three lines to the suite's graph:
+Add the following three lines to the workflow's graph:
 
 .. code-block:: cylc-graph
 
@@ -369,13 +369,13 @@ of the ``sell_cake`` or ``eat_cake`` tasks is run.
    "eat_cake.1" -> "make_cake_mixture.2" [arrowhead="onormal"]
    "sell_cake.1" -> "make_cake_mixture.2" [arrowhead="onormal"]
 
-Add the following :term:`graph string` to your suite.
+Add the following :term:`graph string` to your workflow.
 
 .. code-block:: cylc-graph
 
    eat_cake[-P1] | sell_cake[-P1] => make_cake_mixture
 
-Open the ``cylc gui`` and run the suite. You should see that if the
+Open the ``cylc gui`` and run the workflow. You should see that if the
 ``bake_cake`` task fails both it and the ``sell_cake`` task disappear and
 are replaced by the ``eat_cake`` task.
 

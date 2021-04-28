@@ -110,7 +110,7 @@ Graphing
 
 .. ifnotslides::
 
-   :term:`Families <family>` can be used in the suite's :term:`graph`, e.g:
+   :term:`Families <family>` can be used in the workflow's :term:`graph`, e.g:
 
 .. code-block:: cylc-graph
 
@@ -212,7 +212,7 @@ Families and ``cylc graph``
 .. ifslides::
 
    .. rubric:: In this practical we will consolidate the configuration of the
-      :ref:`weather-forecasting suite <tutorial-cylc-runtime-forecasting-suite>`
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
       from the previous section.
 
    Next section: :ref:`Jinja2 <tutorial-cylc-jinja2>`
@@ -223,12 +223,12 @@ Families and ``cylc graph``
 .. practical::
 
    .. rubric:: In this practical we will consolidate the configuration of the
-      :ref:`weather-forecasting suite <tutorial-cylc-runtime-forecasting-suite>`
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
       from the previous section.
 
-   1. **Create A New Suite.**
+   1. **Create A New Workflow.**
 
-      To make a new copy of the forecasting suite run the following commands:
+      To make a new copy of the forecasting workflow run the following commands:
 
       .. code-block:: bash
 
@@ -290,16 +290,16 @@ Families and ``cylc graph``
          -        DOMAIN = -12,48,5,61  # Do not change!
                   # The path to the files containing wind data (the {variables} will
                   # get substituted in the forecast script).
-                  WIND_FILE_TEMPLATE = $CYLC_SUITE_WORK_DIR/{cycle}/consolidate_observations/wind_{xy}.csv
+                  WIND_FILE_TEMPLATE = $CYLC_WORKFLOW_WORK_DIR/{cycle}/consolidate_observations/wind_{xy}.csv
                   # List of cycle points to process wind data from.
                   WIND_CYCLES = 0, -3, -6
 
                   # The path to the rainfall file.
-                  RAINFALL_FILE = $CYLC_SUITE_WORK_DIR/$CYLC_TASK_CYCLE_POINT/get_rainfall/rainfall.csv
+                  RAINFALL_FILE = $CYLC_WORKFLOW_WORK_DIR/$CYLC_TASK_CYCLE_POINT/get_rainfall/rainfall.csv
                   # Create the html map file in the task's log directory.
                   MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map.html"
                   # The path to the template file used to generate the html map.
-                  MAP_TEMPLATE = "$CYLC_SUITE_RUN_DIR/lib/template/map.html"
+                  MAP_TEMPLATE = "$CYLC_WORKFLOW_RUN_DIR/lib/template/map.html"
 
           [[post_process_exeter]]
               # Generate a forecast for Exeter 60 minutes into the future.

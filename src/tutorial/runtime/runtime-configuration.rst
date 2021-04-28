@@ -5,7 +5,7 @@ Runtime Configuration
 
 .. TODO - platformise all the examples in here
 
-In the last section we associated tasks with scripts and ran a simple suite. In
+In the last section we associated tasks with scripts and ran a simple workflow. In
 this section we will look at how we can configure these tasks.
 
 
@@ -30,7 +30,7 @@ Environment Variables
 
    Each job is also provided with some standard environment variables e.g:
 
-   ``CYLC_SUITE_RUN_DIR``
+   ``CYLC_WORKFLOW_RUN_DIR``
        The path to the :term:`run directory`
        *(e.g. ~/cylc-run/workflow)*.
    ``CYLC_TASK_WORK_DIR``
@@ -45,7 +45,7 @@ Environment Variables
 
 .. ifslides::
 
-   * ``CYLC_SUITE_RUN_DIR``
+   * ``CYLC_WORKFLOW_RUN_DIR``
    * ``CYLC_TASK_WORK_DIR``
    * ``CYLC_TASK_CYCLE_POINT``
 
@@ -57,7 +57,7 @@ Job Submission
 
 .. ifnotslides::
 
-   By default Cylc runs :term:`jobs <job>` on the machine where the suite is
+   By default Cylc runs :term:`jobs <job>` on the machine where the workflow is
    running. We can tell Cylc to run jobs on other machines by setting the
    :term:`platform` setting: If, for example you want to run a task job on a
    platform called ``powerful_computer`` you would write:
@@ -184,9 +184,9 @@ Start, Stop, Restart
 
 .. ifnotslides::
 
-   We have seen how to start and stop Cylc suites with ``cylc play`` and
+   We have seen how to start and stop Cylc workflows with ``cylc play`` and
    ``cylc stop`` respectively. The ``cylc stop`` command causes Cylc to wait
-   for all running jobs to finish before it stops the suite. There are two
+   for all running jobs to finish before it stops the workflow. There are two
    options which change this behaviour:
 
    ``cylc stop --kill``
@@ -197,17 +197,17 @@ Start, Stop, Restart
       When the ``--now`` option is used twice Cylc stops straight away, leaving
       any jobs running.
 
-   Once a suite has stopped it is possible to restart it using
-   ``cylc play`` command. When the suite restarts it picks up where it left
+   Once a workflow has stopped it is possible to restart it using
+   ``cylc play`` command. When the workflow restarts it picks up where it left
    off and carries on as normal.
 
    .. code-block:: bash
 
-      # Run the suite "name".
+      # Run the workflow "name".
       cylc play <name>
-      # Stop the suite "name", killing any running tasks.
+      # Stop the workflow "name", killing any running tasks.
       cylc stop <name> --kill
-      # Restart the suite "name", picking up where it left off.
+      # Restart the workflow "name", picking up where it left off.
       cylc play <name>
 
 .. ifslides::
@@ -224,35 +224,35 @@ Start, Stop, Restart
    .. nextslide::
 
    .. rubric:: In this practical we will add runtime configuration to the
-      :ref:`weather-forecasting suite <tutorial-datetime-cycling-practical>`
+      :ref:`weather-forecasting workflow <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
    Next section: :ref:`tutorial-cylc-consolidating-configuration`
 
 
-.. _tutorial-cylc-runtime-forecasting-suite:
+.. _tutorial-cylc-runtime-forecasting-workflow:
 
 .. practical::
 
    .. rubric:: In this practical we will add runtime configuration to the
-      :ref:`weather-forecasting suite <tutorial-datetime-cycling-practical>`
+      :ref:`weather-forecasting workflow <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
-   #. **Create A New Suite.**
+   #. **Create A New Workflow.**
 
-      Create a new suite by running the command:
+      Create a new workflow by running the command:
 
       .. code-block:: bash
 
          rose tutorial runtime-tutorial
          cd ~/cylc-run/runtime-tutorial
 
-      You will now have a copy of the weather-forecasting suite along with some
+      You will now have a copy of the weather-forecasting workflow along with some
       executables and python modules.
 
    #. **Set The Initial And Final Cycle Points.**
 
-      We want the suite to run for 6 hours, starting at least 7 hours ago, on
+      We want the workflow to run for 6 hours, starting at least 7 hours ago, on
       the hour.
 
       We could work out the dates and times manually, or we could let Cylc do
@@ -368,20 +368,20 @@ Start, Stop, Restart
 
          cylc gui runtime-tutorial &
 
-      Run the suite either by pressing the play button in the Cylc GUI or by
+      Run the workflow either by pressing the play button in the Cylc GUI or by
       running the command:
 
       .. code-block:: bash
 
          cylc play runtime-tutorial
 
-      If all goes well the suite will startup and the tasks will run and
+      If all goes well the workflow will startup and the tasks will run and
       succeed. Note that the tasks which do not have a ``[runtime]`` section
       will still run though they will not do anything as they do not call any
       scripts.
 
-      Once the suite has reached the final cycle point and all tasks have
-      succeeded the suite will automatically shutdown.
+      Once the workflow has reached the final cycle point and all tasks have
+      succeeded the workflow will automatically shutdown.
 
       .. TODO: Advise on what to do if all does not go well.
 
@@ -426,9 +426,9 @@ Start, Stop, Restart
 
       .. TODO: Add advice on what to do if the command fails.
 
-   #. **Run The Suite.**
+   #. **Run The Workflow.**
 
-      Open the Cylc GUI (if not already open) and run the suite.
+      Open the Cylc GUI (if not already open) and run the workflow.
 
       .. spoiler:: Hint hint
 
@@ -436,7 +436,7 @@ Start, Stop, Restart
 
             cylc gui runtime-tutorial &
 
-         Run the suite either by:
+         Run the workflow either by:
 
          * Pressing the play button in the Cylc GUI. Then, ensuring that
            "Cold Start" is selected within the dialogue window, pressing the
@@ -458,7 +458,7 @@ Start, Stop, Restart
 
       .. spoiler:: Hint hint
 
-         * ``cycle-point`` - this will be the last cycle of the suite,
+         * ``cycle-point`` - this will be the last cycle of the workflow,
            i.e. the final cycle point.
          * ``task-name`` - set this to "post_process_exeter".
 
@@ -484,7 +484,7 @@ Start, Stop, Restart
 
       .. spoiler:: Hint hint
 
-         * ``cycle-point`` - this will be the last cycle of the suite,
+         * ``cycle-point`` - this will be the last cycle of the workflow,
            i.e. the final cycle point.
          * ``task-name`` - set this to "forecast".
          * ``submission-number`` - set this to "01".

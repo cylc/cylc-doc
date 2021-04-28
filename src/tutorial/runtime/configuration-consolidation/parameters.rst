@@ -273,7 +273,7 @@ Parameters can be either words or integers:
 
          cylc config . --sparse -i "[runtime]"
 
-      Finally we can use this parameterisation to simplify the suite's
+      Finally we can use this parameterisation to simplify the workflow's
       graphing. Replace the ``get_observations`` lines in the graph with
       ``get_observations<station>``:
 

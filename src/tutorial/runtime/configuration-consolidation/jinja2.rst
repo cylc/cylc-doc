@@ -7,7 +7,7 @@ Jinja2
 ======
 
 `Jinja2`_ is a templating language often used in web design with some
-similarities to python. It can be used to make a suite definition more
+similarities to python. It can be used to make a workflow definition more
 dynamic.
 
 
@@ -194,7 +194,7 @@ This would result in:
 
          {% set API_KEY = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' %}
 
-      Next replace the key, where it appears in the suite, with
+      Next replace the key, where it appears in the workflow, with
       ``{{ API_KEY }}``:
 
       .. code-block:: diff

@@ -1,0 +1,40 @@
+# FLOW.CYLC
+#
+[meta]
+    title = "User Guide [runtime] example."
+
+[scheduling]
+    initial cycle point = 20110101T06
+    final cycle point = 20110102T00
+    [[graph]]
+        T00 = """
+            foo => OBS
+            OBS:succeed-all => bar
+        """
+
+# TODO: platformise
+[runtime]
+    [[root]] # base namespace for all tasks (defines workflow-wide defaults)
+        [[[job]]]
+            batch system = at
+        [[[environment]]]
+            COLOR = red
+    [[OBS]]  # family (inherited by land, ship); implicitly inherits root
+        script = run-${CYLC_TASK_NAME}.sh
+        [[[environment]]]
+            RUNNING_DIR = $HOME/running/$CYLC_TASK_NAME
+    [[land]] # a task (a leaf on the inheritance tree) in the OBS family
+        inherit = OBS
+        [[[meta]]]
+            description = land obs processing
+    [[ship]] # a task (a leaf on the inheritance tree) in the OBS family
+        inherit = OBS
+        [[[meta]]]
+            description = ship obs processing
+        [[[job]]]
+            batch system = loadleveler
+        [[[environment]]]
+            RUNNING_DIR = $HOME/running/ship  # override OBS environment
+            OUTPUT_DIR = $HOME/output/ship    # add to OBS environment
+    [[foo, bar]]
+        # (just inherit from root)

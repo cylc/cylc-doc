@@ -31,7 +31,7 @@ task event handling system. More information is available on these in the
 
 
 :term:`Message triggers <message trigger>` provide a superior solution to
-the problem of file system polling. We could, for example, design our suite
+the problem of file system polling. We could, for example, design our workflow
 such that we check if our task is finished by polling at intervals.
 It is inefficient to 'spam' task hosts with polling commands, it is preferable
 to set up a message trigger.
@@ -39,17 +39,17 @@ to set up a message trigger.
 How to create a message trigger
 -------------------------------
 
-In order to get our suite to trigger messages, we need to:
+In order to get our workflow to trigger messages, we need to:
 
 * specify our custom message in a section called ``[[outputs]]`` within the
-     ``[runtime]`` section of our suite,
+     ``[runtime]`` section of our workflow,
 
-* add ``cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
+* add ``cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
      to the ``script`` section of ``[runtime]``, your chosen trigger message
      should be unique and should exactly match the message defined in
      ``[[outputs]]``.
 
-* Refer to these messages in the ``[dependencies]`` section of our suite.
+* Refer to these messages in the ``[dependencies]`` section of our workflow.
 
 These outputs are then triggered during the running of the task.
 We can use these to manage tasks dependent on partially completed tasks.
@@ -69,7 +69,7 @@ triggers another task bar and when fully completed triggers another task, baz.
           [[foo]]
               script = """
                   sleep 5
-                  cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" "file 1 done"
+                  cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" "file 1 done"
                   sleep 10
               """
               [[[outputs]]]
@@ -82,7 +82,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
 .. practical::
 
-   .. rubric:: In this practical example, we will create a suite to demonstrate
+   .. rubric:: In this practical example, we will create a workflow to demonstrate
       :term:`message triggers <message trigger>`. We will use message triggers
       to both produce a report and trigger a new task from a partially completed
       task.
@@ -98,9 +98,9 @@ triggers another task bar and when fully completed triggers another task, baz.
          mkdir ~/cylc-run/message-triggers
          cd ~/cylc-run/message-triggers
 
-   #. **Install the script needed for our suite**
+   #. **Install the script needed for our workflow**
 
-      The suite we will be designing requires a bash script, ``random.sh``,
+      The workflow we will be designing requires a bash script, ``random.sh``,
       to produce our report. It will simply create a text file ``report.txt``
       with some random numbers in it. This will be executed when the associated
       task is run.
@@ -144,9 +144,9 @@ triggers another task bar and when fully completed triggers another task, baz.
          done
 
 
-   #. **Create a new suite.**
+   #. **Create a new workflow.**
 
-      Create a :cylc:conf:`flow.cylc` file and paste the following basic suite into it:
+      Create a :cylc:conf:`flow.cylc` file and paste the following basic workflow into it:
 
       .. code-block:: cylc
 
@@ -154,7 +154,7 @@ triggers another task bar and when fully completed triggers another task, baz.
              UTC mode = True
 
          [meta]
-             title = "test suite to demo message triggers"
+             title = "test workflow to demo message triggers"
 
          [scheduling]
              initial cycle point = 2019-06-27T00Z
@@ -169,13 +169,13 @@ triggers another task bar and when fully completed triggers another task, baz.
                          long_forecasting_task[-P2M] => long_forecasting_task
                      """
 
-      This is a basic suite, currently it does not have any message triggers
+      This is a basic workflow, currently it does not have any message triggers
       attached to any task.
 
 
    #. **Define our tasks in the runtime section.**
 
-      Next we want to create our ``runtime`` section of our suite.
+      Next we want to create our ``runtime`` section of our workflow.
       First we define what the tasks do. In this example
       ``long_forecasting_task`` will sleep, create a file containing some
       random numbers and produce a message.
@@ -207,7 +207,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Create message triggers.**
 
-      We now have a suite with a task, ``long_forecasting_task`` which, after
+      We now have a workflow with a task, ``long_forecasting_task`` which, after
       it has fully completed, triggers two more tasks, ``another_weather_task``
       and ``different_weather_task``.
 
@@ -222,7 +222,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       There are three aspects of creating messsage triggers.
       The first is to create the messages. Within ``runtime``, ``TASK`` in our
-      suite, we need to create a sub-section called ``outputs``. Here we create
+      workflow, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.
 
       .. code-block:: diff
@@ -251,11 +251,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                  script = """
                      sleep 2
                      random.sh
-         +           cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+         +           cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                           "Task partially complete, report ready to view"
                      sleep 2
                      random.sh
-         +           cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+         +           cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                           "Task partially complete, report updated"
                      sleep 2
                      random.sh
@@ -281,7 +281,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       This completes our :cylc:conf:`flow.cylc` file.
 
-      Our final suite should look like this:
+      Our final workflow should look like this:
 
       .. spoiler:: Solution warning
 
@@ -291,7 +291,7 @@ triggers another task bar and when fully completed triggers another task, baz.
             UTC mode = True
 
             [meta]
-            title = "test suite to demo message triggers"
+            title = "test workflow to demo message triggers"
 
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
@@ -312,11 +312,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                     script = """
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report ready to view"
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report updated"
                         sleep 2
                         random.sh
@@ -329,7 +329,7 @@ triggers another task bar and when fully completed triggers another task, baz.
                 [[another_weather_task, different_weather_task]]
                     script = sleep 1
 
-   #. **Validate the suite.**
+   #. **Validate the workflow.**
 
       It is a good idea to check that our :cylc:conf:`flow.cylc` file does not have any
       configuration issues.
@@ -340,28 +340,28 @@ triggers another task bar and when fully completed triggers another task, baz.
 
           cylc validate .
 
-   #. **Run the suite.**
+   #. **Run the workflow.**
 
-      Now we are ready to run our suite. Open the Cylc GUI by running the
+      Now we are ready to run our workflow. Open the Cylc GUI by running the
       following command:
 
       .. code-block:: bash
 
          cylc gui message-triggers &
 
-      Run the suite either by pressing the play button in the Cylc GUI or by
+      Run the workflow either by pressing the play button in the Cylc GUI or by
       running the command:
 
       .. code-block:: bash
 
          cylc play message-triggers
 
-      Your suite should now run, the tasks should succeed.
+      Your workflow should now run, the tasks should succeed.
 
    #. **Inspect the work directory.**
 
       You can now check for your report outputs. These should appear in the
-      :term:`work directory` of the suite. All being well, our first cycle
+      :term:`work directory` of the workflow. All being well, our first cycle
       point should produce a test file with some random numbers, and each
       subsequent cycle point file should have more random numbers added.
 
@@ -386,7 +386,7 @@ triggers another task bar and when fully completed triggers another task, baz.
            [[[events]]]
                mail events = update1, update2
 
-        Our updated suite should look like this:
+        Our updated workflow should look like this:
 
       .. spoiler:: Solution warning
 
@@ -395,7 +395,7 @@ triggers another task bar and when fully completed triggers another task, baz.
             [scheduler]
             UTC mode = True
             [meta]
-            title = "test suite to demo message triggers"
+            title = "test workflow to demo message triggers"
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
@@ -413,11 +413,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                     script = """
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report ready to view"
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_SUITE_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report updated"
                         sleep 2
                         random.sh
@@ -433,7 +433,7 @@ triggers another task bar and when fully completed triggers another task, baz.
                 [[another_weather_task, different_weather_task]]
                     script = sleep 1
 
-      Save your changes and run your suite.
+      Save your changes and run your workflow.
       Check your emails and you should have, one email for the first update and,
       a second email alerting you to the subsequent updated reports being ready.
 

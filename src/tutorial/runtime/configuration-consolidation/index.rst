@@ -7,7 +7,7 @@ Consolidating Configuration
 
    In the last section we wrote out the following code in the :cylc:conf:`flow.cylc` file:
 
-.. slide:: Weather Forecasting Suite
+.. slide:: Weather Forecasting Workflow
    :level: 2
    :inline-contents: True
 
@@ -46,7 +46,7 @@ Consolidating Configuration
 
 .. ifslides::
 
-   .. slide:: Weather Forecasting Suite
+   .. slide:: Weather Forecasting Workflow
       :level: 2
 
       Repetition
@@ -54,7 +54,7 @@ Consolidating Configuration
       * ``script``
       * ``API_KEY``
 
-.. slide:: Weather Forecasting Suite
+.. slide:: Weather Forecasting Workflow
    :level: 2
    :inline-contents: True
 
@@ -72,7 +72,7 @@ Consolidating Configuration
 .. nextslide::
 
 Cylc offers three ways of consolidating configurations to help improve the
-structure of a suite and avoid duplication.
+structure of a workflow and avoid duplication.
 
 .. toctree::
    :maxdepth: 1
@@ -141,7 +141,7 @@ The Three Approaches
 .. ifnotslides::
 
    The next three sections cover the three consolidation approaches and how we
-   could use them to simplify the suite from the previous tutorial. *Work
+   could use them to simplify the workflow from the previous tutorial. *Work
    through them in order!*
 
 * :ref:`families <tutorial-cylc-families>`
@@ -162,9 +162,9 @@ Which Approach To Use
    * :term:`Families <family>` work best consolidating runtime configuration by
      collecting tasks into broad groups, e.g. groups of tasks which run on a
      particular machine or groups of tasks belonging to a particular system.
-   * `Jinja2`_ is good at configuring settings which apply to the entire suite
+   * `Jinja2`_ is good at configuring settings which apply to the entire workflow
      rather than just a single task, as we can define variables then use them
-     throughout the suite.
+     throughout the workflow.
    * :term:`Parameterisation <parameterisation>` works best for describing tasks
      which are very similar but which have subtly different configurations
      (e.g. different arguments or environment variables).
@@ -176,7 +176,7 @@ Which Approach To Use
    Families
       Collecting tasks into broad groups.
    Jinja2
-      Configuration settings which apply to the entire suite.
+      Configuration settings which apply to the entire workflow.
    Parameterisation
       Tasks which are similar.
 

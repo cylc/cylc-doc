@@ -9,7 +9,7 @@ Tutorial
 
    This section has not yet been upgraded to match Cylc 8 changes.
 
-This section will cover the Cylc framework and writing basic Cylc suites.
+This section will cover the Cylc framework and writing basic Cylc workflows.
 
 .. toctree::
    :name: cylc-tutorial
