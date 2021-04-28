@@ -41,7 +41,7 @@ Install a workflow from source and run it:
      - **Cylc8** (Rose 2)
    * - ::
 
-         # no installation capibility
+         # no installation capability
          # run from source
          cylc run <name>
      - ::
@@ -98,7 +98,7 @@ Restart a stopped workflow and pick up where it left off:
      - **Cylc8** (Rose 2)
    * - ::
 
-         # no installation capibility
+         # no installation capability
          # restart from source
          cylc restart <name>
      - ::
@@ -207,7 +207,7 @@ for monitoring / controling running workflows:
 
            cylc hub
 
-         Then open the address ``0.0.0.0:8000`` in a web browser.
+         Then open the URL ``0.0.0.0:8000`` in a web browser.
 
 Static Graph Visualisation
 --------------------------
@@ -222,7 +222,7 @@ Generate a visualisation for a workflow without running it:
    * - ::
 
          cylc graph <name>
-     - Not yet implemnted. As a temporary workaround Graphviz can be used
+     - Not yet implemented. As a temporary workaround Graphviz can be used
        to render ``cylc graph --reference`` output like so:
 
        .. code-block:: bash
