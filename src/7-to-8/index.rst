@@ -17,5 +17,6 @@ algorithm, security, UIs, working practices, and more.
    :maxdepth: 2
 
    summary
+   caveats
    cheat-sheet
    major-changes/index
