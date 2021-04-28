@@ -13,16 +13,13 @@ The :cylc:conf:`flow.cylc` File Format
 
 .. ifnotslides::
 
-   We refer to a Cylc workflow as a :term:`Cylc workflow`. A Cylc workflow is a
-   directory containing a :cylc:conf:`flow.cylc` file. This configuration file is where
-   we define our workflow. The :cylc:conf:`flow.cylc` file uses a nested `INI`_-based
-   format:
+   A :term:`Cylc workflow` is defined by a :cylc:conf:`flow.cylc` configuration
+   file, which uses a nested `INI`_-based format:
 
 .. ifslides::
 
-   * Cylc workflow == Cylc workflow
-   * Cylc workflow is a directory containing a :cylc:conf:`flow.cylc` file
-   * The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format
+   * A Cylc workflow is defined by a :cylc:conf:`flow.cylc` file
+   * It is written in a nested `INI`_-based format
 
 .. ifnotslides::
 
@@ -313,7 +310,7 @@ Cylc Graphs
 
    #. **Create a Cylc workflow.**
 
-      A Cylc workflow is just a directory containing a :cylc:conf:`flow.cylc` file.
+      A :term:`Cylc workflow` is defined by a :cylc:conf:`flow.cylc` file.
 
       If you don't have one already, create a ``cylc-run`` directory in your
       user space i.e.
