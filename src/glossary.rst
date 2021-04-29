@@ -5,10 +5,35 @@ Glossary
    :sorted:
 
    workflow
-   Cylc workflow
-      A Cylc workflow is defined by a :cylc:conf:`flow.cylc` file
-      containing a dependency :term:`graph<graph>` and :term:`task`
-      definitions.
+   cylc workflow
+      A Cylc workflow is a collection of :term:`tasks <task>` to carry out and
+      :term:`dependencies <dependency>` that govern the order in which they
+      run. This is represented in Cylc format in a :cylc:conf:`flow.cylc` file.
+
+      For example here is a Cylc workflow representing the brewing process:
+
+      .. code-block:: cylc
+         :caption: flow.cylc
+
+         [scheduling]
+             cycling mode = integer
+             initial cycle point = 1
+             [[graph]]
+                 # repeat this for each batch
+                 P1 = """
+                     # the stages of brewing in the order they must occur in
+                     malt => mash => sparge => boil => chill => ferment => rack
+
+                     # must finish the sparge of one batch before
+                     # starting the next one
+                     # sparge[-P1] => mash
+                 """
+
+      .. admonition:: Cylc 7
+         :class: tip
+
+         In Cylc version 7 and earlier "workflows" were referred to as
+         "suites".
 
    graph
       The graph of a :term:`workflow<Cylc workflow>` refers to the
@@ -422,26 +447,6 @@ Glossary
 
       * :ref:`ImplicitTasks`
 
-   run directory
-      The run directory contains all of the configuration for a workflow, e.g.
-      the :cylc:conf:`flow.cylc` file.
-
-      It contains all the necessary files to run the workflow and typically
-      resides in the :term:`cylc-run directory`:
-
-      ``~/cylc-run/<workflow-name>``
-
-      The run directory can be accessed by a running workflow using
-      the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
-
-      See also:
-
-      * :term:`source directory`
-      * :term:`work directory`
-      * :term:`share directory`
-      * :term:`job log directory`
-      * :term:`cylc-run directory`
-
    work directory
       When Cylc executes a :term:`job` it does so inside the
       :term:`job's <job>` working directory. This directory is created by Cylc
@@ -524,13 +529,14 @@ Glossary
       workflows.
 
    contact file
-      The contact file records information about a running workflow such as the host it
-      is running on, the TCP port(s) it is listening on and the process ID.
-      The file is called ``contact`` and lives inside the workflow's
+      The contact file records information about a running workflow such as the
+      host it is running on, the TCP port(s) it is listening on and the process
+      ID. The file is called ``contact`` and lives inside the workflow's
       :term:`service directory`.
 
-      The contact file only exists when the workflow is running, if you delete the
-      contact file, the workflow will (after a delay) notice this and shut down.
+      The contact file only exists when the workflow is running, if you delete
+      the contact file, the workflow will (after a delay) notice this and shut
+      down.
 
       .. warning::
 
@@ -716,14 +722,67 @@ Glossary
       * :term:`run directory`
 
    source directory
-      Any directory where workflows are written and stored in preparation for
-      installation with ``cylc install`` or reinstallation with
-      ``cylc reinstall``.
+      Any directory where :term:`workflows <workflow>` are written and stored
+      in preparation for installation with ``cylc install`` or reinstallation
+      with ``cylc reinstall``.
+
+      .. tip::
+
+         You can configure the default locations where the ``cylc install``
+         will look for source directories using the
+         :cylc:conf:`global.cylc[install]source dirs` configuration.
 
       See also:
 
       * :term:`run directory`
       * :ref:`Installing-workflows`
+
+   run directory
+      This is a directory containing the configuration that Cylc uses to run
+      the :term:`workflow`.
+
+      Typically this is installed from the :term:`source directory` using
+      ``cylc install``.
+
+      The run directory can be accessed by a running workflow using
+      the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
+
+      See also:
+
+      * :term:`source directory`
+      * :term:`work directory`
+      * :term:`share directory`
+      * :term:`job log directory`
+      * :term:`cylc-run directory`
+
+   play
+      We run a :term:`workflow` using the ``cylc play`` command.
+
+      This starts a :term:`scheduler` which is the program that controls the
+      flow and is what we refer to as "running".
+
+      You can :term:`play`, :term:`pause` and :term:`stop` a :term:`flow`,
+      Cylc will always carry on where it left off.
+
+      See also:
+
+      * :term:`pause`
+      * :term:`stop`
+
+   pause
+      When a :term:`workflow` is "paused" the :term:`scheduler` is still
+      running, however, will not submit any new jobs.
+
+      This can be useful if you want to hold the workflow back whilst you make
+      a change.
+
+      Pause a workflow using ``cylc pause`` and unpause it using ``cylc play``.
+
+      See also:
+
+      * :term:`play`
+      * :term:`stop`
+      * :term:`hold`
 
    stop
    shutdown
@@ -737,6 +796,8 @@ Glossary
 
       See also:
 
+      * :term:`play`
+      * :term:`pause`
       * :ref:`Stopping Suites`
       * :term:`start`
       * :term:`restart`
@@ -759,26 +820,6 @@ Glossary
       * :term:`start`
       * :term:`stop`
       * :term:`reload`
-
-   pause
-      Pausing a :term:`workflow` prevents all submission of :term:`jobs <job>`.
-      However, any already-running or submitted jobs will still run to
-      completion.
-
-      See also:
-
-      * :term:`resume`
-
-   resume
-      When a :term:`paused <pause>` :term:`workflow` is resumed, :term:`jobs <job>`
-      will be allowed to be submitted once again.
-
-      Resuming the workflow is the behaviour of ``cylc play`` for a paused (but
-      not :term:`stopped <stop>`) workflow.
-
-      See also:
-
-      * :term:`pause`
 
    reload
       Any changes made to the :cylc:conf:`flow.cylc` file whilst the workflow is
@@ -815,10 +856,13 @@ Glossary
 
       .. note::
 
-         While similar to :term:`pausing a workflow <pause>`, holding a task(s)
-         is slightly different. Pausing a workflow does not hold tasks or
-         affect task states. Any held tasks are not :term:`released <release>`
-         when :term:`resuming <resume>` a paused workflow.
+         :term:`Workflows <workflow>` can be :term:`paused <pause>` and
+         unpaused.
+
+         :term:`Tasks <task>` can be :term:`held <hold>` and
+         :term:`released <release>`.
+
+         When a workflow is unpaused any held tasks remain held.
 
       See also:
 
@@ -1036,3 +1080,88 @@ Glossary
       See also:
 
       * :ref:`Graph Branching`
+
+   .. TODO - add this after the universal ID work
+
+      workflow id
+         A workflow ID is the name Cylc uses to identify a :term:`workflow` in
+         the :term:`run directory`.
+
+         This ID is used on the command line and in the GUI.
+
+         The ID is the relative path between the :term:`workflows <workflow>`
+         :term:`run directory` and the :term:`cylc run directory`.
+
+         For example, if your workflow is in ``~/cylc-run/foo/bar/run1`` then its ID
+         is ``foo/bar/run1``.
+
+         .. ..note:: For convenience you can omit the ``/run1`` on the command line.
+
+   flow
+      A flow is a single logical run of a :term:`workflow` that is done by
+      a :term:`scheduler`.
+
+      A flow can be :term:`played <play>` and :term:`paused <pause>`,
+      :term:`stopped <stop>` and :term:`restarted <restart>`.
+
+      A flow begins at the :term:`start cycle point` and ends at the
+      :term:`stop cycle point`.
+
+      It is possible to run more than one flow in a single :term:`scheduler`.
+
+   reflow
+      A reflow is a subsequent logical run of a :term:`workflow` that is done by
+      the same :term:`scheduler` as the original :term:`flow`.
+
+      Reflows are useful when you need to re-wind your :term:`workflow` run to
+      allow it to evolve a new path into the future.
+
+      .. TODO - add this once the CLI example works
+
+         For example, the following workflow runs the task ``a`` every cycle, then
+         either ``b`` or ``c`` depending on the outcome of ``a``:
+
+         .. code-block:: cylc
+
+            [scheduler]
+                allow implicit tasks = True
+
+            [scheduling]
+                cycling mode = integer
+                initial cycle point = 1
+                [[graph]]
+                    P1 = """
+                        b[-P1] | c[-P1] => a
+                        a:succeed => b
+                        a:fail => c
+                    """
+
+         Let's say the workflow has run to cycle 8, but we have just noticed that
+         something went wrong with the task ``a`` in cycle 5.
+
+         To rectify this we could create a new flow (a reflow) starting at ``a.5``::
+
+            # get the ID of the original flow
+            cylc TBC <id> a.5  # ???
+
+            # pause the original flow
+            cylc pause <id> --flow <flow>
+
+            # create a new flow starting at a.5
+            cylc trigger a.5 --reflow
+
+         Where ``<id>`` is the name of the :term:`workflow` and ``<flow>`` is the
+         identifier of the :term:`flow`.
+
+         This new flow will catch up and merge with the old one, the workflow
+         will then continue as normal.
+
+         Now we have started the new flow we can stop the original one::
+
+            # stop the original flow
+            cylc stop <id> --flow <flow>
+
+         The new flow will now continue to run to the end.
+
+         It is also possible to have multiple :term:`flows <flow>` running in the
+         scheduler :term:`schduler` simultaneously.
