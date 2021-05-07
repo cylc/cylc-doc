@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Remote Job Management &mdash; Cylc 8.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b1 documentation" href="../../index.html" />
+    <link rel="up" title="Task Implementation" href="index.html" />
+    <link rel="next" title="Plugins" href="../../plugins/index.html" />
+    <link rel="prev" title="slurm_packjob" href="job-runner-handlers/cylc.flow.job_runner_handlers.slurm_packjob.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="remote-job-management">
+
+<h1>Remote Job Management<a class="headerlink" href="../../../html/user-guide/task-implementation/ssh-job-management.html#remote-job-management" title="View HTML">§</a></h1>
+
+<p>Managing tasks in a workflow requires more than just job execution: Cylc
+performs additional actions with <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and
+direct execution of <code class="docutils literal notranslate"><span class="pre">cylc</span></code> sub-commands over non-interactive SSH.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="ssh-free-job-management">
+
+<h2>SSH-free Job Management?<a class="headerlink" href="../../../html/user-guide/task-implementation/ssh-job-management.html#ssh-free-job-management" title="View HTML">§</a></h2>
+
+<p>Some sites may want to restrict access to job hosts by whitelisting SSH
+connections to allow only <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and allowing job
+execution only via a local <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> that sees the job hosts <a class="footnote-reference" href="#id4" id="id1">[1]</a> .
+We are investigating the feasibility of SSH-free job management when a local
+job runner is available, but this is not yet possible unless your suite
+and job hosts also share a filesystem, which allows Cylc to treat jobs as
+entirely local <a class="footnote-reference" href="#id5" id="id2">[2]</a> .</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="ssh-based-job-management">
+
+<h2>SSH-based Job Management<a class="headerlink" href="../../../html/user-guide/task-implementation/ssh-job-management.html#ssh-based-job-management" title="View HTML">§</a></h2>
+
+<p>Cylc does not have persistent agent processes running on job hosts to act on
+instructions received over the network <a class="footnote-reference" href="#id6" id="id3">[3]</a> so instead we execute job
+management commands directly on job hosts over SSH. Reasons for this include:</p>
+<ul class="simple">
+<li>It works equally for <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> and background jobs.</li>
+<li>SSH is <em>required</em> for background jobs, and for jobs in other job runners if the
+job runner is not available on the suite host.</li>
+<li>Querying the job runner alone is not sufficient for full job
+polling functionality.<ul>
+<li>This is because jobs can complete (and then be forgotten by
+the job runner) while the network, suite host, or <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> is
+down (e.g. between suite shutdown and restart).</li>
+<li>To handle this we get the automatic job wrapper code to write
+job messages and exit status to <em>job status files</em> that are
+interrogated by <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> during job polling
+operations.</li>
+<li>Job status files reside on the job host, so the interrogation
+is done over SSH.</li>
+</ul>
+</li>
+<li>Job status files also hold job runner name and job ID; this is
+written by the job submit command, and read by job poll and kill commands</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="other-cases-where-cylc-uses-ssh-directly">
+
+<h2>Other Cases Where Cylc Uses SSH Directly<a class="headerlink" href="../../../html/user-guide/task-implementation/ssh-job-management.html#other-cases-where-cylc-uses-ssh-directly" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>To see if a suite is running on another host with a shared
+filesystem - see <code class="docutils literal notranslate"><span class="pre">cylc/flow/suite_files:detect_old_contact_file</span></code>.</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>A malicious script could be <code class="docutils literal notranslate"><span class="pre">rsync</span></code>’d and run from a batch
+job, but jobs in job runners are considered easier to audit.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>The job ID must also be valid to query and kill the job via the local
+<a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>. This is not the case for Slurm, unless the
+<code class="docutils literal notranslate"><span class="pre">--cluster</span></code> option is explicitly used in job query and kill commands,
+otherwise the job ID is not recognized by the local Slurm instance.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>This would be a more complex solution, in terms of implementation,
+administration, and security.</td></tr>
+</tbody>
+</table>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

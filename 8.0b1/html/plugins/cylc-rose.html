@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Cylc Rose &mdash; Cylc 8.0b1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Main Loop Plugins" href="main-loop/index.html" />
+    <link rel="prev" title="Plugins" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">What’s New in Cylc 8.0b0?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Plugins</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cylc Rose</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Cylc Rose</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rose-config">Rose Config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-cli-options">Additional CLI options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-install-optional-config">Cylc Install Optional Config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rose-stem">Rose Stem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main-loop/index.html">Main Loop Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../suite-design-guide/index.html">Suite Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Plugins</a> &raquo;</li>
+        
+      <li>Cylc Rose</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/plugins/cylc-rose.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-cylc.rose">
+<span id="id1"></span><span id="cylc-rose"></span><h1>Cylc Rose<a class="headerlink" href="#module-cylc.rose" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>Cylc Rose<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Cylc Rose is the bridge between Rose suite configurations and Cylc workflows.</p>
+<p>Cylc Rose is a replacement for the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> command (present in Rose
+versions 2019.01 and earlier). It reads the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file and
+performs the required actions.</p>
+<div class="section" id="rose-config">
+<h3>Rose Config<a class="headerlink" href="#rose-config" title="Permalink to this headline">¶</a></h3>
+<p>A fuller description of
+<a class="reference external" href="http://metomi.github.io/rose/doc/html/api/configuration/suite.html#rose-suites" title="(in Rose Documentation v2019.01.2)"><span class="xref std std-ref">rose suite config is available here</span></a>.</p>
+<p>Cylc-rose allows you to set environment and template variables in a
+configuration file called <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>. The following sections are
+permitted in the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> files:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>config item</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">opts=A</span> <span class="pre">B</span> <span class="pre">C</span></code></p></td>
+<td><p>A space limited list of optional configs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[env]</span></code></p></td>
+<td><p>Variables which the cylc-rose plugin will export to the
+environment.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">[template</span> <span class="pre">variables]</span></code></p></td>
+<td><p>Variables which can be used by Jinja2 or Empy
+in the workflow definition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">[file:destination]</span></code></p></td>
+<td><p>A file from one or more sources to be installed.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For compatibility with Cylc 7 sections <code class="docutils literal notranslate"><span class="pre">[suite.rc:empy]</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[suite.rc:jinja2]</span></code> will be processed, but are deprecated and provided
+for ease of porting Cylc 7 workflows.</p>
+</div>
+</div>
+<div class="section" id="additional-cli-options">
+<h3>Additional CLI options<a class="headerlink" href="#additional-cli-options" title="Permalink to this headline">¶</a></h3>
+<p>You can use command line options to set or override
+any setting you could put in a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file: If you
+have Cylc Rose installed see <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--help</span></code>.</p>
+</div>
+<div class="section" id="cylc-install-optional-config">
+<h3>Cylc Install Optional Config<a class="headerlink" href="#cylc-install-optional-config" title="Permalink to this headline">¶</a></h3>
+<p>If Cylc-Rose is installed, using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> with a Rose Suite will
+write a record of command line options set in
+<code class="docutils literal notranslate"><span class="pre">$CYLC_RUN_DIR/workflow_name/opt/rose-suite-cylc-install.conf</span></code>.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>For a suite with the following definitions in the <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>:</p>
+<p>rose-suite.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[template variables]</span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">&#39;Mars&#39;</span>
+</pre></div>
+</div>
+<p>flow.cylc</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> Hello_</span><span class="cp">{{ NAME }}</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[Hello_</span><span class="cp">{{ NAME }}</span><span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+<p>If you then ran</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc install
+</pre></div>
+</div>
+<p>Your final workflow would have the variable <code class="docutils literal notranslate"><span class="pre">NAME</span></code> inserted:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- Before processing</span>
+<span class="gi">+ After processing</span>
+
+<span class="gd">-           R1 = Hello_{{ NAME }}</span>
+<span class="gi">+           R1 = Hello_Mars</span>
+
+<span class="gd">-       [[Hello_{{ NAME }}]]</span>
+<span class="gi">+       [[Hello_Mars]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="rose-stem">
+<h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this headline">¶</a></h2>
+<p>Cylc Rose provides a Rose Stem command, if FCM is installed on your system.
+See <a class="reference external" href="https://metomi.github.io/rose/2019.01.2/html/tutorial/rose/furthertopics/rose-stem.html">the Rose Stem documentation</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="main-loop/index.html" class="btn btn-neutral float-right" title="Main Loop Plugins" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">
+        Last updated on May 07, 2021.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0b1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "plugins/cylc-rose";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

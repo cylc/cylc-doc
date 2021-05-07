@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EmPy &mdash; Cylc 8.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b1 documentation" href="../../index.html" />
+    <link rel="up" title="Writing Suites" href="index.html" />
+    <link rel="next" title="External Triggers" href="external-triggers.html" />
+    <link rel="prev" title="Jinja2" href="jinja2.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="empy">
+
+<h1>EmPy<a class="headerlink" href="../../../html/user-guide/writing-suites/empy.html#empy" title="View HTML">§</a></h1>
+
+<p>In addition to Jinja2, Cylc supports EmPy template processor in suite
+configurations. Similarly to Jinja2, EmPy provides variables, mathematical
+expressions, loop control structures, conditional logic, etc., that are
+expanded to generate the final suite configuration seen by Cylc. See the
+<a class="reference external" href="http://www.alcyone.com/software/empy">EmPy documentation</a> for more
+details on its templating features and how to use them.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">EmPy is not included in the standard Cylc installation, if installing
+with <code class="docutils literal notranslate"><span class="pre">pip</span></code> run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cylc-flow[empy]</span></code> to install this
+dependency.</p>
+</div>
+<p>To enable EmPy place an <code class="docutils literal notranslate"><span class="pre">empy</span></code> hash-bang comment on the first line of
+the flow.cylc file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!empy</span>
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>An example suite <code class="docutils literal notranslate"><span class="pre">empy.cities</span></code> demonstrating its use is shown below.
+It is a translation of <code class="docutils literal notranslate"><span class="pre">jinja2.cities</span></code> example from
+<a class="reference internal" href="jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a> and can be directly compared against it.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#!EmPy</span>
+<span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;EmPy city suite example.&quot;</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Illustrates use of variables and math expressions, and programmatic</span>
+<span class="s2">        generation of groups of related dependencies and runtime properties.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="cp">@{</span>
+<span class="cp">HOST = &quot;SuperComputer&quot;</span>
+<span class="cp">CITIES = &#39;NewYork&#39;, &#39;Philadelphia&#39;, &#39;Newark&#39;, &#39;Houston&#39;, &#39;SantaFe&#39;, &#39;Chicago&#39;</span>
+<span class="cp">CITYJOBS = &#39;one&#39;, &#39;two&#39;, &#39;three&#39;, &#39;four&#39;</span>
+<span class="cp">LIMIT_MINS = 20</span>
+<span class="cp">CLEANUP = True</span>
+<span class="cp">}</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2011-08-08T12</span>
+    <span class="nt">[[graph]]</span>
+<span class="cp">@[ if CLEANUP ]</span>
+        <span class="nv">T23 </span><span class="o">=</span><span class="s"> clean</span>
+<span class="cp">@[ end if ]</span>
+        <span class="nv">T00,T12 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            setup =&gt; get_lbc &amp; get_ic</span> <span class="c1"># foo</span><span class="s2"></span>
+<span class="cp">@[ for CITY in CITIES ]</span><span class="c c-Multi">@# comment</span><span class="s2"></span>
+<span class="s2">            get_lbc =&gt; </span><span class="cp">@(CITY)</span><span class="s2">_one</span>
+<span class="s2">            get_ic =&gt; </span><span class="cp">@(CITY)</span><span class="s2">_two</span>
+<span class="s2">            </span><span class="cp">@(CITY)</span><span class="s2">_one &amp; </span><span class="cp">@(CITY)</span><span class="s2">_two =&gt; </span><span class="cp">@(CITY)</span><span class="s2">_three &amp; </span><span class="cp">@(CITY)</span><span class="s2">_four</span>
+<span class="s2">    </span><span class="cp">@[ if CLEANUP ]</span><span class="s2"></span>
+<span class="s2">            </span><span class="cp">@(CITY)</span><span class="s2">_three &amp; </span><span class="cp">@(CITY)</span><span class="s2">_four =&gt; cleanup</span>
+<span class="s2">    </span><span class="cp">@[ end if ]</span><span class="s2"></span>
+<span class="cp">@[ end for ]</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[on_</span><span class="cp">@HOST</span><span class="nt"> ]]</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> </span><span class="cp">@HOST</span>
+            <span class="c1"># (remote cylc directory is set in site/user config for this host)</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">wall_clock_limit </span><span class="o">=</span><span class="s"> &quot;00:</span><span class="cp">@(LIMIT_MINS + 2)</span><span class="s">:00,00:</span><span class="cp">@(LIMIT_MINS)</span><span class="s">:00&quot;</span>
+
+<span class="cp">@[ for CITY in CITIES ]</span>
+    <span class="nt">[[ </span><span class="cp">@(CITY)</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> on_</span><span class="cp">@(HOST)</span>
+    <span class="cp">@[ for JOB in CITYJOBS ]</span>
+    <span class="nt">[[ </span><span class="cp">@(CITY)</span><span class="nt">_</span><span class="cp">@(JOB)</span><span class="nt"> ]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> </span><span class="cp">@CITY</span>
+    <span class="cp">@[ end for ]</span>
+<span class="cp">@[ end for ]</span>
+
+<span class="cp">@empy.include(&quot;./suite-visualization.cylc&quot;)</span>
+</pre></div>
+</div>
+<p>For basic usage the difference between Jinja2 and EmPy amounts to a different
+markup syntax with little else to distinguish them. EmPy might be preferable,
+however, in cases where more complicated processing logic have to be
+implemented.</p>
+<p>EmPy is a system for embedding Python expressions and statements in template
+text. It makes the full power of Python language and its ecosystem easily
+accessible from within the template. This might be desirable for several
+reasons:</p>
+<ul class="simple">
+<li>No need to learn different language and its idiosyncrasies just for
+writing template logic.</li>
+<li>Availability of lambda functions, list and dictionary comprehensions
+can make template code smaller and more readable compared to Jinja2.</li>
+<li>Natural and straightforward integration with Python package ecosystem.</li>
+<li>No two-language barrier between writing template logic and processing
+extensions makes it easier to refactor and maintain the template code
+as its complexity grows - inline pieces of Python code can be
+gathered into subroutines and eventually into separate modules and
+packages in a seamless manner.</li>
+</ul>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scan API &mdash; Cylc 8.0b1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b1 documentation" href="../../index.html" />
+    <link rel="up" title="Cylc API" href="index.html" />
+    <link rel="next" title="Suite Runtime Interface" href="zmq.html" />
+    <link rel="prev" title="Cylc API" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.network.scan">
+
+<h1>Scan API<a class="headerlink" href="../../../html/reference/api/scan.html#module-cylc.flow.network.scan" title="View HTML">§</a></h1>
+
+<p>Functionality for searching for workflows running as the current user.</p>
+<p>The <a class="reference internal" href="#cylc.flow.network.scan.scan" title="cylc.flow.network.scan.scan"><code class="xref py py-func docutils literal notranslate"><span class="pre">scan()</span></code></a> asynchronous generator yields workflows. Iterate
+over them using an <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">for</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">for</span> <span class="n">flow</span> <span class="ow">in</span> <span class="n">scan</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">flow</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For further functionality construct a pipe:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">scan</span> <span class="o">|</span> <span class="n">is_active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">contact_info</span>
+<span class="k">async</span> <span class="k">for</span> <span class="n">flow</span> <span class="ow">in</span> <span class="n">pipe</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">flow</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">flow</span><span class="p">[</span><span class="s2">&quot;CYLC_SUITE_HOST&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are filters which you can you to omit workflows e.g.
+<a class="reference internal" href="#cylc.flow.network.scan.cylc_version" title="cylc.flow.network.scan.cylc_version"><code class="xref py py-func docutils literal notranslate"><span class="pre">cylc_version()</span></code></a> and transformers which acquire more information
+e.g. <a class="reference internal" href="#cylc.flow.network.scan.contact_info" title="cylc.flow.network.scan.contact_info"><code class="xref py py-func docutils literal notranslate"><span class="pre">contact_info()</span></code></a>.</p>
+<dl class="py function">
+<dt id="cylc.flow.network.scan.scan">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">scan</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>List flows installed on the filesystem.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>run_dir (pathlib.Path):</dt><dd><p>The run dir to look for workflows in, defaults to ~/cylc-run.</p>
+<p>All workflow registrations will be given relative to this path.</p>
+</dd>
+<dt>scan_dir(pathlib.Path):</dt><dd><p>The directory to scan for workflows in.</p>
+<p>Use in combination with run_dir if you want to scan a subdir
+within the run_dir.</p>
+</dd>
+<dt>max_depth (int):</dt><dd><p>The maximum number of levels to descend before bailing.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">max_depth=1</span></code> will pick up top-level suites (e.g. <code class="docutils literal notranslate"><span class="pre">foo</span></code>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">max_depth=2</span></code> will pick up nested suites (e.g. <code class="docutils literal notranslate"><span class="pre">foo/bar</span></code>).</li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>Yields:</dt><dd>dict - Dictionary containing information about the flow.</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.filter_name">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">filter_name</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Filter flows by name.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+<dt>pattern (re.Pattern):</dt><dd>One or more regex patterns as strings.
+This will return True if any of the patterns match.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.is_active">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">is_active</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Filter flows by the presence of a contact file.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+<dt>is_active (bool):</dt><dd>True to filter for running flows.
+False to filter for stopped and unregistered flows.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.contact_info">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">contact_info</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Read information from the contact file.</p>
+<dl class="docutils">
+<dt>Requires:</dt><dd><ul class="simple">
+<li>is_active(True)</li>
+</ul>
+</dd>
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.cylc_version">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">cylc_version</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Filter by cylc version.</p>
+<dl class="docutils">
+<dt>Requires:</dt><dd><ul class="simple">
+<li>is_active(True)</li>
+<li>contact_info</li>
+</ul>
+</dd>
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+<dt>requirement (str):</dt><dd>Requirement specifier in pkg_resources format e.g. <code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">8,</span> <span class="pre">&lt;</span> <span class="pre">9</span></code></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.api_version">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">api_version</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Filter by the cylc API version.</p>
+<dl class="docutils">
+<dt>Requires:</dt><dd><ul class="simple">
+<li>is_active(True)</li>
+<li>contact_info</li>
+</ul>
+</dd>
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+<dt>requirement (str):</dt><dd>Requirement specifier in pkg_resources format e.g. <code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">8,</span> <span class="pre">&lt;</span> <span class="pre">9</span></code></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.graphql_query">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">graphql_query</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Obtain information from a GraphQL request to the flow.</p>
+<dl class="docutils">
+<dt>Requires:</dt><dd><ul class="simple">
+<li>is_active(True)</li>
+<li>contact_info</li>
+</ul>
+</dd>
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>flow (dict):</dt><dd>Flow information dictionary, provided by scan through the pipe.</dd>
+<dt>fields (iterable):</dt><dd><p>Iterable containing the fields to request e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>One level of nesting is supported e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;meta&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]}</span>
+</pre></div>
+</div>
+</dd>
+<dt>filters (list):</dt><dd><p>Filter by the data returned from the query.
+List in the form <code class="docutils literal notranslate"><span class="pre">[(key,</span> <span class="pre">...),</span> <span class="pre">value]</span></code>, e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># state must be running</span>
+<span class="p">[(</span><span class="s1">&#39;state&#39;</span><span class="p">,),</span> <span class="s1">&#39;running&#39;</span><span class="p">]</span>
+
+<span class="c1"># state must be running or paused</span>
+<span class="p">[(</span><span class="s1">&#39;state&#39;</span><span class="p">,),</span> <span class="p">(</span><span class="s1">&#39;running&#39;</span><span class="p">,</span> <span class="s1">&#39;paused&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="cylc.flow.network.scan.title">
+<code class="descclassname"><span class="pre">cylc.flow.network.scan.</span></code><code class="descname"><span class="pre">title</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="n"><span class="pre">filter_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Attempt to parse the suite title out of the flow config file.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This uses a fast but dumb method which may fail to extract the suite
+title.</p>
+<p class="last">Obtaining the suite title via <a class="reference internal" href="#cylc.flow.network.scan.graphql_query" title="cylc.flow.network.scan.graphql_query"><code class="xref py py-func docutils literal notranslate"><span class="pre">graphql_query()</span></code></a> is preferable
+for running flows.</p>
+</div>
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
