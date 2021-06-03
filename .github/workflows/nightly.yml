@@ -28,7 +28,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     timeout-minutes: 5
     steps:
       - name: configure python
@@ -39,7 +39,6 @@ jobs:
       - name: checkout cylc-doc
         uses: actions/checkout@v2
         with:
-          ref: master
           path: docs
 
       - name: install dependencies
