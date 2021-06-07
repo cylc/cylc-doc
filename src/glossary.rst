@@ -773,10 +773,9 @@ Glossary
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
       running, however, will not submit any new jobs.
 
-      This can be useful if you want to hold the workflow back whilst you make
-      a change.
+      This can be useful if you want to make a change to a running workflow.
 
-      Pause a workflow using ``cylc pause`` and unpause it using ``cylc play``.
+      Pause a workflow using ``cylc pause`` and resume it using ``cylc play``.
 
       See also:
 
@@ -849,7 +848,8 @@ Glossary
    held task
    hold after cycle point
       A :term:`task` can be held using ``cylc hold``, which prevents it from
-      submitting :term:`jobs <job>`.
+      submitting :term:`jobs <job>`. Both active tasks (n=0) and future tasks
+      (n>0) can be held; the latter will be immediately held when they spawn.
 
       It is also possible to set a "hold after cycle point"; all tasks after
       this cycle point will be held.
@@ -857,7 +857,7 @@ Glossary
       .. note::
 
          :term:`Workflows <workflow>` can be :term:`paused <pause>` and
-         unpaused.
+         unpaused/resumed.
 
          :term:`Tasks <task>` can be :term:`held <hold>` and
          :term:`released <release>`.

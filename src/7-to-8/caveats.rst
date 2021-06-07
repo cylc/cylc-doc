@@ -35,7 +35,7 @@ CLI Change
 
       $ cylc stop '*'  # stop everything
 
-   * https://github.com/cylc/cylc-flow/pull/3931   
+   * https://github.com/cylc/cylc-flow/pull/3931
 Platform Selection
    When Cylc needs to perform an action on a platform (e.g. submit a job)
    it picks a random host from the platform. If this host is down the operation
@@ -47,11 +47,6 @@ Platform Selection
    * https://github.com/cylc/cylc-flow/issues/3827
 Trigger Edit
    Functionality removed pending reimplementation.
-
-   * https://github.com/cylc/cylc-flow/issues/3751
-Hold / Release
-   The ability to hold tasks is in place, however, doesn't work for most uses.
-   This will be fixed in a future beta release.
 
    * https://github.com/cylc/cylc-flow/issues/3743
 Reflow
@@ -67,7 +62,7 @@ Browser Based UI
 The old "GUI" has been replaced by the new browser-based "UI".
 
 Graph View
-   There is no graph view in the Cylc UI as yet. A new graph view will be 
+   There is no graph view in the Cylc UI as yet. A new graph view will be
    developed providing both "live" (AKA ``cylc gui``) and "offline"
    (AKA ``cylc graph``) functionalities.
 
@@ -79,7 +74,7 @@ Multiple Selection
    Multiple selection is yet to be implemented, however, it is possible
    to issue action for multiple tasks (e.g. ``kill``) without using
    multiple selection:
-   
+
    * From the UI click on a workflow/cycle/task/job.
    * Find the action you want to call (e.g. kill).
    * Click the pencil symbol next to this action.
