@@ -237,6 +237,8 @@ Here's the result:
    -I = ncpus=9
 
 
+.. _jinja2-template-variables:
+
 Jinja2 Default Values And Template Inputs
 -----------------------------------------
 
