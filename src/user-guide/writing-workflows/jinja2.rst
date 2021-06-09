@@ -353,14 +353,14 @@ Jinja2 Variable Scope
 
 Jinja2 variable scoping rules may be surprising. Variables set inside a
 *for loop* block, for instance, are not accessible outside of the block,
-so the following will print ``# FOO is 0``, not ``# FOO is 9``:
+so the following will never print ``# FOO is True``:
 
 .. code-block:: cylc
 
-   {% set FOO = false %}
+   {% set FOO = False %}
    {% for item in items %}
        {% if item.check_something() %}
-           {% set FOO = true %}
+           {% set FOO = True %}
        {% endif %}
    {% endfor %}
    # FOO is {{FOO}}
