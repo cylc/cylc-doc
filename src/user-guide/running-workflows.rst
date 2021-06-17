@@ -1370,7 +1370,7 @@ Alternate Run Directories
 
 The ``cylc install`` command normally creates a worflow run directory at
 the standard location ``~/cylc-run/<WORKFLOW-NAME>/``. Configure the run
-directory in the ``global.cylc`` file: :cylc:conf:`global.cylc[symlink dirs]`.
+directory in the ``global.cylc`` file: :cylc:conf:`global.cylc[install]symlink dirs`.
 
 This may be useful for quick-running :ref:`Sub-Workflows` that generate large
 numbers of files - you could put their run directories on fast local disk or

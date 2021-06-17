@@ -235,10 +235,21 @@ Looking at the directory structure that has been created
 Upon running ``cylc install``, symlinks for the directories ``run``, ``log``,
 ``share``, ``share/cycle`` and ``work`` will be created in accordance with
 the symlink rules for ``localhost`` as defined in
-:cylc:conf:`global.cylc[symlink dirs]`.
+:cylc:conf:`global.cylc[install][symlink dirs]`.
 
-This is overridable via the command line option ``--no-symlinks``, where the
-directories will not be symlinked.
+This is overridable via the command line option ``--symlink-dirs="log=$DIR,
+run=/path/to/dir,..."``, where the directories supplied will be used to create
+symlinks, rather than the ones specified in
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+
+.. note::
+
+   If configuring symlink dirs on the command line, the global configured
+   symlink dirs will not be used to source directories not included in
+   the command line list.
+
+
+Use `--symlink-dirs=""` to skip making symlinks.
 
 
 Automatically Generated Directories and Files
