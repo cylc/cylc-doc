@@ -70,6 +70,3 @@
         inherit = OPS
         [[[meta]]]
             description = "OPS ATOVS postprocessing"
-
-[visualization]
-    collapsed families = OPS, VAR, BAZ

@@ -196,8 +196,6 @@ several top level section headings:
    - workflow-wide defaults in the *root* namespace
    - a nested family hierarchy with common properties
      inherited by related tasks
-:cylc:conf:`[visualization]`
-   Workflow graph styling
 
 .. _Validation:
 

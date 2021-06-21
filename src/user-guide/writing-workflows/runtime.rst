@@ -130,10 +130,10 @@ from the root namespace:
 Workflow Visualization And Multiple Inheritance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The first parent inherited by a namespace is also used as the
-collapsible family group when visualizing the workflow. If this is not what
-you want, you can demote the first parent for visualization purposes,
-without affecting the order of inheritance of runtime properties:
+The first parent a namespace inherits from doubles as the collapsible family
+group in workflow UI views and visualization. If this is not what you want, you
+can demote the first parent for visualization purposes, without affecting the
+order of inheritance of runtime properties:
 
 .. code-block:: cylc
 

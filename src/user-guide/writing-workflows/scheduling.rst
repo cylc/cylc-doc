@@ -651,14 +651,6 @@ For example, we can write our workflow like so, to produce the graph as shown:
                  R1/T12 = "prep[^] => baz"
                  T00 = "foo[-P1D] => foo => bar"
                  T12 = "baz[-P1D] => baz => qux"
-         [visualization]
-             initial cycle point = 20130808T00
-             final cycle point = 20130810T00
-             [[node attributes]]
-                 foo = "color=red"
-                 bar = "color=orange"
-                 baz = "color=green"
-                 qux = "color=blue"
 
    .. container:: image
 
@@ -705,12 +697,6 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
                       foo[-PT6H] => foo
                       foo => bar
                   """
-          [visualization]
-              initial cycle point = 20130808T00
-              final cycle point = 20130808T18
-              [[node attributes]]
-                  foo = "color=red"
-                  bar = "color=orange"
 
    .. container:: image
 

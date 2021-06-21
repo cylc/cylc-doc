@@ -50,12 +50,3 @@
         inherit = {{ CITY }}
     {% endfor %}
 {% endfor %}
-
-[visualization]
-    initial cycle point = 2011-08-08T12
-    final cycle point = 2011-08-08T23
-    [[node groups]]
-        cleaning = clean, cleanup
-    [[node attributes]]
-        cleaning = 'style=filled', 'fillcolor=yellow'
-        NewYork = 'style=filled', 'fillcolor=lightblue'
