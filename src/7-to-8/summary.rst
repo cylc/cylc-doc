@@ -148,13 +148,14 @@ Cylc 7 was aware of individual job hosts.
 
    [runtime]
       [[model]]
-          [[[remote]]]  # Deprecated Cylc 7
-              host = hpc1.login.1
+          [[[remote]]]
+              host = hpc1.login.1  # Deprecated Cylc 8
 
-Cylc 8 is aware of sets of host settings, specified as *platforms*
-in global configuration. By definition platform hosts share a file
-system and job runner: If one host is unavailable Cylc 8 can use
-other hosts on the same platform to interact with task jobs.
+Cylc 8 is aware of sets of host settings, specified as
+:term:`[job] platforms <platform>` in the global configuration.
+By definition platform hosts share a file system and :term:`job runner`:
+If one host is unavailable Cylc 8 can use other hosts
+on the same platform to interact with task jobs.
 
 .. code-block:: cylc
 
@@ -165,6 +166,13 @@ other hosts on the same platform to interact with task jobs.
       [[model_cleanup]]
           # Platforms can have the same hosts with different job runners.
           platform = hpc1_background
+
+
+.. warning::
+
+   Cylc 8 will attempt to pick a sensible platform for your Cylc 7 settings,
+   but this upgrade logic will be removed at Cylc 9.
+
 
 Graph Syntax
 ------------

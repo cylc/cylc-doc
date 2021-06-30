@@ -638,7 +638,7 @@ Glossary
       in the following workflow:
 
       .. code-block:: cylc
-         :caption: global.cylc
+         :caption: Global configuration (``global.cylc``)
 
          [platforms]
              [[my_hpc]]
@@ -646,7 +646,7 @@ Glossary
                  job runner = slurm
 
       .. code-block:: cylc
-         :caption: flow.cylc
+         :caption: Workflow configuration (``flow.cylc``)
 
          [runtime]
              [[some-task]]
