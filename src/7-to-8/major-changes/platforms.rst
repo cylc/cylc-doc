@@ -1,0 +1,98 @@
+Platforms
+=========
+
+.. note::
+
+   The terms :term:`platform` and :term:`job platform` are equivelent.
+
+
+.. admonition:: Does This Change Affect Me?
+   :class: tip
+
+   Platforms replace the following items in a Cylc 7 Workflow (suite):
+
+   .. code-block:: cylc
+
+      [runtime]
+         [[task_name]]
+            [[[job]]]
+               batch system = slurm
+            [[[remote]]]
+               host = my_supercomputer
+
+   Read this section if your workflows jobs run on a remote computer or if
+   you see the following warning on running ``cylc validate``:
+
+   .. code-block::
+
+      WARNING - Task XXX: deprecated "host" and "batch system" will be removed at Cylc 9
+
+
+Overview
+--------
+
+Cylc 7 defines settings for remote :term:`jobs <job>` in each
+:term:`task's <task>` definition.
+
+Cylc 8 allows site administrators to configure :term:`platforms <platform>`.
+Each platform is a group of settings. The user needs only to
+select a platform for their tasks, and does not need to set all
+the settings.
+
+.. warning::
+
+   Cylc 8 contains upgrade logic which should handle Cylc 7
+   settings in most cases. Cylc 8 will warn you when it runs
+   the upgrade logic. You should upgrade these parts of your
+   workflows. Cylc 9 will deprecate the upgrade logic.
+
+
+Example
+-------
+
+Here is an example Cylc 7 :term:`graph`:
+
+.. code-block:: cylc
+
+   [runtime]
+      [[mytask_cylc_server]]
+
+      [[mytask_big_server]]
+         [[[remote]]]
+            host = linuxbox42
+
+      [[mytask_submit_local_to_remote_computer]]
+         [[[job]]]
+            batch system = pbs
+
+      [[mytask_login_to_hpc_and_submit]]
+         [[[remote]]]
+            host = $(supercomputer_login_node_selector_script)
+         [[[job]]]
+            batch system = slurm
+
+
+Which will result in Cylc Running:
+
+- ``mytask_cylc_server`` on the machine the workflow is running on.
+- ``mytask_big_server`` on ``linuxbox``, using background.
+- ``mytask_submit_local_to_remote_computer`` on a system where you can
+  use PBS to submit from the workflow server.
+- ``mytask_login_to_hpc_and_submit`` on a host set by the subshelled
+  script using Slurm.
+
+In Cylc 8 the equivelent might be:
+
+.. code-block:: cylc
+
+   [runtime]
+      [[mytask_cylc_server]]
+
+      [[mytask_big_server]]
+         platform = linxubox42
+
+      [[mytask_submit_local_to_remote_computer]]
+         platform = pbs_local
+
+      [[mytask_login_to_hpc_and_submit]]
+         platform = $(supercomputer_login_node_selector_script)
