@@ -3,7 +3,7 @@ Platforms
 
 .. note::
 
-   The terms :term:`platform` and :term:`job platform` are equivelent.
+   The terms :term:`platform` and :term:`job platform` are equivalent.
 
 
 .. admonition:: Does This Change Affect Me?
@@ -75,13 +75,13 @@ Here is an example Cylc 7 :term:`graph`:
 Which will result in Cylc Running:
 
 - ``mytask_cylc_server`` on the machine the workflow is running on.
-- ``mytask_big_server`` on ``linuxbox``, using background.
+- ``mytask_big_server`` on ``linuxbox42``, using background.
 - ``mytask_submit_local_to_remote_computer`` on a system where you can
   use PBS to submit from the workflow server.
 - ``mytask_login_to_hpc_and_submit`` on a host set by the subshelled
   script using Slurm.
 
-In Cylc 8 the equivelent might be:
+In Cylc 8 the equivalent might be:
 
 .. code-block:: cylc
 
@@ -89,7 +89,7 @@ In Cylc 8 the equivelent might be:
       [[mytask_cylc_server]]
 
       [[mytask_big_server]]
-         platform = linxubox42
+         platform = linuxbox42
 
       [[mytask_submit_local_to_remote_computer]]
          platform = pbs_local
