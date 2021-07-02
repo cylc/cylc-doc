@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+# THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Create redirects from old locations of pages.
+
+NOTE: must be run from top-level cylc-doc dir.
+"""
+
+import os
+from pathlib import Path
+import subprocess
+
+
+CREATE_HTML_REDIRECT = 'bin/create-html-redirect'
+HTML_DIR = Path(os.environ['BUILDDIR'], 'html')
+
+# Mapping of current page locations to old one(s):
+REVERSE_MAPPING = {
+    'introduction/index.html': ['introduction.html'],
+
+    'glossary.html': ['terminology.html'],
+
+    'tutorial/index.html': ['tutorial.html'],
+
+    'user-guide/writing-workflows/index.html': [
+        'user-guide/writing-suites.html',
+        'suite-config.html',
+    ],
+    'user-guide/task-implementation/index.html': [
+        'task-implementation.html',
+    ],
+    'user-guide/task-implementation/job-submission.html': [
+        'task-job-submission.html',
+    ],
+    'user-guide/task-implementation/ssh-job-management.html': [
+        'appendices/remote-job-management.html'
+    ],
+    'user-guide/writing-workflows/external-triggers.html': [
+        'external-triggers.html'
+    ],
+    'user-guide/running-workflows.html': [
+        'user-guide/running-suites.html'
+        'running-suites.html',
+    ],
+
+    'reference/index.html': [
+        'appendices/appendices-master.html',
+    ],
+    'reference/config/workflow.html': [
+        'reference/config/suite.html',
+        'appendices/suiterc-config-ref.html',
+    ],
+    'reference/config/global.html': [
+        'appendices/site-user-config-ref.html',
+    ],
+
+    'workflow-design-guide/index.html': [
+        'suite-design-guide/index.html',
+        'suite-design-guide/suite-design-guide-master.html',
+    ],
+    'workflow-design-guide/style-guide.html': [
+        'suite-design-guide/style-guide.html'
+    ],
+    'workflow-design-guide/general-principles.html': [
+        'suite-design-guide/general-principles.html'
+    ],
+    'workflow-design-guide/efficiency.html': [
+        'suite-design-guide/efficiency.html'
+    ],
+    'workflow-design-guide/portable-workflows.html': [
+        'suite-design-guide/portable-suites.html'
+    ]
+}
+
+
+for target in REVERSE_MAPPING:
+    for d in REVERSE_MAPPING[target]:
+        dest = Path(d)
+        prefix = tuple('..' for _ in dest.parent.parts)
+        rel_target = Path(*prefix, target)
+        full_dest = HTML_DIR / dest
+        if full_dest.exists():
+            raise FileExistsError(
+                f"Cannot create redirect from {full_dest}: file already exists"
+            )
+        print(f"Creating redirect: {dest} -> {rel_target}")
+        subprocess.run(
+            [CREATE_HTML_REDIRECT, rel_target, full_dest],
+            check=True
+        )

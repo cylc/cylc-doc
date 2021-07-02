@@ -39,6 +39,8 @@ cleanall:
 	bin/version write > doc/versions.json
 	# Redirect doc/<version>/index.html -> doc/<version>/html/index.html
 	bin/create-html-redirect "html/index.html" "$(BUILDDIR)/index.html"
+	# Redirect old pages
+	bin/redirect-old-pages
 ifeq ($(STABLE),true)  # makefile conditionals in recipe must be unindented
 	# Link e.g. doc/stable/ -> doc/7.0/
 	rm "$(BUILDDIR)/../stable" || true
