@@ -50,5 +50,3 @@ CLEANUP = True
         inherit = @CITY
     @[ end for ]
 @[ end for ]
-
-@empy.include("./workflow-visualization.cylc")

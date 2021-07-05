@@ -16,11 +16,9 @@ The Task Family Hierarchy
 
 A properly designed family hierarchy fulfils three purposes in Cylc:
 
-- efficient sharing of all configuration common to groups of related
-  tasks
+- efficient sharing of configuration common to groups of related tasks
 - efficient bulk triggering, for clear scheduling graphs
-- clean workflow visualization and monitoring, because families are
-  collapsible
+- collapsible families in workflow visualization and UI views
 
 
 .. _Sharing By Inheritance:
