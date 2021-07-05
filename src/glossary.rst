@@ -1165,3 +1165,13 @@ Glossary
 
          It is also possible to have multiple :term:`flows <flow>` running in the
          scheduler :term:`schduler` simultaneously.
+
+   event handlers
+   handlers
+      Carry out an action when the Cylc scheduler detects that an arbitrary
+      event has occurred. This allows Cylc to centralize automated handling of
+      critical events. Cylc can do may things when it detects an event.
+      Use-cases include:
+
+      - Send an email message
+      - Run a Cylc command
