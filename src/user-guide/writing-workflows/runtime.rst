@@ -115,18 +115,6 @@ inheritance in a workflow. You can extract specific items, e.g.:
    $ cylc config --item '[runtime][var_p2]script' inherit.multi.one
    echo "RUN: run-var.sh"
 
-or use the ``--sparse`` option to print entire namespaces
-without obscuring the result with the dense runtime structure obtained
-from the root namespace:
-
-.. code-block:: console
-
-   $ cylc config --sparse --item '[runtime]ops_s1' inherit.multi.one
-   script = echo "RUN: run-ops.sh"
-   inherit = ['OPS', 'SERIAL']
-   [directives]
-      job_type = serial
-
 Workflow Visualization And Multiple Inheritance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

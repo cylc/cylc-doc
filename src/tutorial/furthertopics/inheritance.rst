@@ -134,7 +134,7 @@ inheritance tree applying each section in turn.
 To see the resulting configuration for the ``a380`` task use the
 ``cylc config`` command::
 
-   cylc config . --sparse -i "[runtime][a380]"
+   cylc config . -i "[runtime][a380]"
 
 You should see some settings which have been inherited from the ``VEHICLE`` and
 ``AIRPLANE`` families as well as a couple defined in the ``a380`` task.
@@ -234,7 +234,7 @@ command.
 
    .. code-block:: bash
 
-      cylc config . --sparse -i "[runtime][v22]"
+      cylc config . -i "[runtime][v22]"
 
 You should see that the ``CAN_TASK_OFF_VERTICALLY`` environment variable has
 been set to ``false`` which isn't right. This is because of the order in which
@@ -434,7 +434,7 @@ task we can see that it inherits settings from the ``VEHICLE``,
 
    .. code-block:: bash
 
-      cylc config . --sparse -i "[runtime]penny_farthing"
+      cylc config . -i "[runtime]penny_farthing"
 
 Hovercraft
 ^^^^^^^^^^

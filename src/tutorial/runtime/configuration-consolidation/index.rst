@@ -104,12 +104,11 @@ The ``cylc config`` Command
       graphing use the ``cylc graph`` command.
 
    Call ``cylc config`` with the path of the workflow (``.`` if you are already
-   in the :term:`run directory`) and the ``--sparse`` option which hides
-   default values.
+   in the :term:`run directory`).
 
 .. code-block:: sub
 
-   cylc config <path> --sparse
+   cylc config <path>
 
 .. ifnotslides::
 
@@ -119,11 +118,11 @@ The ``cylc config`` Command
 .. code-block:: sub
 
    # Print the contents of the [scheduling] section.
-   cylc config <path> --sparse -i '[scheduling]'
+   cylc config <path> -i '[scheduling]'
    # Print the contents of the get_observations_heathrow task.
-   cylc config <path> --sparse -i '[runtime][get_observations_heathrow]'
+   cylc config <path> -i '[runtime][get_observations_heathrow]'
    # Print the value of the script setting in the get_observations_heathrow task
-   cylc config <path> --sparse -i '[runtime][get_observations_heathrow]script'
+   cylc config <path> -i '[runtime][get_observations_heathrow]script'
 
 .. nextslide::
 
