@@ -72,7 +72,7 @@ Here are some example Cylc 7 task definitions:
             batch system = slurm
 
 
-Which will result in Cylc Running:
+This will result in Cylc running:
 
 - ``mytask_cylc_server`` on the machine the workflow is running on.
 - ``mytask_big_server`` on ``linuxbox42``, using background.
