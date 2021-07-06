@@ -44,7 +44,7 @@ Cylc 8 allows site administrators (and users) to configure
    Cylc 8 contains upgrade logic which handles Cylc 7
    settings in most cases. Cylc 8 will warn you when it runs
    the upgrade logic. You should upgrade these parts of your
-   workflows. Cylc 9 will deprecate the upgrade logic.
+   workflows. Deprecated Cylc 7 settings will be removed at Cylc 9.
 
 
 Example
