@@ -50,7 +50,7 @@ Cylc 8 allows site administrators (and users) to configure
 Example
 -------
 
-Here is an example Cylc 7 :term:`graph`:
+Here are some example Cylc 7 task definitions:
 
 .. code-block:: cylc
 
