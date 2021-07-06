@@ -23,9 +23,9 @@ Platforms
    Read this section if your workflow's jobs run on a remote computer or if
    you see the following warning on running ``cylc validate``:
 
-   .. code-block::
+   .. code-block:: console
 
-      WARNING - Task XXX: deprecated "host" and "batch system" will be removed at Cylc 9
+      WARNING - Task <task>: deprecated "host" and "batch system" will be removed at Cylc 9
 
 
 Overview
