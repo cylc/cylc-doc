@@ -41,7 +41,7 @@ the settings.
 
 .. warning::
 
-   Cylc 8 contains upgrade logic which should handle Cylc 7
+   Cylc 8 contains upgrade logic which handles Cylc 7
    settings in most cases. Cylc 8 will warn you when it runs
    the upgrade logic. You should upgrade these parts of your
    workflows. Cylc 9 will deprecate the upgrade logic.
