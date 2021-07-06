@@ -20,7 +20,7 @@ Platforms
             [[[remote]]]
                host = my_supercomputer
 
-   Read this section if your workflows jobs run on a remote computer or if
+   Read this section if your workflow's jobs run on a remote computer or if
    you see the following warning on running ``cylc validate``:
 
    .. code-block::
