@@ -1168,10 +1168,21 @@ Glossary
 
    event handlers
    handlers
-      Carry out an action when the Cylc scheduler detects that an arbitrary
-      event has occurred. This allows Cylc to centralize automated handling of
-      critical events. Cylc can do may things when it detects an event.
-      Use-cases include:
 
-      - Send an email message
-      - Run a Cylc command
+      :ref:`Event Handling documentation <EventHandling>`
+
+      An action you want the Cylc scheduler to run when it detects that an
+      event has occurred:
+
+      - For the :term:`scheduler`; for example startup, stall or shutdown.
+      - For a :term:`task`; for example when the :term:`task state` changes to
+        succeeded, failed or submit-failed.
+
+      This allows Cylc to centralize automated handling of critical events.
+      Cylc can do many things when it detects an event.
+
+      Possible use-cases include (but are not limited to):
+
+      - Send an email message.
+      - Run a Cylc command.
+      - Run _any_ user-specified script or command.
