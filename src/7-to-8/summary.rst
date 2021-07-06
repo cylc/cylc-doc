@@ -171,7 +171,7 @@ on the same platform to interact with task jobs.
 .. warning::
 
    Cylc 8 will pick a sensible platform for your Cylc 7 settings,
-   but this upgrade logic will be removed at Cylc 9.
+   These deprecated settings will be removed at Cylc 9.
 
 
 Graph Syntax
