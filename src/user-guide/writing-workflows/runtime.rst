@@ -23,10 +23,19 @@ or for triggering other tasks off all members at once -
 see :ref:`FamilyTriggers`.
 
 
+.. _namespace-names:
+
 Namespace Names
 ---------------
 
 .. autoclass:: cylc.flow.unicode_rules.TaskNameValidator
+
+
+.. note::
+
+   - ``:`` would stop cylc adding paths using task name to ``$PATH``.
+   - ``.`` would be interpreted as a namespace delimeter.
+
 
 .. note::
 
