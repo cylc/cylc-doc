@@ -170,7 +170,7 @@ on the same platform to interact with task jobs.
 
 .. warning::
 
-   Cylc 8 will attempt to pick a sensible platform for your Cylc 7 settings,
+   Cylc 8 will pick a sensible platform for your Cylc 7 settings,
    but this upgrade logic will be removed at Cylc 9.
 
 
