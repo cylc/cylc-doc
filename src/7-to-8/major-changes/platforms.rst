@@ -34,10 +34,10 @@ Overview
 Cylc 7 defines settings for remote :term:`jobs <job>` in each
 :term:`task's <task>` definition.
 
-Cylc 8 allows site administrators to configure :term:`platforms <platform>`.
-Each platform is a group of settings. The user needs only to
-select a platform for their tasks, and does not need to set all
-the settings.
+Cylc 8 allows site administrators (and users) to configure
+  :term:`platforms <platform>` in ``global.cylc``. A platform can have
+  multiple hosts with associated platform-specific settings. Users only need to
+  select the platform for their task jobs.
 
 .. warning::
 
