@@ -113,20 +113,6 @@ e.g.:
    Template processors may have their own include functionality
    which can also be used.
 
-.. note::
-
-   Cylc's native file inclusion mechanism supports optional inlined
-   editing:
-
-   .. code-block:: bash
-
-      $ cylc edit --inline WORKFLOW
-
-   The workflow will be split back into its constituent include-files when you
-   exit the edit session. While editing, the inlined file becomes the
-   official workflow configuration so that changes take effect whenever you save
-   the file. See ``cylc prep edit --help`` for more information.
-
 
 .. _SyntaxHighlighting:
 
@@ -212,6 +198,4 @@ These checks are also performed by ``cylc play`` before starting a workflow.
 All legal entries are documented in :cylc:conf:`flow.cylc`.
 
 If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
-show an inlined copy of the workflow with correct line numbers
-(you can also edit workflows in a temporarily inlined state with
-``cylc edit --inline``).
+show an inlined copy of the workflow with correct line numbers.
