@@ -1169,8 +1169,14 @@ Glossary
    event handlers
    handlers
 
-      :ref:`Event Handling documentation <EventHandling>`
+      .. seealso::
 
+         - :ref:`Event Handling documentation <EventHandling>`
+         - Task events configuration reference: 
+           :cylc:conf:`task events <[runtime][<namespace>][events]>`.
+         - Workflow events configuration reference: 
+           :cylc:conf:`workflow events <[scheduler][events]>`
+      
       An action you want the Cylc scheduler to run when it detects that an
       event has occurred:
 
