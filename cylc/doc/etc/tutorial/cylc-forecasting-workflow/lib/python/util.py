@@ -19,6 +19,7 @@
 # This is illustrative code developed for tutorial purposes, it is not
 # intended for scientific use and is not guarantied to be accurate or correct.
 from copy import copy
+from contextlib import suppress
 import math
 import jinja2
 import sys
@@ -169,7 +170,7 @@ def interpolate_grid(points, dim_x, dim_y, d_x, d_y, spline_order=0):
 
     if spline_order == 0:
         spline = spline_0
-    elif spline_order == 1:
+    elif spline_order == 1:  # noqa: SIM106 (case type matching)
         spline = spline_1
     else:
         raise ValueError('Invalid spline order "%d" must be in (0, 1).' %
@@ -181,11 +182,9 @@ def interpolate_grid(points, dim_x, dim_y, d_x, d_y, spline_order=0):
         x_coord = x_val / d_x
         y_coord = y_val / d_y
         for grid_x, grid_y, grid_z in spline(x_coord, y_coord, z_val):
-            try:
+            with suppress(IndexError):
                 grid[grid_y][grid_x] += grid_z
-            except IndexError:
-                # Grid point out of bounds => skip.
-                pass
+                # skip grid point out of bounds
 
     return grid
 
@@ -228,7 +227,7 @@ def get_grid_coordinates(lng, lat, domain, resolution):
         length_y - int((abs(lat - domain['lat1'])) // resolution))
 
 
-class SurfaceFitter(object):
+class SurfaceFitter:
     """A 2D interpolation for random points.
 
     A standin for scipy.interpolate.interp2d
@@ -253,7 +252,7 @@ class SurfaceFitter(object):
             self.power = 1.
         elif kind == 'quadratic':
             self.power = 2.
-        elif kind == 'cubic':
+        elif kind == 'cubic':  # noqa: SIM106 (case type matching)
             self.power = 3.
         else:
             raise ValueError('"%s" is not a valid interpolation method' % kind)
@@ -292,7 +291,7 @@ def parse_domain(domain):
 
 
 def generate_html_map(filename, template_file, data, domain, resolution):
-    with open(template_file, 'r') as template:
+    with open(template_file, 'r') as template:  # noqa: SIM117
         with open(filename, 'w+') as html_file:
             html_file.write(jinja2.Template(template.read()).render(
                 resolution=resolution,
@@ -300,4 +299,5 @@ def generate_html_map(filename, template_file, data, domain, resolution):
                 lng2=domain['lng2'],
                 lat1=domain['lat1'],
                 lat2=domain['lat2'],
-                data=data))
+                data=data
+            ))
