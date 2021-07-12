@@ -1165,3 +1165,30 @@ Glossary
 
          It is also possible to have multiple :term:`flows <flow>` running in the
          scheduler :term:`schduler` simultaneously.
+
+   event handlers
+   handlers
+
+      .. seealso::
+
+         - :ref:`Event Handling documentation <EventHandling>`
+         - Task events configuration reference: 
+           :cylc:conf:`task events <[runtime][<namespace>][events]>`.
+         - Workflow events configuration reference: 
+           :cylc:conf:`workflow events <[scheduler][events]>`
+      
+      An action you want the Cylc scheduler to run when it detects that an
+      event has occurred:
+
+      - For the :term:`scheduler`; for example startup, stall or shutdown.
+      - For a :term:`task`; for example when the :term:`task state` changes to
+        succeeded, failed or submit-failed.
+
+      This allows Cylc to centralize automated handling of critical events.
+      Cylc can do many things when it detects an event.
+
+      Possible use-cases include (but are not limited to):
+
+      - Send an email message.
+      - Run a Cylc command.
+      - Run _any_ user-specified script or command.

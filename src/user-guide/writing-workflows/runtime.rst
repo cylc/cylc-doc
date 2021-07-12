@@ -23,6 +23,8 @@ or for triggering other tasks off all members at once -
 see :ref:`FamilyTriggers`.
 
 
+.. _namespace-names:
+
 Namespace Names
 ---------------
 

@@ -559,8 +559,8 @@ sequence by manually resetting it to the *failed* state.
 
 .. _EventHandling:
 
-Task Event Handling
--------------------
+Event Handling
+--------------
 
 * Task events (e.g. task succeeded/failed) are configured by
   :cylc:conf:`task events <[runtime][<namespace>][events]>`.
