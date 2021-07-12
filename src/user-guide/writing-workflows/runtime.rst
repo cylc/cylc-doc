@@ -30,13 +30,6 @@ Namespace Names
 
 .. autoclass:: cylc.flow.unicode_rules.TaskNameValidator
 
-
-.. note::
-
-   - ``:`` would stop cylc adding paths using task name to ``$PATH``.
-   - ``.`` would be interpreted as a namespace delimeter.
-
-
 .. note::
 
    *Task names need not be hardwired into task implementations*
