@@ -167,7 +167,7 @@ View the parsed workflow configuration:
              <name/path>
      - ::
 
-         # install workflow
+         # install workflow
          rose suite-run -l
 
          # view installed config
@@ -175,8 +175,7 @@ View the parsed workflow configuration:
              <name/path>
      - ::
 
-         cylc config --sparse \
-             <name/path>
+         cylc config <name/path>
 
 Opening User Interfaces
 -----------------------

@@ -228,7 +228,7 @@ Parameters can be either words or integers:
 
       .. code-block:: bash
 
-         cylc config . --sparse -i "[runtime]"
+         cylc config . -i "[runtime]"
 
       The ``get_observations`` tasks are now missing the ``SITE_ID``
       environment variable. Add a new section for each station with a
@@ -271,7 +271,7 @@ Parameters can be either words or integers:
 
       .. code-block:: bash
 
-         cylc config . --sparse -i "[runtime]"
+         cylc config . -i "[runtime]"
 
       Finally we can use this parameterisation to simplify the workflow's
       graphing. Replace the ``get_observations`` lines in the graph with

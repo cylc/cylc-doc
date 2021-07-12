@@ -316,7 +316,7 @@ Families and ``cylc graph``
 
       .. code-block:: bash
 
-         cylc config . --sparse -i "[runtime]"
+         cylc config . -i "[runtime]"
 
       You should see the environment variables from the ``[root]`` section
       in the ``[environment]`` section for all tasks.
@@ -326,4 +326,4 @@ Families and ``cylc graph``
          You may find it easier to open the output of this command in a text
          editor, e.g::
 
-            cylc config . --sparse -i "[runtime]" | gvim -
+            cylc config . -i "[runtime]" | gvim -
