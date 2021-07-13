@@ -8,6 +8,6 @@ User Guide
    workflows
    writing-workflows/index
    installing-workflows
-   running-workflows
+   running-workflows/index
    workflow-storage-etc
    task-implementation/index

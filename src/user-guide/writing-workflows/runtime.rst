@@ -453,3 +453,222 @@ results in exactly the same task behaviour, via inheritance from root,
 but adds a layer of protection against mistakes. Thus, it is recommended to
 turn off :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` when the
 :cylc:conf:`flow.cylc[runtime]` section has been written.
+
+
+.. _TaskRetries:
+
+Automatic Task Retry On Failure
+-------------------------------
+
+.. seealso::
+
+   cylc:conf:`[runtime][<namespace>]execution retry delays`.
+
+Tasks can be configured with a list of "retry delay" intervals, as
+:term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will go
+into the *retrying* state and resubmit after the next configured delay
+interval. An example is shown in the workflow listed below under
+:ref:`EventHandling`.
+
+If a task with configured retries is *killed* (by ``cylc kill``
+it goes to the *held* state so that the operator can decide
+whether to release it and continue the retry sequence or to abort the retry
+sequence by manually resetting it to the *failed* state.
+
+
+.. _EventHandling:
+
+Event Handling
+--------------
+
+* Task events (e.g. task succeeded/failed) are configured by
+  :cylc:conf:`task events <[runtime][<namespace>][events]>`.
+* Workflow events (e.g. workflow started/stopped) are configured by
+  :cylc:conf:`workflow events <[scheduler][events]>`
+
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+Cylc can call nominated event handlers - to do whatever you like - when certain
+workflow or task events occur. This facilitates centralized alerting and automated
+handling of critical events. Event handlers can be used to send a message, call
+a pager, or whatever; they can even intervene in the operation of their own
+workflow using cylc commands.
+
+To send an email, use the built-in setting :cylc:conf:`[events]mail events`
+to specify a list of events for which notifications should be sent. (The
+name of a registered task output can also be used as an event name in
+this case.) E.g. to send an email on (submission) failed and retry:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = """
+               test ${CYLC_TASK_TRY_NUMBER} -eq 3
+               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+           """
+           execution retry delays = PT0S, PT30S
+           [[[events]]]
+               mail events = submission failed, submission retry, failed, retry, oops
+           [[[outputs]]]
+               oops = oopsy daisy
+
+By default, the emails will be sent to the current user with:
+
+- ``to:`` set as ``$USER``
+- ``from:`` set as ``notifications@$(hostname)``
+- SMTP server at ``localhost:25``
+
+These can be configured using the settings:
+
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+- :cylc:conf:`[mail]to` (list of email addresses)
+- :cylc:conf:`[mail]from`
+
+.. cylc-scope::
+
+By default, a cylc workflow will send you no more than one task event email every
+5 minutes - this is to prevent your inbox from being flooded by emails should a
+large group of tasks all fail at similar time. This is configured by
+:cylc:conf:`[scheduler][mail]task event batch interval`.
+
+Event handlers can be located in the workflow ``bin/`` directory;
+otherwise it is up to you to ensure their location is in ``$PATH`` (in
+the shell in which the :term:`scheduler` runs). They should require little
+resource and return quickly - see :ref:`Managing External Command Execution`.
+
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+Task event handlers can be specified using the
+``[events]<event> handler`` settings, where
+``<event>`` is one of:
+
+.. TODO - Add link to replaced link of states.
+
+The value of each setting should be a list of command lines or command line
+templates (see below).
+
+Alternatively you can use :cylc:conf:`[events]handlers` and
+:cylc:conf:`[events]handler events`, where the former is a list of command
+lines or command line templates (see below) and the latter is a list of events
+for which these commands should be invoked. (The name of a registered task
+output can also be used as an event name in this case.)
+
+.. cylc-scope::
+
+Event handler arguments can be constructed from various templates
+representing workflow name; task ID, name, cycle point, message, and submit
+number name; and any :cylc:conf:`workflow <[meta]>` or
+:cylc:conf:`task <[runtime][<namespace>][meta]>` item.
+See :cylc:conf:`workflow events <[scheduler][events]>` and
+:cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
+
+If no template arguments are supplied the following default command line
+will be used:
+
+.. code-block:: none
+
+   <task-event-handler> %(event)s %(workflow)s %(id)s %(message)s
+
+.. note::
+
+   Substitution patterns should not be quoted in the template strings.
+   This is done automatically where required.
+
+For an explanation of the substitution syntax, see
+`String Formatting Operations
+<https://docs.python.org/2/library/stdtypes.html#string-formatting>`_
+in the Python documentation.
+
+The retry event occurs if a task fails and has any remaining retries
+configured (see :ref:`TaskRetries`).
+The event handler will be called as soon as the task fails, not after
+the retry delay period when it is resubmitted.
+
+.. note::
+
+   Event handlers are called by the :term:`scheduler`, not by
+   task jobs. If you wish to pass additional information to them use
+   ``[scheduler] -> [[environment]]``, not task runtime environment.
+
+The following two :cylc:conf:`flow.cylc` snippets are examples on how to specify
+event handlers using the alternate methods:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
+           execution retry delays = PT0S, PT30S
+           [[[events]]]
+               retry handler = "echo '!!!!!EVENT!!!!!' "
+               failed handler = "echo '!!!!!EVENT!!!!!' "
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = """
+               test ${CYLC_TASK_TRY_NUMBER} -eq 2
+               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+           """
+           execution retry delays = PT0S, PT30S
+           [[[events]]]
+               handlers = "echo '!!!!!EVENT!!!!!' "
+               # Note: task output name can be used as an event in this method
+               handler events = retry, failed, oops
+           [[[outputs]]]
+               oops = oopsy daisy
+
+The handler command here - specified with no arguments - is called with the
+default arguments, like this:
+
+.. code-block:: bash
+
+   echo '!!!!!EVENT!!!!!' %(event)s %(workflow)s %(id)s %(message)s
+
+
+.. _Late Events:
+
+Late Events
+^^^^^^^^^^^
+
+You may want to be notified when certain tasks are running late in a real time
+production system - i.e. when they have not triggered by *the usual time*.
+Tasks of primary interest are not normally clock-triggered however, so their
+trigger times are mostly a function of how the workflow runs in its environment,
+and even external factors such as contention with other workflows [1]_ .
+
+But if your system is reasonably stable from one cycle to the next such that a
+given task has consistently triggered by some interval beyond its cycle point,
+you can configure Cylc to emit a *late event* if it has not triggered by
+that time. For example, if a task ``forecast`` normally triggers by 30
+minutes after its cycle point, configure late notification for it like this:
+
+.. code-block:: cylc
+
+   [runtime]
+      [[forecast]]
+           script = run-model.sh
+           [[[events]]]
+               late offset = PT30M
+               late handler = my-handler %(message)s
+
+*Late offset intervals are not computed automatically so be careful
+to update them after any change that affects triggering times.*
+
+.. note::
+
+   Cylc can only check for lateness in tasks that it is currently aware
+   of. If a workflow gets delayed over many cycles the next tasks coming up
+   can be identified as late immediately, and subsequent tasks can be
+   identified as late as the workflow progresses to subsequent cycle points,
+   until it catches up to the clock.
+
+
+.. [1] Late notification of clock-triggered tasks is not very useful in
+   any case because they typically do not depend on other tasks, and as
+   such they can often trigger on time even if the workflow is delayed to
+   the point that downstream tasks are late due to their dependence on
+   previous-cycle tasks that are delayed.

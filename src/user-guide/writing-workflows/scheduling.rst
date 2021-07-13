@@ -428,6 +428,132 @@ initial and final cycle points. Using this shorthand you can write:
 
 .. _excluding-dates:
 
+
+The Meaning And Use Of Initial Cycle Point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When a workflow is started with the ``cylc play`` command (cold or
+warm start) the cycle point at which it starts can be given on the command
+line or hardcoded into the :cylc:conf:`flow.cylc` file:
+
+.. code-block:: console
+
+   $ cylc play foo --initial-cycle-point=20120808T06Z
+
+or:
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 20100808T06Z
+
+An initial cycle given on the command line will override one in the
+flow.cylc file.
+
+.. _setting-the-icp-relative-to-now:
+
+Setting The Initial Cycle Point Relative To The Current Time
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. warning::
+
+   Setting the initial cycle point relative to the current time only works
+   for :term:`datetime cycling` workflows which use the Gregorian calendar and
+   will not work for alternative calendars like the 360, 365 or 366 day
+   calendars.
+
+Two additional commands, ``next`` and ``previous``, can be used when setting
+the initial cycle point.
+
+The syntax uses truncated ISO8601 time representations, and is of the style:
+``next(Thh:mmZ)``, ``previous(T-mm)``; e.g.
+
+* ``initial cycle point = next(T15:00Z)``
+* ``initial cycle point = previous(T09:00)``
+* ``initial cycle point = next(T12)``
+* ``initial cycle point = previous(T-20)``
+
+A list of times, separated by semicolons, can be provided, e.g.
+``next(T-00;T-15;T-30;T-45)``. At least one time is required within the
+brackets, and if more than one is given, the major time unit in each (hours
+or minutes) should all be of the same type.
+
+If an offset from the specified date or time is required, this should be
+used in the form: ``previous(Thh:mm) +/- PxTy`` in the same way as is used
+for determining cycle periods, e.g.
+
+* ``initial cycle point = previous(T06) +P1D``
+* ``initial cycle point = next(T-30) -PT1H``
+
+The section in the bracket attached to the next/previous command is
+interpreted first, and then the offset is applied.
+
+The offset can also be used independently without a ``next`` or ``previous``
+command, and will be interpreted as an offset from "now".
+
+.. table:: Examples of setting relative initial cycle point for times and offsets using ``now = 2018-03-14T15:12Z`` (and UTC mode)
+
+   ====================================  ==================
+   Syntax                                Interpretation
+   ====================================  ==================
+   ``next(T-00)``                        2018-03-14T16:00Z
+   ``previous(T-00)``                    2018-03-14T15:00Z
+   ``next(T-00; T-15; T-30; T-45)``      2018-03-14T15:15Z
+   ``previous(T-00; T-15; T-30; T-45)``  2018-03-14T15:00Z
+   ``next(T00)``                         2018-03-15T00:00Z
+   ``previous(T00)``                     2018-03-14T00:00Z
+   ``next(T06:30Z)``                     2018-03-15T06:30Z
+   ``previous(T06:30) -P1D``             2018-03-13T06:30Z
+   ``next(T00; T06; T12; T18)``          2018-03-14T18:00Z
+   ``previous(T00; T06; T12; T18)``      2018-03-14T12:00Z
+   ``next(T00; T06; T12; T18) +P1W``     2018-03-21T18:00Z
+   ``PT1H``                              2018-03-14T16:12Z
+   ``-P1M``                              2018-02-14T15:12Z
+   ====================================  ==================
+
+The relative initial cycle point also works with truncated dates, including
+weeks and ordinal date, using ISO8601 truncated date representations.
+Note that day-of-week should always be specified when using weeks. If a time
+is not included, the calculation of the next or previous corresponding
+point will be done from midnight of the current day.
+
+.. table:: Examples of setting relative initial cycle point for dates using ``now = 2018-03-14T15:12Z`` (and UTC mode)
+
+   ====================================  ==================
+   Syntax                                Interpretation
+   ====================================  ==================
+   ``next(-00)``                         2100-01-01T00:00Z
+   ``previous(--01)``                    2018-01-01T00:00Z
+   ``next(---01)``                       2018-04-01T00:00Z
+   ``previous(--1225)``                  2017-12-25T00:00Z
+   ``next(-2006)``                       2020-06-01T00:00Z
+   ``previous(-W101)``                   2018-03-05T00:00Z
+   ``next(-W-1; -W-3; -W-5)``            2018-03-14T00:00Z
+   ``next(-001; -091; -181; -271)``      2018-04-01T00:00Z
+   ``previous(-365T12Z)``                2017-12-31T12:00Z
+   ====================================  ==================
+
+
+The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+In the case of a *cold start only* the initial cycle point is passed
+through to task execution environments as
+``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT``. The value is then stored in
+workflow database files and persists across restarts, but it does get wiped out
+(set to ``None``) after a warm start, because a warm start is really an
+implicit restart in which all state information is lost (except that the
+previous cycle is assumed to have completed).
+
+The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
+determine if they are running in the initial cold-start cycle point, when
+different behaviour may be required, or in a normal mid-run cycle point.
+Note however that an initial ``R1`` graph section is now the preferred
+way to get different behaviour at workflow start-up.
+
+
+
+
 How Multiple Graph Strings Combine
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1556,6 +1682,108 @@ External Triggers
 ^^^^^^^^^^^^^^^^^
 
 This is a substantial topic, documented in :ref:`Section External Triggers`.
+
+
+Limiting Triggering
+-------------------
+
+Cylc will usually try to trigger any task with met dependencies. This can
+risk running more tasks than you wish to. :ref:`RunaheadLimit` and
+:ref:`InternalQueues` provide tools for you to control the trigging of ready
+tasks.
+
+.. _RunaheadLimit:
+
+Runahead Limiting
+^^^^^^^^^^^^^^^^^
+
+Runahead limiting prevents the fastest tasks in a workflow from getting too far
+ahead of the slowest ones.
+
+For example in the following workflow the runahead limit of ``P5`` restricts the
+workflow so that only five consecutive cycles may run simultaneously.
+
+.. code-block:: cylc
+
+    [scheduling]
+        initial cycle point = 1
+        cycling mode = integer
+        runahead limit = P5
+        [[graph]]
+            P1 = foo
+
+When this workflow is started the tasks ``foo.1`` -> ``foo.5`` will be submitted,
+however, the tasks from ``foo.6`` onwards are said to be "runahead limited"
+and will not be submitted.
+
+Succeeded and failed tasks are ignored when computing the runahead limit. This
+functionality is controlled by the :cylc:conf:`[scheduling]runahead limit`
+which can be set to either:
+
+* A number of consecutive cycles.
+* Or a time interval between the oldest and newest cycles.
+
+A low runahead limit can prevent Cylc from interleaving cycles, but it will not
+stall a workflow unless it fails to extend out past a future trigger (see
+:ref:`InterCyclePointTriggers`).
+
+A high runahead limit may allow fast tasks
+that are not constrained by dependencies or clock-triggers to spawn far ahead
+of the pack, which could have performance implications for the
+:term:`scheduler` when running very large workflows.
+
+See the :cylc:conf:`[scheduling]runahead limit` configuration for more details.
+
+
+.. _InternalQueues:
+
+Limiting Activity With Internal Queues
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Large workflows can potentially overwhelm task hosts by submitting too many
+tasks at once. You can prevent this with *internal queues*, which
+limit the number of tasks that can be active (submitted or running)
+at the same time.
+
+Internal queues behave in the first-in-first-out (FIFO) manner, i.e. tasks are
+released from a queue in the same order that they were queued.
+
+A queue is defined by a *name*; a *limit*, which is the maximum
+number of active tasks allowed for the queue; and a list of *members*,
+assigned by task or family name.
+
+Queue configuration is done in the :cylc:conf:`[scheduling][queues]` section.
+
+By default every task is assigned to the ``default`` queue, which by default
+has a zero limit (interpreted by cylc as no limit). To use a single queue for
+the whole workflow just set the default queue limit:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[queues]]
+           # limit the entire workflow to 5 active tasks at once
+           [[[default]]]
+               limit = 5
+
+To use additional queues just name each one, set their limits, and assign
+members:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[queues]]
+           [[[q_foo]]]
+               limit = 5
+               members = foo, bar, baz
+
+Any tasks not assigned to a particular queue will remain in the default
+queue. The *queues* example workflow illustrates how queues work by
+running two task trees side by side each
+limited to 2 and 3 tasks respectively:
+
+.. literalinclude:: ../../workflows/queues/flow.cylc
+   :language: cylc
 
 
 .. _Graph Branching:
