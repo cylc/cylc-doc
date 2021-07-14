@@ -32,10 +32,12 @@ Environment Variables:
 
 """
 
+from pathlib import Path
 from datetime import datetime
 import json
 import os
 import re
+import requests
 import urllib3
 
 
@@ -114,7 +116,6 @@ def extract_observations(data):
 
 def reference_lat_long(site_id):
     """Extract lat-long from a reference file."""
-    from pathlib import Path
     src = Path(os.environ['CYLC_WORKFLOW_RUN_DIR']) / 'etc/met-office-sites.dat'
     info = Path(src).read_text()
     siteinfo = re.findall(f'^{int(site_id):05d}.*', info, re.MULTILINE)
@@ -128,7 +129,6 @@ def reference_lat_long(site_id):
     return lat, lon
 
 
-import requests
 def synop_grab(site_id, time):
     """Get obs data from a resonably reliable 3rd Party source.
 
@@ -170,13 +170,42 @@ def synop_grab(site_id, time):
     return [lat, lon, data['direction'], data['speed']]
 
 
+def get_nearby_site(site_id, badsites):
+    """Use Pythagoras to find the next nearest site."""
+    lat, lon = reference_lat_long(site_id)
+    src = Path(os.environ['CYLC_WORKFLOW_RUN_DIR']) / 'etc/met-office-sites.dat'
+    info = Path(src).read_text()
+    dist = 100
+    result = 0
+    for site in info.split('\n')[6:]:
+        site = site.split()
+        slat = site[-4]
+        slon = site[-3]
+        x = float(slat) - float(lat)
+        y = float(slon) - float(lon)
+        ndist = (x ** 2 + y ** 2) ** 0.5
+        if ndist < dist and site[0] not in badsites:
+            dist = ndist
+            result = int(site[0])
+    print(f'using {" ".join(site[1:][:-5])} (dist {dist})')
+    return result, dist
+
 
 def main(site_id, api_key=None):
     cycle_point = os.environ['CYLC_TASK_CYCLE_POINT']
+    dist = 0.0
+    badsites = []
+    fails = True
+    obs = None
+    while dist < 0.1 and fails:
+        try:
+            obs = synop_grab(site_id, cycle_point)
+            fails = False
+        except NoDataException:
+            badsites.append(site_id)
+            site_id, dist = get_nearby_site(site_id, badsites)
 
-    try:
-        obs = synop_grab(site_id, cycle_point)
-    except NoDataException:
+    if obs == None:
         if api_key:
             print('Attempting to get weather data from DataPoint...')
             data = get_datapoint_data(site_id, cycle_point, api_key)
