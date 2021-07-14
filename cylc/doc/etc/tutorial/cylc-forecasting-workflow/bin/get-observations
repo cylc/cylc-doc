@@ -165,7 +165,7 @@ def synop_grab(site_id, time):
     data['direction'] = str(int(data['direction']) * 10)
 
     # Convert data in KT to MPH:
-    data['speed'] = str(int(data['speed'] * 1.15078))
+    data['speed'] = str(int(data['speed']) * 1.15078)
 
     # Get lat and long from MO Data:
     lat, lon = reference_lat_long(site_id)
