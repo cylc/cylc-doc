@@ -164,6 +164,9 @@ def synop_grab(site_id, time):
     # Parse the direction from 10's of degrees to degrees:
     data['direction'] = str(int(data['direction']) * 10)
 
+    # Convert data in KT to MPH:
+    data['speed'] = str(int(data['speed'] * 1.15078))
+
     # Get lat and long from MO Data:
     lat, lon = reference_lat_long(site_id)
 
@@ -193,6 +196,8 @@ def get_nearby_site(site_id, badsites):
 
 def main(site_id, api_key=None):
     cycle_point = os.environ['CYLC_TASK_CYCLE_POINT']
+
+    # Try to get the information from SYNOPS.
     dist = 0.0
     badsites = []
     fails = True
