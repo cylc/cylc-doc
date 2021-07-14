@@ -202,7 +202,7 @@ def main(site_id, api_key=None):
     badsites = []
     fails = True
     obs = None
-    while dist < 0.1 and fails:
+    while dist < 0.01 and fails:
         try:
             obs = synop_grab(site_id, cycle_point)
             fails = False
