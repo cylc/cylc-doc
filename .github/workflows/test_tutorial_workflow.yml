@@ -1,4 +1,4 @@
-name: test
+name: test-tutorial-workflow
 
 on:
   push:
@@ -18,18 +18,13 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: configure python
         uses: actions/setup-python@v2
         with:
           python-version: '3.7'
-
-      - name: configure node
-        uses: actions/setup-node@v1
-        with:
-            node-version: '10.x'
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2
@@ -38,35 +33,25 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: install cylc-doc
-        run: pip install .[all]
+        run: pip install .[tutorial]
 
-      - name: install libs to document
+      - name: install libs
         env:
           cylc_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
           rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
           cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
         run: |
-          # NOTE: Install with [all] so we can import plugins which may
-          #       have extra dependencies.
           pip install  \
-            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${rose_ref}" \
-            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"
+            "cylc-flow @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
+            "metomi-rose @ git+https://github.com/metomi/rose@${rose_ref}" \
+            "cylc-rose @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"
 
-      - name: install eslint
+      - name: run tutorial workflow
         run: |
-          npm install -g eslint
-
-      - name: lint
-        run: |
-          flake8
-          eslint .
-
-      - name: build
-        run: |
-          make html slides linkcheck doctest SPHINXOPTS='-Wn'
+          mkdir -p "${HOME}/cylc-run"
+          bin/run-validate
 
       - name: debug
         if: failure()
         run: |
-          cat /tmp/sphinx-err* || true  # sphinx traceback
+          find ~/cylc-run -name job.err -exec cat {} +  # cylc error files

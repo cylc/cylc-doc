@@ -49,7 +49,14 @@ INSTALL_REQUIRES = [
 
 EXTRAS_REQUIRE = {
     'test': [
-        'pycodestyle'
+        'flake8',
+        'flake8-broken-line>=0.3.0',
+        'flake8-bugbear>=21.0.0',
+        'flake8-builtins>=1.5.0',
+        'flake8-comprehensions>=3.5.0',
+        'flake8-debugger>=4.0.0',
+        'flake8-mutable>=1.2.0',
+        'flake8-simplify>=0.14.0',
     ],
     'tutorial': [
         'pillow',
@@ -60,10 +67,14 @@ EXTRAS_REQUIRE = {
 EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
 
 
+with open('README.md', 'r') as readmefile:
+    README = readmefile.read()
+
+
 setup(
     name='cylc-doc',
     version=VERSION,
-    long_description=open('README.md').read(),
+    long_description=README,
     long_description_content_type="text/markdown",
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRE,

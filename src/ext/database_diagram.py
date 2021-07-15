@@ -88,7 +88,7 @@ def schema_to_markdown(db_name):
     lines = []
     orphans = []
     relationships = get_relationships()
-    with closing(sqlite3.connect(db_name)) as conn:
+    with closing(sqlite3.connect(db_name)) as conn:  # noqa SIM117 (multi-line)
         with closing(conn.cursor()) as cursor:
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
             for row in cursor:
