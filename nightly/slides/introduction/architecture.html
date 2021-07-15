@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architecture &mdash; Cylc nightly.2021-07-15 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'nightly.2021-07-15',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc nightly.2021-07-15 documentation" href="../index.html" />
+    <link rel="up" title="Introduction" href="index.html" />
+    <link rel="next" title="Tutorial" href="../tutorial/index.html" />
+    <link rel="prev" title="Introduction" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="architecture">
+
+<h1>Architecture<a class="headerlink" href="../../html/introduction/architecture.html#architecture" title="View HTML">§</a></h1>
+
+
+
+
+
+</article>
+<article class="slide level-2" id="web">
+
+<h2>Web<a class="headerlink" href="../../html/introduction/architecture.html#web" title="View HTML">§</a></h2>
+
+
+
+
+
+</article>
+<article class="slide level-3" id="websocket">
+
+<h3>WebSocket<a class="headerlink" href="../../html/introduction/architecture.html#websocket" title="View HTML">§</a></h3>
+
+<p>The Cylc Web UI uses <a class="reference external" href="https://www.apollographql.com/docs/react/">Apollo Client</a> to handle GraphQL query
+requests. A GraphQL query is used to create a <a class="reference external" href="https://www.apollographql.com/docs/react/data/subscriptions/">GraphQL subscription</a>.</p>
+<p>Once a subscription is created, the server will send back a message
+with the query result whenever there is new data available.</p>
+<p>In order to handle the communication between the client and the
+server, Apollo Client uses WebSockets. It will have one WebSocket
+per user session.</p>
+<div class="figure align-center">
+<img alt="../_images/websocket-communication.png" src="../_images/websocket-communication.png" />
+</div>
+<p>Every message received by the server is added to a queue, and processed
+by the server as soon as possible.</p>
+<p>The server uses the Cylc UI Server schema and resolvers to validate the
+query and to fetch data from the data store for the query response.</p>
+<p>The query result is then serialized as JSON and sent back to the client.
+The work of the Apollo Client ends after it pushes the data to the Vuex
+store.</p>
+<p>The communication between client and server follows a protocol
+called <a class="reference external" href="https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md">graphql-ws protocol</a>.</p>
+<div class="figure align-center">
+<img alt="../_images/websocket-graphql-ws-protocol.png" src="../_images/websocket-graphql-ws-protocol.png" />
+</div>
+<p>After a channel between client and server is open, the messages
+follow that protocol, starting by the <code class="docutils literal notranslate"><span class="pre">connection</span> <span class="pre">init</span></code> message,
+that simply expects an <code class="docutils literal notranslate"><span class="pre">ack</span></code> message back from the server,
+where the <code class="docutils literal notranslate"><span class="pre">ack</span></code> is an acknowlegdement to the client - note
+that the protocol does not define an <code class="docutils literal notranslate"><span class="pre">ack</span></code> as a MUST, but
+rather as a MAY, so a client may interpret not receiving an
+error as an acknowledgement to proceed as well.</p>
+<p>The next message will be a <code class="docutils literal notranslate"><span class="pre">start</span></code>, which will contain the
+GraphQL query subscription. If there were no errors, the client and
+server susbcription is established, and the client will start
+receiving the GraphQL responses.</p>
+<p>The protocol also supports other messages, such as <code class="docutils literal notranslate"><span class="pre">stop</span></code>, to
+tell the server it doesn’t need to send any more data as that
+subscription is now cancelled.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cylc 8 Migration Guide &mdash; Cylc nightly.2021-07-15 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'nightly.2021-07-15',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc nightly.2021-07-15 documentation" href="../index.html" />
+    <link rel="next" title="Quick Summary Of Changes" href="summary.html" />
+    <link rel="prev" title="Cylc Documentation" href="../index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="cylc-8-migration-guide">
+
+<h1>Cylc 8 Migration Guide<a class="headerlink" href="../../html/7-to-8/index.html#cylc-8-migration-guide" title="View HTML">§</a></h1>
+
+<p><strong>A quick guide for Cylc 7 (and Rose 2019) users upgrading to Cylc 8.</strong></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you need help using or understanding Cylc 8 please post questions to the
+<a class="reference external" href="https://cylc.discourse.group/c/cylc/7-to-8/13">Cylc 8 Migration category</a>
+on the <a class="reference external" href="https://cylc.discourse.group/">Cylc Forum</a></p>
+</div>
+<p>Cylc 8 differs from Cylc 7 in many ways: architecture, scheduling
+algorithm, security, UIs, working practices, and more.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Quick Summary Of Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#backward-compatibility">Backward Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#architecture">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#scheduling-algorithm">Scheduling Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#task-job-separation-and-states">Task/Job Separation and States</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#window-on-the-workflow">Window on the Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#platform-awareness">Platform Awareness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#graph-syntax">Graph Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#workflow-installation">Workflow Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#safe-run-semantics">Safe Run Semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#security">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#packaging">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#what-s-still-missing-from-cylc-8">What’s Still Missing From Cylc 8?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="summary.html#cylc-7-scheduler-deficiencies-fixed-by-cylc-8">Cylc 7 Scheduler Deficiencies Fixed by Cylc 8</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="caveats.html">Cylc nightly.2021-07-15 Caveats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html#cylc-flow">Cylc Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html#browser-based-ui">Browser Based UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html#terminal-user-interface">Terminal User Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html#ui-server">UI Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#validating">Validating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#installing-running">Installing &amp; Running</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#pausing-unpausing">Pausing &amp; Unpausing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#stopping">Stopping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#restarting">Restarting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#deleting">Deleting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#scanning">Scanning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#view-a-workflow-s-configuration">View A Workflow’s Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#opening-user-interfaces">Opening User Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#static-graph-visualisation">Static Graph Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html#rose-stem">Rose Stem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="major-changes/index.html">Major Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/platforms.html">Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/template-vars.html">Template Variables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

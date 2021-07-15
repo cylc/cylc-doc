@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Workflow Runtime Interface &mdash; Cylc nightly.2021-07-15 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc Development History - Major Changes" href="../dev-history-major-changes.html" />
+    <link rel="prev" title="Scan API" href="scan.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                nightly.2021-07-15
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../config/index.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Cylc API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="scan.html">Scan API</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Workflow Runtime Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#client">Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#server">Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+        
+          <li><a href="index.html">Cylc API</a> &raquo;</li>
+        
+      <li>Workflow Runtime Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/reference/api/zmq.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="workflow-runtime-interface">
+<h1>Workflow Runtime Interface<a class="headerlink" href="#workflow-runtime-interface" title="Permalink to this headline">¶</a></h1>
+<p>Cylc workflows are TCP servers which use the ZeroMQ protocol to communicate with
+clients and jobs.</p>
+<p>Cylc provides a Python client to communicate with this server
+<a class="reference internal" href="#cylc.flow.network.client.WorkflowRuntimeClient" title="cylc.flow.network.client.WorkflowRuntimeClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.client.WorkflowRuntimeClient</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cylc.flow.network.client</span> <span class="kn">import</span> <span class="n">WorkflowRuntimeClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">WorkflowRuntimeClient</span><span class="p">(</span><span class="s1">&#39;my-workflow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ping_workflow&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Cylc also provides sub-command called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">client</span></code> which is a simple
+wrapper of the Python client.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc client generic ping_workflow -n
+<span class="go">true</span>
+</pre></div>
+</div>
+<p>The available “commands” or (“endpoints”) are contained in
+<a class="reference internal" href="#cylc.flow.network.server.WorkflowRuntimeServer" title="cylc.flow.network.server.WorkflowRuntimeServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.server.WorkflowRuntimeServer</span></code></a> class.</p>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cylc.flow.network.client.</span></span><span class="sig-name descname"><span class="pre">WorkflowRuntimeClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><span class="pre">object</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srv_public_key_loc</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate a client to the scheduler API.</p>
+<p>Initiates the REQ part of a ZMQ REQ-REP pair.</p>
+<p>This class contains the logic for the ZMQ message interface and client -
+server communication.</p>
+<p>Determine host and port from the contact file unless provided.</p>
+<p>If there is no socket bound to the specified host/port the client will
+bail after <code class="docutils literal notranslate"><span class="pre">timeout</span></code> seconds.</p>
+<dl>
+<dt>Args:</dt><dd><dl>
+<dt>workflow (str):</dt><dd><p>Name of the workflow to connect to.</p>
+</dd>
+<dt>timeout (float):</dt><dd><p>Set the default timeout in seconds. The default is
+<code class="docutils literal notranslate"><span class="pre">ZMQClient.DEFAULT_TIMEOUT</span></code>.
+Note the default timeout can be overridden for individual requests.</p>
+</dd>
+<dt>host (str):</dt><dd><p>The host where the flow is running if known.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</dd>
+<dt>port (int):</dt><dd><p>The port on which the REQ-REP TCP server is listening.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>host (str):</dt><dd><p>Workflow host name.</p>
+</dd>
+<dt>port (int):</dt><dd><p>Workflow host port.</p>
+</dd>
+<dt>timeout_handler (function):</dt><dd><p>Optional function which runs before ClientTimeout is raised.
+This provides an interface for raising more specific exceptions in
+the event of a communication timeout.</p>
+</dd>
+<dt>header (dict):</dt><dd><p>Request “header” data to attach to each request.</p>
+</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd><p>Call endpoints using <code class="docutils literal notranslate"><span class="pre">ZMQClient.__call__</span></code>.</p>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts responses of the format: {“data”: {…}}</p></li>
+<li><p>Accepts error in the format: {“error”: {“message”: MSG}}</p></li>
+<li><p>Returns requests of the format: {“command”: CMD,
+“args”: {…}}</p></li>
+</ul>
+</dd>
+<dt>Raises:</dt><dd><p>ClientError: if the workflow is not running.</p>
+</dd>
+<dt>Call server “endpoints” using:</dt><dd><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">__call__</span></code>, <code class="docutils literal notranslate"><span class="pre">serial_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.serial_request">
+<span class="sig-name descname"><span class="pre">serial_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.serial_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a request.</p>
+<p>For convenience use <code class="docutils literal notranslate"><span class="pre">__call__</span></code> to call this method.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>command (str): The name of the endpoint to call.
+args (dict): Arguments to pass to the endpoint function.
+timeout (float): Override the default timeout (seconds).</p>
+</dd>
+<dt>Raises:</dt><dd><p>ClientTimeout: If a response takes longer than timeout to arrive.
+ClientError: Coverall for all other issues including failed auth.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>object: The data exactly as returned from the endpoint function,</dt><dd><p>nothing more, nothing less.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">async_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.async_request">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">async_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.async_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an asynchronous request using asyncio.</p>
+<p>Has the same arguments and return values as <code class="docutils literal notranslate"><span class="pre">serial_request</span></code>.</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="server">
+<h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">cylc.flow.network.server.</span></span><span class="sig-name descname"><span class="pre">WorkflowRuntimeServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barrier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threaded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">daemon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Workflow runtime service API facade exposed via zmq.</p>
+<p>This class contains the Cylc endpoints.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>schd (object): The parent object instantiating the server. In</dt><dd><p>this case, the workflow scheduler.</p>
+</dd>
+<dt>context (object): The instantiated ZeroMQ context (i.e. zmq.Context())</dt><dd><p>passed in from the application.</p>
+</dd>
+<dt>barrier (object): Threading Barrier object used to sync threads, for</dt><dd><p>the main thread to ensure socket setup has finished.</p>
+</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd><ul class="simple">
+<li><p>Define endpoints using the <code class="docutils literal notranslate"><span class="pre">expose</span></code> decorator.</p></li>
+<li><p>Call endpoints using the function name.</p></li>
+</ul>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts requests of the format: {“command”: CMD, “args”: {…}}</p></li>
+<li><p>Returns responses of the format: {“data”: {…}}</p></li>
+<li><p>Returns error in the format: {“error”: {“message”: MSG}}</p></li>
+</ul>
+</dd>
+<dt>Common Arguments:</dt><dd><p>Arguments which are shared between multiple commands.</p>
+<dl class="simple">
+<dt>task identifier (str):</dt><dd><p>A task identifier in the format <code class="docutils literal notranslate"><span class="pre">task.cycle-point</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">foo.1</span></code> or <code class="docutils literal notranslate"><span class="pre">bar.20000101T0000Z</span></code>.</p>
+</dd>
+</dl>
+<dl id="task-globs">
+<dt>task globs (list):</dt><dd><p>A list of strings in the format
+<code class="docutils literal notranslate"><span class="pre">name[.cycle_point][:task_state]</span></code> where <code class="docutils literal notranslate"><span class="pre">name</span></code> could be a
+task or family name.</p>
+<blockquote>
+<div><p>Glob-like patterns may be used to match multiple items e.g.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">*</span></code></dt><dd><p>Matches everything.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*.1</span></code></dt><dd><p>Matches everything in cycle <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*.*:failed</span></code></dt><dd><p>Matches all failed tasks.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.RECV_TIMEOUT">
+<span class="sig-name descname"><span class="pre">RECV_TIMEOUT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.RECV_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Max time the WorkflowRuntimeServer will wait for an incoming
+message in seconds.</p>
+<p>We use a timeout here so as to give the _listener a chance to respond to
+requests (i.e. stop) from its spawner (the scheduler).</p>
+<p>The alternative would be to spin up a client and send a message to the
+server, this way seems safer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.api">
+<span class="sig-name descname"><span class="pre">api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return information about this API.</p>
+<p>Returns a list of callable endpoints.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>endpoint (str, optional):</dt><dd><p>If specified the documentation for the endpoint
+will be returned instead.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>list/str: List of endpoints or string documentation of the
+requested endpoint.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.get_graph_raw">
+<span class="sig-name descname"><span class="pre">get_graph_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_point_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_point_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.get_graph_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a textual representation of the workflow graph.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The grouping options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grouping</span></code></p></li>
+</ul>
+</div>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>start_point_str (str):</dt><dd><p>Cycle point as a string to define the window of view of the
+workflow graph.</p>
+</dd>
+<dt>stop_point_str (str):</dt><dd><p>Cycle point as a string to define the window of view of the
+workflow graph.</p>
+</dd>
+<dt>grouping (list, optional):</dt><dd><p>List of (graph nodes) family names to group according to
+inheritance.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>list: [left, right, None, is_suicide, condition]</p>
+<dl class="simple">
+<dt>left (str):</dt><dd><p>Task identifier for the dependency of
+an edge.</p>
+</dd>
+<dt>right (str):</dt><dd><p>Task identifier for the dependant task
+of an edge.</p>
+</dd>
+<dt>is_suicide (bool):</dt><dd><p>True if edge represents a suicide trigger.</p>
+</dd>
+<dt>condition:</dt><dd><p>Conditional expression if edge represents a conditional trigger
+else <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.graphql">
+<span class="sig-name descname"><span class="pre">graphql</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.graphql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the GraphQL scheme execution result.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>request_string (str, optional):</dt><dd><p>GraphQL request passed to Graphene</p>
+</dd>
+<dt>variables (dict, optional):</dt><dd><p>Dict of variables passed to Graphene</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>object: Execution result, or a list with errors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements">
+<span class="sig-name descname"><span class="pre">pb_data_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the specified data elements in delta form.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>element_type (str):</dt><dd><p>Key from DELTAS_MAP dictionary.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>bytes</dt><dd><p>Serialised Protobuf message</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow">
+<span class="sig-name descname"><span class="pre">pb_entire_workflow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the entire data-store in a single Protobuf message.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>bytes</dt><dd><p>Serialised Protobuf message</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints">
+<span class="sig-name descname"><span class="pre">register_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register all exposed methods.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../dev-history-major-changes.html" class="btn btn-neutral float-right" title="Cylc Development History - Major Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="scan.html" class="btn btn-neutral float-left" title="Scan API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">
+        Last updated on Jul 15, 2021.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly.2021-07-15";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/api/zmq";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
