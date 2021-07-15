@@ -189,9 +189,10 @@ def get_nearby_site(site_id, badsites):
         ndist = (x ** 2 + y ** 2) ** 0.5
         if ndist < dist and site[0] not in badsites:
             dist = ndist
-            result = int(site[0])
-    print(f'using {" ".join(site[1:][:-5])} (dist {dist})')
-    return result, dist
+            result = site
+    print('using {} (dist {})'.format(" ".join(result[1:][:-5]), dist))
+    return int(result[0]), dist
+
 
 
 def main(site_id, api_key=None):
@@ -202,12 +203,12 @@ def main(site_id, api_key=None):
     badsites = []
     fails = True
     obs = None
-    while dist < 0.01 and fails:
+    while dist < 1 and fails:
         try:
             obs = synop_grab(site_id, cycle_point)
             fails = False
         except NoDataException:
-            badsites.append(site_id)
+            badsites.append(f'{int(site_id):05d}')
             site_id, dist = get_nearby_site(site_id, badsites)
 
     if obs == None:
