@@ -101,29 +101,6 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 
 .. warning::
 
-   .. TODO - Get rid of this!!!!!!!!
-
-   Cylc currently has DNS issues with the latest versions of Mac OS, to get
-   around them the following diff must be made to the installed source code:
-
-   .. code-block:: diff
-
-      diff --git a/cylc/flow/hostuserutil.py b/cylc/flow/hostuserutil.py
-      index 1b0bfc37d..73d5c9f98 100644
-      --- a/cylc/flow/hostuserutil.py
-      +++ b/cylc/flow/hostuserutil.py
-      @@ -113,7 +113,7 @@ class HostUtil(object):
-               """Return the extended info of the current host."""
-               if target not in self._host_exs:
-                   if target is None:
-      -                target = socket.getfqdn()
-      +                target = socket.gethostname()
-                   try:
-                       self._host_exs[target] = socket.gethostbyname_ex(target)
-                   except IOError as exc:
-
-.. warning::
-
    For Mac OS Versions 10.15.0 (Catalina) and higher SSH is disabled by
    default. The ability to SSH into your Mac OS box may be required for
    certain Cylc installations.
