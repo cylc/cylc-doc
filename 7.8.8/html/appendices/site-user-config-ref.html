@@ -114,7 +114,7 @@ sets a timeout for such a command to ensure that the suite can continue.</p>
 <p>This section contains configuration items that affect task-to-suite
 communications.</p>
 <div class="section" id="retry-interval-task-messaging-retry-interval">
-<h3>15.2.2.1. [retry interval]{[task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> retry interval<a class="headerlink" href="#retry-interval-task-messaging-retry-interval" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.2.1. [retry interval][task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> retry interval<a class="headerlink" href="#retry-interval-task-messaging-retry-interval" title="Permalink to this headline">¶</a></h3>
 <p>If a send fails, the messaging code will retry after a configured
 delay interval.</p>
 <ul class="simple">
@@ -124,7 +124,7 @@ delay interval.</p>
 </ul>
 </div>
 <div class="section" id="maximum-number-of-tries-task-messaging-maximum-number-of-tries">
-<h3>15.2.2.2. [maximum number of tries]{[task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> maximum number of tries<a class="headerlink" href="#maximum-number-of-tries-task-messaging-maximum-number-of-tries" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.2.2. [maximum number of tries][task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> maximum number of tries<a class="headerlink" href="#maximum-number-of-tries-task-messaging-maximum-number-of-tries" title="Permalink to this headline">¶</a></h3>
 <p>If successive sends fail, the messaging code will give up after a
 configured number of tries.</p>
 <ul class="simple">
@@ -134,7 +134,7 @@ configured number of tries.</p>
 </ul>
 </div>
 <div class="section" id="connection-timeout-task-messaging-connection-timeout">
-<h3>15.2.2.3. [connection timeout]{[task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> connection timeout<a class="headerlink" href="#connection-timeout-task-messaging-connection-timeout" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.2.3. [connection timeout][task messaging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> connection timeout<a class="headerlink" href="#connection-timeout-task-messaging-connection-timeout" title="Permalink to this headline">¶</a></h3>
 <p>This is the same as the <code class="docutils literal notranslate"><span class="pre">--comms-timeout</span></code> option in cylc
 commands. Without a timeout remote connections to unresponsive
 suites can hang indefinitely (suites suspended with Ctrl-Z for instance).</p>
@@ -151,7 +151,7 @@ suites can hang indefinitely (suites suspended with Ctrl-Z for instance).</p>
 as a rolling archive. Logs are rolled over (backed up and started anew)
 when they reach a configurable limit size.</p>
 <div class="section" id="rolling-archive-length-suite-logging-rolling-archive-length">
-<h3>15.2.3.1. [rolling archive length]{[suite logging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> rolling archive length<a class="headerlink" href="#rolling-archive-length-suite-logging-rolling-archive-length" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.3.1. [rolling archive length][suite logging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> rolling archive length<a class="headerlink" href="#rolling-archive-length-suite-logging-rolling-archive-length" title="Permalink to this headline">¶</a></h3>
 <p>How many rolled logs to retain in the archive.</p>
 <ul class="simple">
 <li><em>type</em>: integer</li>
@@ -160,7 +160,7 @@ when they reach a configurable limit size.</p>
 </ul>
 </div>
 <div class="section" id="maximum-size-in-bytes-suite-logging-maximum-size-in-bytes">
-<h3>15.2.3.2. maximum size in bytes]{[suite logging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> maximum size in bytes<a class="headerlink" href="#maximum-size-in-bytes-suite-logging-maximum-size-in-bytes" title="Permalink to this headline">¶</a></h3>
+<h3>15.2.3.2. maximum size in bytes][suite logging] <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code> maximum size in bytes<a class="headerlink" href="#maximum-size-in-bytes-suite-logging-maximum-size-in-bytes" title="Permalink to this headline">¶</a></h3>
 <p>Suite event logs are rolled over when they reach this file size.</p>
 <ul class="simple">
 <li><em>type</em>: integer</li>
