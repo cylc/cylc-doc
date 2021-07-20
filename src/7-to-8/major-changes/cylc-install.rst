@@ -16,7 +16,7 @@ Cylc Install
 
    - If you usually develop your Cylc workflows in the ``~/cylc-run`` directory.
    - If you develop your code outside the ``~/cylc-run`` directory and manually
-     copied to ``~/cylc-run``
+     copied to ``~/cylc-run``.
    - If you use ``rose suite-run``.
 
 Overview
@@ -70,8 +70,6 @@ You can also use ``-C`` (or ``--directory``) to set a source path:
 
    cylc install -C /path/to/another-workflow
 
-.. TODO - insert a seealso section referring to full reference, once written.
-
 Once you have installed a workflow you can use Cylc play to set it in motion.
 
 .. TODO - Include links to Cylc Play documentation.
@@ -95,12 +93,15 @@ To find out if you have Cylc-Rose installed:
 
 .. code-block:: bash
 
-   cylc install --help
+   > cylc version --long
+   8.0 (/path/to/cylc-8)
 
-If the output contains the options ``-D``, ``-S`` and ``-O`` you probably have
-Cylc-Rose installed.
+   Plugins:
+       cylc-rose       0.1.1   /path/to/cylc-rose
 
-.. TODO - give a quick cylc -rose example
+   ...
+
+
 
 Rose Stem
 ---------
