@@ -715,7 +715,7 @@ Glossary
 
    cylc-run directory
       The directory that contains workflows. This is, by default, ``~/cylc-run``
-      but may be configured using :cylc:conf:`global.cylc[install]symlink dirs`.
+      but may be configured using :cylc:conf:`global.cylc[install][symlink dirs]`.
 
       See also:
 

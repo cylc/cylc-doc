@@ -336,7 +336,7 @@ typically held in cycle point sub-directories of the workflow share directory.
 
 The top level share and work directory (below) location can be changed
 (e.g. to a large data area) by global config settings in
-:cylc:conf:`global.cylc[install]symlink dirs`.
+:cylc:conf:`global.cylc[install][symlink dirs]`.
 
 
 Task Work Directories
@@ -351,7 +351,7 @@ provide a unique workspace for every instance of every task.
 
 The top level work and share directory (above) location can be changed
 (e.g. to a large data area) by global config settings in
-:cylc:conf:`global.cylc[install]symlink dirs`.
+:cylc:conf:`global.cylc[install][symlink dirs]`.
 
 
 Environment Variable Evaluation
