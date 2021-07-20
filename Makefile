@@ -27,7 +27,7 @@ cleanall:
 	(cd doc; echo [0-9]*.*)
 	rm -rI doc/[0-9]*.*
 
-.PHONY: help clean Makefile .EXPORT_ALL_VARIABLES
+.PHONY: help clean Makefile .EXPORT_ALL_VARIABLES html
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -39,8 +39,6 @@ cleanall:
 	bin/version write > doc/versions.json
 	# Redirect doc/<version>/index.html -> doc/<version>/html/index.html
 	bin/create-html-redirect "html/index.html" "$(BUILDDIR)/index.html"
-	# Redirect old pages
-	bin/redirect-old-pages
 ifeq ($(STABLE),true)  # makefile conditionals in recipe must be unindented
 	# Link e.g. doc/stable/ -> doc/7.0/
 	rm "$(BUILDDIR)/../stable" || true
@@ -53,3 +51,7 @@ ifeq ($(LATEST),true)
 	rm "$(BUILDDIR)/../latest" || true
 	ln -sr "$(BUILDDIR)" "$(BUILDDIR)/../latest"
 endif
+
+html:
+	# Redirect old pages
+	bin/redirect-old-pages
