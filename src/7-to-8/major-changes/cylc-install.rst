@@ -29,7 +29,7 @@ Cylc might alter your files. If you developed elsewhere you needed to
 install your workflow with another tool.
 
 We designed Cylc 8 to help you keep your development and
-running copies separated. By default you can now develop workflows in the
+running copies separate. By default you can now develop workflows in the
 ``~/cylc-src`` directory. As a result you will not change your development
 copy by running a workflow. You will, however, need to install your workflow
 from ``~/cylc-src`` to ``~/cylc-run`` using the ``cylc install`` command.
