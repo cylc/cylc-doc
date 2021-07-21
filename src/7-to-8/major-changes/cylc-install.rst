@@ -60,7 +60,7 @@ You can install by workflow name if the workflow is in ``~/cylc-src``.
 .. note::
 
    Each time you run ``cylc install`` a new copy of the workflow is installed
-   in a new directory:
+   in a new directory,
    in the previous case this directory is ``run2``. ``cylc install`` also creates
    a symlink from the most recently installed run directory to ``~/cylc-run/<my_workflow>/runN``.
 
