@@ -142,6 +142,10 @@ or even infinite in extent in cycling systems. The Cylc 8 UI shows:
 Platform Awareness
 ------------------
 
+.. seealso::
+
+   :ref:`Platforms at Cylc 8.<majorchangesplatforms>`
+
 Cylc 7 was aware of individual job hosts.
 
 .. code-block:: cylc
@@ -201,6 +205,10 @@ Cylc 8 cleans this up:
 
 Workflow Installation
 ---------------------
+
+.. seealso::
+
+   :ref:`Moving to Cylc Install<majorchangesinstall>`.
 
 The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
 cleanly separates workflow source directory from run directory, and installs
