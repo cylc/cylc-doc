@@ -249,7 +249,11 @@ symlinks, rather than the ones specified in
    the command line list.
 
 
-Use `--symlink-dirs=""` to skip making symlinks.
+To skip making symlinks
+"""""""""""""""""""""""
+
+Use `--symlink-dirs=""`
+   
 
 
 Automatically Generated Directories and Files
