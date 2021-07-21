@@ -237,7 +237,7 @@ Upon running ``cylc install``, symlinks for the directories ``run``, ``log``,
 the symlink rules for ``localhost`` as defined in
 :cylc:conf:`global.cylc[install][symlink dirs]`.
 
-This is overridable via the command line option ``--symlink-dirs="log=$DIR,
+You can override the default locations set in :cylc:conf:`global.cylc` using the command line option ``--symlink-dirs="log=$DIR,
 run=/path/to/dir,..."``, where the directories supplied will be used to create
 symlinks, rather than the ones specified in
 :cylc:conf:`global.cylc[install][symlink dirs]`.
