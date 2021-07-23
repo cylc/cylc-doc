@@ -518,3 +518,118 @@ variable in the trigger string, and "passX12334a" is the ID string for
 the new event. The workflow passphrase must be installed on the triggering
 account. In this case, the event will trigger for the second cycle point but
 not the first because of the cycle-point matching.
+
+
+.. _WorkflowStatePolling:
+
+Triggering Off Of Tasks In Other Workflows
+------------------------------------------
+
+.. note::
+
+   Please read :ref:`Section External Triggers` before using
+   the older inter-workflow triggering mechanism described in this section.
+
+The ``cylc workflow-state`` command interrogates workflow run databases. It
+has a polling mode that waits for a given task in the target workflow to achieve a
+given state, or receive a given message. This can be used to make task
+scripting wait for a remote task to succeed (for example).
+
+Automatic workflow-state polling tasks can be defined with in the graph. They get
+automatically-generated task scripting that uses ``cylc workflow-state``
+appropriately (it is an error to give your own ``script`` item for these
+tasks).
+
+Here's how to trigger a task ``bar`` off a task ``foo`` in
+a remote workflow called ``other.workflow``:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           T00, T12 = "my-foo<other.workflow::foo> => bar"
+
+Local task ``my-foo`` will poll for the success of ``foo``
+in workflow ``other.workflow``, at the same cycle point, succeeding only when
+or if it succeeds. Other task states can also be polled:
+
+.. code-block:: cylc
+
+   T00, T12 = "my-foo<other.workflow::foo:fail> => bar"
+
+The default polling parameters (e.g. maximum number of polls and the interval
+between them) are printed by ``cylc workflow-state --help`` and can be
+configured if necessary under the local polling task runtime section:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           T00,T12 = "my-foo<other.workflow::foo> => bar"
+   [runtime]
+       [[my-foo]]
+           [[[workflow state polling]]]
+               max-polls = 100
+               interval = PT10S
+
+To poll for the target task to receive a message rather than achieve a state,
+give the message in the runtime configuration (in which case the task status
+inferred from the graph syntax will be ignored):
+
+.. code-block:: cylc
+
+   [runtime]
+       [[my-foo]]
+           [[[workflow state polling]]]
+               message = "the quick brown fox"
+
+For workflows owned by others, or those with run databases in non-standard
+locations, use the ``--run-dir`` option, or in-workflow:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[my-foo]]
+           [[[workflow state polling]]]
+               run-dir = /path/to/top/level/cylc/run-directory
+
+If the remote task has a different cycling sequence, just arrange for the
+local polling task to be on the same sequence as the remote task that it
+represents. For instance, if local task ``cat`` cycles 6-hourly at
+``0,6,12,18`` but needs to trigger off a remote task ``dog``
+at ``3,9,15,21``:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           T03,T09,T15,T21 = "my-dog<other.workflow::dog>"
+           T00,T06,T12,T18 = "my-dog[-PT3H] => cat"
+
+For workflow-state polling, the cycle point is automatically converted to the
+cycle point format of the target workflow.
+
+The remote workflow does not have to be running when polling commences because the
+command interrogates the workflow run database, not the :term:`scheduler`.
+
+.. note::
+
+   The graph syntax for workflow polling tasks cannot be combined with
+   cycle point offsets, family triggers, or parameterized task notation.
+   This does not present a problem because workflow polling tasks can be put on
+   the same cycling sequence as the remote-workflow target task (as recommended
+   above), and there is no point in having multiple tasks (family members or
+   parameterized tasks) performing the same polling operation. Task state
+   triggers can be used with workflow polling, e.g. to trigger another task if
+   polling fails after 10 tries at 10 second intervals:
+
+   .. code-block:: cylc
+
+      [scheduling]
+          [[graph]]
+              R1 = "poller<other-workflow::foo:succeed>:fail => another-task"
+      [runtime]
+          [[my-foo]]
+              [[[workflow state polling]]]
+                  max-polls = 10
+                  interval = PT10S
