@@ -1,9 +1,17 @@
 {
-    "8.0b1": [
-        "html",
-        "slides"
+    "8.0b2": [
+        "slides",
+        "html"
     ],
-    "8.0b0": [
+    "7.9.3": [
+        "singlehtml",
+        "html"
+    ],
+    "7.8.8": [
+        "singlehtml",
+        "html"
+    ],
+    "8.0b1": [
         "slides",
         "html"
     ],
@@ -11,17 +19,13 @@
         "slides",
         "html"
     ],
-    "7.9.3": [
-        "html",
-        "singlehtml"
-    ],
-    "7.8.8": [
-        "html",
-        "singlehtml"
+    "8.0b0": [
+        "slides",
+        "html"
     ],
     "stable": [
-        "html",
-        "singlehtml"
+        "singlehtml",
+        "html"
     ],
     "latest": [
         "slides",

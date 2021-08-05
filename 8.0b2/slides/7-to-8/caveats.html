@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cylc 8.0b2 Caveats &mdash; Cylc 8.0b2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0b2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0b2 documentation" href="../index.html" />
+    <link rel="up" title="Cylc 8 Migration Guide" href="index.html" />
+    <link rel="next" title="Cheat Sheet" href="cheat-sheet.html" />
+    <link rel="prev" title="Quick Summary Of Changes" href="summary.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="cylc-version-caveats">
+
+<h1>Cylc 8.0b2 Caveats<a class="headerlink" href="../../html/7-to-8/caveats.html#cylc-version-caveats" title="View HTML">§</a></h1>
+
+<p>This is an early release of Cylc, there are some loose ends and features which
+have not yet been (re)implemented.</p>
+<p>The documentation has not been fully reviewed and command line information may
+be out of date in some cases.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-flow">
+
+<h2>Cylc Flow<a class="headerlink" href="../../html/7-to-8/caveats.html#cylc-flow" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt>Run Numbers</dt><dd><p>By default when you install a workflow with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> it is installed
+into a numbered subdirectory e.g. <code class="docutils literal notranslate"><span class="pre">run1</span></code>. A subsequent installation
+would go into <code class="docutils literal notranslate"><span class="pre">run2</span></code>, etc.</p>
+<p>At present the full workflow registration <em>including</em> this run number must
+be provided to Cylc commands e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cylc play myflow/run1
+</pre></div>
+</div>
+<p>We plan to infer the most recent run to make this easier e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cylc play myflow
+</pre></div>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3895">https://github.com/cylc/cylc-flow/issues/3895</a></li>
+</ul>
+</dd>
+<dt>CLI Change</dt><dd><p>We plan to move to a new way of specifying workflow, cycles, tasks and jobs
+on the command line (with back support for the old format).</p>
+<p>This will open up performing operations on multiple workflows in a single
+command e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cylc stop &#39;*&#39;  # stop everything
+</pre></div>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/pull/3931">https://github.com/cylc/cylc-flow/pull/3931</a></li>
+</ul>
+</dd>
+<dt>Platform Selection</dt><dd><p>When Cylc needs to perform an action on a platform (e.g. submit a job)
+it picks a random host from the platform. If this host is down the operation
+will fail.</p>
+<p>In a later relase Cylc will pick another host in order to provide resilience
+to system issues.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3827">https://github.com/cylc/cylc-flow/issues/3827</a></li>
+</ul>
+</dd>
+<dt>Trigger Edit</dt><dd><p>Functionality removed pending reimplementation.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3743">https://github.com/cylc/cylc-flow/issues/3743</a></li>
+</ul>
+</dd>
+<dt>Reflow</dt><dd>The new “reflow” functionality which allows multiple
+(potentially parallel) executions of the same workflow in a single
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> is not fully supported by all commands and is
+yet to be documented.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="browser-based-ui">
+
+<h2>Browser Based UI<a class="headerlink" href="../../html/7-to-8/caveats.html#browser-based-ui" title="View HTML">§</a></h2>
+
+<p>The old “GUI” has been replaced by the new browser-based “UI”.</p>
+<dl class="docutils">
+<dt>Graph View</dt><dd><p>There is no graph view in the Cylc UI as yet. A new graph view will be
+developed providing both “live” (AKA <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gui</span></code>) and “offline”
+(AKA <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code>) functionalities.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/74">https://github.com/cylc/cylc-ui/issues/74</a></li>
+<li><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/82">https://github.com/cylc/cylc-ui/issues/82</a></li>
+</ul>
+</dd>
+<dt>Log Files</dt><dd>The ability to view job log and other files is yet to be implemented.</dd>
+<dt>Multiple Selection</dt><dd><p>Multiple selection is yet to be implemented, however, it is possible
+to issue action for multiple tasks (e.g. <code class="docutils literal notranslate"><span class="pre">kill</span></code>) without using
+multiple selection:</p>
+<ul class="simple">
+<li>From the UI click on a workflow/cycle/task/job.</li>
+<li>Find the action you want to call (e.g. kill).</li>
+<li>Click the pencil symbol next to this action.</li>
+<li>Edit the workflows/cycles/tasks/jobs in the form and press submit.</li>
+<li><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/434">https://github.com/cylc/cylc-ui/issues/434</a></li>
+</ul>
+</dd>
+<dt>Installing Workflows</dt><dd>At present there is no way to view uninstalled workflows in the UI.
+We will add the ability to view and install workflows from the UI.</dd>
+<dt>Rose Edit</dt><dd>Rose Edit is awaiting reimplementation in the UI.</dd>
+<dt>Trigger Edit</dt><dd>Functionality removed pending reimplementation.</dd>
+<dt>Xtrigger Visibility</dt><dd><p>Xtriggers are not yet visible in the UI.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/331">https://github.com/cylc/cylc-ui/issues/331</a></li>
+</ul>
+</dd>
+<dt>Documentation / Orientation Guide</dt><dd><p>Some form of documentation will be provided within the UI itself.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/155">https://github.com/cylc/cylc-ui/issues/155</a></li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="terminal-user-interface">
+
+<h2>Terminal User Interface<a class="headerlink" href="../../html/7-to-8/caveats.html#terminal-user-interface" title="View HTML">§</a></h2>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> command (Tui) replaces the old <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code>, it provides a
+tree view that is very similar to the Cylc UI and supports some control
+functionality.</p>
+<dl class="docutils">
+<dt>Performance</dt><dd><p>TUI currently refreshes its display every second. Large workflows which
+change rapidly may evolve faster than TUI is able to keep pace with which
+will cause TUI to freeze.</p>
+<p>A more performant implementation which does not rely on a scheduled global
+update will follow in due course.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3527">https://github.com/cylc/cylc-flow/issues/3527</a></li>
+</ul>
+</dd>
+<dt>GScan</dt><dd><p>The old <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gscan</span></code> command has been removed. You can now find the gscan
+display on the left-hand side of the Cylc UI.</p>
+<p>In a future release <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> will be able to list workflows in a similar
+way.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3464">https://github.com/cylc/cylc-flow/issues/3464</a></li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="ui-server">
+
+<h2>UI Server<a class="headerlink" href="../../html/7-to-8/caveats.html#ui-server" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt>Authorisation</dt><dd><p>Only “binary” authorisation (i.e. no access / full control) is currently
+supported.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-uiserver/issues/10">https://github.com/cylc/cylc-uiserver/issues/10</a></li>
+</ul>
+</dd>
+<dt>CLI Via UIS</dt><dd><p>The ability to route Cylc commands via the UIS is planned for a future relase</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3528">https://github.com/cylc/cylc-flow/issues/3528</a></li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

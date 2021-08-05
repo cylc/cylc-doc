@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Efficiency And Maintainability &mdash; Cylc 8.0b2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0b2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0b2 documentation" href="../index.html" />
+    <link rel="up" title="Workflow Design Guide" href="index.html" />
+    <link rel="next" title="Portable Workflows" href="portable-workflows.html" />
+    <link rel="prev" title="Basic Principles" href="general-principles.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="efficiency-and-maintainability">
+
+<h1>Efficiency And Maintainability<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#efficiency-and-maintainability" title="View HTML">§</a></h1>
+
+<p>Efficiency (in the sense of <em>economy of workflow definition</em>) and
+maintainability go hand in hand. This section describes techniques for clean
+and efficient construction of complex workflows that are easy to understand,
+maintain, and modify.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="the-task-family-hierarchy">
+
+<h2>The Task Family Hierarchy<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#the-task-family-hierarchy" title="View HTML">§</a></h2>
+
+<p>A properly designed family hierarchy fulfils three purposes in Cylc:</p>
+<ul class="simple">
+<li>efficient sharing of configuration common to groups of related tasks</li>
+<li>efficient bulk triggering, for clear scheduling graphs</li>
+<li>collapsible families in workflow visualization and UI views</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="sharing-by-inheritance">
+
+<h3>Sharing By Inheritance<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#sharing-by-inheritance" title="View HTML">§</a></h3>
+
+<p>Duplication is a maintenance risk because changes have to be repeated in
+multiple places without mistakes. On the other hand, unnecessary sharing of
+items via global variables is also bad because it is hard to be sure which
+tasks are using which variables. A properly designed runtime inheritance
+hierarchy can give every task exactly what it needs, and nothing that it
+doesn’t need.</p>
+<p>If a group of related tasks has some configuration in common, it can be
+factored out into a task family inherited by all.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[OBSPROC]]</span>
+        <span class="c1"># Settings common to all obs processing tasks.</span>
+    <span class="nt">[[obs1]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> OBSPROC</span>
+    <span class="nt">[[obs2]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> OBSPROC</span>
+</pre></div>
+</div>
+<p>If several families have settings in common, they can in turn can inherit
+from higher-level families.</p>
+<p>Multiple inheritance allows efficient sharing even for overlapping categories
+of tasks. For example consider that some obs processing tasks in the following
+workflow run parallel jobs and some serial:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[SERIAL]]</span>
+        <span class="c1"># Serial job settings.</span>
+    <span class="nt">[[PARALLEL]]</span>
+        <span class="c1"># Parallel job settings.</span>
+    <span class="nt">[[OBSPROC]]</span>
+        <span class="c1"># Settings for all obs processing tasks.</span>
+    <span class="nt">[[obs1, obs2, obs3]]</span>
+        <span class="c1"># Serial obs processing tasks.</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> OBSPROC, SERIAL</span>
+    <span class="nt">[[obs4, obs5]]</span>
+        <span class="c1"># Parallel obs processing tasks.</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> OBSPROC, PARALLEL</span>
+</pre></div>
+</div>
+<p>Note that workflow parameters should really be used to define family members
+efficiently - see <a class="reference internal" href="#generating-tasks"><span class="std std-ref">Generating Tasks Automatically</span></a>.</p>
+<p>Cylc provides tools to help make sense of your inheritance hierarchy:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">-n/--namespaces</span></code> - plot the full multiple
+inheritance graph (not the dependency graph)</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span> <span class="pre">WORKFLOW</span></code> - print selected sections or items
+after inheritance processing</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">WORKFLOW</span></code> - plot the dependency graph, with
+collapsible first-parent families
+(see <a class="reference internal" href="#task-families-and-visualization"><span class="std std-ref">Task Families And Visualization</span></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">list</span> <span class="pre">-t/--tree</span> <span class="pre">WORKFLOW</span></code> - print the first-parent
+inheritance hierarchy</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">list</span> <span class="pre">-m/--mro</span> <span class="pre">WORKFLOW</span></code> - print the inheritance
+precedence order for each runtime namespace</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="family-triggering">
+
+<h3>Family Triggering<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#family-triggering" title="View HTML">§</a></h3>
+
+<p>Task families can be used to simplify the scheduling graph wherever many
+tasks need to trigger at once:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> pre =&gt; MODELS</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[MODELS]]</span>
+    <span class="nt">[[model1, model2, model3, ...]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODELS</span>
+</pre></div>
+</div>
+<p>To trigger <em>off of</em> many tasks at once, family names need to be qualified
+by <code class="docutils literal notranslate"><span class="pre">&lt;state&gt;-all</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;state&gt;-any</span></code> to indicate the desired
+member-triggering semantics:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">           pre =&gt; MODELS</span>
+<span class="s2">           MODELS:succeed-all =&gt; post</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Note that this can be simplified further because Cylc ignores trigger
+qualifiers like <code class="docutils literal notranslate"><span class="pre">:succeed-all</span></code> on the right of trigger arrows
+to allow chaining of dependencies:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> pre =&gt; MODELS:succeed-all =&gt; post</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="family-to-family-triggering">
+
+<h3>Family-to-Family Triggering<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#family-to-family-triggering" title="View HTML">§</a></h3>
+
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> BIG_FAM_1:succeed-all =&gt; BIG_FAM_2</span>
+</pre></div>
+</div>
+<p>This means every member of <code class="docutils literal notranslate"><span class="pre">BIG_FAM_2</span></code> depends on every member
+of <code class="docutils literal notranslate"><span class="pre">BIG_FAM_1</span></code> succeeding. For very large families this can create so
+many dependencies that it affects the performance of Cylc at run time, as
+well as cluttering graph visualizations with unnecessary edges. Instead,
+interpose a blank task that signifies completion of the first family:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> BIG_FAM_1:succeed-all =&gt; big_fam_1_done =&gt; BIG_FAM_2</span>
+</pre></div>
+</div>
+<p>For families with <code class="docutils literal notranslate"><span class="pre">M</span></code> and <code class="docutils literal notranslate"><span class="pre">N</span></code> members respectively, this
+reduces the number of dependencies from <code class="docutils literal notranslate"><span class="pre">M*N</span></code> to <code class="docutils literal notranslate"><span class="pre">M+N</span></code>
+without affecting the scheduling.</p>
+<img alt="../_images/fam-to-fam-1.png" src="../_images/fam-to-fam-1.png" />
+<img alt="../_images/fam-to-fam-2.png" src="../_images/fam-to-fam-2.png" />
+
+
+
+
+</article>
+<article class="slide level-3" id="task-families-and-visualization">
+
+<h3>Task Families And Visualization<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#task-families-and-visualization" title="View HTML">§</a></h3>
+
+<p><em>First parents</em> in the inheritance hierarchy double as collapsible summary
+groups for visualization and monitoring. Tasks should generally be grouped into
+visualization families that reflect their logical purpose in the workflow rather
+than technical detail such as inherited job submission or host settings. So in
+the example under <a class="reference internal" href="#sharing-by-inheritance"><span class="std std-ref">Sharing By Inheritance</span></a> above all
+<code class="docutils literal notranslate"><span class="pre">obs&lt;n&gt;</span></code> tasks collapse into <code class="docutils literal notranslate"><span class="pre">OBSPROC</span></code> but not into
+<code class="docutils literal notranslate"><span class="pre">SERIAL</span></code> or <code class="docutils literal notranslate"><span class="pre">PARALLEL</span></code>.</p>
+<p>If necessary you can introduce new namespaces just for visualization:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[MODEL]]</span>
+        <span class="c1"># (No settings here - just for visualization).</span>
+    <span class="nt">[[model1, model2]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODEL, HOSTX</span>
+    <span class="nt">[[model3, model4]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODEL, HOSTY</span>
+</pre></div>
+</div>
+<p>To stop a solo parent being used in visualization, demote it to secondary with
+a null parent like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[SERIAL]]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="c1"># Inherit settings from SERIAL but don&#39;t use it in visualization.</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> None, SERIAL</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="generating-tasks-automatically">
+
+<h2>Generating Tasks Automatically<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#generating-tasks-automatically" title="View HTML">§</a></h2>
+
+<p>Groups of tasks that are closely related such as an ensemble of model runs or
+a family of obs processing tasks, or sections of workflow that are repeated
+with minor variations, can be generated automatically by iterating over
+some integer range (e.g. <code class="docutils literal notranslate"><span class="pre">model&lt;n&gt;</span></code> for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">1..10</span></code>) or
+list of strings (e.g. <code class="docutils literal notranslate"><span class="pre">obs&lt;type&gt;</span></code> for
+<code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">ship,</span> <span class="pre">buoy,</span> <span class="pre">radiosonde,</span> <span class="pre">...</span></code>).</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="jinja2-loops">
+
+<h3>Jinja2 Loops<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#jinja2-loops" title="View HTML">§</a></h3>
+
+<p>Task generation was traditionally done in Cylc with explicit Jinja2 loops,
+like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Task generation the old way: Jinja2 loops (NO LONGER RECOMMENDED!)</span>
+<span class="cp">{% set PARAMS = range(1,11) %}</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="cp">{% for P in PARAMS %}</span><span class="s2"></span>
+<span class="s2">            pre =&gt; model_p</span><span class="cp">{{P}}</span><span class="s2"> =&gt; post</span>
+<span class="s2">    </span><span class="cp">{% if P == 5 %}</span><span class="s2"></span>
+<span class="s2">            model_p</span><span class="cp">{{P}}</span><span class="s2"> =&gt; check</span>
+<span class="s2">    </span><span class="cp">{% endif %}</span><span class="s2"></span>
+<span class="cp">{% endfor %}</span><span class="s2">    &quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+<span class="cp">{% for P in PARAMS %}</span>
+    <span class="nt">[[model_p</span><span class="cp">{{P}}</span><span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;my parameter value is </span><span class="cp">{{P}}</span><span class="s">&quot;</span>
+    <span class="cp">{% if P == 1 %}</span>
+        <span class="c1"># special case...</span>
+    <span class="cp">{% endif %}</span>
+<span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+<p>Unfortunately this makes a mess of the workflow definition, particularly the
+scheduling graph, and it gets worse with nested loops over multiple parameters.</p>
+<img alt="../_images/param-1.png" src="../_images/param-1.png" />
+
+
+
+
+</article>
+<article class="slide level-3" id="parameterized-tasks">
+
+<h3>Parameterized Tasks<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#parameterized-tasks" title="View HTML">§</a></h3>
+
+<p>Cylc-6.11 introduced built-in <em>workflow parameters</em> for generating tasks
+without destroying the clarity of the base workflow definition. Here’s the same
+example using workflow parameters instead of Jinja2 loops:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Task generation the new way: workflow parameters.</span>
+<span class="nt">[scheduler]</span>
+    <span class="nt">[[parameters]]</span>
+        <span class="nv">p </span><span class="o">=</span><span class="s"> 1..10</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            pre =&gt; model&lt;p&gt; =&gt; post</span>
+<span class="s2">            model&lt;p=5&gt; =&gt; check</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[pre, post, check]]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">p</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;my parameter value is ${CYLC_TASK_PARAM_p}&quot;</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">p=7</span>&gt;<span class="nt">]]</span>
+        <span class="c1"># special case ...</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">model&lt;p&gt;</span></code> expands to <code class="docutils literal notranslate"><span class="pre">model_p7</span></code> for <code class="docutils literal notranslate"><span class="pre">p=7</span></code>,
+and so on, via the default expansion template for integer-valued parameters,
+but custom templates can be defined if necessary. Parameters can also be
+defined as lists of strings, and you can define dependencies between different
+values: <code class="docutils literal notranslate"><span class="pre">chunk&lt;p-1&gt;</span> <span class="pre">=&gt;</span> <span class="pre">chunk&lt;p&gt;</span></code>. Here’s a multi-parameter example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+    <span class="nt">[[parameters]]</span>
+        <span class="nv">run </span><span class="o">=</span><span class="s"> a, b, c</span>
+        <span class="nv">m </span><span class="o">=</span><span class="s"> 1..5</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> pre =&gt; init&lt;run&gt; =&gt; sim&lt;run,m&gt; =&gt; close&lt;run&gt; =&gt; post</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[sim</span>&lt;<span class="nb">run,m</span>&gt;<span class="nt">]]</span>
+</pre></div>
+</div>
+<img alt="../_images/param-2.png" src="../_images/param-2.png" />
+<p>If family members are defined by workflow parameters, then parameterized
+trigger expressions are equivalent to family <code class="docutils literal notranslate"><span class="pre">:&lt;state&gt;-all</span></code> triggers.
+For example, this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[parameters]]</span>
+        <span class="nv">n </span><span class="o">=</span><span class="s"> 1..5</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> pre =&gt; model&lt;n&gt; =&gt; post</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[pre, post]]</span>
+    <span class="nt">[[MODELS]]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">n</span>&gt;<span class="nt">]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODELS</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[parameters]]</span>
+        <span class="nv">n </span><span class="o">=</span><span class="s"> 1..5</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> pre =&gt; MODELS:succeed-all =&gt; post</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[pre, post]]</span>
+    <span class="nt">[[MODELS]]</span>
+    <span class="nt">[[model</span>&lt;<span class="nb">n</span>&gt;<span class="nt">]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODELS</span>
+</pre></div>
+</div>
+<p>(but future plans for family triggering may make the second case more
+efficient for very large families).</p>
+<p>For more information on parameterized tasks see the Cylc user guide.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="optional-app-config-files">
+
+<h2>Optional App Config Files<a class="headerlink" href="../../html/workflow-design-guide/efficiency.html#optional-app-config-files" title="View HTML">§</a></h2>
+
+<p>Closely related tasks with few configuration differences between them - such as
+multiple UM forecast and reconfiguration apps in the same workflow - should use
+the same Rose app configuration with the differences supplied by optional
+configs, rather than duplicating the entire app for each task.</p>
+<p>Optional app configs should be valid on top of the main app config and not
+dependent on the use of other optional app configs. This ensures they will
+work correctly with macros and can therefore be upgraded automatically.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently optional configs don’t work very well with UM STASH
+configuration - see <a class="reference internal" href="roadmap.html#um-stash-in-optional-app-configs"><span class="std std-ref">UM STASH in Optional App Configs</span></a>.</p>
+</div>
+<p>Optional app configs can be loaded by command line switch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rose task-run -O key1 -O key2
+</pre></div>
+</div>
+<p>or by environment variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ROSE_APP_OPT_CONF_KEYS</span> <span class="o">=</span> key1 key2
+</pre></div>
+</div>
+<p>The environment variable is generally preferred in workflows because you don’t
+have to repeat and override the root-level script configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">ROSE_APP_OPT_CONF_KEYS </span><span class="o">=</span><span class="s"> key1 key2</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

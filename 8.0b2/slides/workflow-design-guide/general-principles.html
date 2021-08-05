@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basic Principles &mdash; Cylc 8.0b2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0b2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0b2 documentation" href="../index.html" />
+    <link rel="up" title="Workflow Design Guide" href="index.html" />
+    <link rel="next" title="Efficiency And Maintainability" href="efficiency.html" />
+    <link rel="prev" title="Style Guidelines" href="style-guide.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="basic-principles">
+
+<h1>Basic Principles<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#basic-principles" title="View HTML">§</a></h1>
+
+<p>This section covers general principles that should be kept in mind when
+writing any workflow. More advanced topics are covered later:
+<a class="reference internal" href="efficiency.html#efficiency-and-maintainability"><span class="std std-ref">Efficiency And Maintainability</span></a> and <a class="reference internal" href="portable-workflows.html#portable-workflows-label"><span class="std std-ref">Portable Workflows</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="utc-mode">
+
+<h2>UTC Mode<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#utc-mode" title="View HTML">§</a></h2>
+
+<p>Cylc has full timezone support if needed, but real time NWP workflows should use
+UTC mode to avoid problems at the transition between local standard time and
+daylight saving time, and to enable the same workflow to run the same way in
+different timezones.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="fine-or-coarse-grained-workflows">
+
+<h2>Fine Or Coarse-Grained Workflows<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#fine-or-coarse-grained-workflows" title="View HTML">§</a></h2>
+
+<p>Workflows can have many small simple tasks, fewer large complex tasks, or anything
+in between. A task that runs many distinct processes can be split into many
+distinct tasks. The fine-grained approach is more transparent and it allows
+more task level concurrency and quicker failure recovery - you can rerun just
+what failed without repeating anything unnecessarily.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="rose-bunch">
+
+<h3>rose bunch<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#rose-bunch" title="View HTML">§</a></h3>
+
+<p>One caveat to our fine-graining advice is that submitting a large number of
+small tasks at once may be a problem on some platforms. If you have many
+similar concurrent jobs you can use <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">bunch</span></code> to pack them into a
+single task with incremental rerun capability: retriggering the task will rerun
+just the component jobs that did not successfully complete earlier.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="monolithic-or-interdependent-workflows">
+
+<h2>Monolithic Or Interdependent Workflows<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#monolithic-or-interdependent-workflows" title="View HTML">§</a></h2>
+
+<p>When writing workflows from scratch you may need to decide between putting
+multiple loosely connected sub-workflows into a single large workflow, or
+constructing a more modular system of smaller workflows that depend on each other
+through inter-workflow triggering. Each approach has its pros and cons, depending
+on your requirements and preferences with respect to the complexity and
+manageability of the resulting system.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="inter-workflow-triggering">
+
+<h3>Inter-Workflow Triggering<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#inter-workflow-triggering" title="View HTML">§</a></h3>
+
+<p>A task in one workflow can explicitly trigger off of a task in another workflow. The
+full range of possible triggering conditions is supported, including custom
+message triggers. Remote triggering involves repeatedly querying (“polling”)
+the remote workflow run database, not the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, so it works even
+if the other workflow is down at the time.</p>
+<p>There is special graph syntax to support triggering off of a task in another
+workflow, or you can call the underlying <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">workflow-state</span></code> command
+directly in task scripting.</p>
+<p>In real time workflows you may want to use clock-triggers to delay the onset of
+inter-workflow polling until roughly the expected completion time of the remote
+task.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="self-contained-workflows">
+
+<h2>Self-Contained Workflows<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#self-contained-workflows" title="View HTML">§</a></h2>
+
+<p>All files generated by Cylc during a workflow run are confined to the <em>workflow
+run directory</em> <code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;WORKFLOW&gt;</span></code>. However, Cylc has no control
+over the locations of the programs, scripts, and files, that are executed,
+read, or generated by your tasks at runtime. It is up to you to ensure that
+all of this is confined to the run directory too, as far as possible.</p>
+<p>Self-contained workflows are more robust, easier to work with, and more portable.
+Multiple instances of the same workflow (with different workflow names) should be
+able to run concurrently under the same user account without mutual
+interference.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="avoiding-external-files">
+
+<h3>Avoiding External Files<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#avoiding-external-files" title="View HTML">§</a></h3>
+
+<p>Workflows that use external scripts, executables, and files beyond the essential
+system libraries and utilities are vulnerable to external changes: someone
+else might interfere with these files without telling you.</p>
+<p>In some case you may need to symlink to large external files anyway, if space
+or copy speed is a problem, but otherwise workflows with private copies of all the
+files they need are more robust.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="installing-files-at-start-up">
+
+<h3>Installing Files At Start-up<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#installing-files-at-start-up" title="View HTML">§</a></h3>
+
+<p>Files can be installed on any remote platform. By default, Cylc installs the
+following directories: <code class="docutils literal notranslate"><span class="pre">app</span></code>, <code class="docutils literal notranslate"><span class="pre">bin</span></code>, <code class="docutils literal notranslate"><span class="pre">etc</span></code>, <code class="docutils literal notranslate"><span class="pre">lib</span></code>.
+Cylc supports adding custom directories and files to the file installation.</p>
+<p>If, for example, you wished to install directories <code class="docutils literal notranslate"><span class="pre">dir1</span></code>, <code class="docutils literal notranslate"><span class="pre">dir2</span></code>, and
+files <code class="docutils literal notranslate"><span class="pre">file1</span></code>, <code class="docutils literal notranslate"><span class="pre">file2</span></code>, add the following configuration to your
+<a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>, under the section
+:cylc:conf:flow.cylc[scheduler]install.
+To mark an item as a directory, add a trailing slash.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">install </span><span class="o">=</span><span class="s"> dir1/, dir2/, file1, file2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ensure files and directories to be installed are located in the top
+level of your workflow.</p>
+</div>
+<p>The file installation will timeout after 10 minutes.
+Install tasks are preferred for time-consuming installations because
+they don’t slow the workflow start-up process, they can be monitored,
+they can run directly on target platforms, and you can rerun them later without
+restarting the workflow.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="confining-ouput-to-the-run-directory">
+
+<h3>Confining Ouput To The Run Directory<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#confining-ouput-to-the-run-directory" title="View HTML">§</a></h3>
+
+<p>Output files should be confined to the run directory tree. Then all
+output is easy to find, multiple instances of the same workflow can run
+concurrently without interference, and other users should be able to copy and
+run your workflow with few modifications. Cylc provides a <code class="docutils literal notranslate"><span class="pre">share</span></code>
+directory for generated files that are used by several tasks in a workflow
+(see <a class="reference internal" href="#shared-task-io-paths"><span class="std std-ref">Shared Task IO Paths</span></a>). Archiving tasks can use <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">arch</span></code>
+to copy or move selected files to external locations as needed (see
+<a class="reference internal" href="#workflow-housekeeping"><span class="std std-ref">Workflow Housekeeping</span></a>).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-host-selection">
+
+<h2>Task Host Selection<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#task-host-selection" title="View HTML">§</a></h2>
+
+<p>At sites with multiple task hosts to choose from, use
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">host-select</span></code> to dynamically select appropriate task hosts
+rather than hard coding particular hostnames. This enables your workflow to
+adapt to particular machines being down or heavily overloaded by selecting
+from a group of hosts based on a series of criteria.
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">host-select</span></code> will only return hosts that can be contacted by
+non-interactive SSH.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-scripting">
+
+<h2>Task Scripting<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#task-scripting" title="View HTML">§</a></h2>
+
+<p>Non-trivial task scripting should be held in external files rather than
+inlined in <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>. This keeps the workflow definition tidy, and it
+allows proper shell-mode text editing and independent testing of task scripts.</p>
+<p>For automatic access by task jobs, task-specific scripts should be kept in
+Rose app bin directories, and shared scripts kept in (or installed to) the
+workflow bin directory.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="coding-standards">
+
+<h3>Coding Standards<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#coding-standards" title="View HTML">§</a></h3>
+
+<p>When writing your own task scripts make consistent use of appropriate coding
+standards such as:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8 for Python</a></li>
+<li><a class="reference external" href="https://google.github.io/styleguide/shell.xml">Google Shell Style Guide for
+Bash</a></li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="basic-functionality">
+
+<h3>Basic Functionality<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#basic-functionality" title="View HTML">§</a></h3>
+
+<p>In consideration of future users who may not be expert on the internals of your
+workflow and its tasks, all task scripts should:</p>
+<ul class="simple">
+<li>Print clear usage information if invoked incorrectly (and via the
+standard options <code class="docutils literal notranslate"><span class="pre">-h,</span> <span class="pre">--help</span></code>).</li>
+<li>Print useful diagnostic messages in case of error. For example, if a
+file was not found, the error message should contain the full path to the
+expected location.</li>
+<li>Always return correct shell exit status - zero for success, non-zero
+for failure. This is used by Cylc job wrapper code to detect success and
+failure and report it back to the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</li>
+<li>In shell scripts use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-u</span></code> to abort on any reference to
+an undefined variable. If you really need an undefined variable to evaluate
+to an empty string, make it explicit: <code class="docutils literal notranslate"><span class="pre">FOO=${FOO:-}</span></code>.</li>
+<li>In shell scripts use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-e</span></code> to abort on any error without
+having to failure-check each command explicitly.</li>
+<li>In shell scripts use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-o</span> <span class="pre">pipefail</span></code> to abort on any error
+within a pipe line. Note that all commands in the pipe line will still
+run, it will just exit with the right most non-zero exit status.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Examples and more details <a class="reference external" href="https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/">are available</a>
+for the above three <code class="docutils literal notranslate"><span class="pre">set</span></code> commands.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="rose-apps">
+
+<h2>Rose Apps<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#rose-apps" title="View HTML">§</a></h2>
+
+<p>Rose apps allow all non-shared task configuration - which is not relevant to
+workflow automation - to be moved from the workflow definition into app config
+files. This makes workflows tidier and easier to understand, and it allows
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code> to provide a unified metadata-enhanced view of the workflow
+and its apps (see <a class="reference internal" href="#rose-metadata-compliance"><span class="std std-ref">Rose Metadata Compliance</span></a>).</p>
+<p>Rose apps are a clear winner for tasks with complex configuration requirements.
+It matters less for those with little configuration, but for consistency and to
+take full advantage of <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code> it makes sense to use Rose apps
+for most tasks.</p>
+<p>When most tasks are Rose apps, set the app-run command as a root-level default,
+and override it for the occasional non Rose app task:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v</span>
+    <span class="nt">[[rose-app1]]</span>
+        <span class="c1">#...</span>
+    <span class="nt">[[rose-app2]]</span>
+        <span class="c1">#...</span>
+    <span class="nt">[[hello-world]]</span>  <span class="c1"># Not a Rose app.</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;Hello World&quot;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="rose-metadata-compliance">
+
+<h2>Rose Metadata Compliance<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#rose-metadata-compliance" title="View HTML">§</a></h2>
+
+<p>Rose metadata drives page layout and sort order in <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code>, plus
+help information, input validity checking, macros for advanced checking and app
+version upgrades, and more.</p>
+<p>To ensure the workflow and its constituent applications are being run as intended
+it should be valid against any provided metadata: launch the
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code> GUI or run <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">macro</span> <span class="pre">--validate</span></code> on the
+command line to highlight any errors, and correct them prior to use. If errors
+are flagged incorrectly you should endeavour to fix the metadata.</p>
+<p>When writing a new workflow or application, consider creating metadata to
+facilitate ease of use by others.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-independence">
+
+<h2>Task Independence<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#task-independence" title="View HTML">§</a></h2>
+
+<p>Essential dependencies must be encoded in the workflow graph, but
+tasks should not rely unnecessarily on the action of other tasks.
+For example, tasks should create their own output directories if they don’t
+already exist, even if they would normally be created by an earlier task
+in the workflow. This makes it is easier to run tasks alone during
+development and testing.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="clock-triggered-tasks">
+
+<h2>Clock-Triggered Tasks<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#clock-triggered-tasks" title="View HTML">§</a></h2>
+
+<p>Tasks that wait on real time data should use clock-triggers to delay job
+submission until the expected data arrival time:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="c1"># Trigger 5 min after wall-clock time is equal to cycle point.</span>
+        <span class="nv">clock-trigger </span><span class="o">=</span><span class="s"> get-data(PT5M)</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 </span><span class="o">=</span><span class="s"> get-data =&gt; process-data</span>
+</pre></div>
+</div>
+<p>Clock-triggered tasks typically have to handle late data arrival. Task
+execution <em>retry delays</em> can be used to simply retrigger the task at
+intervals until the data is found, but frequently retrying small tasks probably
+should not go to a <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>, and multiple task failures will be logged
+for what is a essentially a normal condition (at least it is normal until the
+data is really late).</p>
+<p>Rather than using task execution retry delays to repeatedly trigger a task that
+checks for a file, it may be better to have the task itself repeatedly poll for
+the data (see <a class="reference internal" href="#rose-app-file-polling"><span class="std std-ref">Rose App File Polling</span></a> for example).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="rose-app-file-polling">
+
+<h2>Rose App File Polling<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#rose-app-file-polling" title="View HTML">§</a></h2>
+
+<p>Rose apps have built-in polling functionality to check repeatedly for the
+existence of files before executing the main app. See the <code class="docutils literal notranslate"><span class="pre">[poll]</span></code>
+section in Rose app config documentation. This is a good way to implement
+check-and-wait functionality in clock-triggered tasks
+(<a class="reference internal" href="#clock-triggered-tasks"><span class="std std-ref">Clock-Triggered Tasks</span></a>), for example.</p>
+<p>It is important to note that frequent polling may be bad for some filesystems,
+so be sure to configure a reasonable interval between polls.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-execution-time-limits">
+
+<h2>Task Execution Time Limits<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#task-execution-time-limits" title="View HTML">§</a></h2>
+
+<p>Instead of setting job wall clock limits directly in <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>
+directives, use the <code class="docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code> workflow config item.
+Cylc automatically derives the correct job runner directives from this,
+and it is also used to run <code class="docutils literal notranslate"><span class="pre">background</span></code> and <code class="docutils literal notranslate"><span class="pre">at</span></code> jobs via
+the <code class="docutils literal notranslate"><span class="pre">timeout</span></code> command, and to poll tasks that haven’t reported in
+finished by the configured time limit.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="restricting-workflow-activity">
+
+<h2>Restricting Workflow Activity<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#restricting-workflow-activity" title="View HTML">§</a></h2>
+
+<p>It may be possible for large workflows to overwhelm a job host by submitting too
+many jobs at once:</p>
+<ul class="simple">
+<li>Large workflows that are not sufficiently limited by real time clock
+triggering or inter-cycle dependence may generate a lot of <em>runahead</em>
+(this refers to Cylc’s ability to run multiple cycles at once, restricted
+only by the dependencies of individual tasks).</li>
+<li>Some workflows may have large families of tasks whose members all
+become ready at the same time.</li>
+</ul>
+<p>These problems can be avoided with <em>runahead limiting</em> and <em>internal
+queues</em>, respectively.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="runahead-limiting">
+
+<h3>Runahead Limiting<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#runahead-limiting" title="View HTML">§</a></h3>
+
+<p>By default Cylc allows a maximum of five cycle points to be active at the same
+time, but this value is configurable:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01-01T00</span>
+    <span class="c1"># Don&#39;t allow any cycle interleaving:</span>
+    <span class="nv">runahead limit </span><span class="o">=</span><span class="s"> P1</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="internal-queues">
+
+<h3>Internal Queues<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#internal-queues" title="View HTML">§</a></h3>
+
+<p>Tasks can be assigned to named internal queues that limit the number of members
+that can be active (i.e. submitted or running) at the same time:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01-01T00</span>
+    <span class="nt">[[queues]]</span>
+        <span class="c1"># Allow only 2 members of BIG_JOBS to run at once:</span>
+        <span class="nt">[[[big_jobs_queue]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 2</span>
+            <span class="nv">members </span><span class="o">=</span><span class="s"> BIG_JOBS</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 </span><span class="o">=</span><span class="s"> pre =&gt; BIG_JOBS</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[BIG_JOBS]]</span>
+    <span class="nt">[[foo, bar, baz, ...]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> BIG_JOBS</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="workflow-housekeeping">
+
+<h2>Workflow Housekeeping<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#workflow-housekeeping" title="View HTML">§</a></h2>
+
+<p>Ongoing cycling workflows can generate an enormous number of output files and logs
+so regular housekeeping is very important. Special housekeeping tasks,
+typically the last tasks in each cycle, should be included to archive selected
+important files and then delete everything at some offset from the current
+cycle point.</p>
+<p>The Rose built-in apps <code class="docutils literal notranslate"><span class="pre">rose_arch</span></code> and <code class="docutils literal notranslate"><span class="pre">rose_prune</span></code>
+provide an easy way to do this. They can be configured easily with
+file-matching patterns and cycle point offsets to perform various housekeeping
+operations on matched files.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="complex-jinja2-code">
+
+<h2>Complex Jinja2 Code<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#complex-jinja2-code" title="View HTML">§</a></h2>
+
+<p>The Jinja2 template processor provides general programming constructs,
+extensible with custom Python filters, that can be used to <em>generate</em> the
+workflow definition. This makes it possible to write flexible multi-use
+workflows with structure and content that varies according to various input
+switches. There is a cost to this flexibility however: excessive use of Jinja2
+can make a workflow hard to understand and maintain. It is difficult to say
+exactly where to draw the line, but we recommend erring on the side of
+simplicity and clarity: write workflows that are easy to understand and therefore
+easy to modify for other purposes, rather than extremely complicated workflows
+that attempt do everything out of the box but are hard to maintain and modify.</p>
+<p>Note that use of Jinja2 loops for generating tasks is now deprecated in favour
+of built-in parameterized tasks - see <a class="reference internal" href="../user-guide/writing-workflows/parameterized-tasks.html#user-guide-param"><span class="std std-ref">Parameterized Tasks</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="shared-configuration">
+
+<h2>Shared Configuration<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#shared-configuration" title="View HTML">§</a></h2>
+
+<p>Configuration that is common to multiple tasks should be defined in one
+place and used by all, rather than duplicated in each task. Duplication is
+a maintenance risk because changes have to be made consistently in several
+places at once.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="jinja2-variables">
+
+<h3>Jinja2 Variables<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#jinja2-variables" title="View HTML">§</a></h3>
+
+<p>In simple cases you can share by passing a Jinja2 variable to all the tasks
+that need it:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set JOB_VERSION = &#39;A23&#39; %}</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> run-foo --version=</span><span class="cp">{{JOB_VERSION}}</span>
+    <span class="nt">[[bar]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> run-bar --version=</span><span class="cp">{{JOB_VERSION}}</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="inheritance">
+
+<h3>Inheritance<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#inheritance" title="View HTML">§</a></h3>
+
+<p>Sharing by inheritance of task families is recommended when more than a few
+configuration items are involved.</p>
+<p>The simplest application of inheritance is to set global defaults in the
+<code class="docutils literal notranslate"><span class="pre">[runtime][root]</span></code> namespace that is inherited by all tasks.
+However, this should only be done for settings that really are used
+by the vast majority of tasks. Over-sharing of via root, particularly of
+environment variables, is a maintenance risk because it can be very
+difficult to be sure which tasks are using which global variables.</p>
+<p>Any <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> settings can be shared - scripting, platform
+configuration, environment variables, and so on - from
+single items up to complete task or app configurations. At the latter extreme,
+it is quite common to have several tasks that inherit the same complete
+job configuration followed by minor task-specific additions:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[FILE-CONVERT]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> convert-netcdf</span>
+        <span class="c1">#...</span>
+    <span class="nt">[[convert-a]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FILE-CONVERT</span>
+        <span class="nt">[[[environment]]]</span>
+              <span class="nv">FILE_IN </span><span class="o">=</span><span class="s"> file-a</span>
+    <span class="nt">[[convert-b]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FILE-CONVERT</span>
+        <span class="nt">[[[environment]]]</span>
+              <span class="nv">FILE_IN </span><span class="o">=</span><span class="s"> file-b</span>
+</pre></div>
+</div>
+<p>Inheritance is covered in more detail from an efficiency perspective in
+<a class="reference internal" href="efficiency.html#the-task-family-hierarchy"><span class="std std-ref">The Task Family Hierarchy</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="shared-task-io-paths">
+
+<h3>Shared Task IO Paths<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#shared-task-io-paths" title="View HTML">§</a></h3>
+
+<p>If one task uses files generated by another task (and both see the same
+filesystem) a common IO path should normally be passed to both tasks via a
+shared environment variable. As far as Cylc is concerned this is no different
+to other shared configuration items, but there are some additional aspects
+of usage worth addressing here.</p>
+<p>Primarily, for self-containment (see <a class="reference internal" href="#self-contained-workflows"><span class="std std-ref">Self-Contained Workflows</span></a>) shared IO
+paths should be under the <em>workflow share directory</em>, the location of which is
+passed to all tasks as <code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_SHARE_PATH</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">task-env</span></code> utility can provide additional environment
+variables that refer to static and cyclepoint-specific locations under the
+workflow share directory.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my-task]]</span>
+        <span class="nv">env-script </span><span class="o">=</span><span class="s"> $(eval rose task-env -T P1D -T P2D)</span>
+</pre></div>
+</div>
+<p>For a current cycle point of <code class="docutils literal notranslate"><span class="pre">20170105</span></code> this will make the following
+variables available to tasks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">ROSE_DATA</span><span class="o">=</span><span class="nv">$CYLC_WORKFLOW_SHARE_PATH</span>/data
+<span class="nv">ROSE_DATAC</span><span class="o">=</span><span class="nv">$CYLC_WORKFLOW_SHARE_PATH</span>/cycle/20170105
+<span class="nv">ROSE_DATACP1D</span><span class="o">=</span><span class="nv">$CYLC_WORKFLOW_SHARE_PATH</span>/cycle/20170104
+<span class="nv">ROSE_DATACP2D</span><span class="o">=</span><span class="nv">$CYLC_WORKFLOW_SHARE_PATH</span>/cycle/20170103
+</pre></div>
+</div>
+<p>Subdirectories of <code class="docutils literal notranslate"><span class="pre">$ROSE_DATAC</span></code> etc. should be agreed between
+different sub-systems of the workflow; typically they are named for the
+file-generating tasks, and the file-consuming tasks should know to look there.</p>
+<p>The share-not-duplicate rule can be relaxed for shared files whose names are
+agreed by convention, so long as their locations under the share directory are
+proper shared workflow variables. For instance the Unified Model uses a large
+number of files whose conventional names (<code class="docutils literal notranslate"><span class="pre">glu_snow</span></code>, for example)
+can reasonably be expected not to change, so they are typically hardwired into
+app configurations (as <code class="docutils literal notranslate"><span class="pre">$ROSE_DATA/glu_snow</span></code>, for example) to avoid
+cluttering the workflow definition.</p>
+<p>Here two tasks share a workspace under the workflow share directory
+by inheritance:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharing an I/O location via inheritance.</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> write_data =&gt; read_data</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">env-script </span><span class="o">=</span><span class="s"> $(eval rose task-env)</span>
+    <span class="nt">[[WORKSPACE]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">DATA_DIR </span><span class="o">=</span><span class="s"> ${ROSE_DATA}/png</span>
+    <span class="nt">[[write_data]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> WORKSPACE</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            mkdir -p $DATA_DIR</span>
+<span class="s2">            write-data.exe -o ${DATA_DIR}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="nt">[[read_data]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> WORKSPACE</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> read-data.exe -i ${DATA_DIR}</span>
+</pre></div>
+</div>
+<p>In simple cases where an appropriate family does not already exist paths can
+be shared via Jinja variables:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sharing an I/O location with Jinja2.</span>
+<span class="cp">{% set DATA_DIR = &#39;$ROSE_DATA/stuff&#39; %}</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span><span class="s"> write_data =&gt; read_data</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[write_data]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            mkdir -p </span><span class="cp">{{DATA_DIR}}</span><span class="s2"></span>
+<span class="s2">            write-data.exe -o </span><span class="cp">{{DATA_DIR}}</span><span class="s2"></span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="nt">[[read_data]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> read-data.exe -i </span><span class="cp">{{DATA_DIR}}</span>
+</pre></div>
+</div>
+<p>For completeness we note that it is also possible to configure multiple tasks
+to use the same work directory so they can all share files in <code class="docutils literal notranslate"><span class="pre">$PWD</span></code>.
+(Cylc executes task jobs in special work directories that by default are unique
+to each task). This may simplify the workflow slightly, and it may be useful if
+you are unfortunate enough to have executables that are designed for IO in
+<code class="docutils literal notranslate"><span class="pre">$PWD</span></code>, <em>but it is not recommended</em>. There is a higher risk
+of interference between tasks; it will break <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">task-run</span></code>
+incremental file creation mode; and <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">task-run</span> <span class="pre">--new</span></code> will in
+effect delete the work directories of tasks other than its intended target.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Shared work directory: tasks can read and write in $PWD - use with caution!</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2018</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1Y </span><span class="o">=</span><span class="s"> write_data =&gt; read_data</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[WORKSPACE]]</span>
+        <span class="nv">work sub-directory </span><span class="o">=</span><span class="s"> $CYLC_TASK_CYCLE_POINT/datadir</span>
+    <span class="nt">[[write_data]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> WORKSPACE</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> write-data.exe</span>
+    <span class="nt">[[read_data]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> WORKSPACE</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> read-data.exe</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="varying-behaviour-by-cycle-point">
+
+<h3>Varying Behaviour By Cycle Point<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#varying-behaviour-by-cycle-point" title="View HTML">§</a></h3>
+
+<p>To make a cycling job behave differently at different cycle points you
+<em>could</em> use a single task with scripting that reacts to the cycle point it finds
+itself running at, but it is better to use different tasks (in different
+cycling sections) that inherit the same base job configuration. This results
+in a more transparent workflow that can be understood just by inspecting the
+graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the same job differently at different cycle points.</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 </span><span class="o">=</span><span class="s"> pre =&gt; long_fc =&gt; post</span>
+        <span class="nv">T12 </span><span class="o">=</span><span class="s"> pre =&gt; short_fc =&gt; post</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[MODEL]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> run-model.sh</span>
+    <span class="nt">[[long_fc]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODEL</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT30M</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">RUN_LEN </span><span class="o">=</span><span class="s"> PT48H</span>
+    <span class="nt">[[short_fc]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODEL</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT10M</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">RUN_LEN </span><span class="o">=</span><span class="s"> PT12H</span>
+</pre></div>
+</div>
+<p>The few differences between <code class="docutils literal notranslate"><span class="pre">short_fc</span></code> and <code class="docutils literal notranslate"><span class="pre">long_fc</span></code>,
+including <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> resource requests, can be configured after common
+settings are inherited.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="at-start-up">
+
+<h3>At Start-Up<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#at-start-up" title="View HTML">§</a></h3>
+
+<p>Similarly, if a cycling job needs special behaviour at the initial (or any
+other) cycle point, just use a different logical task in an <code class="docutils literal notranslate"><span class="pre">R1</span></code> graph and
+have it inherit the same job as the general cycling task, not a single task
+with scripting that behaves differently if it finds itself running at the
+initial cycle point.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="automating-failure-recovery">
+
+<h2>Automating Failure Recovery<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#automating-failure-recovery" title="View HTML">§</a></h2>
+
+
+
+
+
+</article>
+<article class="slide level-3" id="job-submission-retries">
+
+<h3>Job Submission Retries<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#job-submission-retries" title="View HTML">§</a></h3>
+
+<p>When submitting jobs to a remote host, use job submission retries to
+automatically resubmit tasks in the event of network outages. Note this is
+distinct from job retries for job execution failure (just below).</p>
+<p>Job submission retries should normally be host (or host-group for
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">host-select</span></code>) specific, not task-specific, so configure them in
+a host (or host-group) specific family. The following <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>
+fragment configures all HPC jobs to retry on job submission failure up to 10
+times at 1 minute intervals, then another 5 times at 1 hour intervals:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[HPC]]</span>  <span class="c1"># Inherited by all jobs submitted to HPC.</span>
+        <span class="nv">submission retry delays </span><span class="o">=</span><span class="s"> 10*PT1M, 5*PT1H</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="job-execution-retries">
+
+<h3>Job Execution Retries<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#job-execution-retries" title="View HTML">§</a></h3>
+
+<p>Automatic retry on job execution failure is useful if you have good reason to
+believe that a simple retry will usually succeed. This may be the case if the
+job host is known to be flaky, or if the job only ever fails for one known
+reason that can be fixed on a retry. For example, if a model fails occasionally
+with a numerical instability that can be remedied with a short timestep rerun,
+then an automatic retry may be appropriate:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[model]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            if [[ $CYLC_TASK_TRY_NUMBER &gt; 1 ]]; then</span>
+<span class="s2">                SHORT_TIMESTEP=true</span>
+<span class="s2">            else</span>
+<span class="s2">                SHORT_TIMESTEP=false</span>
+<span class="s2">            fi</span>
+<span class="s2">            model.exe</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 1*PT0M</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="failure-recovery-workflows">
+
+<h3>Failure Recovery Workflows<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#failure-recovery-workflows" title="View HTML">§</a></h3>
+
+<p>For recovery from failures that require explicit diagnosis you can configure
+alternate routes through the workflow, together with <em>suicide triggers</em>
+that remove the unused route. In the following example, if the model fails a
+diagnosis task will trigger; if it determines the cause of the failure is a
+known numerical instability (e.g. by parsing model job logs) it will succeed,
+triggering a short timestep run. Postprocessing can proceed from either the
+original or the short-step model run, and suicide triggers remove the unused
+path from the workflow:</p>
+<div class="twocol docutils container" id="fig-failure-rec">
+<div class="image docutils container">
+<div class="figure align-center">
+<img alt="../_images/failure-recovery.png" src="../_images/failure-recovery.png" />
+</div>
+</div>
+<div class="caption docutils container">
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            model | model_short =&gt; postproc</span>
+<span class="s2">            model:fail =&gt; diagnose =&gt; model_short</span>
+              <span class="c1"># Clean up with suicide triggers:</span><span class="s2"></span>
+<span class="s2">            model =&gt; ! diagnose &amp; ! model_short</span>
+<span class="s2">            model_short =&gt; ! model</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="include-files">
+
+<h2>Include Files<a class="headerlink" href="../../html/workflow-design-guide/general-principles.html#include-files" title="View HTML">§</a></h2>
+
+<p>Include-files should not be overused, but they can sometimes be useful
+(e.g. see <a class="reference internal" href="portable-workflows.html#portable-workflows-label"><span class="std std-ref">Portable Workflows</span></a>):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
+<span class="cp">{% include &#39;inc/foo.cylc&#39; %}</span>
+</pre></div>
+</div>
+<p>(Technically this inserts a Jinja2-rendered file template). Cylc also has a
+native include mechanism that pre-dates Jinja2 support and literally inlines
+the include-file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
+<span class="o">%include</span> <span class="s">&#39;inc/foo.cylc&#39;</span>
+</pre></div>
+</div>
+<p>The two methods normally produce the same result, but use the Jinja2 version if
+you need to construct an include-file name from a variable (because Cylc
+include-files get inlined before Jinja2 processing is done):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
+<span class="cp">{% include &#39;inc/&#39; ~ SITE ~ &#39;.cylc&#39; %}</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Workflows For Cycling Systems &mdash; Cylc 8.0b2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing Workflows" href="writing-workflows/index.html" />
+    <link rel="prev" title="User Guide" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                8.0b2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Workflows For Cycling Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cycling-workflows">Cycling Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameterized-tasks-as-a-proxy-for-cycling">Parameterized Tasks as a Proxy for Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mixed-cycling-workflows">Mixed Cycling Workflows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow-storage-etc.html">Workflow Storage, Discovery, Revision Control, and Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task-implementation/index.html">Task Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">User Guide</a> &raquo;</li>
+        
+      <li>Workflows For Cycling Systems</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/user-guide/workflows.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="workflows-for-cycling-systems">
+<span id="id1"></span><h1>Workflows For Cycling Systems<a class="headerlink" href="#workflows-for-cycling-systems" title="Permalink to this headline">¶</a></h1>
+<p>A model run and associated processing may need to be cycled for the following
+reasons:</p>
+<ul class="simple">
+<li><p>In real time forecasting systems, a new forecast may be initiated
+at regular intervals when new real time data comes in.</p></li>
+<li><p>It may be convenient (or necessary, e.g. due to <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>
+queue limits) to split single long model runs into many smaller chunks,
+each with associated pre- and post-processing workflows.</p></li>
+</ul>
+<p>Cylc provides two ways of constructing workflows for cycling systems:
+<em>cycling workflows</em> and <em>parameterized tasks</em>.</p>
+<div class="section" id="cycling-workflows">
+<span id="id2"></span><h2>Cycling Workflows<a class="headerlink" href="#cycling-workflows" title="Permalink to this headline">¶</a></h2>
+<p>This is Cylc’s classic cycling mode as described in the Introduction. Each
+instance of a cycling job is represented by a new instance of <em>the same task</em>,
+with a new cycle point. The workflow configuration defines patterns for
+extending the workflow on the fly, so it can keep running indefinitely if
+necessary. For example, to cycle <code class="docutils literal notranslate"><span class="pre">model.exe</span></code> on a monthly sequence we
+could define a single task <code class="docutils literal notranslate"><span class="pre">model</span></code>, an initial cycle point, and a
+monthly sequence. Cylc then generates the date-time sequence and creates a new
+task instance for each cycle point as it comes up. Workflow dependencies are
+defined generically with respect to the “current cycle point” of the tasks
+involved.</p>
+<p>This is the only sensible way to run very large workflows or operational workflows
+that need to continue cycling indefinitely. The cycling is configured with
+standards-based ISO 8601 date-time <em>recurrence expressions</em>. Multiple
+cycling sequences can be used at once in the same workflow. See
+<a class="reference internal" href="writing-workflows/scheduling.html#user-guide-scheduling"><span class="std std-ref">Scheduling - Dependency Graphs</span></a>.</p>
+</div>
+<div class="section" id="parameterized-tasks-as-a-proxy-for-cycling">
+<span id="id3"></span><h2>Parameterized Tasks as a Proxy for Cycling<a class="headerlink" href="#parameterized-tasks-as-a-proxy-for-cycling" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to run cycling jobs with a pre-defined static workflow in
+which each instance of a cycling job is represented by <em>a different task</em>:
+as far as the abstract workflow is concerned there is no cycling. The sequence
+of tasks can be constructed efficiently, however, using Cylc’s built-in workflow
+parameters (<a class="reference internal" href="writing-workflows/parameterized-tasks.html#parameterized-cycling"><span class="std std-ref">Parameterized Cycling</span></a>) or explicit Jinja2 loops
+(<a class="reference internal" href="writing-workflows/jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a>).</p>
+<p>For example, to run <code class="docutils literal notranslate"><span class="pre">model.exe</span></code> 12 times on a monthly cycle we could
+loop over an integer parameter <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...,</span> <span class="pre">11</span></code> to define tasks
+<code class="docutils literal notranslate"><span class="pre">model-R0,</span> <span class="pre">model-R1,</span> <span class="pre">model-R2,</span> <span class="pre">...model-R11</span></code>, and the parameter
+values could be multiplied by the interval <code class="docutils literal notranslate"><span class="pre">P1M</span></code> (one month) to get
+the start point for the corresponding model run.</p>
+<p>This method is only good for smaller workflows of finite duration because every
+single task has to be mapped out in advance, and Cylc has to be aware of all of
+them throughout the entire run. Additionally Cylc’s <em>cycling workflow</em>
+capabilities (above) are more powerful, more flexible, and generally easier to
+use (Cylc will generate the cycle point date-times for you, for instance), so
+that is the recommended way to drive most cycling systems.</p>
+<p>The primary use for parameterized tasks in Cylc is to generate ensembles and
+other groups of related tasks at the same cycle point, not as a proxy for
+cycling.</p>
+</div>
+<div class="section" id="mixed-cycling-workflows">
+<h2>Mixed Cycling Workflows<a class="headerlink" href="#mixed-cycling-workflows" title="Permalink to this headline">¶</a></h2>
+<p>For completeness we note that parameterized cycling can be used within a
+cycling workflow. For example, in a daily cycling workflow long (daily)
+model runs could be split into four shorter runs by parameterized cycling.
+A simpler six-hourly cycling workflow should be considered first, however.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="writing-workflows/index.html" class="btn btn-neutral float-right" title="Writing Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">
+        Last updated on Aug 05, 2021.
+      </span>
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0b2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/workflows";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
