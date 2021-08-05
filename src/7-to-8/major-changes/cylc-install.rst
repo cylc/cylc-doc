@@ -80,7 +80,7 @@ Cylc Rose
 
 .. seealso::
 
-   :ref:`cylc-rose` plugin documentation, which includes examples of how
+   :ref:`Cylc Rose` plugin documentation, which includes examples of how
    to install a Cylc workflow with a Rose suite configuration with ``cylc install``.
 
    .. TODO link to rose stem doc once it's done
