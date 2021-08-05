@@ -227,16 +227,16 @@ Generate a visualisation for a workflow without running it:
        .. code-block:: bash
 
           #!/usr/bin/env bash
-     
+
           set -eu
-     
+
           SUITE="$1"
           FMT="$2"
-     
+
           TMP=dotfile
-     
+
           cylc graph --reference "$SUITE" 2>/dev/null > "$TMP.ref"
-     
+
           sed \
               -e 's/node "\(.*\)" "\(.*\)"/"\1" [label="\2"]/' \
               -e 's/edge "\(.*\)" "\(.*\)"/"\1" -> "\2"/' \
@@ -246,12 +246,12 @@ Generate a visualisation for a workflow without running it:
               -e '/^stop$/d' \
               "$TMP.ref" \
               > "$TMP.dot"
-     
+
           dot \
               "$TMP.dot" \
               -T$FMT \
               -o "$TMP.$FMT"
-     
+
           rm "$TMP.ref" "$TMP.dot"
           echo "$TMP.$FMT"
 
@@ -270,7 +270,7 @@ Run a :ref:`rose:Rose Stem` test suite.
          # install and start
          rose stem
      - ::
- 
+
          # install
          rose stem
 

@@ -10,64 +10,75 @@ Installation
    It has a fully functional Python 3 workflow service and CLI that can run
    existing Cylc workflows.
 
-   **BUT:**
+   **But** it is not production-ready yet.
 
-   - It is not production-ready yet
-
-     Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
-     for production systems.
-
-   - Do not use it where security is a concern
-   - The UI includes a prototype "tree view" with no control capability
-     - we are working on other views, and controls
-   - Data update in the UI is via polling at 5 second intervals, and monolithic
-     - future releases will use WebSockets and incremental update
-
-Cylc runs on Unix-like operating systems including Mac OS though at
-present Cylc only tested on Linux.
+   Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
+   for production systems.
 
 
 Quick Installation
 ------------------
 
-Via Conda (recommended):
+Cylc runs on Unix systems including Linux and Mac OS.
 
-.. code-block:: console
+.. highlight:: sub
 
-   # install cylc with the browser-GUI
-   $ conda install cylc
+.. list-table::
+   :class: grid-table
 
-Via pip:
+   * - .. rubric:: Via Conda (recommended):
+     - .. rubric:: Via Pip (+npm):
 
-.. note::
+   * - ::
 
-   We recommend using a virtual environment.
+          $ conda install cylc-flow
 
-.. note::
+          # install the browser-GUI (optional)
+          $ conda install cylc-uiserver
 
-   Requires Python 3.7
+          # install Rose support (optional)
+          $ conda install cylc-rose
 
-.. code-block:: console
+     - ::
 
-   # install the "core" cylc package
-   $ pip install cylc-flow
+          $ pip install cylc-flow
 
-   # install the browser-GUI
-   $ pip install cylc-uiserver
+          # install the browser-GUI (optional)
+          # (requires nodejs & npm)
+          $ pip install cylc-uiserver
+          $ npm install configurable-http-proxy
 
+          # install Rose support (optional)
+          $ pip install cylc-rose
+
+   * -
+     -
+       .. note::
+
+          Requires Python 3.7+
+
+       .. note::
+
+          We recommend using a virtual environment.
+
+
+.. highlight:: bash
+
+
+.. _non-python-requirements:
 
 Non-Python Requirements
 -----------------------
 
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
 
-The following dependencies are not installed by Conda or pip:
+These dependencies are not installed by Conda or pip:
 
 * ``bash``
 * GNU `coreutils`_
-* ``mail`` (for automated email functionality)
+* ``mail`` (optional: for automated email functionality)
 
-The following dependencies are installed by Conda but not by pip:
+These dependencies are installed by Conda but not by pip (you can use npm):
 
 * `configurable-http-proxy`_
 
@@ -126,6 +137,8 @@ Cylc is split into a number of packages providing different functionality:
    Provides the scheduler "kernel" of Cylc along with the command-line.
 `Cylc UI Server`_
    Provides the "Cylc Hub" and the browser-based "Cylc GUI".
+:ref:`Cylc Rose`
+   Provides support for :ref:`Rose` suite configurations in Cylc workflows.
 
 Installation Types
 ^^^^^^^^^^^^^^^^^^
@@ -150,11 +163,14 @@ Recommended Installation
 
 User Machines
    * `Cylc Flow`_
+   * :ref:`Cylc Rose` (if using :ref:`Rose`)
 Cylc Servers
    * `Cylc Flow`_
+   * :ref:`Cylc Rose` (if using :ref:`Rose`)
    * `Cylc UI Server`_
 Job Hosts:
    * `Cylc Flow`_
+   * :ref:`Rose` (if running Rose applications on the job host)
 
 .. _managing environments:
 
