@@ -26,7 +26,7 @@ Cylc runs on Unix systems including Linux and Mac OS.
 .. list-table::
    :class: grid-table
 
-   * - .. rubric:: Via Conda (recommeneded):
+   * - .. rubric:: Via Conda (recommended):
      - .. rubric:: Via Pip (+npm):
 
    * - ::
