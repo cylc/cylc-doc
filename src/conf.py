@@ -98,6 +98,9 @@ intersphinx_mapping = {
     ),
     'python': (
         'https://docs.python.org/', None
+    ),
+    'jupyter_server': (
+        'https://jupyter-server.readthedocs.io/en/latest/', None
     )
 }
 

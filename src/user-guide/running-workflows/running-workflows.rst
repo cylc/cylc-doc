@@ -188,7 +188,7 @@ commands can read this file, if they have access to it, to find the target
 Authentication Files
 --------------------
 
-Cylc uses `CurveZMQ <http://curvezmq.org/page:read-the-docs/>`_ to ensure that
+Cylc uses `CurveZMQ`_ to ensure that
 any data, sent between the :term:`scheduler <scheduler>` and the client,
 remains protected during transmission. Public keys are used to encrypt the
 data, private keys for decryption.

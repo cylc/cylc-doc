@@ -21,7 +21,6 @@ indefinitely.
 
    7-to-8/index
    installation
-   introduction/index
    tutorial/index
    user-guide/index
    plugins/index
