@@ -265,8 +265,7 @@ Security
   Server interacts with its own schedulers and authorizes access to them
   according to the privileges granted to the authenticated user
   - (the UI Server and Schedulers run as the workflow-owner user)
-- Jobs authenticate to their parent scheduler using
-  `CurveZMQ <http://curvezmq.org/>`_
+- Jobs authenticate to their parent scheduler using `CurveZMQ`_.
 
 .. note::
 
