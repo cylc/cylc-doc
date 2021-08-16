@@ -312,20 +312,20 @@ Cylc Graphs
 
       A :term:`Cylc workflow` is defined by a :cylc:conf:`flow.cylc` file.
 
-      If you don't have one already, create a ``cylc-run`` directory in your
+      If you don't have one already, create a ``cylc-src`` directory in your
       user space i.e.
 
       .. code-block::
 
-         ~/cylc-run
+         mkdir ~/cylc-src
 
       Within this directory create a new folder called ``graph-introduction``,
       which is to be our :term:`run directory`. Move into it:
 
       .. code-block:: bash
 
-         mkdir ~/cylc-run/graph-introduction
-         cd ~/cylc-run/graph-introduction
+         mkdir ~/cylc-src/graph-introduction
+         cd ~/cylc-src/graph-introduction
 
       Inside this directory create a :cylc:conf:`flow.cylc` file and paste in the
       following text:
@@ -370,16 +370,6 @@ Cylc Graphs
 
       If the results don't match the diagram above try going back to the
       :cylc:conf:`flow.cylc` file and making changes.
-
-      .. tip::
-
-         In the top right-hand corner of the ``cylc graph`` window there is a
-         refresh button which will reload the GUI with any changes you have
-         made.
-
-         .. image:: ../img/cylc-graph-refresh.png
-            :align: center
-
 
       .. spoiler:: Solution warning
 
