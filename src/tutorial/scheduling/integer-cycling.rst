@@ -68,8 +68,8 @@ To make a workflow repeat we must tell Cylc three things:
      :term:`cycle points <cycle point>` to be numbered.
    * The ``initial cycle point = 1`` setting tells Cylc to start counting
      from 1.
-   * ``P1`` is the :term:`recurrence`. The :term:`graph` within the ``P1``
-     section will be repeated at each :term:`cycle point`.
+   * ``P1`` is the :term:`recurrence`. The ``P1`` :term:`graph`
+     will be repeated at each :term:`cycle point`.
 
    The first three :term:`cycles<cycle>` would look like this, with the entire
    workflow repeated at each cycle point:
@@ -344,7 +344,7 @@ Recurrence Sections
 .. ifnotslides::
 
    In the previous examples we made the workflow repeat by placing the graph
-   within the ``P1`` section. Here ``P1`` is a :term:`recurrence` meaning
+   in the ``P1`` setting. Here ``P1`` is a :term:`recurrence` meaning
    repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
    *other* cycle, and so on. To build more complex workflows we can use multiple
    recurrences:
@@ -369,7 +369,7 @@ Recurrence Sections
 
 .. ifnotslides::
 
-   By default recurrences start at the
+   By default, recurrences start at the
    :term:`initial cycle point`, however it is possible to make them start at an
    arbitrary cycle point. This is done by writing the cycle point and the
    recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means repeat
