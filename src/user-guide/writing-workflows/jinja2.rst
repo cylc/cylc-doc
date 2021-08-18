@@ -374,7 +374,7 @@ For example, with Cylc Rose installed:
 
    # rose-suite.conf
    [template variables]
-   ICP = 1068
+   ICP=1068
 
 .. code-block:: cylc
 
