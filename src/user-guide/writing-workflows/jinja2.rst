@@ -370,7 +370,7 @@ section which the plugin makes available to Cylc:
 
 For example, with Cylc Rose installed:
 
-.. code-block:: rose-suite.conf
+.. code-block:: ini
 
    # rose-suite.conf
    [template variables]
