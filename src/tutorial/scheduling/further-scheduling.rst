@@ -83,8 +83,12 @@ Alternative Calendars
 .. ifnotslides::
 
    By default Cylc uses the Gregorian calendar for :term:`datetime cycling`,
-   but Cylc also supports the 360-day calendar (12 months of 30 days each in
-   a year).
+   but Cylc also supports:
+
+   - Integer cycling.
+   - 360-day calendar (12 months of 30 days each in a year).
+   - 365-day calendar (never a leap year).
+   - 366-day calendar (always a leap year).
 
 .. code-block:: cylc
 
@@ -93,7 +97,7 @@ Alternative Calendars
 
 .. ifnotslides::
 
-   *For more information see the* `Cylc User Guide`_.
+   .. seealso:: :cylc:conf:`[scheduling]cycling mode`
 
 .. nextslide::
 

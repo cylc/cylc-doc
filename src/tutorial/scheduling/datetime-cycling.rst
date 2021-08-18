@@ -66,8 +66,8 @@ ISO8601 Durations
 
 .. ifnotslides::
 
-   In ISO8601, durations are prefixed with a ``P`` and are written with a
-   character following each unit:
+   In ISO8601, durations are prefixed with a ``P`` (for "period") and are
+   written with a character following each unit:
 
 * ``Y`` for year.
 * ``M`` for month.
@@ -425,13 +425,13 @@ Putting It All Together
 
    #. **Create A New Workflow.**
 
-      Within your ``~/cylc-run`` directory create a new directory called
+      Within your ``~/cylc-src`` directory create a new directory called
       ``datetime-cycling`` and move into it:
 
       .. code-block:: bash
 
-         mkdir ~/cylc-run/datetime-cycling
-         cd ~/cylc-run/datetime-cycling
+         mkdir ~/cylc-src/datetime-cycling
+         cd ~/cylc-src/datetime-cycling
 
       Create a :cylc:conf:`flow.cylc` file and paste the following code into it:
 
