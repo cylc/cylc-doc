@@ -248,11 +248,11 @@ You can provide template variables to Cylc in 3 ways:
 
 - Using the ``--set-file`` option.
 - Using the ``-s`` option.
-- Using a plugin, such as :ref:`Cylc Rose`.
+- `Using a plugin (example)`_, such as :ref:`Cylc Rose`.
 
 .. note::
 
-   If the same variable is set by more than one method the last source in the
+   If the same variable is set by more than one method, the last source in the
    above list is used.
 
 
@@ -365,18 +365,17 @@ Using a plugin
 
 Template plugins such as :ref:`Cylc Rose` should provide a set of template
 variables which can be provided to Cylc. For example, using Cylc Rose you
-add a ``rose-suite.conf`` file which contains a ``[template variables]``
+add a ``rose-suite.conf`` file containing a ``[template variables]``
 section which the plugin makes available to Cylc:
 
-For example, with Cylc Rose installed:
-
 .. code-block:: ini
-
-   # rose-suite.conf
+   :caption: rose-suite.conf
+   
    [template variables]
    ICP=1068
 
 .. code-block:: cylc
+   :caption: flow.cylc
 
    #!jinja2
    [scheduler]
