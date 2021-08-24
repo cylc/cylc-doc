@@ -39,7 +39,7 @@ VERSION = get_version(
 )
 
 INSTALL_REQUIRES = [
-    'cylc-sphinx-extensions>=1.3.1',
+    'cylc-sphinx-extensions>=1.3.2',
     'eralchemy==1.2.*',
     'hieroglyph>=2.1.0',
     'sphinx>=3.0.0',
