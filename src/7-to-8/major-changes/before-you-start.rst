@@ -22,16 +22,16 @@ Cylc Configuration Upgrader
 Overview
 --------
 
-Cylc has a built in configuration upgrader. Cylc can upgrade Cylc 7
-workflows to Cylc 8 workflows. Cylc cannot upgrade Cylc 6 or earlier
+Cylc has a built in configuration upgrader. Cylc 8 can upgrade Cylc 7
+workflows at runtime. Cylc cannot upgrade Cylc 6 or earlier
 workflows to Cylc 8.
 
 Solution
 --------
 
 To avoid problems with old config items you should validate your workflow using
-Cylc 7. Look for deprecation warnings and change your configuration to avoid
-these warnings.
+Cylc 7. Look for deprecation warnings and edit the workflow configuration to
+eliminate these warnings.
 
 Example
 -------
@@ -41,15 +41,15 @@ Consider this configuration:
 .. code-block:: cylc
 
    [scheduling]
-   initial cycle point = 11000101T00
+       initial cycle point = 11000101T00
 
    [[dependencies]]
        [[[R1]]]
            graph = task
 
    [runtime]
-   [[task]]
-       pre-command scripting = echo "Hello World"
+       [[task]]
+           pre-command scripting = echo "Hello World"
 
 Running ``cylc validate`` on this configuration at Cylc 7 we see that the
 workflow is valid, but we are warned that ``pre-command scripting``
@@ -67,7 +67,7 @@ Cylc 7 has upgraded this for us, but at Cylc 8 this workflow will fail
 validation.
 
 .. code-block::
-   :caption: Cylc 8 failing to validate an obselete configuration
+   :caption: Cylc 8 failing to validate an obsolete configuration
 
    > cylc validate .
    IllegalItemError: [runtime][task]pre-command scripting
@@ -83,7 +83,7 @@ You must change the configuration yourself:
 
 .. warning::
 
-   At version 9 Cylc will no longer automatically upgrade obselete Cylc 7
+   At version 9 Cylc will no longer automatically upgrade obsolete Cylc 7
    configurations. It's a good idea to try and remove the configuration items
    causing to these warnings as part of routine workflow review and
-   maintainance to avoid problems when a major Cylc version is released.
+   maintenance to avoid problems when a major Cylc version is released.
