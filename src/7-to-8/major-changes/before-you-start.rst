@@ -22,9 +22,8 @@ Cylc Configuration Upgrader
 Overview
 --------
 
-Cylc has a built in configuration upgrader. Cylc can upgrade Cylc 7
-workflows to Cylc 8 workflows. Cylc cannot upgrade Cylc 6 or earlier
-workflows to Cylc 8.
+Cylc has a built in configuration upgrader. **Cylc 8** can upgrade Cylc 7
+workflows. **Cylc 8** will not upgrade Cylc 6 or earlier workflows to Cylc 8.
 
 Solution
 --------
@@ -41,17 +40,17 @@ Consider this configuration:
 .. code-block:: cylc
 
    [scheduling]
-   initial cycle point = 11000101T00
+       initial cycle point = 11000101T00
 
    [[dependencies]]
        [[[R1]]]
            graph = task
 
    [runtime]
-   [[task]]
-       pre-command scripting = echo "Hello World"
+       [[task]]
+           pre-command scripting = echo "Hello World"
 
-Running ``cylc validate`` on this configuration at Cylc 7 we see that the
+Running ``cylc validate`` on this configuration at **Cylc 7** we see that the
 workflow is valid, but we are warned that ``pre-command scripting``
 was replaced by ``pre-script`` at 6.4.0:
 
@@ -63,13 +62,16 @@ was replaced by ``pre-script`` at 6.4.0:
    WARNING -  * (6.4.0) [runtime][task][pre-command scripting] -> [runtime][task][pre-script] - value unchanged
    Valid for cylc-7.8.7
 
-Cylc 7 has upgraded this for us, but at Cylc 8 this workflow will fail
+**Cylc 7** has upgraded this for us, but at **Cylc 8** this workflow will fail
 validation.
 
 .. code-block::
    :caption: Cylc 8 failing to validate an obselete configuration
 
    > cylc validate .
+   WARNING - deprecated graph items were automatically upgraded in "workflow definition":
+    * (8.0.0) [scheduling][dependencies][X]graph -> [scheduling][graph]X - for X in:
+          R1
    IllegalItemError: [runtime][task]pre-command scripting
 
 
@@ -80,10 +82,22 @@ You must change the configuration yourself:
    -     pre-command scripting = echo "Hello World"
    +     pre-script = echo "Hello World"
 
+Validation will now succed.
+
+This will leave you with just the warning about the changes to the graph
+format: You might wish to fix this now:
+
+.. code-block:: diff
+
+   [[dependencies]]
+       [[[R1]]]
+           graph = task
+
+
 
 .. warning::
 
-   At version 9 Cylc will no longer automatically upgrade obselete Cylc 7
+   Cylc 9 will no longer automatically upgrade obselete Cylc 7
    configurations. It's a good idea to try and remove the configuration items
    causing to these warnings as part of routine workflow review and
    maintainance to avoid problems when a major Cylc version is released.
