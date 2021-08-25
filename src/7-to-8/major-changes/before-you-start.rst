@@ -29,8 +29,8 @@ Solution
 --------
 
 To avoid problems with old config items you should validate your workflow using
-Cylc 7. Look for deprecation warnings and change your configuration to avoid
-these warnings.
+Cylc 7. Look for deprecation warnings and edit the workflow configuration to
+eliminate these warnings.
 
 Example
 -------
@@ -66,7 +66,7 @@ was replaced by ``pre-script`` at 6.4.0:
 validation.
 
 .. code-block::
-   :caption: Cylc 8 failing to validate an obselete configuration
+   :caption: Cylc 8 failing to validate an obsolete configuration
 
    > cylc validate .
    WARNING - deprecated graph items were automatically upgraded in "workflow definition":
@@ -100,4 +100,4 @@ format: You might wish to fix this now:
    Cylc 9 will no longer automatically upgrade obselete Cylc 7
    configurations. It's a good idea to try and remove the configuration items
    causing to these warnings as part of routine workflow review and
-   maintainance to avoid problems when a major Cylc version is released.
+   maintenance to avoid problems when a major Cylc version is released.
