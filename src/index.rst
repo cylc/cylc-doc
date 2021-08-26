@@ -23,6 +23,7 @@ indefinitely.
    introduction/index
    tutorial/index
    user-guide/index
+   admin-guide/index
    plugins/index
    workflow-design-guide/index
    reference/index
