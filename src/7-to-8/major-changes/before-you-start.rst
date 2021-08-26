@@ -23,7 +23,7 @@ Overview
 --------
 
 Cylc has a built in configuration upgrader. **Cylc 8** can upgrade Cylc 7
-workflows. **Cylc 8** will not upgrade Cylc 6 or earlier workflows to Cylc 8.
+workflows at runtime, but not if validation with Cylc 7 gives deprecation warnings.
 
 Solution
 --------
@@ -76,7 +76,7 @@ validation.
 Fixing Validation Failure
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You must change the configuration yourself:
+You must change the configuration yourself. In this case:
 
 .. code-block:: diff
 
@@ -101,14 +101,14 @@ following changes. (explanation of
    [scheduling]
        initial cycle point = 11000101T00
    -   [[dependencies]]
-   +   [[graph]]
    -       [[[R1]]]
    -           graph = task
+   +   [[graph]]
    +       R1 = task
 
 .. warning::
 
-   Cylc 9 will no longer automatically upgrade obselete Cylc 7
+   Cylc 9 will no longer automatically upgrade obsolete Cylc 7
    configurations. It's a good idea to try and remove the configuration items
    causing to these warnings as part of routine workflow review and
    maintenance to avoid problems when a major Cylc version is released.
@@ -149,13 +149,13 @@ platforms section:
            hosts = localhost
            job runner = slurm
        [[supercomputer_B]]
-           hosts = tigger, wol, eyore
+           hosts = tigger, wol, eeyore
            batch system = pbs
 
 And you have a **cylc 7** workflow runtime configuration:
 
 .. code-block:: cylc
-   :caption: Part of ``suite.rc`` or ``flow.cylc``
+   :caption: Part of ``suite.rc``
 
    [runtime]
        [[task1]]
@@ -163,19 +163,19 @@ And you have a **cylc 7** workflow runtime configuration:
                batch system = slurm
        [[task2]]
            [[[remote]]]
-               hosts = eyore
+               hosts = eeyore
            [[[job]]]
                batch system = pbs
 
 
 Then, ``task1`` will be assigned platform
-``supercomputer_A`` because the host
-specified is in the list of hosts **and** the batch system is the same and task
-``task2`` will run on ``supercomputer_B``.
+``supercomputer_A`` because the specified host (implicitly ``localhost``)
+is in the list of hosts for ``supercomputer_A`` **and** the batch system is the same.
+Likewise, ``task2`` will run on ``supercomputer_B``.
 
 .. important::
 
-   for simplicity, and becuause the ``host`` key is a special case (it can
+   For simplicity, and because the ``host`` key is a special case (it can
    match and host in ``[platform]hosts``) we only show these two config keys
    here. In reality, **Cylc 8 compares the whole of**
    ``[<task>][job]`` **and** ``[<task>][remote]``
