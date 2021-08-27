@@ -70,9 +70,11 @@ You can also use ``-C`` (or ``--directory``) to set a source path:
 
    cylc install -C /path/to/another-workflow
 
-Once you have installed a workflow you can use Cylc play to set it in motion.
+Once you have installed a workflow you can use ``cylc play`` to run it - see
+:ref:`RunningWorkflows`.
 
-.. TODO - Include links to Cylc Play documentation.
+You can delete installed workflows using ``cylc clean`` - see
+:ref:`Removing-workflows`.
 
 
 Cylc Rose

@@ -137,7 +137,7 @@ or even infinite in extent in cycling systems. The Cylc 8 UI shows:
   - plus waiting tasks that are only waiting on non-task dependencies: queues,
   runahead limit, clock-triggers, or xtriggers
 
-- tasks up to ``n`` graph edges away from active tasks (default ``1`` edge) 
+- tasks up to ``n`` graph edges away from active tasks (default ``1`` edge)
 
 Platform Awareness
 ------------------
@@ -247,6 +247,9 @@ workflow files into the run directory at start-up
    $ cylc play democ8/run2
    # etc.
 
+Deleting workflows can be done using ``cylc clean`` - see
+:ref:`Removing-workflows`.
+
 Safe Run Semantics
 ------------------
 
@@ -327,7 +330,7 @@ Some features are still in progress or yet to be started:
 - Cross-user functionality and fine-grained authorization
 - UI presentation of workflow and job logs
    - for the moment look in your ``cylc-run`` directory, or use
-     ``cylc cat-log``, or use Cylc Review from cylc-7.9.3/7.8.8 
+     ``cylc cat-log``, or use Cylc Review from cylc-7.9.3/7.8.8
      to view Cylc 8 logs
 - UI/CLI "edit run"
 - UI Server:

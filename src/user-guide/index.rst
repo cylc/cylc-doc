@@ -11,3 +11,4 @@ User Guide
    running-workflows/index
    workflow-storage-etc
    task-implementation/index
+   removing-workflows

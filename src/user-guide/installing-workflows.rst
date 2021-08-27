@@ -151,7 +151,7 @@ a new run directory. If you wish to install files into an existing run
 directory, use ``cylc reinstall``, see :ref:`Reinstalling a Workflow`.
 
 Excluding Items From Installation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""
 
 By default, cylc install will exclude ``.git``, ``.svn`` directories.
 To configure excluded files and directories from the file installation,
@@ -164,7 +164,7 @@ configuring files to be excluded from the installation.
 .. _Example Installation:
 
 Example Installation
-^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""
 
 For example:
 We will look at running the cylc install command inside the directory
@@ -261,7 +261,7 @@ To skip making localhost symlinks
 """""""""""""""""""""""""""""""""
 
 Use `--symlink-dirs=""` with the `cylc install` command.
-   
+
 
 
 Automatically Generated Directories and Files
