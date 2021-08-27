@@ -4,6 +4,12 @@ on:
   push:
     branches: [master]
   pull_request:
+    paths:
+      - cylc/doc/etc/**
+      - src/tutorial/**
+      - setup.py
+      - .github/actions/**
+      - .github/workflows/test_tutorial_workflow.yml
   workflow_dispatch:
     inputs:
       rose_ref:
