@@ -248,7 +248,7 @@ You can provide template variables to Cylc in 3 ways:
 
 - Using the ``--set-file`` option.
 - Using the ``-s`` option.
-- `Using a plugin (example)`_, such as :ref:`Cylc Rose`.
+- `Using a plugin`_, such as :ref:`Cylc Rose`.
 
 .. note::
 
