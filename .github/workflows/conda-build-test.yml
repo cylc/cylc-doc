@@ -1,0 +1,23 @@
+name: conda builds
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test_conda_install:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        case: [basic, gui, rose, live-basic, live-full]
+    steps:
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+
+      - name: build conda env ${{matrix.case}}
+        run: |
+          conda env create -f \
+            src/admin-guide/environments/${{matrix.case}}.yml
