@@ -1,0 +1,16 @@
+name: test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10
+    steps:
+      - name: conda install
+        run:
+          conda env create -f tests
