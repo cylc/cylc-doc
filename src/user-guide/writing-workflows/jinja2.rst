@@ -126,6 +126,8 @@ prior to configuration parsing to provide workflow context:
 .. code-block:: sub
 
    CYLC_DEBUG                      # Debug mode, true or not defined
+   CYLC_TEMPLATE_VARS              # All variables set by -s, --set-file or
+                                   # by a plugin.
    CYLC_VERBOSE                    # Verbose mode, True or False
    CYLC_VERSION                    # Version of cylc installation used
 
@@ -239,13 +241,23 @@ Here's the result:
 
 .. _jinja2-template-variables:
 
-Jinja2 Default Values And Template Inputs
------------------------------------------
+Jinja2 Default Values And Template Variables
+--------------------------------------------
 
-The values of Jinja2 variables can be passed in from the Cylc command
-line rather than hardwired in the workflow configuration.
+You can provide template variables to Cylc in 3 ways:
 
-This can be done on a case-by-case basis using the ``-s`` option e.g:
+- Using the ``--set-file`` option.
+- Using the ``-s`` option.
+- `Using a plugin`_, such as :ref:`Cylc Rose`.
+
+.. note::
+
+   If the same variable is set by more than one method, the last source in the
+   above list is used.
+
+
+Using the ``-s`` and ``--set-file`` options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: console
 
@@ -346,6 +358,39 @@ will show the workflow with the Jinja2 variables as set.
    line will :term:`restart` with the same settings. However, you can set
    them again on the ``cylc play`` command line if they need to
    be overridden.
+
+
+Using a plugin
+^^^^^^^^^^^^^^
+
+Template plugins such as :ref:`Cylc Rose` should provide a set of template
+variables which can be provided to Cylc. For example, using Cylc Rose you
+add a ``rose-suite.conf`` file containing a ``[template variables]``
+section which the plugin makes available to Cylc:
+
+.. code-block:: ini
+   :caption: rose-suite.conf
+   
+   [template variables]
+   ICP=1068
+
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   #!jinja2
+   [scheduler]
+      allow implicit tasks = True
+   [scheduling]
+      initial cycle point = {{ICP}}
+      [[dependencies]]
+         P1Y = Task1
+
+
+.. code-block:: shell
+
+   > cylc config . -i "[scheduling]initial cycle point"
+   1068
+
 
 
 Jinja2 Variable Scope
