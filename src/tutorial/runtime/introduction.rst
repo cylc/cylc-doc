@@ -345,11 +345,11 @@ Workflow Files
          The directory where the :term:`workflow log files <workflow log>` live.
          These files are written by Cylc as the workflow is run and are useful for
          debugging purposes in the event of error.
+      ``flow-config/flow.cylc.processed``
+         A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
+         processed - we will cover this in the
+         :ref:`tutorial-cylc-consolidating-configuration` section.
 
-   ``flow.cylc.processed``
-      A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
-      processed - we will cover this in the
-      :ref:`tutorial-cylc-consolidating-configuration` section.
    ``share/``
       The :term:`share directory` is a place where :term:`tasks <task>` can
       write files which are intended to be shared within that cycle.
@@ -363,7 +363,7 @@ Workflow Files
       * ``log/db``
       * ``log/job``
       * ``log/workflow``
-   * ``flow.cylc.processed``
+      * ``log/flow-config/flow.cylc.processed``
    * ``share/``
    * ``work/``
 
