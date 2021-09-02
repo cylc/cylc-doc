@@ -3,19 +3,31 @@
 Removing Workflows
 ==================
 
-If you want to delete an installed workflow from the :term:`cylc-run directory`
-(or just delete certain subdirectories), the recommended way is using
+To delete an installed workflow :term:`run directory`, we recommend using
 the ``cylc clean`` command. ``cylc clean`` takes care of deleting workflows
-on the local filesystem was well as any remote install targets. It also
-follows any symlink directories specified in
+on the local filesystem and any remote install targets.
+It follows any symlink directories specified in
 :cylc:conf:`global.cylc[install][symlink dirs]`
-(but will never follow other symlink directories). It will not remove the
-workflow :term:`source directory` either.
+(see :ref:`CleanSymlinkDirsNote` below). You can also use ``cylc clean`` to
+just delete certain files or subdirectories (see :ref:`TargetedClean` below).
 
 If you've used ``rose suite-clean`` before, the functionality is similar, but
 not identical.
 
-``cylc clean`` can be called like so:
+.. note::
+
+   ``cylc clean`` only affects workflow :term:`run directories <run directory>`
+   (located in the :term:`cylc-run directory`). It will not affect
+   workflow :term:`source directories <source directory>`.
+
+.. warning::
+
+   ``cylc clean`` is intended for use on workflows installed with
+   ``cylc install``. If you clean a workflow that was instead written
+   directly in the cylc-run directory and not backed up elsewhere,
+   it will be lost.
+
+Simple example of using ``cylc clean``:
 
 .. code-block:: console
 
@@ -25,7 +37,7 @@ not identical.
 .. note::
 
    Trying to clean a directory that contains more than one
-   :term:`run directory` is not allowed, as a safety feature. You can override
+   run directory is not allowed, as a safety feature. You can override
    this using the ``--force`` option, but this will not clean remote install
    targets or follow symlink dirs as described above.
 
@@ -46,19 +58,21 @@ filesystem.
 .. note::
 
    This relies on determining which platforms were used from the workflow
-   database; if the database is missing, you will have to manually remove the
+   database. If the database is missing, you will have to manually remove the
    files on remote install targets.
 
 You can also clean on just the local filesystem using the ``--local`` option,
 or just the remote install target using the ``--remote`` option.
 
 
+.. _TargetedClean:
+
 Cleaning specific subdirectories or files
 -----------------------------------------
 
 You can clean specific subdirectories or files inside a run directory using
-the ``--rm`` option. For example, to remove the ``log`` and ``work``
-directories:
+the ``--rm`` option (we refer to this as a targeted clean).
+For example, to remove the ``log`` and ``work`` directories:
 
 .. code-block:: console
 
@@ -86,3 +100,27 @@ beginning with ``2020``:
 
    Use the ``--debug`` option to see all the directories or files that get
    removed.
+
+
+.. _CleanSymlinkDirsNote:
+
+A note on symlink directories
+-----------------------------
+
+.. admonition:: Does this affect me?
+   :class: tip
+
+   If you use symlink directories specified in
+   :cylc:conf:`global.cylc[install][symlink dirs]`, you might want to read
+   this explanation of how Cylc handles them during cleaning.
+
+If you manually delete a run directory (e.g., using ``rm`` or the file
+manager), only the symlinks themselves will be deleted, not the actual targets.
+In contrast, ``cylc clean`` follows the symlinks and deletes the targets.
+
+- It does this for the symlinks that can be set in
+  :cylc:conf:`global.cylc[install][symlink dirs]` only, not any custom
+  user-created symlinks.
+- It does not actually look up the global configuration at time of cleaning;
+  it simply detects what symlinks are present out of the possible ones.
+- It also does this for targeted clean (using the ``--rm`` option).
