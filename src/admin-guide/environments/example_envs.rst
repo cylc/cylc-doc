@@ -19,6 +19,10 @@ Example installation command:
 
    conda env create -f path/to/env.yml --name "name of env"
 
+   # ..or if you haven't specified a python version in the enviroment file:
+   conda env create -f path/to/env.yml --name "name of env" python==<version>
+
+
 Cylc 8 basic
 ------------
 
