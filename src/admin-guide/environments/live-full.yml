@@ -3,11 +3,8 @@ name: cylc-8-live-with-rose
 # n.b. The UI needs to be installed with Yarn: For details see
 # https://github.com/cylc/cylc-ui
 channels:
-  - defaults
   - conda-forge
-  - kinow
 dependencies:
-  - python
   - pip
   - pip:
     - git+https://github.com/cylc/cylc-flow.git
