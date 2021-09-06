@@ -7,7 +7,7 @@ on:
       - 'src/admin-guide/environments/*.ya?ml'
   schedule:
     - cron: '17 22 * * 6'
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   test_conda_install:
