@@ -3,8 +3,7 @@ name: cylc-8-with-rose
 channels:
   - conda-forge
 dependencies:
-  - cylc
+  - cylc-flow
   - cylc-rose
-  - cylc-ui
   - cylc-uiserver
   - metomi-rose

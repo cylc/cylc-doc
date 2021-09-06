@@ -33,14 +33,6 @@ Also demonstrates using different versions of Python.
 .. literalinclude:: basic-3.7.yml
    :language: YAML
 
-
-.. literalinclude:: basic-3.8.yml
-   :language: YAML
-
-
-.. literalinclude:: basic-3.9.yml
-   :language: YAML
-
 Cylc 8 with UI Server
 ---------------------
 

@@ -3,4 +3,5 @@ name: cylc-8-with-gui
 channels:
   - conda-forge
 dependencies:
-  - cylc
+  - cylc-flow
+  - cylc-uiserver

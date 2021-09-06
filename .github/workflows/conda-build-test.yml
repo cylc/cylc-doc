@@ -11,19 +11,13 @@ on:
 
 jobs:
   test_conda_install:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       matrix:
         case: [basic, gui, rose, live-basic, live-full]
         python: [3.7, 3.8, 3.9]
     steps:
-      # - name: install conda
-      #   run: |
-      #     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-      #     chmod +x Miniconda3-latest-Linux-x86_64.sh
-      #     bash Miniconda3-latest-Linux-x86_64.sh -y
-
       - name: checkout cylc-doc
         uses: actions/checkout@v2
 
