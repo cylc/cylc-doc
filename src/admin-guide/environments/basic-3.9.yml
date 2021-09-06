@@ -1,0 +1,8 @@
+name: cylc-8-basic
+# Cylc 8 without GUI installed from Conda Repos.
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - cylc-flow=8.*
+  - pip

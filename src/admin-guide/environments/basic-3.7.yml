@@ -3,5 +3,6 @@ name: cylc-8-basic
 channels:
   - conda-forge
 dependencies:
+  - python=3.7
   - cylc-flow=8.*
   - pip
