@@ -20,10 +20,14 @@ jobs:
 
       - name: build conda env ${{matrix.case}}
         run: |
+          # Done like this so that we test all versions of python,
+          # and offer users examples of basic with all three versions
+          # but don't have to have three env.yml files for each case.
           if [[ -f src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml ]]; then
             conda env create -f \
               src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml
           else
             conda env create -f \
-              src/admin-guide/environments/${{matrix.case}}.yml
+              src/admin-guide/environments/${{matrix.case}}.yml \
+              python==${{python}}
           fi

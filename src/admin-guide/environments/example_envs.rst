@@ -13,11 +13,26 @@ A set of possible installations of Cylc:
    `Cylc 8 basic live from github`_, ✔️, , ,✔️
    `Cylc 8 with rose and GUI live from github`_,✔️,✔️,✔️,✔️
 
+Example installation command:
+
+.. code-block:: bash
+
+   conda env create -f path/to/env.yml --name "name of env"
 
 Cylc 8 basic
 ------------
 
-.. literalinclude:: basic.yml
+Also demonstrates using different versions of Python.
+
+.. literalinclude:: basic-3.7.yml
+   :language: YAML
+
+
+.. literalinclude:: basic-3.8.yml
+   :language: YAML
+
+
+.. literalinclude:: basic-3.9.yml
    :language: YAML
 
 Cylc 8 with UI Server
