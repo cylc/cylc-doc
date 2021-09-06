@@ -1,9 +1,11 @@
 name: conda builds
 
 on:
-  push:
-    branches: [master]
+  schedule: '17 22 * * 6'  # Every Saturday
   pull_request:
+    paths:
+      - .github/workflows/conda-build-test.yml
+      - 'src/admin-guide/environments/*.ya?ml'
   workflow_dispatch:
 
 jobs:
