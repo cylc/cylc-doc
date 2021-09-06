@@ -26,5 +26,5 @@ indefinitely.
    plugins/index
    workflow-design-guide/index
    reference/index
-   administration-guide/index
+   admin-guide/index
    glossary
