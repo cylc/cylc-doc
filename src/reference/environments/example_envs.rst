@@ -4,11 +4,10 @@ Example Environments
 A set of possible installations of Cylc:
 
 .. csv-table::
-   :header-rows:1
-   
-   environment, cylc, cylc uiserver, rose, install latest from github
-   `Cylc 8 basic`_, ✔️, , ,
-   `Cylc 8 with UI Server`_, ✔️,✔️, ,
+   :header:  environment, cylc, cylc uiserver, rose
+
+   `Cylc 8 basic`_, ✔️, ,
+   `Cylc 8 with UI Server`_, ✔️,✔️,
    `Cylc 8 with Rose`_, ✔️,✔️,✔️
 
 Example installation commands:
