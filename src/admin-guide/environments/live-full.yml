@@ -1,13 +1,8 @@
 name: cylc-8-live-with-rose
-# Cylc 8, the UI server, Cylc Rose and Metomi Rose
-# n.b. The UI needs to be installed with Yarn: For details see
-# https://github.com/cylc/cylc-ui
+# Cylc 8, the UI and UI server, Cylc Rose and Metomi Rose
 channels:
-  - defaults
   - conda-forge
-  - kinow
 dependencies:
-  - python
   - pip
   - pip:
     - git+https://github.com/cylc/cylc-flow.git
