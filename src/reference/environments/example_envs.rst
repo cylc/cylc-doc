@@ -13,16 +13,7 @@ A set of possible installations of Cylc:
    :ref:`Cylc 8 basic live from github <liveFromGH>`, ✔️, , ,✔️
    :ref:`Cylc 8 with rose and GUI live from github <liveFromGH>`,✔️,✔️,✔️,✔️
 
-Example installation command:
-
-.. code-block:: bash
-
-   conda env create -f path/to/env.yml --name "name of env"
-
-   # ..or if you haven't specified a python version in the enviroment file:
-   conda env create -f path/to/env.yml --name "name of env" python==<version>
-
-Example installation command:
+Example installation commands:
 
 .. code-block:: bash
 
