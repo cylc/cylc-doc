@@ -1,12 +1,13 @@
 name: conda builds
 
 on:
-  schedule: '17 22 * * 6'  # Every Saturday
   pull_request:
     paths:
-      - .github/workflows/conda-build-test.yml
+      - '.github/workflows/conda-build-test.yml'
       - 'src/admin-guide/environments/*.ya?ml'
-  workflow_dispatch:
+  schedule:
+    - cron: '17 22 * * 6'
+
 
 jobs:
   test_conda_install:
