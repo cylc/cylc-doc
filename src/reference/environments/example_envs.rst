@@ -9,9 +9,7 @@ A set of possible installations of Cylc:
    environment, cylc, cylc uiserver, rose, install latest from github
    `Cylc 8 basic`_, ✔️, , ,
    `Cylc 8 with UI Server`_, ✔️,✔️, ,
-   `Cylc 8 with Rose`_, ✔️,✔️,✔️,
-   :ref:`Cylc 8 basic live from github <liveFromGH>`, ✔️, , ,✔️
-   :ref:`Cylc 8 with rose and GUI live from github <liveFromGH>`,✔️,✔️,✔️,✔️
+   `Cylc 8 with Rose`_, ✔️,✔️,✔️
 
 Example installation commands:
 
@@ -49,20 +47,4 @@ In addition to the GUI components also add the Cylc-Rose plugin, and the
 Rose configuration management system.
 
 .. literalinclude:: rose.yml
-   :language: YAML
-
-.. _liveFromGH:
-
-Cylc 8 live from github
------------------------
-
-In this case the ``enviroment.yml`` file will create a new enviroment and
-download the latest development version of Cylc from github. One could
-add ``@branch``, ``@hash`` or ``@tag`` to the end of the URL to specify a
-particular version.
-
-.. literalinclude:: live-basic.yml
-   :language: YAML
-
-.. literalinclude:: live-full.yml
    :language: YAML
