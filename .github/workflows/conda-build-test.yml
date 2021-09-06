@@ -29,5 +29,5 @@ jobs:
           else
             conda env create -f \
               src/admin-guide/environments/${{matrix.case}}.yml \
-              python==${{python}}
+              python==${{matrix.python}}
           fi
