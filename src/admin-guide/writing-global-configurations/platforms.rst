@@ -27,7 +27,8 @@ Why were platforms introduced?
   unit.
 - Allow Cylc to elegantly handle failure of to communicate with login nodes.
 - Configure multiple platforms with the same hosts; for example you can use
-separate platforms to submit jobs to a batch system and to background on ``localhost``.
+   separate platforms to submit jobs to a batch system and to background on 
+   ``localhost``.
 
 
 Example platforms
