@@ -20,9 +20,9 @@ jobs:
 
       - name: build conda env ${{matrix.case}}
         run: |
-          if [[ -f src/admin-guide/environments/${{matrix.case}}-${{python}}.yml ]]; then
+          if [[ -f src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml ]]; then
             conda env create -f \
-              src/admin-guide/environments/${{matrix.case}}-${{python}}.yml
+              src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml
           else
             conda env create -f \
               src/admin-guide/environments/${{matrix.case}}.yml
