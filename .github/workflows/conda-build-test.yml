@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/conda-build-test.yml'
-      - 'src/admin-guide/environments/*.ya?ml'
+      - 'src/reference/environments/*.ya?ml'
   schedule:
     - cron: '17 22 * * 6'
   workflow_dispatch:
@@ -18,6 +18,12 @@ jobs:
         case: [basic, gui, rose, live-basic, live-full]
         python: [3.7, 3.8, 3.9]
     steps:
+      # - name: install conda
+      #   run: |
+      #     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+      #     chmod +x Miniconda3-latest-Linux-x86_64.sh
+      #     bash Miniconda3-latest-Linux-x86_64.sh -y
+
       - name: checkout cylc-doc
         uses: actions/checkout@v2
 
@@ -26,11 +32,11 @@ jobs:
           # Done like this so that we test all versions of python,
           # and offer users examples of basic with all three versions
           # but don't have to have three env.yml files for each case.
-          if [[ -f src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml ]]; then
+          if [[ -f src/reference/environments/${{matrix.case}}-${{matrix.python}}.yml ]]; then
             conda env create -f \
-              src/admin-guide/environments/${{matrix.case}}-${{matrix.python}}.yml
+              src/reference/environments/${{matrix.case}}-${{matrix.python}}.yml
           else
             conda env create -f \
-              src/admin-guide/environments/${{matrix.case}}.yml \
+              src/reference/environments/${{matrix.case}}.yml \
               python==${{matrix.python}}
           fi
