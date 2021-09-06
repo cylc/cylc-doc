@@ -3,6 +3,7 @@ name: cylc-8-live-with-rose
 channels:
   - conda-forge
 dependencies:
+  - python=3.9
   - pip
   - pip:
     - git+https://github.com/cylc/cylc-flow.git
