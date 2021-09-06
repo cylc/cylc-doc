@@ -1,7 +1,5 @@
 name: cylc-8-with-gui
 # Cylc 8 and the UI server installed from Conda
-# n.b. The UI needs to be installed with Yarn: For details see
-# https://github.com/cylc/cylc-ui
 channels:
   - defaults
   - conda-forge

@@ -1,9 +1,7 @@
 name: cylc-8-basic
 # Cylc 8 without GUI installed from Conda Repos.
 channels:
-  - defaults
   - conda-forge
-  - kinow
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=4.5=1_gnu
