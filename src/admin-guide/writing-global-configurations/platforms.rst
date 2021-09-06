@@ -202,4 +202,5 @@ As a result the above configuration can be simplified to:
 
     .. note::
 
-    Random is the default selection method.
+       Random is the default selection method.
+
