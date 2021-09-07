@@ -99,10 +99,10 @@ Runtime
            inherit = GET_OBSERVATIONS
            [[[environment]]]
                SITE_ID = 3005
-       [[get_observations_belmullet]]
+       [[get_observations_aldergrove]]
            inherit = GET_OBSERVATIONS
            [[[environment]]]
-               SITE_ID = 3976
+               SITE_ID = 3917
 
 
 Graphing
@@ -128,7 +128,7 @@ Graphing
    get_observations_heathrow => consolidate_observations
    get_observations_camborne => consolidate_observations
    get_observations_shetland => consolidate_observations
-   get_observations_belmullet => consolidate_observations
+   get_observations_aldergrove => consolidate_observations
 
 .. ifnotslides::
 
