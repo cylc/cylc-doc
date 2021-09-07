@@ -211,7 +211,7 @@ def main(site_id, api_key=None):
             badsites.append(f'{int(site_id):05d}')
             site_id, dist = get_nearby_site(site_id, badsites)
 
-    if obs == None:
+    if obs is None:
         if api_key:
             print('Attempting to get weather data from DataPoint...')
             data = get_datapoint_data(site_id, cycle_point, api_key)
