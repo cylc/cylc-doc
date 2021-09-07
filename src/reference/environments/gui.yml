@@ -1,5 +1,5 @@
 name: cylc-8-with-gui
-# Cylc 8 and the GUI installed from Conda
+# Cylc 8 and the GUI
 channels:
   - conda-forge
 dependencies:

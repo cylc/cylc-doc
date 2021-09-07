@@ -1,8 +1,6 @@
-name: cylc-8-basic-python-3.8
+name: cylc-8-basic-python-3.7
 # Cylc 8 without GUI installed from Conda Repos.
 channels:
   - conda-forge
 dependencies:
-  - python=3.8
   - cylc-flow=8.*
-  - pip

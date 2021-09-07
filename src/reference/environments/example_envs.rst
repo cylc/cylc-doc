@@ -1,7 +1,7 @@
 Example Environments
 ====================
 
-A set of possible installations of Cylc:
+A set of example Conda Cylc Environments:
 
 .. csv-table::
    :header:  environment, cylc, cylc uiserver, rose
@@ -16,16 +16,11 @@ Example installation commands:
 
    conda env create -f path/to/env.yml --name "name of env"
 
-   # ..or if you haven't specified a python version in the enviroment file:
-   conda env create -f path/to/env.yml --name "name of env" python==<version>
-
 
 Cylc 8 basic
 ------------
 
-In this case we are collecting the core workflow engine.
-
-Also demonstrates using different versions of Python.
+This environment contains the core workflow engine and shows how to specify a particular version of Python.
 
 .. literalinclude:: basic-3.7.yml
    :language: YAML
@@ -33,8 +28,7 @@ Also demonstrates using different versions of Python.
 Cylc 8 with UI Server
 ---------------------
 
-Create an enviroment containing the workflow engine and the GUI components
-from releases available on conda-forge.
+An environment containing the workflow engine and the GUI components.
 
 .. literalinclude:: gui.yml
    :language: YAML

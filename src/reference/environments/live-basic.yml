@@ -1,9 +1,0 @@
-name: cylc-8-live-basic
-# Cylc 8 without GUI installed from the default GitHub branch.
-channels:
-  - conda-forge
-dependencies:
-  - python=3.9
-  - pip
-  - pip:
-    - git+https://github.com/cylc/cylc-flow.git
