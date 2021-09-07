@@ -17,7 +17,7 @@ What are platforms?
 -------------------
 
 Platforms define settings, most importantly a set of hosts and a
-``job runner`` (formerly a ``batch system``) upon which Cylc can submit a
+``job runner`` (formerly a ``batch system``) where Cylc can submit a
 task job.
 
 Why were platforms introduced?
@@ -25,17 +25,17 @@ Why were platforms introduced?
 
 - Allow a compute cluster with multiple login nodes to be treated as a single
   unit.
-- Allow Cylc to elegently handle failure of to communicate with login nodes.
-- Configure multiple platforms which have the same hosts; for example using
-  ``localhost`` to submit jobs to a batch system and to background would be 
-  use seperate platforms.
+- Allow Cylc to elegantly handle failure of to communicate with login nodes.
+- Configure multiple platforms with the same hosts; for example you can use
+   separate platforms to submit jobs to a batch system and to background on 
+   ``localhost``.
 
 
 Example platforms
 -----------------
 
-Lots of desktops
-^^^^^^^^^^^^^^^^
+Lots of desktop computers
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platform names are regular expressions.**
 - **you can specify where to install job files.**
@@ -44,7 +44,7 @@ Lots of desktops
 
    Everyone in your organization has a computer called ``desktopNNN``,
    all with a file system shared with the scheduler host. Many users
-   will want a platform to run small jobs on thier computer:
+   will want a platform to run small jobs on their computer:
 
 Cylc treats platform names as regular expressions, so in this case:
 
@@ -61,11 +61,11 @@ platform. Job files can be installed on the workflow host.
 .. note::
 
    Cylc carries out a "fullmatch" regular expression comparison with the
-   the platform name so ``desktop\d\d\d`` is effictively the same as
+   the platform name so ``desktop\d\d\d`` is effectively the same as
    ``^desktop\d\d\d$``.
 
-Cluster has multiple login nodes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Cluster with multiple login nodes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms can group multiple hosts together.**
 
@@ -85,22 +85,22 @@ Cluster has multiple login nodes
            retrieve job logs = True
 
 If either host is unavailable Cylc will attempt to start and communicate with
-jobs on the other login node.
+jobs via the other login node.
 
 Since the platform hosts do not share a file system with the scheduler
 host we need to ask Cylc to retrieve job logs.
 
-Submit background and pbs jobs from localhost
+Submit background and PBS jobs from localhost
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Two platforms can share hosts and not share batch systems.**
+**Platforms can share hosts and not share batch systems.**
 
 **There is a built in localhost platform**
 
 .. admonition:: Scenario
 
    You have a cluster where you can submit jobs from the Cylc scheduler host
-   using PBS, but also want to allow users to submit small jobs in the
+   using PBS, but also want to allow users to submit small jobs to the
    scheduler host:
 
 .. code-block:: cylc
@@ -115,10 +115,10 @@ Submit background and pbs jobs from localhost
            host = localhost
            job runner = background
 
-But since and ``host`` defaults to ``localhost`` you can simplify
+But ``host`` defaults to ``localhost`` so you can simplify
 the ``[[pbs_cluster]]`` definition.
 
-If a job doesn't set a platform it will run on the Cylc scheduler
+If a job doesn't set a platform it will run on the Cylc scheduler host
 using a default ``localhost`` platform.
 
 As a result the above configuration can be simplified to:
@@ -162,10 +162,10 @@ As a result the above configuration can be simplified to:
 
     Why not just have one platform with all 4 login nodes?
 
-    Having hosts in a platform imply that Cylc can communicate with
-    jobs through any host at any time. Platform groups allow Cylc to
+    Having hosts in a platform means that Cylc can communicate with
+    jobs via any host at any time. Platform groups allow Cylc to
     pick a platform when the job is started, but Cylc will not then
-    be able to communicate with that jobs through hosts on another
+    be able to communicate with that job via hosts on another
     platform in the group.
 
     Preferred and backup hosts and platforms
@@ -203,4 +203,5 @@ As a result the above configuration can be simplified to:
 
     .. note::
 
-    Random is the default selection method.
+       Random is the default selection method.
+
