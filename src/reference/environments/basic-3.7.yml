@@ -1,5 +1,5 @@
 name: cylc-8-basic-python-3.7
-# Cylc 8 without GUI
+# Cylc 8 without UI Server.
 channels:
   - conda-forge
 dependencies:

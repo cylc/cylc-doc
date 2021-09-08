@@ -1,5 +1,6 @@
 name: cylc-8-with-rose
-# Cylc 8, the UI server, Cylc Rose and Metomi Rose
+# Cylc 8, the UI Server (which provides the web GUI).
+# and the Cylc Rose plugin (which requires metomi-rose).
 channels:
   - conda-forge
 dependencies:
