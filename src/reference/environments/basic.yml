@@ -1,4 +1,4 @@
-name: cylc-8-basic-python-3.7
+name: cylc-8-basic
 # Cylc 8 without GUI installed from Conda Repos.
 channels:
   - conda-forge
