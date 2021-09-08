@@ -163,9 +163,9 @@ Parameters can be either words or integers:
            [[[environment]]]
                API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
-       [[get_observations<station=belmullet>]]
+       [[get_observations<station=aldergrove>]]
            [[[environment]]]
-               SITE_ID = 3976
+               SITE_ID = 3917
        [[get_observations<station=camborne>]]
            [[[environment]]]
                SITE_ID = 3808
@@ -210,7 +210,7 @@ Parameters can be either words or integers:
           [scheduler]
               UTC mode = True
          +    [[parameters]]
-         +        station = belmullet, camborne, heathrow, shetland
+         +        station = aldergrove, camborne, heathrow, shetland
 
       Remove the four ``get_observations`` tasks and insert the following code
       in their place:
@@ -244,7 +244,7 @@ Parameters can be either words or integers:
 
          The relevant IDs are:
 
-         * Belmullet - ``3976``
+         * Aldergrove - ``3917``
          * Camborne - ``3808``
          * Heathrow - ``3772``
          * Shetland - ``3005``
@@ -253,9 +253,9 @@ Parameters can be either words or integers:
 
          .. code-block:: cylc
 
-            [[get_observations<station=belmullet>]]
+            [[get_observations<station=aldergrove>]]
                 [[[environment]]]
-                    SITE_ID = 3976
+                    SITE_ID = 3917
             [[get_observations<station=camborne>]]
                 [[[environment]]]
                     SITE_ID = 3808
@@ -281,7 +281,7 @@ Parameters can be either words or integers:
 
           # Repeat every three hours starting at the initial cycle point.
           PT3H = """
-         -    get_observations_belmullet => consolidate_observations
+         -    get_observations_aldergrove => consolidate_observations
          -    get_observations_camborne => consolidate_observations
          -    get_observations_heathrow => consolidate_observations
          -    get_observations_shetland => consolidate_observations
@@ -322,7 +322,7 @@ Parameters can be either words or integers:
              [scheduler]
                  UTC mode = True
                  [[parameters]]
-                     station = belmullet, camborne, heathrow, shetland
+                     station = aldergrove, camborne, heathrow, shetland
             +        site = exeter, edinburgh
 
          Next we parameterise the task in the graph:

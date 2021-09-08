@@ -299,7 +299,7 @@ Putting It All Together
    build a picture of the current weather. Our dummy weather forecast
    will get wind observations from four weather stations:
 
-   * Belmullet
+   * Aldergrove
    * Camborne
    * Heathrow
    * Shetland
@@ -323,13 +323,13 @@ Putting It All Together
 
    size = "7,4"
 
-   get_observations_belmullet -> consolidate_observations
+   get_observations_aldergrove -> consolidate_observations
    get_observations_camborne -> consolidate_observations
    get_observations_heathrow -> consolidate_observations
    get_observations_shetland -> consolidate_observations
 
    hidden [style="invis"]
-   get_observations_belmullet -> hidden [style="invis"]
+   get_observations_aldergrove -> hidden [style="invis"]
    get_observations_camborne -> hidden [style="invis"]
    hidden -> consolidate_observations [style="invis"]
 
@@ -518,7 +518,7 @@ Putting It All Together
                initial cycle point = 20000101T00Z
                [[graph]]
                    PT3H = """
-                       get_observations_belmullet => consolidate_observations
+                       get_observations_aldergrove => consolidate_observations
                        get_observations_camborne => consolidate_observations
                        get_observations_heathrow => consolidate_observations
                        get_observations_shetland => consolidate_observations

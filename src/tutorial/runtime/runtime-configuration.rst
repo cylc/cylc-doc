@@ -322,7 +322,7 @@ Start, Stop, Restart
 
       * Camborne - ``3808``
       * Shetland - ``3005``
-      * Belmullet - ``3976``
+      * Aldergrove - ``3917``
 
       .. spoiler:: Solution warning
 
@@ -344,10 +344,10 @@ Start, Stop, Restart
                     [[[environment]]]
                         SITE_ID = 3005
                         API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                [[get_observations_belmullet]]
+                [[get_observations_aldergrove]]
                     script = get-observations
                     [[[environment]]]
-                        SITE_ID = 3976
+                        SITE_ID = 3917
                         API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
       Check the :cylc:conf:`flow.cylc` file is valid by running the command:
