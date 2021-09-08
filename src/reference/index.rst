@@ -7,4 +7,5 @@ Reference
 
    config/index
    api/index
+   environments/example_envs.rst
    dev-history-major-changes

@@ -1,0 +1,7 @@
+name: cylc-8-basic
+# Cylc 8 without the UI Server.
+
+channels:
+  - conda-forge
+dependencies:
+  - cylc-flow=8.*
