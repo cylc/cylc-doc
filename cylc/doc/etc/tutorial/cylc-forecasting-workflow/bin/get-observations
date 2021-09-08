@@ -124,8 +124,8 @@ def reference_lat_long(site_id):
             f'Cannot find site with ID {site_id} in reference file {src}'
         )
     siteinfo = siteinfo[0].split()
-    lat = siteinfo[-3]
-    lon = siteinfo[-4]
+    lat = siteinfo[-4]
+    lon = siteinfo[-3]
     return lat, lon
 
 
