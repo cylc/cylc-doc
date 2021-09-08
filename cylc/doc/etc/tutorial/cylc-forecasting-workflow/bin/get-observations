@@ -157,7 +157,7 @@ def synop_grab(site_id, time):
     )
     try:
         data = regex_wind.search(req.text).groupdict()
-    except:
+    except AttributeError:
         raise NoDataException(
             f'Request for data failed, raw request was {req.text}')
 
