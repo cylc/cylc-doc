@@ -8,7 +8,6 @@ Writing Platform configurations
 
 .. seealso::
 
-   - `The original platforms proposal on Cylc Admin <https://github.com/cylc/cylc-admin/blob/master/docs/proposal-platforms.md>`_.
    - :ref:`Platforms Cylc 7 to 8 user upgrade guide <MajorChangesPlatforms>`.
    - :cylc:conf:`flow.cylc[runtime][<namespace>]platform`
    - :cylc:conf:`global.cylc[platforms]`
@@ -72,7 +71,7 @@ Cluster with multiple login nodes
 .. admonition:: Scenario
 
    You have a cluster where users submit to a single Slurm job queue from
-   either of a pair of identical login nodes:
+   either of a pair of identical login nodes which share a file system:
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
