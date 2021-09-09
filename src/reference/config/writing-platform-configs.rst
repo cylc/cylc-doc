@@ -33,6 +33,18 @@ Why were platforms introduced?
 Example platforms
 -----------------
 
+On the scheduler host (Cylc Server)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**There is a built in localhost platform**
+
+.. admonition:: Scenario
+
+   You want to allow users to submit small jobs to the scheduler host:
+
+If a job doesn't set a platform it will run on the Cylc scheduler host
+using a default ``localhost`` platform.
+
 Lots of desktop computers
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -89,18 +101,15 @@ jobs via the other login node.
 Since the platform hosts do not share a file system with the scheduler
 host we need to ask Cylc to retrieve job logs.
 
-Submit background and PBS jobs from localhost
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Submit PBS jobs from localhost
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Platforms can share hosts and not share batch systems.**
-
-**There is a built in localhost platform**
 
 .. admonition:: Scenario
 
    You have a cluster where you can submit jobs from the Cylc scheduler host
-   using PBS, but also want to allow users to submit small jobs to the
-   scheduler host:
+   using PBS.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
@@ -110,15 +119,9 @@ Submit background and PBS jobs from localhost
            host = localhost
            job runner = pbs
            install target = localhost
-       [[scheduler_host\d\d]]
-           host = localhost
-           job runner = background
 
 But ``host`` defaults to ``localhost`` so you can simplify
 the ``[[pbs_cluster]]`` definition.
-
-If a job doesn't set a platform it will run on the Cylc scheduler host
-using a default ``localhost`` platform.
 
 As a result the above configuration can be simplified to:
 
