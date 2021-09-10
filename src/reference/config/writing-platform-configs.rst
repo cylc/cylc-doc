@@ -93,7 +93,7 @@ host we need to ask Cylc to retrieve job logs.
 Background Jobs on Cluster with Other Options
 ---------------------------------------------
 
-- **Platfroms are the unique combination of all settings.**
+- **Platforms are the unique combination of all settings.**
 
 .. admonition:: Scenarios
 
