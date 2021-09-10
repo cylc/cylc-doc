@@ -41,6 +41,11 @@ Cylc 8 allows site administrators (and users) to configure
   multiple hosts with associated platform-specific settings. Users only need to
   select the platform for their task jobs.
 
+.. seealso::
+
+   :ref:`AdminGuide.PlatformConfigs` for detailed examples of platform
+   configurations.
+
 .. warning::
 
    Cylc 8 contains upgrade logic which handles Cylc 7

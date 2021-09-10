@@ -144,9 +144,8 @@ Platform Awareness
 
 .. seealso::
 
-   :ref:`Platforms at Cylc 8. <majorchangesplatforms>`
-
-   :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
+   - :ref:`Platforms at Cylc 8. <majorchangesplatforms>`
+   - :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 
 Cylc 7 was aware of individual job hosts.
 
