@@ -109,5 +109,5 @@ monitoring or control purposes.
 
 .. warning::
 
-   Authorisation has not yet been implemented, in multi-user mode users can
-   only access their own UI Servers.
+   Authorisation has not yet been fully implemented. For the moment, users can
+   only access their own UI Servers in multi-user mode.
