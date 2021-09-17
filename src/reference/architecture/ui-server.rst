@@ -67,8 +67,8 @@ Users then visit `Jupyter Hub`_ where they authenticate. `Jupyter Hub`_
 spawns UI Servers on behalf of users and provides each with a fixed URL
 (derived from the user name) using a `Configurable HTTP Proxy`_.
 
-Users can access each others UI Servers providing that they have been granted
-permissions.
+Users can access each other's UI Servers providing they have been granted
+permission.
 
 Authorisation is performed by Cylc within the `Cylc UI Server`_, see
 :ref:`cylc authorisation`.
