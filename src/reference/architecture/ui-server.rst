@@ -96,9 +96,9 @@ Authorisation
 
 *Authentication* is provided by either `Jupyter Server`_ or `Jupyter Hub`_.
 
-*Authorisation* in the `Cylc UI Server`_ is provided by Cylc, this is used in
-multi-user mode to allow users to connect to each others UI Servers for
-monitoring and or control purposes.
+*Authorisation* in the `Cylc UI Server`_ is provided by Cylc. In
+multi-user mode this allows users to connect to each others UI Servers for
+monitoring or control purposes.
 
 .. note::
 
