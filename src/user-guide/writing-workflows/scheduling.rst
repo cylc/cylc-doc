@@ -179,7 +179,7 @@ Splitting Up Long Graph Lines
 
 It is not necessary to use the general line continuation marker
 ``\`` to split long graph lines. Just break at
-dependency arrows (``=>``), booleans (``&``, ``|``),
+dependency arrows (``=>``), boolean operators (``&``, ``|``),
 or split long chains into smaller ones. This graph:
 
 .. versionadded:: 8.0.0

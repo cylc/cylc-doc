@@ -251,7 +251,7 @@ but should be avoided if possible because they are easily broken by invisible
 trailing whitespace.
 
 Continuation markers are not needed in graph strings where trailing
-trigger arrows and booleans imply line continuation:
+trigger arrows and boolean operators imply line continuation:
 
 .. code-block:: cylc
 
