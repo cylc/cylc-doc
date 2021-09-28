@@ -12,3 +12,4 @@ User Guide
    workflow-storage-etc
    task-implementation/index
    removing-workflows
+   sharing-workflows/index
