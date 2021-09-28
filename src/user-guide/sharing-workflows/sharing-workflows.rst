@@ -185,11 +185,9 @@ Sites set both limits and defaults for users.
 - `default` sets a default access level, which is activated if the user does
   not appear in the user-authorization configuration.
 
-
 Missing Configurations in Site Authorization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Site configuration 
+For site configuration:
 
 * if a limit is not set but a default is, then the limit is the default.
 * if a default is not set but a limit is, then the default is no access.
