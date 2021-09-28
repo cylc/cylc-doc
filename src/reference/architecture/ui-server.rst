@@ -100,6 +100,8 @@ Authorization
 multi-user mode this allows users to connect to each others UI Servers for
 monitoring or control purposes.
 
+See also :ref:`Authorization`.
+
 .. note::
 
    This authorization only applies to the ``/cylc`` endpoints managed by the

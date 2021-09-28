@@ -1,20 +1,21 @@
 .. _Authorization:
 
-Authorization
-=============
+Authorizing Others to Access Your Workflows
+===========================================
 
-Cylc supports multi user access. You can grant control of your
+The Cylc UI Server supports multi user access. You can grant control of your
 workflows to other users, by adding or removing privileges on a Cylc operation
-basis.This requires site level configuration, with individual users being able
+basis. This requires site level configuration, with individual users being able
 to set authorization settings, within the bounds set by the site.
 
 Sites can set default access rights for users, for more information, see
 :ref:`site_configuration`.
 
-Note, if this feature is not configured, the default is no multi user access
-and access will be limited to the workflow owner.
+Note, if this feature is not configured, the default is no multi user access,
+only the workflow owner will be able to interact with it.
 
-If you grant access to another user, this access will apply to all workflows.
+If you grant access to another user, this access will apply to all of your
+workflows.
 
 Granting Access
 ---------------
@@ -24,24 +25,21 @@ There are three methods of identifying a user to grant access to:
 - ``*`` character, to indicate any authenticated user,
 - using the ``group:`` prefix to indicate a system group. E.g.
   ``group:groupname``, will assign permissions to all members of the system
-  group named `groupname`. For more information, see :ref:`group_support`.
+  group named ``groupname``. For more information, see :ref:`group_support`.
 - ``username`` to indicate a specific user.
 
-All permissions are additive, if user appears elsewhere in configuration, for
+
+Using glob (``*``) to pattern match usernames and group names is not currently
+supported. 
+
+Permissions are additive. If the user appears elsewhere in configuration, for
 example as a member of a system group, the permission level is taken as the
 greatest possible.
 
-However, any negations are applied with priority.
+However, negations take precedence.
 
-Note, default in site config does not contribute to permissions, this is used
-in the case where a user does not appear in the `c.CylcUIServer.user-authorization`.
-
-.. note::
-
-   Spellings of UIServer configurations should be strictly adhered to. Using,
-   for example, `c.CylcUIServer.user-authorisation` rather than
-   `c.CylcUIServer.user-authorization` would result in cylc silently ignoring
-   this configuration.
+Note, defaults in site config only apply if a user does not appear in the
+``c.CylcUIServer.user_authorization``.
 
 Methods of Assigning Permissions
 --------------------------------
@@ -52,23 +50,22 @@ Assigning permissions can be done in two ways:
 
 Using both methods is supported, e.g ["READ", "stop", "pause"]
 
-
 Individual Operations
 ^^^^^^^^^^^^^^^^^^^^^ 
 To assign users permissions, you can list the operations you wish to grant
 
 .. code-block:: python
 
-  c.CylcUIServer.user_authorization = {
-      "user1": ["read", "pause", "play"]
-      }
+   c.CylcUIServer.user_authorization = {
+       "user1": ["read", "pause", "play"]
+   }
 
-Provided you have permission to give `user1` these permissions, as defined in the
-site configuration file, this will result in `user1` being able to see your
-workflows (from the `read` operation), and `pause` and `play` your workflows.
+Provided you have permission (via the site config file) to grant ``user1``
+these permissions, this will result in ``user1`` being able to see your
+workflows (from the ``read`` operation), and ``pause`` and ``play`` your workflows.
 
 
-Removing permissions can be achieved by prepending the operation with a ``!``.
+To remove permissions prepend the operation with a ``!``.
 For example,
 
 .. code-block:: python
@@ -78,14 +75,14 @@ For example,
        "user2": ["!stop"]
    }
 
-Again, providing your site configuration permits you to grant this access,
-this configuration, for `user2` (who is a member of system group `groupA`) would
-result in them having "read" and "play" access. The the access to stop your workflows
-has been removed and this action will be forbidden.
+Providing your site configuration permits you to grant this access,
+this configuration, for ``user2`` (who is a member of system group ``groupA``),
+would result in them having ``read`` and ``play`` access. Permission to stop your
+workflows has been removed so this action will be forbidden.
 
 Access Groups
 ^^^^^^^^^^^^^
-For convenience, cylc operations available in the ui have been bundled into
+For convenience, cylc operations available in the UI have been bundled into
 access groups. These should be capitalized to distinguish from cylc operations.
 
 We currently support ``READ``, ``CONTROL`` and ``ALL`` and to remove permissions
@@ -101,7 +98,6 @@ to operations in these groups, use ``!READ``, ``!CONTROL``, ``!ALL``.
    "Kill",, "X", "X"
    "Message",, "X", "X"
    "Pause",, "X", "X"
-   "Ping","X", , "X"
    "Play",, "X", "X"
    "Poll",, "X", "X"
    "Read","X", , "X"
@@ -120,15 +116,16 @@ to operations in these groups, use ``!READ``, ``!CONTROL``, ``!ALL``.
 
 .. note::
 
-   ``READ`` access group (which exands to ``["read", "ping"]``) is a method for
-   granting non-interactive access.
+   The ``READ`` access group is shorthand for all read-only operations. At present,
+   this is soley the ``read`` operation, which grants access to GraphQL queries,
+   subscriptions and enables users to see the UI. In future this may be extended.
 
 .. _user_configuration:
 
 User Authorization Configuration
 --------------------------------
-`c.CylcUIServer.user-authorization`, which is loaded from
-`~/.cylc/hub/jupyter_config.py`, contains your preferences for granting access
+``c.CylcUIServer.user_authorization``, which is loaded from
+``~/.cylc/hub/jupyter_config.py``, contains your preferences for granting access
 to other users. This configuration should be entered as a Python
 dictionary. If a user does not appear in your user config, the default site
 access will apply.
@@ -142,25 +139,25 @@ An example user configuration:
 .. code-block:: python
 
    c.CylcUIServer.user_authorization = {
-       "*": ["READ"],   
+       "*": ["READ"],
        "group:groupA": ["CONTROL"],
        "user1": ["read", "pause", "!play"],
        "user2": ["!ALL"]
-       }
+   }
 
 In this scenario:
 
 - ``"*"``  represents any authenticated user. They have permission to view all
-  workflows and ping them on the gui.
+  workflows, and view them on the GUI.
 
 - ``"group:groupA"`` applies ``CONTROL`` permissions to any member of system
-  `groupA`.
+  ``groupA``.
   Note that, since permissions are additive, these users will gain ``READ`` access
   from the ``"*":["READ"]`` assignment.
 
 - ``"user1"`` will have permission to view workflows, ``pause`` but not ``play``
-  workflows, even if `user1` is a member of the system `groupA`. This is due to
-  negations taking precedence over additions.
+  workflows, even if ``user1`` is a member of the system ``groupA``. This is due
+  to negations taking precedence over additions.
 
 - ``"user2"`` is not permitted to view workflows, or perform any operations. 
 
@@ -168,22 +165,31 @@ In this scenario:
 
 Site Authorization Configuration
 --------------------------------
-`c.CylcUIServer.site-authorization`, which is loaded from
-`/etc/cylc/hub/jupyter_config.py`, or, alternatively, the environment variable
-``CYLC_SITE_CONF_PATH``, contains default and limit settings for users. This
-is set at a site level. This configuration should be entered as a Python
-dictionary.
+The site_authorization configuration allows sites to configure sensible defaults
+and limits for the permissions users can delegate.
+
+Note, however, that as the UIS runs as the user they have full control over
+this process so, in theory, may bypass these restrictions in a variety of ways.
+As an extreme example a user can pass their credentials on to another person.
+Such behaviours cannot be controlled through technical measures so must be
+enforced by site policy. By the same token, however, because Cylc UI Servers
+(and Schedulers) run as the user, one user cannot compromise another user's
+account using Cylc.
+
+``c.CylcUIServer.site-authorization``, which is loaded from
+``/etc/cylc/hub/jupyter_config.py``, or, alternatively, the environment variable
+``CYLC_SITE_CONF_PATH``, contains these site default and limit settings for
+users. This configuration should be entered as a Python dictionary.
 
 
 Defaults and Limits
 ^^^^^^^^^^^^^^^^^^^
 Sites set both limits and defaults for users.
 
-- `limit` will determine if a user has the privileges to give away access to 
-  their workflows. 
+- ``limit`` determines the maximum access users can grant to their workflows. 
 
-- `default` sets a default access level, which is activated if the user does
-  not appear in the user-authorization configuration.
+- ``default`` sets a default access level, which applies if the user does
+  not appear in the user-authorization configuration (via explicit user name or group).
 
 Missing Configurations in Site Authorization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -251,32 +257,42 @@ Unix-like systems support grouping users. Cylc authorization supports granting
 access by membership of these system groups. You can indicate a system group
 by using the ``group:`` indicator.
 
-.. TODO - link to method getgroups() in uiserver, once Auth PR merged. 
+System groups are found by
+  :py:mod:`get_groups<cylc.uiserver.authorise.get_groups>`
+
+  .. autofunction:: cylc.uiserver.authorise.get_groups
+
 
 Changing Access Rights
 ^^^^^^^^^^^^^^^^^^^^^^
-Changing authorization permissions in your `jupyter_config.py` will require the
+Changing authorization permissions in your ``jupyter_config.py`` will require the
 UI Server to be restarted before any changes are applied.
 
-Interacting with Others Workflows
----------------------------------
-If you have been granted access to another users workflows, you can view and
+Interacting with Others' Workflows
+----------------------------------
+If you have been granted access to another user's workflows, you can view and
 interact with these workflows.
-Say, you, userA, wishes to interact with userB's workflows.
-You can do this by changing the URL `https://<hub>/user/userB`, using the hub
-of the userB. You should authenticate as yourself (userA) and, provided you
+Say, you, userA, wish to interact with userB's workflows.
+You can do this by navigating to the URL ``https://<hub>/user/userB``, using
+the hub of userB. You should authenticate as yourself (userA) and, provided you
 have the correct permissions, you will see userB's workflows for interaction.
 
+.. note::
+
+   Operations that are not authorized will appear greyed out on the UI.
 
 Troubleshooting Authorization
 -----------------------------
 
 If authorization is not performing as expected, check
 
-- you are permitted to give away access in the site configuration.
+- you are permitted by the site configuration to give away access.
 
-- you have provided `read` permissions, this enables the user to see your
+- you have provided ``read`` permissions, which enables the user to see your
   workflows.
 
 - check the spelling in your configuration. The correct spelling is 
-  `c.CylcUIServer.user_authorization`
+  ``c.CylcUIServer.user_authorization``
+
+- the server has been started by the user of the workflows you are trying to
+  access. Users currently can only spawn their own UI Servers.

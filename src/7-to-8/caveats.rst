@@ -116,8 +116,7 @@ UI Server
 
 Authorization
    A full-featured authorization system has been implemented for Cylc 8, but
-   the UI doesn't yet provide easy access to other users' UI Servers. For more
-   information, see :ref:`cylc authorization`.
+   the UI doesn't yet provide easy access to other users' UI Servers.
 
 CLI Via UIS
    The ability to route Cylc commands via the UIS is planned for a future relase
