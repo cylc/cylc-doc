@@ -154,82 +154,83 @@ As a result the above configuration can be simplified to:
            job runner = pbs
 
 
-.. TODO unindent this after you've got platforms from platform groups in
-    Two similar clusters
-    --------------------
 
-    - **Platform groups allow users to ask for jobs to be run on any
-    suitable computer.**
+Two similar clusters
+--------------------
 
-    .. admonition:: Scenario
+- **Platform groups allow users to ask for jobs to be run on any
+  suitable computer.**
 
-       Your site has two mirrored clusters with seperate PBS queues and
-       file systems. Users don't mind which cluster is used and just
-       want to set ``flow.cylc[runtime][mytask]platform = supercomputer``:
+.. admonition:: Scenario
 
-    Remember, because the install target defaults to the platform name
-    clusterA and clusterB have different install targets.
+   Your site has two mirrored clusters with seperate PBS queues and
+   file systems. Users don't mind which cluster is used and just
+   want to set ``flow.cylc[runtime][mytask]platform = supercomputer``:
 
-    .. code-block:: cylc
-    :caption: part of a ``global.cylc`` config file
+   Remember, because the install target defaults to the platform name
+   clusterA and clusterB have different install targets.
 
-    [platforms]
-        [[clusterA]]
-            hosts = login_node_A1, login_node_A2
-            batch system = pbs
-        [[clusterB]]
-            hosts = login_node_B1, login_node_B2
-            batch system = pbs
-        [platform groups]
-            [[supercomputer]]
-            platforms = clusterA, clusterB
+.. code-block:: cylc
+   :caption: part of a ``global.cylc`` config file
 
-    .. note::
+   [platforms]
+       [[clusterA]]
+           hosts = login_node_A1, login_node_A2
+           batch system = pbs
+       [[clusterB]]
+           hosts = login_node_B1, login_node_B2
+           batch system = pbs
+       [platform groups]
+           [[supercomputer]]
+           platforms = clusterA, clusterB
 
-    Why not just have one platform with all 4 login nodes?
+.. note::
 
-    Having hosts in a platform means that Cylc can communicate with
-    jobs via any host at any time. Platform groups allow Cylc to
-    pick a platform when the job is started, but Cylc will not then
-    be able to communicate with that job via hosts on another
-    platform in the group.
+   Why not just have one platform with all 4 login nodes?
 
-    Preferred and backup hosts and platforms
-    ----------------------------------------
+   Having hosts in a platform means that Cylc can communicate with
+   jobs via any host at any time. Platform groups allow Cylc to
+   pick a platform when the job is started, but Cylc will not then
+   be able to communicate with that job via hosts on another
+   platform in the group.
 
-     - **You can set how hosts are selected from platforms.**
-     - **You can set how platforms are selected from groups.**
 
-    .. admonition:: Scenario
+Preferred and backup hosts and platforms
+----------------------------------------
 
-    You have operational cluster and a research cluster.
-    You want your operational workflow to run on one of the operational
-    platforms. If it becomes unavailable you want Cylc to start running
-    jobs on the research cluster.
+- **You can set how hosts are selected from platforms.**
+- **You can set how platforms are selected from groups.**
 
-    .. code-block:: cylc
-    :caption: part of a ``global.cylc`` config file
+.. admonition:: Scenario
 
-    [platforms]
-        [[operational]]
-            hosts = login_node_A1, login_node_A2
-            batch system = pbs
-            [[selection]]
-                method = random  # the default anyway
-        [[research]]
-            hosts = primary, seconday, emergency
-            batch system = pbs
-            [[selection]]
-                method = definition order
-        [platform groups]
-            [[operational_work]]
-            platforms = operational, research
-            [[[selection]]]
-                method = definition order
+   You have operational cluster and a research cluster.
+   You want your operational workflow to run on one of the operational
+   platforms. If it becomes unavailable you want Cylc to start running
+   jobs on the research cluster.
 
-    .. note::
+.. code-block:: cylc
+   :caption: part of a ``global.cylc`` config file
 
-       Random is the default selection method.
+   [platforms]
+       [[operational]]
+           hosts = login_node_A1, login_node_A2
+           batch system = pbs
+           [[selection]]
+               method = random  # the default anyway
+       [[research]]
+           hosts = primary, seconday, emergency
+           batch system = pbs
+           [[selection]]
+               method = definition order
+       [platform groups]
+           [[operational_work]]
+               platforms = operational, research
+           [[[selection]]]
+               method = definition order
+
+.. note::
+
+   Random is the default selection method.
 
 Lots of desktop computers
 -------------------------
@@ -258,3 +259,12 @@ platform. Job files can be installed on the workflow host.
    Cylc carries out a "fullmatch" regular expression comparison with the
    the platform name so ``desktop\d\d\d`` is effectively the same as
    ``^desktop\d\d\d$``.
+
+
+.. warning::
+
+   Platforms and Platform groups are selected in a workflow configuration
+   file using the same key (``[runtime][<task name>]platform = ``).
+   Therefore the same names **cannot** be used for platforms and platform
+   groups. The ``global.cylc`` file will fail validation if the same name is
+   used in both.
