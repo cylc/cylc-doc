@@ -251,7 +251,7 @@ but should be avoided if possible because they are easily broken by invisible
 trailing whitespace.
 
 Continuation markers are not needed in graph strings where trailing
-trigger arrows imply line continuation:
+trigger arrows and booleans imply line continuation:
 
 .. code-block:: cylc
 
@@ -260,7 +260,10 @@ trigger arrows imply line continuation:
            # No line continuation marker is needed here.
            R1 = """
                prep => one => two => three =>
-               four => five six => seven => eight
+               four => five six => seven => eight &
+               nine & ten =>
+               eleven |
+               twelve
            """
    [runtime]
        [[MY_TASKS]]

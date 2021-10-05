@@ -179,6 +179,8 @@ on the same platform to interact with task jobs.
    These deprecated settings will be removed at Cylc 9.
 
 
+.. _7-to-8.summary.graph_syntax:
+
 Graph Syntax
 ------------
 

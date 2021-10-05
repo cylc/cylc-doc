@@ -16,11 +16,11 @@ Platforms
    .. code-block:: cylc
 
       [runtime]
-         [[task_name]]
-            [[[job]]]
-               batch system = slurm
-            [[[remote]]]
-               host = my_supercomputer
+          [[task_name]]
+              [[[job]]]
+                  batch system = slurm
+              [[[remote]]]
+                  host = my_supercomputer
 
    Read this section if your workflow's jobs run on a remote computer or if
    you see the following warning on running ``cylc validate``:
@@ -28,6 +28,21 @@ Platforms
    .. code-block:: console
 
       WARNING - Task <task>: deprecated "host" and "batch system" will be removed at Cylc 9
+
+   If you currently use the ``rose host-select`` utility or a similar host
+   selection or load balancing utility the intelligent host selection
+   functionality of Cylc 8 may be used instead:
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[task_name]]
+              [[[remote]]]
+                  host = $(rose host-select my-computer)
+          [[another_task]]
+              # An example of a home-rolled host selector
+              [[[remote]]]
+                  host = $(test $((RANDOM%2)) -eq 0 && echo "host_a" || echo "host_b")
 
 
 Overview
@@ -40,6 +55,17 @@ Cylc 8 allows site administrators (and users) to configure
   :term:`platforms <platform>` in ``global.cylc``. A platform can have
   multiple hosts with associated platform-specific settings. Users only need to
   select the platform for their task jobs.
+
+  Platforms also define how hosts are selected from each platform:
+
+  - Randomly (default)
+  - By definition order
+
+There may be cases where sets of platforms (for example a group of
+standalone compute servers, or a pair of mirrored HPC's) might be equally
+suitable for a task, but not share files systems to allow them to constitute
+a single platform. Such platforms can be set up to be ``platform groups``
+
 
 .. seealso::
 
@@ -57,8 +83,10 @@ Cylc 8 allows site administrators (and users) to configure
 Examples
 --------
 
-See :cylc:conf:`global.cylc[platforms]` for a detailed explanation of how
-platforms are defined.
+.. seealso::
+
+   :cylc:conf:`global.cylc[platforms]` has a detailed explanation of how
+   platforms and platform groups are defined.
 
 Showing how the global config changes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -132,16 +160,17 @@ In Cylc 8 the equivalent might be:
 .. code-block:: cylc
 
    [runtime]
-      [[mytask_cylc_server]]
+       [[mytask_cylc_server]]
 
-      [[mytask_big_server]]
-         platform = linuxbox42
+       [[mytask_big_server]]
+           platform = linuxbox42
 
-      [[mytask_submit_local_to_remote_computer]]
-         platform = pbs_local
+       [[mytask_submit_local_to_remote_computer]]
+           platform = pbs_local
 
-      [[mytask_login_to_hpc_and_submit]]
-         platform = $(supercomputer_login_node_selector_script)
+       [[mytask_login_to_hpc_and_submit]]
+           # This is still legal, but you could also use host selection.
+           platform = $(supercomputer_login_node_selector_script)
 
 The platform settings for these examples might be:
 
@@ -152,9 +181,9 @@ The platform settings for these examples might be:
            # Without a hosts, platform name is used as a single host.
 
        [[pbs_local]]
-          job runner = pbs
-          hosts = localhost
+           job runner = pbs
+           hosts = localhost
 
        [[slurm_supercomputer]]
-          hosts = login_node01, login_node02  # Cylc will pick a host.
-          job runner = slurm
+           hosts = login_node01, login_node02  # Cylc will pick a host.
+           job runner = slurm

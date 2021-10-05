@@ -656,6 +656,11 @@ Glossary
 
       * :term:`job host`
       * :term:`job runner`
+      * :term:`platform group`
+
+   platform group
+
+      A set of :term:`platforms <platform>`
 
    scheduler
       When we say that a :term:`workflow` is "running" we mean that the cylc
