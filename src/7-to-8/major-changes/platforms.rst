@@ -66,6 +66,12 @@ standalone compute servers, or a pair of mirrored HPC's) might be equally
 suitable for a task, but not share files systems to allow them to constitute
 a single platform. Such platforms can be set up to be ``platform groups``
 
+
+.. seealso::
+
+   :ref:`AdminGuide.PlatformConfigs` for detailed examples of platform
+   configurations.
+
 .. warning::
 
    Cylc 8 contains upgrade logic which handles Cylc 7

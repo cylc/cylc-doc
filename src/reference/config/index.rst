@@ -7,3 +7,4 @@ Configuration
    workflow
    global
    types
+   writing-platform-configs
