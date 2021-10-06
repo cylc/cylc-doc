@@ -63,6 +63,22 @@ On the Scheduler Host (Cylc Server)
 If a job doesn't set a platform it will run on the Cylc scheduler host
 using a default ``localhost`` platform.
 
+Simplest Possible Remote Platform
+---------------------------------
+
+**Platforms don't need to be complicated**
+
+.. admonition:: Scenario
+
+   You want to allow users to run background jobs on a single server
+   which shares a file system with the workflow host.
+   
+.. code-block:: cylc
+   :caption: part of a ``global.cylc`` config file
+
+   [platforms]
+       [[myhost_name]]
+
 
 Cluster with Multiple Login Nodes
 ---------------------------------
