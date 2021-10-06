@@ -722,6 +722,7 @@ Glossary
       * :term:`run directory`
 
    source directory
+   source workflow
       Any directory where :term:`workflows <workflow>` are written and stored
       in preparation for installation with ``cylc install`` or reinstallation
       with ``cylc reinstall``.
@@ -1172,11 +1173,11 @@ Glossary
       .. seealso::
 
          - :ref:`Event Handling documentation <EventHandling>`
-         - Task events configuration reference: 
+         - Task events configuration reference:
            :cylc:conf:`task events <[runtime][<namespace>][events]>`.
-         - Workflow events configuration reference: 
+         - Workflow events configuration reference:
            :cylc:conf:`workflow events <[scheduler][events]>`
-      
+
       An action you want the Cylc scheduler to run when it detects that an
       event has occurred:
 
