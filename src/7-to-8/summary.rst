@@ -3,18 +3,6 @@
 Quick Summary Of Changes
 ========================
 
-
-Backward Compatibility
-----------------------
-
-To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
-
-.. warning::
-
-   But please take action on any deprecation warnings emitted by `cylc
-   validate`.
-
-
 Terminology
 -----------
 
@@ -23,9 +11,26 @@ Terminology
 - **Batch system** is now **JOB RUNNER** (not all of our job runners are "batch
   systems")
 
-.. note::
+.. important::
 
    - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
+
+
+.. _BackCompat:
+
+Backward Compatibility
+----------------------
+
+To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
+If Cylc detects that a workflow is using the deprecated ``suite.rc`` filename,
+it will turn on a backwards compatibility mode.
+
+.. warning::
+
+   Please take action on any deprecation warnings emitted by ``cylc validate``.
+
+   This must be done before renaming config files to ``flow.cylc``.
+
 
 Architecture
 ------------
