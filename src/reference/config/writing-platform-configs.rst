@@ -1,7 +1,7 @@
 
 .. _AdminGuide.PlatformConfigs:
 
-Writing Platform configurations
+Writing Platform Configurations
 ===============================
 
 .. versionadded:: 8.0.0
@@ -13,7 +13,7 @@ Writing Platform configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
-What are platforms?
+What Are Platforms?
 -------------------
 
 Platforms define settings, most importantly:
@@ -23,7 +23,7 @@ Platforms define settings, most importantly:
    task job.
  - An ``install target`` for Cylc to install task job files on.
 
-Why were platforms introduced?
+Why Were Platforms Introduced?
 ------------------------------
 
 - Allow a compute cluster with multiple login nodes to be treated as a single
@@ -33,7 +33,7 @@ Why were platforms introduced?
   separate platforms to submit jobs to a batch system and to background on
   ``localhost``.
 
-What are install targets?
+What Are Install Targets?
 -------------------------
 
 Install targets represent file systems. More than one platform can use the
@@ -41,17 +41,17 @@ same file system. It defaults to the name of the platform.
 
 For example, your Cylc scheduler hosts might share a file system with a
 compute cluster. Cylc does not need to install files on this cluster. The
-cluster and scheduler hosts are different platforms, but  share an install
+cluster and scheduler hosts are different platforms, but share an install
 target.
 
 But you might also have mirrored clusters, each with their own file system.
 Each cluster would be both a platform, and have its own install target.
 
 
-Example platforms
+Example Platforms
 =================
 
-On the scheduler host (Cylc Server)
+On the Scheduler Host (Cylc Server)
 -----------------------------------
 
 - **There is a built in localhost platform**
@@ -64,7 +64,7 @@ If a job doesn't set a platform it will run on the Cylc scheduler host
 using a default ``localhost`` platform.
 
 
-Cluster with multiple login nodes
+Cluster with Multiple Login Nodes
 ---------------------------------
 
 - **Platforms can group multiple hosts together.**
@@ -119,10 +119,10 @@ Background Jobs on Cluster with Other Options
            hosts = login_node_1, login_node_1
            job runner = background
            # extend the default ssh timeout from 10 to 30 seconds.
-           ssh command = myPeculierSSHImplementation --someoption=yes
+           ssh command = myPeculiarSSHImplementation --someoption=yes
 
 
-Submit PBS jobs from localhost
+Submit PBS Jobs from Localhost
 ------------------------------
 
 - **Platforms can share hosts and not share batch systems.**
@@ -155,7 +155,7 @@ As a result the above configuration can be simplified to:
 
 
 
-Two similar clusters
+Two Similar Clusters
 --------------------
 
 - **Platform groups allow users to ask for jobs to be run on any
@@ -195,7 +195,7 @@ Two similar clusters
    platform in the group.
 
 
-Preferred and backup hosts and platforms
+Preferred and Backup Hosts and Platforms
 ----------------------------------------
 
 - **You can set how hosts are selected from platforms.**
