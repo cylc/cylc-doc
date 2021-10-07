@@ -32,14 +32,14 @@ Simple example of using ``cylc clean``:
 .. code-block:: console
 
    $ cylc clean myflow/run1
-   INFO - Cleaning on local filesystem: ~/cylc-run/myflow/run1
+   INFO - Removing directory: ~/cylc-run/myflow/run1
 
 .. note::
 
    Trying to clean a directory that contains more than one
    run directory is not allowed, as a safety feature. You can override
    this using the ``--force`` option, but this will not clean remote install
-   targets or follow symlink dirs as described above.
+   targets or follow symlink dirs as described below.
 
 
 Cleaning on remote install targets
@@ -53,7 +53,9 @@ filesystem.
 
    $ cylc clean remote-example
    INFO - Cleaning on install target: enterprise1701
-   INFO - Cleaning on local filesystem: ~/cylc-run/remote-example/run1
+   INFO - [enterprise1701]
+           INFO - Removing directory: /home/user/cylc-run/remote-example/run1
+   INFO - Removing directory: ~/cylc-run/remote-example/run1
 
 .. note::
 
@@ -95,12 +97,6 @@ beginning with ``2020``:
 .. note::
 
    Make sure to place glob patterns in quotes.
-
-.. tip::
-
-   Use the ``--debug`` option to see all the directories or files that get
-   removed.
-
 
 .. _CleanSymlinkDirsNote:
 
