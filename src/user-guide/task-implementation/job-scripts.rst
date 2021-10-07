@@ -141,7 +141,7 @@ Normal severity messages are printed to ``job.out`` and logged by the scheduler:
 
 .. code-block:: bash
 
-   cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+   cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
      "Hello from ${CYLC_TASK_ID}"
 
 "CUSTOM" severity messages are printed to ``job.out``, logged by the
@@ -150,7 +150,7 @@ event handlers:
 
 .. code-block:: bash
 
-   cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+   cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
      "CUSTOM:data available for ${CYLC_TASK_CYCLE_POINT}"
 
 These can be used to signal special events that are neither routine
@@ -162,7 +162,7 @@ file (a "data availability" event).
 
 .. code-block:: bash
 
-   cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+   cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
      "WARNING:Uh-oh, something's not right here."
 
 "CRITICAL" severity messages are printed to ``job.err``, logged by the
@@ -170,7 +170,7 @@ file (a "data availability" event).
 
 .. code-block:: bash
 
-   cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+   cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
      "CRITICAL:ERROR occurred in process X!"
 
 Task jobs no longer (since Cylc 8) attempt to resend messages if the server
@@ -226,7 +226,7 @@ before aborting, potentially triggering a *critical* task event handler:
 .. code-block:: bash
 
    if ! /bin/false; then
-     cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+     cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
        "CRITICAL:ERROR: /bin/false failed!"
      exit 1
    fi
