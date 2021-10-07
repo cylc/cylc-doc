@@ -392,8 +392,6 @@ If:
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-- the install will create nested run directories, i.e. installing a
-  workflow in a subdirectory of an existing run directory.
 
 - the install will create nested install directories. Neither a new
   installation in a subdirectory of an existing one, nor a directory containing
