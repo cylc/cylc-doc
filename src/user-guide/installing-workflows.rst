@@ -396,7 +396,7 @@ If:
   workflow in a subdirectory of an existing run directory.
 
 - the install will create nested install directories. Neither a new
-  installation in a subdirectory of an existing one, or a directory containing
+  installation in a subdirectory of an existing one, nor a directory containing
   an existing installation are permitted. For example, having installed a
   workflow in ``bar`` you would be unable to install one in ``foo``
   or ``foo/bar/baz``.
