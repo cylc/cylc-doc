@@ -113,7 +113,7 @@ Add the following runtime configuration to the ``runtime`` section:
                WORD=${WORDS[$(date +%s) % ${#WORDS[@]}]}
 
                # Broadcast random word to the announce task.
-               cylc broadcast $CYLC_WORKFLOW_NAME -n announce -s "[environment]WORD=${WORD}"
+               cylc broadcast $CYLC_WORKFLOW_ID -n announce -s "[environment]WORD=${WORD}"
            """
            [[[environment]]]
                WORDS = ni, it, ekke ekke ptang zoo boing

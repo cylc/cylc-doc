@@ -44,7 +44,7 @@ In order to get our workflow to trigger messages, we need to:
 * specify our custom message in a section called ``[[outputs]]`` within the
      ``[runtime]`` section of our workflow,
 
-* add ``cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
+* add ``cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
      to the ``script`` section of ``[runtime]``, your chosen trigger message
      should be unique and should exactly match the message defined in
      ``[[outputs]]``.
@@ -69,7 +69,7 @@ triggers another task bar and when fully completed triggers another task, baz.
           [[foo]]
               script = """
                   sleep 5
-                  cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" "file 1 done"
+                  cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" "file 1 done"
                   sleep 10
               """
               [[[outputs]]]
@@ -251,11 +251,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                  script = """
                      sleep 2
                      random.sh
-         +           cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+         +           cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                           "Task partially complete, report ready to view"
                      sleep 2
                      random.sh
-         +           cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+         +           cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                           "Task partially complete, report updated"
                      sleep 2
                      random.sh
@@ -312,11 +312,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                     script = """
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report ready to view"
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report updated"
                         sleep 2
                         random.sh
@@ -413,11 +413,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                     script = """
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report ready to view"
                         sleep 2
                         random.sh
-                        cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" \
+                        cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
                             "Task partially complete, report updated"
                         sleep 2
                         random.sh
