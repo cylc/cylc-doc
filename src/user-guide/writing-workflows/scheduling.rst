@@ -305,6 +305,8 @@ number of repetitions.
 Graph section heading can also be used with
 :ref:`integer cycling <IntegerCycling>`.
 
+.. _writing_flows.scheduling.syntax_rules:
+
 Syntax Rules
 ^^^^^^^^^^^^
 
@@ -312,8 +314,18 @@ Syntax Rules
 starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
 limit.
 
-The time is assumed to be in the local time zone unless you set
-:cylc:conf:`[scheduler]cycle point time zone` or :cylc:conf:`[scheduler]UTC mode`.
+The time is assumed to be in UTC unless you set
+:cylc:conf:`[scheduler]cycle point time zone`.
+
+.. attention::
+
+   .. versionchanged:: 8.0.0
+
+   At Cylc 7 the time zone was assumed to be local time unless
+   :cylc:conf:`[scheduler]cycle point time zone` or :cylc:conf:`[scheduler]UTC mode`
+   was set. If you run your workflow in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`
+   this remains the case.
+
 The calendar is assumed to be the proleptic Gregorian calendar unless
 you set :cylc:conf:`[scheduling]cycling mode`.
 
