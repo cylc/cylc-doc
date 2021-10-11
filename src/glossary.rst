@@ -35,6 +35,47 @@ Glossary
          In Cylc version 7 and earlier "workflows" were referred to as
          "suites".
 
+   workflow name
+      The workflow name (``CYLC_WORKFLOW_NAME``) is a path relative to the
+      cylc-run directory which contains one or more workflow run directories.
+
+      Unlike :term:`workflow id` it is not always a unique identifier; in the
+      example below ``run1`` and ``run2`` would both have the same name,
+      ``my_workflow``:
+
+      .. code-block:: bash
+
+         |- my_workflow
+         | |- runN
+         | |- run1
+         | |- run2
+
+   workflow id
+      A workflow ID is the name Cylc uses to identify a :term:`workflow` in
+      the :term:`run directory`.
+
+      This ID is used on the command line and in the GUI.
+
+      The ID is the relative path between the :term:`workflows <workflow>`
+      :term:`run directory` and the :term:`cylc run directory`.
+
+      For example, if your workflow is in ``~/cylc-run/foo/bar/run1`` then its ID
+      is ``foo/bar/run1``.
+
+         .. ..note:: For convenience you can omit the ``/run1`` on the command line.
+
+      Unlike :term:`workflow name` it is always a unique identifier. In the
+      example below each run has a different ID despite sharing the same
+      :term:`workflow name` (``my_workflow``).
+
+      .. code-block:: bash
+
+         |- my_workflow
+         | |- runN
+         | |- run1      # CYLC_WORKFLOW_ID = my_workflow/run1
+         | |- run2      # CYLC_WORKFLOW_ID = my_workflow/run2
+
+
    graph
       The graph of a :term:`workflow<Cylc workflow>` refers to the
       :term:`graph strings<graph string>` contained within the
@@ -1086,21 +1127,14 @@ Glossary
 
       * :ref:`Graph Branching`
 
-   .. TODO - add this after the universal ID work
+   cylc run directory
+      The location where Cylc stores data on workflows ready to run. In many
+      cases this will be ``~/cylc-run``.
 
-      workflow id
-         A workflow ID is the name Cylc uses to identify a :term:`workflow` in
-         the :term:`run directory`.
+      .. caution::
 
-         This ID is used on the command line and in the GUI.
-
-         The ID is the relative path between the :term:`workflows <workflow>`
-         :term:`run directory` and the :term:`cylc run directory`.
-
-         For example, if your workflow is in ``~/cylc-run/foo/bar/run1`` then its ID
-         is ``foo/bar/run1``.
-
-         .. ..note:: For convenience you can omit the ``/run1`` on the command line.
+         The cylc run directory should not be confused with the
+         :term:`workflow run directories <run directory>` stored inside it.
 
    flow
       A flow is a single logical run of a :term:`workflow` that is done by
