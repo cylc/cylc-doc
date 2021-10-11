@@ -3,21 +3,11 @@
 Cylc Configuration Upgrader
 ===========================
 
-.. admonition:: Does This Change Affect Me?
+.. admonition:: Does This Affect Me?
    :class: tip
 
-   This change may affect you:
-
-   - If you are working with workflows written before Cylc 7.
-   - If you hope to use Cylc 9.
-
-   You have been affected by this change if you see a message such as:
-
-   .. code-block::
-
-      > cylc validate my_workflow
-      IllegalItemError: reallyoldconfig
-
+   This may affect you if you are working with workflows written before Cylc 8,
+   and you see warnings or an ``IllegalItemError`` when validating.
 
 Overview
 --------
@@ -73,8 +63,8 @@ validation.
           R1
    IllegalItemError: [runtime][task]pre-command scripting
 
-Fixing Validation Failure
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Fixing the validation failure
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You must change the configuration yourself. In this case:
 
@@ -88,8 +78,8 @@ Validation will now succeed.
 This will leave you with just the warning about the changes to the graph
 format: You might wish to fix this now:
 
-Fixing Deprecation Warning
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Fixing the deprecation warning
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the example given Cylc 8 will validate without warning after making the
 following changes. (explanation of
@@ -108,7 +98,7 @@ following changes. (explanation of
 
 .. warning::
 
-   Cylc 9 will no longer automatically upgrade obsolete Cylc 7
+   Cylc 9 will not be able to upgrade obsolete Cylc 7
    configurations. It's a good idea to try and remove the configuration items
    causing to these warnings as part of routine workflow review and
    maintenance to avoid problems when a major Cylc version is released.
