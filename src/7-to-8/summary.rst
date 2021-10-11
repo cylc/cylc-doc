@@ -23,13 +23,23 @@ Backward Compatibility
 
 To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
 If Cylc detects that a workflow is using the deprecated ``suite.rc`` filename,
-it will turn on a backwards compatibility mode.
+it will turn on a backwards compatibility mode, which:
+
+- Allows :term:`implicit tasks <implicit task>` without having to set
+  :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` (unless a
+  ``rose-suite.conf`` file is present in the :term:`run directory`, to maintain
+  compatibility with Rose 2019).
+
+.. TODO: mention optional outputs and cycle point time zone default
 
 .. warning::
 
    Please take action on any deprecation warnings emitted by ``cylc validate``.
 
    This must be done before renaming config files to ``flow.cylc``.
+
+If your Cylc 7 workflow *fails* validation in Cylc 8, see
+:ref:`AutoConfigUpgrades` to learn how to fix this.
 
 
 Architecture
