@@ -47,6 +47,7 @@ extensions = [
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
+default_role = 'cylc:conf'
 
 # Select best available SVG image converter.
 for svg_converter, extension in [

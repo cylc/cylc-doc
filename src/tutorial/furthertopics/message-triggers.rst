@@ -334,7 +334,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       It is a good idea to check that our :cylc:conf:`flow.cylc` file does not have any
       configuration issues.
 
-      Run `cylc validate` to check for any errors:
+      Run ``cylc validate`` to check for any errors:
 
       .. code-block:: bash
 

@@ -1582,7 +1582,7 @@ can be replaced by a single sequential declaration,
 Future Triggers
 ^^^^^^^^^^^^^^^
 
-Cylc also supports term:`inter-cycle triggering <inter-cycle trigger>` off
+Cylc also supports :term:`inter-cycle triggering <inter-cycle trigger>` off
 tasks "in the future" (with respect to cycle point - which has no bearing on
 wall-clock job submission time unless the task has a clock trigger):
 

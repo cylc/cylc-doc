@@ -975,7 +975,7 @@ Glossary
       * :ref:`Family Trigger Tutorial <tutorial-cylc-family-triggers>`
 
    message trigger
-      A `message trigger` can be used to trigger a dependent
+      A message trigger can be used to trigger a dependent
       :term:`task <task>` before the upstream task has completed.
 
       We can use :term:`custom task outputs <custom task output>` as triggers.
@@ -989,7 +989,7 @@ Glossary
       * :term:`custom task output`
 
    custom task output
-      A `custom task output` is a user-defined message sent from the
+      A custom task output is a user-defined message sent from the
       :term:`job` to the workflow server.
       These can be used as :term:`message triggers <message trigger>`.
 
