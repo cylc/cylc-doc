@@ -280,7 +280,7 @@ Start, Stop, Restart
       This sets the :term:`final cycle point` six hours after the
       :term:`initial cycle point`.
 
-      Run `cylc validate` to check for any errors::
+      Run ``cylc validate`` to check for any errors::
 
          cylc validate .
 

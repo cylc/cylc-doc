@@ -158,7 +158,7 @@ The ``root`` Family
 
 .. ifnotslides::
 
-   There is a special family called `root` (in lowercase) which is used only
+   There is a special family called ``root`` (in lowercase) which is used only
    in the runtime to provide configuration which will be inherited by all
    tasks.
 

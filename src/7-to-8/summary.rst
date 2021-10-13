@@ -11,8 +11,8 @@ To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
 
 .. warning::
 
-   But please take action on any deprecation warnings emitted by `cylc
-   validate`.
+   But please take action on any deprecation warnings emitted by
+   ``cylc validate``.
 
 
 Terminology
@@ -293,7 +293,7 @@ Cylc 8 can be installed from **Conda Forge**, into a conda environment:
    (cylc8) $ cylc --version
    cylc-8.0b0
 
-Or from **PyPI**, into a Python 3 virtual environment, by `pip`-installing the
+Or from **PyPI**, into a Python 3 virtual environment, by ``pip``-installing the
 UI Server component, which pulls in cylc-flow (Scheduler and CLI) as a
 dependency, and includes a built copy of cylc-ui (Javascript UI):
 
@@ -307,14 +307,14 @@ dependency, and includes a built copy of cylc-ui (Javascript UI):
 
 The following dependencies are installed by Conda but not by pip:
 
-- `configurable-http-proxy` (used by the Hub)
+- ``configurable-http-proxy`` (used by the Hub)
 - Python
 
 The following dependencies are not installed by Conda or pip:
 
-- `bash`
-- GNU `coreutils`
-- `mail` (for automated email functionality)
+- ``bash``
+- GNU ``coreutils``
+- ``mail`` (for automated email functionality)
 
 What's Still Missing From Cylc 8?
 ---------------------------------

@@ -113,8 +113,8 @@ re-triggered multiple times:
 
 How the stdout and stderr streams are directed into these files depends on the
 :term:`job runner`. The
-py:mod:`background <cylc.flow.job_runner_handlers.background>` method just uses
-appropriate output redirection on the command line, as shown above. The
+:py:mod:`background <cylc.flow.job_runner_handlers.background>` method just
+uses appropriate output redirection on the command line, as shown above. The
 :py:mod:`loadleveler <cylc.flow.job_runner_handlers.loadleveler>` method writes
 appropriate directives to the job script that is submitted to loadleveler.
 

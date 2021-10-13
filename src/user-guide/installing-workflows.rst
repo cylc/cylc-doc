@@ -260,7 +260,7 @@ For example, using the command line option
 To skip making localhost symlinks
 """""""""""""""""""""""""""""""""
 
-Use `--symlink-dirs=""` with the `cylc install` command.
+Use ``--symlink-dirs=""`` with the ``cylc install`` command.
 
 
 
