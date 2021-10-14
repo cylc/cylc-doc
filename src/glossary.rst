@@ -50,19 +50,22 @@ Glossary
          | |- run1
          | |- run2
 
+      .. note::
+
+         If you are not using named or numbered runs, the workflow name
+         will be the same as :term:`workflow id`.
+
    workflow id
       A workflow ID is the name Cylc uses to identify a :term:`workflow` in
       the :term:`run directory`.
 
       This ID is used on the command line and in the GUI.
 
-      The ID is the relative path between the :term:`workflows <workflow>`
-      :term:`run directory` and the :term:`cylc run directory`.
+      The ID is the workflow's :term:`run directory` path relative to
+      the cylc-run directory.
 
       For example, if your workflow is in ``~/cylc-run/foo/bar/run1`` then its ID
       is ``foo/bar/run1``.
-
-         .. ..note:: For convenience you can omit the ``/run1`` on the command line.
 
       Unlike :term:`workflow name` it is always a unique identifier. In the
       example below each run has a different ID despite sharing the same
@@ -760,12 +763,18 @@ Glossary
       * :term:`cold start`
 
    cylc-run directory
+   cylc run directory
       The directory that contains workflows. This is, by default, ``~/cylc-run``
       but may be configured using :cylc:conf:`global.cylc[install][symlink dirs]`.
 
       See also:
 
       * :term:`run directory`
+
+      .. caution::
+
+         The cylc-run directory should not be confused with the
+         :term:`workflow run directories <run directory>` stored inside it.
 
    source directory
       Any directory where :term:`workflows <workflow>` are written and stored
@@ -1126,15 +1135,6 @@ Glossary
       See also:
 
       * :ref:`Graph Branching`
-
-   cylc run directory
-      The location where Cylc stores data on workflows ready to run. In many
-      cases this will be ``~/cylc-run``.
-
-      .. caution::
-
-         The cylc run directory should not be confused with the
-         :term:`workflow run directories <run directory>` stored inside it.
 
    flow
       A flow is a single logical run of a :term:`workflow` that is done by
