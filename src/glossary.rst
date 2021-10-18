@@ -37,7 +37,8 @@ Glossary
 
    workflow name
       The workflow name (``CYLC_WORKFLOW_NAME``) is a path relative to the
-      cylc-run directory which contains one or more workflow run directories.
+      cylc-run directory which contains one or more workflow
+      :term:`run directories <run directory>`.
 
       Unlike :term:`workflow id` it is not always a unique identifier; in the
       example below ``run1`` and ``run2`` would both have the same name,
@@ -763,7 +764,6 @@ Glossary
       * :term:`cold start`
 
    cylc-run directory
-   cylc run directory
       The directory that contains workflows. This is, by default, ``~/cylc-run``
       but may be configured using :cylc:conf:`global.cylc[install][symlink dirs]`.
 
