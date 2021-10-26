@@ -11,21 +11,6 @@ be out of date in some cases.
 Cylc Flow
 ---------
 
-Run Numbers
-   By default when you install a workflow with ``cylc install`` it is installed
-   into a numbered subdirectory e.g. ``run1``. A subsequent installation
-   would go into ``run2``, etc.
-
-   At present the full workflow registration *including* this run number must
-   be provided to Cylc commands e.g::
-
-      $ cylc play myflow/run1
-
-   We plan to infer the most recent run to make this easier e.g::
-
-      $ cylc play myflow
-
-   * https://github.com/cylc/cylc-flow/issues/3895
 CLI Change
    We plan to move to a new way of specifying workflow, cycles, tasks and jobs
    on the command line (with back support for the old format).
@@ -82,8 +67,9 @@ Multiple Selection
 
    * https://github.com/cylc/cylc-ui/issues/434
 Installing Workflows
-   At present there is no way to view uninstalled workflows in the UI.
-   We will add the ability to view and install workflows from the UI.
+   At present there is no way to view non-installed workflows (a.k.a.
+   :term:`source workflows <source directory>`) in the UI.
+   We will add the ability to view and install source workflows from the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation in the UI.
 Trigger Edit

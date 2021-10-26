@@ -258,6 +258,7 @@ The task job script may export the following environment variables:
                                       # when in any date-time cycling mode
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
+   CYLC_WORKFLOW_ID                   # Workflow ID - the WORKFLOW_NAME plus the run directory
    CYLC_WORKFLOW_NAME                 # Workflow name
    CYLC_UTC                           # UTC mode, True or False
    CYLC_VERBOSE                       # Verbose mode, True or False
@@ -505,7 +506,7 @@ this case.) E.g. to send an email on (submission) failed and retry:
        [[foo]]
            script = """
                test ${CYLC_TASK_TRY_NUMBER} -eq 3
-               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+               cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
            execution retry delays = PT0S, PT30S
            [[[events]]]
@@ -611,7 +612,7 @@ event handlers using the alternate methods:
        [[foo]]
            script = """
                test ${CYLC_TASK_TRY_NUMBER} -eq 2
-               cylc message -- "${CYLC_WORKFLOW_NAME}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+               cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" 'oopsy daisy'
            """
            execution retry delays = PT0S, PT30S
            [[[events]]]
