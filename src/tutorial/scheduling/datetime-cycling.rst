@@ -105,6 +105,8 @@ recurrences:
 1. Using ISO8601 durations (e.g. ``P1D``, ``PT1H``).
 2. Using ISO8601 date-times with inferred recurrence.
 
+.. _tutorial-inferred-recurrence:
+
 Inferred Recurrence
 ^^^^^^^^^^^^^^^^^^^
 
