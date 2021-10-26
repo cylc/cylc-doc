@@ -16,7 +16,7 @@ Overview
 --------
 
 In Cylc 7 :term:`suicide triggers <suicide trigger>` are used to remove
-tasks from the graph automatically whilst a workflow is running.
+tasks from the graph automatically at runtime.
 
 Cylc 8 handles :term:`graphs <graph>` in an event-driven manner which means
 that a workflow can follow different paths in different eventualities without

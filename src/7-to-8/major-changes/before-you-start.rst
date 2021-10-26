@@ -13,7 +13,8 @@ Overview
 --------
 
 Cylc has a built in configuration upgrader. **Cylc 8** can upgrade Cylc 7
-workflows at runtime, but not if validation with Cylc 7 gives deprecation warnings.
+workflows on the fly if they use up-to-date Cylc 7 syntax, but *not
+if validation with Cylc 7 gives deprecation warnings*.
 
 Solution
 --------
@@ -113,7 +114,7 @@ Host to platform upgrade logic
    .. TODO reference to how to write platforms page
 
 If you have a Cylc 7 workflow where tasks submit jobs to remote hosts
-Cylc 8 will attempt to find a platform which matches the task specfication.
+Cylc 8 will attempt to find a platform which matches the task specification.
 
 .. important::
 

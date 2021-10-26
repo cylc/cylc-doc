@@ -1,11 +1,11 @@
 Cylc |version| Caveats
 ======================
 
-This is an early release of Cylc, there are some loose ends and features which
+This is a beta release of Cylc. There are some loose ends and features which
 have not yet been (re)implemented.
 
-The documentation has not been fully reviewed and command line information may
-be out of date in some cases.
+The documentation has not been fully reviewed and the command line help may
+be out of date in some places.
 
 
 Cylc Flow
@@ -15,30 +15,19 @@ CLI Change
    We plan to move to a new way of specifying workflow, cycles, tasks and jobs
    on the command line (with back support for the old format).
 
-   This will open up performing operations on multiple workflows in a single
-   command e.g::
+   This will allow targetting of multiple workflows with a single command e.g::
 
       $ cylc stop '*'  # stop everything
 
    * https://github.com/cylc/cylc-flow/pull/3931
-Platform Selection
-   When Cylc needs to perform an action on a platform (e.g. submit a job)
-   it picks a random host from the platform. If this host is down the operation
-   will fail.
-
-   In a later relase Cylc will pick another host in order to provide resilience
-   to system issues.
-
-   * https://github.com/cylc/cylc-flow/issues/3827
 Trigger Edit
    Functionality removed pending reimplementation.
 
    * https://github.com/cylc/cylc-flow/issues/3743
 Reflow
-   The new "reflow" functionality which allows multiple
-   (potentially parallel) executions of the same workflow in a single
-   :term:`scheduler` is not fully supported by all commands and is
-   yet to be documented.
+   The new "reflow" functionality, which allows multiple
+   (potentially concurrent) executions of the same workflow in a single
+   :term:`scheduler`, is not fully supported by all commands or documented.
 
 
 Browser Based UI
@@ -53,8 +42,21 @@ Graph View
 
    * https://github.com/cylc/cylc-ui/issues/74
    * https://github.com/cylc/cylc-ui/issues/82
+
+Static Graph Visualization
+   Not yet been reimplemented for Cylc 8. As an interim measure the
+   ``cylc graph``` command can generate a basic PNG image of a workflow
+   graph if Graphviz is installed in the Cylc environment.
+
 Log Files
-   The ability to view job log and other files is yet to be implemented.
+   The ability to view job logs and other files in the web UI is yet to be
+   implemented. For the moment:
+
+   * use ``cylc cat-log``
+   * look in your ``cylc-run`` directory
+   * use Cylc Review from Cylc 7.9.5/7.8.10 (the latest version is compatible
+     with Cylc 8)
+
 Multiple Selection
    Multiple selection is yet to be implemented, however, it is possible
    to issue action for multiple tasks (e.g. ``kill``) without using
@@ -67,9 +69,8 @@ Multiple Selection
 
    * https://github.com/cylc/cylc-ui/issues/434
 Installing Workflows
-   At present there is no way to view non-installed workflows (a.k.a.
+   At present there is no way to view or install non-installed workflows (a.k.a.
    :term:`source workflows <source directory>`) in the UI.
-   We will add the ability to view and install source workflows from the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation in the UI.
 Trigger Edit
@@ -101,7 +102,7 @@ Performance
 
    * https://github.com/cylc/cylc-flow/issues/3527
 GScan
-   The old ``cylc gscan`` command has been removed. You can now find the gscan
+   The old ``cylc gscan`` GUI has been removed. You can now find the gscan
    display on the left-hand side of the Cylc UI.
 
    In a future release ``cylc tui`` will be able to list workflows in a similar
@@ -114,10 +115,9 @@ UI Server
 ---------
 
 Authorisation
-   Only "binary" authorisation (i.e. no access / full control) is currently
-   supported.
+   A full-featured authorization system has been implemented for Cylc 8, but
+   the UI doesn't yet provide easy access to other users' UI Servers
 
-   * https://github.com/cylc/cylc-uiserver/issues/10
 CLI Via UIS
    The ability to route Cylc commands via the UIS is planned for a future relase
 

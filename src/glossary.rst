@@ -4,6 +4,11 @@ Glossary
 .. glossary::
    :sorted:
 
+   validation
+   workflow validation
+      The ``cylc validate`` command parses ``flow.cylc`` workflow configuration
+      files and reports syntax errors and deprecation warnings.
+
    workflow
    cylc workflow
       A Cylc workflow is a collection of :term:`tasks <task>` to carry out and
@@ -179,13 +184,15 @@ Glossary
       * :term:`family trigger`
 
    cycle
-      In a :term:`cycling workflow<cycling>` one cycle is one repetition of the
-      workflow.
+      In a :term:`cycling workflow<cycling>` a cycle is one repetition of a
+      single-cycle workflow graph. However, note that Cylc unrolls the cycle
+      loop to remove the barrier between cycles, and gives each individual task
+      its own :term:`cycle point`.
 
       For example, in the following workflow each dotted box represents a cycle
       and the :term:`tasks<task>` within it are the :term:`tasks<task>`
       belonging to that cycle. The numbers (i.e. ``1``, ``2``, ``3``) are the
-      :term:`cycle points<cycle point>`.
+      :term:`cycle points <cycle point>`.
 
       .. digraph:: example
          :align: center
@@ -222,7 +229,8 @@ Glossary
          "bar.1" -> "bar.2" -> "bar.3"
 
    cycling
-      A cycling :term:`workflow<Cylc workflow>` is one in which the workflow repeats.
+      A cycling :term:`workflow<Cylc workflow>` in Cylc is a graph of
+      repeating tasks with individual :term:`cycle points <cycle point>`.
 
       See also:
 
@@ -230,16 +238,22 @@ Glossary
       * :term:`cycle point`
 
    cycle point
-      A cycle point is the unique label given to a particular :term:`cycle`.
-      If the :term:`workflow<Cylc workflow>` is using :term:`integer cycling` then
-      the cycle points will be numbers e.g. ``1``, ``2``, ``3``, etc. If the
-      :term:`workflow<Cylc workflow>` is using :term:`datetime cycling` then the
-      labels will be :term:`ISO8601` datetimes e.g. ``2000-01-01T00:00Z``.
+      The unique label given to tasks that belong to a particular :term:`cycle`.
+      For :term:`integer cycling` these will be integers, e.g. ``1``, ``2``, ``3``, etc.
+      For :term:`datetime cycling` they will be :term:`ISO8601` datetimes, e.g. ``2000-01-01T00:00Z``.
 
       See also:
 
       * :term:`initial cycle point`
       * :term:`final cycle point`
+      * :term:`start cycle point`
+
+   cycle point time zone
+      The time zone used for task cycle points.
+
+      See also:
+
+      * :term:`cycle point`
 
    initial cycle point
       In a :term:`cycling workflow <cycling>` the initial cycle point is the point
@@ -273,7 +287,7 @@ Glossary
       The start cycle point is the :term:`cycle point` where the
       :term:`scheduler` :term:`starts <start>` running from.
 
-      This may be before or after the :term:`initial cycle point`.
+      This may be after the :term:`initial cycle point`.
 
       See :ref:`start_stop_cycle_point` for more information.
 
@@ -288,7 +302,7 @@ Glossary
       The stop cycle point is the :term:`cycle point` at which the
       :term:`scheduler` :term:`shuts down <shutdown>`.
 
-      This may be before or after the :term:`final cycle point`.
+      This may be before the :term:`final cycle point`.
 
       See :ref:`start_stop_cycle_point` for more information.
 
@@ -300,25 +314,24 @@ Glossary
       * :term:`final cycle point`
 
    integer cycling
-      An integer cycling workflow is a :term:`cycling workflow<cycling>` which has
-      been configured to use integer cycling. When a workflow uses integer cycling
-      integer :term:`recurrences <recurrence>` may be used in the :term:`graph`,
-      e.g. ``P3`` means every third cycle. This is configured by setting
-      :cylc:conf:`[scheduling]cycling mode = integer`.
+      An integer :term:`cycling` workflow uses integer :term:`cycle points <cycle point>`
+      and :term:`recurrences <recurrence>` (e.g. ``P3`` means every third
+      cycle). It is configured with :cylc:conf:`[scheduling]cycling mode = integer`.
 
       See also:
 
+      * :term:`datetime cycling`
       * :ref:`Cylc tutorial <tutorial-integer-cycling>`
 
    datetime cycling
-      A datetime cycling is the default for a :term:`cycling workflow<cycling>`.
-      When using datetime cycling :term:`cycle points<cycle point>` will be
-      :term:`ISO8601 datetimes <ISO8601 datetime>` e.g. ``2000-01-01T00:00Z``
-      and ISO8601 :term:`recurrences<recurrence>` can be used e.g. ``P3D``
-      means every third day.
+      A datetime :term:`cycling` workflow uses
+      :term:`ISO8601 datetime <ISO8601 datetime>` :term:`cycle points <cycle point>` (e.g.
+      ``2000-01-01T00:00Z``) and :term:`recurrences <recurrence>` (e.g. ``P3D``
+      means every third day).
 
       See also:
 
+      * :term:`integer cycling`
       * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
    wall-clock time
@@ -471,8 +484,11 @@ Glossary
       * :term:`qualifier`
 
    implicit task
-      An implicit task (previously known as a naked task) is a task in the
-      graph that does not have an explicit runtime definition.
+      Implicit tasks appear in the workflow graph but do not have explicit
+      runtime definitions. These were previously known as *naked dummy tasks*.
+      Implicit tasks inherit runtime configuration from the ``root`` task
+      family, but otherwise their jobs exit without doing anything useful.
+
       For example, ``bar`` is an implicit task in the following workflow:
 
       .. code-block:: cylc
@@ -483,10 +499,11 @@ Glossary
          [runtime]
              [[foo]]
 
-      Implicit tasks are not allowed by default, as they are often typos.
-      However, it is possible to allow them using
-      :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` during
-      development of a workflow.
+      Implicit tasks are not allowed by default because they are too easy to
+      create accidentally by misspelling a task name. However, they can
+      be useful placeholders for real tasks during workflow development. Enable
+      them with
+      :cylc:conf:`flow.cylc[scheduler]allow implicit tasks = True`.
 
       See also:
 
@@ -708,64 +725,75 @@ Glossary
       A set of :term:`platforms <platform>`
 
    scheduler
-      When we say that a :term:`workflow` is "running" we mean that the cylc
-      scheduler is running.
+      Cylc schedulers are programs that are responsible for running a single
+      Cylc workflow. They determine which tasks are ready to run, submit task
+      :term:`jobs <job>` and monitor their status, maintain the workflow state,
+      and listen for commands from the user.
 
-      The scheduler is responsible for running the workflow. It submits
-      :term:`jobs <job>`, monitors their status and maintains the workflow state.
+      .. _daemons: https://en.wikipedia.org/wiki/Daemon_(computing)
 
-      .. _daemon: https://en.wikipedia.org/wiki/Daemon_(computing)
-
-      By default a scheduler is a `daemon`_ meaning that it runs in
-      the background (potentially on another host).
+      By default, Cylc schedulers run as `daemons`_ (and potentially on another
+      host): they detach from your terminal (or similar) so they won't get killed
+      if you log out.
 
    start
    startup
-      A start is when the Cylc :term:`scheduler` runs a :term:`workflow`
-      for the first time. The scheduler is the program that
-      controls the workflow and is what we refer to as "running".
-
-      A workflow start can be either :term:`cold <cold start>` or
-      :term:`warm <warm start>` (cold by default).
-
-      .. TODO Suites -> Workflows once metomi cheat-sheet is updated
+      When the Cylc :term:`scheduler` starts running a :term:`workflow` from
+      scratch. This can be a :term:`cold start <cold start>` (the default), a
+      :term:`warm start <warm start>`, or from a :term:`start task`.
 
       See also:
 
       * :ref:`Starting Suites`
-      * :term:`scheduler`
       * :term:`warm start`
       * :term:`cold start`
+      * :term:`start task`
       * :term:`shutdown`
       * :term:`restart`
       * :term:`reload`
 
    cold start
-      A cold start is one in which the :term:`workflow` :term:`starts <start>`
-      from the :term:`initial cycle point`. This is the default behaviour
-      of ``cylc play`` for a workflow that hasn't been run before.
+      The :term:`scheduler` :term:`starts <start>` running the :term:`workflow`
+      at the very beginning of the :term:`graph`, which in a cycling workflow
+      is determined by the :term:`initial cycle point`. This is the default
+      behaviour of ``cylc play`` for a workflow that hasn't run yet.
 
       See also:
 
       * :term:`start`
       * :term:`warm start`
+      * :term:`start task`
 
    warm start
-      In a :term:`cycling workflow <cycling>`, a warm start
-      is one in which a :term:`workflow` (that hasn't been run before)
-      :term:`starts <start>` from a :term:`start cycle point` that is after the
-      :term:`initial cycle point`. Tasks in cycles before this point are
-      treated as if they have succeeded.
+      The :term:`scheduler` :term:`starts <start>` running a :term:`cycling`
+      :term:`workflow` from a :term:`start cycle point` after the
+      :term:`initial cycle point`.
+      Tasks in previous cycles are treated as if they have succeeded.
 
       See also:
 
       * :term:`start`
+      * :term:`start task`
       * :term:`start cycle point`
       * :term:`cold start`
 
+   start task
+      A particular task in the graph from which the :term:`scheduler`
+      :term:`starts <start>` running a :term:`workflow` from scratch.
+      Earlier tasks are treated as if they have succeeded.
+
+      See also:
+
+      * :term:`start`
+      * :term:`start task`
+      * :term:`start cycle point`
+      * :term:`cold start`
+      * :term:`warm start`
+
    cylc-run directory
-      The directory that contains workflows. This is, by default, ``~/cylc-run``
-      but may be configured using :cylc:conf:`global.cylc[install][symlink dirs]`.
+      The ``~/cylc-run`` directory for :term:`installed <workflow installation>`
+      workflows. Cylc can be configured to symlink cylc-run sub-directories to
+      other locations via :cylc:conf:`global.cylc[install][symlink dirs]`.
 
       See also:
 
@@ -774,13 +802,26 @@ Glossary
       .. caution::
 
          The cylc-run directory should not be confused with the
-         :term:`workflow run directories <run directory>` stored inside it.
+         :term:`workflow run directories <run directory>` below it.
+
+   install
+   installation
+   workflow installation
+      The ``cylc install`` command installs workflow source files from
+      :term:`source directories <source directory>` into the :term:`run
+      directories <run directory>` under the :term:`cylc-run directory`.
+
+      See also:
+
+      * :term:`source directory`
+      * :term:`run directory`
+      * :term:`cylc-run directory`
 
    source directory
    source workflow
       Any directory where :term:`workflows <workflow>` are written and stored
       in preparation for installation with ``cylc install`` or reinstallation
-      with ``cylc reinstall``.
+      with ``cylc reinstall``. The default location is ``~/cylc-src``.
 
       .. tip::
 
@@ -794,13 +835,10 @@ Glossary
       * :ref:`Installing-workflows`
 
    run directory
-      This is a directory containing the configuration that Cylc uses to run
-      the :term:`workflow`.
+      A directory containing the :term:`installed <install>` configuration used
+      to run a :term:`workflow`.
 
-      Typically this is installed from the :term:`source directory` using
-      ``cylc install``.
-
-      The run directory can be accessed by a running workflow using
+      The run directory can be accessed by workflow task jobs at runtime using
       the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
 
       See also:
@@ -814,10 +852,9 @@ Glossary
    play
       We run a :term:`workflow` using the ``cylc play`` command.
 
-      This starts a :term:`scheduler` which is the program that controls the
-      flow and is what we refer to as "running".
+      This starts a :term:`scheduler` program to manage the workflow.
 
-      You can :term:`play`, :term:`pause` and :term:`stop` a :term:`flow`,
+      You can :term:`play`, :term:`pause` and :term:`stop` a :term:`workflow`,
       Cylc will always carry on where it left off.
 
       See also:
@@ -827,7 +864,7 @@ Glossary
 
    pause
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
-      running, however, will not submit any new jobs.
+      running but it will not submit any new jobs.
 
       This can be useful if you want to make a change to a running workflow.
 
@@ -841,11 +878,11 @@ Glossary
 
    stop
    shutdown
-      When a :term:`workflow` is shut down the :term:`scheduler` is
-      stopped. This means that no further :term:`jobs <job>` will be submitted.
+      When a :term:`workflow` is shut down its :term:`scheduler` is
+      stopped and no further :term:`jobs <job>` will be submitted.
 
-      By default Cylc waits for any submitted or running :term:`jobs <job>` to
-      complete (either succeed or fail) before shutting down.
+      By default Cylc waits for any submitted or running task :term:`jobs
+      <job>` to complete (either succeed or fail) before shutting down.
 
       .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
 
@@ -1078,10 +1115,9 @@ Glossary
       user. Human interaction is required to escape a stalled state.
 
    suicide trigger
-      Suicide triggers remove :term:`tasks <task>` from the :term:`graph`.
-
-      This allows Cylc to dynamically alter the graph based on events in the
-      workflow.
+      Suicide triggers remove :term:`tasks <task>` from the :term:`graph` at
+      runtime. This allows Cylc to dynamically alter the graph based on events
+      in the workflow.
 
       .. warning::
 
@@ -1102,9 +1138,9 @@ Glossary
 
    branching
    graph branching
-      Cylc handles :term:`graphs <graph>` in an event-driven manner which means
-      that a workflow can follow different paths in different eventualities.
-      This is called "branching".
+      Cylc handles workflow :term:`graphs <graph>` in an event-driven way:
+      it can follow different graph paths depending on events at runtime. This
+      is called "branching".
 
       For example the following workflow follows one of two possible paths
       depending on the outcome of task ``b``:
