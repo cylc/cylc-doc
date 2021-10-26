@@ -16,7 +16,7 @@ Terminology
    - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
 
 
-.. _BackCompat:
+.. _Cylc_7_compat_mode:
 
 Backward Compatibility
 ----------------------
@@ -29,9 +29,12 @@ Workflows defined in a ``suite.rc`` file will be run in Cylc 7 compatibility
 mode. Changing the name of the definition file to ``flow.cylc`` will disable
 the compatibility mode.
 
-.. warning::
+.. warning:: Compatibility Mode Effects
 
-.. TODO: mention optional outputs and cycle point time zone default
+   - :cylc:conf:`[scheduler]cycle point time zone` defaults to local time in
+     compatibility mode.
+
+   .. TODO: mention optional outputs
 
 .. warning::
 
