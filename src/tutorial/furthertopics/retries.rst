@@ -28,11 +28,11 @@ Example
 
 Create a new workflow by running the following commands::
 
-   rose tutorial retries-tutorial
-   cd retries-tutorial
+   mkdir -p ~/cylc-run/retries-tutorial
+   cd ~/cylc-run/retries-tutorial
 
-You will now have a workflow with a ``roll_doubles`` task which simulates
-trying to roll doubles using two dice:
+And paste the following code into a ``flow.cylc`` file. This workflow has a
+``roll_doubles`` task that simulates trying to roll doubles using two dice:
 
 .. code-block:: cylc
 

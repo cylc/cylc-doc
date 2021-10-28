@@ -11,13 +11,15 @@ multiple inheritance.
 Inheritance Hierarchy
 ---------------------
 
-Create a new workflow by running the command::
+Within your ``~/cylc-run`` directory create a new directory called
+``inheritance-tutorial``::
 
-   rose tutorial inheritance-tutorial
+   mkdir ~/cylc-run/inheritance-tutorial
    cd ~/cylc-run/inheritance-tutorial
 
-You will now have a :cylc:conf:`flow.cylc` file that defines two tasks each representing
-a different aircraft, the Airbus A380 jumbo jet and the Robson R44 helicopter:
+And paste the following code into a ``flow.cylc`` file. This
+defines two tasks each representing different aircraft, the Airbus A380 jumbo
+jet and the Robson R44 helicopter:
 
 .. image:: https://upload.wikimedia.org/wikipedia/commons/0/09/A6-EDY_A380_Emirates_31_jan_2013_jfk_%288442269364%29_%28cropped%29.jpg
    :width: 49%

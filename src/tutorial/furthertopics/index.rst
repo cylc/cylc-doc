@@ -13,5 +13,4 @@ This section looks at further topics in cylc.
    inheritance
    queues
    retries
-   suicide-triggers
    message-triggers

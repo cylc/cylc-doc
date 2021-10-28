@@ -234,6 +234,8 @@ Start, Stop, Restart
 
 .. practical::
 
+   .. TODO - is this Met Office specific?
+
    .. rubric:: In this practical we will add runtime configuration to the
       :ref:`weather-forecasting workflow <tutorial-datetime-cycling-practical>`
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
