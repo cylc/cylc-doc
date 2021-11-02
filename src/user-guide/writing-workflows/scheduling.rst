@@ -323,7 +323,7 @@ The time is assumed to be in UTC unless you set
 
    At Cylc 7 the time zone was assumed to be local time unless
    :cylc:conf:`[scheduler]cycle point time zone` or :cylc:conf:`[scheduler]UTC mode`
-   was set. If you run your workflow in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`
+   was set. If your workflow is running in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`
    this remains the case.
 
 The calendar is assumed to be the proleptic Gregorian calendar unless

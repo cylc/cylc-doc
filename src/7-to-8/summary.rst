@@ -23,10 +23,7 @@ Backward Compatibility
 
 To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
 If Cylc detects that a workflow is using the deprecated ``suite.rc`` filename,
-it will turn on a backwards compatibility mode.
-
-Compatibility Mode Effects
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+it will turn on a backwards compatibility mode, which:
 
 - Allows :term:`implicit tasks <implicit task>` without having to set
   :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` (unless a
