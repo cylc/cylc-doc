@@ -16,7 +16,7 @@ Terminology
    - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
 
 
-.. _BackCompat:
+.. _Cylc_7_compat_mode:
 
 Backward Compatibility
 ----------------------
@@ -29,8 +29,11 @@ it will turn on a backwards compatibility mode, which:
   :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` (unless a
   ``rose-suite.conf`` file is present in the :term:`run directory`, to maintain
   compatibility with Rose 2019).
+- Sets the default :cylc:conf:`[scheduler]cycle point time zone` to local time
+  of the workflow's initial start (including any daylight saving changes),
+  rather than UTC.
 
-.. TODO: mention optional outputs and cycle point time zone default
+.. TODO: mention optional outputs
 
 .. warning::
 
@@ -331,6 +334,14 @@ The following dependencies are not installed by Conda or pip:
 - ``bash``
 - GNU ``coreutils``
 - ``mail`` (for automated email functionality)
+
+Time Zones
+----------
+
+:cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
+are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
+
+.. seealso:: :ref:`Scheduling syntax rules<writing_flows.scheduling.syntax_rules>`
 
 What's Still Missing From Cylc 8?
 ---------------------------------
