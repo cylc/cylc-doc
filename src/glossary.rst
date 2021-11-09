@@ -254,6 +254,7 @@ Glossary
       See also:
 
       * :term:`cycle point`
+      * :cylc:conf:`flow.cylc[scheduler]cycle point time zone`
 
    initial cycle point
       In a :term:`cycling workflow <cycling>` the initial cycle point is the point

@@ -71,7 +71,7 @@ Clock Triggers
            PT1H_trigger = wall_clock(offset=-PT1H):PT30S
        [[graph]]
            # "daily" will run, at the earliest, one hour before midday.
-           T12 = PT1H_trigger => daily
+           T12 = @PT1H_trigger => daily
 
 .. tip::
 

@@ -57,8 +57,7 @@ see :ref:`AutoConfigUpgrades` to learn how to fix this.
 Architecture
 ------------
 
-Cylc has been re-architected to support a remote web UI. The main Cylc 8 system
-components are:
+The main Cylc system components are:
 
 - **Cylc Scheduler**
      - The workflow engine core, Python 3 based
@@ -293,10 +292,10 @@ do a fresh ``cylc install`` and play it safely in the new run directory.
 Security
 --------
 
-* In a multi-user installation, users authenticate at the Hub, which
+* In a multi-user installation users authenticate at the Hub, which
   spawns a Cylc UI Server as the target user (workflow owner).
 
-* For a single user installation, the UI Server can be started directly,
+* For a single user installation the UI Server can be started directly,
   with token-based authentication.
 
 * The UI Server interacts with its own Schedulers, which also run as the user.
@@ -304,6 +303,9 @@ Security
 * Users can authorize different levels of access to others, via their UI Server.
 
 * Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
+
+See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
+
 
 .. note::
 
@@ -321,7 +323,7 @@ Forge, into a conda environment; or from PyPI, into a Python 3 virtual environme
 
 See also:
 
-* :ref:`Installation`
+* :ref:`Cylc UI Server <CylcUIServer.architecture>`
 
 
 Time Zones
