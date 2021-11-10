@@ -15,7 +15,7 @@
 .. _Jinja2: https://jinja.palletsprojects.com/
 .. _Jupyter Hub: https://jupyterhub.readthedocs.io/en/stable/
 .. _Jupyter Lab: https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html
-.. _Jupyter Server: https://jupyter-server.readthedocs.io/en/latest/index.html
+.. _Jupyter Server: https://jupyter-server.readthedocs.io
 .. _Protobuf: https://developers.google.com/protocol-buffers/
 .. _PyGTK: http://www.pygtk.org/
 .. _Python Regular Expressions: https://docs.python.org/2/library/re.html#regular-expression-syntax

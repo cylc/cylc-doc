@@ -21,10 +21,13 @@ Terminology
 Backward Compatibility
 ----------------------
 
-With some caveats Cylc 8 can run Cylc 7 workflows
-out of the box. :term:`Workflow validation` warns about use of deprecated Cylc
-7 syntax, and a backward compatibility mode is triggered by the deprecated
-``suite.rc`` config filename. In backward compatibility mode:
+Cylc 8 can run most Cylc 7 workflows out of the box.
+
+:term:`Workflow validation` warns of deprecated Cylc 7 syntax, and a
+backward compatibility mode is triggered by the deprecated ``suite.rc`` config
+filename.
+
+In backward compatibility mode:
 
 .. TODO: mention optional outputs
 
@@ -49,6 +52,16 @@ out of the box. :term:`Workflow validation` warns about use of deprecated Cylc
 
    Please take action on deprecation warnings from ``cylc validate`` before
    renaming your ``suite.rc`` file to ``flow.cylc``.
+
+.. warning::
+
+   Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. Instead, :ref:`install
+   <Workflow Installation>` the workflow to a new run directory and start it
+   from scratch at the right cycle point or task(s):
+
+   - ``cylc play --start-cycle-point=<CYCLEPOINT>`` (c.f. Cylc 7 *warm start*), or
+   - ``cylc play --start-task=<NAME.CYCLEPOINT>`` (Cylc 8 can start anywhere in the graph)
+
 
 If your Cylc 7 workflow *fails* validation in Cylc 8,
 see :ref:`AutoConfigUpgrades` to learn how to fix this.
@@ -238,6 +251,8 @@ Cylc 8 cleans this up:
           R1 = "prep => foo"
           R/^/P1D = "foo => bar => baz"
 
+.. _Workflow Installation:
+
 Workflow Installation
 ---------------------
 
@@ -249,10 +264,11 @@ The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
 cleanly separates workflow source directory from run directory, and installs
 workflow files into the run directory at start-up
 
-- ``cylc install`` copies all workflow source files into a dedicated
-  run-directory
-- each new install creates a new numbered run-directory (by default)
-- (workflow files are automatically installed onto job platforms too)
+- ``cylc install`` copies workflow source files to a dedicated run-directory
+- :term:`source directory` locations can be set in global config
+- each install creates a new numbered :term:`run directory` (by default)
+- (workflow files are automatically installed onto job platforms too, when the 
+  first job runs on the platform)
 
 .. code-block:: bash
 
@@ -285,9 +301,22 @@ Cylc 7 run semantics were somewhat dangerous: if you accidentally typed ``cylc r
 instead of ``cylc restart`` a new run from scratch would overwrite the existing
 run directory, preventing a return to the intended restart.
 
-Cylc 8 has ``cylc play`` to *start*, *restart*, or *unpause* a workflow, so
-"restart" is now the safe default behaviour. For a new run from scratch,
+Cylc 8 has ``cylc pause`` to:
+
+- pause a workflow (halt all job submission)
+
+And ``cylc play`` to:
+
+- start,
+
+- restart, and
+
+- release a paused workflow
+
+So *restart* is now the safe default behaviour. For a new run from scratch,
 do a fresh ``cylc install`` and play it safely in the new run directory.
+
+(Note that ``cylc hold`` and ``cylc release`` pause and release individual tasks.)
 
 Security
 --------
