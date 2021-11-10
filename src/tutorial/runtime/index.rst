@@ -7,8 +7,7 @@ Runtime
 
 .. warning::
 
-   This section has been upgraded for Cylc 8 syntax and commands, but it still
-   contains screenshots of the Cylc 7 desktop GUI.
+   This section has been temporarily removed pending update for Cylc 8
 
 This section covers:
 
@@ -16,10 +15,11 @@ This section covers:
 * Providing executables with runtime configurations.
 * Running Cylc workflows.
 
-.. toctree::
-   :name: rug-runtime-toc
-   :maxdepth: 2
+.. uncomment when upgraded:
+  .. toctree::
+     :name: rug-runtime-toc
+     :maxdepth: 2
 
-   introduction
-   runtime-configuration
-   configuration-consolidation/index
+     introduction
+     runtime-configuration
+     configuration-consolidation/index
