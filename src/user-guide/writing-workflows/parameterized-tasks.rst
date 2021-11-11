@@ -462,7 +462,7 @@ Parameterized Cycling
 Two ways of constructing cycling systems are described and contrasted in
 :ref:`Workflows For Cycling Systems`. For most purposes use of
 a proper :term:`cycling` workflow is recommended, wherein Cylc incrementally
-generates the date-time sequence and extends the workflow, potentially
+generates the datetime sequence and extends the workflow, potentially
 indefinitely, at run time. For smaller systems of finite duration, however,
 parameter expansion can be used to generate a sequence of pre-defined tasks
 as a proxy for cycling.
@@ -511,7 +511,7 @@ The two workflows are shown together below. They both achieve the same
 result, and both can include special tasks at the start, end, or
 anywhere in between. But as noted earlier the parameterized version has
 several disadvantages: it must be finite in extent and not too large; the
-date-time arithmetic has to be done by the user; and the full extent of the
+datetime arithmetic has to be done by the user; and the full extent of the
 workflow will be visible at all times as the workflow runs.
 
 .. todo
@@ -559,7 +559,7 @@ point:
               P3M = "model[-P3M] => model"
 
 Here's a possible valid use-case for mixed cycling: consider a portable
-date-time cycling workflow of model jobs that can each take too long to run on
+datetime cycling workflow of model jobs that can each take too long to run on
 some supported platforms. This could be handled without changing the cycling
 structure of the workflow by splitting the run (at each cycle point) into a
 variable number of shorter steps, using more steps on less powerful hosts.
@@ -599,8 +599,8 @@ simplifies for ``chunk=1`` to this:
    The initial cut-off applies to every parameter list, but only
    to cycle point sequences that start at the workflow initial cycle point.
    Therefore it may be somewhat easier to use parameterized cycling if you
-   need multiple date-time sequences *with different start points* in the
+   need multiple datetime sequences *with different start points* in the
    same workflow. We plan to allow this sequence-start simplification for any
-   date-time sequence in the future, not just at the workflow initial point,
+   datetime sequence in the future, not just at the workflow initial point,
    but it needs to be optional because delayed-start cycling tasks
    sometimes need to trigger off earlier cycling tasks.

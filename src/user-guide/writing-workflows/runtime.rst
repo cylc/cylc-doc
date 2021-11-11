@@ -7,26 +7,18 @@ Runtime - Task Configuration
 
 The :cylc:conf:`[runtime]` section of a workflow configuration configures what
 to execute (and where and how to execute it) when each task is ready to
-run, in a *multiple inheritance hierarchy* of *namespaces* culminating in
-individual tasks. This allows all common configuration detail to be
-factored out and defined in one place.
+run, in a *multiple inheritance hierarchy* of task families. This allows all
+common configuration to be factored out and defined in one place.
 
-Any namespace can configure any or all of the items defined in
-:cylc:conf:`flow.cylc`.
+:ref:`FamilyTriggers` can be used in the graph to trigger (or trigger off of)
+all member tasks at once  
 
-Namespaces that do not explicitly inherit from others automatically
-inherit from the ``root`` namespace (below).
-
-Nested namespaces define *task families* that can be used in the
-graph as convenient shorthand for triggering all member tasks at once,
-or for triggering other tasks off all members at once -
-see :ref:`FamilyTriggers`.
-
+All tasks implicitly inherit from the ``root`` family (below).
 
 .. _namespace-names:
 
-Namespace Names
----------------
+Task and Family Names
+---------------------
 
 .. autoclass:: cylc.flow.unicode_rules.TaskNameValidator
 
@@ -42,7 +34,7 @@ Namespace Names
 Root - Runtime Defaults
 -----------------------
 
-The ``root`` namespace, at the base of the inheritance hierarchy,
+The ``root`` family, at the base of the inheritance hierarchy,
 provides default configuration for all tasks in the workflow.
 Most root items are unset by default, but some have default values
 sufficient to allow test workflows to be defined by dependency graph alone.
@@ -50,15 +42,15 @@ The *script* item, for example, defaults to code that
 prints a message then sleeps for between 1 and 15 seconds and
 exits. Default values are documented with each item in
 :cylc:conf:`flow.cylc`. You can override the defaults or
-provide your own defaults by explicitly configuring the root namespace.
+provide your own defaults by explicitly configuring the root family.
 
 
 .. _MultiTaskDef:
 
-Defining Multiple Namespaces At Once
--------------------------------------
+Defining Multiple Task or Family Names At Once
+----------------------------------------------
 
-If a namespace section heading is a comma-separated list of names
+If a runtime sub-section heading is a comma-separated list of names
 then the subsequent configuration applies to each list member.
 Particular tasks can be singled out at run time using the
 ``$CYLC_TASK_NAME`` variable.
@@ -93,14 +85,12 @@ illustrates basic runtime inheritance with single parents.
 Runtime Inheritance - Multiple
 ------------------------------
 
-If a namespace inherits from multiple parents the linear order of
-precedence (which namespace overrides which) is determined by the
-so-called *C3 algorithm* used to find the linear *method
-resolution order* for class hierarchies in Python and several other
-object oriented programming languages. The result of this should be
-fairly obvious for typical use of multiple inheritance in Cylc workflows,
-but for detailed documentation of how the algorithm works refer to the
-`official Python documentation
+If a task or family inherits from multiple parents the order of precedence is
+determined by the so-called *C3 algorithm* used to find the linear *method
+resolution order* for class hierarchies in the Python programming language.
+The result of this should be obvious for typical use of multiple inheritance in
+Cylc workflows, but for detailed documentation of how the algorithm works refer
+to the `official Python documentation
 <https://www.python.org/download/releases/2.3/mro/>`_.
 
 The *inherit.multi.one* example workflow, listed here, makes use of
@@ -166,14 +156,14 @@ defined variables.
 
 Additionally, access to Cylc itself is configured prior to the user-defined
 environment, so that variable assignment expressions can make use of
-Cylc utility commands:
+Cylc commands:
 
 .. code-block:: cylc
 
    [runtime]
        [[foo]]
            [[[environment]]]
-               REFERENCE_TIME = $( cylc util cycletime --offset-hours=6 )
+               REFERENCE_TIME = $( cylc cyclepoint --offset-hours=6 )
 
 
 User Environment Variables
@@ -255,7 +245,7 @@ The task job script may export the following environment variables:
    CYLC_CYCLING_MODE                  # Cycling mode, e.g. gregorian
    ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command,
                                       # defined with the value of CYLC_CYCLING_MODE
-                                      # when in any date-time cycling mode
+                                      # when in any datetime cycling mode
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
    CYLC_WORKFLOW_ID                   # Workflow ID - the WORKFLOW_NAME plus the run directory
@@ -279,7 +269,7 @@ The task job script may export the following environment variables:
    CYLC_TASK_CYCLE_POINT              # Cycle point, e.g. 20110511T1800Z
    ISODATETIMEREF                     # Reference time for the `isodatetime` command,
                                       # defined with the value of CYLC_TASK_CYCLE_POINT
-                                      # when in any date-time cycling mode
+                                      # when in any datetime cycling mode
    CYLC_TASK_NAME                     # Job's task name, e.g. t1
    CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
                                       # increments with every submit

@@ -9,7 +9,7 @@ Using clock-triggers we can make tasks wait until their cycle point time before
 running.
 
 Clock-triggering effectively enables us to tether the "cycle time" to the
-"real world time" which we refer to as the :term:`wall-clock time`.
+"real world time" which we refer to as the :term:`wallclock time`.
 
 .. note::
 
@@ -110,7 +110,7 @@ has passed in order to confirm the clock triggering is working correctly.
 Once you are satisfied, stop your workflow.
 
 By making the ``bell`` task a clock triggered task we have made it run in
-real-time. Thus, when the wall-clock time caught up with the cycle time, the
+real-time. Thus, when the wallclock time caught up with the cycle time, the
 ``bell`` task triggered.
 
 
@@ -175,7 +175,7 @@ Summary
 -------
 
 * Clock triggers are a type of :term:`dependency` which cause
-  :term:`tasks <task>` to wait for the :term:`wall-clock time` to reach the
+  :term:`tasks <task>` to wait for the :term:`wallclock time` to reach the
   :term:`cycle point` time.
 * Clock triggers are a built in example of :ref:`Section External Triggers`.
 * Clock triggers can only be used in datetime cycling workflows.

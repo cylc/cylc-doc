@@ -440,7 +440,7 @@ As a workflow runs, its task proxies may pass through the following states:
   sufficiently. The amount of runahead allowed is configurable - see
   :ref:`RunaheadLimit`.
 - **expired** - will not be submitted to run, due to falling too far
-  behind the wall-clock relative to its cycle point -
+  behind the wallclock relative to its cycle point -
   see :ref:`ClockExpireTasks`.
 
 

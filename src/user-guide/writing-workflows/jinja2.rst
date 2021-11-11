@@ -37,8 +37,7 @@ now be maintained as a single master workflow configuration that reconfigures
 itself according to the value of a flag variable indicating the intended use.
 
 Template processing is the first thing done on parsing a workflow
-configuration so Jinja2 expressions can appear anywhere in the file (inside
-strings and namespace headings, for example).
+configuration so Jinja2 expressions can appear anywhere in the file.
 
 Jinja2 is `well documented <https://jinja.palletsprojects.com/>`_, so here
 we just provide an example workflow that uses it. The meaning of the

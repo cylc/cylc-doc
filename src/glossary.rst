@@ -335,14 +335,13 @@ Glossary
       * :term:`integer cycling`
       * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
-   wall-clock time
-      In a Cylc workflow the wall-clock time refers to the actual time (in the
-      real world).
+   wallclock time
+      The actual time (in the real world).
 
       See also:
 
       * :term:`datetime cycling`
-      * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
+      * :term:`clock trigger`
 
    ISO8601
       ISO8601 is an international standard for writing dates and times which is
@@ -359,7 +358,7 @@ Glossary
         <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
 
    ISO8601 datetime
-      A date-time written in the ISO8601
+      A datetime written in the ISO8601
       format, e.g:
 
       * ``2000-01-01T00:00Z``: midnight on the 1st of January 2000
@@ -390,6 +389,16 @@ Glossary
 
       * :term:`integer cycling`
       * :term:`datetime cycling`
+
+   clock trigger
+      Clock triggers connect tasks to the wallclock (real) time, at some
+      offset relative to their datetime cycle point.
+
+      See also:
+
+      * :term:`wallclock`
+      * :ref:`Clock Triggers <Built-in Clock Triggers>`
+      * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
 
    inter-cycle dependency
    inter-cycle trigger
@@ -1241,7 +1250,7 @@ Glossary
          The new flow will now continue to run to the end.
 
          It is also possible to have multiple :term:`flows <flow>` running in the
-         scheduler :term:`schduler` simultaneously.
+         scheduler :term:`scheduler` simultaneously.
 
    event handlers
    handlers

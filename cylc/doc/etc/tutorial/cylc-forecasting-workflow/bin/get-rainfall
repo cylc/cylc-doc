@@ -118,7 +118,7 @@ def get_datapoint_radar_image(filename, time, api_key):
 
     Args:
         filename (str): The path to write the image file to.
-        time (str): The date-time of the image to retrieve in ISO8601 format.
+        time (str): The datetime of the image to retrieve in ISO8601 format.
         api_key (str): Datapoint API key.
 
     """
@@ -148,7 +148,7 @@ def get_archived_radar_image(filename, time):
 
     Args:
         filename (str): The path to write the image file to.
-        time (str): The date-time of the image to retrieve in ISO8601 format.
+        time (str): The datetime of the image to retrieve in ISO8601 format.
 
     """
     shutil.copyfile(

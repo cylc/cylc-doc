@@ -1,38 +1,39 @@
 .. _Cycling Workflows:
 
-Cycling Workflows
-=================
+
+What is a Cycling Workflow?
+===========================
 
 A *cycling workflow* is a repetitive process involving many interdependent
-tasks. Cylc tasks are distinct *applications*, i.e. executable commands,
+tasks. Cylc tasks wrap arbitrary applications: executable commands,
 scripts, or programs. Example use cases include:
 
-- Processing many similar datasets 
+- Processing many similar datasets, through a pipeline or graph of tasks
 
-- Climate, weather, and weather-driven forecasting systems that generate new
-  forecasts at regular intervals
+- Forecasting systems that generate new forecasts at regular intervals
 
-- Splitting a single long scientific model run into many smaller runs, each with
-  associated pre- and post-processing tasks
+- Splitting a long model run and associated processing tasks into many smaller runs
 
-- Iterative tuning of scientific model parameters, using model runs and
-  processing and validation tasks 
+- Iterative tuning of model parameters by model, processing, and validation tasks
 
-Cycling systems were traditionally handled by repeat-running a single workflow,
-one cycle after another. Sometimes, however, it would be more efficient to run
-multiple cycles concurrently, or at least allow them to overlap. But this can't
-be done if there is any implicit intercycle dependence, or if the workflow
-engine has a global loop that must finish one cycle before starting the next.
+Cycling systems were traditionally managed by repeat-running the single-cycle
+workflow, finishing each new cycle before starting the next. Sometimes, however,
+it can be much more efficient to run multiple cycles at once. Even in real time
+forecasting systems that normally have a gap between cycles waiting on new
+data, this can greatly speed catch up from delays or downtime. But it can't
+be done if the workflow manager has a global loop that handles only one cycle
+at a time and does not understand any intercycle dependence that may be present.
 
 .. important::
 
-  Cylc handles inter- and intra-cycle dependence equally and unrolls the cycle
-  loop to create a single non-cycling workflow of repeating tasks, each with
-  its own *cycle point*.
+  Cylc handles inter- and intra-cycle dependence equally, and it unrolls the
+  cycle loop to create a single non-cycling workflow of repeating tasks, each
+  with its own individual *cycle point*.
 
 .. image:: ../img/cycling.png
    :align: center
 
-Consequently Cylc can achieve maximum concurrency across as well as within
-cycles, allowing fast catch-up from delays in real time systems, and
-sustained high throughput off the clock.
+This removes the artificial barrier between cycles. Cylc tasks can advance
+constrained only by their individual dependencies, for maximum concurrency
+across as well as within cycles. This allows fast catch-up from delays in
+real time systems, and sustained high throughput off the clock.

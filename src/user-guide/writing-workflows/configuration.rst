@@ -4,13 +4,13 @@ Workflow Configuration
 ======================
 
 Cylc workflows are defined in structured, validated, :cylc:conf:`flow.cylc`
-files that concisely specify the properties of, and the relationships
-between, the various tasks managed by the workflow.
+files that specify the properties of, and the relationships between, the
+various tasks to be managed by the Cylc scheduler.
 
 Here we will look at:
 
-- Folders which may (optionally) accompany a workflow configuration.
-- The contents of the :cylc:conf:`flow.cylc` file.
+- Folders which may accompany a workflow configuration.
+- The content of the :cylc:conf:`flow.cylc` file.
 - How to configure workflows.
 
 
@@ -23,26 +23,26 @@ A Cylc :term:`source directory` contains:
 
 :cylc:conf:`flow.cylc`
    The file which configures the workflow.
+
 ``bin/`` (optional)
-   A directory where you can put scripts and executables for use
-   in the workflow. It is automatically added to ``$PATH`` in the job
-   execution environment.
+   A directory for scripts and executables used by workflow tasks. It is
+   added to ``$PATH`` in task job environments.
 
-   Alternatively, tasks can call external commands; or they can be
-   scripted entirely within the flow.cylc file.
+   Task jobs can also run scripting defined in the ``flow.cylc`` file,
+   executables installed to user-defined locations of the workflow run
+   directory, and external excutables.
+
 ``lib/python/`` (optional)
-   A directory for Python modules which can be used for:
+   A directory for Python modules. It is added to ``$PYTHONPATH`` in
+   the scheduler and task job execution environments. It can be used by:
 
-   - Tasks; this directory is automatically added to ``$PYTHONPATH``
-     in the job execution environment.
-   - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`.
-   - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`).
+   - Task jobs
+   - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`
+   - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`
 
-Other files and folders may be placed in the :term:`source directory` e.g.
-documentation, configuration files, etc.
-
-When the workflow is :ref:`installed <Installing-workflows>`, these
-directories and files will be copied over to the :term:`run directory`.
+Other files and folders may be placed in the :term:`source directory` too:
+documentation, configuration files, etc. When the workflow is :ref:`installed
+<Installing-workflows>` these will be copied over to the :term:`run directory`.
 
 .. _FlowConfigFile:
 
@@ -53,7 +53,7 @@ The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format.
 
 .. _template processors: https://en.wikipedia.org/wiki/Template_processor
 
-Cylc supports two `template processors`_ for use in the flow.cylc file:
+Cylc also supports two `template processors`_ for use in the ``flow.cylc`` file:
 
 * `Jinja2`_
 * `EmPy`_
@@ -64,13 +64,13 @@ Cylc supports two `template processors`_ for use in the flow.cylc file:
 Syntax
 ^^^^^^
 
-The following defines legal :cylc:conf:`flow.cylc` syntax:
+:cylc:conf:`flow.cylc` syntax, in general terms:
 
-- **Items** are of the form ``item = value``.
+- **Config items** are of the form ``item = value``.
 - **[Section]** headings are enclosed in square brackets.
-- **Sub-section [[nesting]]** is defined by repeated square brackets.
 
-  - Sections are **closed** by the next section heading.
+  - **Sub-section [[nesting]]** is defined by repeated square brackets.
+  - Sections are **closed** implicitly by the next section heading.
 
 - **Comments** (line and trailing) follow a hash character: ``#``
 - **List values** are comma-separated.
@@ -83,10 +83,10 @@ The following defines legal :cylc:conf:`flow.cylc` syntax:
 - **Continuation lines** follow a trailing backslash: ``\``
 - **Duplicate sections** add their items to those previously
   defined under the same section.
-- **Duplicate items** override, *except for dependency
-  ``graph`` strings, which are additive*.
-- **Include-files** ``%include inc/foo.cylc`` can be
-  used as a verbatim inlining mechanism.
+- **Duplicate items** override, except for ``graph`` strings, which are
+  additive.
+- **Include-files** ``%include inc/foo.cylc`` can be used as a verbatim
+  inlining mechanism.
 
 Workflows that embed templating code (see :ref:`User Guide Jinja2` and
 :ref:`User Guide EmPy`) must process to raw :cylc:conf:`flow.cylc` syntax.
@@ -179,7 +179,7 @@ several top level section headings:
    Determines how, where, and what to execute when tasks are ready
 
    - script, environment, job submission, remote hosting, etc.
-   - workflow-wide defaults in the *root* namespace
+   - workflow-wide defaults in the *root* family
    - a nested family hierarchy with common properties
      inherited by related tasks
 
@@ -195,7 +195,7 @@ issues and impossible scheduling constraints.
 
 These checks are also performed by ``cylc play`` before starting a workflow.
 
-All legal entries are documented in :cylc:conf:`flow.cylc`.
+All legal entries are documented in the :cylc:conf:`flow.cylc` reference.
 
-If the :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
+If a :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
 show an inlined copy of the workflow with correct line numbers.

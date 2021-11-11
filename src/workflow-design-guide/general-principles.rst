@@ -281,7 +281,7 @@ submission until the expected data arrival time:
    [scheduling]
        initial cycle point = now
        [[special tasks]]
-           # Trigger 5 min after wall-clock time is equal to cycle point.
+           # Trigger 5 min after wallclock time is equal to cycle point.
            clock-trigger = get-data(PT5M)
        [[graph]]
            T00 = get-data => process-data
@@ -316,7 +316,7 @@ so be sure to configure a reasonable interval between polls.
 Task Execution Time Limits
 --------------------------
 
-Instead of setting job wall clock limits directly in :term:`job runner`
+Instead of setting job wallclock limits directly in :term:`job runner`
 directives, use the ``execution time limit`` workflow config item.
 Cylc automatically derives the correct job runner directives from this,
 and it is also used to run ``background`` and ``at`` jobs via

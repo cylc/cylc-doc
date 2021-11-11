@@ -5,9 +5,8 @@ Scheduling - Dependency Graphs
 
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
-The :term:`graph` defines the workflow in terms of
-:term:`tasks <task>` and the :term:`dependencies <dependency>`
-between them.
+The ``flow.cylc`` :term:`graph` defines a workflow in terms of its
+:term:`tasks <task>` and the :term:`dependencies <dependency>` between them.
 
 Graph Syntax
 ------------
@@ -15,10 +14,11 @@ Graph Syntax
 .. tutorial:: Graph Tutorial <tutorial-cylc-graphing>
 
 A Cylc :term:`graph` is composed of one or more
-:term:`graph strings <graph string>` which use a special syntax.
+:term:`graph strings <graph string>` which use a special syntax to define the
+dependencies between tasks:
 
-* ``=>`` defines a dependency.
-* ``&`` and ``|`` meaning *and* & *or* can be used to write
+* arrow symbols ``=>`` declare a dependency
+* logical operators ``&`` (AND) and ``|`` (OR) can be used to write
   :term:`conditional dependencies <conditional dependency>`.
 
 For example:
@@ -29,7 +29,7 @@ For example:
    foo & bar => baz
 
 These :term:`graph strings <graph string>` are configured in the
-:cylc:conf:`[scheduling][graph]` section e.g:
+:cylc:conf:`[scheduling][graph]` section of the file:
 
 .. code-block:: cylc
 
@@ -39,8 +39,10 @@ These :term:`graph strings <graph string>` are configured in the
                foo & bar => baz
            """
 
-In this example ``R1`` is the :term:`recurrence` which defines the interval
-at which this graph string is to be run. ``R1`` means "run once", ``P1D`` means every day.
+In this example ``R1`` is a :term:`recurrence expression <recurrence>` that
+defines how often, and on what cycle interval, to run this part of the graph.
+For example, ``R1`` means run once, and ``P1D`` means run repeatedly on a 1-day
+cycle.
 
 Graph strings may contain blank lines, arbitrary white space and comments e.g:
 
@@ -49,8 +51,8 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
    [scheduling]
        [[graph]]
            R1 = """
-
-               foo & bar => baz  # baz is dependent on foo and bar
+               # drugs and money
+               foo & bar => baz  # baz depends on foo and bar
 
            """
 
@@ -58,18 +60,13 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
 Interpreting Graph Strings
 --------------------------
 
-Workflow dependency graphs can be broken down into pairs in which the left
-side (which may be a single task or family, or several that are
-conditionally related) defines a :term:`trigger` for the task or family on the
-right. For instance the "word graph" *C triggers off B which
-triggers off A* can be deconstructed into pairs *C triggers off B*
-and *B triggers off A*. In this section we use only the default
-trigger type, which is to trigger off the upstream task succeeding;
-see :ref:`TriggerTypes` for other available triggers.
+Graphs can be broken down into pairs of :term:`triggers <trigger>`, where the
+left side is a single task output, or a logical expression involving several of
+them, and the right side is the task or family that triggers when the output
+(or expression) is completed.
 
-In the case of cycling tasks, the triggers defined by a graph string are
-valid for cycle points matching the list of hours specified for the
-graph section. For example this graph:
+In the case of cycling tasks, triggers are valid for cycle points matching the
+*recurrence expression* for the graph string. For example this graph:
 
 .. code-block:: cylc
 
@@ -77,11 +74,9 @@ graph section. For example this graph:
        [[graph]]
            T00,T12 = "A => B"
 
-implies that ``B`` triggers off ``A`` for cycle points in which the hour
-matches ``00`` or ``12``.
-
-To define inter-cycle dependencies, attach an offset indicator to the
-left side of a pair:
+implies that ``B`` triggers off of ``A`` (i.e. off of the ``A:succeeded`` output)
+for cycle points where the hour matches ``00`` or ``12``. To define inter-cycle
+dependencies, attach an offset indicator to the left side of a pair:
 
 .. code-block:: cylc
 
@@ -89,14 +84,13 @@ left side of a pair:
        [[graph]]
            T00,T12 = "A[-PT12H] => B"
 
-This means ``B[time]`` triggers off ``A[time-PT12H]`` (12 hours before) for cycle
-points with hours matching ``00`` or ``12``. ``time`` is implicit because
-this keeps graphs clean and concise, given that the
-majority of tasks will typically
-depend only on others with the same cycle point. Cycle point offsets can only
-appear on the left of a pair, because a pairs define triggers for the right
-task at cycle point ``time``. However, ``A => B[-PT6H]``, which is
-illegal, can be reformulated as a *future trigger*
+This means ``B[cyclepoint]`` triggers off of ``A[cyclepoint-PT12H]`` (12 hours
+before) for cycle points with hours matching ``00`` or ``12``. Note
+``cyclepoint`` is implicit because most tasks depend only on others with the
+same cycle point.
+
+Cycle point offsets can only appear on the left side of arrow. However,
+``A => B[-PT6H]``, which is illegal, can be reformulated as a *future trigger*
 ``A[+PT6H] => B`` (see :ref:`InterCyclePointTriggers`). It is also
 possible to combine multiple offsets within a cycle point offset e.g.
 
@@ -106,8 +100,8 @@ possible to combine multiple offsets within a cycle point offset e.g.
        [[graph]]
            T00,T12 = "A[-P1D-PT12H] => B"
 
-This means that ``B[Time]`` triggers off ``A[time-P1D-PT12H]`` (1 day and 12 hours
-before).
+This means that ``B[cyclepoint]`` triggers off ``A[cyclepoint-P1D-PT12H]`` (1
+day and 12 hours before).
 
 Triggers can be chained together. This graph:
 
@@ -124,9 +118,7 @@ is equivalent to this:
 
    T00, T12 = "A => B => C"
 
-*Each trigger in the graph must be unique* but *the same task
-can appear in multiple pairs or chains*. Separately defined triggers
-for the same task have an AND relationship. So this:
+All triggers defined for the same task combine, so this:
 
 .. code-block:: cylc
 
@@ -142,9 +134,9 @@ is equivalent to this:
    T00, T12 = "A & B => X"  # X triggers off A AND B
 
 In summary, the branching tree structure of a dependency graph can
-be partitioned into lines (in the :cylc:conf:`flow.cylc` graph string) of pairs
-or chains, in any way you like, with liberal use of internal white space
-and comments to make the graph structure as clear as possible.
+be partitioned into lines (in the :cylc:conf:`flow.cylc` graph string) of
+dependency pairs or chains, in any way you like.
+Use white space and comments to make the graph as clear as possible.
 
 .. code-block:: cylc
 
@@ -177,14 +169,14 @@ and comments to make the graph structure as clear as possible.
 Splitting Up Long Graph Lines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is not necessary to use the general line continuation marker
-``\`` to split long graph lines. Just break at
-dependency arrows (``=>``), boolean operators (``&``, ``|``),
-or split long chains into smaller ones. This graph:
-
 .. versionadded:: 8.0.0
 
-   Breaking graph strings on ``&`` and ``|`` is new at Cylc 8
+   Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
+
+
+It is not necessary to use the fragile line continuation marker ``\`` to split
+long graph lines. You can break at dependency arrows (``=>``) and operators
+(``&``, ``|``), or split long chains into smaller ones. This graph:
 
 .. code-block:: cylc
 
@@ -209,21 +201,22 @@ and also to this:
    """
 
 
+.. note::
+
+  Multiple graph strings add together to make the complete workflow graph.
+   
+
 .. _GraphTypes:
 
 Graph Types
 -----------
 
-A workflow configuration can contain multiple graph strings that are combined
-to generate the final graph.
+Non-Cycling
+^^^^^^^^^^^
 
-One-off (Non-Cycling)
-^^^^^^^^^^^^^^^^^^^^^
-
-The following is a small workflow of one-off non-cycling
-tasks; these all share a single cycle point (``1``) and don't spawn
-successors (once they're all finished the workflow just exits). The integer
-``1`` attached to each graph node is just an arbitrary label here.
+The following is a small workflow of non-cycling tasks; these all have a
+single cycle point (``1``), and once they're all finished the scheduler 
+shuts down.
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -232,12 +225,8 @@ successors (once they're all finished the workflow just exits). The integer
 
    .. container:: caption
 
-      *One-off (Non-Cycling) Tasks*
-
       .. code-block:: cylc
 
-         [meta]
-             title = some one-off tasks
          [scheduling]
              [[graph]]
                  R1 = "foo => bar & baz => qux"
@@ -252,8 +241,8 @@ successors (once they're all finished the workflow just exits). The integer
 Cycling Graphs
 ^^^^^^^^^^^^^^
 
-For cycling tasks the graph section heading defines a sequence of cycle points
-for which the subsequent graph section is valid, as demonstrated here for a
+For cycling tasks we give a *recurrence expression* that defines a sequence of
+cycle points for which the graph string is valid, as demonstrated here for a
 small workflow of cycling tasks:
 
 .. Need to use a 'container' directive to get centered image with
@@ -263,15 +252,11 @@ small workflow of cycling tasks:
 
    .. container:: caption
 
-      *Cycling Tasks*
-
       .. code-block:: cylc
 
-         [meta]
-             title = some cycling tasks
-         # (no dependence between cycle points)
          [scheduling]
              [[graph]]
+                # (note no dependence between cycle points)
                  T00,T12 = "foo => bar & baz => qux"
 
    .. container:: image
@@ -282,14 +267,9 @@ small workflow of cycling tasks:
          :align: center
 
 
-Graph Section Headings
-----------------------
-
 .. tutorial:: Datetime Tutorial <tutorial-datetime-cycling>
 
-Graph section headings define recurrence expressions, the graph within a graph
-section heading defines a workflow at each point of the recurrence. For
-example in the following scenario:
+For example in the following scenario:
 
 .. code-block:: cylc
 
@@ -302,15 +282,12 @@ initial cycle point". Cylc allows you to start (or end) at any particular
 time, repeat at whatever frequency you like, and even optionally limit the
 number of repetitions.
 
-Graph section heading can also be used with
-:ref:`integer cycling <IntegerCycling>`.
-
 .. _writing_flows.scheduling.syntax_rules:
 
 Syntax Rules
 ^^^^^^^^^^^^
 
-:term:`Date-time cycling <datetime cycling>` information is made up of a
+:term:`Datetime cycling <datetime cycling>` information is made up of a
 starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
 limit.
 
@@ -329,24 +306,31 @@ The time is assumed to be in UTC unless you set
 The calendar is assumed to be the proleptic Gregorian calendar unless
 you set :cylc:conf:`[scheduling]cycling mode`.
 
-The syntax for representations is based on the :term:`ISO8601` date-time standard.
-This includes the representation of date-times and intervals. What we
-define for Cylc's cycling syntax is our own optionally-heavily-condensed form
-of ISO8601 recurrence syntax. The most common full form is:
-``R[limit?]/[date-time]/[interval]``. However, we allow omitting
-information that can be guessed from the context (rules below). This means
-that it can be written as:
+The syntax is based on the :term:`ISO8601` datetime standard, which includes
+the representation of datetimes and intervals. Cylc (optionally) allows these
+representations to be heavily condensed by omitting information that can be
+inferred from context (rules below).
+
+.. important::
+  Cycle points in Cylc are just task **labels** that anchor dependence on
+  other tasks, and which task jobs can use to determine their current cycle
+  point. Datetime cycle points have no relation to wallclock (real) time
+  unless specific tasks, if any, also depend on
+  :term:`clock triggers <clock trigger>`.
+
+The most common full form for recurrences is
+``R[limit?]/[datetime]/[interval]``. In Cylc this can be condensed to:
 
 .. code-block:: sub
 
-   R[limit?]/[date-time]
+   R[limit?]/[datetime]
    R[limit?]//[interval]
-   [date-time]/[interval]
+   [datetime]/[interval]
    R[limit?] # Special limit of 1 case
-   [date-time]
+   [datetime]
    [interval]
 
-with example graph headings for each form being:
+Here are some examples for each form:
 
 .. code-block:: sub
 
@@ -359,29 +343,27 @@ with example graph headings for each form being:
 
 .. note::
 
-   ``T00`` is an example of ``[date-time]``, with an
+   ``T00`` is an example of ``[datetime]``, with an
    inferred 1 day period and no limit.
 
-Where some or all date-time information is omitted, it is inferred to
+Where some or all datetime information is omitted, it is inferred to
 be relative to the :term:`initial cycle point`. For example, ``T00``
 by itself would mean the next occurrence of midnight that follows, or is, the
-initial cycle point. Entering ``+PT6H`` would mean 6 hours after the
-initial cycle point. Entering ``-P1D`` would mean 1 day before the
-initial cycle point. Entering no information for the date-time implies
-the initial cycle point date-time itself.
+initial cycle point. ``+PT6H`` means 6 hours after the initial cycle point.
+``-P1D`` means 1 day before the initial cycle point. The default is the initial
+cycle point itself.
 
-Where the interval is omitted and some (but not all) date-time
-information is omitted, it is inferred to be a single unit above
-the largest given specific date-time unit. For example, the largest
-given specific unit in ``T00`` is hours, so the inferred interval is
-1 day (daily), ``P1D``.
+If the interval is omitted and some (but not all) datetime information is
+omitted, it is inferred to be a single unit above the largest given specific
+datetime unit. For example, the largest given specific unit in ``T00`` is
+hours, so the inferred interval is 1 day (daily), ``P1D``.
 
-Where the limit is omitted, unlimited cycling is assumed. This will be
-bounded by the final cycle point's date-time if given.
+If the limit is omitted, unlimited cycling is assumed. This will be
+bounded by the workflow's final cycle point if given.
 
 Another supported form of ISO8601 :term:`recurrence` is:
-``R[limit?]/[interval]/[date-time]``. This form uses the
-date-time as the end of the cycling sequence rather than the start.
+``R[limit?]/[interval]/[datetime]``. This form uses the
+datetime as the end of the cycling sequence rather than the start.
 For example, ``R3/P5D/20140430T06`` means:
 
 .. code-block:: none
@@ -390,15 +372,14 @@ For example, ``R3/P5D/20140430T06`` means:
    20140425T06
    20140430T06
 
-This kind of form can be used for specifying special behaviour near the end of
-the workflow, at the final cycle point's date-time. We can also represent this in
-cylc with a collapsed form:
+This form can be used to get special behaviour near the end of the workflow, at
+the final cycle point. We can also represent this in Cylc with a collapsed form:
 
 .. code-block:: none
 
    R[limit?]/[interval]
-   R[limit?]//[date-time]
-   [interval]/[date-time]
+   R[limit?]//[datetime]
+   [interval]/[datetime]
 
 So, for example, you can write:
 
@@ -417,55 +398,52 @@ So, for example, you can write:
 Referencing The Initial And Final Cycle Points
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For convenience the caret and dollar symbols may be used as shorthand for the
-initial and final cycle points. Using this shorthand you can write:
+The caret and dollar symbols are shorthand for the initial and final cycle
+points:
 
 .. code-block:: sub
 
    R1/^+PT12H  # Repeat once 12 hours after the initial cycle point
-               # R[limit]/[date-time]
+               # R[limit]/[datetime]
                # Equivalent to R1/+PT12H
    R1/$        # Repeat once at the final cycle point
-               # R[limit]/[date-time]
+               # R[limit]/[datetime]
                # Equivalent to R1//+P0D
    $-P2D/PT3H  # Repeat 3 hourly starting two days before the
-               # [date-time]/[interval]
+               # [datetime]/[interval]
                # final cycle point
 
 .. note::
 
-   There can be multiple ways to write the same headings, for instance
+   There are multiple ways to write the same recurrences, for instance
    the following all run once at the final cycle point:
 
    .. code-block:: sub
 
       R1/P0Y       # R[limit]/[interval]
-      R1/P0Y/$     # R[limit]/[interval]/[date-time]
-      R1/$         # R[limit]/[date-time]
+      R1/P0Y/$     # R[limit]/[interval]/[datetime]
+      R1/$         # R[limit]/[datetime]
 
 .. _excluding-dates:
 
 
-The Meaning And Use Of Initial Cycle Point
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The Initial Cycle Point
+^^^^^^^^^^^^^^^^^^^^^^^
 
-When a workflow is started with the ``cylc play`` command (cold or
-warm start) the cycle point at which it starts can be given on the command
-line or hardcoded into the :cylc:conf:`flow.cylc` file:
-
-.. code-block:: console
-
-   $ cylc play foo --initial-cycle-point=20120808T06Z
-
-or:
+A workflow normally begins running at the *initial cycle point*, which defines
+the start of the workflow graph:
 
 .. code-block:: cylc
 
    [scheduling]
        initial cycle point = 20100808T06Z
 
-An initial cycle given on the command line will override one in the
-flow.cylc file.
+This can be overridden on the command line:
+
+.. code-block:: console
+
+   $ cylc play foo --initial-cycle-point=20120808T06Z
+
 
 .. _setting-the-icp-relative-to-now:
 
@@ -475,14 +453,12 @@ Setting The Initial Cycle Point Relative To The Current Time
 .. warning::
 
    Setting the initial cycle point relative to the current time only works
-   for :term:`datetime cycling` workflows which use the Gregorian calendar and
-   will not work for alternative calendars like the 360, 365 or 366 day
-   calendars.
+   for :term:`datetime cycling` workflows using the Gregorian calendar.
+   It does not work for alternative calendars like the 360, 365 or 366 day
+   calendars, or integer cycling.
 
-Two additional commands, ``next`` and ``previous``, can be used when setting
-the initial cycle point.
-
-The syntax uses truncated ISO8601 time representations, and is of the style:
+The ``next`` and ``previous`` syntax can be used with truncated ISO8601
+representations, to set the initial cycle point:
 ``next(Thh:mmZ)``, ``previous(T-mm)``; e.g.
 
 * ``initial cycle point = next(T15:00Z)``
@@ -493,22 +469,20 @@ The syntax uses truncated ISO8601 time representations, and is of the style:
 A list of times, separated by semicolons, can be provided, e.g.
 ``next(T-00;T-15;T-30;T-45)``. At least one time is required within the
 brackets, and if more than one is given, the major time unit in each (hours
-or minutes) should all be of the same type.
+or minutes) should be of the same type.
 
-If an offset from the specified date or time is required, this should be
-used in the form: ``previous(Thh:mm) +/- PxTy`` in the same way as is used
+If an offset from the specified datetime is required, this should be
+of the form ``previous(Thh:mm) +/- PxTy`` as is used
 for determining cycle periods, e.g.
 
 * ``initial cycle point = previous(T06) +P1D``
 * ``initial cycle point = next(T-30) -PT1H``
 
-The section in the bracket attached to the next/previous command is
-interpreted first, and then the offset is applied.
+The next/previous syntax is interpreted first, then the offset is applied.
 
-The offset can also be used independently without a ``next`` or ``previous``
-command, and will be interpreted as an offset from "now".
+Offsets used without ``next`` or ``previous`` are interpreted as offsets from "now".
 
-.. table:: Examples of setting relative initial cycle point for times and offsets using ``now = 2018-03-14T15:12Z`` (and UTC mode)
+.. table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
 
    ====================================  ==================
    Syntax                                Interpretation
@@ -528,13 +502,13 @@ command, and will be interpreted as an offset from "now".
    ``-P1M``                              2018-02-14T15:12Z
    ====================================  ==================
 
-The relative initial cycle point also works with truncated dates, including
+Relative initial cycle points also work with truncated dates, including
 weeks and ordinal date, using ISO8601 truncated date representations.
 Note that day-of-week should always be specified when using weeks. If a time
 is not included, the calculation of the next or previous corresponding
 point will be done from midnight of the current day.
 
-.. table:: Examples of setting relative initial cycle point for dates using ``now = 2018-03-14T15:12Z`` (and UTC mode)
+.. table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
 
    ====================================  ==================
    Syntax                                Interpretation
@@ -554,33 +528,28 @@ point will be done from midnight of the current day.
 The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-In the case of a *cold start only* the initial cycle point is passed
-through to task execution environments as
-``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT``. The value is then stored in
-workflow database files and persists across restarts, but it does get wiped out
-(set to ``None``) after a warm start, because a warm start is really an
-implicit restart in which all state information is lost (except that the
-previous cycle is assumed to have completed).
+At start up the initial cycle point is passed to task job environments
+as ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` and stored in the workflow
+database to persist across restarts. However it gets wiped out (set to
+``None``) by a warm start (``cylc play --start-cycle-point`` or ``cylc play
+--start-task``) - which is essentially a restart that ignores prior state
+information.
 
 The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
-determine if they are running in the initial cold-start cycle point, when
-different behaviour may be required, or in a normal mid-run cycle point.
-Note however that an initial ``R1`` graph section is now the preferred
-way to get different behaviour at workflow start-up.
+check if they are running in the initial cold-start cycle point, when
+different behaviour may be required. Note however that an initial ``R1`` graph
+section is the preferred way to get different behaviour at workflow start-up.
 
 
+.. _HowMultipleGraphStringsCombine:
 
 
 How Multiple Graph Strings Combine
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For a cycling graph with multiple validity sections for different
-hours of the day, the different sections *add* to generate the
-complete graph. Different graph sections can overlap (i.e. the same
-hours may appear in multiple section headings) and the same tasks may
-appear in multiple sections, but individual dependencies should be
-unique across the entire graph. For example, the following graph defines
-a duplicate prerequisite for task C:
+Multiple graph strings add together to make the complete workflow graph.
+Recurrences can overlap, and tasks can appear in multiple graph strings. It is
+OK (but unnecessary) to define duplicate dependencies.
 
 .. code-block:: cylc
 
@@ -590,8 +559,7 @@ a duplicate prerequisite for task C:
            T06,T18 = "B => C => X"
            # duplicate prerequisite: B => C already defined at T06, T18
 
-This does not affect scheduling, but for the sake of clarity and brevity
-the graph should be written like this:
+This graph can be written more concisely, with the same result, like this:
 
 .. code-block:: cylc
 
@@ -605,24 +573,23 @@ the graph should be written like this:
 Excluding Dates
 ^^^^^^^^^^^^^^^
 
-:term:`Date-times <ISO8601 datetime>` can be excluded from a :term:`recurrence`
+:term:`datetimes <ISO8601 datetime>` can be excluded from a :term:`recurrence`
 by an exclamation mark for example ``PT1D!20000101`` means run daily except on
 the first of January 2000.
 
-This syntax can be used to exclude one or multiple date-times from a
-recurrence. Multiple date-times are excluded using the syntax
-``PT1D!(20000101,20000102,...)``. All date-times listed within
-the parentheses after the exclamation mark will be excluded.
+This syntax can be used to exclude multiple datetimes from a recurrence, using
+the syntax ``PT1D!(20000101,20000102,...)``. All datetimes listed within
+the parentheses will be excluded.
 
 .. note::
 
    The ``^`` and ``$`` symbols (shorthand for the initial
-   and final cycle points) are both date-times so ``T12!$-PT1D``
+   and final cycle points) are both datetimes so ``T12!$-PT1D``
    is valid.
 
-If using a run limit in combination with an exclusion, the heading might not
-run the number of times specified in the limit. For example in the following
-workflow ``foo`` will only run once as its second run has been excluded.
+If using a run limit in combination with an exclusion, the recurrence might not
+run the expected number of times. For example, in the following
+workflow ``foo`` will only run once as its second run is excluded.
 
 .. code-block:: cylc
 
@@ -635,12 +602,11 @@ workflow ``foo`` will only run once as its second run has been excluded.
 Excluding Recurrences
 ^^^^^^^^^^^^^^^^^^^^^
 
-In addition to excluding isolated date-time points or lists of date-time points
-from recurrences, exclusions themselves may be date-time recurrence sequences.
-Any partial date-time or sequence given after the exclamation mark will be
-excluded from the main sequence.
+Exclusions may themselves be datetime recurrence sequences. Any partial
+datetime or sequence after the exclamation mark will be excluded from the main
+sequence.
 
-For example, partial date-times can be excluded using the syntax:
+For example, partial datetimes can be excluded like this:
 
 .. code-block:: sub
 
@@ -652,7 +618,7 @@ For example, partial date-times can be excluded using the syntax:
                                 # hour from the initial cycle point.
    T00 ! W-1T00                 # Run daily at 00:00 except on Mondays.
 
-It is also valid to use sequences for exclusions. For example:
+And sequences can be excluded like this:
 
 .. code-block:: sub
 
@@ -667,13 +633,11 @@ It is also valid to use sequences for exclusions. For example:
 
    R/^/P1H ! R5/20000101T00/P1D    # Any valid recurrence may be used to
                                    # determine exclusions. This example
-                                   # translates to: Repeat every hour from
+                                   # means: Repeat every hour from
                                    # the initial cycle point, but exclude
-                                   # 00:00 for 5 days from the 1st January
-                                   # 2000.
+                                   # 00:00 for 5 days from 1 January 2000.
 
-You can combine exclusion sequences and single point exclusions within a
-comma separated list enclosed in parentheses:
+You can combine exclusion sequences and single point exclusions like this:
 
 .. code-block:: sub
 
@@ -681,15 +645,13 @@ comma separated list enclosed in parentheses:
                                # on the 1st Jan, 2000 and not 2-hourly
                                # on the hour.
 
-.. _HowMultipleGraphStringsCombine:
-
 
 .. _AdvancedCycling:
 
 Advanced Examples
 ^^^^^^^^^^^^^^^^^
 
-The following examples show the various ways of writing graph headings in Cylc.
+Here are several examples of Cylc graph recurrence expressions:
 
 .. code-block:: sub
 
@@ -722,13 +684,10 @@ Advanced Starting Up
 ^^^^^^^^^^^^^^^^^^^^
 
 Dependencies that are only valid at the :term:`initial cycle point` can be
-written using the ``R1`` notation. For example:
+written using the ``R1`` syntax. For example:
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True
-       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -738,8 +697,7 @@ written using the ``R1`` notation. For example:
 
 In the example above, ``R1`` implies ``R1/20130808T00``, so
 ``prep`` only runs once at that cycle point (the initial cycle point).
-At that cycle point, ``foo`` will have a dependence on
-``prep`` - but not at subsequent cycle points.
+``foo`` will depend on ``prep`` there, but not at subsequent cycle points.
 
 However, it is possible to have a workflow that has multiple effective initial
 cycles - for example, one starting at ``T00`` and another starting
@@ -749,9 +707,6 @@ Let's suppose that we add the following section to the workflow example above:
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True
-       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20130808T00
        final cycle point = 20130812T00
@@ -780,9 +735,6 @@ For example, we can write our workflow like so, to produce the graph as shown:
 
       .. code-block:: cylc
 
-         [scheduler]
-             UTC mode = True
-             allow implicit tasks = True
          [scheduling]
              initial cycle point = 20130808T00
              final cycle point = 20130812T00
@@ -803,19 +755,14 @@ For example, we can write our workflow like so, to produce the graph as shown:
          :align: center
 
 
-This neatly expresses what we want - a task running at the initial cycle point
-that has one-off dependencies with other task sets at different cycles.
-
-Cylc also caters for a different kind of requirement.
-
 Usually, we want to specify additional tasks and dependencies at the initial
-cycle point. What if we want our first cycle point to be entirely special,
+cycle point. But what if we want our first cycle point to be entirely special,
 with some tasks missing compared to subsequent cycle points?
 
-In the workflow below, ``bar`` will not be run at the initial
-cycle point, but will still run at subsequent cycle points, where
-``+PT6H/PT6H`` means start at ``+PT6H`` (6 hours after
-the initial cycle point) and then repeat every ``PT6H`` (6 hours):
+In the workflow below, ``bar`` will not run at the initial cycle point, but
+will still run at subsequent cycle points. ``+PT6H/PT6H`` means start at
+``+PT6H`` (6 hours after the initial cycle point) and then repeat every
+``PT6H`` (6 hours):
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -828,9 +775,6 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
       .. code-block:: cylc
 
-          [scheduler]
-              UTC mode = True
-              allow implicit tasks = True
           [scheduling]
               initial cycle point = 20130808T00
               final cycle point = 20130808T18
@@ -850,16 +794,13 @@ the initial cycle point) and then repeat every ``PT6H`` (6 hours):
 
 
 Some workflows may have staggered start-up sequences where different tasks need
-running once but only at specific cycle points, potentially due to differing
-data sources at different cycle points with different possible initial cycle
+to run once but only at specific cycle points, e.g. because of differing
+data sources at different cycle points, with different possible initial cycle
 points. To allow this Cylc provides a ``min( )`` function that can be
 used as follows:
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True
-       allow implicit tasks = True
    [scheduling]
        initial cycle point = 20100101T03
        [[graph]]
@@ -881,22 +822,22 @@ Integer Cycling
 
 .. tutorial:: Integer Cycling Tutorial <tutorial-integer-cycling>
 
-In addition to non-repeating and :term:`datetime cycling` workflows, Cylc can do
-:term:`integer cycling` for repeating workflows that are not date-time based.
+In addition to non-cycling and :term:`datetime cycling` workflows, Cylc can do
+:term:`integer cycling` for cycling workflows that are not datetime based.
 
 To construct an integer cycling workflow, set
 :cylc:conf:`[scheduling]cycling mode = integer`, and specify integer values
 for the :term:`initial cycle point` and optionally the
-:term:`final cycle point`. The notation for intervals,
+:term:`final cycle point`. The syntax for intervals,
 offsets, and :term:`recurrences <recurrence>` (sequences) is similar to the
-date-time cycling notation, except for the simple integer values.
+datetime cycling syntax, except for the simple integer values.
 
 The full integer recurrence expressions supported are:
 
 - ``Rn/start-point/interval # e.g. R3/1/P2``
 - ``Rn/interval/end-point # e.g. R3/P2/9``
 
-But, as for date-time cycling, sequence start and end points can be omitted
+But, as for datetime cycling, sequence start and end points can be omitted
 where workflow initial and final cycle points can be assumed. Some examples:
 
 .. code-block:: sub
@@ -920,7 +861,7 @@ Advanced Integer Cycling Syntax
 
 The same syntax used to reference the initial and final cycle points
 (introduced in :ref:`referencing-the-initial-and-final-cycle-points`) for
-use with date-time cycling can also be used for integer cycling. For
+use with datetime cycling can also be used for integer cycling. For
 example you can write:
 
 .. code-block:: sub
@@ -998,11 +939,10 @@ name in the graph) and, and off the clock, and arbitrary external events.
 External triggering is relatively more complicated, and is documented
 separately in :ref:`Section External Triggers`.
 
-
 Success Triggers
 ^^^^^^^^^^^^^^^^
 
-The default, with no trigger type specified, is to trigger off the
+The default, with no trigger type specified, is to trigger off of the
 upstream task succeeding:
 
 .. code-block:: cylc
@@ -1024,49 +964,33 @@ explicit:
 Failure Triggers
 ^^^^^^^^^^^^^^^^
 
-To trigger off the upstream task reporting failure:
+To trigger off of the upstream task failing:
 
 .. code-block:: cylc
 
    # B triggers if A FAILS:
        R1 = "A:fail => B"
 
-*Suicide triggers* can be used to remove task ``B`` here if
-``A`` does not fail, see :ref:`SuicideTriggers`.
-
 
 Start Triggers
 ^^^^^^^^^^^^^^
 
-To trigger off the upstream task starting to execute:
+To trigger off of the upstream task starting:
 
 .. code-block:: cylc
 
    # B triggers if A STARTS EXECUTING:
        R1 = "A:start => B"
 
-This can be used to trigger tasks that monitor other tasks once they
-(the target tasks) start executing. Consider a long-running forecast model,
-for instance, that generates a sequence of output files as it runs. A
-postprocessing task could be launched with a start trigger on the model
-(``model:start => post``) to process the model output as it
-becomes available. Note, however, that there are several alternative
-ways of handling this scenario: both tasks could be triggered at the
-same time (``foo => model & post``), but depending on
-external queue delays this could result in the monitoring task starting
-to execute first; or a different postprocessing task could be
-triggered off a message output for each data file
-(``model:out1 => post1`` etc.; see :ref:`MessageTriggers`), but this
-may not be practical if the
-number of output files is large or if it is difficult to add Cylc
-messaging calls to the model.
+This can be used to trigger tasks that monitor the execution of other tasks,
+e.g. to process their output files on the fly as they are generated.
+:ref:`MessageTriggers` can also be useful for this use case.
 
 
 Finish Triggers
 ^^^^^^^^^^^^^^^
 
-To trigger off the upstream task succeeding or failing, i.e. finishing
-one way or the other:
+To trigger off of the upstream task either succeeding **or** failing:
 
 .. code-block:: cylc
 
@@ -1083,11 +1007,11 @@ Message Triggers
 
 .. tutorial:: Message Trigger Tutorial <tutorial-cylc-message-triggers>
 
-Tasks can also trigger off custom output messages. These must be registered in
-the :cylc:conf:`[runtime][<namespace>][outputs]` section of the emitting task,
-and reported using the ``cylc message`` command in task scripting.
-The graph trigger notation refers to the item name of the registered
-output message. An example message triggering workflow:
+We can also trigger off of custom task output messages. These must be
+registered in the :cylc:conf:`[runtime][<namespace>][outputs]` section
+of the emitting task, and sent with ``cylc message`` command.
+The graph trigger syntax refers to the item name of the registered
+output message. Here's an example workflow that uses message triggers:
 
 .. literalinclude:: ../../workflows/message-triggers/flow.cylc
    :language: cylc
@@ -1096,7 +1020,7 @@ output message. An example message triggering workflow:
 Job Submission Triggers
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-It is also possible to trigger off a task submitting, or failing to submit:
+To trigger off of a task submitting, or failing to submit:
 
 .. code-block:: cylc
 
@@ -1105,11 +1029,9 @@ It is also possible to trigger off a task submitting, or failing to submit:
    # D triggers if C fails to submit successfully:
        R1 = "C:submit-fail => D"
 
-A possible use case for submit-fail triggers: if a task goes into the
-submit-failed state, possibly after several job submission retries,
-another task that inherits the same runtime but sets a different job
-submission method and/or host could be triggered to, in effect, run the
-same job on a different platform.
+A possible use case for submit-fail triggering: if a task fails to submit,
+possibly after multiple retries, another task that inherits (mostly) the same
+runtime could be triggered to submit the same job to an alternative platform.
 
 
 Conditional Triggers
@@ -1155,8 +1077,7 @@ can only appear on the left [1]_ :
    # C triggers when either A or B finishes:
        R1 = "A | B => C"
 
-Any valid conditional expression can be used, as shown in the graph below,
-where conditional triggers are plotted with open arrow heads:
+Any valid conditional expression can be used.
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -1165,7 +1086,7 @@ where conditional triggers are plotted with open arrow heads:
 
    .. container:: caption
 
-      *Conditional triggers*
+      *Conditional trigger example*
 
       .. code-block:: cylc-graph
 
@@ -1184,124 +1105,12 @@ where conditional triggers are plotted with open arrow heads:
          :align: center
 
 
-.. _SuicideTriggers:
-
-Suicide Triggers
-^^^^^^^^^^^^^^^^
-
-.. tutorial:: Suicide Trigger Tutorial <tut-cylc-suicide-triggers>
-
-Suicide triggers take tasks out of the workflow. This can be used for automated
-failure recovery. The following :cylc:conf:`flow.cylc` listing and accompanying
-:term:`graph` show how to define a chain of failure recovery tasks that trigger
-if they're needed but otherwise remove themselves from the workflow (you can run
-the *AutoRecover.async* example workflow to see how this works). The dashed graph
-edges ending in solid dots indicate suicide triggers, and the open arrowheads
-indicate conditional triggers as usual.
-
-.. Need to use a 'container' directive to get centered image with
-   left-aligned caption (as required for code block text).
-
-.. container:: twocol
-
-   .. container:: caption
-
-      *Automated failure recovery via suicide triggers*
-
-      .. code-block:: cylc
-
-          [meta]
-              title = automated failure recovery
-              description = """
-                  Model task failure triggers diagnosis
-                  and recovery tasks, which take themselves
-                  out of the workflow if model succeeds. Model
-                  post processing triggers off model OR
-                  recovery tasks.
-              """
-          [scheduling]
-              [[graph]]
-                  R1 = """
-                      pre => model
-                      model:fail => diagnose => recover
-                      model => !diagnose & !recover
-                      model | recover => post
-                  """
-          [runtime]
-              [[model]]
-                  # UNCOMMENT TO TEST FAILURE:
-                  # script = /bin/false
-
-   .. container:: image
-
-      .. _fig-suicide:
-
-      .. figure:: ../../img/suicide.png
-         :align: center
-
-
-.. note::
-
-   Multiple suicide triggers combine in the same way as other
-   triggers, so this:
-
-   .. code-block:: cylc-graph
-
-      foo => !baz
-      bar => !baz
-
-   is equivalent to this:
-
-   .. code-block:: cylc-graph
-
-      foo & bar => !baz
-
-   i.e. both ``foo`` and ``bar`` must succeed for
-   ``baz`` to be taken out of the workflow. If you really want a task
-   to be taken out if any one of several events occurs then be careful to
-   write it that way:
-
-   .. code-block:: cylc-graph
-
-      foo | bar => !baz
-
-.. warning::
-
-   A word of warning on the meaning of "bare suicide triggers". Consider
-   the following workflow:
-
-   .. code-block:: cylc
-
-      [scheduling]
-          [[graph]]
-              R1 = "foo => !bar"
-
-   Task ``bar`` has a suicide trigger but no normal prerequisites
-   (a suicide trigger is not a task triggering prerequisite, it is a task
-   removal prerequisite) so this is entirely equivalent to:
-
-   .. code-block:: cylc
-
-      [scheduling]
-          [[graph]]
-              R1 = """
-                  foo & bar
-                  foo => !bar
-              """
-
-   In other words both tasks will trigger immediately, at the same time,
-   and then ``bar`` will be removed if ``foo`` succeeds.
-
-If an active task proxy (currently in the submitted or running states)
-is removed from the workflow by a suicide trigger, a warning will be logged.
-
-
 .. _FamilyTriggers:
 
 Family Triggers
 ^^^^^^^^^^^^^^^
 
-:term:`Families <family>` defined by the namespace inheritance hierarchy
+:term:`Families <family>` defined by the runtime inheritance hierarchy
 (:ref:`User Guide Runtime`) can be used in the graph to :term:`trigger` whole
 groups of tasks at the same time (e.g. forecast model ensembles and groups of
 tasks for processing different observation types at the same time) and for
@@ -1322,7 +1131,7 @@ To trigger an entire task family at once:
            R1 = "foo => FAM"
    [runtime]
        [[FAM]]    # a family (because others inherit from it)
-       [[m1,m2]]  # family members (inherit from namespace FAM)
+       [[m1,m2]]  # family members (inherit from FAM)
            inherit = FAM
 
 This is equivalent to:
@@ -1337,10 +1146,8 @@ This is equivalent to:
        [[m1,m2]]
            inherit = FAM
 
-To trigger other tasks off families we have to specify whether
-to triggering off *all members* starting, succeeding, failing,
-or finishing, or off *any* members (doing the same). Legal family
-triggers are thus:
+To trigger off of a task family you must specify whether the trigger condition
+applies to **all** or **any** of the member tasks:
 
 .. code-block:: cylc
 
@@ -1377,8 +1184,6 @@ failed):
 Efficient Inter-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. TODO: Is this section still true post-SoD?
-
 While Cylc allows writing :term:`dependencies <dependency>` between two
 :term:`families <family>` it is important to consider the number of
 dependencies this will generate. In the following example, each member of
@@ -1394,25 +1199,23 @@ dependencies this will generate. In the following example, each member of
 
 Expanding this out, you generate ``N * M`` dependencies, where ``N`` is the
 number of members of ``FAM1`` and ``M`` is the number of members of ``FAM2``.
-This can result in high memory use as the number of members of these families
-grows, potentially rendering the workflow impractical for running on some systems.
+This can result in high memory use as the number of family members grows.
 
-You can greatly reduce the number of dependencies generated in these situations
-by putting blank tasks in the graphing to represent the state of the family you
-want to trigger off. For example, if ``FAM2`` should trigger off any
-member of ``FAM1`` succeeding you can create a blank task
-``FAM1_succeed_any_marker`` and place a dependency on it as follows:
+You can greatly reduce the number of dependencies generated here by putting
+dummy tasks in the graph to represent the state of the upstream family. For
+example, if ``FAM2`` should trigger off any member of ``FAM1`` succeeding you
+can use a dummy task ``FAM1_done`` like this:
 
 .. code-block:: cylc
 
    [scheduling]
        [[graph]]
            R1 = """
-               FAM1:succeed-any => FAM1_succeed_any_marker => FAM2
+               FAM1:succeed-any => FAM1_done => FAM2
            """
    [runtime]
    # ...
-       [[FAM1_succeed_any_marker]]
+       [[FAM1_done]]
            script = true
    # ...
 
@@ -1425,12 +1228,15 @@ significantly less memory and CPU to store and evaluate.
 Inter-Cycle Triggers
 ^^^^^^^^^^^^^^^^^^^^
 
-Typically most tasks in a workflow will trigger off others in the same
-cycle point, but some may depend on others with other cycle points.
-This notably applies to warm-cycled forecast models, which depend on
-their own previous instances (see below); but other kinds of
-:term:`inter-cycle dependence <inter-cycle dependency>` are possible too [2]_ .
-Here's how to express this kind of relationship in cylc:
+Most tasks in a workflow typically depend on others with the same
+cycle point, but some may depend on other cycle points [2]_.
+
+:term:`Inter-cycle dependence <inter-cycle dependency>` is expressed using
+``[offset]`` syntax such as ``foo[-PT12H] => foo``, which means ``foo`` at the
+current cycle point depends on a previous instance of ``foo`` at 12 hours
+before the current cycle point. Unlike for recurrences (e.g. ``T00,T12``),
+dependency these offsets are relative to the current cycle point, not the
+initial cycle point.
 
 .. code-block:: cylc
 
@@ -1438,7 +1244,7 @@ Here's how to express this kind of relationship in cylc:
        # B triggers off A in the previous cycle point
        PT6H = "A[-PT6H] => B"
 
-inter-cycle and trigger type (or message trigger) notation can be
+inter-cycle and trigger type (or message trigger) syntax can be
 combined:
 
 .. code-block:: cylc
@@ -1446,77 +1252,32 @@ combined:
    # B triggers if A in the previous cycle point fails:
    PT6H = "A[-PT6H]:fail => B"
 
-At workflow start-up inter-cycle triggers refer to a previous cycle point
-that does not exist. This does not cause the dependent task to wait
-indefinitely, however, because Cylc ignores triggers that reach back
-beyond the initial cycle point. That said, the presence of an
-inter-cycle trigger does normally imply that something special has to
-happen at start-up. If a model depends on its own previous instance for
-restart files, for instance, then an initial set of restart files has to be
-generated somehow or the first model task will presumably fail with
-missing input files. There are several ways to handle this in Cylc
-using different kinds of one-off (non-cycling) tasks that run at workflow
-start-up.
-
-- ``R1`` tasks (recommended):
+For convenience, Cylc automatically ignores intercycle triggers that reach back
+beyond the initial cycle point. If something special has to happen at start-up,
+``R1`` tasks are the recommended way to make it happen:
 
   .. code-block:: cylc
 
      [scheduling]
          [[graph]]
-             R1 = "prep"
-             R1/T00,R1/T12 = "prep[^] => foo"
+             R1 = "prep1 => prep2"
+             R1/T00,R1/T12 = "prep2[^] => foo"
              T00,T12 = "foo[-PT12H] => foo => bar"
 
-``R1``, or ``R1/date-time`` tasks are the recommended way to
-specify unusual start up conditions. They allow you to specify a clean
-distinction between the dependencies of initial cycles and the dependencies
-of the subsequent cycles.
+Here there is a dependence on the initial ``R1`` task ``prep`` for ``foo`` at
+the first ``T00`` cycle point, and at the first ``T12`` cycle point.
+Thereafter, ``foo`` just depends on its previous (12 hours ago) instance.
 
-Initial tasks can be used for real model cold-start processes, whereby a
-warm-cycled model at any given cycle point can in principle have its inputs
-satisfied by a previous instance of itself, *or* by an initial task with
-(nominally) the same cycle point.
-
-In effect, the ``R1`` task masquerades as the previous-cycle-point trigger
-of its associated cycling task. At workflow start-up initial tasks will
-trigger the first cycling tasks, and thereafter the inter-cycle trigger
-will take effect.
-
-If a task has a dependency on another task in a different cycle point, the
-dependency can be written using the ``[offset]`` syntax such as
-``[-PT12H]`` in ``foo[-PT12H] => foo``. This means that
-``foo`` at the current cycle point depends on a previous instance of
-``foo`` at 12 hours before the current cycle point. Unlike recurrences
-(e.g. ``T00,T12``), dependencies assume that relative times are relative to the
-current cycle point, not the initial cycle point.
-
-However, it can be useful to have specific dependencies on tasks at or near
+It can also be useful to have specific dependencies on tasks at or near
 the initial cycle point. You can switch the context of the offset to be
 the initial cycle point by using the caret symbol: ``^``.
 
-For example, you can write ``foo[^]`` to mean foo at the initial
-cycle point, and ``foo[^+PT6H]`` to mean foo 6 hours after the initial
-cycle point. Usually, this kind of dependency will only apply in a limited
-number of cycle points near the start of the workflow, so you may want to write
-it in ``R1``-based graphs. Here's the example inter-cycle
-``R1`` workflow from above again.
+For example, ``foo[^]`` means ``foo`` at the initial cycle point, and
+``foo[^+PT6H]`` means ``foo`` 6 hours after the initial cycle point. Usually,
+this kind of dependency will only apply in a limited number of cycle points
+near the start of the workflow, so you may want to write it in an ``R1`` graph.
 
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           R1 = "prep"
-           R1/T00,R1/T12 = "prep[^] => foo"
-           T00,T12 = "foo[-PT12H] => foo => bar"
-
-You can see there is a dependence on the initial ``R1`` task
-``prep`` for ``foo`` at the first ``T00`` cycle point,
-and at the first ``T12`` cycle point. Thereafter, ``foo`` just
-depends on its previous (12 hours ago) instance.
-
-Finally, it is also possible to have a dependency on a task at a specific cycle
-point.
+Finally, dependence on a task at a specific cycle point is also possible:
 
 .. code-block:: cylc
 
@@ -1524,11 +1285,13 @@ point.
        [[graph]]
            R1/20200202 = "baz[20200101] => qux"
 
-However, in a long running workflow, a repeating cycle should avoid having a
-dependency on a task with a specific cycle point (including the initial cycle
-point) - as it can currently cause performance issue. In the following example,
-all instances of ``qux`` will depend on ``baz.20200101``, which
-will never be removed from the task pool:
+
+.. TODO is this still the case:
+
+.. warning::
+  However, in a long running workflow it is best to avoid a repeating cycle
+  that depends forever on a specific cycle point (including the initial point)
+  as this can adversely affect the scheduler's performance.
 
 .. code-block:: cylc
 
@@ -1556,9 +1319,8 @@ Tasks that depend on their own previous-cycle instance can be declared as
        [[graph]]
            T00,T12 = "foo => bar"
 
-*The sequential declaration is deprecated* however, in favor of explicit
-inter-cycle triggers which clearly expose the same scheduling behaviour in the
-graph:
+However, this feature is deprecated in favor of explicit inter-cycle triggers
+which expose the associated scheduling behaviour in the graph:
 
 .. code-block:: cylc
 
@@ -1595,8 +1357,7 @@ Future Triggers
 ^^^^^^^^^^^^^^^
 
 Cylc also supports :term:`inter-cycle triggering <inter-cycle trigger>` off
-tasks "in the future" (with respect to cycle point - which has no bearing on
-wall-clock job submission time unless the task has a clock trigger):
+tasks "in the future" (with respect to cycle point):
 
 .. code-block:: cylc
 
@@ -1620,21 +1381,19 @@ other tasks beyond the final point.
 Clock Triggers
 ^^^^^^^^^^^^^^
 
-.. note::
+.. warning::
 
-   Please read External Triggers (:ref:`Section External Triggers`) before
-   using the older clock triggers described in this section.
+   This section describes deprecated old-style clock triggers that are part of
+   the task definition. Please consider using :ref:`Built-in Clock Triggers`
+   (external triggers) instead.
 
-By default, date-time cycle points are not connected to the real time
-(the :term:`wall-clock time`).
-They are just labels that are passed to task jobs (e.g. to
-initialize an atmospheric model run with a particular date-time value). In real
-time cycling systems, however, some tasks - typically those near the top of the
-graph in each cycle - need to trigger at or near the time when their cycle point
-is equal to the real clock date-time.
+By default, datetime cycle points are not connected to the :term:`wallclock time`.
+In real time cycling systems, however, some tasks may need to trigger at
+(or at some offset from) their cycle point in real time.
 
-So *clock triggers* allow tasks to trigger at (or after, depending on other
-triggers) a wall clock time expressed as an offset from cycle point:
+Cylc points are full datetimes, not just times of the day, so clock-triggers
+provide no constraint if the workflow gets sufficiently far behind the clock,
+allowing maximum concurrency until the clock-triggered tasks catch up again.
 
 .. code-block:: cylc
 
@@ -1644,15 +1403,10 @@ triggers) a wall clock time expressed as an offset from cycle point:
        [[graph]]
            T00 = foo
 
-Here, ``foo[2015-08-23T00]`` would trigger (other dependencies allowing)
-when the wall clock time reaches ``2015-08-23T02``. Clock-trigger
-offsets are normally positive, to trigger some time *after* the wall-clock
-time is equal to task cycle point.
-
-Clock-triggers have no effect on scheduling if a workflow is running sufficiently
-far behind the clock (e.g. after a delay, or because it is processing archived
-historical data) that the trigger times, which are relative to task cycle
-point, have already passed.
+Here, ``foo[2025-08-23T00]`` would trigger (other dependencies allowing)
+when the wallclock time reaches ``2025-08-23T02``. Clock-trigger
+offsets are normally positive, to trigger *after* the wallclock time is equal
+to the task cycle point.
 
 
 .. _ClockExpireTasks:
@@ -1660,37 +1414,25 @@ point, have already passed.
 Clock-Expire Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Tasks can be configured to *expire* - i.e. to skip job submission and
-enter the *expired* state - if they are too far behind the wall clock when
-they become ready to run, and other tasks can trigger off this. As a possible
-use case, consider a cycling task that copies the latest of a set of files to
-overwrite the previous set: if the task is delayed by more than one cycle there
-may be no point in running it because the freshly copied files will just be
-overwritten immediately by the next task instance as the workflow catches back up
-to real time operation. Clock-expire tasks are configured with
+Tasks can be configured to *expire* and skip job submission if they are too far
+behind the wallclock when they become ready to run (and other tasks can trigger
+off of this).
+
+For example, if a clock-triggered task always copies the latest of a set of
+files to overwrite the previous set, in every cycle, there would be no point in
+running it late because the files it copied would be immediately overwritten by
+the next task instance as the workflow catches back up to real time operation.
+
+Clock-expire tasks are configured with
 :cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
 :cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
-with a date-time offset relative to cycle point.
-The offset should be positive to make the task expire if the wall-clock time
-has gone beyond the cycle point. Triggering off an expired task typically
-requires suicide triggers to remove the workflow that runs if the task has not
-expired. Here a task called ``copy`` expires, and its downstream
-workflow is skipped, if it is more than one day behind the wall-clock:
+with a datetime offset relative to cycle point.
+The offset should be positive to make the task expire if the wallclock time
+has gone beyond the cycle point.
 
-.. code-block:: cylc
-
-   [scheduler]
-      allow implicit tasks = True
-      cycle point format = %Y-%m-%dT%H
-   [scheduling]
-       initial cycle point = 2015-08-15T00
-       [[special tasks]]
-           clock-expire = copy(-P1D)
-       [[graph]]
-           P1D = """
-               model[-P1D] => model => copy => proc
-               copy:expired => !proc
-           """
+.. note::
+  The scheduler can only determine that a task has expired once it has
+  appeared in the active window of the workflow.
 
 
 .. _WorkflowConfigExternalTriggers:
@@ -1698,27 +1440,37 @@ workflow is skipped, if it is more than one day behind the wall-clock:
 External Triggers
 ^^^^^^^^^^^^^^^^^
 
-This is a substantial topic, documented in :ref:`Section External Triggers`.
+This is a substantial topic, documented separately
+in :ref:`Section External Triggers`.
 
 
-Limiting Triggering
--------------------
+How to Limit Triggering
+-----------------------
 
-Cylc will usually try to trigger any task with met dependencies. This can
-risk running more tasks than you wish to. :ref:`RunaheadLimit` and
-:ref:`InternalQueues` provide tools for you to control the trigging of ready
-tasks.
+Cylc will usually try to trigger any task with met dependencies. If this
+risks running more tasks than you wish - if it would overwhelm the job
+platform for example - :ref:`RunaheadLimit` and :ref:`InternalQueues` provide
+tools to limit workflow activity.
 
 .. _RunaheadLimit:
 
 Runahead Limiting
 ^^^^^^^^^^^^^^^^^
 
-Runahead limiting prevents the fastest tasks in a workflow from getting too far
-ahead of the slowest ones.
+Runahead limiting, controlled by :cylc:conf:`[scheduling]runahead limit`,
+prevents the fastest tasks in a workflow from getting too far
+ahead (with respect to cycle point) of the slowest ones.
 
-For example in the following workflow the runahead limit of ``P5`` restricts the
-workflow so that only five consecutive cycles may run simultaneously.
+.. note::
+  Runahead limiting does not restrict activity within a cycle point.
+  Workflows with a large number of tasks per cycle may need :ref:`internal
+  queues <InternalQueues>` to constrain activity in absolute terms.
+   
+Succeeded and failed tasks are ignored when computing the runahead limit. 
+
+In the following example the runahead limit of ``P5`` (which is also the
+default) restricts the active window of the workflow to span a maximum of five
+cycle points.
 
 .. code-block:: cylc
 
@@ -1729,50 +1481,37 @@ workflow so that only five consecutive cycles may run simultaneously.
         [[graph]]
             P1 = foo
 
-When this workflow is started the tasks ``foo.1`` -> ``foo.5`` will be submitted,
-however, the tasks from ``foo.6`` onwards are said to be "runahead limited"
-and will not be submitted.
+When this workflow is started the tasks ``foo.1`` through ``foo.5`` will be
+submitted, but ``foo.6`` (and beyond) are "runahead limited" and will not be
+submitted until the earliest tasks finish.
 
-Succeeded and failed tasks are ignored when computing the runahead limit. This
-functionality is controlled by the :cylc:conf:`[scheduling]runahead limit`
-which can be set to either:
+A low runahead limit restricts Cylc's ability to run multiple cycle at once,
+but it will not stall the workflow unless it fails to extend out past a future
+trigger (see :ref:`InterCyclePointTriggers`).
 
-* A number of consecutive cycles.
-* Or a time interval between the oldest and newest cycles.
-
-A low runahead limit can prevent Cylc from interleaving cycles, but it will not
-stall a workflow unless it fails to extend out past a future trigger (see
-:ref:`InterCyclePointTriggers`).
-
-A high runahead limit may allow fast tasks
-that are not constrained by dependencies or clock-triggers to spawn far ahead
-of the pack, which could have performance implications for the
-:term:`scheduler` when running very large workflows.
-
-See the :cylc:conf:`[scheduling]runahead limit` configuration for more details.
+A high runahead limit allows fast tasks that are not constrained by dependence
+on other tasks or clock-triggers to spawn many cycles ahead.
+:ref:`Internal queues <InternalQueues>` may be needed as well, if this would
+result in too many tasks submitting at once.
 
 
 .. _InternalQueues:
 
-Limiting Activity With Internal Queues
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Internal Queues
+^^^^^^^^^^^^^^^
 
-Large workflows can potentially overwhelm task hosts by submitting too many
-tasks at once. You can prevent this with *internal queues*, which
-limit the number of tasks that can be active (submitted or running)
-at the same time.
+Large workflows can potentially overwhelm the system by submitting too many
+jobs at once. Internal queues can prevent this by limiting the number of
+tasks that can be active (submitted or running) at the same time.
 
-Internal queues behave in the first-in-first-out (FIFO) manner, i.e. tasks are
-released from a queue in the same order that they were queued.
-
-A queue is defined by a *name*; a *limit*, which is the maximum
-number of active tasks allowed for the queue; and a list of *members*,
-assigned by task or family name.
-
-Queue configuration is done in the :cylc:conf:`[scheduling][queues]` section.
+Internal queues are FIFO (first-in-first-out): tasks are released in the same
+order that they were queued. They are configured under
+:cylc:conf:`[scheduling][queues]` with a *name*; a list of *members* assigned
+by task or family name; and a *limit*, which is the maximum number of active
+members allowed.
 
 By default every task is assigned to the ``default`` queue, which by default
-has a zero limit (interpreted by cylc as no limit). To use a single queue for
+has a zero limit (interpreted by Cylc as no limit). To use a single queue for
 the whole workflow just set the default queue limit:
 
 .. code-block:: cylc
@@ -1783,8 +1522,7 @@ the whole workflow just set the default queue limit:
            [[[default]]]
                limit = 5
 
-To use additional queues just name each one, set their limits, and assign
-members:
+To use additional queues just name them, set limits, and assign members:
 
 .. code-block:: cylc
 
@@ -1795,9 +1533,8 @@ members:
                members = foo, bar, baz
 
 Any tasks not assigned to a particular queue will remain in the default
-queue. The *queues* example workflow illustrates how queues work by
-running two task trees side by side each
-limited to 2 and 3 tasks respectively:
+queue. The following example illustrates how queues work by running two task
+trees side by side, limited to 2 and 3 tasks respectively:
 
 .. literalinclude:: ../../workflows/queues/flow.cylc
    :language: cylc
@@ -1810,21 +1547,19 @@ Graph Branching
 
 .. versionadded:: 8.0.0
 
-Cylc handles :term:`graphs <graph>` in an event-driven manner which means
-that a workflow can follow different paths in different eventualities.
+Cylc 8 handles :term:`graphs <graph>` in an event-driven way so that
+a workflow can automatically follow different paths in different eventualities.
 This is called :term:`branching`.
 
 .. note::
 
-   Before Cylc 8 graphs were not event-driven so
-   :term:`suicide triggers <suicide trigger>`
-   were used to allow the graph to evolve at runtime.
+   Before Cylc 8 graphs were not event-driven so :term:`suicide triggers
+   <suicide trigger>` were needed to clean up unused branches at runtime.
 
 Basic Example
 ^^^^^^^^^^^^^
 
-In this example Cylc will follow one of two possible "branches" depending
-on the outcome of task ``b``:
+Here Cylc will follow one of two "branches" depending on the outcome of task ``b``:
 
 * If ``b`` succeeds then the task ``c`` will run.
 * If ``b`` fails then the task ``r`` will run.
@@ -1864,22 +1599,21 @@ Task ``d`` will run after either ``c`` or ``r`` succeeds.
                a => b => c
                # the fail path
                a => b:fail => r
-               # carrying on with the rest of the workflow
+               # either way, carry on with the rest of the workflow
                c | r => d
            """
 
-Note the last line of the graph ``c | r => d`` which allows the graph to
-continue on to ``d`` irrespective of which path has been taken.
+Note the last line of the graph ``c | r => d`` allows the graph to
+continue on to ``d`` regardless of the path taken.
 
 Message Trigger Example
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Branching is particularly powerful when combined with :ref:`MessageTriggers`,
-here is an example showing how message triggers can be used to define multiple
-parallel pathways.
+Branching is particularly powerful when using :ref:`MessageTriggers`
+to define multiple parallel pathways.
 
-In this graph there is a task called ``showdown`` which produces one of three
-possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
+In the following graph there is a task called ``showdown`` which produces one
+of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
 a different path depending on which of these three outputs is produced:
 
 .. digraph:: Example
@@ -1915,7 +1649,7 @@ a different path depending on which of these three outputs is produced:
 
 As with the previous example each path begins with a different outcome
 of a particular task and ends with an "or" dependency to allow the workflow
-to continue irrespective of which path was taken:
+to continue regardless of the path taken:
 
 .. code-block:: cylc
 
@@ -1954,9 +1688,8 @@ When using message triggers in this way there are two things to be aware of:
 
 1. Message triggers are not exit states.
 
-   Message triggers are produced ``before`` a task has completed, consequently,
-   it can be useful to combine a message trigger with a regular trigger for
-   safety e.g:
+   Custom output messages are generated *before* the task has completed, so it
+   can be useful to combine them with a regular trigger for safety e.g:
 
    .. code-block:: cylc-graph
 
@@ -1966,46 +1699,14 @@ When using message triggers in this way there are two things to be aware of:
       # if showdown fails then good will not run
       showdown:succeed & showdown:good => good
 
-2. Message triggers are not mutually exclusive.
+2. Message triggers are not necessarily mutually exclusive.
 
-   There is nothing in Cylc to prevent a task from producing multiple outputs
+   Cylc cannot prevent a task from sending multiple output messages,
    e.g. ``good``, ``bad`` and ``ugly``.
 
-   This is hard to defend against, ensure that the task that produces these
-   outputs is written in such a way that this cannot happen.
-
-
-.. _ModelRestartDependencies:
-
-Model Restart Dependencies
---------------------------
-
-Warm-cycled forecast models generate *restart files*, e.g. model
-background fields, to initialize the next forecast. This kind of
-dependence requires an inter-cycle trigger:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           T00,T06,T12,T18 = "A[-PT6H] => A"
-
-If your model is configured to write out additional restart files
-to allow one or more cycle points to be skipped in an emergency *do not
-represent these potential dependencies in the workflow graph* as they
-should not be used under normal circumstances. For example, the
-following graph would result in task ``A`` erroneously
-triggering off ``A[T-24]`` as a matter of course, instead of
-off ``A[T-6]``, because ``A[T-24]`` will always
-be finished first:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           # DO NOT DO THIS (SEE ACCOMPANYING TEXT):
-           T00,T06,T12,T18 = "A[-PT24H] | A[-PT18H] | A[-PT12H] | A[-PT6H] => A"
-
+   Sometimes this is actually desirable, but if not it is hard to defend
+   against. If your graph assumes the outputs are mutually exclusive you should
+   check that they really are, as far as the producing task is concerned.
 
 How The Graph Determines Task Instantiation
 -------------------------------------------
@@ -2149,6 +1850,5 @@ value of a single logical flag defined at the top of the workflow.
 
 .. [1] An OR operator on the right doesn't make much sense: if "B or C"
        triggers off A, what exactly should Cylc do when A finishes?
-.. [2] In NWP forecast analysis workflows parts of the observation
-       processing and data assimilation subsystem will typically also
-       depend on model background fields generated by the previous forecast.
+.. [2] For example, in weather forecasting workflows (and similar systems) each
+       new forecast depends partly on the outcome of the previous forecast.
