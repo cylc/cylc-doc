@@ -60,8 +60,10 @@ In backward compatibility mode:
    from scratch at the right cycle point or task(s):
 
    - ``cylc play --start-cycle-point=<CYCLEPOINT>`` (c.f. Cylc 7 *warm start*), or
-   - ``cylc play --start-task=<NAME.CYCLEPOINT>`` (Cylc 8 can start anywhere in the graph)
+   - ``cylc play --start-task=<TASKNAME.CYCLEPOINT>`` (Cylc 8 can start anywhere in the graph)
 
+   Any previous-cycle workflow data needed by the new run will need to be
+   manually copied over from the original run directory.
 
 If your Cylc 7 workflow *fails* validation in Cylc 8,
 see :ref:`AutoConfigUpgrades` to learn how to fix this.
