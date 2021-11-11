@@ -308,9 +308,7 @@ Cylc 8 has ``cylc pause`` to:
 And ``cylc play`` to:
 
 - start,
-
 - restart, and
-
 - release a paused workflow
 
 So *restart* is now the safe default behaviour. For a new run from scratch,
