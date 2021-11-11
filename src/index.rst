@@ -12,9 +12,13 @@ indefinitely.
 
 .. warning::
 
-   Cylc 8 is beta software that is not yet recommended for production use.
+   Cylc 8.0b3 is the final beta release of Cylc 8, a major upgrade from Cylc 7.
 
-   This documentation has not yet been fully updated and may contain errors.
+   As beta software it is not yet recommended for production use, but the
+   primary components of the new system are all in place.
+
+   This documentation has been revised for Cylc 8 but some new features are yet
+   to be fully documented.
 
 .. toctree::
    :maxdepth: 2
