@@ -168,9 +168,9 @@ task icon incorporates a radial progress indicator.
 .. image:: ../img/task-job.png
    :align: center
 
-The removed Cylc 7 task states have been absorbed into the *waiting* state, but
-you can see or infer what is being waited on: e.g. a queue, xtrigger, or
-retry timer. For instance, a waiting task with any associated jobs must be going
+The task states removed since Cylc 7 have been absorbed into *waiting*, but
+you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
+timer. For instance, a waiting task that already has associated jobs must be going
 to retry.
 
 Window on the Workflow
@@ -368,7 +368,7 @@ are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
 Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
 ----------------------------------------------
 
-- Every task implicitly depedended on previous-instance (same task, previous
+- Every task implicitly depended on previous-instance (same task, previous
   cycle point) job submission
 - The scheduler had to be aware of at least one active and one waiting
   cycle point instance of every task in the workflow, plus all succeeded tasks
