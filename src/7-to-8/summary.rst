@@ -29,6 +29,12 @@ filename.
 
 In backward compatibility mode:
 
+.. note::
+
+   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
+   ``suite.rc`` files in the same :term:`run directory` will result in an
+   error and will not trigger back compatibility mode. 
+
 .. TODO: mention optional outputs
 
 * :term:`implicit tasks <implicit task>` are allowed by default
@@ -296,6 +302,11 @@ workflow files into the run directory at start-up
 
 Workflows can be deleted with ``cylc clean`` - see :ref:`Removing-workflows`.
 
+.. note::
+
+   Cylc 8 forbids having both ``flow.cylc`` and ``suite.rc`` files in the same
+   :term:`run directory` or :term:`source directory`.
+
 Safe Run Semantics
 ------------------
 
@@ -317,6 +328,7 @@ So *restart* is now the safe default behaviour. For a new run from scratch,
 do a fresh ``cylc install`` and play it safely in the new run directory.
 
 (Note that ``cylc hold`` and ``cylc release`` pause and release individual tasks.)
+
 
 Security
 --------
