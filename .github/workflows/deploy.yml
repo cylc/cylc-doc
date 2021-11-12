@@ -35,12 +35,14 @@ on:
         required: true
       set_stable:
         description: 'Stable build. Make this the default documented version.'
-        required: false
+        type: boolean
         default: true
+        required: false
       set_latest:
         description: 'Latest build (but not the default version). If the build is both the Latest and the Stable/default, use `set_stable` as well.'
-        required: false
+        type: boolean
         default: true
+        required: false
 
 jobs:
   deploy:
@@ -84,7 +86,7 @@ jobs:
           path: gh-pages
 
       - name: sync static files
-        if: ${{ github.event.inputs.set_stable }}
+        if: ${{ github.event.inputs.set_stable == 'true' }}
         run: |
           DOCS="${{ github.workspace }}/docs" \
           PAGE="${{ github.workspace }}/gh-pages"  \
