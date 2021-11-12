@@ -31,7 +31,7 @@ on:
         description: 'cylc rose github release tag'
         required: true
       cylc-uis-tag:
-        description: 'cylc rose github release tag'
+        description: 'cylc uiserver github release tag'
         required: true
       metomi-rose-tag:
         description: 'Rose GitHub release tag (currently only affects cylc-rose install)'
