@@ -383,6 +383,9 @@ If:
 - neither :cylc:conf:`flow.cylc` nor the deprecated suite.rc are found in
   the :term:`source directory`
 
+- Both :cylc:conf:`flow.cylc` and the deprecated suite.rc are found in
+  the :term:`source directory`. Only one should be present.
+
 - the run-name is specified as ``_cylc-install``
 
 - the workflow name is an absolute path or invalid

@@ -33,6 +33,12 @@ it will turn on a backwards compatibility mode, which:
   of the workflow's initial start (including any daylight saving changes),
   rather than UTC.
 
+.. note::
+
+   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
+   ``suite.rc`` files in the same :term:`run directory` will result in an
+   error and will not trigger back compatibility mode. 
+
 .. TODO: mention optional outputs
 
 .. warning::
@@ -266,6 +272,11 @@ workflow files into the run directory at start-up
    $ cylc play democ8/run2
    # etc.
 
+.. note::
+
+   Cylc 8 forbids having both ``flow.cylc`` and ``suite.rc`` files in the same
+   :term:`run directory` or :term:`source directory`.
+
 Deleting workflows can be done using ``cylc clean`` - see
 :ref:`Removing-workflows`.
 
@@ -280,6 +291,7 @@ the intended restart.
 Cylc 8 has ``cylc play`` to *start*, *restart*, or *unpause* a workflow, so
 "restart" is now the safe default behaviour. For a new run from scratch,
 do a fresh ``cylc install`` and run it safely in the new run directory.
+
 
 Security
 --------
