@@ -3,6 +3,13 @@
 Introduction
 ============
 
+.. warning::
+
+   This section of the tutorial still has screenshots of the obsolete Cylc 7
+   desktop GUI, and it still uses a command from the ``Rose`` project to
+   copy workflow source files.
+
+
 .. ifnotslides::
 
    So far we have been working with the ``[scheduling]`` section. This is where

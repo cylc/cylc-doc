@@ -5,6 +5,11 @@
 Date-Time Cycling
 =================
 
+.. warning::
+
+   This section of the tutorial still contains screenshots of the obsolete Cylc 7
+   desktop GUI.
+
 
 In the last section we looked at writing an :term:`integer cycling` workflow,
 one where the :term:`cycle points <cycle point>` are numbered.

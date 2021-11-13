@@ -10,15 +10,17 @@ indefinitely.
    :width: 50%
    :target: https://cylc.discourse.group
 
+.. Note the following warning is also given at the top of the installation section.
+
 .. warning::
 
-   Cylc 8.0b3 is the final beta release of Cylc 8, a major upgrade from Cylc 7.
+   Cylc 8.0b3 is the final *beta release* of Cylc 8, a major upgrade from Cylc 7.
 
-   As beta software it is not yet recommended for production use, but the
-   primary components of the new system are all in place.
+   All Cylc 8 system components are in place but not yet heavily tested by users. 
+   Cylc 7 is still available if needed.
 
-   This documentation has been revised for Cylc 8 but some new features are yet
-   to be fully documented.
+   This documentation has been revised for Cylc 8, but some new features are
+   yet to be fully described.
 
 .. toctree::
    :maxdepth: 2

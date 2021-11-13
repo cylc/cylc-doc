@@ -6,7 +6,6 @@ Further Scheduling
 In this section we will quickly run through some of the more advanced features
 of Cylc's scheduling logic.
 
-
 .. _tutorial-qualifiers:
 
 Qualifiers

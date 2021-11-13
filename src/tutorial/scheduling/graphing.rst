@@ -5,6 +5,10 @@ Graphing
 
 In this section we will cover writing basic workflows in cylc.
 
+.. warning::
+
+   This section of the tutorial still contains screenshots of the obsolete Cylc 7
+   desktop GUI.
 
 .. _Cylc file format:
 

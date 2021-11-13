@@ -6,6 +6,7 @@
 Jinja2
 ======
 
+
 `Jinja2`_ is a templating language often used in web design with some
 similarities to python. It can be used to make a workflow definition more
 dynamic.

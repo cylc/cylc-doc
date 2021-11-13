@@ -10,54 +10,49 @@ Terminology
 - **Suite daemon** (or **suite server program**) is now **SCHEDULER** (ditto)
 - **Batch system** is now **JOB RUNNER** (not all of our job runners are "batch
   systems")
+- The **workflow config filename** is now ``flow.cylc``, not ``suite.rc``
 
 .. important::
-
-   - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
-
+   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
+   ``suite.rc`` files in the same :term:`run directory` will result in an error.
 
 .. _Cylc_7_compat_mode:
 
 Backward Compatibility
 ----------------------
 
-Cylc 8 can run most Cylc 7 workflows out of the box.
-
-:term:`Workflow validation` warns of deprecated Cylc 7 syntax, and a
-backward compatibility mode is triggered by the deprecated ``suite.rc`` config
-filename.
-
-In backward compatibility mode:
-
-.. note::
-
-   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
-   ``suite.rc`` files in the same :term:`run directory` will result in an
-   error and will not trigger back compatibility mode. 
-
-.. TODO: mention optional outputs
-
-* :term:`implicit tasks <implicit task>` are allowed by default
-
-  * (unless a ``rose-suite.conf`` file is found in the :term:`run directory`)
-
-  * (by default, Cylc 8 does not allow implicit tasks)
-
-* :term:`cycle point time zone` defaults to the local time zone
-
-  * (by default, Cylc 8 defaults to UTC)
-
-* waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
-  stall behaviour, and these require :term:`suicide triggers <suicide trigger>` for
-  alternate path :term:`branching <graph branching>`
-
-  * (otherwise, Cylc 8 spawns tasks on demand so suicide triggers are not
-    needed for branching)
+:term:`Workflow validation` warns of deprecated Cylc 7 syntax. If your Cylc 7
+workflow *fails* validation in Cylc 8, see :ref:`AutoConfigUpgrades` to learn
+how to fix this.
 
 .. warning::
 
    Please take action on deprecation warnings from ``cylc validate`` before
    renaming your ``suite.rc`` file to ``flow.cylc``.
+
+Before upgrade, Cylc 8 can run Cylc 7 workflows out of the box. The old
+``suite.rc`` filename triggers a backward compatibility mode in which:
+
+- :term:`implicit tasks <implicit task>` are allowed by default
+
+  - (unless a ``rose-suite.conf`` file is found in the :term:`run directory`)
+  - (by default, Cylc 8 does not allow implicit tasks)
+
+- :term:`cycle point time zone` defaults to the local time zone
+
+  - (by default, Cylc 8 defaults to UTC)
+
+- waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
+  stall behaviour, and these require :term:`suicide triggers <suicide trigger>` for
+  alternate path :term:`branching <graph branching>`
+
+  - (Cylc 8 spawns tasks on demand and suicide triggers are not needed for branching)
+
+- task ``succeeded`` outputs are *required* so the scheduler will retain failed
+  tasks as incomplete
+
+  - (in Cylc 8, all outputs are *required* unless marked as optional by new ``?`` syntax)
+
 
 .. warning::
 
@@ -70,9 +65,6 @@ In backward compatibility mode:
 
    Any previous-cycle workflow data needed by the new run will need to be
    manually copied over from the original run directory.
-
-If your Cylc 7 workflow *fails* validation in Cylc 8,
-see :ref:`AutoConfigUpgrades` to learn how to fix this.
 
 
 Architecture
@@ -333,17 +325,13 @@ do a fresh ``cylc install`` and play it safely in the new run directory.
 Security
 --------
 
-* In a multi-user installation users authenticate at the Hub, which
-  spawns a Cylc UI Server as the target user (workflow owner).
-
-* For a single user installation the UI Server can be started directly,
+- In a multi-user context, users authenticate at the Hub, which
+  spawns Cylc UI Servers as the target user (workflow owner).
+- In a single user context, the UI Server can be started directly,
   with token-based authentication.
-
-* The UI Server interacts with its own Schedulers, which also run as the user.
-
-* Users can authorize different levels of access to others, via their UI Server.
-
-* Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
+- The UI Server interacts with its own Schedulers, which also run as the user.
+- Users can authorize different levels of access to others, via their UI Server.
+- Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
 
 See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 

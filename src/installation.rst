@@ -5,12 +5,13 @@ Installation
 
 .. warning::
 
-   **Cylc** |version| **is an early full-system Cylc 8 preview release**
-   It is fully functional and Python 3 based, but not yet heavily tested by
-   users.
+   Cylc 8.0b3 is the final *beta release* of Cylc 8, a major upgrade from Cylc 7.
 
-   The latest Cylc 7 stable releases (7.9.x for Python 2.7 and cylc-7.8.x for
-   Python 2.6) are still available for use if needed.
+   All Cylc 8 system components are in place but not yet heavily tested by users. 
+   Cylc 7 is still available if needed.
+
+   This documentation has been revised for Cylc 8, but some new features are
+   yet to be fully described.
 
 
 Quick Installation
