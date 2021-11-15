@@ -39,8 +39,6 @@ in that family reaching the desired :term:`state <task state>` e.g:
 Such :term:`triggers <task trigger>` are referred to as
 :term:`family triggers <family trigger>`
 
-Foo ``cylc gui`` bar
-
 
 Example
 -------
@@ -83,15 +81,15 @@ You have now created a workflow that:
   or fails.
 * Has 7 tasks that inherit from the ``MINERS`` family.
 
-Open the ``cylc gui`` then run the workflow by pressing the "play" button
-(top left hand corner) then clicking :guilabel:`Start`::
+Run the workflow::
 
-   cylc gui tutorial-family-triggers &
+   cylc play tutorial-family-triggers
 
 You should see the ``visit_mine`` task run, then trigger the members of the
 ``MINERS`` family. Note that some of the ``MINERS`` tasks may fail so you
-will need to stop your workflow using the "stop" button in the ``cylc gui`` in
-order to allow it to shutdown.
+will need to stop your workflow using the "stop" button in the UI, or::
+
+   cylc stop tutorial-family-triggers
 
 
 Family Triggering: Success
@@ -131,8 +129,7 @@ all the ``MINERS`` tasks have finished and if any of them have succeeded.
 
 Save your changes and run your workflow. You should see the new
 ``sell_diamonds`` task being run once all the miners have finished and at
-least one of them has succeeded. As before, stop your workflow using the "stop"
-button in the ``cylc gui``.
+least one of them has succeeded. Stop your workflow as described above.
 
 
 Family Triggering: Failure

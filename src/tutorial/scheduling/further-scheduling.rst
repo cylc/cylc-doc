@@ -6,7 +6,6 @@ Further Scheduling
 In this section we will quickly run through some of the more advanced features
 of Cylc's scheduling logic.
 
-
 .. _tutorial-qualifiers:
 
 Qualifiers
@@ -54,10 +53,11 @@ Clock Triggers
 .. ifnotslides::
 
    In Cylc, :term:`cycle points <cycle point>` are just labels. Tasks are
-   triggered when their dependencies are met irrespective of the cycle they are
-   in, but we can force cycles to wait for a particular time before running
-   using clock triggers. This is necessary for certain operational and
-   monitoring systems.
+   triggered when their dependencies are met regardles of their cycle point.
+   But we can use *clock triggers* to force tasks to wait for a particular time,
+   relative to their cycle point time, before running.
+   This is necessary for certain operational and monitoring systems, e.g. for
+   tasks that process real-time data.
 
    For example in the following workflow the cycle ``2000-01-01T12Z`` will wait
    until 11:00 on the 1st of January 2000 before running:
@@ -66,11 +66,11 @@ Clock Triggers
 
    [scheduling]
        initial cycle point = 2000-01-01T00Z
-       [[special tasks]]
-           clock-trigger = daily(-PT1H)
+       [[xtriggers]]
+           PT1H_trigger = wall_clock(offset=-PT1H):PT30S
        [[graph]]
-           T12 = daily  # "daily" will run, at the earliest, one hour
-                        # before midday.
+           # "daily" will run, at the earliest, one hour before midday.
+           T12 = @PT1H_trigger => daily
 
 .. tip::
 

@@ -5,15 +5,13 @@ Installation
 
 .. warning::
 
-   **Cylc** |version| **is an early full-system Cylc 8 preview release**
+   Cylc 8.0b3 is the final *beta release* of Cylc 8, a major upgrade from Cylc 7.
 
-   It has a fully functional Python 3 workflow service and CLI that can run
-   existing Cylc workflows.
+   All Cylc 8 system components are in place but not yet heavily tested by users. 
+   Cylc 7 is still available if needed.
 
-   **But** it is not production-ready yet.
-
-   Use the latest Cylc 7.9 (Python 2.7) or 7.8 (Python 2.6) release
-   for production systems.
+   This documentation has been revised for Cylc 8, but some new features are
+   yet to be fully described.
 
 
 Quick Installation
@@ -108,7 +106,7 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 
    Newer version of Mac OS set ``zsh`` as the default shell (as opposed to
    ``bash``). You do not need to change this but be aware that Cylc uses
-   ``bash`` which has a subtly different syntax.
+   ``bash`` (for task job scripts) which has a subtly different syntax.
 
 .. warning::
 
@@ -124,7 +122,6 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 Site Installation
 -----------------
 
-
 For multi-user installation we recommend using Conda and installing
 Cylc components only where required.
 
@@ -134,7 +131,7 @@ The Cylc Packages
 Cylc is split into a number of packages providing different functionality:
 
 `Cylc Flow`_
-   Provides the scheduler "kernel" of Cylc along with the command-line.
+   Provides the scheduler "kernel" of Cylc along with the command line interface.
 `Cylc UI Server`_
    Provides the "Cylc Hub" and the browser-based "Cylc GUI".
 :ref:`Cylc Rose`
@@ -143,20 +140,18 @@ Cylc is split into a number of packages providing different functionality:
 Installation Types
 ^^^^^^^^^^^^^^^^^^
 
-The places where you would want to install Cylc fall into the following
-"roles":
+Cylc install locations may fall into the following "roles":
 
 User Machines
-   The boxes where users write workflows and interact with the command line.
+   Where users write workflows and interact with the command line.
 Cylc Servers
-   The boxes where workflows are run.
+   Where Cylc schedulers run to manage workflows.
 Job Hosts
-   The systems where jobs are run (e.g. supercomputers or clusters)
+   Where task jobs run, e.g. supercomputers or clusters
 
 .. note::
 
-   There may be a mix of purposes between the different "roles", for example
-   it is possible to use job hosts as cylc servers and vice versa.
+   These roles may overlap. For example, Cylc servers can also be job hosts.
 
 Recommended Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -177,21 +172,26 @@ Job Hosts:
 Managing Environments
 ^^^^^^^^^^^^^^^^^^^^^
 
-In order for Cylc to run the correct environment must be activated. Cylc can
-not do this automatically.
+For Cylc to run, the correct environment must be activated. Cylc can
+not do this automatically. You may need to have multiple Cylc versions
+available too.
 
-We recommend using a wrapper script to activate the correct environment
-and call the ``cylc`` command.
+We recommend using a wrapper script named ``cylc`` to activate the correct
+environment before calling the environment's  ``cylc`` command.
 
-An example can be found in ``usr/bin/cylc``, this should be installed to
-a location in the system searchable ``$PATH`` e.g. ``/usr/local/bin``.
+.. TODO - update this once the wrapper has been added to cylc-flow package data.
 
+.. important::
+
+   Cylc comes with a wrapper that you can use with minimal adaptation.
+   This should be installed somewhere in the system search ``$PATH`` such
+   as ``/usr/local/bin``.
 
 Configuration
 -------------
 
-Cylc uses "sane and safe" defaults and is suitable for use "out of the box",
-however, many things may need to be configured e.g:
+Cylc uses "sane and safe" defaults and is suitable for use "out of the box".
+However, many things may need to be configured, e.g:
 
 * Job hosts
 * Communication methods
@@ -211,90 +211,11 @@ configuration of the system on both a site and user basis.
 Bash Profile
 ^^^^^^^^^^^^
 
-Cylc invokes ``bash -l`` to run job scripts so sites and users should
-ensure that their bash login scripts configure the environment correctly
-for use with Cylc and don't source unwanted systems or echo to stdout.
+Cylc task job scripts are bash scripts, which is good for manipulating files
+and processes, They invoke ``bash -l`` to allow environment configuration in
+login scripts. 
 
+.. warning::
 
-.. TODO - this is the start of the quickstart page§
-
-   Start the Hub (JupyterHub gets installed with the "cylc" package):
-
-   .. code-block:: console
-
-      $ mkdir -p "${HOME}/srv/cylc/"  # the hub will store session information here
-      $ cd "${HOME}/srv/cylc/"
-      $ jupyterhub \
-         --JupyterHub.spawner_class="jupyterhub.spawner.LocalProcessSpawner" \
-         --JupyterHub.logo_file="${CONDA_PREFIX}/work/cylc-ui/img/logo.svg" \
-         --Spawner.args="['-s', '${CONDA_PREFIX}/work/cylc-ui']" \
-         --Spawner.cmd="cylc-uiserver"
-
-   Go to ``http://localhost:8000``, log in to the Hub with your local user
-   credentials, and enjoy Cylc 8 Alpha-1!
-
-   - Start a workflow with the CLI (a good example is shown below)
-   - Log in at the Hub to authenticate and launch your UI Server
-
-   .. figure:: img/installation/conda/hub.png
-      :align: center
-
-   - Note that much of the UI Dashboard is not functional yet. The functional
-     links are:
-     - Cylc Hub
-     - Workflow Design Guide (web link)
-     - Documentation (web link)
-
-   .. figure:: img/installation/conda/dashboard.png
-      :align: center
-
-   - In the left side-bar, click on Workflows to view your running workflows
-   - In the workflows view, click on icons under "Actions" to view the
-     corresponding workflow.
-
-   .. figure:: img/installation/conda/workflows.png
-      :align: center
-
-   - In the tree view:
-     - click on task names to see the list of task jobs
-     - click on job icons to see the detail of a specific job
-
-   .. figure:: img/installation/conda/treeview.png
-      :align: center
-
-   To deactivate and/or remove the conda environment:
-
-   .. code-block:: console
-
-      (cylc1) $ conda deactivate
-      $ conda env remove -n cylc1
-
-   An Example Workflow to View
-   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-   The following workflow generates a bunch of tasks that initially
-   fail before succeeding after a random number of retries (this shows
-   the new "Cylc 8 task/job separation" nicely):
-
-   .. code-block:: cylc
-
-      [scheduler]
-          cycle point format = %Y
-          [[parameters]]
-              m = 0..5
-              n = 0..2
-      [scheduling]
-          initial cycle point = 3000
-          [[graph]]
-              P1Y = "foo[-P1Y] => foo => bar<m> => qux<m,n> => waz"
-      [runtime]
-          [[root]]
-              script = """
-                  sleep 20
-                  # fail 50% of the time if try number is less than 5
-                  if (( CYLC_TASK_TRY_NUMBER < 5 )); then
-                      if (( RANDOM % 2 < 1 )); then
-                          exit 1
-                      fi
-                  fi"""
-              execution retry delays = 6*PT2S
+   Sites and users should ensure their bash login scripts configure the
+   environment correctly for Cylc and *do not write anything to stdout*.

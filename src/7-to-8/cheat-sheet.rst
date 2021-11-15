@@ -16,7 +16,7 @@ Check the workflow configuration for errors:
 
    * - **Cylc 7**
      - **Rose 2019**
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          cylc validate <name/path>
@@ -38,7 +38,7 @@ Install a workflow from source and run it:
 
    * - **Cylc 7**
      - **Rose 2019**
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          # no installation capability
@@ -66,7 +66,7 @@ Tell a workflow not to submit any new jobs:
    :class: grid-table
 
    * - **Cylc 7** & Rose 2019
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          cylc hold <name>
@@ -95,7 +95,7 @@ Restart a stopped workflow and pick up where it left off:
 
    * - **Cylc 7**
      - **Rose 2019**
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          # no installation capability
@@ -128,7 +128,7 @@ Delete the workflow :term:`run directory` (leave source files untouched):
 
    * - **Cylc 7**
      - **Rose 2019**
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          rm -rf ~/cylc-run/<name>
@@ -160,7 +160,7 @@ View the parsed workflow configuration:
 
    * - **Cylc 7**
      - **Rose 2019**
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          cylc get-config --sparse \
@@ -188,7 +188,7 @@ for monitoring / controling running workflows:
 
    * -
      - **Cylc 7** & Rose 2019
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - Terminal
      - ::
 
@@ -200,13 +200,19 @@ for monitoring / controling running workflows:
      - ::
 
          cylc gui <name>
-     - * Open the Cylc Hub's URL in a web browser.
+     - * Run your own Cylc UI Server::
 
-       * Or alternatively run your own hub::
+           cylc gui
+
+         then open the printed URL in a web browser
+
+       * Or open your site's Cylc Hub URL in a web browser
+
+       * Or run your own Hub::
 
            cylc hub
 
-         Then open the URL ``0.0.0.0:8000`` in a web browser.
+         then open the URL ``0.0.0.0:8000`` in a web browser
 
 Static Graph Visualisation
 --------------------------
@@ -217,43 +223,17 @@ Generate a visualisation for a workflow without running it:
    :class: grid-table
 
    * - **Cylc 7** & Rose 2019
-     - **Cylc8** (Rose 2)
+     - **Cylc 8** (Rose 2)
    * - ::
 
          cylc graph <name>
-     - Not yet implemented. As a temporary workaround Graphviz can be used
-       to render ``cylc graph --reference`` output like so:
+     - ::
 
-       .. code-block:: bash
+         cylc graph <name>
+         
+       This generates a basic image file if Graphviz is installed.
 
-          #!/usr/bin/env bash
-
-          set -eu
-
-          SUITE="$1"
-          FMT="$2"
-
-          TMP=dotfile
-
-          cylc graph --reference "$SUITE" 2>/dev/null > "$TMP.ref"
-
-          sed \
-              -e 's/node "\(.*\)" "\(.*\)"/"\1" [label="\2"]/' \
-              -e 's/edge "\(.*\)" "\(.*\)"/"\1" -> "\2"/' \
-              -e '1i digraph {' \
-              -e '$a}' \
-              -e '/^graph$/d' \
-              -e '/^stop$/d' \
-              "$TMP.ref" \
-              > "$TMP.dot"
-
-          dot \
-              "$TMP.dot" \
-              -T$FMT \
-              -o "$TMP.$FMT"
-
-          rm "$TMP.ref" "$TMP.dot"
-          echo "$TMP.$FMT"
+       The web UI will have full graph vis. in a future release.
 
 Rose Stem
 ---------
@@ -264,7 +244,7 @@ Run a :ref:`rose:Rose Stem` test suite.
    :class: grid-table
 
    * - **Rose 2019**
-     - **Rose 2** (Cylc8)
+     - **Rose 2** (Cylc 8)
    * - ::
 
          # install and start

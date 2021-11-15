@@ -14,10 +14,10 @@ Cylc Install
 
    This change will affect you:
 
-   - If you usually develop your Cylc workflows in the ``~/cylc-run`` directory.
-   - If you develop your code outside the ``~/cylc-run`` directory and manually
-     copied to ``~/cylc-run``.
-   - If you use ``rose suite-run``.
+   - If you usually develop Cylc workflows in the ``~/cylc-run`` directory.
+   - If you develop Cylc workflows outside of the ``~/cylc-run`` directory and manually
+     copy the files to ``~/cylc-run``.
+   - If you use ``rose suite-run`` to install and run Cylc workflows.
 
 Overview
 --------
@@ -26,7 +26,7 @@ Cylc 7 ran workflows in ``~/cylc-run/``. You could develop your
 workflow in ``~/cylc-run`` or copy it after developing it elsewhere.
 If you developed in the ``~/cylc-run`` directory there was a risk that
 Cylc might alter your files. If you developed elsewhere you needed to
-install your workflow with another tool.
+install your workflows manually or with another tool.
 
 We designed Cylc 8 to help you keep your development and
 running copies separate. By default you can now develop workflows in the
@@ -48,21 +48,21 @@ You can install from inside the development directory:
 
    > cd ~/cylc-src/my-workflow
    > cylc install
-   INSTALLED my-workflow/run1 from /home/me/cylc-src/my-wf
+   INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow
 
 You can install by workflow name if the workflow is in ``~/cylc-src``.
 
 .. code-block:: bash
 
    > cylc install my-workflow
-   INSTALLED my-workflow/run2 from /home/me/cylc-src/my-wf
+   INSTALLED my-workflow/run2 from /home/me/cylc-src/my-workflow
 
 .. note::
 
    Each time you run ``cylc install`` a new copy of the workflow is installed
-   in a new directory,
-   in the previous case this directory is ``run2``. ``cylc install`` also creates
-   a symlink from the most recently installed run directory to ``~/cylc-run/<my_workflow>/runN``.
+   to a new run directory. In the previous case this is the ``run2`` directory.
+   ``cylc install`` also creates a symlink from the most recently installed run
+   directory to ``~/cylc-run/<my_workflow>/runN``.
 
 You can also use ``-C`` (or ``--directory``) to set a source path:
 

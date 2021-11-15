@@ -5,6 +5,10 @@ Graphing
 
 In this section we will cover writing basic workflows in cylc.
 
+.. warning::
+
+   This section of the tutorial still contains screenshots of the obsolete Cylc 7
+   desktop GUI.
 
 .. _Cylc file format:
 
@@ -64,7 +68,9 @@ Throughout this tutorial we will refer to settings in the following format:
 ``[section]key=value``
    Expresses the value of the setting.
 ``[section][sub-section]another-key``
-   Note we only use one set of square brackets with nested sections.
+   Note we only use one set of square brackets per section heading when writing
+   config items on one line like this, but in the config file each nesting level
+   gets a another set of square brackets.
 
 Duplicate Items
 ^^^^^^^^^^^^^^^
@@ -114,6 +120,25 @@ Duplicate settings get overwritten:
          :caption: result
 
          a = bar
+
+Except for duplicate graph string items, which get merged:
+
+.. list-table::
+   :class: grid-table
+
+   * -
+      .. code-block:: cylc
+         :caption: input
+
+         R1 = "foo => bar"
+         R1 = "foo => baz"
+
+     -
+      .. code-block:: cylc
+         :caption: result
+
+         R1 = "foo => bar & baz"
+
 
 Indentation
 ^^^^^^^^^^^

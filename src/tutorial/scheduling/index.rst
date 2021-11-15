@@ -7,7 +7,9 @@ Scheduling
 
 .. warning::
 
-   This section has not yet been upgraded to match Cylc 8 changes.
+   This section of the tutorial still has screenshots of the obsolete Cylc 7
+   desktop GUI.
+
 
 This section looks at how to write workflows in cylc.
 

@@ -7,8 +7,8 @@ Introduction
 
 .. warning::
 
-   This section has not yet been upgraded to match Cylc 8 changes.
-
+   This section of the tutorial still contains screenshots of the obsolete Cylc
+   7 desktop GUI.
 
 
 What Is A Workflow?

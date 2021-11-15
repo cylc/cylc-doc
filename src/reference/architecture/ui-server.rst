@@ -1,4 +1,4 @@
-.. _Cylc UI Server architecture:
+.. _CylcUIServer.architecture:
 
 Cylc UI Server
 ==============

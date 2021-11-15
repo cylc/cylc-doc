@@ -3,6 +3,14 @@
 Families
 ========
 
+
+.. warning::
+
+   This section of the tutorial still has screenshots of the obsolete Cylc 7
+   desktop GUI, and it still uses a command from the ``Rose`` project to
+   copy workflow source files.
+
+
 :term:`Families <family>` provide a way of grouping tasks together so they can
 be treated as one.
 

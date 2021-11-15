@@ -91,7 +91,7 @@ Examples
 Showing how the global config changes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At Cylc 7:
+This Cylc 7 workflow:
 
 .. code-block:: cylc
 
@@ -103,7 +103,7 @@ At Cylc 7:
            [[[remote]]]
                host = login_node01
 
-Would, at Cylc 8 become:
+Would, at Cylc 8, become:
 
 .. code-block:: cylc
 
@@ -111,7 +111,7 @@ Would, at Cylc 8 become:
        [[mytask]]
            platform = our_cluster
 
-While at Cylc 8 the global config might contain:
+And the Cylc 8 global config might contain:
 
 .. code-block:: cylc
 
@@ -155,7 +155,7 @@ This will result in Cylc running:
 - ``mytask_login_to_hpc_and_submit`` on a host set by the subshelled
   script using Slurm.
 
-In Cylc 8 the equivalent might be:
+At Cylc 8 the equivalent might be:
 
 .. code-block:: cylc
 
@@ -172,7 +172,7 @@ In Cylc 8 the equivalent might be:
            # This is still legal, but you could also use host selection.
            platform = $(supercomputer_login_node_selector_script)
 
-The platform settings for these examples might be:
+And the platform settings for these examples might be:
 
 .. code-block:: cylc
 

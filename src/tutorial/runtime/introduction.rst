@@ -3,6 +3,13 @@
 Introduction
 ============
 
+.. warning::
+
+   This section of the tutorial still has screenshots of the obsolete Cylc 7
+   desktop GUI, and it still uses a command from the ``Rose`` project to
+   copy workflow source files.
+
+
 .. ifnotslides::
 
    So far we have been working with the ``[scheduling]`` section. This is where
@@ -39,9 +46,9 @@ The Task Section
 
 .. note::
 
-   This runtime sub-section is normally required, even if it is empty. However,
-   in the previous tutorials, we disabled this requirement using the setting
-   :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`.
+   A runtime sub-section for each task is normally required, even if it is
+   empty. However, in the previous tutorials we disabled this requirement
+   with :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`.
    See :ref:`ImplicitTasks` for more details.
 
 
@@ -323,12 +330,13 @@ Running A Workflow
 
    In this tutorial we are writing our workflows in the ``cylc-run`` directory.
 
-   It is possible to write them elsewhere on the system. If we do so we
-   must install the workflow with ``cylc install`` before use. For more
-   information, see :ref:`Installing-workflows`.
+   However, you should write real workflows in a separate source location
+   (Cylc expects ``~/cylc-src`` by default) and then use ``cylc install`` to
+   install them to the run directory before use. For more information, see
+   :ref:`Installing-workflows`.
 
-Workflow Files
---------------
+Generated Workflow Files
+------------------------
 
 .. ifnotslides::
 

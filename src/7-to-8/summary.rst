@@ -10,52 +10,67 @@ Terminology
 - **Suite daemon** (or **suite server program**) is now **SCHEDULER** (ditto)
 - **Batch system** is now **JOB RUNNER** (not all of our job runners are "batch
   systems")
+- The **workflow config filename** is now ``flow.cylc``, not ``suite.rc``
 
 .. important::
-
-   - And the Cylc config filename is now ``flow.cylc``, not ``suite.rc``
-
+   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
+   ``suite.rc`` files in the same :term:`run directory` will result in an error.
 
 .. _Cylc_7_compat_mode:
 
 Backward Compatibility
 ----------------------
 
-To make the transition easier, Cylc 8 can run Cylc 7 workflows out of the box.
-If Cylc detects that a workflow is using the deprecated ``suite.rc`` filename,
-it will turn on a backwards compatibility mode, which:
-
-- Allows :term:`implicit tasks <implicit task>` without having to set
-  :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` (unless a
-  ``rose-suite.conf`` file is present in the :term:`run directory`, to maintain
-  compatibility with Rose 2019).
-- Sets the default :cylc:conf:`[scheduler]cycle point time zone` to local time
-  of the workflow's initial start (including any daylight saving changes),
-  rather than UTC.
-
-.. note::
-
-   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
-   ``suite.rc`` files in the same :term:`run directory` will result in an
-   error and will not trigger back compatibility mode. 
-
-.. TODO: mention optional outputs
+:term:`Workflow validation` warns of deprecated Cylc 7 syntax. If your Cylc 7
+workflow *fails* validation in Cylc 8, see :ref:`AutoConfigUpgrades` to learn
+how to fix this.
 
 .. warning::
 
-   Please take action on any deprecation warnings emitted by ``cylc validate``.
+   Please take action on deprecation warnings from ``cylc validate`` before
+   renaming your ``suite.rc`` file to ``flow.cylc``.
 
-   This must be done before renaming config files to ``flow.cylc``.
+Before upgrade, Cylc 8 can run Cylc 7 workflows out of the box. The old
+``suite.rc`` filename triggers a backward compatibility mode in which:
 
-If your Cylc 7 workflow *fails* validation in Cylc 8, see
-:ref:`AutoConfigUpgrades` to learn how to fix this.
+- :term:`implicit tasks <implicit task>` are allowed by default
+
+  - (unless a ``rose-suite.conf`` file is found in the :term:`run directory`)
+  - (by default, Cylc 8 does not allow implicit tasks)
+
+- :term:`cycle point time zone` defaults to the local time zone
+
+  - (by default, Cylc 8 defaults to UTC)
+
+- waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
+  stall behaviour, and these require :term:`suicide triggers <suicide trigger>` for
+  alternate path :term:`branching <graph branching>`
+
+  - (Cylc 8 spawns tasks on demand and suicide triggers are not needed for branching)
+
+- task ``succeeded`` outputs are *required* so the scheduler will retain failed
+  tasks as incomplete
+
+  - (in Cylc 8, all outputs are *required* unless marked as optional by new ``?`` syntax)
+
+
+.. warning::
+
+   Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. Instead, :ref:`install
+   <Workflow Installation>` the workflow to a new run directory and start it
+   from scratch at the right cycle point or task(s):
+
+   - ``cylc play --start-cycle-point=<CYCLEPOINT>`` (c.f. Cylc 7 *warm start*), or
+   - ``cylc play --start-task=<TASKNAME.CYCLEPOINT>`` (Cylc 8 can start anywhere in the graph)
+
+   Any previous-cycle workflow data needed by the new run will need to be
+   manually copied over from the original run directory.
 
 
 Architecture
 ------------
 
-Cylc has been re-architected to support a remote web UI. The main Cylc 8 system
-components are:
+The main Cylc system components are:
 
 - **Cylc Scheduler**
      - The workflow engine core, Python 3 based
@@ -64,13 +79,15 @@ components are:
 
 - **Cylc Hub**
    - Authenticates users, spawns and proxies Cylc UI Servers
-   - (A `Jupyterhub <https://jupyter.org/hub>`_ instance)
    - Can run as a regular or privileged user
+   - (Is a `Jupyterhub <https://jupyter.org/hub>`_ instance)
 
 - **Cylc UI Server**
-   - Launched by the Hub
    - Interacts with Schedulers and the filesystem
    - Serves the UI to users
+   - Can be lauched by the privileged Hub, for multi-user installations
+   - Or run standalone for use by a single user
+   - (Is a `Jupyter Server <https://jupyter-server.readthedocs.io>`_ extension)
 
 - **Cylc UI**
    - In-browser web UI, includes:
@@ -110,28 +127,34 @@ components are:
 Scheduling Algorithm
 --------------------
 
-Cylc has to be able to manage infinite workflows of repeating tasks:
+Cylc can manage infinite workflows of repeating tasks:
 
 .. image:: ../img/cycling.png
    :align: center
 
-See :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
-
-Cylc 8 has an efficient new **Spawn on Demand** scheduler that:
-   - Only needs to be aware of current active tasks, and what comes next
+Cylc 8 has an efficient new scheduling algorithm that:
+   - Spawns new tasks on demand
    - Handles alternate path branching without suicide triggers
+   - Distinguishes between *optional* and *expected* task outputs. If a tasks
+     finishes without completing an expected output it will be retained by the
+     scheduler as an *incomplete task*
    - Can run tasks out of cycle point order
-   - Enables a sensible active-task based window on the evolving workflow
+   - Provides a sensible active-task based window on the evolving workflow
    - Supports a powerful new capability called **reflow**: you can trigger
-     multiple "wavefronts" of activity in the graph at once, in the same
-     scheduler
+     multiple fronts of activity in the graph at once, in the same scheduler
+
+See also:
+
+   * :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
+
 
 Task/Job Separation and States
 ------------------------------
 
-**Tasks** are nodes in the abstract workflow graph, representing processes
-you want to run on computers, and **jobs are the real processes**. Tasks can
-have multiple jobs, thanks to automatic retries and manual re-triggering.
+**Tasks** are nodes in the abstract workflow graph representing processes
+that should run once their prerequisites are satisfied. **Jobs** are the real
+processes submitted to run by workflow tasks. A task can have multiple jobs,
+by automatic retries and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.
@@ -143,10 +166,10 @@ task icon incorporates a radial progress indicator.
 .. image:: ../img/task-job.png
    :align: center
 
-The removed Cylc 7 task states have been absorbed into the *waiting* state, but
-you can see or infer what is being waited on: e.g. a queue, xtrigger, or
-retry timer. For instance, a waiting task that already has one or more
-associated jobs must be about to retry.
+The task states removed since Cylc 7 have been absorbed into *waiting*, but
+you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
+timer. For instance, a waiting task that already has associated jobs must be going
+to retry.
 
 Window on the Workflow
 ----------------------
@@ -157,9 +180,8 @@ Window on the Workflow
 The Cylc UI can't show "all the tasks" at once because the graph may be huge,
 or even infinite in extent in cycling systems. The Cylc 8 UI shows:
 
-- current **active tasks** (submitted, running, unhandled-failed)
-  - plus waiting tasks that are only waiting on non-task dependencies: queues,
-  runahead limit, clock-triggers, or xtriggers
+- current **active tasks** (submitted, running) plus tasks waiting on scheduler
+  constraints (queues, runahead limit, clock triggers) and external triggers
 
 - tasks up to ``n`` graph edges away from active tasks (default ``1`` edge)
 
@@ -180,11 +202,10 @@ Cylc 7 was aware of individual job hosts.
           [[[remote]]]
               host = hpc1.login.1  # Deprecated Cylc 8
 
-Cylc 8 is aware of sets of host settings, specified as
-:term:`[job] platforms <platform>` in the global configuration.
-By definition platform hosts share a file system and :term:`job runner`:
-If one host is unavailable Cylc 8 can use other hosts
-on the same platform to interact with task jobs.
+Cylc 8 is aware of host groups specified as :term:`[job] platforms <platform>`
+in the global configuration. Platform hosts share a file system and :term:`job
+runner`. If a host becomes unavailable Cylc 8 can use other hosts on the same
+platform to interact with task jobs.
 
 .. code-block:: cylc
 
@@ -230,6 +251,8 @@ Cylc 8 cleans this up:
           R1 = "prep => foo"
           R/^/P1D = "foo => bar => baz"
 
+.. _Workflow Installation:
+
 Workflow Installation
 ---------------------
 
@@ -241,111 +264,96 @@ The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
 cleanly separates workflow source directory from run directory, and installs
 workflow files into the run directory at start-up
 
-- ``cylc install`` copies all workflow source files into a dedicated
-  run-directory
-- each new install creates a new numbered run-directory (by default)
-- (workflow files are automatically installed onto job platforms too)
+- ``cylc install`` copies workflow source files to a dedicated run-directory
+- :term:`source directory` locations can be set in global config
+- each install creates a new numbered :term:`run directory` (by default)
+- (workflow files are automatically installed onto job platforms too, when the 
+  first job runs on the platform)
 
 .. code-block:: bash
 
    $ pwd
-   ~/cylc-src/democ8
+   ~/cylc-src/demo
+
+   $ ls
+   flow.cylc
 
    $ cylc install
-   INSTALLED democ8 from ~/cylc-src/democ8 -> ~/cylc-run/democ8/run1
+   INSTALLED demo/run1 from /home/oliverh/cylc-src/demo
 
-   $ cylc play democ8/run1
-                ._.
-                | |
-    ._____._. ._| |_____.
-    | .___| | | | | .___|       The Cylc Workflow Engine [8.0b0]
-    | !___| !_! | | !___.           Copyright (C) 2008-2021 NIWA
-    !_____!___. |_!_____!   & British Crown (Met Office) & Contributors.
-          .___! |
-          !_____!
-
+   $ cylc play demo
    ...
+   demo/run1: oliver.niwa.local PID=6702
 
    $ cylc install
-   INSTALLED democ8 from ~/cylc-src/democ8 -> ~/cylc-run/democ8/run2
+   INSTALLED demo/run2 from /home/oliverh/cylc-src/demo
 
-   $ cylc play democ8/run2
-   # etc.
+   $ cylc play demo
+   ...
+   demo/run2: oliver.niwa.local PID=6962
+
+Workflows can be deleted with ``cylc clean`` - see :ref:`Removing-workflows`.
 
 .. note::
 
    Cylc 8 forbids having both ``flow.cylc`` and ``suite.rc`` files in the same
    :term:`run directory` or :term:`source directory`.
 
-Deleting workflows can be done using ``cylc clean`` - see
-:ref:`Removing-workflows`.
-
 Safe Run Semantics
 ------------------
 
-Cylc 7 run semantics were dangerous: if you accidentally typed ``cylc run``
-instead of ``cylc restart`` a new from-scratch run would overwrite the existing
-run directory, including the run database, so that you could not go back and do
-the intended restart.
+Cylc 7 run semantics were somewhat dangerous: if you accidentally typed ``cylc run``
+instead of ``cylc restart`` a new run from scratch would overwrite the existing
+run directory, preventing a return to the intended restart.
 
-Cylc 8 has ``cylc play`` to *start*, *restart*, or *unpause* a workflow, so
-"restart" is now the safe default behaviour. For a new run from scratch,
-do a fresh ``cylc install`` and run it safely in the new run directory.
+Cylc 8 has ``cylc pause`` to:
+
+- pause a workflow (halt all job submission)
+
+And ``cylc play`` to:
+
+- start,
+- restart, and
+- release a paused workflow
+
+So *restart* is now the safe default behaviour. For a new run from scratch,
+do a fresh ``cylc install`` and play it safely in the new run directory.
+
+(Note that ``cylc hold`` and ``cylc release`` pause and release individual tasks.)
 
 
 Security
 --------
 
-- Users authenticate at the Hub, with site-appropriate authentication plugins
-- The Hub spawns a UI Server as the target user (workflow owner). This UI
-  Server interacts with its own schedulers and authorizes access to them
-  according to the privileges granted to the authenticated user
-  - (the UI Server and Schedulers run as the workflow-owner user)
-- Jobs authenticate to their parent scheduler using `CurveZMQ`_.
+- In a multi-user context, users authenticate at the Hub, which
+  spawns Cylc UI Servers as the target user (workflow owner).
+- In a single user context, the UI Server can be started directly,
+  with token-based authentication.
+- The UI Server interacts with its own Schedulers, which also run as the user.
+- Users can authorize different levels of access to others, via their UI Server.
+- Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
+
+See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
+
 
 .. note::
 
-   The authorization system is still in development; for the moment you can
-   only interact with your own workflows.
+   The authorization system in Cylc 8 is complete but we haven't yet provided easy
+   access to other users' workflows via the UI.
 
 Packaging
 ---------
 
-Cylc 7 had to be installed by unpacking a release tarball and ensuring
-that many software dependencies were also installed on the system.
+Cylc 7 had to be installed from a release tarball, and its software dependencies
+had to be installed manually.
 
-Cylc 8 can be installed from **Conda Forge**, into a conda environment:
+Cylc 8 and its core software dependencies can be installed quickly from Conda
+Forge, into a conda environment; or from PyPI, into a Python 3 virtual environment.
 
-.. code-block:: bash
+See also:
 
-   $ conda create -n cylc8
-   $ conda activate cylc8
-   (cylc8) $ conda install cylc
-   (cylc8) $ cylc --version
-   cylc-8.0b0
+* :ref:`Cylc UI Server <CylcUIServer.architecture>`
 
-Or from **PyPI**, into a Python 3 virtual environment, by ``pip``-installing the
-UI Server component, which pulls in cylc-flow (Scheduler and CLI) as a
-dependency, and includes a built copy of cylc-ui (Javascript UI):
-
-.. code-block:: bash
-
-   $ python3 -m venv venv
-   $ . venv/bin/activate
-   (venv) $ pip install cylc-uiserver
-   (venv) $ cylc --version
-   cylc-8.0b0
-
-The following dependencies are installed by Conda but not by pip:
-
-- ``configurable-http-proxy`` (used by the Hub)
-- Python
-
-The following dependencies are not installed by Conda or pip:
-
-- ``bash``
-- GNU ``coreutils``
-- ``mail`` (for automated email functionality)
 
 Time Zones
 ----------
@@ -355,39 +363,16 @@ are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
 
 .. seealso:: :ref:`Scheduling syntax rules<writing_flows.scheduling.syntax_rules>`
 
-What's Still Missing From Cylc 8?
----------------------------------
-
-Some features are still in progress or yet to be started:
-
-- Other UI workflow views:
-   - graph view
-   - table view
-   - dot view
-- Static workflow graph visualization
-- Cross-user functionality and fine-grained authorization
-- UI presentation of workflow and job logs
-   - for the moment look in your ``cylc-run`` directory, or use
-     ``cylc cat-log``, or use Cylc Review from cylc-7.9.3/7.8.8
-     to view Cylc 8 logs
-- UI/CLI "edit run"
-- UI Server:
-   - sub-service to install new workflows
-   - sub-service to start stopped workflows
-   - populate historic task data from run DBs
-
-- Delta-driven TUI, for large workflows
-
 .. _Cylc 7 Scheduler Deficiencies Fixed by Cylc 8:
 
 Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
 ----------------------------------------------
 
-- Every task implicitly depedended on previous-instance (same task, previous
+- Every task implicitly depended on previous-instance (same task, previous
   cycle point) job submission
 - The scheduler had to be aware of at least one active and one waiting
-  instance of every task in the workflow, plus all succeeded tasks in the
-  current active task window
+  cycle point instance of every task in the workflow, plus all succeeded tasks
+  in the current active task window
 - The indiscriminate dependency matching process was costly
 - To fully understand what tasks appeared in the GUI (why particular
   *waiting* or *succeeded* tasks appeared in some cycles but not in others, for

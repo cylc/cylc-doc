@@ -3,6 +3,12 @@
 Runtime Configuration
 =====================
 
+.. warning::
+
+   This section of the tutorial still uses a command from the ``Rose`` project
+   to copy workflow source files.
+
+
 .. TODO - platformise all the examples in here
 
 In the last section we associated tasks with scripts and ran a simple workflow. In
@@ -233,6 +239,8 @@ Start, Stop, Restart
 .. _tutorial-cylc-runtime-forecasting-workflow:
 
 .. practical::
+
+   .. TODO - is this Met Office specific?
 
    .. rubric:: In this practical we will add runtime configuration to the
       :ref:`weather-forecasting workflow <tutorial-datetime-cycling-practical>`

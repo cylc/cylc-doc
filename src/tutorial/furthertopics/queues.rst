@@ -13,10 +13,10 @@ In this example, our workflow manages a particularly understaffed restaurant.
 
 Create a new workflow called ``queues-tutorial``::
 
-   rose tutorial queues-tutorial
+   mkdir -p ~/cylc-run/queues-tutorial
    cd ~/cylc-run/queues-tutorial
 
-You will now have a :cylc:conf:`flow.cylc` file that looks like this:
+And paste the following into :cylc:conf:`flow.cylc`:
 
 .. code-block:: cylc
 
