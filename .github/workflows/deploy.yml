@@ -28,7 +28,10 @@ on:
         description: 'Cylc Flow GitHub release tag (must be present in cylc-docs)'
         required: true
       cylc-rose-tag:
-        description: 'Cylc Rose GitHub release tag'
+        description: 'cylc rose github release tag'
+        required: true
+      cylc-uis-tag:
+        description: 'cylc uiserver github release tag'
         required: true
       metomi-rose-tag:
         description: 'Rose GitHub release tag (currently only affects cylc-rose install)'
@@ -69,13 +72,15 @@ jobs:
           cylc_flow: ${{ github.event.inputs.cylc-flow-tag }}
           meto_rose: ${{ github.event.inputs.metomi-rose-tag }}
           cylc_rose: ${{ github.event.inputs.cylc-rose-tag }}
+          cylc_uis: ${{ github.event.inputs.cylc-uis-tag }}
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
           pip install  \
             "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
             "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
-            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}"
+            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
+            "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
 
       - name: checkout gh-pages
         uses: actions/checkout@v2

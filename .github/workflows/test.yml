@@ -6,15 +6,18 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      rose_ref:
-        description: The Rose branch to test against
-        required: false
-      cylc_ref:
-        description: The Cylc branch to test against
-        required: false
-      cylc_rose_ref:
-        description: The Cylc branch to test against
-        required: false
+      cylc-flow-tag:
+        description: 'cylc-flow ref'
+        required: true
+      cylc-rose-tag:
+        description: 'cylc-rose ref'
+        required: true
+      cylc-uis-tag:
+        description: 'cylc-uis ref'
+        required: true
+      metomi-rose-tag:
+        description: 'metomi-rose ref (for cylc-rose install)'
+        required: true
 
 jobs:
   test:
@@ -42,16 +45,18 @@ jobs:
 
       - name: install libs to document
         env:
-          cylc_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
-          rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
-          cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
+          cylc_flow: ${{ github.event.inputs.cylc-flow-tag || 'master' }}
+          meto_rose: ${{ github.event.inputs.metomi-rose-tag || 'master' }}
+          cylc_rose: ${{ github.event.inputs.cylc-rose-tag || 'master' }}
+          cylc_uis: ${{ github.event.inputs.cylc-uis-tag || 'master' }}
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
           pip install  \
-            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${rose_ref}" \
-            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"
+            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
+            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
+            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
+            "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
 
       - name: install eslint
         run: |
