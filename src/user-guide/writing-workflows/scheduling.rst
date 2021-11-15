@@ -203,7 +203,7 @@ and also to this:
 
 .. note::
 
-  Multiple graph strings add together to make the complete workflow graph.
+   Multiple graph strings add together to make the complete workflow graph.
    
 
 .. _GraphTypes:
@@ -312,11 +312,12 @@ representations to be heavily condensed by omitting information that can be
 inferred from context (rules below).
 
 .. important::
-  Cycle points in Cylc are just task **labels** that anchor dependence on
-  other tasks, and which task jobs can use to determine their current cycle
-  point. Datetime cycle points have no relation to wallclock (real) time
-  unless specific tasks, if any, also depend on
-  :term:`clock triggers <clock trigger>`.
+
+   Cycle points in Cylc are just task **labels** that anchor dependence on
+   other tasks, and which task jobs can use to determine their current cycle
+   point. Datetime cycle points have no relation to wallclock (real) time
+   unless specific tasks, if any, also depend on
+   :term:`clock triggers <clock trigger>`.
 
 The most common full form for recurrences is
 ``R[limit?]/[datetime]/[interval]``. In Cylc this can be condensed to:
@@ -430,7 +431,7 @@ points:
 The Initial Cycle Point
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-A workflow normally begins running at the *initial cycle point*, which defines
+A workflow normally begins running at the :term:`initial cycle point`, which defines
 the start of the workflow graph:
 
 .. code-block:: cylc
@@ -1289,9 +1290,10 @@ Finally, dependence on a task at a specific cycle point is also possible:
 .. TODO is this still the case:
 
 .. warning::
-  However, in a long running workflow it is best to avoid a repeating cycle
-  that depends forever on a specific cycle point (including the initial point)
-  as this can adversely affect the scheduler's performance.
+
+   However, in a long running workflow it is best to avoid a repeating cycle
+   that depends forever on a specific cycle point (including the initial point)
+   as this can adversely affect the scheduler's performance.
 
 .. code-block:: cylc
 
@@ -1430,9 +1432,10 @@ with a datetime offset relative to cycle point.
 The offset should be positive to make the task expire if the wallclock time
 has gone beyond the cycle point.
 
-.. note::
-  The scheduler can only determine that a task has expired once it has
-  appeared in the active window of the workflow.
+.. warning::
+
+   The scheduler can only determine that a task has expired once it has
+   appeared in the active window of the workflow.
 
 
 .. _WorkflowConfigExternalTriggers:
@@ -1462,9 +1465,10 @@ prevents the fastest tasks in a workflow from getting too far
 ahead (with respect to cycle point) of the slowest ones.
 
 .. note::
-  Runahead limiting does not restrict activity within a cycle point.
-  Workflows with a large number of tasks per cycle may need :ref:`internal
-  queues <InternalQueues>` to constrain activity in absolute terms.
+
+   Runahead limiting does not restrict activity within a cycle point.
+   Workflows with a large number of tasks per cycle may need :ref:`internal
+   queues <InternalQueues>` to constrain activity in absolute terms.
    
 Succeeded and failed tasks are ignored when computing the runahead limit. 
 
