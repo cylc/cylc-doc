@@ -478,17 +478,20 @@ Automatic Task Retry On Failure
 
    cylc:conf:`[runtime][<namespace>]execution retry delays`.
 
-Tasks can be configured with a list of "retry delay" intervals, as
-:term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will go
-into the *retrying* state and resubmit after the next configured delay
-interval. An example is shown in the workflow listed below under
-:ref:`EventHandling`.
+Tasks can be configured with a list of retry intervals, as
+:term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will
+return to ``waiting`` state to wait on a clock-trigger configured with the
+next retry delay interval in the list. The task job will submit again once
+the delay interval is up.
 
-If a task with configured retries is *killed* (by ``cylc kill``
-it goes to the *held* state so that the operator can decide
-whether to release it and continue the retry sequence or to abort the retry
-sequence by manually resetting it to the *failed* state.
+An example is shown in the workflow below under :ref:`EventHandling`.
 
+If a task with configured retries is *killed* (e.g. by ``cylc kill``) it goes
+to the ``held`` state so that the operator can decide whether to release it and
+continue the retry sequence or not. 
+
+.. TODO check how to abort the retry sequence in Cylc 8
+`
 
 .. _EventHandling:
 
