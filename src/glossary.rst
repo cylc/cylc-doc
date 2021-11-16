@@ -396,7 +396,7 @@ Glossary
 
       See also:
 
-      * :term:`wallclock`
+      * :term:`wallclock time`
       * :ref:`Clock Triggers <Built-in Clock Triggers>`
       * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
 

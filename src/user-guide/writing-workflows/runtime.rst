@@ -6,7 +6,7 @@ Runtime - Task Configuration
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 
 The :cylc:conf:`flow.cylc` file's :cylc:conf:`[runtime]` section configures
-what each should run, and where and how to run it. It is a multiple inheritance
+what each task should run, and where and how to run it. It is a multiple inheritance
 hierarchy that allows all common settings to be factored out into task families
 and defined once only (duplication of configuraiton is a maintenance risk in a
 complex workflow).
@@ -25,7 +25,7 @@ applications wrapped by the tasks.
 .. note::
 
    At runtime, task jobs can access their own workflow task name as
-   ``$CYLC_TASK_NAME`` the job environment :ref:`job environment
+   ``$CYLC_TASK_NAME`` in the job environment :ref:`job environment
    <TaskExecutionEnvironment>` if needed.
 
 
@@ -124,8 +124,8 @@ Families can inherit from other families, to any depth.
        [[model]]  # a big task that runs on hpc1
            inherit = BIG-HPC1
 
-If an item is defined at several levels in the family tree the highest level
-(closest to the task) takes precedence.
+If the same item is defined (and redefined) at several levels in the family
+tree, the highest level (closest to the task) takes precedence.
 
 
 Inheriting from Multiple Parents
