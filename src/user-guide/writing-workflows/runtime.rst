@@ -5,172 +5,210 @@ Runtime - Task Configuration
 
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 
-The :cylc:conf:`[runtime]` section of a workflow configuration configures what
-to execute (and where and how to execute it) when each task is ready to
-run, in a *multiple inheritance hierarchy* of task families. This allows all
-common configuration to be factored out and defined in one place.
-
-:ref:`FamilyTriggers` can be used in the graph to trigger (or trigger off of)
-all member tasks at once  
-
-All tasks implicitly inherit from the ``root`` family (below).
+The :cylc:conf:`flow.cylc` file's :cylc:conf:`[runtime]` section configures
+what each should run, and where and how to run it. It is a multiple inheritance
+hierarchy that allows all common settings to be factored out into task families
+and defined once only (duplication of configuraiton is a maintenance risk in a
+complex workflow).
 
 .. _namespace-names:
 
 Task and Family Names
 ---------------------
 
+Task and family names must match in the graph and runtime sections of the
+workflow config file. They do not need to match the names of the external
+applications wrapped by the tasks.
+
 .. autoclass:: cylc.flow.unicode_rules.TaskNameValidator
 
 .. note::
 
-   *Task names need not be hardwired into task implementations*
-   because task and workflow identity can be extracted portably from the task
-   execution environment supplied by the :term:`scheduler`
-   (:ref:`TaskExecutionEnvironment`) - then to rename a task you can
-   just change its name in the workflow configuration.
+   At runtime, task jobs can access their own workflow task name as
+   ``$CYLC_TASK_NAME`` the job environment :ref:`job environment
+   <TaskExecutionEnvironment>` if needed.
 
 
-Root - Runtime Defaults
------------------------
+The following runtime configuration defines one family called ``FAM`` and two
+member tasks ``fm1`` and ``fm2`` that inherit settings from it. Members can
+also override inherited settings and define their own private settings.
 
-The ``root`` family, at the base of the inheritance hierarchy,
-provides default configuration for all tasks in the workflow.
-Most root items are unset by default, but some have default values
-sufficient to allow test workflows to be defined by dependency graph alone.
-The *script* item, for example, defaults to code that
-prints a message then sleeps for between 1 and 15 seconds and
-exits. Default values are documented with each item in
-:cylc:conf:`flow.cylc`. You can override the defaults or
-provide your own defaults by explicitly configuring the root family.
+.. code-block:: cylc
+
+   [runtime]
+       [[FAM]]  # <-- a family
+           #...  settings for all FAM members
+
+       [[fm1]]  # <-- task
+           inherit = FAM
+           #...  fm1-specific settings
+
+       [[fm2]]  # <-- a task
+           inherit = FAM
+           #...  fm2-specific settings
+
+Note that families are not nested in terms of the file sub-heading structure. A
+runtime subsection defines a family if others inherit from it, otherwise
+it defines a task.
+
+
+The Root Family
+---------------
+
+All tasks inherit implicitly from a family called ``root`` that can provide
+default settings for all tasks in the workflow (non-root families require an
+explicit ``inherit`` statement).
+
+For example, if all task jobs are to run on the same job platform, that could
+can be specified once for all tasks under ``root``:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[root]]
+           # all tasks run on hpc1 (unless they override this setting)
+           platform = hpc1
+
 
 
 .. _MultiTaskDef:
 
-Defining Multiple Task or Family Names At Once
-----------------------------------------------
+Defining Multiple Tasks or Families at Once
+-------------------------------------------
 
-If a runtime sub-section heading is a comma-separated list of names
-then the subsequent configuration applies to each list member.
-Particular tasks can be singled out at run time using the
-``$CYLC_TASK_NAME`` variable.
+Runtime sub-section headings can be a comma-separated list of task or family
+names, in which case the settings below it apply to each list member.
 
-As an example, consider a workflow containing an ensemble of closely
-related tasks that each invokes the same script but with a unique
-argument that identifies the calling task name:
+Here a group of three related tasks all run the same script on the same
+:term:`platform`, but pass their own names to it on the command line:
 
 .. code-block:: cylc
 
    [runtime]
        [[ENSEMBLE]]
+           platform = hpc1
            script = "run-model.sh $CYLC_TASK_NAME"
+
        [[m1, m2, m3]]
            inherit = ENSEMBLE
 
-For large ensembles template processing can be used to
-automatically generate the member names and associated dependencies
-(see :ref:`User Guide Jinja2` and :ref:`User Guide EmPy`).
+       [[m1]]
+           #...  m1-specific settings
+
+Specific tasks (such as ``m1`` above) can still be singled out to add
+task-specific settings.
 
 
-Runtime Inheritance - Single
-----------------------------
+.. note::
 
-The following listing of the *inherit.single.one* example workflow
-illustrates basic runtime inheritance with single parents.
-
-.. literalinclude:: ../../workflows/inherit/single/one/flow.cylc
-   :language: cylc
+   :ref:`Task parameters <User Guide Param>` or template processing (see
+   :ref:`User Guide Jinja2` and :ref:`User Guide EmPy`) can be used to
+   programmatically generate family members and associated dependencies.
 
 
-Runtime Inheritance - Multiple
-------------------------------
+Families of Families
+--------------------
 
-If a task or family inherits from multiple parents the order of precedence is
-determined by the so-called *C3 algorithm* used to find the linear *method
-resolution order* for class hierarchies in the Python programming language.
-The result of this should be obvious for typical use of multiple inheritance in
-Cylc workflows, but for detailed documentation of how the algorithm works refer
-to the `official Python documentation
-<https://www.python.org/download/releases/2.3/mro/>`_.
+Families can inherit from other families, to any depth.
 
-The *inherit.multi.one* example workflow, listed here, makes use of
-multiple inheritance:
+.. code-block:: cylc
 
-.. literalinclude:: ../../workflows/inherit/multi/one/flow.cylc
-   :language: cylc
+   [runtime]
+       [[HPC1]]
+           platform = hpc1
 
-``cylc config`` provides an easy way to check the result of
-inheritance in a workflow. You can extract specific items, e.g.:
+       [[BIG-HPC1]]
+           inherit = HPC1
+           #...  add in high memory batch system directives
 
-.. code-block:: console
+       [[model]]  # a big task that runs on hpc1
+           inherit = BIG-HPC1
 
-   $ cylc config --item '[runtime][var_p2]script' inherit.multi.one
-   echo "RUN: run-var.sh"
+If an item is defined at several levels in the family tree the highest level
+(closest to the task) takes precedence.
 
-Workflow Visualization And Multiple Inheritance
+
+Inheriting from Multiple Parents
+--------------------------------
+
+Sometimes a multi-level single-parent tree is not sufficient to avoid all
+duplication of settings, however you can inherit from multiple parents
+at once [1]_:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[HPC1]]
+           platform = hpc1
+
+       [[BIG]]  # high memory batch system directives
+           #...
+
+       [[model]]  # a big task that runs on hpc1
+           inherit = BIG, HPC1
+
+
+
+.. tip::
+
+  Use ``cylc config`` to check task or family settings after inheritance:
+
+  .. code-block:: console
+
+     $ cylc config --item "[runtime][model]environment" <workflow-name>
+     # (prints model's environment as inherited from all parents)
+
+
+First-parent Family Hierarchy for Visualization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The first parent a namespace inherits from doubles as the collapsible family
-group in workflow UI views and visualization. If this is not what you want, you
-can demote the first parent for visualization purposes, without affecting the
-order of inheritance of runtime properties:
+Tasks can be collapsed into first-parent families in the Cylc GUI, so first
+parents should reflect the logical purpose of a task where possible, rather
+than (say) shared technical settings:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[HPC]]
+           # technical platform settings
+
+       [[MODEL]]
+           # atmospheric model tasks
+
+       [[atmos]]
+           inherit = MODEL, HPC  # (not HPC, MODEL)
+
+
+If this is not what you want, given that the primary purpose of the family
+hierarchy is inheritance of runtime settings, a dummy first parent ``None`` can
+be used to disable the visualization usage without affecting inheritance:
 
 .. code-block:: cylc
 
    [runtime]
        [[BAR]]
-           # ...
+           #...
        [[foo]]
-           # inherit properties from BAR, but stay under root for visualization:
+           # inherit from BAR but stay under root for visualization
            inherit = None, BAR
 
 
-How Runtime Inheritance Works
------------------------------
-
-The linear precedence order of ancestors is computed for each namespace
-using the C3 algorithm. Then any runtime items that are explicitly
-configured in the workflow configuration are "inherited" up the linearized
-hierarchy for each task, starting at the root namespace: if a particular
-item is defined at multiple levels in the hierarchy, the level nearest
-the final task namespace takes precedence. Finally, root namespace
-defaults are applied for every item that has not been configured in the
-inheritance process (this is more efficient than carrying the full dense
-namespace structure through from root from the beginning).
 
 
 .. _TaskExecutionEnvironment:
 
-Task Execution Environment
---------------------------
+Task Job Environment
+--------------------
 
-The task execution environment contains workflow and task identity variables
-provided by the :term:`scheduler`, and user-defined environment variables.
-The environment is explicitly exported (by the task job script) prior to
-executing the task ``script`` (see :ref:`TaskJobSubmission`).
+Task job environments (see :cylc:conf:`[runtime][<namespace>][environment]`)
+contain workflow and task identity variables provided by the :term:`scheduler`,
+and user-defined variables inherited through the runtime tree.
 
-Workflow and task identity are exported first, so that user-defined
-variables can refer to them. Order of definition is preserved throughout
-so that variable assignment expressions can safely refer to previously
-defined variables.
-
-Additionally, access to Cylc itself is configured prior to the user-defined
-environment, so that variable assignment expressions can make use of
-Cylc commands:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[foo]]
-           [[[environment]]]
-               REFERENCE_TIME = $( cylc cyclepoint --offset-hours=6 )
-
-
-User Environment Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A task's user-defined environment results from its inherited
-:cylc:conf:`[runtime][<namespace>][environment]` section.
+Environment variables are exported in the task job script prior to running the
+``script`` items (see :ref:`TaskJobSubmission`). Identity variables are
+defined first so that user-defined variables can reference them, and order of
+definition is preserved so that new variable assignments can reference
+previously-defined ones.
 
 .. code-block:: cylc
 
@@ -184,20 +222,36 @@ A task's user-defined environment results from its inherited
                COLOR = blue  # root override
                TEXTURE = rough # new variable
 
-This results in a task *foo* with ``SHAPE=circle``, ``COLOR=blue``,
+Here the task *foo* ends up with ``SHAPE=circle``, ``COLOR=blue``,
 and ``TEXTURE=rough`` in its environment.
 
+Task job access to Cylc itself is configured first of all so that variable
+assignment expressions (as well as scripting) can make use of Cylc commands:
 
-Overriding Environment Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: cylc
 
-When you override inherited namespace items the original parent
-item definition is *replaced* by the new definition. This applies to
-all items including those in the environment sub-sections which,
-strictly speaking, are not "environment variables" until they are
-written, post inheritance processing, to the task job script that
-executes the associated task. Consequently, if you override an
-environment variable you cannot also access the original parent value:
+   [runtime]
+       [[foo]]
+           [[[environment]]]
+               REFERENCE_TIME = $(cylc cyclepoint --offset-hours=6)
+
+.. note::
+
+  Task environment variables are evaluated at run time, by task jobs, on the
+  job platform. So ``$HOME`` in a task environment, for instance, evaluates at
+  run time to the home directory on the job platform, not on the scheduler
+  platform.
+
+
+Overriding Inherited Environment Variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. warning::
+
+  If you override a task environment variable that is inherited, the parent
+  config item gets *replaced* before it is used to define a shell variable in
+  the job script. Consequently the job cannot see the parent value as well as
+  the task value:
 
 .. code-block:: cylc
 
@@ -211,9 +265,9 @@ environment variable you cannot also access the original parent value:
                tmp = $COLOR        # !! ERROR: $COLOR is undefined here
                COLOR = dark-$tmp   # !! as this overrides COLOR in FOO.
 
-The compressed variant of this, ``COLOR = dark-$COLOR``, is
-also in error for the same reason. To achieve the desired result you
-must use a different name for the parent variable:
+The compressed variant of this, ``COLOR = dark-$COLOR``, is also an error for
+the same reason. To achieve the desired result, use a different name for the
+parent variable:
 
 .. code-block:: cylc
 
@@ -232,10 +286,7 @@ must use a different name for the parent variable:
 Task Job Script Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-These are variables that can be referenced (but should not be modified) in a
-task job script.
-
-The task job script may export the following environment variables:
+These variables provided by the :term:`scheduler` are available to task job scripts:
 
 .. code-block:: sub
 
@@ -244,8 +295,9 @@ The task job script may export the following environment variables:
 
    CYLC_CYCLING_MODE                  # Cycling mode, e.g. gregorian
    ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command,
-                                      # defined with the value of CYLC_CYCLING_MODE
-                                      # when in any datetime cycling mode
+                                      #   defined with the value of CYLC_CYCLING_MODE
+                                      #     when in any datetime cycling mode
+
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
    CYLC_WORKFLOW_ID                   # Workflow ID - the WORKFLOW_NAME plus the run directory
@@ -264,97 +316,72 @@ The task job script may export the following environment variables:
    CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
    CYLC_TASK_JOB                      # Task job identifier expressed as
-                                      # CYCLE-POINT/TASK-NAME/SUBMIT-NUM
-                                      # e.g. 20110511T1800Z/t1/01
+                                      # CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER
+                                      #   e.g. 20110511T1800Z/t1/01
+                                      
    CYLC_TASK_CYCLE_POINT              # Cycle point, e.g. 20110511T1800Z
    ISODATETIMEREF                     # Reference time for the `isodatetime` command,
-                                      # defined with the value of CYLC_TASK_CYCLE_POINT
-                                      # when in any datetime cycling mode
+                                      #   defined with the value of CYLC_TASK_CYCLE_POINT
+                                      #     when in any datetime cycling mode
+
    CYLC_TASK_NAME                     # Job's task name, e.g. t1
    CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
-                                      # increments with every submit
+                                      #   increments with every submit
    CYLC_TASK_TRY_NUMBER               # Number of execution tries, e.g. 1
-                                      # increments with automatic retry-on-fail
-   CYLC_TASK_ID                       # Task instance identifier expressed as
-                                      # TASK-NAME.CYCLE-POINT
-                                      # e.g. t1.20110511T1800Z
+                                      #   increments with automatic retry-on-fail
+   CYLC_TASK_ID                       # Task instance identifier TASK-NAME.CYCLE-POINT
+                                      #   e.g. t1.20110511T1800Z
    CYLC_TASK_LOG_DIR                  # Location of the job log directory
-                                      # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
+                                      #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
    CYLC_TASK_LOG_ROOT                 # The task job file path
-                                      # e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
+                                      #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
    CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
-                                      # e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
+                                      #   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
    CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
-                                      # e.g. root postproc t1
+                                      #   e.g. root postproc t1
    CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task
-                                      # e.g. foo.1 bar.1
+                                      #   e.g. foo.1 bar.1
 
    CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
    CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
-                                      # use login shell on workflow host
+                                      #   use login shell on workflow host
 
-There are also some global shell variables that may be defined in the task job
-script (but not exported to the environment). These include:
+Some global shell variables may be defined in the task job script too, but are
+not exported to the environment). These include:
 
 .. code-block:: sub
 
    CYLC_FAIL_SIGNALS               # List of signals trapped by the error trap
    CYLC_VACATION_SIGNALS           # List of signals trapped by the vacation trap
-   CYLC_WORKFLOW_WORK_DIR_ROOT     # Root directory above the workflow work directory
-                                   # in the job host
    CYLC_TASK_MESSAGE_STARTED_PID   # PID of "cylc message" job started" command
    CYLC_TASK_WORK_DIR_BASE         # Alternate task work directory,
-                                   # relative to the workflow work directory
+                                   #   relative to the workflow work directory
 
 
 Workflow Share Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A workflow :term:`share directory` is created automatically under the workflow run
-directory as a share space for tasks. The location is available to tasks as
-``$CYLC_WORKFLOW_SHARE_DIR``. In a cycling workflow, output files are
-typically held in cycle point sub-directories of the workflow share directory.
+The workflow :term:`share directory` is created automatically under the
+workflow run directory as a convenient shared space for tasks. The location is
+available to tasks as ``$CYLC_WORKFLOW_SHARE_DIR``. In a cycling workflow,
+output files are typically held in cycle point sub-directories of this.
 
-The top level share and work directory (below) location can be changed
-(e.g. to a large data area) by global config settings in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
+The top level share directory location can be changed, e.g. to a large data
+area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.
 
 
 Task Work Directories
 ^^^^^^^^^^^^^^^^^^^^^
 
-Task job scripts are executed from within
-:term:`work directories <work directory>` created automatically under the workflow
-run directory. A task can get its own work directory from
-``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD`` if it does not ``cd`` elsewhere at
-runtime). By default the location contains task name and cycle point, to
-provide a unique workspace for every instance of every task.
+Task job scripts are executed from within :term:`work directories <work
+directory>` created automatically under the workflow run directory. A task can
+access its own work directory via ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD``
+if it does not change to another location at runtime). By default the location
+contains task name and cycle point, to provide a unique workspace for every
+instance of every task.
 
-The top level work and share directory (above) location can be changed
-(e.g. to a large data area) by global config settings in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
-
-
-Environment Variable Evaluation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Variables in the task execution environment are not evaluated in the
-shell in which the workflow is running prior to submitting the task. They
-are written in unevaluated form to the job script that is submitted by
-Cylc to run the task (:ref:`JobScripts`) and are therefore
-evaluated when the task begins executing under the task owner account
-on the task host. Thus ``$HOME``, for instance, evaluates at
-run time to the home directory of task owner on the task host.
-
-
-How Tasks Get Access To The Run Directory
------------------------------------------
-
-The workflow bin directory is automatically added
-``$PATH``. If a remote workflow configuration directory is not
-specified, the local (workflow host) path will be assumed with the local
-home directory, if present, swapped for literal ``$HOME`` for
-evaluation on the task host.
+The top level work directory location can be changed, e.g. to a large data
+area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.
 
 
 .. _RunningTasksOnARemoteHost:
@@ -362,10 +389,11 @@ evaluation on the task host.
 Remote Task Hosting
 -------------------
 
-If a task declares a different platform to the one running the workflow,
-Cylc will use non-interactive ssh to execute the task using the
-:term:`job runner` and one of the hosts from the :term:`platform` definition
-(platforms are defined in ``global.cylc[platforms]``).
+If a task declares a different platform to the one where the scheduler is running,
+Cylc will use non-interactive SSH to submit the task job using the platform
+:term:`job runner` on one of the hosts that comprise the :term:`platform`.
+(platforms are defined in ``global.cylc[platforms]``). Workflow source files
+will be installed to the platform just before the first job is submitted there.
 
 For example:
 
@@ -377,22 +405,18 @@ For example:
 
 For this to work:
 
-- Non-interactive ssh is required from the :term:`scheduler` host
-  to the remote platform's hosts.
-- Cylc must be installed on the hosts of the destination platform.
+- Non-interactive SSH is required from the :term:`scheduler` host
+  to the platform hosts
+- Cylc must be installed on the hosts of the destination platform
 
-  - If polling task communication is used, there is no other
-    requirement.
-  - If SSH task communication is configured, non-interactive ssh is
-    required from the task platform to the workflow platform.
+  - If polling task communication is used, there is no other requirement
+  - If SSH task communication is configured, non-interactive SSH is required
+    from the job platform to the scheduler platform
   - If TCP (default) task communication is configured, the task platform
-    should have access to the port on the workflow host.
+    should have access to the Cylc ports on the scheduler host
 
-- The workflow configuration directory, or some fraction of its
-  content, can be installed on the task platform, if needed.
-
-Platform, like all namespace settings, can be declared globally in
-the root namespace, or per family, or for individual tasks.
+Platforms, like other runtime settings, can be declared globally in the root
+family, or in other families or in individual tasks.
 
 
 Dynamic Platform Selection
@@ -422,16 +446,14 @@ necessary, during job submission.
 Implicit Tasks
 --------------
 
-An :term:`implicit task` appears in the workflow graph but has no
-explicit runtime configuration section. Such tasks automatically
-inherit the configuration from the root namespace.
-This is very useful because it allows functional workflows to
-be mocked up quickly for test and demonstration purposes by simply
-defining the graph. It is somewhat dangerous, however, because there
-is no way to distinguish an intentional implicit task from one
-caused by typographic error. Misspelling a task name in the graph
-results in a new implicit task replacing the intended task in the
-affected trigger expression, and misspelling a task name in a runtime
+An :term:`implicit task` appears in the graph but has no matching runtime
+configuration section. These tasks (like all tasks) inherit from root.
+This can be useful because it allows functional workflows to be mocked up
+quickly for test purposes by simply defining the graph. It is somewhat
+dangerous, however, because there is no way to distinguish an intentional
+implicit task from one caused by typographic error. Misspelling a task name in
+the graph results in a new implicit task replacing the intended task in the
+affected trigger expression; and misspelling a task name in a runtime
 section heading results in the intended task becoming an implicit task
 itself (by divorcing it from its intended runtime config section).
 
@@ -629,7 +651,7 @@ You may want to be notified when certain tasks are running late in a real time
 production system - i.e. when they have not triggered by *the usual time*.
 Tasks of primary interest are not normally clock-triggered however, so their
 trigger times are mostly a function of how the workflow runs in its environment,
-and even external factors such as contention with other workflows [1]_ .
+and even external factors such as contention with other workflows [2]_ .
 
 But if your system is reasonably stable from one cycle to the next such that a
 given task has consistently triggered by some interval beyond its cycle point,
@@ -658,7 +680,14 @@ to update them after any change that affects triggering times.*
    until it catches up to the clock.
 
 
-.. [1] Late notification of clock-triggered tasks is not very useful in
+.. [1] The order of precedence for inheritance from multiple parents
+   is determined by the `C3 algorithm
+   <https://en.wikipedia.org/wiki/C3_linearization>`_. C3 is
+   used to find the linear *method resolution order* for multiple inheritance
+   in Python.
+
+
+.. [2] Late notification of clock-triggered tasks is not very useful in
    any case because they typically do not depend on other tasks, and as
    such they can often trigger on time even if the workflow is delayed to
    the point that downstream tasks are late due to their dependence on
