@@ -459,8 +459,7 @@ expands to:
 Parameterized Cycling
 ---------------------
 
-Two ways of constructing cycling systems are described and contrasted in
-:ref:`Workflows For Cycling Systems`. For most purposes use of
+For most purposes use of
 a proper :term:`cycling` workflow is recommended, wherein Cylc incrementally
 generates the datetime sequence and extends the workflow, potentially
 indefinitely, at run time. For smaller systems of finite duration, however,

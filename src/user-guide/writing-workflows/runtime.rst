@@ -501,16 +501,67 @@ Automatic Task Retry On Failure
    :cylc:conf:`[runtime][<namespace>]execution retry delays`.
 
 Tasks can have a list of :term:`ISO8601 durations <ISO8601 duration>` as retry
-intervals. If the job fails the task will return to the ``waiting`` state, to
-wait on a clock-trigger configured with the next retry delay.
+intervals. If the job fails the task will return to the ``waiting`` state
+with a clock-trigger configured with the next retry delay.
 
-An example is shown in the workflow below under :ref:`EventHandling`.
+In the following example, tasks ``bad`` and ``flaky`` each have 3 retries
+configured, with a 10 second delay between. On the final try, ``bad`` fails
+again and goes to the ``failed`` state, while ``flaky`` succeeds and triggers
+task ``whizz`` downstream. The scheduler will then stall with
+``bad`` retained as an incomplete task.
 
-If a task with configured retries is *killed* (e.g. by ``cylc kill``) it goes
-to the ``held`` state so that the operator can decide whether to release it and
-continue the retry sequence or not. 
+.. code-block:: cylc
 
-.. TODO check how to abort the retry sequence in Cylc 8
+   [scheduling]
+       [[graph]]
+           R1 = """
+               bad => cheese
+               flaky => whizz
+            """
+   [runtime]
+       [[bad]]
+           # retry 3 times then fail
+           script = """
+               sleep 10
+               false
+           """
+           execution retry delays = 3*PT10S
+       [[flaky]]
+           # retry 3 times then succeed
+           script = """
+               sleep 10
+               test $CYLC_TASK_TRY_NUMBER -gt 3
+           """
+           execution retry delays = 3*PT10S
+       [[cheese, whizz]]
+           script = "sleep 10"
+
+
+Aborting a Retry Sequence
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To prevent a waiting task from retrying, remove it from the scheduler.
+If the example above is installed as ``demo``:
+
+.. code-block:: console
+
+   $ cylc remove demo flaky.1
+ 
+If a task with retries gets *killed* while running, it goes to the ``held``
+state so you decide whether to release it and continue the retry
+sequence, or abort.
+
+.. code-block:: console
+
+   $ cylc kill demo flaky.1  # flaky.1 goes to held state
+   $ cylc release demo flaky.1  # release to continue retrying 
+   $ cylc remove demo flaky.1  # or remove the task to abort retries
+
+
+If you want ``whizz`` to triggr downstream despite ``flaky.1`` being removed
+before it succeeded, use ``cylc set-outputs demo flaky.1`` to artificially mark
+it as succeeded (and use the ``--flow`` option if you want the flow to continue
+after ``whizz``).
 
 
 .. _EventHandling:
