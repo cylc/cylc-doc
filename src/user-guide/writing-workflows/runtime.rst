@@ -426,20 +426,17 @@ Dynamic Platform Selection
 .. TODO - consider a re-write once dynamic platform selection done
 
 Instead of hardwiring platform names into the workflow configuration you can
-specify a shell command that prints a platform name, or an environment
-variable that holds a platform name, as the value of the
-:cylc:conf:`host config item <[runtime][<namespace>]platform>`.
+give a command that prints a platform name, or an environment variable, as the
+value of the :cylc:conf:`host config item <[runtime][<namespace>]platform>`.
 
+Job hosts are always selected dynamically, for the chosen platform.
 
-Remote Task Log Directories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Remote Task Job Log Directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Task stdout and stderr streams are written to :term:`log files <job log>` in a
-workflow-specific sub-directory of the workflow :term:`run directory`, as
-explained in :ref:`WhitherStdoutAndStderr`. For remote tasks
-the same directory is used, but *on the task host*.
-Remote task log directories, like local ones, are created on the fly, if
-necessary, during job submission.
+Task job stdout and stderr streams are written to :term:`log files <job log>`
+under the workflow :term:`run directory` (see :ref:`WhitherStdoutAndStderr`).
+For remote tasks the same directory is used, on the job host.
 
 
 .. _ImplicitTasks:
@@ -447,26 +444,51 @@ necessary, during job submission.
 Implicit Tasks
 --------------
 
-An :term:`implicit task` appears in the graph but has no matching runtime
-configuration section. These tasks (like all tasks) inherit from root.
-This can be useful because it allows functional workflows to be mocked up
-quickly for test purposes by simply defining the graph. It is somewhat
-dangerous, however, because there is no way to distinguish an intentional
-implicit task from one caused by typographic error. Misspelling a task name in
-the graph results in a new implicit task replacing the intended task in the
-affected trigger expression; and misspelling a task name in a runtime
-section heading results in the intended task becoming an implicit task
-itself (by divorcing it from its intended runtime config section).
+An implicit task is one that appears in the graph but is not defined under
+:cylc:conf:`flow.cylc[runtime]`.
 
-You can allow implicit tasks during development of a workflow using
-:cylc:conf:`flow.cylc[scheduler]allow implicit tasks`. But, to avoid
-the problems mentioned above, any task used in a production/operational
-workflow should not be implicit, i.e. it should have an explicit entry in under
-the runtime section of ``flow.cylc``, even if the section is empty. This
-results in exactly the same task behaviour, via inheritance from root,
-but adds a layer of protection against mistakes. Thus, it is recommended to
-turn off :cylc:conf:`flow.cylc[scheduler]allow implicit tasks` when the
-:cylc:conf:`flow.cylc[runtime]` section has been written.
+Depending on the value of :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`
+Cylc can automatically create default task definitions for these, to submit
+local dummy jobs that just return the standard job status messages.
+
+Implicit tasks can be used to mock up functional workflows very quickly. A
+default ``script`` can be added to the root family, e.g. to slow job execution
+down a little. Here is a complete workflow definition using implicit tasks:
+
+.. code-block:: cylc
+
+   [scheduler]
+       allow implicit tasks = True
+   [scheduling]
+       [[graph]]
+           R1 = "prep => run-a & run-b => done"
+   [runtime]
+       [[root]]
+           script = "sleep 10"
+
+
+.. warning::
+  Implicit tasks are somewhat dangerous because they can easily be created by
+  mistake. Simply misspelling a task's name will divorce it from its intended
+  ``runtime`` definition.
+
+For this reason implicit tasks are not allowed by default, and if used they
+should be turned off once the task definitions are done.
+
+You can get the convenience without the danger with a little more effort, by
+adding empty runtime placeholders instead of allowing implicit tasks:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           R1 = "prep => run-a & run-b => done"
+   [runtime]
+       [[root]]
+           script = "sleep 10"
+       [[prep]]
+       [[run-a, run-b]]
+       [[done]]
 
 
 .. _TaskRetries:
@@ -476,13 +498,11 @@ Automatic Task Retry On Failure
 
 .. seealso::
 
-   cylc:conf:`[runtime][<namespace>]execution retry delays`.
+   :cylc:conf:`[runtime][<namespace>]execution retry delays`.
 
-Tasks can be configured with a list of retry intervals, as
-:term:`ISO8601 durations <ISO8601 duration>`. If the task job fails it will
-return to ``waiting`` state to wait on a clock-trigger configured with the
-next retry delay interval in the list. The task job will submit again once
-the delay interval is up.
+Tasks can have a list of :term:`ISO8601 durations <ISO8601 duration>` as retry
+intervals. If the job fails the task will return to the ``waiting`` state, to
+wait on a clock-trigger configured with the next retry delay.
 
 An example is shown in the workflow below under :ref:`EventHandling`.
 
@@ -491,7 +511,7 @@ to the ``held`` state so that the operator can decide whether to release it and
 continue the retry sequence or not. 
 
 .. TODO check how to abort the retry sequence in Cylc 8
-`
+
 
 .. _EventHandling:
 
