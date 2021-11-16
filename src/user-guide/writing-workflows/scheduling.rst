@@ -17,7 +17,7 @@ A Cylc :term:`graph` is composed of one or more
 :term:`graph strings <graph string>` which use a special syntax to define the
 dependencies between tasks:
 
-* arrow symbols ``=>`` declare a dependency
+* arrow symbols ``=>`` declare dependencies
 * logical operators ``&`` (AND) and ``|`` (OR) can be used to write
   :term:`conditional dependencies <conditional dependency>`.
 
@@ -66,7 +66,7 @@ them, and the right side is the task or family that triggers when the output
 (or expression) is completed.
 
 In the case of cycling tasks, triggers are valid for cycle points matching the
-*recurrence expression* for the graph string. For example this graph:
+recurrence expression for the graph string. For example this graph:
 
 .. code-block:: cylc
 
@@ -141,53 +141,57 @@ Use white space and comments to make the graph as clear as possible.
 .. code-block:: cylc
 
    # B triggers if A succeeds, then C and D trigger if B succeeds:
-       R1 = "A => B => C & D"
-   # which is equivalent to this:
-       R1 = """
-           A => B => C
-           B => D
-       """
-   # and to this:
-       R1 = """
-           A => B => D
-           B => C
-       """
-   # and to this:
-       R1 = """
-           A => B
-           B => C
-           B => D
-       """
-   # and it can even be written like this:
-       R1 = """
-           A => B # blank line follows:
+   R1 = "A => B => C & D"
 
-           B => C # comment ...
-           B => D
-       """
+   # which is equivalent to this:
+   R1 = """
+       A => B => C
+       B => D
+   """
+
+   # and to this:
+   R1 = """
+       A => B => D
+       B => C
+   """
+
+   # and to this:
+   R1 = """
+       A => B
+       B => C
+       B => D
+   """
+
+   # and it can even be written like this:
+   R1 = """
+       A => B # blank line follows:
+
+       B => C # comment ...
+       B => D
+   """
 
 Splitting Up Long Graph Lines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is not necessary to use the fragile line continuation marker ``\`` to split
+long graph lines. You can break at dependency arrows (``=>``) and operators
+(``&``, ``|``), or split long chains into smaller ones. This graph:
 
 .. versionadded:: 8.0.0
 
    Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
 
 
-It is not necessary to use the fragile line continuation marker ``\`` to split
-long graph lines. You can break at dependency arrows (``=>``) and operators
-(``&``, ``|``), or split long chains into smaller ones. This graph:
-
 .. code-block:: cylc
 
-   R1 = "A => B => C"
+   R1 = "A & B => C"
 
 is equivalent to this:
 
 .. code-block:: cylc
 
    R1 = """
-       A => B =>
+       A & B =>
        C
    """
 
@@ -196,10 +200,9 @@ and also to this:
 .. code-block:: cylc
 
    R1 = """
-       A => B
+       A &
        B => C
    """
-
 
 .. note::
 
@@ -949,7 +952,7 @@ upstream task succeeding:
 .. code-block:: cylc
 
    # B triggers if A SUCCEEDS:
-       R1 = "A => B"
+   R1 = "A => B"
 
 For consistency and completeness, however, the success trigger can be
 explicit:
@@ -957,9 +960,10 @@ explicit:
 .. code-block:: cylc
 
    # B triggers if A SUCCEEDS:
-       R1 = "A => B"
+   R1 = "A => B"
+
    # or:
-       R1 = "A:succeed => B"
+   R1 = "A:succeed => B"
 
 
 Failure Triggers
@@ -970,7 +974,7 @@ To trigger off of the upstream task failing:
 .. code-block:: cylc
 
    # B triggers if A FAILS:
-       R1 = "A:fail => B"
+   R1 = "A:fail => B"
 
 
 Start Triggers
@@ -981,7 +985,7 @@ To trigger off of the upstream task starting:
 .. code-block:: cylc
 
    # B triggers if A STARTS EXECUTING:
-       R1 = "A:start => B"
+   R1 = "A:start => B"
 
 This can be used to trigger tasks that monitor the execution of other tasks,
 e.g. to process their output files on the fly as they are generated.
@@ -996,9 +1000,10 @@ To trigger off of the upstream task either succeeding **or** failing:
 .. code-block:: cylc
 
    # B triggers if A either SUCCEEDS or FAILS:
-       R1 = "A | A:fail => B"
+   R1 = "A | A:fail => B"
+
    # or
-       R1 = "A:finish => B"
+   R1 = "A:finish => B"
 
 
 .. _MessageTriggers:
@@ -1026,9 +1031,10 @@ To trigger off of a task submitting, or failing to submit:
 .. code-block:: cylc
 
    # B triggers if A submits successfully:
-       R1 = "A:submit => B"
+   R1 = "A:submit => B"
+
    # D triggers if C fails to submit successfully:
-       R1 = "C:submit-fail => D"
+   R1 = "C:submit-fail => D"
 
 A possible use case for submit-fail triggering: if a task fails to submit,
 possibly after multiple retries, another task that inherits (mostly) the same
@@ -1047,31 +1053,35 @@ provide a concise alternative to defining multiple triggers separately:
 .. code-block:: cylc
 
    # 1/ this:
-       R1 = "A & B => C"
-   # is equivalent to:
-       R1 = """
-           A => C
-           B => C
-       """
-   # 2/ this:
-       R1 = "A => B & C"
-   # is equivalent to:
-       R1 = """
-           A => B
-           A => C
-       """
-   # 3/ and this:
-       R1 = "A & B => C & D"
-   # is equivalent to this:
-       R1 = """
-           A => C
-           B => C
-           A => D
-           B => D
-       """
+   R1 = "A & B => C"
 
-OR operators (``|``) which result in true conditional triggers,
-can only appear on the left [1]_ :
+   # is equivalent to:
+   R1 = """
+       A => C
+       B => C
+   """
+
+   # 2/ this:
+   R1 = "A => B & C"
+
+   # is equivalent to:
+   R1 = """
+       A => B
+       A => C
+   """
+
+   # 3/ and this:
+   R1 = "A & B => C & D"
+
+   # is equivalent to this:
+   R1 = """
+       A => C
+       B => C
+       A => D
+       B => D
+   """
+
+OR operators (``|``), for conditional triggers, can only appear on the left:
 
 .. code-block:: cylc
 
@@ -1230,7 +1240,7 @@ Inter-Cycle Triggers
 ^^^^^^^^^^^^^^^^^^^^
 
 Most tasks in a workflow typically depend on others with the same
-cycle point, but some may depend on other cycle points [2]_.
+cycle point, but some may depend on other cycle points [1]_.
 
 :term:`Inter-cycle dependence <inter-cycle dependency>` is expressed using
 ``[offset]`` syntax such as ``foo[-PT12H] => foo``, which means ``foo`` at the
@@ -1292,7 +1302,7 @@ Finally, dependence on a task at a specific cycle point is also possible:
 .. warning::
 
    However, in a long running workflow it is best to avoid a repeating cycle
-   that depends forever on a specific cycle point (including the initial point)
+   that depends forever on a specific cycle point (such as the initial point)
    as this can adversely affect the scheduler's performance.
 
 .. code-block:: cylc
@@ -1703,156 +1713,86 @@ When using message triggers in this way there are two things to be aware of:
       # if showdown fails then good will not run
       showdown:succeed & showdown:good => good
 
-2. Message triggers are not necessarily mutually exclusive.
+2. Whether message outputs from a single task are mutually exclusive or not
+   depends on the task, and the workflow should be designed accordingly. 
+  
+   For example, the ``showdown`` task above could instead send all three
+   messages in succession, after writing out corresponding *good*, *bad*, and
+   *ugly* files.
 
-   Cylc cannot prevent a task from sending multiple output messages,
-   e.g. ``good``, ``bad`` and ``ugly``.
+   Check that you understand how your tasks work, if they use custom outputs.
 
-   Sometimes this is actually desirable, but if not it is hard to defend
-   against. If your graph assumes the outputs are mutually exclusive you should
-   check that they really are, as far as the producing task is concerned.
+How The Graph Determines Valid Task Cycle Points
+------------------------------------------------
 
-How The Graph Determines Task Instantiation
--------------------------------------------
-
-A graph trigger pair like ``foo => bar`` determines the existence and
-prerequisites (dependencies) of the downstream task ``bar``, for
-the cycle points defined by the associated graph section heading. In general it
-does not say anything about the dependencies or existence of the upstream task
-``foo``. However *if the trigger has no cycle point offset* Cylc
-will infer that ``bar`` must exist at the same cycle points as
-``foo``. This is a convenience to allow this:
-
-.. code-block:: cylc
-
-   R1 = "foo => bar"
-
-to be written as shorthand for this:
-
-.. code-block:: cylc
-
-   R1 = """
-       foo
-       foo => bar
-   """
-
-(where ``foo`` by itself means ``<nothing> => foo``, i.e. the
-task exists at these cycle points but has no prerequisites - although other
-prerequisites may be defined for it in other parts of the graph).
-
-*Cylc does not infer the existence of the upstream task in offset
-triggers* like ``foo[-P1D] => bar`` because a typo in the offset
-interval should generate an error rather than silently creating
-tasks on an erroneous cycling sequence.
-
-As a result you need to be careful not to define inter-cycle dependencies that
-cannot be satisfied at run time. Workflow validation catches this kind of error if
-the existence of the cycle offset task is not defined anywhere at all:
+Graph triggers determine the sequence of valid cycle points (via the
+recurrence value of the associated graph string) and the prerequisites, for
+each downstream task in a dependency. In the absence of an cycle point offset 
+(intercycle trigger) they also determine the sequence of cycle points for
+the upstream tasks:
 
 .. code-block:: cylc
 
    [scheduling]
-       initial cycle point = 2020
+       initial cycle point = 2025-01-01T00
        [[graph]]
-           # ERROR
-           P1Y = "foo[-P1Y] => bar"
+           P2D = "foo & bar => baz"
+  
+This says ``baz`` depends on ``foo`` and ``bar`` for every point in the
+sequence defined by the recurrence ``P2D`` (i.e. ``R/^/P2D``).
 
-.. code-block:: console
-
-   $ cylc validate WORKFLOW
-   'ERROR: No cycling sequences defined for foo'
-
-To fix this, use another line in the graph to tell Cylc to define
-``foo`` at each cycle point:
+Cycle does not infer the cycling sequence for upstream tasks in intercycle triggers,
+however. This prevents mistakes in the graph (e.g. ``P1D`` should be ``P2D`` above) from
+silently creating tasks on off-sequence points:
 
 .. code-block:: cylc
 
    [scheduling]
-       initial cycle point = 2020
+       initial cycle point = 2025-01-01T00
        [[graph]]
-           P1Y = """
+           # ERROR: No cycling sequences defined for foo
+           P2D = "foo[-P1D] & bar
+ 
+.. warning::
+
+  Validation currently does not detect this sort of error if affected do have
+  defined cycling sequences.
+
+For example, the following graph will validate but ``bar`` will only run once in
+the first cycle point (where it's pre-initial dependence is ignored):
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 2025-01-01T00
+       [[graph]]
+           P2D = """
                foo
-               foo[-P1Y] => bar
+               foo[-P1D] => bar  # ERROR: foo doesn't exist at P1D off sequence
            """
 
-But validation does not catch this kind of error if the offset task
-is defined only on a different cycling sequence:
+To fix this, the offset ``[-P1D]`` should be changed to ``[-P2D]``, or else
+another graph line is needed to generate ``foo`` instances on the ``P1D`` sequence:
 
 .. code-block:: cylc
 
    [scheduling]
-       initial cycle point = 2020
+       initial cycle point = 2025-01-01T00
        [[graph]]
-           # ERROR
-           P2Y = """
-               foo
-               foo[-P1Y] => bar
-           """
-
-This workflow will validate OK, but it will stall at runtime with ``bar``
-waiting on ``foo[-P1Y]`` at the intermediate years where it does not
-exist. The offset ``[-P1Y]`` is presumably an error (it should be
-``[-P2Y]``), or else another graph line is needed to generate
-``foo`` instances on the yearly sequence:
-
-.. code-block:: cylc
-
-   [scheduling]
-       initial cycle point = 2020
-       [[graph]]
-           P1Y = "foo"
-           P2Y = "foo[-P1Y] => bar"
-
-Similarly the following workflow will validate OK, but it will stall at
-runtime with ``bar`` waiting on ``foo[-P1Y]`` in
-every cycle point, when only a single instance of it exists, at the initial
-cycle point:
-
-.. code-block:: cylc
-
-   [scheduling]
-       initial cycle point = 2020
-       [[graph]]
-           R1 = foo
-           # ERROR
-           P1Y = foo[-P1Y] => bar
-
-.. note::
-
-   ``cylc graph`` will display un-satisfiable inter-cycle
-   dependencies as "ghost nodes", as illustrated in this
-   screenshot of cylc graph displaying the above example with the
-   un-satisfiable task (foo) displayed as a "ghost node".
-
-   .. _ghost-node-screenshot:
-
-   .. figure:: ../../img/ghost-node-example.png
-      :align: center
-
-      Screenshot of ``cylc graph`` showing one task as a "ghost node".
+           P1D = "foo"
+           P2D = "foo[-P1D] => bar"
 
 
-Omitting Tasks At Runtime
--------------------------
+Omitting Tasks
+--------------
 
-It is sometimes convenient to omit certain tasks from the workflow at
-runtime without actually deleting their definitions from the workflow.
+It can sometimes be useful to temporarily remove tasks by simply commenting
+them out of the graph. As a reminder to restore them remove them properly,
+validation will warn about tasks defined under :cylc:conf:`[runtime]` but not
+used in the graph.
 
-Defining :cylc:conf:`[runtime]` properties for tasks that do not appear
-in the workflow graph results in verbose-mode validation warnings that the
-tasks are disabled. They cannot be used because the workflow graph is what
-defines their dependencies and valid cycle points. Nevertheless, it is
-legal to leave these orphaned runtime sections in the workflow
-configuration because it allows you to temporarily remove tasks from
-the workflow by commenting them out of the graph.
+You can also use logical Jinja2 switches (:ref:`User Guide Jinja2`) to
+include or exclude tasks (or anything else) from workflow. 
 
-With Jinja2 (:ref:`User Guide Jinja2`) you can radically alter
-workflow structure by including or excluding tasks from the
-:cylc:conf:`[scheduling]` and :cylc:conf:`[runtime]` sections according to the
-value of a single logical flag defined at the top of the workflow.
-
-
-.. [1] An OR operator on the right doesn't make much sense: if "B or C"
-       triggers off A, what exactly should Cylc do when A finishes?
-.. [2] For example, in weather forecasting workflows (and similar systems) each
+.. [1] For example, in weather forecasting workflows (and similar systems) each
        new forecast depends partly on the outcome of the previous forecast.
