@@ -153,10 +153,11 @@ at once [1]_:
 
   Use ``cylc config`` to check task or family settings after inheritance:
 
-  .. code-block:: console
 
-     $ cylc config --item "[runtime][model]environment" <workflow-name>
-     # (prints model's environment as inherited from all parents)
+.. code-block:: console
+
+   $ cylc config --item "[runtime][model]environment" <workflow-name>
+   prints model's environment as inherited from all parents
 
 
 First-parent Family Hierarchy for Visualization
@@ -237,9 +238,9 @@ assignment expressions (as well as scripting) can make use of Cylc commands:
 
 .. note::
 
-  Task environment variables are evaluated at run time, by task jobs, on the
+  Task environment variables are evaluated at runtime, by task jobs, on the
   job platform. So ``$HOME`` in a task environment, for instance, evaluates at
-  run time to the home directory on the job platform, not on the scheduler
+  runtime to the home directory on the job platform, not on the scheduler
   platform.
 
 
@@ -389,19 +390,19 @@ area, by global config settings under :cylc:conf:`global.cylc[install][symlink d
 Remote Task Hosting
 -------------------
 
-If a task declares a different platform to the one where the scheduler is running,
-Cylc will use non-interactive SSH to submit the task job using the platform
-:term:`job runner` on one of the hosts that comprise the :term:`platform`.
-(platforms are defined in ``global.cylc[platforms]``). Workflow source files
-will be installed to the platform just before the first job is submitted there.
+Job :term:`platforms <platform>` are defined in ``global.cylc[platforms]``.
 
-For example:
+If a task declares a different platform to that where the scheduler is running,
+Cylc uses non-interactive SSH to submit the job to the platform :term:`job
+runner`, on one of the platform hosts. Workflow source files will be installed
+to the platform, via the associated ``global.cylc[install targets]``, just
+before the first job is submitted to run there.
 
 .. code-block:: cylc
 
    [runtime]
-       [[foo]]
-           platform = orca
+      [[foo]]
+          platform = orca
 
 For this to work:
 
