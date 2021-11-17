@@ -95,7 +95,7 @@ Here a group of three related tasks all run the same script on the same
        [[m1]]
            #...  m1-specific settings
 
-Specific tasks (such as ``m1`` above) can still be singled out to add
+Particular tasks (such as ``m1`` above) can still be singled out to add
 task-specific settings.
 
 
@@ -132,8 +132,8 @@ Inheriting from Multiple Parents
 --------------------------------
 
 Sometimes a multi-level single-parent tree is not sufficient to avoid all
-duplication of settings, however you can inherit from multiple parents
-at once [1]_:
+duplication of settings. Fortunately tasks can inherit from multiple parents at
+once [1]_:
 
 .. code-block:: cylc
 
@@ -151,13 +151,12 @@ at once [1]_:
 
 .. tip::
 
-  Use ``cylc config`` to check task or family settings after inheritance:
+  Use ``cylc config`` to check exactly what settings a task or family ends up
+  with after inheritance processing:
 
+  .. code-block:: console
 
-.. code-block:: console
-
-   $ cylc config --item "[runtime][model]environment" <workflow-name>
-   prints model's environment as inherited from all parents
+     $ cylc config --item "[runtime][model]environment" <workflow-name>
 
 
 First-parent Family Hierarchy for Visualization
@@ -201,15 +200,24 @@ be used to disable the visualization usage without affecting inheritance:
 Task Job Environment
 --------------------
 
-Task job environments (see :cylc:conf:`[runtime][<namespace>][environment]`)
-contain workflow and task identity variables provided by the :term:`scheduler`,
-and user-defined variables inherited through the runtime tree.
+Task job scripts export various environment variables before running ``script``
+blocks (see :ref:`TaskJobSubmission`).
 
-Environment variables are exported in the task job script prior to running the
-``script`` items (see :ref:`TaskJobSubmission`). Identity variables are
-defined first so that user-defined variables can reference them, and order of
-definition is preserved so that new variable assignments can reference
-previously-defined ones.
+Scheduler-defined variables appear first to identify the workflow, the task,
+and log directory locations. Then user-defined variables from
+:cylc:conf:`[runtime][<namespace>][environment]`. Order of variable definition
+is preserved so that new variable assignments can reference previous ones.
+
+.. note::
+
+  Task environment variables are evaluated at runtime, by task jobs, on the
+  job platform. So ``$HOME`` in a task environment, for instance, evaluates at
+  runtime to the home directory on the job platform, not on the scheduler
+  platform.
+
+
+In this example the task ``foo`` ends up with ``SHAPE=circle``, ``COLOR=blue``,
+and ``TEXTURE=rough`` in its environment:
 
 .. code-block:: cylc
 
@@ -223,11 +231,8 @@ previously-defined ones.
                COLOR = blue  # root override
                TEXTURE = rough # new variable
 
-Here the task *foo* ends up with ``SHAPE=circle``, ``COLOR=blue``,
-and ``TEXTURE=rough`` in its environment.
-
-Task job access to Cylc itself is configured first of all so that variable
-assignment expressions (as well as scripting) can make use of Cylc commands:
+Task job access to Cylc itself is configured first so that variable
+assignment expressions (as well as scripting) can use Cylc commands:
 
 .. code-block:: cylc
 
@@ -236,23 +241,16 @@ assignment expressions (as well as scripting) can make use of Cylc commands:
            [[[environment]]]
                REFERENCE_TIME = $(cylc cyclepoint --offset-hours=6)
 
-.. note::
-
-  Task environment variables are evaluated at runtime, by task jobs, on the
-  job platform. So ``$HOME`` in a task environment, for instance, evaluates at
-  runtime to the home directory on the job platform, not on the scheduler
-  platform.
-
 
 Overriding Inherited Environment Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. warning::
 
-  If you override a task environment variable that is inherited, the parent
-  config item gets *replaced* before it is used to define a shell variable in
-  the job script. Consequently the job cannot see the parent value as well as
-  the task value:
+  If you override an inherited task environment variable the parent config
+  item gets *replaced* before it is ever used to define the shell variable in
+  the task job script. Consequently the job cannot see the parent value as well
+  as the task value:
 
 .. code-block:: cylc
 
@@ -263,8 +261,8 @@ Overriding Inherited Environment Variables
        [[bar]]
            inherit = FOO
            [[[environment]]]
-               tmp = $COLOR        # !! ERROR: $COLOR is undefined here
-               COLOR = dark-$tmp   # !! as this overrides COLOR in FOO.
+               tmp = $COLOR  # !! ERROR: $COLOR is undefined here
+               COLOR = dark-$tmp  # !! as this overrides COLOR in FOO.
 
 The compressed variant of this, ``COLOR = dark-$COLOR``, is also an error for
 the same reason. To achieve the desired result, use a different name for the
@@ -297,7 +295,7 @@ These variables provided by the :term:`scheduler` are available to task job scri
    CYLC_CYCLING_MODE                  # Cycling mode, e.g. gregorian
    ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command,
                                       #   defined with the value of CYLC_CYCLING_MODE
-                                      #     when in any datetime cycling mode
+                                      #   when in any datetime cycling mode
 
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
@@ -319,11 +317,11 @@ These variables provided by the :term:`scheduler` are available to task job scri
    CYLC_TASK_JOB                      # Task job identifier expressed as
                                       # CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER
                                       #   e.g. 20110511T1800Z/t1/01
-                                      
+
    CYLC_TASK_CYCLE_POINT              # Cycle point, e.g. 20110511T1800Z
    ISODATETIMEREF                     # Reference time for the `isodatetime` command,
                                       #   defined with the value of CYLC_TASK_CYCLE_POINT
-                                      #     when in any datetime cycling mode
+                                      #   when in any datetime cycling mode
 
    CYLC_TASK_NAME                     # Job's task name, e.g. t1
    CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
@@ -347,8 +345,8 @@ These variables provided by the :term:`scheduler` are available to task job scri
    CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
                                       #   use login shell on workflow host
 
-Some global shell variables may be defined in the task job script too, but are
-not exported to the environment). These include:
+Some global shell variables are also defined in the task job script, but not
+exported to subshells:
 
 .. code-block:: sub
 
@@ -417,7 +415,7 @@ For this to work:
     should have access to the Cylc ports on the scheduler host
 
 Platforms, like other runtime settings, can be declared globally in the root
-family, or in other families or in individual tasks.
+family, or in other families, or for individual tasks.
 
 
 Dynamic Platform Selection
@@ -427,7 +425,7 @@ Dynamic Platform Selection
 
 Instead of hardwiring platform names into the workflow configuration you can
 give a command that prints a platform name, or an environment variable, as the
-value of the :cylc:conf:`host config item <[runtime][<namespace>]platform>`.
+value of :cylc:conf:`[runtime][<namespace>]platform`.
 
 Job hosts are always selected dynamically, for the chosen platform.
 
@@ -545,7 +543,7 @@ If the example above is installed as ``demo``:
 .. code-block:: console
 
    $ cylc remove demo flaky.1
- 
+
 If a task with retries gets *killed* while running, it goes to the ``held``
 state so you decide whether to release it and continue the retry
 sequence, or abort.
@@ -553,7 +551,7 @@ sequence, or abort.
 .. code-block:: console
 
    $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
-   $ cylc release demo flaky.1  # release to continue retrying 
+   $ cylc release demo flaky.1  # release to continue retrying
    $ cylc remove demo flaky.1  # or remove the task to abort retries
 
 
@@ -568,23 +566,164 @@ after ``whizz``).
 Event Handling
 --------------
 
-* Task events (e.g. task succeeded/failed) are configured by
-  :cylc:conf:`task events <[runtime][<namespace>][events]>`.
-* Workflow events (e.g. workflow started/stopped) are configured by
-  :cylc:conf:`workflow events <[scheduler][events]>`
+.. seealso::
+
+  * Task events :cylc:conf:`[runtime][<namespace>][events]`
+  * Workflow events :cylc:conf:`[scheduler][events]`
 
 .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
-Cylc can call nominated event handlers - to do whatever you like - when certain
-workflow or task events occur. This facilitates centralized alerting and automated
-handling of critical events. Event handlers can be used to send a message, call
-a pager, or whatever; they can even intervene in the operation of their own
-workflow using cylc commands.
+Custom *event handler* scripts can be called when certain workflow and task
+events occur. Event handlers can be used to send a message, raise an alarm, or
+whatever you like. They can even call ``cylc`` commands to intervene in the
+workflow.
 
-To send an email, use the built-in setting :cylc:conf:`[events]mail events`
-to specify a list of events for which notifications should be sent. (The
-name of a registered task output can also be used as an event name in
-this case.) E.g. to send an email on (submission) failed and retry:
+.. note::
+
+   Task event handlers are called by the :term:`scheduler`, not by the task
+   jobs that generate the events - so they do not see the task job environment.
+
+Event handlers can be stored in the workflow ``bin`` directory, or anywhere in
+``$PATH`` in the :term:`scheduler` environment.
+
+They should return quickly to avoid tying up the scheduler processing pool -
+see :ref:`Managing External Command Execution`.
+
+
+.. cylc-scope::
+
+Event-Specific Handlers
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Event-specific handlers can be configured in ``<event> handlers``
+under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>`` can be:
+
+  - **submitted**
+
+    - task job submitted
+  - **started**
+
+    - task job started running
+  - **succeeded**
+
+    - task job succeeded
+  - **failed**
+
+    - task job failed
+  - **retry**
+
+    - task job just failed but will retry after a configured delay
+  - **submission failed**
+
+    - task job submission failed
+  - **submission retry**
+
+    - task job submission failed but will retry after a configured delay
+  - **submission timeout**
+
+    - task job timed out in the submitted state
+  - **execution timeout**
+
+    - task job timed out in the running state
+  - **warning**
+
+    - scheduler received a WARNING message from the task job
+  - **critical**
+
+    - scheduler received a CRITICAL message from the task job
+  - **expired**
+
+    - task expired (too far behind the clock to bother submitting)
+  - **late**
+
+    - task will run later than expected (by some configured interval)
+  - **custom**
+
+    - scheduler received a custom event message received from the task job
+  - **<name>**
+
+    - scheduler recieved the <name> output received from the task job
+
+
+The value should be a list of commands, command lines, or command line
+templates (see below) to call if the specified event is triggered.
+
+General Event Handlers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Alternatively you can configure ``handler events`` and ``handlers``
+under :cylc:conf:`[runtime][<namespace>][events]`, where the former a list of
+events (as above), and the latter a list of commands, command lines,
+lines or command line templates (see below) to call if any of the specified
+events are triggered.
+
+.. cylc-scope::
+
+Event Handler Command Line Arguments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc makes event data available to event handlers by command line argument
+templating: workflow name; task ID, name, cycle point, message, submit
+number; and any :cylc:conf:`workflow <[meta]>` or
+:cylc:conf:`task <[runtime][<namespace>][meta]>` item.
+See :cylc:conf:`workflow events <[scheduler][events]>` and
+:cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
+
+If no templates or arguments are specified the following default command line
+will be used:
+
+.. code-block:: none
+
+   <event-handler> %(event)s %(workflow)s %(id)s %(message)s
+
+The ``%(event)s`` string, for instance, will be replaced by the actual event
+name when the handler is invoked.
+
+.. warning::
+
+   Substitution patterns should not be quoted in the template strings.
+   This is done automatically where required.
+
+Examples
+^^^^^^^^
+
+The following :cylc:conf:`flow.cylc` snippets illustrate the two (general and
+task-specific) ways to configure event handlers:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
+           execution retry delays = PT0S, PT30S
+           [[[events]]]  # event-specific handlers:
+               retry handler = notify-retry.py
+               failed handler = notify-failed.py
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = """
+               test ${CYLC_TASK_TRY_NUMBER} -eq 2
+               cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" 'oopsy daisy'
+           """
+           execution retry delays = PT0S, PT30S
+           [[[events]]]  # general handlers:
+               handlers = notify-events.py
+               # Note: task output name can be used as an event in this method
+               handler events = retry, failed, oops
+           [[[outputs]]]
+               oops = oopsy daisy
+
+Built-in Email Event Handler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To send an email on task events, configure relevant tasks with a list of events
+to handle by email. Custom task output names can also be used as event names,
+in which case the event triggers when the output message is received.
+
+E.g. to send an email on task failed, retry, and a custom message event:
 
 .. code-block:: cylc
 
@@ -596,11 +735,11 @@ this case.) E.g. to send an email on (submission) failed and retry:
            """
            execution retry delays = PT0S, PT30S
            [[[events]]]
-               mail events = submission failed, submission retry, failed, retry, oops
+               mail events = failed, retry, oops
            [[[outputs]]]
                oops = oopsy daisy
 
-By default, the emails will be sent to the current user with:
+By default, event emails will be sent to the current user with:
 
 - ``to:`` set as ``$USER``
 - ``from:`` set as ``notifications@$(hostname)``
@@ -615,105 +754,9 @@ These can be configured using the settings:
 
 .. cylc-scope::
 
-By default, a cylc workflow will send you no more than one task event email every
-5 minutes - this is to prevent your inbox from being flooded by emails should a
-large group of tasks all fail at similar time. This is configured by
-:cylc:conf:`[scheduler][mail]task event batch interval`.
-
-Event handlers can be located in the workflow ``bin/`` directory;
-otherwise it is up to you to ensure their location is in ``$PATH`` (in
-the shell in which the :term:`scheduler` runs). They should require little
-resource and return quickly - see :ref:`Managing External Command Execution`.
-
-.. cylc-scope:: flow.cylc[runtime][<namespace>]
-
-Task event handlers can be specified using the
-``[events]<event> handler`` settings, where
-``<event>`` is one of:
-
-.. TODO - Add link to replaced link of states.
-
-The value of each setting should be a list of command lines or command line
-templates (see below).
-
-Alternatively you can use :cylc:conf:`[events]handlers` and
-:cylc:conf:`[events]handler events`, where the former is a list of command
-lines or command line templates (see below) and the latter is a list of events
-for which these commands should be invoked. (The name of a registered task
-output can also be used as an event name in this case.)
-
-.. cylc-scope::
-
-Event handler arguments can be constructed from various templates
-representing workflow name; task ID, name, cycle point, message, and submit
-number name; and any :cylc:conf:`workflow <[meta]>` or
-:cylc:conf:`task <[runtime][<namespace>][meta]>` item.
-See :cylc:conf:`workflow events <[scheduler][events]>` and
-:cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
-
-If no template arguments are supplied the following default command line
-will be used:
-
-.. code-block:: none
-
-   <task-event-handler> %(event)s %(workflow)s %(id)s %(message)s
-
-.. note::
-
-   Substitution patterns should not be quoted in the template strings.
-   This is done automatically where required.
-
-For an explanation of the substitution syntax, see
-`String Formatting Operations
-<https://docs.python.org/2/library/stdtypes.html#string-formatting>`_
-in the Python documentation.
-
-The retry event occurs if a task fails and has any remaining retries
-configured (see :ref:`TaskRetries`).
-The event handler will be called as soon as the task fails, not after
-the retry delay period when it is resubmitted.
-
-.. note::
-
-   Event handlers are called by the :term:`scheduler`, not by
-   task jobs. If you wish to pass additional information to them use
-   ``[scheduler] -> [[environment]]``, not task runtime environment.
-
-The following two :cylc:conf:`flow.cylc` snippets are examples on how to specify
-event handlers using the alternate methods:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[foo]]
-           script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
-           execution retry delays = PT0S, PT30S
-           [[[events]]]
-               retry handler = "echo '!!!!!EVENT!!!!!' "
-               failed handler = "echo '!!!!!EVENT!!!!!' "
-
-.. code-block:: cylc
-
-   [runtime]
-       [[foo]]
-           script = """
-               test ${CYLC_TASK_TRY_NUMBER} -eq 2
-               cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" 'oopsy daisy'
-           """
-           execution retry delays = PT0S, PT30S
-           [[[events]]]
-               handlers = "echo '!!!!!EVENT!!!!!' "
-               # Note: task output name can be used as an event in this method
-               handler events = retry, failed, oops
-           [[[outputs]]]
-               oops = oopsy daisy
-
-The handler command here - specified with no arguments - is called with the
-default arguments, like this:
-
-.. code-block:: bash
-
-   echo '!!!!!EVENT!!!!!' %(event)s %(workflow)s %(id)s %(message)s
+The scheduler batches events over a 5 minute interval, by default, to avoid
+flooding your Inbox if many events occur in a short time. The batching interval
+can be configured with :cylc:conf:`[scheduler][mail]task event batch interval`.
 
 
 .. _Late Events:
@@ -721,17 +764,20 @@ default arguments, like this:
 Late Events
 ^^^^^^^^^^^
 
-You may want to be notified when certain tasks are running late in a real time
-production system - i.e. when they have not triggered by *the usual time*.
-Tasks of primary interest are not normally clock-triggered however, so their
-trigger times are mostly a function of how the workflow runs in its environment,
-and even external factors such as contention with other workflows [2]_ .
+.. warning::
 
-But if your system is reasonably stable from one cycle to the next such that a
-given task has consistently triggered by some interval beyond its cycle point,
-you can configure Cylc to emit a *late event* if it has not triggered by
-that time. For example, if a task ``forecast`` normally triggers by 30
-minutes after its cycle point, configure late notification for it like this:
+   The scheduler can only check for lateness once a task has appeared in its
+	active task window. In Cylc 8 this is usually when the task is actually
+	ready to run, which severely limits the usefulness of late events as
+   currently implemented.
+
+If a real time (clock-triggered) workflow performs fairly consistently from one
+cycle to the next, you may want to be notified when certain tasks are running
+late with respect the time they normally trigger in each cycle.
+
+Cylc can generate a *late* event if a task has not triggered by a given offset
+from its cycle point in real time. For example, if a task ``forecast`` normally
+triggers at 30 minutes after cycle point, a late event could be configured like this:
 
 .. code-block:: cylc
 
@@ -739,30 +785,54 @@ minutes after its cycle point, configure late notification for it like this:
       [[forecast]]
            script = run-model.sh
            [[[events]]]
-               late offset = PT30M
+               late offset = PT40M  # allow a 10 minute delay
                late handler = my-handler %(message)s
 
-*Late offset intervals are not computed automatically so be careful
-to update them after any change that affects triggering times.*
+.. warning::
+  Late offset intervals are not computed automatically so be careful to update
+  them after any workflow change that affects triggering times.
 
-.. note::
 
-   Cylc can only check for lateness in tasks that it is currently aware
-   of. If a workflow gets delayed over many cycles the next tasks coming up
-   can be identified as late immediately, and subsequent tasks can be
-   identified as late as the workflow progresses to subsequent cycle points,
-   until it catches up to the clock.
+Workflow Events
+^^^^^^^^^^^^^^^
 
+Cylc also supports general and event-specific workflow event handling so
+you can run an event handler or send and email when the scheduler starts up or
+shuts down, for example.
+
+Workflow events are configured in :cylc:conf:`workflow events
+<[scheduler][events]>`. The list of events is:
+
+  - startup
+
+    - the scheduler started running the workflow
+  - shutdown
+
+    - the workflow finished and the scheduler will shut down
+  - abort
+
+    - the scheduler will shut down even though the workflow didn't finish
+  - workflow timeout
+
+    - the workflow run timed out
+  - stall
+
+    - the workflow stalled
+  - stall timeout
+
+    - the workflow timed out after stalling
+  - inactivity timeout
+
+    - the workflow timed out with no activity
+
+You can also tell the scheduler to abort the run on certain workflow events,
+with the following settings:
+
+  - abort on stall timeout
+  - abort on inactivity timeout
+  - abort on workflow timeout
 
 .. [1] The order of precedence for inheritance from multiple parents
    is determined by the `C3 algorithm
-   <https://en.wikipedia.org/wiki/C3_linearization>`_. C3 is
-   used to find the linear *method resolution order* for multiple inheritance
-   in Python.
-
-
-.. [2] Late notification of clock-triggered tasks is not very useful in
-   any case because they typically do not depend on other tasks, and as
-   such they can often trigger on time even if the workflow is delayed to
-   the point that downstream tasks are late due to their dependence on
-   previous-cycle tasks that are delayed.
+	<https://en.wikipedia.org/wiki/C3_linearization>`_ - which is used to find
+   the linear method resolution order for multiple inheritance in Python.
