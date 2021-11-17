@@ -462,6 +462,24 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-qualifiers>`
       * :term:`task state`
 
+
+   future trigger
+      When a task depends on another task with a later cycle point. Here ``bar.1``
+      triggers off ``foo.2``; and ``bar.2`` off of ``foo.3``; and so on:
+
+      .. code-block:: cylc
+
+         [scheduling]
+             initial cycle point = 1
+             cycling mode = integer
+             [[graph]]
+                 P1 = "foo[+P1] => bar"
+
+
+      See also:
+
+      * :term:`inter-cycle trigger`
+ 
    task
       A task represents an activity in a workflow. It is a specification of
       that activity consisting of the script or executable to run and certain

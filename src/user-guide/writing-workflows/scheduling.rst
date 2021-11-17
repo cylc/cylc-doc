@@ -84,14 +84,15 @@ dependencies, attach an offset indicator to the left side of a pair:
        [[graph]]
            T00,T12 = "A[-PT12H] => B"
 
-This means ``B[cyclepoint]`` triggers off of ``A[cyclepoint-PT12H]`` (12 hours
-before) for cycle points with hours matching ``00`` or ``12``. Note
-``cyclepoint`` is implicit because most tasks depend only on others with the
-same cycle point.
+This means task ``B`` triggers off of task ``A[-PT12H]`` (12 hours before, with
+respect to cycle point) at every point with hours matching ``00`` and ``12`` in
+a sequence starting at the initial cycle point.
+Note current cycle point is implicit - only offsets need to be specified -
+because most tasks depend only on others with the same cycle point.
 
-Cycle point offsets can only appear on the left side of arrow. However,
-``A => B[-PT6H]``, which is illegal, can be reformulated as a *future trigger*
-``A[+PT6H] => B`` (see :ref:`InterCyclePointTriggers`). It is also
+Cycle point offsets can only appear on the left side of an arrow. However,
+``A => B[-PT6H]``, which is illegal, can be reformulated as a :term:`future
+trigger` ``A[+PT6H] => B`` (see :ref:`InterCyclePointTriggers`). It is also
 possible to combine multiple offsets within a cycle point offset e.g.
 
 .. code-block:: cylc
@@ -100,8 +101,8 @@ possible to combine multiple offsets within a cycle point offset e.g.
        [[graph]]
            T00,T12 = "A[-P1D-PT12H] => B"
 
-This means that ``B[cyclepoint]`` triggers off ``A[cyclepoint-P1D-PT12H]`` (1
-day and 12 hours before).
+This means that ``B`` triggers off ``A[P1D-PT12H]`` (1 day and 12 hours before)
+at each cycle point.
 
 Triggers can be chained together. This graph:
 

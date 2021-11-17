@@ -469,11 +469,10 @@ down a little. Here is a complete workflow definition using implicit tasks:
 
 .. warning::
   Implicit tasks are somewhat dangerous because they can easily be created by
-  mistake. Simply misspelling a task's name will divorce it from its intended
-  ``runtime`` definition.
+  mistake: misspelling a task's name divorces it from its ``runtime`` definition.
 
 For this reason implicit tasks are not allowed by default, and if used they
-should be turned off once the task definitions are done.
+should be turned off once the real task definitions are complete.
 
 You can get the convenience without the danger with a little more effort, by
 adding empty runtime placeholders instead of allowing implicit tasks:
@@ -553,7 +552,7 @@ sequence, or abort.
 
 .. code-block:: console
 
-   $ cylc kill demo flaky.1  # flaky.1 goes to held state
+   $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
    $ cylc release demo flaky.1  # release to continue retrying 
    $ cylc remove demo flaky.1  # or remove the task to abort retries
 
