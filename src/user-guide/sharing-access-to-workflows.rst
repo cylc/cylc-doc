@@ -173,13 +173,12 @@ Site Authorization Configuration
 The site_authorization configuration allows sites to configure sensible defaults
 and limits for the permissions users can delegate.
 
-Note, however, that as the UIS runs as the user they have full control over
-this process so, in theory, may bypass these restrictions in a variety of ways.
-As an extreme example a user can pass their credentials on to another person.
-Such behaviours cannot be controlled through technical measures so must be
-enforced by site policy. By the same token, however, because Cylc UI Servers
-(and Schedulers) run as the user, one user cannot compromise another user's
-account using Cylc.
+Note that as the UI Server runs as the workflow owner, s/he has full control
+over it and in theory may bypass these restrictions in a variety of ways. As an
+extreme example, a workflow owner could pass their account credentials to
+another person, and that cannot be prevented by technical means. However, a
+workflow owner cannot unilaterally gain access to any other user's account or
+workflows by configuring their own UI Server.
 
 ``c.CylcUIServer.site-authorization``, which is loaded from
 ``/etc/cylc/hub/jupyter_config.py``, or, alternatively, the environment variable
