@@ -33,6 +33,8 @@ Why Were Platforms Introduced?
   separate platforms to submit jobs to a batch system and to background on
   ``localhost``.
 
+.. _Install Targets:
+
 What Are Install Targets?
 -------------------------
 

@@ -100,6 +100,7 @@ In some case you may need to symlink to large external files anyway, if space
 or copy speed is a problem, but otherwise workflows with private copies of all the
 files they need are more robust.
 
+.. _installing_files:
 
 Installing Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -111,7 +112,7 @@ Cylc supports adding custom directories and files to the file installation.
 If, for example, you wished to install directories ``dir1``, ``dir2``, and
 files ``file1``, ``file2``, add the following configuration to your
 :cylc:conf:`flow.cylc`, under the section
-:cylc:conf:flow.cylc[scheduler]install.
+:cylc:conf:`[scheduler]install`.
 To mark an item as a directory, add a trailing slash.
 
 .. code-block:: cylc
