@@ -14,25 +14,25 @@ workflow that you can actually run, with a few easy steps:
 
 For example, here is a small cycling workflow graph:
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-  # Avoid caffeine withdrawal
-  PT6H = "grind_beans => make_coffee => drink_coffee"
+   # Avoid caffeine withdrawal
+   PT6H = "grind_beans => make_coffee => drink_coffee"
 
 And here it is as a complete runnable workflow:
 
 .. code-block:: cylc
 
-  [scheduler]
-      allow implicit tasks = True
-  [scheduling]
-      initial cycle point = now
-      [[graph]]
-          # Avoid caffeine withdrawal
-          PT6H = "grind_beans => make_coffee => drink_coffee"
-  [runtime]
-      [[root]]
-          script = "sleep 10"
+   [scheduler]
+       allow implicit tasks = True
+   [scheduling]
+       initial cycle point = now
+       [[graph]]
+           # Avoid caffeine withdrawal
+           PT6H = "grind_beans => make_coffee => drink_coffee"
+   [runtime]
+       [[root]]
+           script = "sleep 10"
 
 
 

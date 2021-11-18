@@ -20,9 +20,9 @@ at a time and does not understand any intercycle dependence that may be present.
 
 .. important::
 
-  Cylc handles inter- and intra-cycle dependence equally, and it unrolls the
-  cycle loop to create a single non-cycling workflow of repeating tasks, each
-  with its own individual *cycle point*.
+   Cylc handles inter- and intra-cycle dependence equally, and it unrolls the
+   cycle loop to create a single non-cycling workflow of repeating tasks, each
+   with its own individual *cycle point*.
 
 .. image:: ../../img/cycling.png
    :align: center

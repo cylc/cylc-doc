@@ -170,7 +170,7 @@ Custom Jinja2 Filters, Tests and Globals
 
 Jinja2 has three namespaces that separate "globals", "filters" and "tests".
 Globals are template-wide variables and functions. Cylc extends this namespace
-with hte ``environ`` dictionary above, and
+with the ``environ`` dictionary above, and
 :ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
 functions for raising exceptions to abort Cylc config parsing.
 
@@ -191,7 +191,7 @@ Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
 filter or test is a single Python function in a source file with the same name
 as the function (plus ``.py`` extension).
 
-In the argument list of a filter or test function the first argument is
+In the argument list of a filter or test function, the first argument is
 the variable value to be filtered or tested, and subsequent arguments can be
 whatever is needed. Currently three custom filters are supplied:
 

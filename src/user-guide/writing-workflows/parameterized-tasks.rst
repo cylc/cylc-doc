@@ -575,7 +575,7 @@ might be simpler to use a 3-monthly datetime cycle instead:
            P3M = "model[-P3M] => model"
 
 
-For another example, here task ``model`` generates 10 files in sequence at it
+For another example, here task ``model`` generates 10 files in sequence as it
 runs. Task ``proc_file0`` triggers when the model starts running, to wait for
 and process the first file; when that is done, ``proc_file1`` triggers to wait
 for the second file; and so on.
@@ -601,7 +601,7 @@ for the second file; and so on.
 Offsets at Sequence Start
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In cycling workflows dependence on tasks prior to the start cycle point is
+In cycling workflows, dependence on tasks prior to the start cycle point is
 ignored [1]_. So this graph:
 
 .. code-block:: cylc

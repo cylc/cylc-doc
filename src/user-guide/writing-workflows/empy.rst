@@ -32,7 +32,7 @@ implemented with Empy instead of Jinja2.
 .. literalinclude:: ../../workflows/empy/cities/flow.cylc
    :language: cylc
 
-For basic usage the difference between Jinja2 and EmPy amounts little more than
+For basic usage, the difference between Jinja2 and EmPy amounts to little more than
 a different markup syntax. EmPy might be preferable, however, in cases needing
 more complicated processing logic.
 
