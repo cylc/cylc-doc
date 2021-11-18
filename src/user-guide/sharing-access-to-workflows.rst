@@ -117,8 +117,13 @@ to operations in these groups, use ``!READ``, ``!CONTROL``, ``!ALL``.
 .. note::
 
    The ``READ`` access group is shorthand for all read-only operations. At present,
-   this is soley the ``read`` operation, which grants access to GraphQL queries,
-   subscriptions and enables users to see the UI. In future this may be extended.
+   this is soley the ``read`` operation, which grants access to GraphQL queries and
+   subscriptions, and enables users to see the workflows in the UI. In future
+   the ``READ`` access group may be extended.
+
+.. note::
+
+   Granting CONTROL access does not automatically grant READ access.
 
 .. _user_configuration:
 
