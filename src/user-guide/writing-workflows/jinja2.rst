@@ -371,7 +371,7 @@ section which the plugin makes available to Cylc:
 
 .. code-block:: ini
    :caption: rose-suite.conf
-   
+
    [template variables]
    ICP=1068
 

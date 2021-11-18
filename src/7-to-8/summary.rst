@@ -332,6 +332,8 @@ Security
 - The UI Server interacts with its own Schedulers, which also run as the user.
 - Users can authorize different levels of access to others, via their UI Server.
 - Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
+- Cylc8 supports target users authorizing other users to interact with their
+  workflows on the UI.
 
 See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 
