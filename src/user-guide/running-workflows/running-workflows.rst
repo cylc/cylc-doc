@@ -180,18 +180,14 @@ Configuration Logs
 At startup a folder ``log/flow-config`` is created to record the workflow configuration,
 with all templating expanded:
 
-- ``flow-processed.cylc`` - A record of the current workflow configuration
-  with templating expanded, but without being fully parsed: Duplicate sections
-  will not be merged.
-- ``<datetime-stamp>-<start/restart/reload>`` - A record of the config at
-  the time a workflow was started, restarted or reloaded, parsed by Cylc:
-  Duplicate sections will be merged.
+- ``flow-processed.cylc`` - the current workflow configuration
+  with templating expanded, and duplicate sections unmerged.
+- ``<datetime-stamp>-<start/restart/reload>`` - the config at each time the workflow
+ was started, restarted, or reloaded; with duplicate sections merged.
 
 .. note::
 
-   These are particularly useful files to look at if you are working with a
-   workflow definition containing many template variables as these are filled
-   in these files.
+   Look at these files to see the result of templating in the workflow config.
 
 
 .. _The Workflow Contact File:
