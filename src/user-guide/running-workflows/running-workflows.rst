@@ -177,8 +177,8 @@ Files Created at Workflow Start
 Configuration Logs
 ^^^^^^^^^^^^^^^^^^
 
-At startup a folder ``log/flow-config`` is created where the flow configuration
-is recorded, with all templating expanded:
+At startup a folder ``log/flow-config`` is created to record the workflow configuration,
+with all templating expanded:
 
 - ``flow-processed.cylc`` - A record of the current workflow configuration
   with templating expanded, but without being fully parsed: Duplicate sections
