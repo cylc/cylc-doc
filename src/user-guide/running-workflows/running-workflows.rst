@@ -171,7 +171,7 @@ reload are not inserted into the pool automatically. The first instance of each
 must be inserted manually at the right cycle point, with ``cylc insert``.
 
 
-Files created at workflow start
+Files Created at Workflow Start
 -------------------------------
 
 Configuration Logs
