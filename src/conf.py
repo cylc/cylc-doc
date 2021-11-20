@@ -44,6 +44,7 @@ extensions = [
     'cylc.sphinx_ext.practical',
     'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
+    'sphinxcontrib.spelling'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
@@ -213,3 +214,10 @@ texinfo_documents = [
 
 # How to display URL addresses.
 texinfo_show_urls = 'footnote'
+
+# Spelling extension
+spelling_lang='en_UK'
+tokenizer_lang='en_UK'
+spelling_word_list_filename=['spelling_wordlist.txt']
+spelling_show_suggestions=False
+spelling_ignore_importable_modules=True
