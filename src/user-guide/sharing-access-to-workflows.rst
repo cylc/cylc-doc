@@ -173,7 +173,7 @@ Site Authorization Configuration
 The site_authorization configuration allows sites to configure sensible defaults
 and limits for the permissions users can delegate.
 
-Note that as the UI Server runs as the workflow owner, s/he has full control
+Note that as the UI Server runs as the workflow owner, they have full control
 over it and in theory may bypass these restrictions in a variety of ways. As an
 extreme example, a workflow owner could pass their account credentials to
 another person, and that cannot be prevented by technical means. However, a
