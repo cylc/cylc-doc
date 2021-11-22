@@ -13,8 +13,11 @@ conditional logic, etc., are processed to generate the final configuration. To
 the template processor, Jinja2 code is embedded in arbitrary text, but the
 result after processing must be valid Cylc syntax.
 
-Use of Jinja2 should be declared with a hash-bang comment in the first line of
-the :cylc:conf:`flow.cylc` file:
+To use Jinja2, put a hash-bang comment in the first line of :cylc:conf:`flow.cylc`:
+
+.. code-block:: cylc
+
+   #!jinja2
 
 Template processing is the first thing done on parsing a workflow configuration
 so Jinja2 can appear anywhere in the file. 
@@ -22,10 +25,6 @@ so Jinja2 can appear anywhere in the file.
 Embedded Jinja2 code should be reasonably easy to understand for those with
 coding experience; but if not, Jinja2 is well documented `here
 <https://jinja.palletsprojects.com/>`_. 
-
-.. code-block:: cylc
-
-   #!jinja2
 
 Uses of Jinja2 in Cylc include:
 
