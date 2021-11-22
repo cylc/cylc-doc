@@ -766,10 +766,10 @@ Late Events
 
 .. warning::
 
-   The scheduler can only check for lateness once a task has appeared in its
-	active task window. In Cylc 8 this is usually when the task is actually
-	ready to run, which severely limits the usefulness of late events as
-   currently implemented.
+  The scheduler can only check for lateness once a task has appeared in its
+  active task window. In Cylc 8 this is usually when the task is actually
+  ready to run, which severely limits the usefulness of late events as
+  currently implemented.
 
 If a real time (clock-triggered) workflow performs fairly consistently from one
 cycle to the next, you may want to be notified when certain tasks are running
@@ -832,7 +832,7 @@ with the following settings:
   - abort on inactivity timeout
   - abort on workflow timeout
 
-.. [1] The order of precedence for inheritance from multiple parents
-   is determined by the `C3 algorithm
-	<https://en.wikipedia.org/wiki/C3_linearization>`_ - which is used to find
-   the linear method resolution order for multiple inheritance in Python.
+.. [1] The order of precedence for inheritance from multiple parents is
+  determined by the `C3 algorithm
+  <https://en.wikipedia.org/wiki/C3_linearization>`_ used to find
+  the linear method resolution order for multiple inheritance in Python.

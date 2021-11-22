@@ -135,7 +135,7 @@ Cylc is split into a number of packages providing different functionality:
 `Cylc UI Server`_
    Provides the "Cylc Hub" and the browser-based "Cylc GUI".
 :ref:`Cylc Rose`
-   Provides support for :ref:`Rose` suite configurations in Cylc workflows.
+   Provides support for `Rose`_ suite configurations in Cylc workflows.
 
 Installation Types
 ^^^^^^^^^^^^^^^^^^
@@ -158,14 +158,14 @@ Recommended Installation
 
 User Machines
    * `Cylc Flow`_
-   * :ref:`Cylc Rose` (if using :ref:`Rose`)
+   * :ref:`Cylc Rose` (if using `Rose`_)
 Cylc Servers
    * `Cylc Flow`_
-   * :ref:`Cylc Rose` (if using :ref:`Rose`)
+   * :ref:`Cylc Rose` (if using `Rose`_)
    * `Cylc UI Server`_
 Job Hosts:
    * `Cylc Flow`_
-   * :ref:`Rose` (if running Rose applications on the job host)
+   * `Rose`_ (if running Rose applications on the job host)
 
 .. _managing environments:
 

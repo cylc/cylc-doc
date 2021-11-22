@@ -1,5 +1,4 @@
-.. This document contains hyperlink references to be used throughout the
-   documentation.
+.. This document contains hyperlink references for use throughout the documentation.
 
 .. _Apollo Client: https://www.apollographql.com/docs/react/
 .. _Configurable HTTP Proxy: https://github.com/AbdealiJK/configurable-http-proxy
@@ -22,6 +21,7 @@
 .. _Python: https://www.python.org/
 .. _Rose Documentation: https://metomi.github.io/rose
 .. _Rose GitHub: https://github.com/metomi/rose
+.. _Rose: https://github.com/metomi/rose
 .. _SRS: https://code.metoffice.gov.uk/
 .. _SVN: https://subversion.apache.org/
 .. _Websocket: https://en.wikipedia.org/wiki/WebSocket

@@ -43,8 +43,3 @@ to interpret the diagram, refer to the
 
 .. cylc-db-graph::
    :align: center
-
-
-.. _auto-stop-restart:
-
-

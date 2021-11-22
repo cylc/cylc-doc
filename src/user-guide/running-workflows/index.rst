@@ -3,8 +3,6 @@
 Running Workflows
 =================
 
-.. cylc-scope::
-
 .. toctree::
    :maxdepth: 2
 
