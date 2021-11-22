@@ -153,10 +153,7 @@ class CylcRunDBDirective(Graphviz):
         # group orphan nodes to cut down on clutter
         dotcode.extend(group_nodes(orphans))
 
-        # use invisible graph edges to change the graph layout
-        dotcode.append(
-            '"task_pool_checkpoints" -- "inheritance"[style=invis];'
-        )
+        # note: use invisible graph edges to change the graph layout
 
         # graph suffix
         dotcode += ['}']
