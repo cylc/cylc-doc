@@ -593,9 +593,8 @@ for the second file; and so on.
                proc<file=9> => upload_products
            """
    [runtime]
-      [[model]]
-      [[proc<file>]]
-      [[upload_products]]
+       [[proc<file>]]
+       # ...
 
 
 Offsets at Sequence Start

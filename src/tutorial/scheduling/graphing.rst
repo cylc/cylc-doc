@@ -69,7 +69,7 @@ Throughout this tutorial we will refer to settings in the following format:
    Expresses the value of the setting.
 ``[section][sub-section]another-key``
    Note we only use one set of square brackets per section heading when writing
-   config items on one line like this, but in the config file each nesting level
+   settings on one line like this, but in the config file each nesting level
    gets a another set of square brackets.
 
 Duplicate Items

@@ -52,8 +52,8 @@ nesting clearly, and it makes block re-indentation operations easier in text
 editors. Indent :cylc:conf:`flow.cylc` syntax four spaces per nesting level:
 
 
-Config Items
-^^^^^^^^^^^^
+Settings (Config Items)
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: cylc
 

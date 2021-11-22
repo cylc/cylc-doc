@@ -66,7 +66,7 @@ Syntax
 
 :cylc:conf:`flow.cylc` syntax, in general terms:
 
-- **Config items** are of the form ``item = value``.
+- **Settings** (config items) are of the form ``item = value``.
 - **[Section]** headings are enclosed in square brackets.
 
   - **Sub-section [[nesting]]** is defined by repeated square brackets.

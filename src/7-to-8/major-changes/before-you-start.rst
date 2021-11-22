@@ -19,7 +19,7 @@ if validation with Cylc 7 gives deprecation warnings*.
 Solution
 --------
 
-To avoid problems with old config items you should validate your workflow using
+To avoid problems with old settings you should validate your workflow using
 Cylc 7. Look for deprecation warnings and edit the workflow configuration to
 eliminate these warnings.
 
