@@ -171,10 +171,29 @@ reload are not inserted into the pool automatically. The first instance of each
 must be inserted manually at the right cycle point, with ``cylc insert``.
 
 
+Files Created at Workflow Start
+-------------------------------
+
+Configuration Logs
+^^^^^^^^^^^^^^^^^^
+
+At startup a folder ``log/flow-config`` is created to record the workflow configuration,
+with all templating expanded:
+
+- ``flow-processed.cylc`` - the current workflow configuration
+  with templating expanded, and duplicate sections unmerged.
+- ``<datetime-stamp>-<start/restart/reload>`` - the config at each time the workflow
+ was started, restarted, or reloaded; with duplicate sections merged.
+
+.. note::
+
+   Look at these files to see the result of templating in the workflow config.
+
+
 .. _The Workflow Contact File:
 
 The Workflow Contact File
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 At start-up, :term:`schedulers <scheduler>` write a :term:`contact file`
 ``$HOME/cylc-run/WORKFLOW/.service/contact`` that records workflow host,
@@ -186,7 +205,7 @@ commands can read this file, if they have access to it, to find the target
 .. _Authentication Files:
 
 Authentication Files
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 Cylc uses `CurveZMQ`_ to ensure that
 any data, sent between the :term:`scheduler <scheduler>` and the client,
