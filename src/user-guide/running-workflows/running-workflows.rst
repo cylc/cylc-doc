@@ -183,7 +183,7 @@ with all templating expanded:
 - ``flow-processed.cylc`` - the current workflow configuration
   with templating expanded, and duplicate sections unmerged.
 - ``<datetime-stamp>-<start/restart/reload>`` - the config at each time the workflow
- was started, restarted, or reloaded; with duplicate sections merged.
+  was started, restarted, or reloaded; with duplicate sections merged.
 
 .. note::
 
