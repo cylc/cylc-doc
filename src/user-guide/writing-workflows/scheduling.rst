@@ -87,7 +87,7 @@ dependencies, attach an offset indicator to the left side of a pair:
 This means task ``B`` triggers off of task ``A[-PT12H]`` (12 hours before, with
 respect to cycle point) at every point with hours matching ``00`` and ``12`` in
 a sequence starting at the initial cycle point.
-Note current cycle point is implicit - only offsets need to be specified -
+Note: current cycle point is implicit - only offsets need to be specified -
 because most tasks depend only on others with the same cycle point.
 
 Cycle point offsets can only appear on the left side of an arrow. However,
@@ -101,7 +101,7 @@ possible to combine multiple offsets within a cycle point offset e.g.
        [[graph]]
            T00,T12 = "A[-P1D-PT12H] => B"
 
-This means that ``B`` triggers off ``A[P1D-PT12H]`` (1 day and 12 hours before)
+This means that ``B`` triggers off ``A[-P1D-PT12H]`` (1 day and 12 hours before)
 at each cycle point.
 
 Triggers can be chained together. This graph:
@@ -178,11 +178,6 @@ It is not necessary to use the fragile line continuation marker ``\`` to split
 long graph lines. You can break at dependency arrows (``=>``) and operators
 (``&``, ``|``), or split long chains into smaller ones. This graph:
 
-.. versionadded:: 8.0.0
-
-   Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
-
-
 .. code-block:: cylc
 
    R1 = "A & B => C"
@@ -209,6 +204,11 @@ and also to this:
 
    Multiple graph strings add together to make the complete workflow graph.
    
+
+.. versionadded:: 8.0.0
+
+   Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
+
 
 .. _GraphTypes:
 
@@ -317,11 +317,11 @@ inferred from context (rules below).
 
 .. important::
 
-   Cycle points in Cylc are just task **labels** that anchor dependence on
+   Cycle points in Cylc are just task labels that anchor dependence on
    other tasks, and which task jobs can use to determine their current cycle
-   point. Datetime cycle points have no relation to wallclock (real) time
-   unless specific tasks, if any, also depend on
-   :term:`clock triggers <clock trigger>`.
+   point. **Datetime cycle points have no relation to wallclock (real) time**
+   except where specific tasks, if any, depend on :term:`clock triggers <clock
+   trigger>`.
 
 The most common full form for recurrences is
 ``R[limit?]/[datetime]/[interval]``. In Cylc this can be condensed to:
@@ -349,7 +349,7 @@ Here are some examples for each form:
 .. note::
 
    ``T00`` is an example of ``[datetime]``, with an
-   inferred 1 day period and no limit.
+   inferred 1 day period and no limit (it is short for ``R/T00``).
 
 Where some or all datetime information is omitted, it is inferred to
 be relative to the :term:`initial cycle point`. For example, ``T00``
@@ -536,14 +536,14 @@ The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 At start up the initial cycle point is passed to task job environments
 as ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` and stored in the workflow
 database to persist across restarts. However it gets wiped out (set to
-``None``) by a warm start (``cylc play --start-cycle-point`` or ``cylc play
---start-task``) - which is essentially a restart that ignores prior state
+``None``) by a :term:`warm start` (``cylc play --start-cycle-point`` or ``cylc
+play --start-task``) - which is essentially a restart that ignores prior state
 information.
 
 The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
-check if they are running in the initial cold-start cycle point, when
-different behaviour may be required. Note however that an initial ``R1`` graph
-section is the preferred way to get different behaviour at workflow start-up.
+check if they are running in the initial cycle point, when different behaviour
+may be required. Note however that an initial ``R1`` graph section is the
+preferred way to get different behaviour at workflow start-up.
 
 
 .. _HowMultipleGraphStringsCombine:
@@ -689,7 +689,7 @@ Advanced Starting Up
 ^^^^^^^^^^^^^^^^^^^^
 
 Dependencies that are only valid at the :term:`initial cycle point` can be
-written using the ``R1`` syntax. For example:
+written using an ``R1`` recurrence. For example:
 
 .. code-block:: cylc
 
@@ -1416,7 +1416,7 @@ allowing maximum concurrency until the clock-triggered tasks catch up again.
        [[graph]]
            T00 = foo
 
-Here, ``foo[2025-08-23T00]`` would trigger (other dependencies allowing)
+Here, ``foo.2025-08-23T00`` would trigger (other dependencies allowing)
 when the wallclock time reaches ``2025-08-23T02``. Clock-trigger
 offsets are normally positive, to trigger *after* the wallclock time is equal
 to the task cycle point.
@@ -1568,7 +1568,7 @@ This is called :term:`branching`.
 
 .. note::
 
-   Before Cylc 8 graphs were not event-driven so :term:`suicide triggers
+   Before Cylc 8, graphs were not event-driven, so :term:`suicide triggers
    <suicide trigger>` were needed to clean up unused branches at runtime.
 
 Basic Example
@@ -1728,7 +1728,7 @@ How The Graph Determines Valid Task Cycle Points
 
 Graph triggers determine the sequence of valid cycle points (via the
 recurrence value of the associated graph string) and the prerequisites, for
-each downstream task in a dependency. In the absence of an cycle point offset 
+each downstream task in a dependency. In the absence of a cycle point offset 
 (intercycle trigger) they also determine the sequence of cycle points for
 the upstream tasks:
 
@@ -1742,25 +1742,24 @@ the upstream tasks:
 This says ``baz`` depends on ``foo`` and ``bar`` for every point in the
 sequence defined by the recurrence ``P2D`` (i.e. ``R/^/P2D``).
 
-Cycle does not infer the cycling sequence for upstream tasks in intercycle triggers,
-however. This prevents mistakes in the graph (e.g. ``P1D`` should be ``P2D`` above) from
-silently creating tasks on off-sequence points:
+Cylc does not infer the cyclepoint sequence for upstream tasks in intercycle
+triggers, however. All tasks must be tied to the right sequence by appearing
+somewhere in the graph with no offset. This prevents unintentional creation of
+off-sequence tasks by an offset error in the graph.
+
+For instance, the following example fails validation with *no cycling sequences
+defined for ``foo``*:
 
 .. code-block:: cylc
 
    [scheduling]
        initial cycle point = 2025-01-01T00
        [[graph]]
-           # ERROR: No cycling sequences defined for foo
-           P2D = "foo[-P1D] & bar
+           # ERROR!
+           P2D = "foo[-P1D] & bar"
  
-.. warning::
-
-  Validation currently does not detect this sort of error if affected do have
-  defined cycling sequences.
-
-For example, the following graph will validate but ``bar`` will only run once in
-the first cycle point (where it's pre-initial dependence is ignored):
+To fix this, ``foo`` should be explicitly tied to the ``P2D`` cycle, and the
+correct offset used: 
 
 .. code-block:: cylc
 
@@ -1769,7 +1768,34 @@ the first cycle point (where it's pre-initial dependence is ignored):
        [[graph]]
            P2D = """
                foo
-               foo[-P1D] => bar  # ERROR: foo doesn't exist at P1D off sequence
+               foo[-P2D] & bar
+           """
+
+Or it should be explicitly tied to the intermediate cycle, if the ``P1D`` offset
+is actually correct:
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 2025-01-01T00
+       [[graph]]
+           R/+P1D/P2D = foo  # day 2, 4, 6, ...
+           P2D = "foo[-P1D] & bar"  # day 1, 3, 5, ...
+
+
+Note that validation does not detect this sort of error if the target task has
+cyclepoint sequences defined but the offset does not land on them. For example,
+the following graph will validate but ``bar`` will only run once in the first
+cycle point (where its pre-initial dependence is ignored):
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 2025-01-01T00
+       [[graph]]
+           P2D = """
+               foo
+               foo[-P1D] => bar  # ERROR: foo doesn't exist at -P1D
            """
 
 To fix this, the offset ``[-P1D]`` should be changed to ``[-P2D]``, or else

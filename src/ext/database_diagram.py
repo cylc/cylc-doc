@@ -153,7 +153,7 @@ class CylcRunDBDirective(Graphviz):
         # group orphan nodes to cut down on clutter
         dotcode.extend(group_nodes(orphans))
 
-        # note: use invisible graph edges to change the graph layout
+        # (NB: can use invisible edges to change the layout if nec. in future)
 
         # graph suffix
         dotcode += ['}']

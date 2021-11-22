@@ -204,16 +204,16 @@ Task job scripts export various environment variables before running ``script``
 blocks (see :ref:`TaskJobSubmission`).
 
 Scheduler-defined variables appear first to identify the workflow, the task,
-and log directory locations. Then user-defined variables from
+and log directory locations. These are followed by user-defined variables from
 :cylc:conf:`[runtime][<namespace>][environment]`. Order of variable definition
 is preserved so that new variable assignments can reference previous ones.
 
 .. note::
 
-  Task environment variables are evaluated at runtime, by task jobs, on the
-  job platform. So ``$HOME`` in a task environment, for instance, evaluates at
-  runtime to the home directory on the job platform, not on the scheduler
-  platform.
+   Task environment variables are evaluated at runtime, by task jobs, on the
+   job platform. So ``$HOME`` in a task environment, for instance, evaluates at
+   runtime to the home directory on the job platform, not on the scheduler
+   platform.
 
 
 In this example the task ``foo`` ends up with ``SHAPE=circle``, ``COLOR=blue``,
@@ -247,10 +247,10 @@ Overriding Inherited Environment Variables
 
 .. warning::
 
-  If you override an inherited task environment variable the parent config
-  item gets *replaced* before it is ever used to define the shell variable in
-  the task job script. Consequently the job cannot see the parent value as well
-  as the task value:
+   If you override an inherited task environment variable the parent config
+   item gets *replaced* before it is ever used to define the shell variable in
+   the task job script. Consequently the job cannot see the parent value as well
+   as the task value:
 
 .. code-block:: cylc
 
@@ -392,8 +392,8 @@ Job :term:`platforms <platform>` are defined in ``global.cylc[platforms]``.
 
 If a task declares a different platform to that where the scheduler is running,
 Cylc uses non-interactive SSH to submit the job to the platform :term:`job
-runner`, on one of the platform hosts. Workflow source files will be installed
-to the platform, via the associated ``global.cylc[install targets]``, just
+runner` on one of the platform hosts. Workflow source files will be installed
+on the platform, via the associated ``global.cylc[install targets]``, just
 before the first job is submitted to run there.
 
 .. code-block:: cylc
@@ -445,7 +445,7 @@ Implicit Tasks
 An implicit task is one that appears in the graph but is not defined under
 :cylc:conf:`flow.cylc[runtime]`.
 
-Depending on the value of :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`
+Depending on the value of :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`,
 Cylc can automatically create default task definitions for these, to submit
 local dummy jobs that just return the standard job status messages.
 
@@ -466,8 +466,8 @@ down a little. Here is a complete workflow definition using implicit tasks:
 
 
 .. warning::
-  Implicit tasks are somewhat dangerous because they can easily be created by
-  mistake: misspelling a task's name divorces it from its ``runtime`` definition.
+   Implicit tasks are somewhat dangerous because they can easily be created by
+   mistake: misspelling a task's name divorces it from its ``runtime`` definition.
 
 For this reason implicit tasks are not allowed by default, and if used they
 should be turned off once the real task definitions are complete.
@@ -552,13 +552,13 @@ sequence, or abort.
 
    $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
    $ cylc release demo flaky.1  # release to continue retrying
-   $ cylc remove demo flaky.1  # or remove the task to abort retries
+   $ cylc remove demo flaky.1  # OR remove the task to abort retries
 
 
-If you want ``whizz`` to triggr downstream despite ``flaky.1`` being removed
-before it succeeded, use ``cylc set-outputs demo flaky.1`` to artificially mark
-it as succeeded (and use the ``--flow`` option if you want the flow to continue
-after ``whizz``).
+If you want ``whizz`` to trigger downstream tasks despite ``flaky.1`` being
+removed before it succeeded, use ``cylc set-outputs demo flaky.1`` to
+artificially mark it as succeeded (and use the ``--flow`` option if you want
+the flow to continue after ``whizz``).
 
 
 .. _EventHandling:
@@ -639,10 +639,10 @@ under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>`` can be:
     - task will run later than expected (by some configured interval)
   - **custom**
 
-    - scheduler received a custom event message received from the task job
+    - scheduler received a custom event message from the task job
   - **<name>**
 
-    - scheduler recieved the <name> output received from the task job
+    - scheduler received the <name> output from the task job
 
 
 The value should be a list of commands, command lines, or command line
@@ -652,20 +652,20 @@ General Event Handlers
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Alternatively you can configure ``handler events`` and ``handlers``
-under :cylc:conf:`[runtime][<namespace>][events]`, where the former a list of
-events (as above), and the latter a list of commands, command lines,
-lines or command line templates (see below) to call if any of the specified
-events are triggered.
+under :cylc:conf:`[runtime][<namespace>][events]`, where the former is a list
+of events (as above), and the latter a list of commands, command lines, lines
+or command line templates (see below) to call if any of the specified events
+are triggered.
 
 .. cylc-scope::
 
 Event Handler Command Line Arguments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Cylc makes event data available to event handlers by command line argument
-templating: workflow name; task ID, name, cycle point, message, submit
-number; and any :cylc:conf:`workflow <[meta]>` or
-:cylc:conf:`task <[runtime][<namespace>][meta]>` item.
+Cylc makes event data available to event handler command lines, via string
+templates. The data includes: task ID, name, cycle point, message, submit
+number; and any workflow :cylc:conf:`[meta]` or task
+:cylc:conf:`[runtime][<namespace>][meta]` item.
 See :cylc:conf:`workflow events <[scheduler][events]>` and
 :cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
 
@@ -789,8 +789,8 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
                late handler = my-handler %(message)s
 
 .. warning::
-  Late offset intervals are not computed automatically so be careful to update
-  them after any workflow change that affects triggering times.
+   Late offset intervals are not computed automatically so be careful to update
+   them after any workflow change that affects triggering times.
 
 
 Workflow Events
@@ -800,8 +800,8 @@ Cylc also supports general and event-specific workflow event handling so
 you can run an event handler or send and email when the scheduler starts up or
 shuts down, for example.
 
-Workflow events are configured in :cylc:conf:`workflow events
-<[scheduler][events]>`. The list of events is:
+Workflow events are configured in :cylc:conf:`[scheduler][events]`. The list of
+events is:
 
   - startup
 

@@ -31,6 +31,3 @@ The information logged here includes:
      (see :ref:`Workflow Run Databases`)
      
    Rather than parse the log files.
-
-
-
