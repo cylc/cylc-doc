@@ -5,10 +5,11 @@
 Date-Time Cycling
 =================
 
-.. warning::
+.. admonition:: Aims
+   :class: aims
 
-   This section of the tutorial still contains screenshots of the obsolete Cylc 7
-   desktop GUI.
+   | You should be able to:
+   | ✅ Write workflows where cycle points are dates and/or times.
 
 
 In the last section we looked at writing an :term:`integer cycling` workflow,
@@ -25,7 +26,8 @@ one where the :term:`cycle points <cycle point>` are numbered.
    :class: tip
 
    :term:`Cycle points <cycle point>` are labels. Cylc runs tasks as soon as
-   their dependencies are met so cycles do not necessarily run in order.
+   their dependencies are met so cycles do not necessarily run in order, or
+   at the real world time indicated by the cycle point.
 
 
 .. _tutorial-iso8601:
@@ -306,10 +308,10 @@ Putting It All Together
    build a picture of the current weather. Our dummy weather forecast
    will get wind observations from four weather stations:
 
-   * Aldergrove
-   * Camborne
-   * Heathrow
-   * Shetland
+   * Aldergrove (Near Belfast in NW of the UK)
+   * Camborne (In Cornwall, the far SW of England)
+   * Heathrow (Near London in the SE)
+   * Shetland (The northernmost part of the UK)
 
    The tasks which retrieve observation data will be called
    ``get_observations_<site>`` where ``site`` is the name of the weather

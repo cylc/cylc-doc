@@ -3,9 +3,11 @@
 Basic Cycling
 =============
 
+.. admonition:: Aims
+   :class: aims
 
-In this section we will look at how to write :term:`cycling` (repeating)
-workflows.
+   | You will be able to:
+   | ✅ Write simple :term:`cycling` (repeating) workflows.
 
 
 Repeating Workflows
