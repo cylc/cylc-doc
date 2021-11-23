@@ -56,6 +56,8 @@ def get_relationships():
          CylcWorkflowDAO.TABLE_TASK_LATE_FLAGS],
         [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_MANY,
          CylcWorkflowDAO.TABLE_TASK_OUTPUTS],
+        [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_MANY,
+         CylcWorkflowDAO.TABLE_TASK_PREREQUISITES],
         [CylcWorkflowDAO.TABLE_TASK_POOL, ONE_TO_ONE,
          CylcWorkflowDAO.TABLE_TASK_TIMEOUT_TIMERS]
     ]
