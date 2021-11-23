@@ -6,6 +6,7 @@ Writing Workflows
 
    configuration
    scheduling
+   optional-outputs
    runtime
    parameterized-tasks
    jinja2
