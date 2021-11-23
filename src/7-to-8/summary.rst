@@ -148,13 +148,14 @@ See also:
    * :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
 
 
-Task/Job Separation and States
-------------------------------
+Task/Job Separation
+-------------------
 
 **Tasks** are nodes in the abstract workflow graph representing processes
 that should run once their prerequisites are satisfied. **Jobs** are the real
-processes submitted to run by workflow tasks. A task can have multiple jobs,
-by automatic retries and manual re-triggering.
+processes submitted to execute these tasks (or at least, at the submission
+stage, real job scripts). A task can have multiple jobs, by automatic retries
+and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.
@@ -170,6 +171,26 @@ The task states removed since Cylc 7 have been absorbed into *waiting*, but
 you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
 timer. For instance, a waiting task that already has associated jobs is going
 to retry.
+
+
+Optional and Expected Task Outputs
+----------------------------------
+
+Cylc 8 distinguishes between expected and optional task outputs.  This allows
+the scheduler to diagnose workflow completion properly.
+
+Expected outputs (the default) are what the workflow graph "expects". If a task
+job finishes without completing an expected output, the scheduler will retain
+it, pending user intervention, as a :term:`incomplete task`.
+
+A task can finish with or without completing optional outputs, on the other
+hand. The primary use for optional outputs is alternate path branching in the
+graph.
+
+If there is nothing left to do, but incomplete tasks are present, the scheduler
+will conclude that the workflow did not run to completion as expected and will
+:term:`stall` rather than shut down.
+
 
 Window on the Workflow
 ----------------------

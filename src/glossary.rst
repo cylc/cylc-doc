@@ -28,6 +28,10 @@ Glossary
 
       * :ref:`n-window`
  
+   artificial dependency
+      A dependency introduced to the :term:`graph` for some reason, that does
+      not reflect any real dependence (e.g. on I/O files) in the tasks involved.
+
    workflow
    cylc workflow
       A Cylc workflow is a collection of :term:`tasks <task>` to carry out and
@@ -1138,12 +1142,55 @@ Glossary
       * `Cylc User Guide`_
       * :term:`message trigger`
 
+   optional output
+   optional
+      Optional task outputs are marked with a question mark in the
+      :term:`graph`, e.g. ``foo:x?``, or ``foo:fail?``, or ``foo?`` (meaning
+      ``foo:succeed?``). This tells the scheduler that they will not
+      necessarily be completed at runtime, and nothing is wrong if they are
+      not.
+
+      See also:
+
+      * :term:`expected output`
+      * `Cylc User Guide`_
+
+
+   expected output
+      Task outputs that are not marked with a question mark (i.e. they are not
+      :term:`optional outputs <optional output>`) in the :term:`graph`, e.g. ``foo:x``, or
+      ``foo:fail``, or ``foo`` (meaning ``foo:succeed``) are expected outputs.
+      The scheduler expects them to completed at runtime, and if they are not
+      it will retain them as :term:`incomplete tasks <incomplete task>`.
+
+      See also:
+
+      * :term:`optional output`
+      * :term:`incomplete task`
+      * `Cylc User Guide`_
+
+   incomplete task
+      A task that finishes (succeeds or fails) without completing all
+      :term:`expected outputs <expected output>` is retained by the scheduler
+      as an incomplete task. This will remain visible in the UI and will cause
+      a :term:`stall` if there is nothing else to run.
+
+      See also:
+
+      * :term:`expected output`
+      * :term:`optional output`
+      * `Cylc User Guide`_
+
+
+   stall
    stalled workflow
    stalled state
-      If Cylc is unable to proceed running a workflow due to unmet dependencies
-      the workflow is said to be *stalled*.
+      If the scheduler has nothing else to run but there are
+      :term:`incomplete tasks <incomplete task>` present, it will stay alive
+      for a time and report a stall instead of concluding that the workflow is
+      complete and shutting down.
 
-      This usually happens because of a task failure as in the following
+      This is usually caused by unexpected task failures, as in the following
       diagram:
 
       .. digraph:: Example
@@ -1155,11 +1202,12 @@ Glossary
 
          foo -> bar -> baz
 
-      In this example the task ``bar`` has failed meaning that ``baz`` is
-      unable to run as its dependency (``bar:succeed``) has not been met.
+      In this example the task ``bar`` has failed, so  that ``baz`` should not
+      run, but the ``bar:fail`` output was not marked as :term:`optional`.
 
-      When a Cylc detects that a workflow has stalled an email will be sent to the
-      user. Human interaction is required to escape a stalled state.
+      Cylc can send an email to the user. Human intervention is required to fix
+      the stall, e.g. by retriggering an incomplete task after fixing the
+      problem.
 
    suicide trigger
       Suicide triggers remove :term:`tasks <task>` from the :term:`graph` at
@@ -1315,3 +1363,16 @@ Glossary
       - Send an email message.
       - Run a Cylc command.
       - Run _any_ user-specified script or command.
+
+
+   runahead limit
+   runahead
+
+      In a cycling workflow, the runahead limit holds the fastest tasks back if
+      they get too far ahead of the slowest ones. The default limit is 5
+      cycles.
+
+      See also:
+
+      * :cylc:conf:`[scheduling]runahead limit`
+      * :ref:`Runahead Limiting`
