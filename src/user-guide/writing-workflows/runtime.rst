@@ -490,8 +490,8 @@ adding empty runtime placeholders instead of allowing implicit tasks:
 
 .. _TaskRetries:
 
-Automatic Task Retry On Failure
--------------------------------
+Task Retry On Failure
+---------------------
 
 .. seealso::
 

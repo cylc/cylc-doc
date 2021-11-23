@@ -9,6 +9,16 @@ Glossary
       The ``cylc validate`` command parses ``flow.cylc`` workflow configuration
       files and reports syntax errors and deprecation warnings.
 
+   retry
+      Tasks configured to retry on failure will return to the ``waiting`` state
+      with a new clock trigger to handle the retry delay. Task jobs can
+      get their try number from the environment, if needed.
+
+      See also:
+
+      * :ref:`TaskRetries`
+
+
    workflow
    cylc workflow
       A Cylc workflow is a collection of :term:`tasks <task>` to carry out and

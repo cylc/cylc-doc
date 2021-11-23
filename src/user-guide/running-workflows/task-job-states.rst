@@ -1,81 +1,132 @@
+.. |task-waiting| image:: ../../img/task-job-icons/task-waiting.png
+   :scale: 100%
+   :align: middle
+
+.. |task-expired| image:: ../../img/task-job-icons/task-expired.png
+   :scale: 100%
+   :align: middle
+
+.. |task-preparing| image:: ../../img/task-job-icons/task-preparing.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submitted| image:: ../../img/task-job-icons/task-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submit-failed| image:: ../../img/task-job-icons/task-submit-failed.png
+   :scale: 100%
+   :align: middle
+
+.. |task-running| image:: ../../img/task-job-icons/task-running.png
+   :scale: 100%
+   :align: middle
+
+.. |task-succeeded| image:: ../../img/task-job-icons/task-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |task-failed| image:: ../../img/task-job-icons/task-failed.png
+   :scale: 100%
+   :align: middle
+
+
+.. |job-blank| image:: ../../img/task-job-icons/job-blank.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submitted| image:: ../../img/task-job-icons/job-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submit-failed| image:: ../../img/task-job-icons/job-submit-failed.png
+   :scale: 100%
+   :align: middle
+
+.. |job-running| image:: ../../img/task-job-icons/job-running.png
+   :scale: 100%
+   :align: middle
+
+.. |job-succeeded| image:: ../../img/task-job-icons/job-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |job-failed| image:: ../../img/task-job-icons/job-failed.png
+   :scale: 100%
+   :align: middle
+
+
 Task and Job States
 ===================
 
 **Tasks** are a workflow abstraction; they represent future and past jobs as
-well as current active ones.
+well as current active ones. Task states are represented by monochromatic icons
+like |task-running|.
 
 **Jobs** are less of an abstraction; they represent real job scripts submitted
 to run as a process on a computer somewhere, or the final status of those
-real processes.
+real processes. Job states are represented by colored icons like |job-running|.
+Several color themes are provided.
 
-A single task can submit multiple jobs, by automatic retry or manual triggering.
-
-In the Cylc UI, task states are represented by monochromatic task icons, and
-job states by coloured job icons.
-
-
-.. TODO include task and job state images 
+A single task can have multiple jobs, by automatic retry or manual triggering.
 
 
 .. table::
 
-    ================  ===========
-    Task-only states  Description
-    ================  ===========
-    waiting           waiting on prerequisites, triggers, internal queues, or runahead limit
-    expired           will not submit job - too far behind the clock
-    preparing         job being prepared for submission by the scheduler
-    ================  ===========
+    =======================================================     ===========
+    Task & Job States                                           Description
+    =======================================================     ===========
+    |task-waiting|       |job-blank|          waiting           waiting on prerequisites
+    |task-expired|       |job-blank|          expired           will not submit job (too far behind)
+    |task-preparing|     |job-blank|          preparing         job being prepared
+    |task-submitted|     |job-submitted|      submitted         job submitted
+    |task-submit-failed| |job-submit-failed|  submit-failed     job submission failed
+    |task-running|       |job-running|        running           job running
+    |task-succeeded|     |job-succeeded|      succeeded         job succeeded
+    |task-failed|        |job-failed|         failed            job failed
+    =======================================================     ===========
 
 
-.. table::
+Windows on the Workflow
+=======================
 
-    ===============   ===========
-    Task-job states   Description
-    ===============   ===========
-    submitted         job submitted to the job runner on the job platform
-    submit-failed     job submission failed
-    running           job running (*started* message received)
-    succeeded         job succeeded (*succeeded* message received)
-    failed            job failed (*failed* message received)
-    ===============   ===========
+Cylc graphs can be very large or even infinite in extent, so the UI often can't
+display all the tasks at once. Instead, it displays a moving *window* on the
+graph, out to ``n`` graph edges from current active tasks.
+
+The ``n = 0`` window includes only active tasks, where "active" means:
+
+- ``preparing`` tasks
+- ``submitted`` and ``running`` tasks - i.e. those with active jobs
+- ``waiting`` tasks, that are waiting on:
+  
+  - :ref:`clock triggers <Built-in Clock Triggers>`
+  - :ref:`external triggers <Section External Triggers>`
+  - :ref:`internal queues <InternalQueues>`
+  - :ref:`runahead limit <RunaheadLimit>`
+ 
+- finished tasks retained as *incomplete* by the scheduler:
+
+  - ``submit-failed`` tasks, if successful submission was not *optional*
+  - ``succeeded`` or ``failed`` tasks that did not complete *expected outputs*
+
+.. TODO add links above to optional and expected outputs, once documented.
 
 
-The Active Task Window
-======================
+The default window extent is ``n = 1``, i.e. tasks out to one graph edge from
+current active tasks.
 
-Cylc graphs can be very large, or even infinite in cycling workflows, but the
-scheduler does not need to be aware of every single task in the entire run. It
-just keeps track of current active tasks and what comes after them in the
-graph. The meaning of *active tasks* here is:
+Tasks ahead of the ``n=0`` window are displayed by the UI as ``waiting`` but
+the scheduler is not actively managing them yet.
 
-- Tasks in the ``preparing`` state
-- Tasks with active jobs: ``submitted``, ``running``
-- Any ``succeeded`` or ``failed`` tasks being retained as incomplete (and any
-  ``submit-failed`` tasks)
-- Any ``waiting`` tasks held back by unsatisfied external triggers
 
-We also call this the ``n=0`` task window. The UI can display more than this,
-to a requested number of graph edges around the active tasks. The default
-window size is ``n=1``, which is active tasks plus tasks one graph edge away
-from them.
+Retrying Tasks
+==============
+
+In Cylc 8, a task that fails but is configured to :term:`retry` will return to
+the ``waiting`` state, with a new clock trigger to handle the retry delay.
 
 .. note::
-   Tasks ahead of the n=0 window are displayed by the UI as ``waiting``, but
-   unlike the "active" waiting tasks they don't actually exist yet as far as
-   the scheduler is concerned.
 
-
-Waiting Tasks in the Active Window
-----------------------------------
-
-Waiting tasks in the ``n=0`` window depend on unsatisfied non-task prerequisites:
-
-- :ref:`InternalQueues`
-- :ref:`RunaheadLimit`
-- external triggers
-- clock triggers
-  
-
-A ``waiting`` task that has one or more jobs associated with it must be going
-to retry.
+  A task that is waiting on a retry will already have one or more failed jobs
+  associated with it.
