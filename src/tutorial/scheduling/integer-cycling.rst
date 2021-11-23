@@ -7,11 +7,6 @@ Basic Cycling
 In this section we will look at how to write :term:`cycling` (repeating)
 workflows.
 
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc
-   7 desktop GUI.
-
 
 Repeating Workflows
 -------------------
