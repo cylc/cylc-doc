@@ -42,8 +42,8 @@ Tracking Task State
 
 Cylc supports three ways of tracking task state on job hosts:
 
-- task-to-workflow messaging via TCP (using ZMQ protocol)
-- task-to-workflow messaging via non-interactive SSH to the workflow host, then
+- task-to-scheduler messaging via TCP (using ZMQ protocol)
+- task-to-scheduler messaging via non-interactive SSH to the workflow host, then
   local TCP.
 - regular polling by the :term:`scheduler`
 
@@ -57,7 +57,7 @@ allowed).
 
 It is possible to run Cylc :term:`schedulers <scheduler>` on HPC login nodes,
 but be aware of scheduler resource requirements (which depend on workflow size
-and run duration)
+and run duration).
 
 Port forwarding could potentially provide another solution, but the idea has
 been rejected at this stage. Organisations often disable port forwarding for
@@ -147,7 +147,7 @@ the last value, which is used repeatedly until the job is finished:
 
 A list of intervals with optional multipliers can be used for both submission
 and execution polling, although a single value is probably sufficient for
-submission. If these items are not configured default values from
+submission. If these items are not configured, default values from
 site and user global config will be used for
 :cylc:conf:`communication method = polling`.
 

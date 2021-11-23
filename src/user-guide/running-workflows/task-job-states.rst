@@ -22,7 +22,7 @@ job states by coloured job icons.
     ================  ===========
     TASK-ONLY STATES  DESCRIPTION
     waiting           waiting on prerequisites, triggers, internal queues, or runahead limit
-    expired           will not submit job, too fair behind the clock
+    expired           will not submit job - too far behind the clock
     preparing         job being prepared for submission by the scheduler
     ================  ===========
 

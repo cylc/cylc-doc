@@ -28,7 +28,7 @@ Set the run mode (default ``live``) on the command line:
    $ cylc play --mode=dummy WORKFLOW
 
 You can get specified tasks to fail in these modes, for more flexible workflow
-testing. See cylc:conf:`[runtime][<namespace>][simulation]`.
+testing. See :cylc:conf:`[runtime][<namespace>][simulation]`.
 
 
 Proportional Simulated Run Length
@@ -45,7 +45,7 @@ Limitations Of Workflow Simulation
 Dummy mode ignores :term:`job runner` settings because Cylc does not know which
 job resource directives (requested memory, number of compute nodes, etc.) would
 need to be changed for the dummy jobs. If you need to dummy-run jobs on a
-job runner manually comment out ``script`` items and modify
+job runner, manually comment out ``script`` items and modify
 directives in your live workflow, or else use a custom live mode test workflow.
 
 .. note::

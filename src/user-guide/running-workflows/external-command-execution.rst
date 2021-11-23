@@ -15,5 +15,5 @@ However, to guard against rogue commands that hang indefinitely, processes
 are killed after a configurable timeout
 (:cylc:conf:`global.cylc[scheduler]process pool timeout`).
 All process kills are
-logged by the :term:`scheduler`. For killed job submissions the associated
+logged by the :term:`scheduler`. For killed job submissions, the associated
 tasks also go to the *submit-failed* state.

@@ -6,7 +6,7 @@ Start, Restart, and Reload
 
 
 The ``cylc play`` command starts a new instance of the Cylc scheduler program
-to manage the target workflow, for the duration of its run (It also releases
+to manage the target workflow, for the duration of its run (it also resumes
 paused workflows that are already running).
 
 There are several ways to start a scheduler for workflow that is not already
