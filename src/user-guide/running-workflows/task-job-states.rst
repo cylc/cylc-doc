@@ -20,7 +20,8 @@ job states by coloured job icons.
 .. table::
 
     ================  ===========
-    TASK-ONLY STATES  DESCRIPTION
+    Task-only states  Description
+    ================  ===========
     waiting           waiting on prerequisites, triggers, internal queues, or runahead limit
     expired           will not submit job - too far behind the clock
     preparing         job being prepared for submission by the scheduler
@@ -30,7 +31,8 @@ job states by coloured job icons.
 .. table::
 
     ===============   ===========
-    TASK-JOB STATES   DESCRIPTION
+    Task-job states   Description
+    ===============   ===========
     submitted         job submitted to the job runner on the job platform
     submit-failed     job submission failed
     running           job running (*started* message received)
