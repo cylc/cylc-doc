@@ -82,6 +82,10 @@ We use a few custom Sphinx extensions, for details see
 [![test](https://github.com/cylc/cylc-doc/workflows/test/badge.svg?branch=master&event=push)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Atest)
 [![nightly](https://github.com/cylc/cylc-doc/workflows/nightly/badge.svg)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Anightly)
 
+### Installation
+
+Note: you may need to install `graphviz` first (e.g. `conda install graphviz`).
+
 ```console
 $ git clone git@github.com:cylc/cylc-doc.git cylc-doc
 $ cd cylc-doc
@@ -89,14 +93,14 @@ $ pip install -e .
 $ make html
 ```
 
-## Testing
+### Testing
 
 ```console
 # note: -W tells Sphinx to fail on warnings
 $ make html linkcheck doctest SPHINXOPTS='-W'
 ```
 
-## Deploying
+### Deploying
 
 **To document a new version of Cylc:**
 
@@ -133,7 +137,7 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
   This has not been automated on-purpose, though if it becomes a problem
   we could potentially setup a chron job to squash all but the last N commits.
 
-## Nightly Builds
+### Nightly Builds
 
 The `nightly` action builds `cylc-doc:master` against `cylc-flow:master`
 and pushes the result up to `upstream/gh-pages`.
