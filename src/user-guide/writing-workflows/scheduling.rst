@@ -1813,9 +1813,9 @@ Omitting Tasks
 --------------
 
 It can sometimes be useful to temporarily remove tasks by simply commenting
-them out of the graph. As a reminder to restore them remove them properly,
-validation will warn about tasks defined under :cylc:conf:`[runtime]` but not
-used in the graph.
+them out of the graph. Validation warns about tasks defined under
+:cylc:conf:`[runtime]` but not used in the graph, as a reminder to restore them
+or remove them.
 
 You can also use logical Jinja2 switches (:ref:`User Guide Jinja2`) to
 include or exclude tasks (or anything else) from workflow. 
