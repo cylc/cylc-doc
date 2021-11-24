@@ -5,7 +5,7 @@ Scheduling - Dependency Graphs
 
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
-The ``flow.cylc`` :term:`graph` defines a workflow in terms of its
+The :term:`graph` defines a workflow in terms of its
 :term:`tasks <task>` and the :term:`dependencies <dependency>` between them.
 
 Graph Syntax
