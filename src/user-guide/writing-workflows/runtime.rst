@@ -586,7 +586,7 @@ workflow.
 Event handlers can be stored in the workflow ``bin`` directory, or anywhere in
 ``$PATH`` in the :term:`scheduler` environment.
 
-They should return quickly to avoid tying up the scheduler processing pool -
+They should return quickly to avoid tying up the scheduler process pool -
 see :ref:`Managing External Command Execution`.
 
 
@@ -598,55 +598,30 @@ Event-Specific Handlers
 Event-specific handlers can be configured in ``<event> handlers``
 under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>`` can be:
 
-  - **submitted**
+.. table::
 
-    - task job submitted
-  - **started**
+   =========================================  ================================
+   Event                                      Description
+   =========================================  ================================
+   submitted                                  job submitted
+   submission retry                           job submission failed but will retry later
+   submission failed                          job submission failed
+   started                                    job started running
+   retry                                      job failed but will retry later
+   failed                                     job failed
+   succeeded                                  job succeeded
+   submission timeout                         job timed out in the ``submitted`` state
+   execution timeout                          job timed out in the ``running`` state
+   warning                                    scheduler received a WARNING message from job
+   critical                                   scheduler received a CRITICAL message from job
+   custom                                     scheduler received a custom message from job
+   expired                                    task expired and will not submit (too far behind)
+   late                                       task running later than expected
+   OUTPUT                                     scheduler received OUTPUT message from job
+   =========================================  ================================
 
-    - task job started running
-  - **succeeded**
-
-    - task job succeeded
-  - **failed**
-
-    - task job failed
-  - **retry**
-
-    - task job just failed but will retry after a configured delay
-  - **submission failed**
-
-    - task job submission failed
-  - **submission retry**
-
-    - task job submission failed but will retry after a configured delay
-  - **submission timeout**
-
-    - task job timed out in the submitted state
-  - **execution timeout**
-
-    - task job timed out in the running state
-  - **warning**
-
-    - scheduler received a WARNING message from the task job
-  - **critical**
-
-    - scheduler received a CRITICAL message from the task job
-  - **expired**
-
-    - task expired (too far behind the clock to bother submitting)
-  - **late**
-
-    - task will run later than expected (by some configured interval)
-  - **custom**
-
-    - scheduler received a custom event message from the task job
-  - **<name>**
-
-    - scheduler received the <name> output from the task job
-
-
-The value should be a list of commands, command lines, or command line
-templates (see below) to call if the specified event is triggered.
+Values should be a list of commands, command lines, or command line templates
+(see below) to call if the specified event is triggered.
 
 General Event Handlers
 ^^^^^^^^^^^^^^^^^^^^^^
