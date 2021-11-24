@@ -803,9 +803,9 @@ events is:
 You can also tell the scheduler to abort the run on certain workflow events,
 with the following settings:
 
-  - abort on stall timeout
-  - abort on inactivity timeout
-  - abort on workflow timeout
+- abort on stall timeout
+- abort on inactivity timeout
+- abort on workflow timeout
 
 .. [1] The order of precedence for inheritance from multiple parents is
   determined by the `C3 algorithm
