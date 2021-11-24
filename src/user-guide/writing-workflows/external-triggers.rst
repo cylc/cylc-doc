@@ -73,12 +73,12 @@ the main process. The clock trigger function signature looks like this:
 
    wall_clock(offset=None)
 
-The ``offset`` argument is a date-time duration (``PT1H`` is 1
+The ``offset`` argument is a datetime duration (``PT1H`` is 1
 hour) relative to the dependent task's cycle point (automatically passed to the
 function via a second argument not shown above).
 
 In the following workflow, task ``foo`` has a daily cycle point sequence,
-and each task instance can trigger once the wall clock time has passed its
+and each task instance can trigger once the wallclock time has passed its
 cycle point value by one hour:
 
 .. code-block:: cylc
@@ -397,7 +397,7 @@ The following issues may be addressed in future Cylc releases:
   referred to by label alone in the graph. It would be convenient (and less
   verbose, although no more functional) if we could just declare a label
   against the *common* arguments, and give remaining arguments (such as
-  different wall clock offsets in clock triggers) as needed in the graph.
+  different wallclock offsets in clock triggers) as needed in the graph.
 - we may move away from the string templating method for providing workflow
   and task attributes to trigger function arguments.
 
@@ -487,7 +487,7 @@ Here is a working example of a simulated satellite processing workflow:
 .. literalinclude:: ../../workflows/satellite/ext-trigger/flow.cylc
    :language: cylc
 
-External triggers are not normally needed in date-time cycling workflows driven
+External triggers are not normally needed in datetime cycling workflows driven
 by real time data that comes in at regular intervals. In these cases a data
 retrieval task can be clock-triggered (and have appropriate retry intervals) to
 submit at the expected data arrival time, so little time is wasted in polling.

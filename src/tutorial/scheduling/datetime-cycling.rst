@@ -2,8 +2,8 @@
 
 .. _tutorial-datetime-cycling:
 
-Date-Time Cycling
-=================
+Datetime Cycling
+================
 
 .. warning::
 
@@ -17,7 +17,7 @@ one where the :term:`cycle points <cycle point>` are numbered.
 .. ifnotslides::
 
    Typically workflows are repeated at a regular time interval, say every day
-   or every few hours. To make this easier Cylc has a date-time cycling mode
+   or every few hours. To make this easier Cylc has a datetime cycling mode
    where the :term:`cycle points <cycle point>` use date and time specifications
    rather than numbers.
 
@@ -38,8 +38,8 @@ In Cylc, dates, times and durations are written using the :term:`ISO8601` format
 
 .. _tutorial-iso8601-datetimes:
 
-ISO8601 Date-Times
-^^^^^^^^^^^^^^^^^^
+ISO8601 Datetimes
+^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
@@ -98,17 +98,17 @@ ISO8601 Durations
   minute and a second.
 
 
-Date-Time Recurrences
----------------------
+Datetime Recurrences
+--------------------
 
 In :term:`integer cycling`, workflows' recurrences are written ``P1``, ``P2``,
 etc.
 
-In :term:`date-time cycling <datetime cycling>` there are two ways to write
+In :term:`datetime cycling <datetime cycling>` there are two ways to write
 recurrences:
 
 1. Using ISO8601 durations (e.g. ``P1D``, ``PT1H``).
-2. Using ISO8601 date-times with inferred recurrence.
+2. Using ISO8601 datetimes with inferred recurrence.
 
 .. _tutorial-inferred-recurrence:
 
@@ -117,7 +117,7 @@ Inferred Recurrence
 
 .. ifnotslides::
 
-   A recurrence can be inferred from a date-time by omitting digits from the
+   A recurrence can be inferred from a datetime by omitting digits from the
    front. For example, if the year is omitted then the recurrence can be
    inferred to be annual. E.G:
 
@@ -428,7 +428,7 @@ Putting It All Together
 .. practical::
 
    .. rubric:: In this practical we will create a dummy forecasting workflow
-      using date-time cycling.
+      using datetime cycling.
 
    #. **Create A New Workflow.**
 
@@ -459,7 +459,7 @@ Putting It All Together
 
       .. hint::
 
-         See :ref:`Date-Time Recurrences<tutorial-cylc-datetime-offset-icp>`.
+         See :ref:`Datetime Recurrences<tutorial-cylc-datetime-offset-icp>`.
 
       .. spoiler:: Solution warning
 
