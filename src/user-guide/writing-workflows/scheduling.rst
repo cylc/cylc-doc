@@ -51,7 +51,6 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
    [scheduling]
        [[graph]]
            R1 = """
-               # drugs and money
                foo & bar => baz  # baz depends on foo and bar
 
            """
