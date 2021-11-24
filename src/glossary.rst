@@ -1143,16 +1143,15 @@ Glossary
       * :term:`message trigger`
 
    optional output
-   optional
       Optional task outputs are marked with a question mark in the
       :term:`graph`, e.g. ``foo:x?``, or ``foo:fail?``, or ``foo?`` (meaning
-      ``foo:succeed?``). This tells the scheduler that they will not
-      necessarily be completed at runtime, and nothing is wrong if they are
-      not.
+      ``foo:succeed?``). This tells the scheduler they will not necessarily be
+      completed at runtime.
 
       See also:
 
       * :term:`expected output`
+      * :term:`graph branching`
       * `Cylc User Guide`_
 
 
@@ -1179,6 +1178,7 @@ Glossary
 
       * :term:`expected output`
       * :term:`optional output`
+      * :term:`graph branching`
       * `Cylc User Guide`_
 
 
@@ -1235,7 +1235,7 @@ Glossary
    graph branching
       Cylc handles workflow :term:`graphs <graph>` in an event-driven way:
       it can follow different graph paths depending on events at runtime. This
-      is called "branching".
+      is called *branching*.
 
       For example the following workflow follows one of two possible paths
       depending on the outcome of task ``b``:
@@ -1367,7 +1367,6 @@ Glossary
 
    runahead limit
    runahead
-
       In a cycling workflow, the runahead limit holds the fastest tasks back if
       they get too far ahead of the slowest ones. The default limit is 5
       cycles.
