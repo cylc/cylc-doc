@@ -778,27 +778,27 @@ shuts down, for example.
 Workflow events are configured in :cylc:conf:`[scheduler][events]`. The list of
 events is:
 
-  - startup
+- startup
 
-    - the scheduler started running the workflow
-  - shutdown
+  - the scheduler started running the workflow
+- shutdown
 
-    - the workflow finished and the scheduler will shut down
-  - abort
+  - the workflow finished and the scheduler will shut down
+- abort
 
-    - the scheduler will shut down even though the workflow didn't finish
-  - workflow timeout
+  - the scheduler will shut down even though the workflow didn't finish
+- workflow timeout
 
-    - the workflow run timed out
-  - stall
+  - the workflow run timed out
+- stall
 
-    - the workflow stalled
-  - stall timeout
+  - the workflow stalled
+- stall timeout
 
-    - the workflow timed out after stalling
-  - inactivity timeout
+  - the workflow timed out after stalling
+- inactivity timeout
 
-    - the workflow timed out with no activity
+  - the workflow timed out with no activity
 
 You can also tell the scheduler to abort the run on certain workflow events,
 with the following settings:
