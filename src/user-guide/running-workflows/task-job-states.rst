@@ -122,6 +122,10 @@ Tasks ahead of the ``n=0`` window are displayed by the UI as ``waiting`` but
 the scheduler is not actively managing them yet.
 
 
+.. image:: ../../img/n-window.png
+   :align: center
+
+
 Retrying Tasks
 ==============
 

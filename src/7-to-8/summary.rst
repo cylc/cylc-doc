@@ -168,7 +168,7 @@ task icon incorporates a radial progress indicator.
 
 The task states removed since Cylc 7 have been absorbed into *waiting*, but
 you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
-timer. For instance, a waiting task that already has associated jobs must be going
+timer. For instance, a waiting task that already has associated jobs is going
 to retry.
 
 Window on the Workflow
