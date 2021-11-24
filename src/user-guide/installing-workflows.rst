@@ -395,22 +395,8 @@ If:
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-
-- the install will create nested install directories. Neither a new
-  installation in a subdirectory of an existing one, nor a directory containing
-  an existing installation are permitted. For example, having installed a
-  workflow in ``bar`` you would be unable to install one in ``foo``
-  or ``foo/bar/baz``.
-
-  .. code-block:: bash
-
-      foo
-      `-- bar
-         |-- _cylc-install
-         |-- baz
-         |-- run1
-         `-- runN
-
+- the install will create nested run directories, i.e. installing a
+  workflow in a subdirectory of an existing run directory.
 
 - trying to install a workflow into an already existing run directory,
   ``cylc reinstall`` should be used for this, see
