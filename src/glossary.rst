@@ -17,8 +17,17 @@ Glossary
       See also:
 
       * :ref:`TaskRetries`
+   
+   window
+   n-window
+   window on the workflow
+      A :term:`graph`-based window or view of the workflow at runtime,
+      including tasks out to n graph edges from current active tasks.
 
+      See also:
 
+      * :ref:`n-window`
+ 
    workflow
    cylc workflow
       A Cylc workflow is a collection of :term:`tasks <task>` to carry out and

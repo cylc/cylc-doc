@@ -87,25 +87,27 @@ A single task can have multiple jobs, by automatic retry or manual triggering.
     =======================================================     ===========
 
 
+.. _n-window:
+
 Windows on the Workflow
 =======================
 
-Cylc graphs can be very large or even infinite in extent, so the UI often can't
-display all the tasks at once. Instead, it displays a moving *window* on the
-graph, out to ``n`` graph edges from current active tasks.
+Cylc graphs can be very large or even infinite in extent. The UI can't display
+all the tasks at once, so it displays a :term:`window` or view of the workflow
+centered on current active tasks and extending ``n`` graph edges out from them.
 
-The ``n = 0`` window includes only active tasks, where "active" means:
+The ``n = 0`` or *active task* window includes:
 
 - ``preparing`` tasks
 - ``submitted`` and ``running`` tasks - i.e. those with active jobs
-- ``waiting`` tasks, that are waiting on:
+- ``waiting`` tasks, that are "actively waiting"[1]_ on:
   
   - :ref:`clock triggers <Built-in Clock Triggers>`
   - :ref:`external triggers <Section External Triggers>`
   - :ref:`internal queues <InternalQueues>`
   - :ref:`runahead limit <RunaheadLimit>`
  
-- finished tasks retained as *incomplete* by the scheduler:
+- finished tasks retained as *incomplete*, in expectation of user intervention:
 
   - ``submit-failed`` tasks, if successful submission was not *optional*
   - ``succeeded`` or ``failed`` tasks that did not complete *expected outputs*
@@ -128,5 +130,8 @@ the ``waiting`` state, with a new clock trigger to handle the retry delay.
 
 .. note::
 
-  A task that is waiting on a retry will already have one or more failed jobs
-  associated with it.
+   A task that is waiting on a retry will already have one or more failed jobs
+   associated with it.
+
+
+.. [1] These are ready to run as far as their task dependencies are concerned.
