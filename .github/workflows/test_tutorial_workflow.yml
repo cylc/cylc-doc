@@ -41,7 +41,7 @@ jobs:
           rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
           cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
         run: |
-          pip install  \
+          pip install -e \
             "cylc-flow @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
             "metomi-rose @ git+https://github.com/metomi/rose@${rose_ref}" \
             "cylc-rose @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"

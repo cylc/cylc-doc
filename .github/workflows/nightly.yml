@@ -51,7 +51,7 @@ jobs:
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install  \
+          pip install -e \
             'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
             'metomi-rose[all] @ git+https://github.com/metomi/rose@master' \
             'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master' \
