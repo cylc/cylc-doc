@@ -56,7 +56,7 @@ jobs:
             "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
             "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
             "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
-          git clone --depth 1 https://github.com/metomi/rose ../rose
+          git clone --depth 1 -b "${meto_rose}" https://github.com/metomi/rose ../rose
           pip install -e ../rose
 
       - name: install eslint
