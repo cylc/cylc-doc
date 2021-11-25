@@ -269,6 +269,7 @@ and installs workflow files into the run directory at start-up.
 .. seealso::
 
    :ref:`Moving to Cylc Install<majorchangesinstall>`.
+
 .. code-block:: bash
 
    $ pwd
