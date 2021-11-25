@@ -38,6 +38,7 @@ jobs:
       - name: install libs
         env:
           cylc_ref: ${{ github.event.inputs.cylc_ref || 'master' }}
+          meto_rose: ${{ github.event.inputs.metomi-rose-tag || 'master' }}
           rose_ref: ${{ github.event.inputs.rose_ref || 'master' }}
           cylc_rose_ref: ${{ github.event.inputs.cylc_rose_ref || 'master' }}
         run: |
