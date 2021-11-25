@@ -9,6 +9,25 @@ Glossary
       The ``cylc validate`` command parses ``flow.cylc`` workflow configuration
       files and reports syntax errors and deprecation warnings.
 
+   retry
+      Tasks configured to retry on failure will return to the ``waiting`` state
+      with a new clock trigger to handle the retry delay. Task jobs can
+      get their try number from the environment, if needed.
+
+      See also:
+
+      * :ref:`TaskRetries`
+   
+   window
+   n-window
+   window on the workflow
+      A :term:`graph`-based window or view of the workflow at runtime,
+      including tasks out to n graph edges from current active tasks.
+
+      See also:
+
+      * :ref:`n-window`
+ 
    workflow
    cylc workflow
       A Cylc workflow is a collection of :term:`tasks <task>` to carry out and
@@ -335,14 +354,13 @@ Glossary
       * :term:`integer cycling`
       * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
-   wall-clock time
-      In a Cylc workflow the wall-clock time refers to the actual time (in the
-      real world).
+   wallclock time
+      The actual time (in the real world).
 
       See also:
 
       * :term:`datetime cycling`
-      * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
+      * :term:`clock trigger`
 
    ISO8601
       ISO8601 is an international standard for writing dates and times which is
@@ -359,7 +377,7 @@ Glossary
         <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
 
    ISO8601 datetime
-      A date-time written in the ISO8601
+      A datetime written in the ISO8601
       format, e.g:
 
       * ``2000-01-01T00:00Z``: midnight on the 1st of January 2000
@@ -390,6 +408,16 @@ Glossary
 
       * :term:`integer cycling`
       * :term:`datetime cycling`
+
+   clock trigger
+      Clock triggers connect tasks to the wallclock (real) time, at some
+      offset relative to their datetime cycle point.
+
+      See also:
+
+      * :term:`wallclock time`
+      * :ref:`Clock Triggers <Built-in Clock Triggers>`
+      * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
 
    inter-cycle dependency
    inter-cycle trigger
@@ -453,6 +481,24 @@ Glossary
       * :ref:`Cylc tutorial <tutorial-qualifiers>`
       * :term:`task state`
 
+
+   future trigger
+      When a task depends on another task with a later cycle point. Here ``bar.1``
+      triggers off ``foo.2``; and ``bar.2`` off of ``foo.3``; and so on:
+
+      .. code-block:: cylc
+
+         [scheduling]
+             initial cycle point = 1
+             cycling mode = integer
+             [[graph]]
+                 P1 = "foo[+P1] => bar"
+
+
+      See also:
+
+      * :term:`inter-cycle trigger`
+ 
    task
       A task represents an activity in a workflow. It is a specification of
       that activity consisting of the script or executable to run and certain
@@ -1241,7 +1287,7 @@ Glossary
          The new flow will now continue to run to the end.
 
          It is also possible to have multiple :term:`flows <flow>` running in the
-         scheduler :term:`schduler` simultaneously.
+         scheduler :term:`scheduler` simultaneously.
 
    event handlers
    handlers

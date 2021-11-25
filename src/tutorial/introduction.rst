@@ -10,6 +10,7 @@ Introduction
    This section of the tutorial still contains screenshots of the obsolete Cylc
    7 desktop GUI.
 
+.. _cylc-what-is-a-workflow:
 
 What Is A Workflow?
 -------------------
@@ -40,6 +41,8 @@ What Is A Workflow?
    "bake bread" -> "clean oven"
    "pre-heat oven" -> "bake bread"
 
+
+.. _cylc-what-is-cylc:
 
 What Is Cylc?
 -------------

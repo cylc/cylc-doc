@@ -94,7 +94,7 @@ Or separate the items:
 
 .. _WhitherStdoutAndStderr:
 
-Task stdout And stderr Logs
+Task stdout and stderr Logs
 ---------------------------
 
 When a task is ready to run Cylc generates a filename root to be used

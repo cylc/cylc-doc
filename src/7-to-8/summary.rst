@@ -168,7 +168,7 @@ task icon incorporates a radial progress indicator.
 
 The task states removed since Cylc 7 have been absorbed into *waiting*, but
 you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
-timer. For instance, a waiting task that already has associated jobs must be going
+timer. For instance, a waiting task that already has associated jobs is going
 to retry.
 
 Window on the Workflow
@@ -369,6 +369,8 @@ Security
 - The UI Server interacts with its own Schedulers, which also run as the user.
 - Users can authorize different levels of access to others, via their UI Server.
 - Workflow task jobs authenticate to their parent scheduler using `CurveZMQ`_.
+- Cylc8 supports target users authorizing other users to interact with their
+  workflows on the UI.
 
 See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 

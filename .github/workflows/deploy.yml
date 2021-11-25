@@ -80,9 +80,10 @@ jobs:
           #       have extra dependencies.
           pip install  \
             "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
             "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
             "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
+          git clone --depth 1 --branch "${meto_rose}" https://github.com/metomi/rose ../rose
+          pip install -e ../rose[all]
 
       - name: checkout gh-pages
         uses: actions/checkout@v2

@@ -11,7 +11,7 @@ List Item Override In Site Include-Files
 ----------------------------------------
 
 
-A few Cylc config items hold lists of task (or family) names, e.g.:
+A few Cylc settings hold lists of task (or family) names, e.g.:
 
 .. code-block:: cylc
 
@@ -21,7 +21,7 @@ A few Cylc config items hold lists of task (or family) names, e.g.:
        #...
    #...
 
-Currently a repeated config item completely overrides a previously set value
+Currently a repeated setting completely overrides the previous value
 (apart from graph strings which are always additive). This means a site
 include-file (for example) can't add a new site-specific clock-triggered task
 without writing out the complete list of all clock-triggered tasks in the
