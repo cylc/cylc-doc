@@ -256,19 +256,19 @@ Cylc 8 cleans this up:
 Workflow Installation
 ---------------------
 
-.. seealso::
+The functionality of ``rose suite-run`` has been migrated into Cylc 8.
 
-   :ref:`Moving to Cylc Install<majorchangesinstall>`.
-
-The functionality of ``rose suite-run`` has been migrated into Cylc 8. This
-cleanly separates workflow source directory from run directory, and installs
-workflow files into the run directory at start-up
-
+Cylc Install
+^^^^^^^^^^^^
+Cylc install cleanly separates workflow source directory from run directory,
+and installs workflow files into the run directory at start-up.
 - ``cylc install`` copies workflow source files to a dedicated run-directory
 - :term:`source directory` locations can be set in global config
 - each install creates a new numbered :term:`run directory` (by default)
-- (workflow files are automatically installed onto job platforms too, when the 
-  first job runs on the platform)
+
+.. seealso::
+
+   :ref:`Moving to Cylc Install<majorchangesinstall>`.
 
 .. code-block:: bash
 
@@ -292,12 +292,49 @@ workflow files into the run directory at start-up
    ...
    demo/run2: oliver.niwa.local PID=6962
 
-Workflows can be deleted with ``cylc clean`` - see :ref:`Removing-workflows`.
+Workflows can be deleted with ``cylc clean`` - see :ref:`Removing-workflows`. This
+replaces the ``rose suite-clean`` functionality.
 
 .. note::
 
    Cylc 8 forbids having both ``flow.cylc`` and ``suite.rc`` files in the same
    :term:`run directory` or :term:`source directory`.
+
+File Installation
+^^^^^^^^^^^^^^^^^
+
+As part of the ``rose suite-run`` migration to Cylc, files are now installed onto
+platforms. This is part of the remote initialization process which is triggered
+when the first job runs on the platform.
+The remote installation, as standard, includes the directories ``app``, ``bin``,
+``etc`` and ``lib``. Extra files and directories can be included in this file
+installation, under the :cylc:conf:`[scheduler]install` section of your
+``flow.cylc`` file.
+
+For more information, see :ref:`installing_files`.
+
+Symlink Dirs
+^^^^^^^^^^^^
+
+Symlinking the directories used by Cylc provides a useful way of managing disk
+space. This functionality was previously available with the Rose ``root dir``
+configuration but has now been implemented in Cylc 8.
+Directories available for symlinking are:
+
+* ``run``
+* ``log``
+* ``share``
+* ``share/cycle``
+* ``work``
+
+These are created on a per install target basis, as configured in
+:cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
+a site level, for more information see :ref:`Install Targets`.
+
+See also:
+
+* :ref:`RemoteInit`
+
 
 Safe Run Semantics
 ------------------

@@ -19,10 +19,10 @@ running:
   - The ``initial cycle point`` is taken from ``flow.cylc`` or the command line
   - Dependence on earlier tasks is ignored, for convenience
   - (In Cylc 7, this was called a *cold start*)
-  
+
 
 * ``cylc play --start-cycle-point=POINT`` **from a later start cycle point**
- 
+
   - This is an option for a workflow that has not run yet
   - The start point must be given on the command line
   - Dependence on earlier tasks is ignored, for convenience
@@ -120,6 +120,58 @@ necessary, with ``cylc remove``.
 If new tasks were added to the graph, instances will be spawned automatically
 as upstream tasks complete the outputs that they depend on. If they have no
 parents to do that, you can trigger the first ones manually with ``cylc trigger``.
+
+
+.. _RemoteInit:
+
+Remote Initialization
+---------------------
+
+For workflows that run on remote platforms, i.e. using a host other than
+``localhost``, Cylc performs an initialization process. This involves transferring
+files and directories required to run jobs, including authentication keys
+(see :ref:`Authentication Files` for more information).
+
+Directories included, as standard, in the remote install are:
+
+* ``app``
+* ``bin``
+* ``etc``
+* ``lib``
+
+These will be transferred from the workflow run directory on the :term:`scheduler`.
+In addition, file and directories configured in :cylc:conf:`[scheduler]install`
+of the ``flow.cylc`` will be included in the transfer. See :ref:`installing_files`
+for an example.
+
+This remote initialization process also creates symlinks on the remote
+platform, if these are configured using
+:cylc:conf:`global.cylc[install][symlink dirs]`. Using this functionality is an
+efficient way to manage disk space.
+
+Troubleshooting
+^^^^^^^^^^^^^^^
+
+There are certain scenarios where remote initialization may fail. Cylc will return
+a ``REMOTE INIT FAILED`` message.
+
+Timeout
+"""""""
+
+Remote initialization has a timeout set at 10 minutes, after which remote
+initialization will fail. If you have particularly large files files to
+transfer, which you expect to exceed the 10 minute timeout, consider using an
+install task in your workflow.
+
+Misconfiguration
+""""""""""""""""
+
+Platforms must be correctly configured to ensure authentication keys, which are
+responsible for secure communication between the :term:`scheduler` and the
+platform, are correctly in place.
+Sites can configure these platforms, insuring they match up with the correct
+install target. Cylc uses install targets as a way of recognising which platforms
+share the same file system. For more information, see :ref:`Install Targets`.
 
 
 .. _The Workflow Contact File:
