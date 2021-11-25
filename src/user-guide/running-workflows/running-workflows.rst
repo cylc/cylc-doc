@@ -177,7 +177,7 @@ Remote Initialization
 
 For workflows that run on remote platforms, i.e. using a host other than
 ``localhost``, Cylc performs an initialization process. This involves transferring
-all files and directories required to run jobs, including authentication keys
+files and directories required to run jobs, including authentication keys
 (see :ref:`Authentication Files` for more information).
 
 Directories included, as standard, in the remote install are:
