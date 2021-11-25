@@ -52,7 +52,7 @@ jobs:
         run: |
           # NOTE: Install with [all] so we can import plugins which may
           #       have extra dependencies.
-          pip install \
+          pip install  \
             "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
             "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
             "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
