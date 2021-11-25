@@ -45,7 +45,7 @@ jobs:
             "cylc-flow @ git+https://github.com/cylc/cylc-flow@${cylc_ref}" \
             "cylc-rose @ git+https://github.com/cylc/cylc-rose@${cylc_rose_ref}"
           git clone --depth 1 -b "${meto_rose}" https://github.com/metomi/rose ../rose
-          pip install -e ../rose
+          pip install -e ../rose[all]
 
       - name: run tutorial workflow
         run: |

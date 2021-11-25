@@ -56,7 +56,7 @@ jobs:
             'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master' \
             'cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@master'
           git clone --depth 1 https://github.com/metomi/rose ../rose
-          pip install -e ../rose
+          pip install -e ../rose[all]
 
       - name: checkout gh-pages branch
         uses: actions/checkout@v2
