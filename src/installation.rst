@@ -7,7 +7,7 @@ Installation
 
    Cylc 8.0b3 is the final *beta release* of Cylc 8, a major upgrade from Cylc 7.
 
-   All Cylc 8 system components are in place but not yet heavily tested by users. 
+   All Cylc 8 system components are in place but not yet heavily tested by users.
    Cylc 7 is still available if needed.
 
    This documentation has been revised for Cylc 8, but some new features are
@@ -179,13 +179,15 @@ available too.
 We recommend using a wrapper script named ``cylc`` to activate the correct
 environment before calling the environment's  ``cylc`` command.
 
-.. TODO - update this once the wrapper has been added to cylc-flow package data.
+Cylc comes with a wrapper which can be extracted to a directory in your $PATH
+using
 
-.. important::
+.. TODO - make this easier once extract-resources is better.
 
-   Cylc comes with a wrapper that you can use with minimal adaptation.
-   This should be installed somewhere in the system search ``$PATH`` such
-   as ``/usr/local/bin``.
+.. code-block:: bash
+
+   cylc resources etc/cylc /path/to/cylc  # should be in $PATH
+   chmod +x /path/to/cylc
 
 Configuration
 -------------
@@ -213,7 +215,7 @@ Bash Profile
 
 Cylc task job scripts are bash scripts, which is good for manipulating files
 and processes, They invoke ``bash -l`` to allow environment configuration in
-login scripts. 
+login scripts.
 
 .. warning::
 
