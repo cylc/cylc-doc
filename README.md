@@ -6,7 +6,7 @@
 
 Documentation for the Cylc Workflow Engine and its software ecosystem.
 
-## Writing
+## Writing
 
 The documentation is written in ReStructuredText, for more information see:
 
