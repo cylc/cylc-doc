@@ -74,7 +74,7 @@ recurrence expression for the graph string. For example this graph:
            T00,T12 = "A => B"
 
 implies that ``B`` triggers off of ``A`` (i.e. off of the ``A:succeeded`` output)
-for cycle points where the hour matches ``00`` or ``12``. To define inter-cycle
+for cycle points where the hour matches ``00`` or ``12``. To define intercycle
 dependencies, attach an offset indicator to the left side of a pair:
 
 .. code-block:: cylc
@@ -1236,13 +1236,13 @@ significantly less memory and CPU to store and evaluate.
 
 .. _InterCyclePointTriggers:
 
-Inter-Cycle Triggers
-^^^^^^^^^^^^^^^^^^^^
+Intercycle Triggers
+^^^^^^^^^^^^^^^^^^^
 
 Most tasks in a workflow typically depend on others with the same
 cycle point, but some may depend on other cycle points [1]_.
 
-:term:`Inter-cycle dependence <inter-cycle dependency>` is expressed using
+:term:`Intercycle dependence <intercycle dependency>` is expressed using
 ``[offset]`` syntax such as ``foo[-PT12H] => foo``, which means ``foo`` at the
 current cycle point depends on a previous instance of ``foo`` at 12 hours
 before the current cycle point. Unlike for recurrences (e.g. ``T00,T12``),
@@ -1255,7 +1255,7 @@ initial cycle point.
        # B triggers off A in the previous cycle point
        PT6H = "A[-PT6H] => B"
 
-inter-cycle and trigger type (or message trigger) syntax can be
+intercycle and trigger type (or message trigger) syntax can be
 combined:
 
 .. code-block:: cylc
@@ -1331,7 +1331,7 @@ Tasks that depend on their own previous-cycle instance can be declared as
        [[graph]]
            T00,T12 = "foo => bar"
 
-However, this feature is deprecated in favor of explicit inter-cycle triggers
+However, this feature is deprecated in favor of explicit intercycle triggers
 which expose the associated scheduling behaviour in the graph:
 
 .. code-block:: cylc
@@ -1368,7 +1368,7 @@ can be replaced by a single sequential declaration,
 Future Triggers
 ^^^^^^^^^^^^^^^
 
-Cylc also supports :term:`inter-cycle triggering <inter-cycle trigger>` off
+Cylc also supports :term:`intercycle triggering <intercycle trigger>` off
 tasks "in the future" (with respect to cycle point):
 
 .. code-block:: cylc

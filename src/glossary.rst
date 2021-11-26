@@ -1,3 +1,27 @@
+.. Glossary Conventions - for consistency across glossary items
+
+   1) Links to other glossary items in the text. There's no need to
+      link mulitple instances of the same term in the same paragraph,
+      but duplicate links may be desirable if further apart.
+
+   2) Examples can be given but should be brief and on point.
+
+   3) "seealso" blocks should contain, in order of preference:
+      - config reference links
+      - links to other glossary items not in the main text
+      - documentation links
+      - external web site links
+
+   3a)  To avoid unnecesarily long lists and repetition "seealso" blocks should
+        not duplicate glossary links from the preceding text
+
+   4) To avoid surprising users by jumping out of the page, non-glossary links
+      should primarily be in the "seealso" list, and not look like an interal
+      glossary link, e.g. :ref:`Cylc User Guide <blah>` not just :ref:`blah`.
+
+
+.. TODO Add user guide and config links to all items, where appropriate.
+
 Glossary
 ========
 
@@ -6,39 +30,67 @@ Glossary
 
    validation
    workflow validation
-      The ``cylc validate`` command parses ``flow.cylc`` workflow configuration
-      files and reports syntax errors and deprecation warnings.
+      Validation parses a ``flow.cylc`` file to report any illegal items,
+      syntax errors, deprecation warnings, and other problems.
+
+      It is done automatically at start up, and should be done manually with
+      the ``cylc validate`` command after making changes.
+
 
    retry
       Tasks configured to retry on failure will return to the ``waiting`` state
-      with a new clock trigger to handle the retry delay. Task jobs can
-      get their try number from the environment, if needed.
+      with a clock trigger to delay the next try.
 
-      See also:
+      Any number of retries, with configurable delays between them, are possible.
+      Task jobs can get their own try number from ``$CYLC_TASK_TRY_NUMBER``.
 
-      * :ref:`TaskRetries`
-   
+      If the final try fails, the task goes to the ``failed`` :term:`state
+      <task state>`.
+
+      .. seealso::
+
+         * :ref:`Cylc User Guide <TaskRetries>`
+
+
    window
    n-window
-   window on the workflow
-      A :term:`graph`-based window or view of the workflow at runtime,
-      including tasks out to n graph edges from current active tasks.
+   workflow window
+      This is a :term:`graph`-based window or view of the workflow at runtime,
+      including tasks out to ``n`` graph edges from current active tasks.
 
-      See also:
+      .. seealso::
 
-      * :ref:`n-window`
- 
+         * :ref:`Cylc User Guide <n-window>`
+
+
    artificial dependency
-      A dependency introduced to the :term:`graph` for some reason, that does
-      not reflect any real dependence (e.g. on I/O files) in the tasks involved.
+      An artificial :term:`dependency` in the :term:`graph` does not reflect
+      real dependence between the tasks involved. This can sometimes be
+      useful but should be avoided if possible. Artificial dependencies muddy
+      the real dependencies of the workflow and they may unnecessarily
+      constrain the scheduler.
+
+      In the following :term:`cycling` workflow, if the task ``foo`` does not
+      actually depend on any real outputs of ``bar`` in the previous cycle,
+      then the intercycle dependence is artificial.
+
+      .. code-block:: cylc
+
+         P1 = """
+            foo => bar => baz
+            baz[-P1] => foo
+         """
+
 
    workflow
    cylc workflow
-      A Cylc workflow is a collection of :term:`tasks <task>` to carry out and
-      :term:`dependencies <dependency>` that govern the order in which they
-      run. This is represented in Cylc format in a :cylc:conf:`flow.cylc` file.
+      A workflow is a collection of :term:`tasks <task>` with
+      :term:`dependencies <dependency>` among them that govern the order in
+      which they can run.
 
-      For example here is a Cylc workflow representing the brewing process:
+      Cylc workflows are defined in :cylc:conf:`flow.cylc` files.
+
+      For example, the following workflow represents the beer brewing process:
 
       .. code-block:: cylc
          :caption: flow.cylc
@@ -49,70 +101,70 @@ Glossary
              [[graph]]
                  # repeat this for each batch
                  P1 = """
-                     # the stages of brewing in the order they must occur in
+                     # the stages of brewing in the order they must occur in:
                      malt => mash => sparge => boil => chill => ferment => rack
 
-                     # must finish the sparge of one batch before
-                     # starting the next one
-                     # sparge[-P1] => mash
+                     # finish the sparge of one batch before starting the next:
+                     sparge[-P1] => mash
                  """
 
       .. admonition:: Cylc 7
          :class: tip
 
-         In Cylc version 7 and earlier "workflows" were referred to as
-         "suites".
+         In Cylc 7 and earlier "workflows" were referred to as "suites".
+
 
    workflow name
-      The workflow name (``CYLC_WORKFLOW_NAME``) is a path relative to the
-      cylc-run directory which contains one or more workflow
-      :term:`run directories <run directory>`.
+      The workflow name is a path relative to the cylc-run directory which
+      contains one or more workflow :term:`run directories <run directory>`.
 
-      Unlike :term:`workflow id` it is not always a unique identifier; in the
-      example below ``run1`` and ``run2`` would both have the same name,
+     Task jobs can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
+     runtime environment.
+
+      Unlike :term:`workflow id` the name is not always a unique identifier. In
+      the example below ``run1`` and ``run2`` would both have the same name,
       ``my_workflow``:
 
       .. code-block:: bash
 
          |- my_workflow
-         | |- runN
-         | |- run1
-         | |- run2
+           |- runN
+           |- run1
+           |- run2
 
       .. note::
+         If you are not using named or numbered runs, the workflow name will be
+         the same as :term:`workflow id`.
 
-         If you are not using named or numbered runs, the workflow name
-         will be the same as :term:`workflow id`.
 
    workflow id
-      A workflow ID is the name Cylc uses to identify a :term:`workflow` in
-      the :term:`run directory`.
+      A workflow can be uniquely identified by its :term:`run directory` path
+      relative to the cylc-run directory.
 
-      This ID is used on the command line and in the GUI.
+      This ID is used on the command line and in the GUI, to target the right
+      worklfow.
 
-      The ID is the workflow's :term:`run directory` path relative to
-      the cylc-run directory.
-
-      For example, if your workflow is in ``~/cylc-run/foo/bar/run1`` then its ID
+      For example, the ID of the workflow in ``~/cylc-run/foo/bar/run1``
       is ``foo/bar/run1``.
 
-      Unlike :term:`workflow name` it is always a unique identifier. In the
+      Unlike :term:`workflow name` the ID is always a unique identifier. In the
       example below each run has a different ID despite sharing the same
       :term:`workflow name` (``my_workflow``).
 
       .. code-block:: bash
 
          |- my_workflow
-         | |- runN
-         | |- run1      # CYLC_WORKFLOW_ID = my_workflow/run1
-         | |- run2      # CYLC_WORKFLOW_ID = my_workflow/run2
+           |- runN
+           |- run1      # CYLC_WORKFLOW_ID = my_workflow/run1
+           |- run2      # CYLC_WORKFLOW_ID = my_workflow/run2
 
 
    graph
-      The graph of a :term:`workflow<Cylc workflow>` refers to the
-      :term:`graph strings<graph string>` contained within the
-      :cylc:conf:`[scheduling][graph]` section. For example the following is,
-      collectively, a graph:
+      A workflow graph is defined by one or more :term:`graph strings<graph string>`
+      under the :cylc:conf:`[scheduling][graph]` section of a :term:`workflow<Cylc
+      workflow>` definition.
+
+      For example, the following is, collectively, a graph:
 
       .. code-block:: cylc
 
@@ -149,68 +201,33 @@ Glossary
          "foo.01T00" -> "bar.01T00"
          "foo.02T00" -> "bar.02T00"
 
+
    graph string
-      A graph string is a collection of dependencies which are placed inside the
-      :cylc:conf:`[scheduling][graph]` section e.g:
+      A graph string is a collection of task :term:`dependencies <dependency>`
+      in the :cylc:conf:`[scheduling][graph]` section of a workflow definition,
+      with an associated recurrence that defines its sequence of cycle points.
+
+      The example below shows one graph string in a datetime cycling workflow,
+      with a daily cycle point sequence:
 
       .. code-block:: cylc-graph
 
-         foo => bar => baz & pub => qux
-         pub => bool
+         R/^/P1D = """
+            foo => bar => baz & pub => qux
+            pub => bool
+         """
 
-   dependency
-      A dependency is a relationship between two :term:`tasks<task>` which
-      describes a constraint on one.
-
-      For example the dependency
-      ``foo => bar`` means that the :term:`task` ``bar`` is *dependent* on the
-      task ``foo``. This means that the task ``bar`` will only run once the
-      task ``foo`` has successfully completed.
-
-      See also:
-
-      * :term:`task trigger`
-      * :term:`conditional dependency`
-
-   conditional dependency
-   conditional trigger
-      A conditional dependency is a :term:`dependency` which uses the ``&`` (and)
-      or ``|`` (or) operators for example:
-
-      .. code-block:: cylc-graph
-
-         a & (b | c) => d
-
-      See also:
-
-      * :term:`dependency`
-      * :term:`task trigger`
-
-   trigger
-   task trigger
-      :term:`Dependency <dependency>` relationships can be thought of the other
-      way around as "triggers".
-
-      For example the dependency ``foo => bar`` could be described in several ways:
-
-      * "``bar`` depends on ``foo``"
-      * "``foo`` triggers ``bar``"
-      * "``bar`` triggers off of ``foo``"
-
-      In practice a trigger is the left-hand side of a dependency (``foo`` in
-      this example).
-
-      See also:
-
-      * :term:`dependency`
-      * :term:`qualifier`
-      * :term:`family trigger`
 
    cycle
-      In a :term:`cycling workflow<cycling>` a cycle is one repetition of a
-      single-cycle workflow graph. However, note that Cylc unrolls the cycle
-      loop to remove the barrier between cycles, and gives each individual task
-      its own :term:`cycle point`.
+      In a :term:`cycling` workflow a cycle comprises one run of all
+      :term:`tasks<task>` on a sequence of :term:`cycle points <cycle point>`
+      defined by the same :term:`recurrence`.
+
+      In simple cases you can think of a cycle as one of a series of repeat
+      runs of a finite non-cycling workflow. However, Cylc gives each
+      task its own individual :term:`cycle point` and can run tasks from
+      multiple cycles at once. Nevertheless it is true that all tasks
+      "belonging to" the same cycle have the same cycle point.
 
       For example, in the following workflow each dotted box represents a cycle
       and the :term:`tasks<task>` within it are the :term:`tasks<task>`
@@ -251,185 +268,184 @@ Glossary
          "foo.3" -> "bar.3" -> "baz.3"
          "bar.1" -> "bar.2" -> "bar.3"
 
+
    cycling
-      A cycling :term:`workflow<Cylc workflow>` in Cylc is a graph of
+   cycling workflow
+      A cycling :term:`workflow` in Cylc is defined by a graph of
       repeating tasks with individual :term:`cycle points <cycle point>`.
 
-      See also:
+      .. seealso::
 
-      * :term:`cycle`
-      * :term:`cycle point`
+         * :term:`cycle`
+
 
    cycle point
       The unique label given to tasks that belong to a particular :term:`cycle`.
-      For :term:`integer cycling` these will be integers, e.g. ``1``, ``2``, ``3``, etc.
-      For :term:`datetime cycling` they will be :term:`ISO8601` datetimes, e.g. ``2000-01-01T00:00Z``.
+      For :term:`integer cycling` these will be integers, e.g. ``1``, ``2``,
+      ``3``, etc.
+      For :term:`datetime cycling` they will be :term:`ISO8601` datetimes, e.g.
+      ``2000-01-01T00:00Z``.
 
-      See also:
+      .. seealso::
 
-      * :term:`initial cycle point`
-      * :term:`final cycle point`
-      * :term:`start cycle point`
+         * :term:`initial cycle point`
+         * :term:`final cycle point`
+         * :term:`start cycle point`
+
 
    cycle point time zone
-      The time zone used for task cycle points.
+      The time zone used for task :term:`cycle points <cycle point>`.
 
-      See also:
+      .. seealso::
 
-      * :term:`cycle point`
-      * :cylc:conf:`flow.cylc[scheduler]cycle point time zone`
+         * :cylc:conf:`flow.cylc[scheduler]cycle point time zone`
+
 
    initial cycle point
-      In a :term:`cycling workflow <cycling>` the initial cycle point is the point
-      from which cycling begins.
+      In a :term:`cycling workflow <cycling>` the initial cycle point is the
+      first :term:`cycle point` in the :term:`graph`.
 
-      It is set by :cylc:conf:`[scheduling]initial cycle point`.
+      .. seealso::
 
-      If the initial cycle point were 2000 then the first cycle would
-      be on the 1st of January 2000.
+         * :cylc:conf:`[scheduling]initial cycle point`.
+         * :term:`start cycle point`
 
-      See also:
-
-      * :term:`cycle point`
-      * :term:`final cycle point`
 
    final cycle point
-      In a :term:`cycling workflow <cycling>` the final cycle point is the point
-      at which cycling ends.
+      In a :term:`cycling workflow <cycling>` the final cycle point, if there
+      is one, is the last :term:`cycle point` in the :term:`graph`.
 
-      It is set by :cylc:conf:`[scheduling]final cycle point`.
+      .. seealso::
 
-      If the final cycle point were 2001 then the final cycle would be no later
-      than the 1st of January 2001.
+         * :cylc:conf:`[scheduling]final cycle point`.
+         * :term:`stop cycle point`
 
-      See also:
-
-      * :term:`cycle point`
-      * :term:`initial cycle point`
 
    start cycle point
-      The start cycle point is the :term:`cycle point` where the
-      :term:`scheduler` :term:`starts <start>` running from.
+      In a :term:`cycling workflow <cycling>` the start cycle point is the
+      :term:`cycle point` where the :term:`scheduler` :term:`starts <start>`
+      running the workflow.
 
-      This may be after the :term:`initial cycle point`.
+      This may be at or after the :term:`initial cycle point`.
 
-      See :ref:`start_stop_cycle_point` for more information.
+      .. seealso::
 
-      See also:
+         * :term:`stop cycle point`
+         * :ref:`Cylc User Guide <start_stop_cycle_point>`
 
-      * :ref:`start_stop_cycle_point`
-      * :term:`cycle point`
-      * :term:`stop cycle point`
-      * :term:`initial cycle point`
 
    stop cycle point
-      The stop cycle point is the :term:`cycle point` at which the
-      :term:`scheduler` :term:`shuts down <shutdown>`.
+      The stop cycle point is the :term:`cycle point` where :term:`scheduler`
+      stops running the workflow and :term:`shuts down <shutdown>`.
 
-      This may be before the :term:`final cycle point`.
+      This may be at or before the :term:`final cycle point`.
 
-      See :ref:`start_stop_cycle_point` for more information.
+      .. seealso::
 
-      See also:
+         * :term:`start cycle point`
+         * :ref:`Cylc User Guide <start_stop_cycle_point>`
 
-      * :ref:`start_stop_cycle_point`
-      * :term:`cycle point`
-      * :term:`start cycle point`
-      * :term:`final cycle point`
 
    integer cycling
-      An integer :term:`cycling` workflow uses integer :term:`cycle points <cycle point>`
-      and :term:`recurrences <recurrence>` (e.g. ``P3`` means every third
-      cycle). It is configured with :cylc:conf:`[scheduling]cycling mode = integer`.
+      An integer :term:`cycling workflow` uses integer :term:`cycle points
+      <cycle point>` and :term:`recurrences <recurrence>` (e.g. ``P3`` means
+      every third cycle).
 
-      See also:
+      .. seealso::
 
-      * :term:`datetime cycling`
-      * :ref:`Cylc tutorial <tutorial-integer-cycling>`
+         * :cylc:conf:`[scheduling]cycling mode`
+         * :term:`datetime cycling`
+         * :ref:`Cylc tutorial <tutorial-integer-cycling>`
+
 
    datetime cycling
       A datetime :term:`cycling` workflow uses
-      :term:`ISO8601 datetime <ISO8601 datetime>` :term:`cycle points <cycle point>` (e.g.
-      ``2000-01-01T00:00Z``) and :term:`recurrences <recurrence>` (e.g. ``P3D``
-      means every third day).
+      :term:`ISO8601 datetime <ISO8601 datetime>` :term:`cycle points <cycle
+      point>` (e.g.  ``2000-01-01T00:00Z``) and :term:`recurrences
+      <recurrence>` (e.g. ``P3D`` means every third day).
 
-      See also:
+      .. seealso::
 
-      * :term:`integer cycling`
-      * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
+         * :cylc:conf:`[scheduling]cycling mode`
+         * :term:`integer cycling`
+         * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
+
 
    wallclock time
       The actual time (in the real world).
 
-      See also:
+      .. seealso::
 
-      * :term:`datetime cycling`
-      * :term:`clock trigger`
+         * :term:`datetime cycling`
+         * :term:`clock trigger`
+
 
    ISO8601
-      ISO8601 is an international standard for writing dates and times which is
-      used in Cylc with :term:`datetime cycling`.
+      ISO8601 is an international standard for writing datetimes, durations,
+      and :term:`recurrences <recurrence>` (sequences of datetimes). Cylc uses
+      ISO8601 for :term:`datetime cycling`.
 
-      See also:
+      .. seealso::
 
-      * :term:`ISO8601 datetime`
-      * :term:`recurrence`
-      * `Wikipedia (ISO8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
-      * `International Organisation For Standardisation
-        <https://www.iso.org/iso-8601-date-and-time-format.html>`_
-      * `a summary of the international standard date and time notation
-        <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
+         * :term:`ISO8601 datetime`
+         * `Wikipedia (ISO8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
+         * `International Organisation For Standardisation
+           <https://www.iso.org/iso-8601-date-and-time-format.html>`_
+         * `a summary of the international standard date and time notation
+           <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
+
 
    ISO8601 datetime
-      A datetime written in the ISO8601
-      format, e.g:
+      A datetime written in the :term:`ISO8601` format, e.g:
 
-      * ``2000-01-01T00:00Z``: midnight on the 1st of January 2000
+      * ``2000-01-01T00:00Z``: midnight on the 1st of January 2000, UTC.
 
-      See also:
+      .. seealso::
 
-      * :ref:`Cylc tutorial <tutorial-iso8601-datetimes>`
-      * :term:`ISO8601`
+         * :ref:`Cylc tutorial <tutorial-iso8601-datetimes>`
+
 
    ISO8601 duration
       A duration written in the ISO8601 format e.g:
 
       * ``PT1H30M``: one hour and thirty minutes.
 
-      See also:
+      .. seealso::
 
-      * :ref:`Cylc tutorial <tutorial-iso8601-durations>`
-      * :term:`ISO8601`
+         * :term:`ISO8601`
+         * :ref:`Cylc tutorial <tutorial-iso8601-durations>`
+
 
    recurrence
-      A recurrence is a repeating sequence which may be used to define a
-      :term:`cycling workflow<cycling>`. Recurrences determine how often something
-      repeats and take one of two forms depending on whether the
-      :term:`workflow<Cylc workflow>` is configured to use :term:`integer cycling`
-      or :term:`datetime cycling`.
+      In a :term:`cycling workflow<cycling>` a recurrence determines the
+      sequence of cycle points given to task instances that appear in the
+      associated :term:`graph string`.
 
-      See also:
+      Recurrences for :term:`datetime cycling` are based on the :term:`ISO8601`
+      standard. Those for :term:`integer cycling` are designed to have similar
+      syntax, but are much simpler.
 
-      * :term:`integer cycling`
-      * :term:`datetime cycling`
 
    clock trigger
-      Clock triggers connect tasks to the wallclock (real) time, at some
-      offset relative to their datetime cycle point.
+      Clock triggers connect cycle points to the :term:`wallclock time`, in
+      :term:`datetime cycling` workflows. Tasks that depend on a clock trigger
+      will not trigger until the wallclock time is equal to their cycle point
+      plus or minus some offset.
 
-      See also:
+      .. seealso::
 
-      * :term:`wallclock time`
-      * :ref:`Clock Triggers <Built-in Clock Triggers>`
-      * :ref:`Clock Trigger Tutorial <tutorial-cylc-clock-trigger>`
+         * :ref:`Cylc User Guide <Built-in Clock Triggers>`
+         * :ref:`Cylc Tutorial <tutorial-cylc-clock-trigger>`
 
-   inter-cycle dependency
-   inter-cycle trigger
-      In a :term:`cycling workflow <cycling>` an inter-cycle dependency
-      is a :term:`dependency` between two tasks in different cycles.
 
-      For example in the following workflow the task ``bar`` is dependent on
-      its previous occurrence:
+   intercycle dependence
+   intercycle dependency
+   intercycle trigger
+      In a :term:`cycling workflow <cycling>`, intercycle dependence refers to
+      a :term:`task` dependending on other tasks at different cycle points.
+
+      For example, in the following workflow the task ``bar`` depends on
+      its own previous instance:
 
       .. code-block:: cylc
 
@@ -476,19 +492,29 @@ Glossary
          "foo.3" -> "bar.3" -> "baz.3"
          "bar.1" -> "bar.2" -> "bar.3"
 
+
    qualifier
-      A qualifier is used to determine the :term:`task state` to which a
-      :term:`dependency` relates.
+      A qualifier is appended to :term:`task` and :term:`family` names in 
+      :term:`triggers <trigger>` in the :term:`graph`, to specify what task
+      outputs must be completed for the associated :term:`dependency` to be
+      satisified.
 
-      See also:
+      For example, in ``foo:start => bar``, the ``start`` output of task ``foo``
+      must be completed to satisfy the trigger.
 
-      * :ref:`Cylc tutorial <tutorial-qualifiers>`
-      * :term:`task state`
+      .. seealso::
+
+         * :term:`task triggers <task trigger>`
+         * :term:`family triggers <family trigger>`
+         * :ref:`Cylc tutorial <tutorial-qualifiers>`
 
 
    future trigger
-      When a task depends on another task with a later cycle point. Here ``bar.1``
-      triggers off ``foo.2``; and ``bar.2`` off of ``foo.3``; and so on:
+      A future trigger makes one task depend on another with a later 
+      :term:`cycle point`.
+     
+      Here, ``bar.1`` triggers off ``foo.2``; and ``bar.2`` off of
+      ``foo.3``; and so on:
 
       .. code-block:: cylc
 
@@ -498,49 +524,47 @@ Glossary
              [[graph]]
                  P1 = "foo[+P1] => bar"
 
+      .. seealso::
 
-      See also:
+         * :term:`intercycle trigger`
 
-      * :term:`inter-cycle trigger`
- 
+
    task
-      A task represents an activity in a workflow. It is a specification of
-      that activity consisting of the script or executable to run and certain
-      details of the environment it is run in.
+      A task represents an activity in a :term:`workflow`. The workflow
+      definition specifies how tasks depends on other tasks, what they
+      should do, how and where to run them, and details of their
+      runtime environment.
 
-      The task specification is used to create a :term:`job` which is executed
-      on behalf of the task.
+      Task definitions are used to create a :term:`job script` that is
+      executed as a :term:`job` on behalf of the task.
 
-      Tasks submit :term:`jobs <job>` and therefore each :term:`job` belongs
-      to one task. Each task can submit multiple :term:`jobs <job>`.
+      Tasks submit :term:`jobs <job>`. Each :term:`job` belongs to one task,
+      but one task can submit multiple :term:`jobs <job>`.
 
-      See also:
-
-      * :term:`job`
-      * :term:`job script`
 
    task state
-      During a :term:`task's <task>` life it will proceed through various
-      states. These include:
+      A :term:`task` progresses through a series of states in its lifetime.
+      These include the ``submitted`` state after :term:`job` submission;
+      ``running`` after execution commences, and ``succeeded`` after
+      successful job execution.
 
-      * waiting
-      * running
-      * succeeded
+      .. seealso::
 
-      See also:
+         * :ref:`Cylc User Guide <task-job-states>`
+         * :ref:`Cylc tutorial <tutorial-tasks-and-jobs>`
 
-      * :ref:`Cylc tutorial <tutorial-tasks-and-jobs>`
-      * :term:`task`
-      * :term:`job`
-      * :term:`qualifier`
 
    implicit task
-      Implicit tasks appear in the workflow graph but do not have explicit
-      runtime definitions. These were previously known as *naked dummy tasks*.
-      Implicit tasks inherit runtime configuration from the ``root`` task
-      family, but otherwise their jobs exit without doing anything useful.
+      Implicit tasks appear in the :term:`workflow` :term:`graph` but are not
+      defined under :cylc:conf:`[runtime]`. (They do inherit from the ``root``
+      :term:`family`, however).
+     
+      Implict tasks submit real jobs that just exit without doing anything
+      useful. They may be useful placeholders during workflow development but
+      are not allowed by default because they can be created accidentally by
+      simply misspelling a task name in the graph or under ``[runtime]``.
 
-      For example, ``bar`` is an implicit task in the following workflow:
+      Here ``bar`` is implicit:
 
       .. code-block:: cylc
 
@@ -549,140 +573,138 @@ Glossary
                  R1 = foo & bar
          [runtime]
              [[foo]]
+         # eof
 
-      Implicit tasks are not allowed by default because they are too easy to
-      create accidentally by misspelling a task name. However, they can
-      be useful placeholders for real tasks during workflow development. Enable
-      them with
-      :cylc:conf:`flow.cylc[scheduler]allow implicit tasks = True`.
+      .. seealso::
 
-      See also:
+         * :cylc:conf:`flow.cylc[scheduler]allow implicit tasks = True`.
+         * :ref:`Cylc User Guide <ImplicitTasks>`
 
-      * :ref:`ImplicitTasks`
+      .. admonition:: Cylc 7
+         :class: tip
+
+         In Cylc 7 and earlier implicit tasks were known as "naked dummy tasks".
+
 
    work directory
-      When Cylc executes a :term:`job` it does so inside the
-      :term:`job's <job>` working directory. This directory is created by Cylc
-      and lies within the directory tree inside the relevant workflow's
-      :term:`run directory`.
+      Cylc executes task :term:`jobs <job>` inside a job-specific working
+      directory, automatically created under the workflow :term:`run
+      directory`.
 
       .. code-block:: sub
 
-         <run directory>/work/<cycle>/<task-name>
+         <run-directory>/work/<cycle-point>/<task-name>
 
-      The location of the work directory can be accessed by a :term:`job` via
-      the environment variable ``CYLC_TASK_WORK_DIR``.
+      Task jobs can get their own work directory path at runtime from
+      the ``CYLC_TASK_WORK_DIR`` environment variable or the Posix ``pwd``
+      command.
 
-      See also:
+      .. seealso::
 
-      * :term:`run directory`
-      * :term:`share directory`
+         * :term:`run directory`
+         * :term:`share directory`
+
 
    share directory
-      The share directory resides within a workflow's
-      :term:`run directory`. It serves the purpose of providing a
-      storage place for any files which need to be shared between different
-      tasks.
+      Cylc automatically creates a share directory inside the workflow
+      :term:`run directory` as a place to store files that need to be
+      shared between tasks.
 
       .. code-block:: sub
 
-         <run directory>/share
+         <run-directory>/share
 
-      The location of the share directory can be accessed by a :term:`job` via
-      the environment variable ``CYLC_WORKFLOW_SHARE_DIR``.
+      Task jobs can get their own share directory path at runtime from
+      the ``CYLC_WORKFLOW_SHARE_DIR`` environment variable.
 
-      In cycling workflows files are typically stored in cycle sub-directories.
+      In cycling workflows files are typically stored in cycle point
+      sub-directories of the share directory.
 
-      See also:
+      .. seealso::
 
-      * :term:`run directory`
-      * :term:`work directory`
+         * :term:`run directory`
+         * :term:`work directory`
+
 
    workflow log
+   scheduler log
    workflow log directory
-      A Cylc workflow logs events and other information to the workflow log files
-      when it runs. There are two log files:
+      At runtime the scheduler logs timestamped events and other information to
+      files under the workflow :term:`run directory`;
 
-      * ``log`` - a log of workflow events, consisting of information about
-        user interaction.
-      * ``file-installation-log`` - a log documenting the file installation
-        process on remote platforms.
-
-      The workflow log directory lies within the :term:`run directory`:
+      * ``log`` - workflow events and user interaction
+      * ``file-installation-log`` - log of file installation on remote platforms
 
       .. code-block:: sub
 
-         <run directory>/log/workflow
+         <run-directory>/log/workflow/
+
 
    job log
    job log directory
-      When Cylc executes a :term:`job`, stdout and stderr are redirected to the
-      ``job.out`` and ``job.err`` files which are stored in the job log
-      directory.
+      Task :term:`job` log files are stored in job specific log directories
+      under the workflow :term:`run directory`. These include:
 
-      The job log directory lies within the :term:`run directory`:
+      - ``job`` - the task :term:`job script`
+      - ``job.out`` - job stdout
+      - ``job.err`` - job stderr
+      - ``job.status`` - job status data in case of lost contact with the scheduler
+      - ``job-activity.log`` - job data logged by the scheduler, rather than
+        the job itself, such as output from the job submission command
 
       .. code-block:: sub
 
-         <run directory>/log/job/<cycle>/<task-name>/<submission-no>
+         <run-directory>/log/job/<cycle-point>/<task-name>/<job-submit-num>
 
-      Other files stored in the job log directory:
-
-      * ``job``: the :term:`job script`.
-      * ``job-activity.log``: a log file containing details of the
-        :term:`job's <job>` progress.
-      * ``job.status``: a file holding Cylc's most up-to-date
-        understanding of the :term:`job's <job>` present status.
 
    service directory
-      This directory is used to store information for internal use by Cylc.
+      The hidden service directory, under the workflow :term:`run directory`,
+      stores information for internal use by Cylc. It is created at
+      :term:`install` time.
 
-      It is called ``.service`` and is located in the
-      :term:`run directory`, it should exist for all installed
-      workflows.
+      .. code-block:: sub
+
+         <run-directory>/.service/
+
 
    contact file
-      The contact file records information about a running workflow such as the
-      host it is running on, the TCP port(s) it is listening on and the process
-      ID. The file is called ``contact`` and lives inside the workflow's
-      :term:`service directory`.
+      The contact file, in the :term:`service directory`, records information
+      about a running scheduler such as host, TCP port, and process ID. It is
+      read by Cylc client commands so they can target the right scheduler.
 
-      The contact file only exists when the workflow is running, if you delete
-      the contact file, the workflow will (after a delay) notice this and shut
-      down.
+      The contact file is created at scheduler start and removed on clean
+      shutdown. If you delete it, the scheduler will (after a delay) notice
+      this and shut down.
+
+      .. code-block:: sub
+
+         <run-directory>/.service/contact
 
       .. warning::
+         If the scheduler dies in an uncontrolled way, for example if the
+         process is killed or the host goes down, the contact file may be
+         left behind. Some Cylc commands automatically detect these files
+         and remove them, otherwise they should be manually removed.
 
-         In the event that a workflow process dies in an uncontrolled way, for
-         example if the process is killed or the host which is running the
-         process crashes, the contact file may be erroneously left behind. Some
-         Cylc commands will automatically detect such files and remove them,
-         otherwise they should be manually removed.
 
    job
-      A job is the realisation of a :term:`task` consisting of a file called
-      the :term:`job script` which is executed when the job "runs".
+      Jobs are real processes that perform :term:`tasks <task>` in a
+      :term:`workflow`. In Cylc, they are implemented by :term:`job scripts
+      <job script>` prepared by the :term:`scheduler`.
 
-      See also:
-
-      * :term:`task`
-      * :term:`job script`
 
    job script
-      A job script is the file containing a bash script which is executed when
-      a :term:`job` runs. A task's job script can be found in the
-      :term:`job log directory`.
+      A Cylc job script is a file containing bash code to implement a task
+      definition in a workflow. It prepared and submitted to run by the
+      :term:`scheduler` when the task is ready to run.
 
-      See also:
+      Job scripts can be found in the task :term:`job log directory`.
 
-      * :term:`task`
-      * :term:`job`
-      * :term:`job submission number`
 
    job host
-      The job host is the compute resource that a :term:`job` runs on. For
+      A job host is a compute resource that a :term:`job` runs on. For
       example ``node_1`` would be one of two possible job hosts on the
-      :term:`platform` ``my_hpc`` for the task ``some-task`` in the
+      :term:`platform` ``my_hpc`` for the task ``solver`` in the
       following workflow:
 
       .. code-block:: cylc
@@ -697,57 +719,55 @@ Glossary
          :caption: flow.cylc
 
          [runtime]
-             [[some-task]]
+             [[solver]]
                  platform = my_hpc
 
-      See also:
-
-      * :term:`platform`
 
    job submission number
-      Cylc may run multiple :term:`jobs <job>` per :term:`task` (e.g. if the
-      task failed and was re-tried). Each time Cylc runs a :term:`job` it is
-      assigned a submission number. The submission number starts at 1,
-      incrementing with each submission.
+      A single :term:`task` may run multiple :term:`jobs <job>` as a result of
+      automatic :term:`retries <retry>` or manually retriggering.
+      The job submission number is incremented each time, starting from 1.
 
-      See also:
-
-      * :term:`job`
-      * :term:`job script`
 
    job runner
-   batch system
-      A job runner (also known as batch system or job scheduler) is a system
-      for submitting :term:`jobs <job>` to a :term:`job platform <platform>`.
+      A job runner is a system for submitting task :term:`jobs <job>` to run on
+      a :term:`job platform <platform>`.
 
-      Job runners are set on a per-platform basis in
-      :cylc:conf:`global.cylc[platforms][<platform name>]job runner`.
+      Cylc supports various job runners, from direct background process
+      execution to HPC batch queueing systems like PBS and Slurm (these are
+      also known as *job schedulers* and *resource managers*).
 
-      See also:
+      Job runners are configured on a per-platform basis in ``global.cylc``.
 
-      * `Wikipedia (job scheduler)
-        <https://en.wikipedia.org/wiki/Job_scheduler>`_
-      * :term:`directive`
+      .. seealso::
+
+         * :cylc:conf:`global.cylc[platforms][<platform name>]job runner`.
+         * :term:`directive`
+         * `Wikipedia (job scheduler) <https://en.wikipedia.org/wiki/Job_scheduler>`_
+
+      .. admonition:: Cylc 7
+         :class: tip
+
+         In Cylc 7 and earlier job runners were referred to as "batch systems".
+
 
    directive
-      Directives are used by :term:`job runners <job runner>` to determine
-      what a :term:`job's <job>` requirements are, e.g. how much memory
-      it requires.
+      Directives request task :term:`jobs <job>` resources such as memory and
+      node count from external :term:`job runners <job runner>`. They are job
+      runner-specific.
 
-      Directives are set in :cylc:conf:`[runtime][<namespace>][directives]`.
+      .. seealso::
 
-      See also:
+         * :cylc:conf:`[runtime][<namespace>][directives]`
 
-      * :term:`job runner`
 
    platform
    job platform
-      A configured setup for running :term:`jobs <job>` on (usually remotely).
-      Platforms are primarily defined by the combination of a
-      :term:`job runner` and a group of :term:`hosts <job host>`
-      (which share a file system).
+      A platform for running Cylc task :term:`jobs <job>` is primarily defined
+      by the combination of a :term:`job runner` and a group of :term:`hosts
+      <job host>` that share a file system.
 
-      For example ``my_hpc`` could be the platform for the task ``some-task``
+      For example ``my_hpc`` could be the platform for the task ``solver``
       in the following workflow:
 
       .. code-block:: cylc
@@ -762,156 +782,191 @@ Glossary
          :caption: Workflow configuration (``flow.cylc``)
 
          [runtime]
-             [[some-task]]
+             [[solver]]
                  platform = my_hpc
 
-      See also:
+      .. seealso::
 
-      * :term:`job host`
-      * :term:`job runner`
-      * :term:`platform group`
+         * :term:`platform group`
+
 
    platform group
+      A set of :term:`platforms <platform>` grouped under a common name.
 
-      A set of :term:`platforms <platform>`
 
    scheduler
-      Cylc schedulers are programs that are responsible for running a single
-      Cylc workflow. They determine which tasks are ready to run, submit task
-      :term:`jobs <job>` and monitor their status, maintain the workflow state,
-      and listen for commands from the user.
+      The Cylc scheduler is a program responsible for managing a single
+      Cylc :term:`workflow`. It determines when each :term:`tasks <task>` is
+      ready to run, submits its :term:`jobs <job>` to selected job runners,
+      tracks job status, maintains the workflow state, and listens for queries
+      and commands from the user.
 
-      .. _daemons: https://en.wikipedia.org/wiki/Daemon_(computing)
+      By default, Cylc schedulers run as daemons (and potentially on a remote
+      host) so they won't be killed if you log out.
 
-      By default, Cylc schedulers run as `daemons`_ (and potentially on another
-      host): they detach from your terminal (or similar) so they won't get killed
-      if you log out.
+      .. seealso::
+
+         * `Wikipedia: daemon <https://en.wikipedia.org/wiki/Daemon_(computing)>`_
+
+      .. admonition:: Cylc 7
+         :class: tip
+
+         In Cylc 7 and earlier schedulers were known as "suite daemons".
+
 
    start
    startup
-      When the Cylc :term:`scheduler` starts running a :term:`workflow` from
-      scratch. This can be a :term:`cold start <cold start>` (the default), a
-      :term:`warm start <warm start>`, or from a :term:`start task`.
+      This refers to starting a new instance of the Cylc :term:`scheduler`
+      program to manage a particular :term:`workflow`. This can be from
+      scratch, for installed workflows that haven't run previously, or to
+      restart one that shut down prior to :term:`completion <workflow completion>`.
 
-      See also:
+      .. seealso::
 
-      * :ref:`Starting Suites`
-      * :term:`warm start`
-      * :term:`cold start`
-      * :term:`start task`
-      * :term:`shutdown`
-      * :term:`restart`
-      * :term:`reload`
+         * :term:`cold start`
+         * :term:`warm start`
+         * :term:`start task`
+         * :term:`restart`
+         * :term:`reload`
+         * :term:`shutdown`
+
 
    cold start
-      The :term:`scheduler` :term:`starts <start>` running the :term:`workflow`
-      at the very beginning of the :term:`graph`, which in a cycling workflow
-      is determined by the :term:`initial cycle point`. This is the default
-      behaviour of ``cylc play`` for a workflow that hasn't run yet.
+      A cold start is when the :term:`scheduler` :term:`start <startup>` a
+      :term:`workflow` at the beginning of :term:`graph`. In a :term:`cycling
+      workflow` this is determined by the :term:`initial cycle point`.
 
-      See also:
+      This is the default behaviour of ``cylc play`` for an installed workflow
+      that hasn't run yet.
 
-      * :term:`start`
-      * :term:`warm start`
-      * :term:`start task`
+      To satisfy unbounded :term:`intercycle dependence` in the graph, tasks
+      prior to the initial cycle point are treated as if they have succeeded.
+
+      .. seealso::
+
+         * :cylc:conf:`[scheduling]initial cycle point`
+         * :term:`warm start`
+         * :term:`start task`
+         * :term:`restart`
+         * :term:`shutdown`
+
 
    warm start
-      The :term:`scheduler` :term:`starts <start>` running a :term:`cycling`
-      :term:`workflow` from a :term:`start cycle point` after the
-      :term:`initial cycle point`.
-      Tasks in previous cycles are treated as if they have succeeded.
+      A warm start is when the :term:`scheduler` :term:`starts <start>` a
+      :term:`cycling workflow` running from a :term:`start cycle point` after
+      the :term:`initial cycle point`.
 
-      See also:
+      To satisfy unbounded :term:`intercycle dependence` in the graph, tasks
+      prior to the start cycle point are treated as if they have succeeded.
 
-      * :term:`start`
-      * :term:`start task`
-      * :term:`start cycle point`
-      * :term:`cold start`
+      .. seealso::
+
+         * :term:`cold start`
+         * :term:`start task`
+         * :term:`restart`
+         * :term:`shutdown`
+
 
    start task
-      A particular task in the graph from which the :term:`scheduler`
-      :term:`starts <start>` running a :term:`workflow` from scratch.
-      Earlier tasks are treated as if they have succeeded.
+      A start task is :term:`task` in the :term:`graph` from which the
+      :term:`scheduler` :term:`starts <start>` running a :term:`workflow` from
+      scratch.
 
-      See also:
+      Earlier tasks depended on by start tasks are treated as if they have
+      succeeded.
 
-      * :term:`start`
-      * :term:`start task`
-      * :term:`start cycle point`
-      * :term:`cold start`
-      * :term:`warm start`
+      .. seealso::
+
+         * :term:`cold start`
+         * :term:`warm start`
+         * :term:`start cycle point`
+         * :term:`shutdown`
+
+      .. admonition:: Cylc 7
+         :class: tip
+
+         Cylc 7 and earlier did not have the capability to start from any task
+         in the graph.
+
 
    cylc-run directory
-      The ``~/cylc-run`` directory for :term:`installed <workflow installation>`
-      workflows. Cylc can be configured to symlink cylc-run sub-directories to
-      other locations via :cylc:conf:`global.cylc[install][symlink dirs]`.
+      This refers to the top level directory for :term:`installed <workflow
+      installation>` workflows: ``~/cylc-run``.
 
-      See also:
+      Cylc can be configured to symlink cylc-run sub-directories to
+      other locations.
 
-      * :term:`run directory`
+      .. seealso::
+
+         * :cylc:conf:`global.cylc[install][symlink dirs]`.
+         * :term:`run directory`
 
       .. caution::
 
-         The cylc-run directory should not be confused with the
+         The cylc-run directory should not be confused with specific
          :term:`workflow run directories <run directory>` below it.
 
    install
    installation
    workflow installation
-      The ``cylc install`` command installs workflow source files from
-      :term:`source directories <source directory>` into the :term:`run
-      directories <run directory>` under the :term:`cylc-run directory`.
+      The ``cylc install`` command installs workflow :term:`source files
+      <source directory>` into a new :term:`run directory` under the
+      :term:`cylc-run directory`.
 
-      See also:
+      .. seealso::
 
-      * :term:`source directory`
-      * :term:`run directory`
-      * :term:`cylc-run directory`
+         * :term:`reinstall`
+
+
+   reinstall
+   reinstallation
+      The ``cylc reinstall`` command reinstalls workflow :term:`source files
+      <source directory>` into an existing :term:`run directory` under the
+      :term:`cylc-run directory`.
+
+      .. seealso::
+
+         * :term:`install`
+
 
    source directory
    source workflow
-      Any directory where :term:`workflows <workflow>` are written and stored
-      in preparation for installation with ``cylc install`` or reinstallation
-      with ``cylc reinstall``. The default location is ``~/cylc-src``.
+      A source directory is any location where :term:`workflows <workflow>` are
+      written and stored in preparation for installation with ``cylc install``
+      or reinstallation with ``cylc reinstall``.
 
-      .. tip::
+      These locations are configurable. The default is ``~/cylc-src``.
 
-         You can configure the default locations where the ``cylc install``
-         will look for source directories using the
-         :cylc:conf:`global.cylc[install]source dirs` configuration.
+      .. seealso::
 
-      See also:
+         * :term:`run directory`
+         * :cylc:conf:`global.cylc[install]source dirs`
+         * :ref:`Installing-workflows`
 
-      * :term:`run directory`
-      * :ref:`Installing-workflows`
 
    run directory
-      A directory containing the :term:`installed <install>` configuration used
-      to run a :term:`workflow`.
+   workflow run directory
+      This is a location under the :term:`cylc-run directory` that contains the
+      :term:`installed <install>` configuration used to run a :term:`workflow`.
 
-      The run directory can be accessed by workflow task jobs at runtime using
-      the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
+      At runtime, task :term:`jobs <job>` can get their workflow run
+      directory from the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
 
-      See also:
+      .. seealso::
 
-      * :term:`source directory`
-      * :term:`work directory`
-      * :term:`share directory`
-      * :term:`job log directory`
-      * :term:`cylc-run directory`
+         * :term:`source directory`
+         * :term:`work directory`
+         * :term:`share directory`
+         * :term:`job log directory`
+
 
    play
-      We run a :term:`workflow` using the ``cylc play`` command.
-
-      This starts a :term:`scheduler` program to manage the workflow.
+      The ``cylc play`` command runs an instance of the :term:`scheduler`
+      program to :term:`start` or :term:`restart` a :term:`workflow`.
 
       You can :term:`play`, :term:`pause` and :term:`stop` a :term:`workflow`,
       Cylc will always carry on where it left off.
 
-      See also:
-
-      * :term:`pause`
-      * :term:`stop`
 
    pause
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
@@ -919,279 +974,399 @@ Glossary
 
       This can be useful if you want to make a change to a running workflow.
 
-      Pause a workflow using ``cylc pause`` and resume it using ``cylc play``.
+      Pause a workflow with ``cylc pause`` and resume it with ``cylc play``.
 
-      See also:
+      .. seealso::
 
-      * :term:`play`
-      * :term:`stop`
-      * :term:`hold`
+         * :term:`play`
+         * :term:`stop`
+         * :term:`hold`
+
 
    stop
    shutdown
-      When a :term:`workflow` is shut down its :term:`scheduler` is
-      stopped and no further :term:`jobs <job>` will be submitted.
+      A :term:`scheduler` can shut down on request, or automatically on
+      :term:`workflow completion`. The :term:`workflow` is then stopped and no
+      further :term:`jobs <job>` will be submitted.
 
-      By default Cylc waits for any submitted or running task :term:`jobs
-      <job>` to complete (either succeed or fail) before shutting down.
+      By default, the scheduler waits for any submitted or running task
+      :term:`jobs <job>` to finish (either succeed or fail) before shutting
+      down.
 
-      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+      .. seealso::
 
-      See also:
+         * :term:`play`
+         * :term:`pause`
+         * :term:`start`
+         * :term:`restart`
+         * :term:`reload`
+         * :ref:`Cylc User Guide <Stopping Suites>`
 
-      * :term:`play`
-      * :term:`pause`
-      * :ref:`Stopping Suites`
-      * :term:`start`
-      * :term:`restart`
-      * :term:`reload`
 
    restart
-      When a :term:`stopped <stop>` :term:`workflow` is restarted, Cylc will pick
-      up where it left off. Cylc will detect any :term:`jobs <job>` which
-      have changed state (e.g. succeeded) during the period in which the
-      :term:`workflow` was stopped.
+      When a :term:`stopped <stop>` :term:`workflow` is :term:`played <play>`
+      again, the :term:`scheduler` picks up where it left off rather than
+      starting again from scratch. It also detects any orphaned :term:`jobs
+      <job>` that changed state (e.g. succeeded) while the system was down.
 
-      A restart is the behaviour of ``cylc play`` for a workflow that has been
-      previously run.
+      Changes made to the :term:`installed <install>` :cylc:conf:`flow.cylc`
+      file will be picked at restart. We recommend that changes are
+      :term:`reinstalled <reinstall>` from the workflow :term:`source
+      directory` before restart, rather than made by editing the installed
+      files directly.
 
-      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+      .. seealso::
 
-      See also:
+         * :term:`start`
+         * :term:`stop`
+         * :term:`reload`
+         * :ref:`Cylc User Guide <Restarting Suites>`
 
-      * :ref:`Restarting Suites`
-      * :term:`start`
-      * :term:`stop`
-      * :term:`reload`
 
    reload
-      Any changes made to the :cylc:conf:`flow.cylc` file whilst the workflow is
-      running will not have any effect until the workflow is either:
+      :term:`Schedulers <scheduler>` can reload their :term:`workflow`
+      configuration from the :term:`installed <install>` :cylc:conf:`flow.cylc`
+      file, to pick up changes made at runtime.
 
-      * :term:`Shutdown <shutdown>` and :term:`rerun <start>`
-      * :term:`Shutdown <shutdown>` and :term:`restarted <restart>`
-      * "Reloaded"
+      We recommend that changes are :term:`reinstalled <reinstall>` from the
+      workflow :term:`source directory` before reload, rather than made by
+      editing the installed files directly.
 
-      Reloading does not require the workflow to be :term:`shutdown`. When a workflow
-      is reloaded any currently "active" :term:`tasks <task>` will continue with
-      their "pre-reload" configuration, whilst new tasks will use the new
-      configuration.
+      Any :term:`task` that is active at reload will continue with its
+      pre-reload configuration. It's next instance (at the next cycle point)
+      will adopt the new configuration.
 
       Reloading changes is safe providing they don't affect the
-      :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have certain
-      caveats attached, see the `Cylc User Guide`_ for details.
+      :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have
+      certain caveats attached, see the `Cylc User Guide`_ for details.
 
-      .. TODO - Suites -> Workflows once metomi cheat-sheet is updated
+      .. seealso::
 
-      See also:
+         * :term:`restart`
 
-      * :ref:`Reloading Suites`
-      * `Cylc User Guide`_
 
    hold
    held task
    hold after cycle point
-      A :term:`task` can be held using ``cylc hold``, which prevents it from
-      submitting :term:`jobs <job>`. Both active tasks (n=0) and future tasks
-      (n>0) can be held; the latter will be immediately held when they spawn.
+      A :term:`task` held with ``cylc hold`` will not submit its :term:`jobs
+      <job>` when ready to run.
 
       It is also possible to set a "hold after cycle point"; all tasks after
       this cycle point will be held.
 
       .. note::
+         :term:`Workflows <workflow>` can be :term:`paused <pause>` with ``cylc
+         pause``, and unpaused/resumed with ``cylc play``.
 
-         :term:`Workflows <workflow>` can be :term:`paused <pause>` and
-         unpaused/resumed.
+         :term:`Tasks <task>` can be :term:`held <hold>` with ``cylc hold`` and
+         :term:`released <release>` with ``cylc release``.
 
-         :term:`Tasks <task>` can be :term:`held <hold>` and
-         :term:`released <release>`.
+         When a workflow is resumed, any held tasks remain held.
 
-         When a workflow is unpaused any held tasks remain held.
-
-      See also:
-
-      * :term:`release`
 
    release
-      :term:`Held tasks <hold>` can be released using ``cylc release``,
-      allowing submission of :term:`jobs <job>` once again.
+      :term:`Held tasks <hold>` can be released with ``cylc release``,
+      allowing submission of task :term:`jobs <job>` once again.
 
       It is also possible to remove the "hold after cycle point" if set,
       using ``cylc release --all``. This will also release all held tasks.
 
-      See also:
 
-      * :term:`hold`
-
+   task parameters
    parameterisation
-      Parameterisation is a way to consolidate configuration in the Cylc
-      :cylc:conf:`flow.cylc` file by implicitly looping over a set of
-      pre-defined variables e.g:
+      Task parameterisation is one way of consolidating configuration in the
+      :cylc:conf:`flow.cylc` file. Cylc implicitly loops over ranges or lists
+      of pre-defined parameters to automatically generate sets of similar
+      tasks.
+
+      Other ways of consolidating configuration include :term:`runtime
+      inheritance` and templating with :ref:`Jinja2 <Jinja>` or :ref:`Empy
+      <User Guide Empy>`.
 
       .. code-block:: cylc
 
          [scheduler]
              [[parameters]]
-                 foo = 1..3
+                 m = 1..3
          [scheduling]
              [[graph]]
-                 R1 = bar<foo> => baz<foo>
+                 R1 = bar<m> => baz<m>
 
       .. minicylc::
          :theme: none
 
-         bar_foo1 => baz_foo1
-         bar_foo2 => baz_foo2
-         bar_foo3 => baz_foo3
+         bar_m1 => baz_m1
+         bar_m2 => baz_m2
+         bar_m3 => baz_m3
 
-      See also:
+      .. seealso::
 
-      * :ref:`Cylc tutorial <tutorial-cylc-parameterisation>`
+         * :ref:`Cylc User Guide <User Guide Param>`
+         * :ref:`Cylc tutorial <tutorial-cylc-parameterisation>`
+
 
    family
-      In Cylc a family is a collection of :term:`tasks <task>` which share a
+      In Cylc a family is a collection of :term:`tasks <task>` that share
       common configuration and which can be referred to collectively in the
       :term:`graph`.
 
-      By convention families are named in upper case with the exception of the
-      special ``root`` family from which all tasks inherit.
+      By convention families names are upper case, with the exception of the
+      special ``root`` family that all tasks inherit from.
 
-      See also:
+      .. seealso::
 
-      * :ref:`Cylc tutorial <tutorial-cylc-families>`
-      * :term:`family inheritance`
-      * :term:`family trigger`
+         * :term:`family inheritance`
+         * :term:`family trigger`
+         * :ref:`Cylc tutorial <tutorial-cylc-families>`
 
+
+   runtime inheritance
    family inheritance
-      A :term:`task` can be "added" to a :term:`family` by "inheriting" from
-      it using the :cylc:conf:`[runtime][<namespace>]inherit` configuration.
+      A :term:`task` is a member of a :term:`family` if it inherits the
+      family configuration via :cylc:conf:`[runtime][<namespace>]inherit`.
 
-      For example the :term:`task` ``task`` "belongs" to the :term:`family`
-      ``FAMILY`` in the following snippet:
+      For example the :term:`task` ``cheddar`` "belongs" to the :term:`family`
+      ``CHEESE`` in the following snippet:
 
       .. code-block:: cylc
 
          [runtime]
-             [[FAMILY]]
+             [[CHEESE]]
                  [[[environment]]]
-                     FOO = foo
-             [[task]]
+                     COLOR = yellow
+             [[cheddar]]
                  inherit = FAMILY
 
-      A task can inherit from multiple families by writing a comma-separated
-      list e.g:
+      Families can also inherit from other families. All tasks implicitly
+      inherit from a special ``root`` family at the base of the inheritance
+      hierarchy.
+
+      Tasks can inherit from multiple families at once using a comma-separated
+      list:
 
       .. code-block:: cylc
 
          inherit = foo, bar, baz
 
-      See also:
+      .. seealso::
 
-      * `Cylc User Guide`_
-      * :term:`family`
-      * :term:`family trigger`
+         * :term:`family trigger`
+         * `Cylc User Guide`_
+
 
    family trigger
-      :term:`Tasks <task>` which "belong" to
-      (:term:`inherit <family inheritance>` from) a :term:`family` can be
-      referred to collectively in the :term:`graph` using a family trigger.
-
-      A family trigger is written using the name of the family followed by a
-      special qualifier i.e. ``FAMILY_NAME:qualifier``. The most commonly used
-      qualifiers are:
+      :term:`Tasks <task>` that belong to a :term:`family` can be
+      referred to collectively in the :term:`graph` using a family
+      :term:`trigger`.
+      
+      Family triggers take the form ``FAMILY-NAME:qualifier``, where
+      the :term:`qualifier` describes the collective state of member tasks
+      needed for the dependency to be met. Some commonly used qualifiers
+      are:
 
       ``succeed-all``
-          The dependency will only be met when **all** of the tasks in the
-          family have **succeeded**.
+          All members succeeded.
       ``succeed-any``
-          The dependency will be met as soon as **any one** of the tasks in the
-          family has **succeeded**.
+          Any one member succeeded.
+      ``fail-all``
+          All members failed.
       ``finish-all``
-          The dependency will only be met once **all** of the tasks in the
-          family have **finished** (either succeeded or failed).
+          All members finished (succeeded or failed).
 
-      See also:
+      .. seealso::
 
-      * `Cylc User Guide`_
-      * :term:`family`
-      * :term:`task trigger`
-      * :term:`dependency`
-      * :ref:`Family Trigger Tutorial <tutorial-cylc-family-triggers>`
+         * :term:`dependency`
+         * :ref:`Cylc Tutorial <tutorial-cylc-family-triggers>`
+         * `Cylc User Guide`_
+
+
+   standard output
+     Every :term:`task` has a set of standard :term:`outputs <task output>`
+     that trigger :term:`task state` changes:
+
+      - ``:submitted``, or ``:submit-failed``
+      - ``:started``
+      - ``:succeeded``, or ``:failed``
+
+
+   task output
+      Task outputs mark the progression of a :term:`task` from waiting (for
+      prerequisites to be satisified) through to success or failure at run
+      time. Downstream tasks can trigger off of the outputs of other tasks, as
+      determined by the :term:`graph`.
+
+      Outputs are written as ``task-name:OUTPUT`` in the :term:`graph`, and can
+      be :term:`expected <expected output>` or :term:`optional <optional output>`.
+
+      Tasks may have :term:`custom outputs <custom output>` as well as
+      :term:`standard outputs <standard output>`.
+
+      Here the task ``bar`` depends on the standard ``:started`` output of
+      ``foo``:
+
+      .. code-block:: cylc-graph
+
+         foo:started => bar
+
+      The standard ``:succeeded`` output is usually implicit:
+
+      .. code-block:: cylc-graph
+
+         foo => bar  # means foo:succeeded => bar
+
+
+   dependence
+   dependency
+      Dependencies in the :term:`graph` show how :term:`tasks <task>` depend on
+      some combination of the :term:`outputs <task output>` of other tasks.
+
+      For example, in the following dependency the task ``baz`` depends on both
+      ``foo`` and ``bar`` succeeding:
+
+      .. code-block:: cylc-graph
+
+         foo & bar => baz
+
+      .. seealso::
+
+          * :term:`task trigger`
+          * :term:`conditional dependence`
+          * :term:`intercycle dependence`
+
+
+   conditional dependence
+   conditional dependency
+   conditional trigger
+      Conditional :term:`dependence` is when a :term:`task` depends on multiple
+      :term:`outputs <task output>` of other tasks combined with the ``&`` and
+      ``|`` logical operators.
+
+      .. code-block:: cylc-graph
+
+         a & (b:fail | c) => d
+
+      The left hand side of a conditional dependency can be called a
+      conditional :term:`trigger`.
+
+
+   trigger
+      A trigger is the left-hand side of a :term:`dependency` in the
+      :term:`graph`, i.e. the :term:`task outputs <task output>`
+      that need to be completed before downstream tasks can run.
+
+      In this example, the task ``bar`` can be said to trigger off of
+      completion of the ``foo:started`` output:
+
+      .. code-block:: cylc-graph
+
+         foo:started => bar
+
+      Triggers can be based on :term:`standard <standard output>` or
+      :term:`custom <custom output>` task outputs. In the latter case they
+      are known as :term:`message triggers <message trigger>`.
+
 
    message trigger
-      A message trigger can be used to trigger a dependent
-      :term:`task <task>` before the upstream task has completed.
+      A message trigger is a :term:`trigger` based on a
+      :term:`custom task output <custom output>`. The task :term:`job` must
+      send a user-defined message to the scheduler to complete the output.
 
-      We can use :term:`custom task outputs <custom task output>` as triggers.
+      For brevity, the trigger in the :term:`graph` uses the output name, not
+      the full message:
 
-      Messages should be defined in the runtime section of the workflow and
-      the graph trigger notation refers to each message.
+      .. code-block:: cylc
 
-      See also:
+         [scheduling]
+            [[graph]]
+               R1 = """
+                  foo:out1 => proc-out-1
+                  foo:out2 => proc-out-2
+         [runtime]
+            [[foo]]
+               [[[outputs]]]
+                   # output name = output message
+                   out1 = "Output 1 completed"
+                   out2 = "Output 2 completed"
 
-      * :ref:`Message Trigger Tutorial <tutorial-cylc-message-triggers>`
-      * :term:`custom task output`
+      However, if you don't need a descriptive message for the workflow
+      log, you can make the message the same as its name:
 
-   custom task output
-      A custom task output is a user-defined message sent from the
-      :term:`job` to the workflow server.
-      These can be used as :term:`message triggers <message trigger>`.
+      .. code-block:: cylc
 
-      See also:
+                [[[outputs]]]
+                   out1 = out1
 
-      * `Cylc User Guide`_
-      * :term:`message trigger`
+
+   custom output
+      A custom task output is a user-defined :term:`task output` that marks
+      an event runtime event between task :term:`job` start and finish. To
+      complete a custom output, the job must send a message defined in the
+      :cylc:conf:`flow.cylc` file to the :term:`scheduler`.
+
+      Triggers based on custom outputs are called :term:`message triggers
+      <message trigger>`.
+
+      .. code-block:: cylc
+
+         [runtime]
+            [[foo]]
+               [[[outputs]]]
+                   # output name = output message
+                   out1 = "Output 1 completed"
+                   out2 = "Output 2 completed"
+
+      .. seealso::
+
+         * :term:`standard output`
+         * :ref:`Cylc Tutorial <tutorial-cylc-message-triggers>`
+         * `Cylc User Guide`_
+
 
    optional output
-      Optional task outputs are marked with a question mark in the
-      :term:`graph`, e.g. ``foo:x?``, or ``foo:fail?``, or ``foo?`` (meaning
-      ``foo:succeed?``). This tells the scheduler they will not necessarily be
-      completed at runtime.
+      Optional :term:`task outputs <task output>` are marked with a question
+      mark in the :term:`graph`, e.g. ``foo:x?``, or ``foo:fail?``,  or
+      ``foo?`` (short for ``foo:succeed?``). The may or may not be completed at
+      runtime. Optional outputs are primarily used for :term:`graph branching`.
 
-      See also:
+      .. seealso::
 
-      * :term:`expected output`
-      * :term:`graph branching`
-      * `Cylc User Guide`_
+         * :term:`expected output`
+         * `Cylc User Guide`_
 
 
    expected output
-      Task outputs that are not marked with a question mark (i.e. they are not
-      :term:`optional outputs <optional output>`) in the :term:`graph`, e.g. ``foo:x``, or
-      ``foo:fail``, or ``foo`` (meaning ``foo:succeed``) are expected outputs.
-      The scheduler expects them to completed at runtime, and if they are not
-      it will retain them as :term:`incomplete tasks <incomplete task>`.
+      Task outputs that are not marked as :term:`optional <optional output>`
+      in the :term:`graph` are expected to be completed at runtime. If not, the
+      :term:`scheduler` retains the task as :term:`incomplete <incomplete
+      task>` pending user intervention.
 
-      See also:
+      .. seealso::
 
-      * :term:`optional output`
-      * :term:`incomplete task`
-      * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <expected outputs>`
+
 
    incomplete task
-      A task that finishes (succeeds or fails) without completing all
-      :term:`expected outputs <expected output>` is retained by the scheduler
-      as an incomplete task. This will remain visible in the UI and will cause
-      a :term:`stall` if there is nothing else to run.
+      Incomplete tasks are :term:`tasks <task>` that finish (succeed or fail)
+      without completing all :term:`expected outputs <expected output>`. They
+      are retained by the :term:`scheduler` in the :term:`n=0 window
+      <n-window>` pending user intervention, and will cause a :term:`stall`
+      if there are no more tasks to run.
 
-      See also:
+      .. seealso::
 
-      * :term:`expected output`
-      * :term:`optional output`
-      * :term:`graph branching`
-      * `Cylc User Guide`_
+         * :term:`optional output`
+         * `Cylc User Guide`_
 
 
    stall
    stalled workflow
    stalled state
-      If the scheduler has nothing else to run but there are
-      :term:`incomplete tasks <incomplete task>` present, it will stay alive
-      for a time and report a stall instead of concluding that the workflow is
-      complete and shutting down.
+      If there are no more tasks to run according to the :term:`graph`, but
+      :term:`incomplete tasks <incomplete task>` are present, the
+      :term:`scheduler` will stall and stay up for a time instead of
+      shutting down with the workflow :term:`complete <workflow completion>`.
 
-      This is usually caused by unexpected task failures, as in the following
-      diagram:
+      Stalls are usually caused by unexpected task failures:
 
       .. digraph:: Example
          :align: center
@@ -1202,34 +1377,32 @@ Glossary
 
          foo -> bar -> baz
 
-      In this example the task ``bar`` has failed, so  that ``baz`` should not
-      run, but the ``bar:fail`` output was not marked as :term:`optional`.
+      In this example the task ``bar`` has failed, so  that ``baz`` cannot
+      run, but ``bar:fail`` was not marked as an :term:`optional output`.
 
-      Cylc can send an email to the user. Human intervention is required to fix
-      the stall, e.g. by retriggering an incomplete task after fixing the
-      problem.
+      User intervention is required to fix a stall, e.g. by retriggering
+      incomplete tasks after fixing the problems that caused them to fail.
+
 
    suicide trigger
-      Suicide triggers remove :term:`tasks <task>` from the :term:`graph` at
-      runtime. This allows Cylc to dynamically alter the graph based on events
-      in the workflow.
+      Suicide triggers remove :term:`tasks <task>` from the :term:`scheduler's
+      <scheduler>` active (:term:`n=0 <n-window>`) window at runtime.
 
-      .. warning::
-
-         Since Cylc 8 suicide triggers have been surpassed by
-         :term:`graph branching` which provides a simpler, superior
-         solution.
-
-      Suicide triggers are denoted using an exclamation mark, ``!foo`` would
-      mean "remove the task foo from this cycle".
+      They are denoted by exclamation marks, and are triggered like normal
+      dependencies. For instance, the following suicide trigger will remove the
+      task ``bar`` from the active window if ``foo`` succeeds:
 
       .. code-block:: cylc-graph
 
-         a => b
+         foo => ! bar
 
-         # suicide trigger which removes the task "b" if "a" fails
-         # NOTE: since Cylc 8 this suicide trigger is not necessary
-         a:fail => !b
+
+      .. TODO add link to new suicide trigger appendix when done:
+
+      .. warning::
+         Suicide triggers are not needed in Cylc 8 for :term:`graph branching`.
+         They are retained for backward compatibility and unusual edge cases.
+
 
    branching
    graph branching
@@ -1264,114 +1437,130 @@ Glossary
          a -> b -> c -> d
          b -> r -> d
 
-      See also:
+      .. seealso::
 
-      * :ref:`Graph Branching`
+         * :term:`optional outputs <optional output>`
+         * :ref:`Cylc User Guide <Graph Branching>`
+
+
+   flow number
+      Flow number is an integer identifier for a particular :term:`flow`
+      in a :term:`workflow` run.
+
 
    flow
-      A flow is a single logical run of a :term:`workflow` that is done by
-      a :term:`scheduler`.
-
-      A flow can be :term:`played <play>` and :term:`paused <pause>`,
-      :term:`stopped <stop>` and :term:`restarted <restart>`.
-
-      A flow begins at the :term:`start cycle point` and ends at the
-      :term:`stop cycle point`.
-
-      It is possible to run more than one flow in a single :term:`scheduler`.
-
    reflow
-      A reflow is a subsequent logical run of a :term:`workflow` that is done by
-      the same :term:`scheduler` as the original :term:`flow`.
+      A flow is a single logical run of a :term:`workflow` that follows the
+      :term:`graph`, or part of the graph, onward from some start point.
 
-      Reflows are useful when you need to re-wind your :term:`workflow` run to
-      allow it to evolve a new path into the future.
+      Cylc :term:`schedulers <scheduler>` can manage more than one flow in a
+      single graph, at the same time. We call this capability *reflow*.
+      The original flow in a new workflow run is :term:`started <startup>`
+      with the ``cylc play`` command. Subsequent flows may be triggered from
+      particular task(s) in the graph using ``cylc trigger --reflow``.
 
-      .. TODO - add this once the CLI example works
+      Flows are identified by a :term:`flow number` that starts at ``1`` and
+      increments for each triggered flow.
 
-         For example, the following workflow runs the task ``a`` every cycle, then
-         either ``b`` or ``c`` depending on the outcome of ``a``:
+      Reflows are useful if you need to re-wind your :term:`workflow` to allow
+      it to evolve a new path into the future, or to repeat-run some part of
+      the graph to regenerate its outputs after making changes.
+
+      For example, the following :term:`cycling workflow` runs a :term:`task`
+      called ``model`` in every cycle, followed by a postprocessing task, two
+      product generating tasks, and finally a task that publishes results for
+      the cycle point:
 
          .. code-block:: cylc
-
-            [scheduler]
-                allow implicit tasks = True
 
             [scheduling]
                 cycling mode = integer
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                        b[-P1] | c[-P1] => a
-                        a:succeed => b
-                        a:fail => c
+                        model [-P1] => model => post => prod1 & prod2 => publish
                     """
 
-         Let's say the workflow has run to cycle 8, but we have just noticed that
-         something went wrong with the task ``a`` in cycle 5.
+      Let's say the workflow has run to cycle 8, but we have just noticed that
+      a corrupted ancillary file resulted in bad products at cycle 5.
 
-         To rectify this we could create a new flow (a reflow) starting at ``a.5``::
+      To rectify this we could fix the corrupted file and trigger a new flow
+      (a reflow) from ``proc.5``::
 
-            # get the ID of the original flow
-            cylc TBC <id> a.5  # ???
+         cylc trigger a.5 --reflow <workflow-id>
 
-            # pause the original flow
-            cylc pause <id> --flow <flow>
+      The new flow will regenerate and republish the cycle 5 products before
+      naturally coming to a halt because the the triggered tasks do not lead on
+      to the next cycle and the rest of the graph.
 
-            # create a new flow starting at a.5
-            cylc trigger a.5 --reflow
+      Meanwhile, the original flow will carry on unaffected, from cycle 8.
 
-         Where ``<id>`` is the name of the :term:`workflow` and ``<flow>`` is the
-         identifier of the :term:`flow`.
+      If a task in one flow catches up to an active sibling from another flow
+      (same name and :term:`cycle point`, different flow number) they will
+      merge and carry both flow numbers forward. Downstream tasks can be
+      considered to belong to both flows.
 
-         This new flow will catch up and merge with the old one, the workflow
-         will then continue as normal.
+      Individual flows can be stopped with ``cylc stop --flow=<flow-number>``.
+      This removes the target flow number from all active tasks. If a task has
+      no flow numbers left it will not spawn downstream, thus stopping the flow.
+     
+      .. note::
+         Currently you have to look at the :term:`scheduler log` to identify
+         the flow numbers of particular tasks in the :term:`n=0 window <n-window>`.
 
-         Now we have started the new flow we can stop the original one::
 
-            # stop the original flow
-            cylc stop <id> --flow <flow>
+   event
+      An event is a milestone in the lifecycle of a :term:`workflow` or
+      :term:`task` at which the :term:`scheduler` provides a hook for
+      attaching :term:`event handlers <event handler>`.
 
-         The new flow will now continue to run to the end.
+      Workflow events include :term:`startup`, :term:`stall`, and
+      :term:`shutdown`.
 
-         It is also possible to have multiple :term:`flows <flow>` running in the
-         scheduler :term:`scheduler` simultaneously.
+      Task events include :term:`task state` changes, to ``running`` or
+      ``failed``, for example, or when the scheduler receivers CRITICAL or
+      WARNING messages from a task :term:`job`.
 
-   event handlers
-   handlers
 
-      .. seealso::
+   event handler
+   handler
+      An :term:`event` handler is a user-defined executable that the
+      :term:`scheduler` runs when selected :term:`task` or :term:`workflow`
+      events occur.
 
-         - :ref:`Event Handling documentation <EventHandling>`
-         - Task events configuration reference:
-           :cylc:conf:`task events <[runtime][<namespace>][events]>`.
-         - Workflow events configuration reference:
-           :cylc:conf:`workflow events <[scheduler][events]>`
-
-      An action you want the Cylc scheduler to run when it detects that an
-      event has occurred:
-
-      - For the :term:`scheduler`; for example startup, stall or shutdown.
-      - For a :term:`task`; for example when the :term:`task state` changes to
-        succeeded, failed or submit-failed.
-
-      This allows Cylc to centralize automated handling of critical events.
-      Cylc can do many things when it detects an event.
-
-      Possible use-cases include (but are not limited to):
+      Use-cases include, but are not limited to:
 
       - Send an email message.
       - Run a Cylc command.
-      - Run _any_ user-specified script or command.
+      - Run *any* user-specified script or command.
+
+      .. seealso::
+
+         - :cylc:conf:`task events <[runtime][<namespace>][events]>`
+         - :cylc:conf:`workflow events <[scheduler][events]>`
+         - :ref:`Cylc User Guide <EventHandling>`
 
 
    runahead limit
    runahead
-      In a cycling workflow, the runahead limit holds the fastest tasks back if
-      they get too far ahead of the slowest ones. The default limit is 5
-      cycles.
+      In a :term:`cycling workflow`, the runahead limit holds the fastest tasks
+      back if they get too far ahead of the slowest ones. The default limit is
+      5 cycles.
 
-      See also:
+      .. seealso::
 
-      * :cylc:conf:`[scheduling]runahead limit`
-      * :ref:`Runahead Limiting`
+         * :cylc:conf:`[scheduling]runahead limit`
+         * :ref:`Runahead Limiting`
+
+
+   workflow completion
+      A workflow is deemed complete if there are no more tasks to run,
+      according to the graph, and there are no :term:`incomplete task
+      <incomplete task>` present.
+
+      If the workflow is complete, the scheduler will automatically :term:`shut
+      down <shutdown>`.
+
+      If there are no more tasks to run, but there are incomplete tasks
+      present, the scheduler will :term:`stall` rather than shut down.
+

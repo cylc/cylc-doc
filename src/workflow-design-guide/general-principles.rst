@@ -334,7 +334,7 @@ It may be possible for large workflows to overwhelm a job host by submitting too
 many jobs at once:
 
 - Large workflows that are not sufficiently limited by real time clock
-  triggering or inter-cycle dependence may generate a lot of *runahead*
+  triggering or intercycle dependence may generate a lot of *runahead*
   (this refers to Cylc's ability to run multiple cycles at once, restricted
   only by the dependencies of individual tasks).
 - Some workflows may have large families of tasks whose members all

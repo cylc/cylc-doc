@@ -127,8 +127,8 @@ To make a workflow repeat we must tell Cylc three things:
    task is in.
 
 
-Inter-Cycle Dependencies
-------------------------
+Intercycle Dependencies
+-----------------------
 
 .. ifnotslides::
 

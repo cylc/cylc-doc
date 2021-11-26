@@ -595,8 +595,9 @@ see :ref:`Managing External Command Execution`.
 Event-Specific Handlers
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Event-specific handlers can be configured in ``<event> handlers``
-under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>`` can be:
+Event-specific handlers are configured by ``<event> handlers``
+under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>``
+can be:
 
 .. table::
 
