@@ -56,6 +56,8 @@
    :align: middle
 
 
+.. _task-job-states:
+
 Task and Job States
 ===================
 

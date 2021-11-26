@@ -237,12 +237,12 @@ The Initial & Final Cycle Points
 .. TODO - change terminology as done in the cylc user guide, "repeat" can be
    confusing. Use occur?
 
-Inter-Cycle Dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^
+Intercycle Dependencies
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
-   Inter-cycle dependencies are written as ISO8601 durations, e.g:
+   Intercycle dependencies are written as ISO8601 durations, e.g:
 
 * ``foo[-P1D]``: the task ``foo`` from the cycle one day before.
 * ``bar[-PT1H30M]``: the task ``bar`` from the cycle 1 hour 30 minutes before.
@@ -488,7 +488,7 @@ Putting It All Together
       With the help of the graphs and the information above add dependencies to
       your workflow to implement the weather-forecasting workflow.
 
-      You will need to consider the inter-cycle dependencies between tasks.
+      You will need to consider the intercycle dependencies between tasks.
 
       Use ``cylc graph`` to inspect your work.
 
@@ -539,7 +539,7 @@ Putting It All Together
                        get_rainfall => forecast => post_process_exeter
                    """
 
-   #. **Inter-Cycle Offsets.**
+   #. **Intercycle Offsets.**
 
       To ensure the ``forecast`` tasks for different cycles run in order the
       ``forecast`` task will also need to be dependent on the previous run

@@ -1,18 +1,24 @@
-
 .. _User Guide Optional Outputs:
 
 Expected and Optional Outputs
 =============================
 
-Distinguishing between *expected* and  *optional* task outputs allow Cylc to
-correctly diagnose workflow completion. [1]_
+:term:`Task outputs <task output>` in the :term:`graph` are either
+:term:`expected <expected output>` (the default) or  :term:`optional <optional
+output>`.
+
+This allows Cylc to do :term:`graph branching` and to correctly diagnose
+:term:`workflow completion`. [1]_
+
+.. _expected outputs:
 
 Expected Outputs
 ----------------
 
-We expect all task outputs to be completed, unless they are marked with ``?``
-as optional. If expected outputs do not get completed, the scheduler retains
-the parent task as :ref:`incomplete <incomplete tasks>`.
+Cylc expects all task outputs to be completed at runtime, unless they are
+marked with a ``?`` as optional. If a task finishes without completing expected
+outputs, the scheduler retains it as an :ref:`incomplete task <incomplete
+tasks>` pending user intervention.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
@@ -21,48 +27,54 @@ This graph says task ``bar`` should trigger if ``foo`` succeeds:
    [graph]
        R1 = "foo => bar"  # short for "foo:succeed => bar"
 
-It also says the ``foo`` (and in fact ``bar`` too) is expected to succeed,
+Additionally, ``foo`` (and in fact ``bar``) are expected to succeed,
 because its success is not marked as optional.
 
-More examples:
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
 
 .. code-block:: cylc
 
    [graph]
        R1 = """
-          # foo:succeed, bar:x, and baz:fail are all expected outputs:
           foo
           bar:x
           baz:fail
        """
 
-Success is also expected of tasks that appear with only custom outputs in the graph:
+Success is also expected of tasks that appear with only custom outputs in the
+graph.
+
+Here, ``foo:succeed`` is an expected output, as well as ``foo:x``, unless it is
+marked as optional elsewhere in the graph:
 
 .. code-block:: cylc
 
    [graph]
-       # both foo:x and foo:succeed are expected outputs:
        R1 = "foo:x => bar"
 
 
 If a task generates multiple custom outputs, they should be "expected" if you
-expect them all to be completed every time the task runs:
+expect them all to be completed every time the task runs.
+
+Here, ``model:file1``, ``model:file2``, and ``model:file3`` are all expected
+outputs:
 
 .. code-block:: cylc
 
    [graph]
-       # model:file1, :file2, and :file3 are all expected outputs:
        R1 = """
            model:file1 => proc1
            model:file2 => proc2
            model:file3 => proc3
        """
 
+.. _optional outputs:
 
 Optional Outputs
 ----------------
 
-Optional outputs, marked with ``?``, may or may not be completed as a task runs.
+Optional outputs are, marked with a ``?``, may or may not be completed as a
+task runs.
 The scheduler doesn't care if optional outputs do not get completed.
 
 Like the first example above, this graph also says task ``bar`` should trigger
@@ -120,7 +132,7 @@ if you do not expect all of them to be completed every time the task runs:
 This is an example of :term:`graph branching` off of optional outputs. If the 3
 outputs are mutually exclusive we should expect only one branch to run. If they
 are not mutually exclusive but may not be generate every time the task runs, we
-should not be surprised if one or more branches does not run. 
+should not be surprised if one or more branches does not run.
 
 Leaf tasks (with nothing downstream of them) can have optional outputs. In the
 following graph, ``foo`` is expected to succeed, but it doesn't matter whether
@@ -151,7 +163,7 @@ after a bug fix, to allow the workflow to continue.
 
 
 .. note::
-   
+
    Whether an output is optional or not does not affect triggering at all. It
    just tells the scheduler what to do with the task if it finishes without
    completing the output.
@@ -160,22 +172,25 @@ after a bug fix, to allow the workflow to continue.
    ``bar`` if ``foo`` fails:
 
    .. code-block:: cylc
-      
+
       R1 = "foo => bar"
-     
+
    And so does this graph:
-     
+
    .. code-block:: cylc
-      
+
       R1 = "foo? => bar"
- 
+
    The only difference is whether or not the scheduler regards ``foo`` as
    incomplete if it fails.
 
 
-Stall and Shutdown
-------------------
+.. _worklfow completion:
 
+Workflow Completion
+-------------------
+
+The sch
 If the graph says there is nothing more to do, and there are no incomplete
 tasks present, the scheduler will report workflow completion and shut down.
 
@@ -186,7 +201,7 @@ default) to await user intervention that may allow the workflow to continue.
 Restarting a stalled workflow will trigger a new stall timer.
 
 .. note::
-   
+
    Partially satisfied prerequisites can also cause a stall. If ``a & b => c``,
    and ``a`` succeeds but ``b`` never even runs, the scheduler will take
    partial completion of ``c``'s prerequisites as a sign that the workflow did
@@ -245,7 +260,7 @@ means:
    R1 = "f1:fail & f2:fail => a"  # f1:fail and f2:fail are expected
 
 
-and 
+and
 
 .. code-block:: cylc
 
@@ -320,7 +335,7 @@ This is often used for automatic failure recovery:
            foo:fail? => diagnose => foo-recover
            foo? | foo-recover => products
        """
-           
+
 
 Alternate paths can also branch from mutually exclusive custom outputs:
 
