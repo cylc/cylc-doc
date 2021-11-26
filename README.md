@@ -6,6 +6,77 @@
 
 Documentation for the Cylc Workflow Engine and its software ecosystem.
 
+## Writing
+
+The documentation is written in ReStructuredText, for more information see:
+
+* https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+* https://docutils.sourceforge.io/docs/user/rst/quickstart.html
+
+We use the following convention for underlining headings:
+
+```rest
+Heading
+=======
+
+Sub Heading
+-----------
+
+Sub Sub Heading
+^^^^^^^^^^^^^^^
+```
+
+ReStructuredText uses "natural indentation" where subsequent lines should follow
+the indentation of previous lines e.g:
+
+```rest
+Bullet Points
+=============
+
+Indent subsequent lines two spaces:
+
+* Foo
+  bar
+  baz.
+* Pub.
+
+Numbered Lists
+==============
+
+Indent subsequent lines three spaces:
+
+1. Foo
+   bar
+   baz.
+2. Pub.
+
+Directives
+==========
+
+Indent subsequent lines three spaces:
+
+.. directive:: argument
+
+   content
+
+Note there should be one blank line before the content.
+```
+
+Hyperlinks that are likely to be common between pages can be put in
+``src/hyperlinks.rst.include`` where they are available to all pages.
+
+Cylc configurations should be referenced using `:cylc:conf:`:
+
+```rest
+Tell Cylc what to run using :cylc:conf:`[runtime][<namespace>]script`.
+```
+
+Content from other Sphinx documented projects (Rose, Python, etc) can be linked
+to via intersphinx.
+
+We use a few custom Sphinx extensions, for details see
+[cylc-sphinx-extensions](https://cylc.github.io/cylc-sphinx-extensions/).
+
 ## Development
 
 [![test](https://github.com/cylc/cylc-doc/workflows/test/badge.svg?branch=master&event=push)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Atest)
