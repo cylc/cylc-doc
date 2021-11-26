@@ -1,0 +1,6 @@
+name: cylc-uiserver
+channels:
+  - conda-forge
+dependencies:
+  - cylc-flow =|release|
+  - cylc-uiserver

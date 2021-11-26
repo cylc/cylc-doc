@@ -1,0 +1,48 @@
+name: create conda environments
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/create-conda-envs.yml'
+      - 'src/reference/environments/env/*.ya?ml'
+  workflow_dispatch:
+    inputs:
+      cylc_flow_version:
+        description: 'Version to install.'
+        required: true
+
+jobs:
+  test_conda_install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+    steps:
+      - name: checkout cylc-doc
+        uses: actions/checkout@v2
+
+      - name: configure python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: install
+        run: |
+          # pick up deps for version processing
+          pip install 'setuptools>=49'
+
+      - name: checkout cylc-flow init file
+        run: |
+          # needed to extract the cylc-flow version
+          LIB_PATH='src/lib/cylc/flow'
+          mkdir -p "$LIB_PATH"
+          curl \
+            https://raw.githubusercontent.com/cylc/cylc-flow/master/cylc/flow/__init__.py \
+            > "$LIB_PATH/__init__.py"
+
+      - name: create conda envs
+        uses: ./.github/actions/create-conda-envs
+        with:
+          python_version: ${{ matrix.python }}
+          cylc_flow_version: ${{ github.event.inputs.cylc_flow_version }}

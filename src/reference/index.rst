@@ -8,5 +8,5 @@ Reference
    architecture/index
    config/index
    api/index
-   environments/example_envs.rst
+   environments/conda.rst
    dev-history-major-changes

@@ -1,12 +1,11 @@
 # Minimal makefile for Sphinx documentation
 
 # You can set these variables from the command line:
-# e.g. $ make html CYLC_VERSION=1.2.3
-CYLC_VERSION = $(shell cylc version | sed 's/Cylc Flow //')
+# e.g. $ make html SPHINXOPTS=-W
 SPHINXOPTS = -n
 SPHINXBUILD = sphinx-build
 SOURCEDIR = src
-BUILDDIR = doc/$(CYLC_VERSION)
+BUILDDIR = doc/$(shell cylc version)
 STABLE = true  # Makes this the Stable and default build
 LATEST = true  # Makes this the Latest build
 # The Stable/default build is what you get when navigating to the docs root dir
