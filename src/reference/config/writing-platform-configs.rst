@@ -289,3 +289,44 @@ platform. Job files can be installed on the workflow host.
    Therefore the same names **cannot** be used for platforms and platform
    groups. The ``global.cylc`` file will fail validation if the same name is
    used in both.
+
+Platform with no ``$HOME`` directory
+------------------------------------
+
+.. admonition:: Scenario
+
+   You are trying to run jobs on a platform where the compute nodes don't
+   have a configured ``HOME`` directory.
+
+So long as the login and compute nodes share a filesystem the workflow can be
+installed on the shared filesystem using
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+
+The ``$CYLC_RUN_DIR`` variable can then be set on the compute node to point
+at the ``cylc-run`` directory on the shared filesystem using
+:cylc:conf:`global.cylc[platforms][<platform name>]global init-script`.
+
+ .. code-block:: cylc
+   :caption: part of a ``global.cylc`` config file
+
+   [platforms]
+       [[homeless-hpc]]
+           job runner = my-job-runner
+           install target = homeless-hpc
+           global init-script = """
+               export CYLC_RUN_DIR=/shared/filesystem/cylc-run
+           """
+
+   [install]
+       [[symlink dirs]]
+           [[[homeless-hpc]]]
+               run = /shared/filesystem/
+
+In this example Cylc will install workflows into
+``/shared/filesystem/cylc-run``.
+
+.. note::
+
+   If you are running :term:`schedulers <scheduler>` directly on the login node
+   and submitting jobs locally then the platform name and install target should
+   be ``localhost``.
