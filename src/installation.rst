@@ -13,7 +13,7 @@ Installation
 Quick Installation
 ------------------
 
-Cylc runs on Unix systems including Linux and Mac OS.
+Cylc runs on Unix-like systems including Linux and Mac OS.
 
 Via Conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -116,7 +116,7 @@ installing Cylc components only where required.
 
 .. tip::
 
-   For example Conda environments and installation options see
+   For examples of Conda environments and installation options see
    :ref:`conda environments` for examples and details.
 
 The Cylc Components
