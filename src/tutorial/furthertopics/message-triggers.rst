@@ -220,7 +220,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       and ``different_weather_task`` after a second set of random numbers has
       been created.
 
-      There are three aspects of creating messsage triggers.
+      There are three aspects of creating message triggers.
       The first is to create the messages. Within ``runtime``, ``TASK`` in our
       workflow, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.
