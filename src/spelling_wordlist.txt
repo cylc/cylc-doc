@@ -48,7 +48,6 @@ Graphviz
 gscan
 GScan
 hardcoded
-hardwiring
 Heathrow
 hetjob
 hostname
@@ -120,7 +119,6 @@ reflow
 Reflow
 Reflows
 regardles
-reimplementation
 reimplemented
 reinstallation
 relase
