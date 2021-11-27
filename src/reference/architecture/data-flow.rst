@@ -189,7 +189,7 @@ error as an acknowledgement to proceed as well.
 
 The next message will be a ``start``, which will contain the
 GraphQL query subscription. If there were no errors, the client and
-server susbcription is established, and the client will start
+server subscription is established, and the client will start
 receiving the GraphQL responses.
 
 The protocol also supports other messages, such as ``stop``, to

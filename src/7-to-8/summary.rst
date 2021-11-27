@@ -85,7 +85,7 @@ The main Cylc system components are:
 - **Cylc UI Server**
    - Interacts with Schedulers and the filesystem
    - Serves the UI to users
-   - Can be lauched by the privileged Hub, for multi-user installations
+   - Can be launched by the privileged Hub, for multi-user installations
    - Or run standalone for use by a single user
    - (Is a `Jupyter Server <https://jupyter-server.readthedocs.io>`_ extension)
 
