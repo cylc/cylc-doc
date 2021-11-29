@@ -30,7 +30,7 @@ jobs:
       - name: install
         run: |
           # pick up deps for version processing
-          pip install 'setuptools>=49'
+          pip install 'setuptools>=50'
 
       - name: checkout cylc-flow init file
         run: |
