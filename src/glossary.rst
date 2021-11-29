@@ -54,6 +54,7 @@ Glossary
 
    window
    n-window
+   active window
    workflow window
       This is a :term:`graph`-based window or view of the workflow at runtime,
       including tasks out to ``n`` graph edges from current active tasks.
@@ -135,6 +136,14 @@ Glossary
       .. note::
          If you are not using named or numbered runs, the workflow name will be
          the same as :term:`workflow id`.
+
+
+   active waiting task
+      An active waiting task is a task in the :term:`scheduler's <scheduler>`
+      active window that is "actively waiting" on (i.e. periodically checking)
+      an external trigger or clock trigger. These are the only waiting tasks
+      that matter to the :term:scheduler in Cylc 8 (waiting tasks ahead of the
+      active window are entirely abstract).
 
 
    workflow id
@@ -1396,13 +1405,13 @@ Glossary
 
          foo => ! bar
 
-
-      .. TODO add link to new suicide trigger appendix when done:
-
       .. warning::
          Suicide triggers are not needed in Cylc 8 for :term:`graph branching`.
-         They are retained for backward compatibility and unusual edge cases.
+         They are retained for backward compatibility and rare edge cases.
 
+      .. seealso::
+
+         * :ref:`Cylc User Guide <SuicideTriggers>`
 
    branching
    graph branching
