@@ -7,6 +7,7 @@ Writing Workflows
    configuration
    scheduling
    optional-outputs
+   suicide-triggers
    runtime
    parameterized-tasks
    jinja2
