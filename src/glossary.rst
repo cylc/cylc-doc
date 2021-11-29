@@ -1,23 +1,26 @@
-.. Glossary Conventions - for consistency across glossary items
+.. Glossary Conventions - for consistency
 
-   1) Links to other glossary items in the text. There's no need to
-      link mulitple instances of the same term in the same paragraph,
-      but duplicate links may be desirable if further apart.
+   1) Linking to other glossary items in the text:
+      - there's no need to link multiple instances of the same term in the same
+        paragraph
+      - but duplicate links may be desirable if further apart
 
-   2) Examples can be given but should be brief and on point.
+   2) Examples can be given but should be brief and on point
 
-   3) "seealso" blocks should contain, in order of preference:
+   3) "seealso" blocks should contain, in order:
       - config reference links
-      - links to other glossary items not in the main text
-      - documentation links
+      - glossary items not linked in the main text
+      - documentation links (e.g. User Guide)
       - external web site links
 
-   3a)  To avoid unnecesarily long lists and repetition "seealso" blocks should
-        not duplicate glossary links from the preceding text
+      To avoid unnecessarily long lists and repetition don't duplicate glossary
+      links from the main text
 
    4) To avoid surprising users by jumping out of the page, non-glossary links
-      should primarily be in the "seealso" list, and not look like an interal
-      glossary link, e.g. :ref:`Cylc User Guide <blah>` not just :ref:`blah`.
+      should:
+      - primarily be in the "seealso" list
+      - not look like another glossary term,
+        e.g. :ref:`Cylc User Guide <blah>` not just :ref:`blah`.
 
 
 .. TODO Add user guide and config links to all items, where appropriate.
@@ -151,7 +154,7 @@ Glossary
       relative to the cylc-run directory.
 
       This ID is used on the command line and in the GUI, to target the right
-      worklfow.
+      workflow.
 
       For example, the ID of the workflow in ``~/cylc-run/foo/bar/run1``
       is ``foo/bar/run1``.
@@ -180,7 +183,7 @@ Glossary
          P1D = foo => bar
          PT12H = baz
 
-      .. digraph:: example
+      .. digraph:: Example
          :align: center
 
          size = "7,15"
@@ -243,7 +246,7 @@ Glossary
       belonging to that cycle. The numbers (i.e. ``1``, ``2``, ``3``) are the
       :term:`cycle points <cycle point>`.
 
-      .. digraph:: example
+      .. digraph:: Example
          :align: center
 
          size = "3,5"
@@ -467,7 +470,7 @@ Glossary
                      bar[-P1] => bar
                  """
 
-      .. digraph:: example
+      .. digraph:: Example
          :align: center
 
          size = "3,5"
@@ -568,7 +571,7 @@ Glossary
       defined under :cylc:conf:`[runtime]`. (They do inherit from the ``root``
       :term:`family`, however).
      
-      Implict tasks submit real jobs that just exit without doing anything
+      Implicit tasks submit real jobs that just exit without doing anything
       useful. They may be useful placeholders during workflow development but
       are not allowed by default because they can be created accidentally by
       simply misspelling a task name in the graph or under ``[runtime]``.
@@ -586,7 +589,7 @@ Glossary
 
       .. seealso::
 
-         * :cylc:conf:`flow.cylc[scheduler]allow implicit tasks = True`.
+         * :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`
          * :ref:`Cylc User Guide <ImplicitTasks>`
 
       .. admonition:: Cylc 7
@@ -1531,13 +1534,16 @@ Glossary
       WARNING messages from a task :term:`job`.
 
 
-   event handler
-   handler
-      An :term:`event` handler is a user-defined executable that the
-      :term:`scheduler` runs when selected :term:`task` or :term:`workflow`
-      events occur.
+   .. cylc-flow workflow cfgspec current reference "event handlers" plural
 
-      Use-cases include, but are not limited to:
+   handler
+   event handler
+   event handlers
+      An event handler is a user-defined executable that the
+      :term:`scheduler` runs when selected :term:`task` or :term:`workflow`
+      :term:`events <event>` occur.
+
+      Use-cases include:
 
       - Send an email message.
       - Run a Cylc command.
