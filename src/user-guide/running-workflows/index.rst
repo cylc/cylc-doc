@@ -8,6 +8,7 @@ Running Workflows
 
 
    scheduler-start-up
+   workflow-completion
    task-job-states
    tracking-task-state
    authentication-files
