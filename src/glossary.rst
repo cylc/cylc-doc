@@ -22,6 +22,8 @@
       - not look like another glossary term,
         e.g. :ref:`Cylc User Guide <blah>` not just :ref:`blah`.
 
+     5) Use singular rather than plural terms for glossary definitions (e.g. task rather than tasks).
+
 
 .. TODO Add user guide and config links to all items, where appropriate.
 
@@ -42,7 +44,7 @@ Glossary
 
    retry
       Tasks configured to retry on failure will return to the ``waiting`` state
-      with a clock trigger to delay the next try.
+      with a :term:`clock trigger` to delay the next try.
 
       Any number of retries, with configurable delays between them, are possible.
       Task jobs can get their own try number from ``$CYLC_TASK_TRY_NUMBER``.
@@ -75,7 +77,7 @@ Glossary
       constrain the scheduler.
 
       In the following :term:`cycling` workflow, if the task ``foo`` does not
-      actually depend on any real outputs of ``bar`` in the previous cycle,
+      actually depend on any real outputs of ``baz`` in the previous cycle,
       then the intercycle dependence is artificial.
 
       .. code-block:: cylc
@@ -89,7 +91,7 @@ Glossary
    workflow
    cylc workflow
       A workflow is a collection of :term:`tasks <task>` with
-      :term:`dependencies <dependency>` among them that govern the order in
+      :term:`dependencies <dependency>` between them that govern the order in
       which they can run.
 
       Cylc workflows are defined in :cylc:conf:`flow.cylc` files.
@@ -115,15 +117,15 @@ Glossary
       .. admonition:: Cylc 7
          :class: tip
 
-         In Cylc 7 and earlier "workflows" were referred to as "suites".
+         In Cylc 7 and earlier, "workflows" were referred to as "suites".
 
 
    workflow name
       The workflow name is a path relative to the cylc-run directory which
       contains one or more workflow :term:`run directories <run directory>`.
 
-     Task jobs can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
-     runtime environment.
+      Task jobs can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
+      runtime environment.
 
       Unlike :term:`workflow id` the name is not always a unique identifier. In
       the example below ``run1`` and ``run2`` would both have the same name,
@@ -131,10 +133,10 @@ Glossary
 
       .. code-block:: bash
 
-         |- my_workflow
+         `- my_workflow
            |- runN
            |- run1
-           |- run2
+           `- run2
 
       .. note::
          If you are not using named or numbered runs, the workflow name will be
@@ -150,8 +152,8 @@ Glossary
 
 
    workflow id
-      A workflow can be uniquely identified by its :term:`run directory` path
-      relative to the cylc-run directory.
+      A workflow can be uniquely identified by the relative path between the :term:`cylc-run directory`
+      (``~/cylc-run``) and its :term:`run directory`.
 
       This ID is used on the command line and in the GUI, to target the right
       workflow.
@@ -165,10 +167,10 @@ Glossary
 
       .. code-block:: bash
 
-         |- my_workflow
+         `- my_workflow
            |- runN
            |- run1      # CYLC_WORKFLOW_ID = my_workflow/run1
-           |- run2      # CYLC_WORKFLOW_ID = my_workflow/run2
+           `- run2      # CYLC_WORKFLOW_ID = my_workflow/run2
 
 
    graph
@@ -279,6 +281,11 @@ Glossary
          "foo.2" -> "bar.2" -> "baz.2"
          "foo.3" -> "bar.3" -> "baz.3"
          "bar.1" -> "bar.2" -> "bar.3"
+         
+      .. seealso::
+      
+         * :ref:`tutorial-integer-cycling`
+         * :ref:`tutorial-datetime-cycling`
 
 
    cycling
@@ -567,9 +574,11 @@ Glossary
 
 
    implicit task
-      Implicit tasks appear in the :term:`workflow` :term:`graph` but are not
-      defined under :cylc:conf:`[runtime]`. (They do inherit from the ``root``
-      :term:`family`, however).
+      Implicit tasks are :term:`tasks <task>` which are not defined in
+      the :cylc:conf:`[runtime]` section.
+
+      Like regular tasks they :term:`inherit <family inheritance>` from the ``root``
+      :term:`family`.
      
       Implicit tasks submit real jobs that just exit without doing anything
       useful. They may be useful placeholders during workflow development but
@@ -595,7 +604,7 @@ Glossary
       .. admonition:: Cylc 7
          :class: tip
 
-         In Cylc 7 and earlier implicit tasks were known as "naked dummy tasks".
+         In Cylc 7 and earlier, implicit tasks were known as "naked dummy tasks".
 
 
    work directory
@@ -760,7 +769,7 @@ Glossary
       .. admonition:: Cylc 7
          :class: tip
 
-         In Cylc 7 and earlier job runners were referred to as "batch systems".
+         In Cylc 7 and earlier, job runners were referred to as "batch systems".
 
 
    directive
@@ -823,7 +832,7 @@ Glossary
       .. admonition:: Cylc 7
          :class: tip
 
-         In Cylc 7 and earlier schedulers were known as "suite daemons".
+         In Cylc 7 and earlier, schedulers were known as "suite daemons".
 
 
    start
@@ -844,7 +853,7 @@ Glossary
 
 
    cold start
-      A cold start is when the :term:`scheduler` :term:`start <startup>` a
+      A cold start is when the :term:`scheduler` :term:`starts <startup>` a
       :term:`workflow` at the beginning of :term:`graph`. In a :term:`cycling
       workflow` this is determined by the :term:`initial cycle point`.
 
@@ -1050,7 +1059,9 @@ Glossary
 
       Reloading changes is safe providing they don't affect the
       :term:`workflow's <workflow>` :term:`graph`. Changes to the graph have
-      certain caveats attached, see the `Cylc User Guide`_ for details.
+      certain caveats attached, see the
+      :ref:`Cylc User Guide <Reloading The Workflow Configuration At Runtime>`
+      for details.
 
       .. seealso::
 
@@ -1122,7 +1133,7 @@ Glossary
       common configuration and which can be referred to collectively in the
       :term:`graph`.
 
-      By convention families names are upper case, with the exception of the
+      By convention, family names are upper case, with the exception of the
       special ``root`` family that all tasks inherit from.
 
       .. seealso::
@@ -1367,7 +1378,7 @@ Glossary
       .. seealso::
 
          * :term:`optional output`
-         * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <incomplete tasks>`
 
 
    stall
@@ -1424,6 +1435,15 @@ Glossary
 
       For example the following workflow follows one of two possible paths
       depending on the outcome of task ``b``:
+      
+      .. code-block:: cylc-graph
+      
+         # the success branch
+         a:succeed => b? => c
+         # the fail branch
+         b:fail? => r
+         # joining the two branches together
+         c | r => d
 
       .. digraph:: example
          :align: center
@@ -1490,7 +1510,7 @@ Glossary
                 initial cycle point = 1
                 [[graph]]
                     P1 = """
-                        model [-P1] => model => post => prod1 & prod2 => publish
+                        model[-P1] => model => post => prod1 & prod2 => publish
                     """
 
       Let's say the workflow has run to cycle 8, but we have just noticed that
