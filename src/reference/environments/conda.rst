@@ -12,14 +12,13 @@ all components:
    :language: YAML
    :substitutions:
 
-For finer control over installation the following sections outline alternative
-installations.
+The following sections outline alternatives for finer control over installation.
 
 
 Cylc Flow
 ---------
 
-The most simple Cylc installation consists only of `Cylc Flow`_:
+The simplest Cylc installation consists only of `Cylc Flow`_:
 
 .. literalsubinclude:: envs/cylc-flow.yml
    :language: YAML

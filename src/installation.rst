@@ -3,12 +3,9 @@
 Installation
 ============
 
-.. note::
+.. The following note is also included in the main index.
 
-   Cylc |release| is a pre release not recommended for production use.
-
-   Please report any issues to the `Cylc 8 Discourse Support Group`_.
-
+.. include:: release-note.rst
 
 Quick Installation
 ------------------
