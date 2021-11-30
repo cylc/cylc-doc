@@ -182,7 +182,7 @@ Cylc 8 distinguishes between :term:`expected <expected output>` and
 completion` properly.
 
 If a task :term:`job` finishes without completing an expected output the
-scheduler will retain it, pending user intervention, as a :term:`incomplete
+scheduler will retain it, pending user intervention, as an :term:`incomplete
 task`.
 
 A task can finish with or without completing optional outputs, on the other

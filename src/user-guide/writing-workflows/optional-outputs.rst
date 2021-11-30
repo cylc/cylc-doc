@@ -290,7 +290,7 @@ and ``FAM:fail-any`` that are short for logical expressions involving the
 corresponding member task outputs.
 
 If the member outputs are not singled out explicitly elsewhere in the graph,
-then they default to expected.
+then they default to being expected outputs.
 
 For example, if ``f1`` and ``f2`` are members of ``FAM``, then this:
 
