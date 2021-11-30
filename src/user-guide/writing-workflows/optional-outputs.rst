@@ -317,7 +317,7 @@ means:
 
 .. code-block:: cylc-graph
 
-   f1 & f2 => a  # f1:succeed and f2:succeed are expected
+   f1 | f2 => a  # f1:succeed and f2:succeed are expected
 
 
 However, the family default can be changed to optional by using ``?`` on the

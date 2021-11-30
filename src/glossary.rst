@@ -583,7 +583,7 @@ Glossary
       Implicit tasks submit real jobs that just exit without doing anything
       useful. They may be useful placeholders during workflow development but
       are not allowed by default because they can be created accidentally by
-      simply misspelling a task name in the graph or under ``[runtime]``.
+      smply misspelling a task name in the graph or under ``[runtime]``.
 
       Here ``bar`` is implicit:
 
@@ -1260,9 +1260,8 @@ Glossary
    conditional dependence
    conditional dependency
    conditional trigger
-      Conditional :term:`dependence` is when a :term:`task` depends on multiple
-      :term:`outputs <task output>` of other tasks combined with the ``&`` and
-      ``|`` logical operators.
+      Conditional :term:`dependence` is when a :term:`task` depends on a
+      combination of multiple upstream :term:`task outputs <task output>`.
 
       .. code-block:: cylc-graph
 
@@ -1304,8 +1303,15 @@ Glossary
                R1 = """
                   foo:out1 => proc-out-1
                   foo:out2 => proc-out-2
+               """
          [runtime]
             [[foo]]
+               script = """
+                  # ...
+                  cylc message "Output 1 completed"
+                  # ...
+                  cylc message "Output 2 completed"
+               """
                [[[outputs]]]
                    # output name = output message
                    out1 = "Output 1 completed"
@@ -1316,8 +1322,8 @@ Glossary
 
       .. code-block:: cylc
 
-                [[[outputs]]]
-                   out1 = out1
+         [[[outputs]]]
+             out1 = out1
 
 
    custom output
