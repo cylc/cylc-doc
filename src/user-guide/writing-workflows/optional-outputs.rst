@@ -1,7 +1,7 @@
 .. _User Guide Optional Outputs:
 
-Expected and Optional Outputs
-=============================
+Expected & Optional Outputs
+===========================
 
 :term:`Task outputs <task output>` in the :term:`graph` are either
 :term:`expected <expected output>` (the default) or  :term:`optional <optional
@@ -9,14 +9,24 @@ output>`. This distinction supports :term:`graph branching` and it allows the
 :term:`scheduler` to correctly diagnose :term:`workflow completion`. [1]_
 
 .. _expected outputs:
+.. _incomplete tasks:
 
-Expected Outputs
-----------------
+Expected Outputs & Incomplete Tasks
+-----------------------------------
 
 The scheduler expects all task outputs to be completed at runtime, unless they are
-marked with ``?`` as optional (:ref:`below <optional outputs>`). Tasks that
-finish without completing expected outputs are retained as
-:ref:`incomplete task <incomplete tasks>` pending user intervention.
+marked with ``?`` as optional (:ref:`below <optional outputs>`).
+
+Tasks that finish without completing expected outputs  [2]_ are retained as
+:ref:`incomplete <incomplete tasks>` pending user intervention, e.g. to be
+retriggered after a bug fix.
+
+.. note::
+   Incomplete tasks stall the workflow if there are no other tasks to run (see
+   :ref:`workflow completion`).
+
+   They also count toward the :term:`runahead limit`, because they may
+   run again once dealt with.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
@@ -25,7 +35,8 @@ This graph says task ``bar`` should trigger if ``foo`` succeeds:
    foo => bar  # short for "foo:succeed => bar"
 
 Additionally, ``foo`` is expected to succeed, because its success is not marked
-as optional. (And in fact ``bar`` is expected to succeed too).
+as optional. If ``foo`` does not succeeded, the scheduler will not run ``bar``,
+and ``foo`` will be retained as an incomplete task.
 
 Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
 
@@ -53,23 +64,6 @@ expect them all to be completed every time the task runs. Here,
    model:file2 => proc2
    model:file3 => proc3
 
-.. _incomplete tasks:
-
-Incomplete Tasks
-^^^^^^^^^^^^^^^^
-
-Tasks that finish without generating expected outputs [2]_ are flagged as
-:term:`incomplete <incomplete task>`, even if they report success.
-
-Incomplete tasks have behaved in a way not anticipated by the graph, which
-often means the workflow cannot proceed to completion as expected. They are
-retained by the scheduler pending user intervention, e.g. to be retriggered
-after a bug fix, to allow the workflow to continue.
-
-.. note::
-   Incomplete tasks count toward the :term:`runahead limit`, because they may
-   run again once dealt with.
-
 
 .. _optional outputs:
 
@@ -87,6 +81,7 @@ trigger if ``foo`` succeeds:
    foo? => bar  # short for "foo:succeed? => bar"
 
 But now ``foo:succeed`` is optional, so we might expect it to fail sometimes.
+And if it does fail, it will not be marked as an incomplete task.
 
 Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all optional outputs:
 
@@ -122,7 +117,8 @@ if you do not expect all of them all to be completed every time the task runs:
 
 This is an example of :term:`graph branching` from optional outputs. Whether a
 particular branch is taken or not depends on which optional outputs are
-completed at runtime.
+completed at runtime. For more information see the section on :ref:`graph
+branching <graph-branching>`.
 
 Leaf tasks (with nothing downstream of them) can have optional outputs. In the
 following graph, ``foo`` is expected to succeed, but it doesn't matter whether
@@ -155,7 +151,6 @@ following graph, ``foo`` is expected to succeed, but it doesn't matter whether
    incomplete if it fails.
 
 
-
 Finish Triggers
 ---------------
 
@@ -179,105 +174,6 @@ is optional" and that a non-optional version of the trigger makes sense.
       foo:finish => bar
       foo => baz  # ERROR : foo:succeed must be optional here!
    """
-
-.. _graph-branching:
-
-Graph Branching
----------------
-
-A graph can split into alternate branches on optional outputs, where only one
-branch or another will be followed at runtime.
-
-This is often used for automatic failure recovery:
-
-.. code-block:: cylc-graph
-
-   foo => bar
-   bar:fail? => recover
-   bar? | recover => baz
-
-
-.. digraph:: Example
-   :align: center
-
-   subgraph cluster_1 {
-      label = ":fail"
-      color = "red"
-      fontcolor = "red"
-      style = "dashed"
-
-      recover
-   }
-
-   foo -> bar
-   bar -> recover
-   recover -> baz [arrowhead="onormal"]
-   bar -> baz [arrowhead="onormal"]
-
-Alternate paths can also branch from mutually exclusive custom outputs:
-
-.. code-block:: cylc-graph
-
-   # branch the graph depending on the outcome of "showdown"
-   showdown:good? => good
-   showdown:bad? => bad
-   showdown:ugly? => ugly
-   # join the graph back together
-   good | bad | ugly => fin
-
-
-.. digraph:: Example
-   :align: center
-
-   subgraph cluster_1 {
-      label = ":good"
-      color = "green"
-      fontcolor = "green"
-      style = "dashed"
-
-      good
-   }
-   subgraph cluster_2 {
-      label = ":bad"
-      color = "red"
-      fontcolor = "red"
-      style = "dashed"
-
-      bad
-   }
-   subgraph cluster_3 {
-      label = ":ugly"
-      color = "purple"
-      fontcolor = "purple"
-      style = "dashed"
-
-      ugly
-   }
-   showdown -> good
-   showdown -> bad
-   showdown -> ugly
-   good -> fin [arrowhead="onormal"]
-   bad -> fin [arrowhead="onormal"]
-   ugly -> fin [arrowhead="onormal"]
-
-
-Cylc can't know if custom outputs are mutually exclusive or not, however. If
-they are not exclusive, the paths will be concurrent rather than alternate:
-
-For branching on custom outputs you can use an :term:`artificial dependency` to
-ensure that at least one branch executes. For the example above:
-
-.. code-block:: cylc-graph
-
-    start => showdown
-    # branch the graph depending on the outcome of "showdown"
-    showdown:good? => good
-    showdown:bad? => bad
-    showdown:ugly? => ugly
-    # join the graph back together
-    good | bad | ugly => fin
-    # ensure at least one branch is run
-    start => fin  # artificial dependency
 
 
 Family Triggers
@@ -362,11 +258,6 @@ finish trigger, because the underlying member outputs must already be optional.
    FAM:finish-any => a  # (ditto)
 
    FAM:finish-all? => b  # ERROR
-
-
-.. note::
-   Cylc 8 does not :term:`suicide triggers <suicide trigger>` to remove tasks
-   from unused paths in the graph.
 
 
 .. [1] By distinguishing graph branches that did not run but should have, from

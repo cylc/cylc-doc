@@ -25,7 +25,7 @@
      5) Use singular rather than plural terms for glossary definitions (e.g. task rather than tasks).
 
 
-.. TODO Add user guide and config links to all items, where appropriate.
+.. TODO Add more user guide and config links to all items, where appropriate.
 
 Glossary
 ========
@@ -1488,63 +1488,14 @@ Glossary
 
    flow
    reflow
-      A flow is a single logical run of a :term:`workflow` that follows the
-      :term:`graph`, or part of the graph, onward from some start point.
-
-      Cylc :term:`schedulers <scheduler>` can manage more than one flow in a
-      single graph, at the same time. We call this capability *reflow*.
-      The original flow in a new workflow run is :term:`started <startup>`
-      with the ``cylc play`` command. Subsequent flows may be triggered from
-      particular task(s) in the graph using ``cylc trigger --reflow``.
-
-      Flows are identified by a :term:`flow number` that starts at ``1`` and
-      increments for each triggered flow.
-
-      Reflows are useful if you need to re-wind your :term:`workflow` to allow
-      it to evolve a new path into the future, or to repeat-run some part of
-      the graph to regenerate its outputs after making changes.
-
-      For example, the following :term:`cycling workflow` runs a :term:`task`
-      called ``model`` in every cycle, followed by a postprocessing task, two
-      product generating tasks, and finally a task that publishes results for
-      the cycle point:
-
-         .. code-block:: cylc
-
-            [scheduling]
-                cycling mode = integer
-                initial cycle point = 1
-                [[graph]]
-                    P1 = """
-                        model[-P1] => model => post => prod1 & prod2 => publish
-                    """
-
-      Let's say the workflow has run to cycle 8, but we have just noticed that
-      a corrupted ancillary file resulted in bad products at cycle 5.
-
-      To rectify this we could fix the corrupted file and trigger a new flow
-      (a reflow) from ``proc.5``::
-
-         cylc trigger a.5 --reflow <workflow-id>
-
-      The new flow will regenerate and republish the cycle 5 products before
-      naturally coming to a halt because the the triggered tasks do not lead on
-      to the next cycle and the rest of the graph.
-
-      Meanwhile, the original flow will carry on unaffected, from cycle 8.
-
-      If a task in one flow catches up to an active sibling from another flow
-      (same name and :term:`cycle point`, different flow number) they will
-      merge and carry both flow numbers forward. Downstream tasks can be
-      considered to belong to both flows.
-
-      Individual flows can be stopped with ``cylc stop --flow=<flow-number>``.
-      This removes the target flow number from all active tasks. If a task has
-      no flow numbers left it will not spawn downstream, thus stopping the flow.
+      In Cylc, a *flow* is a single logical run of a :term:`workflow` that "flows"
+      on from some start point in the :term:`graph`.
      
-      .. note::
-         Currently you have to look at the :term:`scheduler log` to identify
-         the flow numbers of particular tasks in the :term:`n=0 window <n-window>`.
+      Cylc :term:`schedulers <scheduler>` can manage more than one flow in the
+      same graph, at the same time.  We call this capability *reflow*.
+
+      .. seealso::
+         * :ref:`user-guide-reflow`
 
 
    event
