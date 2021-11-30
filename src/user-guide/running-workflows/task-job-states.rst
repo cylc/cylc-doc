@@ -91,8 +91,8 @@ A single task can have multiple jobs, by automatic retry or manual triggering.
 
 .. _n-window:
 
-Windows on the Workflow
-=======================
+Tasks Shown in the UIs
+======================
 
 Cylc graphs can be very large or even infinite in extent. The UI can't display
 all the tasks at once, so it displays a :term:`window` or view of the workflow
@@ -102,7 +102,7 @@ The ``n = 0`` or *active task* window includes:
 
 - ``preparing`` tasks
 - ``submitted`` and ``running`` tasks - i.e. those with active jobs
-- ``waiting`` tasks, that are "actively waiting"[1]_ on:
+- ``waiting`` tasks, that are :term:`actively waiting <active waiting task>` on:
   
   - :ref:`clock triggers <Built-in Clock Triggers>`
   - :ref:`external triggers <Section External Triggers>`
@@ -111,11 +111,9 @@ The ``n = 0`` or *active task* window includes:
  
 - finished tasks retained as *incomplete*, in expectation of user intervention:
 
-  - ``submit-failed`` tasks, if successful submission was not *optional*
-  - ``succeeded`` or ``failed`` tasks that did not complete *expected outputs*
-
-.. TODO add links above to optional and expected outputs, once documented.
-
+  - ``submit-failed`` tasks, if successful submission was not :term:`optional <optional output>`
+  - ``succeeded`` or ``failed`` tasks that did not complete :term:`expected
+    outputs <expected output>`
 
 The default window extent is ``n = 1``, i.e. tasks out to one graph edge from
 current active tasks.
@@ -131,13 +129,11 @@ the scheduler is not actively managing them yet.
 Retrying Tasks
 ==============
 
-In Cylc 8, a task that fails but is configured to :term:`retry` will return to
-the ``waiting`` state, with a new clock trigger to handle the retry delay.
+Tasks that fail but are configured to :term:`retry` return to the ``waiting``
+state, with a new clock trigger to handle the configured retry delay.
 
 .. note::
 
    A task that is waiting on a retry will already have one or more failed jobs
    associated with it.
 
-
-.. [1] These are ready to run as far as their task dependencies are concerned.

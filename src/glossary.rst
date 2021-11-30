@@ -1272,6 +1272,7 @@ Glossary
 
 
    trigger
+   task trigger
       A trigger is the left-hand side of a :term:`dependency` in the
       :term:`graph`, i.e. the :term:`task outputs <task output>`
       that need to be completed before downstream tasks can run.
