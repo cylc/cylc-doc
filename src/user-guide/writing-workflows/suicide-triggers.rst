@@ -1,26 +1,27 @@
 .. _SuicideTriggers:
 
 Suicide Triggers
-^^^^^^^^^^^^^^^^
+================
 
 .. warning::
 
-   **Cylc 8 does not need suicide triggers for** :term:`graph branching
-   <branching>`.
+   Suicided triggers were needed in Cylc 7 and earlier to remove pre-spawned
+   waiting tasks from graph branches not taken at runtime, which would stall
+   the workflow.
 
-   They were needed in Cylc 7 to remove waiting tasks from alternate graph
-   branches not taken at runtime, which would otherwise stall the workflow.
+   However, **Cylc 8 does not need suicide triggers for** :term:`graph
+   branching <branching>`.
 
-   They remain supported, and documented, for backward compatibility reasons
-   and possible rare :ref:`edge cases <remaining-use-cases>`.
+   They remain supported, and documented, for backward compatibility and for
+   a rare :ref:`edge case <remaining-use-cases>`.
 
 
-Suicide triggers can remove waiting :term:`tasks <task>` from the
+Suicide triggers remove waiting :term:`tasks <task>` from the
 :term:`scheduler's <scheduler>` active :term:`active window` at runtime.
 
-They are activated just like other :term:`triggers <task trigger>` but they
-trigger removal of the downstream task (prefixed with ``!``) instead of
-triggering it to run.
+They are activated just like normal :term:`task triggers <task trigger>` but
+they remove the downstream task (prefixed with ``!``) instead of triggering it
+to run.
 
 Here, the task ``bar`` will be removed if ``foo`` succeeds:
 
@@ -28,7 +29,7 @@ Here, the task ``bar`` will be removed if ``foo`` succeeds:
 
    foo => !bar
 
-Suicide triggers combine in the same way as normal triggers, so this:
+Suicide triggers combine in the same way as normal triggers, so this graph:
 
 .. code-block:: cylc-graph
 
@@ -52,11 +53,11 @@ To remove a task after any one of several events, use an OR operator:
 .. note::
 
    * There's no point removing tasks that are not in the ``waiting`` state
-   * Waiting tasks in front of the active window are virtual and don't need to
-     be "removed"
-   * The only non-virtual waiting tasks are those :term:`waiting actively
-     <active waiting task>` on an external trigger; these might need to be
-     removed if they will never run (see below)
+   * In Cylc 8 all waiting tasks in front of the active window are virtual and
+     don't need to be "removed"
+   * The only non-virtual waiting tasks in Cylc 8 are those :term:`actively
+     waiting <active waiting task>` on an external trigger; these might need to
+     be removed if they will never run
 
 
 .. _remaining-use-cases:

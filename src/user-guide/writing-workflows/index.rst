@@ -7,9 +7,10 @@ Writing Workflows
    configuration
    scheduling
    optional-outputs
-   suicide-triggers
+   graph-branching
    runtime
    parameterized-tasks
    jinja2
    empy
    external-triggers
+   suicide-triggers
