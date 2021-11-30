@@ -134,14 +134,16 @@ Cylc can manage infinite workflows of repeating tasks:
 
 Cylc 8 has an efficient new scheduling algorithm that:
    - Spawns new tasks on demand
-   - Handles alternate path branching without suicide triggers
-   - Distinguishes between *optional* and *expected* task outputs. If a tasks
-     finishes without completing an expected output it will be retained by the
-     scheduler as an *incomplete task*
+   - Distinguishes between :term:`optional <optional output>` and
+     :term:`expected <expected output>` task outputs. This supports:
+
+     - :term:`graph branching` without suicide triggers
+     - correct diagnosis of :term:`workflow completion`
    - Can run tasks out of cycle point order
    - Provides a sensible active-task based window on the evolving workflow
-   - Supports a powerful new capability called **reflow**: you can trigger
-     multiple fronts of activity in the graph at once, in the same scheduler
+   - Supports a powerful new capability called :term:`reflow`: you can trigger
+     multiple concurrent flows in the same graph at once, managed by the same
+     scheduler
 
 See also:
 
@@ -178,8 +180,8 @@ Optional and Expected Task Outputs
 
 Cylc 8 distinguishes between :term:`expected <expected output>` and
 :term:`optional <optional output>` task outputs. This supports optional
-:term:`graph branching` and it allows the scheduler to diagnose :term:`workflow
-completion` properly.
+:term:`graph branching` and it allows the scheduler to correctly diagnose
+:term:`workflow completion`.
 
 If a task :term:`job` finishes without completing an expected output the
 scheduler will retain it, pending user intervention, as an :term:`incomplete

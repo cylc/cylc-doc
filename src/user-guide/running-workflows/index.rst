@@ -10,6 +10,7 @@ Running Workflows
    scheduler-start-up
    workflow-completion
    task-job-states
+   reflow
    tracking-task-state
    authentication-files
    simulation-modes
