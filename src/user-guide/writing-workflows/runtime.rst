@@ -1,15 +1,18 @@
 .. _User Guide Runtime:
 
-Runtime - Task Configuration
-============================
+Configuring Tasks
+=================
 
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 
-The :cylc:conf:`flow.cylc` file's :cylc:conf:`[runtime]` section configures
-what each task should run, and where and how to run it. It is a multiple inheritance
-hierarchy that allows all common settings to be factored out into task families
-and defined once only (duplication of configuraiton is a maintenance risk in a
-complex workflow).
+The :cylc:conf:`[runtime]` section of the :cylc:conf:`flow.cylc` file
+defines what job each :term:`task` should run, and where and how to
+submit each one to run.
+
+It is an inheritance hierarchy that allows common settings to be factored
+out and defined once in task :term:`families <family>` (duplication
+of configuraiton is a maintenance risk in a complex workflow).
+
 
 .. _namespace-names:
 

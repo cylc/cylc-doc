@@ -145,10 +145,45 @@ Glossary
    active waiting task
       An active waiting task is a task in the :term:`scheduler's <scheduler>`
       active window that is "actively waiting" on (i.e. periodically checking)
-      an external trigger or clock trigger. These are the only waiting tasks
-      that matter to the :term:scheduler in Cylc 8 (waiting tasks ahead of the
-      active window are entirely abstract).
+      an :term:`external trigger` or :term:`clock trigger`.
+     
+      These are the only waiting tasks that matter to the :term:scheduler.
+      Waiting tasks ahead of the active window in Cylc 8 are entirely
+      abstract.
 
+
+   external trigger
+      External triggers allow :term:`tasks <task>` in the :term:`graph` to
+      depend on external events, such as a file being delivered to some
+      location, or a database being updated in some way. 
+
+      The :term:`scheduler` can repeatedly call a user-supplied Python function
+      to check that the external event has occurred.
+
+      Cylc has a built in external trigger for triggering off of events in
+      other workflows.
+
+      .. seealso::
+
+         * :cylc:conf:`[scheduling][xtriggers]`
+         * :term:`clock trigger`
+         * :ref:`Cylc User Guide <Section External Triggers>`
+         * :ref:`Cylc User Guide <Built-in Workflow State Triggers>`
+      
+
+   internal queue
+      Internal queues (so called to distinguish them from external batch
+      queueing systems) allow you to limit how many :term:`tasks <task>` can be
+      active (submitted or running) at once, across defined groups of tasks.
+
+      Use queues prevent large or busy workflows from swamping their 
+      :term:`job platforms <job platform>` with too many jobs at once.
+      
+      .. seealso::
+
+         * :cylc:conf:`[scheduling][queues]`
+         * :ref:`Cylc User Guide <InternalQueues>`
+      
 
    workflow id
       A workflow can be uniquely identified by the relative path between the :term:`cylc-run directory`
@@ -1451,13 +1486,14 @@ Glossary
    graph branching
       Cylc handles workflow :term:`graphs <graph>` in an event-driven way.
       It can automatically follow different paths depending on events at
-      runtime. This relies on :term:`optional outputs` and is called
-      *branching*.
+      runtime. This relies on :term:`optional outputs <optional output>` and is
+      called *branching*.
 
       For example, the following workflow follows one of two possible paths
       depending on the outcome of task ``b``:
 
       .. code-block:: cylc-graph
+
          # the success branch
          a:succeed => b? => c
          # the fail branch

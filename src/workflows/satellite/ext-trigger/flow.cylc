@@ -1,7 +1,6 @@
 #!Jinja2
 
-# WARNING: this uses deprecated old-style external trigger
-# mechanism.
+# WARNING: this uses the old-style push external trigger mechanism.
 
 [meta]
     title = Real time satellite data processing demo, variant 3 of 3
