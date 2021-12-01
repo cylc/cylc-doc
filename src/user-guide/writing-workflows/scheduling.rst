@@ -206,7 +206,7 @@ and also to this:
    Multiple graph strings add together to make the complete workflow graph.
 
 
-.. versionadded:: 8.0.0
+.. versionchanged:: 8.0.0
 
    Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
 
@@ -1725,7 +1725,7 @@ finish trigger, because the underlying member outputs must already be optional.
 Graph Branching
 ---------------
 
-.. versionadded:: 8.0b2
+.. versionadded:: 8.0.0
 
 Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
 automatically follow different paths depending on events at runtime. This
@@ -2141,4 +2141,3 @@ include or exclude tasks (or anything else) from workflow.
 
 .. [3] This includes failed job submission, when the ``:submit`` output is not
    marked as optional.
-

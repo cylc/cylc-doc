@@ -11,7 +11,7 @@ submit each one to run.
 
 It is an inheritance hierarchy that allows common settings to be factored
 out and defined once in task :term:`families <family>` (duplication
-of configuraiton is a maintenance risk in a complex workflow).
+of configuration is a maintenance risk in a complex workflow).
 
 
 .. _namespace-names:
