@@ -7,7 +7,6 @@ Writing Workflows
    configuration
    scheduling
    optional-outputs
-   graph-branching
    runtime
    parameterized-tasks
    jinja2

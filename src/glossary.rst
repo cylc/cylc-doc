@@ -80,7 +80,7 @@ Glossary
       actually depend on any real outputs of ``baz`` in the previous cycle,
       then the intercycle dependence is artificial.
 
-      .. code-block:: cylc
+      .. code-block:: cylc-graph
 
          P1 = """
             foo => bar => baz
@@ -109,7 +109,6 @@ Glossary
                  P1 = """
                      # the stages of brewing in the order they must occur in:
                      malt => mash => sparge => boil => chill => ferment => rack
-
                      # finish the sparge of one batch before starting the next:
                      sparge[-P1] => mash
                  """
@@ -180,7 +179,7 @@ Glossary
 
       For example, the following is, collectively, a graph:
 
-      .. code-block:: cylc
+      .. code-block:: cylc-graph
 
          P1D = foo => bar
          PT12H = baz
@@ -233,15 +232,15 @@ Glossary
 
 
    cycle
-      In a :term:`cycling` workflow a cycle comprises one run of all
-      :term:`tasks<task>` on a sequence of :term:`cycle points <cycle point>`
-      defined by the same :term:`recurrence`.
+      In a :term:`cycling workflow`, cycles are repetitions of a :term:`graph
+      string`. Each cycle is identified by a :term:`cycle point`. The sequence
+      of cycle points is defined by the graph string's :term:`recurrence`
+      pattern.
 
-      In simple cases you can think of a cycle as one of a series of repeat
-      runs of a finite non-cycling workflow. However, Cylc gives each
-      task its own individual :term:`cycle point` and can run tasks from
-      multiple cycles at once. Nevertheless it is true that all tasks
-      "belonging to" the same cycle have the same cycle point.
+      This defines the structure of the :term:`graph`. At runtime, however,
+      Cylc does not impose a global loop over cycles. Each individual task,
+      with its own cycle point, advances according to its own
+      :term:`dependencies <dependency>`.
 
       For example, in the following workflow each dotted box represents a cycle
       and the :term:`tasks<task>` within it are the :term:`tasks<task>`
@@ -281,9 +280,11 @@ Glossary
          "foo.2" -> "bar.2" -> "baz.2"
          "foo.3" -> "bar.3" -> "baz.3"
          "bar.1" -> "bar.2" -> "bar.3"
-         
+
+
+
       .. seealso::
-      
+
          * :ref:`tutorial-integer-cycling`
          * :ref:`tutorial-datetime-cycling`
 
@@ -513,13 +514,14 @@ Glossary
 
 
    qualifier
-      A qualifier is appended to :term:`task` and :term:`family` names in 
-      :term:`triggers <trigger>` in the :term:`graph`, to specify what task
-      outputs must be completed for the associated :term:`dependency` to be
-      satisified.
+      A qualifier is what follows :term:`task` or family :term:`family` names
+      after a colon ``:`` in :term:`triggers <trigger>`, in the :term:`graph`,
+      to specify exactly which :term:`task outputs <task output>` must be
+      completed for the :term:`dependency` to be satisified.
 
-      For example, in ``foo:start => bar``, the ``start`` output of task ``foo``
-      must be completed to satisfy the trigger.
+      For example, in ``foo:start => bar``, the ``:start`` qualifier means that
+      the ``started`` output of task ``foo`` must be completed to satisfy the
+      dependency.
 
       .. seealso::
 
@@ -529,9 +531,9 @@ Glossary
 
 
    future trigger
-      A future trigger makes one task depend on another with a later 
+      A future trigger makes one task depend on another with a later
       :term:`cycle point`.
-     
+
       Here, ``bar.1`` triggers off ``foo.2``; and ``bar.2`` off of
       ``foo.3``; and so on:
 
@@ -579,7 +581,7 @@ Glossary
 
       Like regular tasks they :term:`inherit <family inheritance>` from the ``root``
       :term:`family`.
-     
+
       Implicit tasks submit real jobs that just exit without doing anything
       useful. They may be useful placeholders during workflow development but
       are not allowed by default because they can be created accidentally by
@@ -666,12 +668,20 @@ Glossary
       Task :term:`job` log files are stored in job specific log directories
       under the workflow :term:`run directory`. These include:
 
-      - ``job`` - the task :term:`job script`
-      - ``job.out`` - job stdout
-      - ``job.err`` - job stderr
-      - ``job.status`` - job status data in case of lost contact with the scheduler
-      - ``job-activity.log`` - job data logged by the scheduler, rather than
-        the job itself, such as output from the job submission command
+      ``job``
+         The task :term:`job script`.
+      ``job.out``
+         Job stdout.
+      ``job.err``
+         Job stderr.
+      ``job.status``
+         Job status data in case of lost contact with the scheduler.
+      ``job-activity.log``
+         Job data logged by the scheduler, rather than
+         the job itself, such as output from the job submission command.
+      ``job.xtrace``
+         Debugging information from Bash captured when Cylc is run in
+         ``--debug`` mode.
 
       .. code-block:: sub
 
@@ -690,10 +700,10 @@ Glossary
 
    contact file
       The contact file, in the :term:`service directory`, records information
-      about a running scheduler such as host, TCP port, and process ID. It is
-      read by Cylc client commands so they can target the right scheduler.
+      about a running :term:`scheduler` such as host, TCP port, and process ID.
+      It is read by Cylc client commands so they can target the right scheduler.
 
-      The contact file is created at scheduler start and removed on clean
+      The contact file is created at scheduler startup and removed on clean
       shutdown. If you delete it, the scheduler will (after a delay) notice
       this and shut down.
 
@@ -813,6 +823,8 @@ Glossary
 
    platform group
       A set of :term:`platforms <platform>` grouped under a common name.
+
+      Platforms are configured by :cylc:conf:`global.cylc[platform groups]`.
 
 
    scheduler
@@ -1108,9 +1120,8 @@ Glossary
 
       .. code-block:: cylc
 
-         [scheduler]
-             [[parameters]]
-                 m = 1..3
+         [task parameters]
+             m = 1..3
          [scheduling]
              [[graph]]
                  R1 = bar<m> => baz<m>
@@ -1140,6 +1151,7 @@ Glossary
 
          * :term:`family inheritance`
          * :term:`family trigger`
+         * :ref:`Cylc User Guide <User Guide Runtime>`
          * :ref:`Cylc tutorial <tutorial-cylc-families>`
 
 
@@ -1174,15 +1186,16 @@ Glossary
       .. seealso::
 
          * :term:`family trigger`
-         * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <User Guide Runtime>`
+         * :ref:`Cylc Tutorial <tutorial-inheritance>`
 
 
    family trigger
       :term:`Tasks <task>` that belong to a :term:`family` can be
       referred to collectively in the :term:`graph` using a family
       :term:`trigger`.
-      
-      Family triggers take the form ``FAMILY-NAME:qualifier``, where
+
+      Family triggers take the form ``family-name:qualifier``, where
       the :term:`qualifier` describes the collective state of member tasks
       needed for the dependency to be met. Some commonly used qualifiers
       are:
@@ -1200,7 +1213,7 @@ Glossary
 
          * :term:`dependency`
          * :ref:`Cylc Tutorial <tutorial-cylc-family-triggers>`
-         * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <FamilyTriggers>`
 
 
    standard output
@@ -1218,7 +1231,7 @@ Glossary
       time. Downstream tasks can trigger off of the outputs of other tasks, as
       determined by the :term:`graph`.
 
-      Outputs are written as ``task-name:OUTPUT`` in the :term:`graph`, and can
+      Outputs are written as ``task-name:output`` in the :term:`graph`, and can
       be :term:`expected <expected output>` or :term:`optional <optional output>`.
 
       Tasks may have :term:`custom outputs <custom output>` as well as
@@ -1274,8 +1287,8 @@ Glossary
    trigger
    task trigger
       A trigger is the left-hand side of a :term:`dependency` in the
-      :term:`graph`, i.e. the :term:`task outputs <task output>`
-      that need to be completed before downstream tasks can run.
+      :term:`graph`. It defines the combination of :term:`task outputs <task
+      output>` that must be completed before downstream tasks can run.
 
       In this example, the task ``bar`` can be said to trigger off of
       completion of the ``foo:started`` output:
@@ -1349,7 +1362,7 @@ Glossary
 
          * :term:`standard output`
          * :ref:`Cylc Tutorial <tutorial-cylc-message-triggers>`
-         * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <MessageTriggers>`
 
 
    optional output
@@ -1361,7 +1374,7 @@ Glossary
       .. seealso::
 
          * :term:`expected output`
-         * `Cylc User Guide`_
+         * :ref:`Cylc User Guide <User Guide Optional Outputs>`
 
 
    expected output
@@ -1436,15 +1449,15 @@ Glossary
 
    branching
    graph branching
-      Cylc handles workflow :term:`graphs <graph>` in an event-driven way:
-      it can follow different graph paths depending on events at runtime. This
-      is called *branching*.
+      Cylc handles workflow :term:`graphs <graph>` in an event-driven way.
+      It can automatically follow different paths depending on events at
+      runtime. This relies on :term:`optional outputs` and is called
+      *branching*.
 
-      For example the following workflow follows one of two possible paths
+      For example, the following workflow follows one of two possible paths
       depending on the outcome of task ``b``:
-      
+
       .. code-block:: cylc-graph
-      
          # the success branch
          a:succeed => b? => c
          # the fail branch
@@ -1478,7 +1491,7 @@ Glossary
 
       .. seealso::
 
-         * :term:`optional outputs <optional output>`
+         * :term:`optional output`
          * :ref:`Cylc User Guide <Graph Branching>`
 
 
@@ -1491,7 +1504,7 @@ Glossary
    reflow
       In Cylc, a *flow* is a single logical run of a :term:`workflow` that "flows"
       on from some start point in the :term:`graph`.
-     
+
       Cylc :term:`schedulers <scheduler>` can manage more than one flow in the
       same graph, at the same time.  We call this capability *reflow*.
 
@@ -1512,7 +1525,7 @@ Glossary
       WARNING messages from a task :term:`job`.
 
 
-   .. cylc-flow workflow cfgspec current reference "event handlers" plural
+   .. TODO cylc-flow cfgspec/workflow.py references "event handlers" plural
 
    handler
    event handler

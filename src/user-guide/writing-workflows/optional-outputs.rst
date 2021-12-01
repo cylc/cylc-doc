@@ -117,8 +117,7 @@ if you do not expect all of them all to be completed every time the task runs:
 
 This is an example of :term:`graph branching` from optional outputs. Whether a
 particular branch is taken or not depends on which optional outputs are
-completed at runtime. For more information see the section on :ref:`graph
-branching <graph-branching>`.
+completed at runtime. For more information see :ref:`Graph Branching`.
 
 Leaf tasks (with nothing downstream of them) can have optional outputs. In the
 following graph, ``foo`` is expected to succeed, but it doesn't matter whether
