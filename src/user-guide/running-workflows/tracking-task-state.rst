@@ -37,7 +37,7 @@ or SSH. See :ref:`Polling To Track Job Status`.
 
 .. _TaskComms:
 
-Tracking Task State
+Tracking Job Status
 -------------------
 
 Cylc supports three ways of tracking task state on job hosts:
