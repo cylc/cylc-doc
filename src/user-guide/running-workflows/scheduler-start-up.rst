@@ -1,17 +1,15 @@
 
-Start, Restart, and Reload
-==========================
+Start, Restart, Reload
+======================
 
 .. _WorkflowStartUp:
 
 
 The ``cylc play`` command starts a new instance of the Cylc scheduler program
-to manage the target workflow, for the duration of its run (it also resumes
-paused workflows that are already running).
+to manage a workflow, for the duration of the run. It also resumes paused
+workflows.
 
-There are several ways to start a scheduler for workflow that is not already
-running:
-
+There are several ways to start a workflow that is not running:
 
 * ``cylc play`` **from the initial cycle point**
 
@@ -36,7 +34,7 @@ running:
   - The start task(s) must be given on the command line
   - The flow will follow the graph onward from the start task(s)
   - (In Cylc 7, this was not possible)
-  - (The makes Cylc 7 restart-from-checkpoint obsolete)
+  - (This makes Cylc 7 restart-from-checkpoint obsolete)
 
 
 * ``cylc play`` to **restart from previous state**

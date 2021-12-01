@@ -1,7 +1,7 @@
 .. _User Guide Scheduling:
 
-Configuring Scheduling
-======================
+Scheduling Configuration
+========================
 
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
@@ -1467,6 +1467,8 @@ in :ref:`Section External Triggers`.
 Expected Outputs
 ----------------
 
+.. versionadded:: 8.0.0
+
 :term:`Task outputs <task output>` in the :term:`graph` are either
 :term:`expected <expected output>` (the default) or  :term:`optional <optional
 output>`.
@@ -1528,6 +1530,8 @@ expect them all to be completed every time the task runs. Here,
 
 Optional Outputs
 ----------------
+
+.. versionadded:: 8.0.0
 
 Optional outputs are marked with ``?``. They may or may not be completed by the
 task at runtime.

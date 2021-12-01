@@ -3,38 +3,32 @@
 Flows & Reflow
 ==============
 
-In Cylc, a *flow* is a single logical run of a :term:`workflow` that "flows"
-on from some start point in the :term:`graph`.
+.. versionadded:: 8.0.0
 
-Cylc :term:`schedulers <scheduler>` can manage more than one flow in the same
-graph, at the same time.  We call this capability *reflow*.
+In Cylc, a *flow* is a single logical run of a :term:`workflow` that "flows"
+on from some start point in the :term:`graph`. Cylc :term:`schedulers
+<scheduler>` can manage more than one flow in the same graph, at the same time.
+This capability is called *reflow*.
 
 Triggering a Flow
 -----------------
 
 The first flow in a new workflow run gets triggered automatically when the
 scheduler is :term:`started <startup>` with the ``cylc play`` command. Its
-tasks can be identified by the integer :term:`flow number` ``1``.
+tasks are have :term:`flow number` ``1``.
 
 Subsequent flows can be triggered from particular task(s) in the graph using
-``cylc trigger --reflow``. The flow number increments by one, for each new
-flow.
+``cylc trigger --reflow``. The flow number increments by one, each time.
 
 .. note::
 
-   Without the ``--reflow`` option ``cylc trigger`` triggers the target
-   task but does not start a new flow from its completed outputs.
+   By default ``cylc trigger`` does not start a new flow from the triggered
+   task. Use the ``--reflow`` option to start a new flow. :term:`Incomplete
+   tasks <incomplete task>` are the exception to this rule
+   because they are considered to be an unfinished part of the existing flow.
 
-   Triggering an :term:`incomplete task`, however, will cause its flow to
-   continue, if it completes its outputs this time. Incomplete tasks are
-   considered to be an unfinished part of their flow.
-
-.. note::
-   Currently you have to look at the :term:`scheduler log` to identify
-   the flow numbers of particular tasks in the :term:`n=0 window <n-window>`.
-
-Use Cases
----------
+Reflow Use Cases
+----------------
 
 Reflows are useful if you need to re-wind your :term:`workflow` to allow
 it to evolve a new path into the future, or to repeat-run some subgraph
@@ -71,9 +65,10 @@ Flow Merging
 ------------
 
 If a task from one flow catches up with an active sibling from another
-(i.e., another active task with the same name and :term:`cycle point`,
-but a different flow number) they will merge and carry both flow numbers
+(i.e. an active task with the same name and :term:`cycle point`, but a
+different flow number) they will merge and carry both flow numbers
 forward. Downstream tasks can be considered to belong to either flow.
+Any number of flows can merge like this.
 
 Stopping Flows
 --------------
@@ -81,6 +76,11 @@ Stopping Flows
 By default, ``cylc stop`` halts the entire workflow and shuts the scheduler down.
 
 Individual flows can be stopped with ``cylc stop --flow=<flow-number>``, however.
-This removes the target flow number from all active tasks. If a task has no
-flow numbers left it will not spawn downstream, thus stopping the flow. If
-there are no active flows left at all, the scheduler will shut down.
+This removes the flow number from all tasks in the :term:`active window`. Tasks
+with no flow numbers do not spawn downstream. If there are no active flows
+left, the scheduler will shut down.
+
+
+.. warning::
+   Flow numbers are not yet exposed in the UI. Consult the :term:`scheduler
+   log` to see the flow number of active tasks.

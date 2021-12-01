@@ -1,7 +1,7 @@
 .. _User Guide Runtime:
 
-Configuring Tasks
-=================
+Task Configuration
+==================
 
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 

@@ -1,7 +1,7 @@
 .. _User Guide Param:
 
-Parameterized Tasks
-===================
+Task Parameters
+===============
 
 Cylc can automatically generate related tasks and dependencies by expanding
 :term:`parameterized <parameterisation>` names over lists or ranges of

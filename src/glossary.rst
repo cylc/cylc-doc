@@ -697,6 +697,9 @@ Glossary
 
          <run-directory>/log/workflow/
 
+      You can print the scheduler log at the terminal with ``cylc cat-log
+      <workflow-name>``.
+
 
    job log
    job log directory
@@ -721,6 +724,11 @@ Glossary
       .. code-block:: sub
 
          <run-directory>/log/job/<cycle-point>/<task-name>/<job-submit-num>
+
+
+      You can print task job logs at the terminal with ``cylc cat-log
+      <workflow-name> <task-id>``. By default this prints ``job.out``.
+      There are command options to select the other logs.
 
 
    service directory
