@@ -1,21 +1,27 @@
 .. _User Guide Scheduling:
 
-Scheduling - Dependency Graphs
-==============================
+Configuring Scheduling
+======================
 
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
-The :term:`graph` defines a workflow in terms of its
-:term:`tasks <task>` and the :term:`dependencies <dependency>` between them.
+The :cylc:conf:`[scheduling]` section of the :cylc:conf:`flow.cylc` file
+defines what tasks exist in the worklow, in a :term:`dependency graph <graph>`,
+and when they should run, relative to each other and to constraints such as
+:term:`clock triggers <clock trigger>`, :term:`external triggers <external
+trigger>`, and :term:`internal queues <internal queue>`
 
-Graph Syntax
-------------
+
+The Graph
+---------
 
 .. tutorial:: Graph Tutorial <tutorial-cylc-graphing>
 
-A Cylc :term:`graph` is composed of one or more
-:term:`graph strings <graph string>` which use a special syntax to define the
-dependencies between tasks:
+The :term:`graph` defines a workflow in terms of its :term:`tasks <task>` and
+the :term:`dependencies <dependency>` between them.
+
+A Cylc :term:`graph` is composed of one or more :term:`graph strings <graph
+string>` which use a special syntax to define the dependencies between tasks:
 
 * arrow symbols ``=>`` declare dependencies
 * logical operators ``&`` (AND) and ``|`` (OR) can be used to write
@@ -28,8 +34,8 @@ For example:
    # baz will not be run until both foo and bar have succeeded
    foo & bar => baz
 
-These :term:`graph strings <graph string>` are configured in the
-:cylc:conf:`[scheduling][graph]` section of the file:
+Graph strings are configured under the :cylc:conf:`[scheduling][graph]` section
+of the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
@@ -54,10 +60,6 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
                foo & bar => baz  # baz depends on foo and bar
 
            """
-
-
-Interpreting Graph Strings
---------------------------
 
 Graphs can be broken down into pairs of :term:`triggers <trigger>`, where the
 left side is a single task output, or a logical expression involving several of
@@ -135,8 +137,8 @@ is equivalent to this:
 
 In summary, the branching tree structure of a dependency graph can
 be partitioned into lines (in the :cylc:conf:`flow.cylc` graph string) of
-dependency pairs or chains, in any way you like.
-Use white space and comments to make the graph as clear as possible.
+dependency pairs or chains, in any way you like. Use white space and comments
+to make the graph as clear as possible.
 
 .. code-block:: cylc
 
@@ -1457,101 +1459,265 @@ This is a substantial topic, documented separately
 in :ref:`Section External Triggers`.
 
 
-How to Limit Triggering
------------------------
 
-Cylc will usually try to trigger any task with met dependencies. If this
-risks running more tasks than you wish - if it would overwhelm the job
-platform for example - :ref:`RunaheadLimit` and :ref:`InternalQueues` provide
-tools to limit workflow activity.
+.. _User Guide Expected Outputs:
+.. _expected outputs:
+.. _incomplete tasks:
 
-.. _RunaheadLimit:
+Expected Outputs
+----------------
 
-Runahead Limiting
-^^^^^^^^^^^^^^^^^
+:term:`Task outputs <task output>` in the :term:`graph` are either
+:term:`expected <expected output>` (the default) or  :term:`optional <optional
+output>`.
 
-Runahead limiting, controlled by :cylc:conf:`[scheduling]runahead limit`,
-prevents the fastest tasks in a workflow from getting too far
-ahead (with respect to cycle point) of the slowest ones.
+The scheduler expects all task outputs to be completed at runtime, unless they
+are marked with ``?`` as optional. This allows it to correctly diagnose
+:term:`workflow completion`. [2]_
+
+Tasks that finish without completing expected outputs  [3]_ are retained as
+:ref:`incomplete <incomplete tasks>` pending user intervention, e.g. to be
+retriggered after a bug fix.
+
+.. note::
+   Incomplete tasks stall the workflow if there are no other tasks to run (see
+   :ref:`workflow completion`).
+
+   They also count toward the :term:`runahead limit`, because they may
+   run again once dealt with.
+
+This graph says task ``bar`` should trigger if ``foo`` succeeds:
+
+.. code-block:: cylc-graph
+
+   foo => bar  # short for "foo:succeed => bar"
+
+Additionally, ``foo`` is expected to succeed, because its success is not marked
+as optional. If ``foo`` does not succeeded, the scheduler will not run ``bar``,
+and ``foo`` will be retained as an incomplete task.
+
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
+
+.. code-block:: cylc-graph
+
+   foo
+   bar:x
+   baz:fail
+
+Tasks that appear with only custom outputs in the graph are also expected to succeed.
+Here, ``foo:succeed`` is an expected output, as well as ``foo:x``, unless it is
+marked as optional elsewhere in the graph:
+
+.. code-block:: cylc-graph
+
+   foo:x => bar
+
+If a task generates multiple custom outputs, they should be "expected" if you
+expect them all to be completed every time the task runs. Here,
+``model:file1``, ``model:file2``, and ``model:file3`` are all expected outputs:
+
+.. code-block:: cylc-graph
+
+   model:file1 => proc1
+   model:file2 => proc2
+   model:file3 => proc3
+
+
+.. _optional outputs:
+.. _User Guide Optional Outputs:
+
+Optional Outputs
+----------------
+
+Optional outputs are marked with ``?``. They may or may not be completed by the
+task at runtime.
+
+Like the first example above, the following graph also says task ``bar`` should
+trigger if ``foo`` succeeds:
+
+.. code-block:: cylc-graph
+
+   foo? => bar  # short for "foo:succeed? => bar"
+
+But now ``foo:succeed`` is optional, so we might expect it to fail sometimes.
+And if it does fail, it will not be marked as an incomplete task.
+
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all optional outputs:
+
+.. code-block:: cylc-graph
+
+   foo?
+   bar:x?
+   baz:fail?
+
+
+Success and failure (of the same task) are mutually exclusive, so they must
+both be optional if one is optional, or if they both appear in the graph:
+
+.. code-block:: cylc-graph
+
+   foo? => bar
+   foo:fail? => baz
+
+
+.. warning::
+
+   Optional outputs must be marked as optional everywhere they appear in the
+   graph, to avoid ambiguity.
+
+
+If a task generates multiple custom outputs, they should all be declared optional
+if you do not expect all of them all to be completed every time the task runs:
+
+.. code-block:: cylc-graph
+
+   # model:x, :y, and :z are all optional outputs:
+   model:x? => proc-x
+   model:y? => proc-y
+   model:z? => proc-z
+
+This is an example of :term:`graph branching` from optional outputs. Whether a
+particular branch is taken or not depends on which optional outputs are
+completed at runtime. For more information see :ref:`Graph Branching`.
+
+Leaf tasks (with nothing downstream of them) can have optional outputs. In the
+following graph, ``foo`` is expected to succeed, but it doesn't matter whether
+``bar`` succeeds or fails:
+
+.. code-block:: cylc-graph
+
+   foo => bar?
+
 
 .. note::
 
-   Runahead limiting does not restrict activity within a cycle point.
-   Workflows with a large number of tasks per cycle may need :ref:`internal
-   queues <InternalQueues>` to constrain activity in absolute terms.
+   Optional outputs do not affect *triggering*. They just tell the scheduler
+   what to do with the task if it finishes without completing the output.
 
-Succeeded and failed tasks are ignored when computing the runahead limit.
+   This graph triggers ``bar`` if ``foo`` succeeds, and does not trigger
+   ``bar`` if ``foo`` fails:
 
-In the following example the runahead limit of ``P5`` (which is also the
-default) restricts the active window of the workflow to span a maximum of five
-cycle points.
+   .. code-block:: cylc-graph
 
-.. code-block:: cylc
+      foo => bar
 
-    [scheduling]
-        initial cycle point = 1
-        cycling mode = integer
-        runahead limit = P5
-        [[graph]]
-            P1 = foo
+   And so does this graph:
 
-When this workflow is started the tasks ``foo.1`` through ``foo.5`` will be
-submitted, but ``foo.6`` (and beyond) are "runahead limited" and will not be
-submitted until the earliest tasks finish.
+   .. code-block:: cylc-graph
 
-A low runahead limit restricts Cylc's ability to run multiple cycle at once,
-but it will not stall the workflow unless it fails to extend out past a future
-trigger (see :ref:`InterCyclePointTriggers`).
+      foo? => bar
 
-A high runahead limit allows fast tasks that are not constrained by dependence
-on other tasks or clock-triggers to spawn many cycles ahead.
-:ref:`Internal queues <InternalQueues>` may be needed as well, if this would
-result in too many tasks submitting at once.
+   The only difference is whether or not the scheduler regards ``foo`` as
+   incomplete if it fails.
 
 
-.. _InternalQueues:
-
-Internal Queues
+Finish Triggers
 ^^^^^^^^^^^^^^^
 
-Large workflows can potentially overwhelm the system by submitting too many
-jobs at once. Internal queues can prevent this by limiting the number of
-tasks that can be active (submitted or running) at the same time.
+``foo:finish`` is a pseudo output that is short for ``foo:succeed? |
+foo:fail?``. This automatically labels the real outputs as optional, because
+success and failure can't both be expected.
 
-Internal queues are FIFO (first-in-first-out): tasks are released in the same
-order that they were queued. They are configured under
-:cylc:conf:`[scheduling][queues]` with a *name*; a list of *members* assigned
-by task or family name; and a *limit*, which is the maximum number of active
-members allowed.
+``foo:finish?`` is illegal because it incorrectly suggests that "finishing
+is optional" and that a non-optional version of the trigger makes sense.
 
-By default every task is assigned to the ``default`` queue, which by default
-has a zero limit (interpreted by Cylc as no limit). To use a single queue for
-the whole workflow just set the default queue limit:
+.. code-block:: cylc-graph
 
-.. code-block:: cylc
+   # Good:
+   R1 = """
+      foo:finish => bar
+      foo? => baz
+   """
 
-   [scheduling]
-       [[queues]]
-           # limit the entire workflow to 5 active tasks at once
-           [[[default]]]
-               limit = 5
+   # Error:
+   R1 = """
+      foo:finish => bar
+      foo => baz  # ERROR : foo:succeed must be optional here!
+   """
 
-To use additional queues just name them, set limits, and assign members:
 
-.. code-block:: cylc
+Family Triggers
+^^^^^^^^^^^^^^^
 
-   [scheduling]
-       [[queues]]
-           [[[q_foo]]]
-               limit = 5
-               members = foo, bar, baz
+.. (taken from https://github.com/cylc/cylc-flow/pull/4343#issuecomment-913901972)
 
-Any tasks not assigned to a particular queue will remain in the default
-queue. The following example illustrates how queues work by running two task
-trees side by side, limited to 2 and 3 tasks respectively:
+Family triggers are based on family pseudo outputs such as ``FAM:succeed-all``
+and ``FAM:fail-any`` that are short for logical expressions involving the
+corresponding member task outputs.
 
-.. literalinclude:: ../../workflows/queues/flow.cylc
-   :language: cylc
+If the member outputs are not singled out explicitly elsewhere in the graph,
+then they default to being expected outputs.
+
+For example, if ``f1`` and ``f2`` are members of ``FAM``, then this:
+
+.. code-block:: cylc-graph
+
+   FAM:fail-all => a
+
+
+means:
+
+.. code-block:: cylc-graph
+
+   f1:fail & f2:fail => a  # f1:fail and f2:fail are expected
+
+
+and this:
+
+.. code-block:: cylc-graph
+
+   FAM:succeed-any => a
+
+
+means:
+
+.. code-block:: cylc-graph
+
+   f1 | f2 => a  # f1:succeed and f2:succeed are expected
+
+
+However, the family default can be changed to optional by using ``?`` on the
+family trigger. So this:
+
+.. code-block:: cylc-graph
+
+   FAM:fail-all? => a
+
+
+means this:
+
+.. code-block:: cylc-graph
+
+   f1:fail? & f2:fail? => a  # f1:fail and f2:fail are optional
+
+
+If particular member tasks are singled out elsewhere in the graph, that
+overrides the family default for expected/optional outputs:
+
+.. code-block:: cylc-graph
+
+   # f1:fail is expected, and f2:fail is optional:
+   FAM:fail-all => a
+   f2:fail? => b
+
+
+Family Finish Triggers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Like task ``:finish`` triggers, family ``:finish-all/any`` triggers are
+different because ``:finish`` is a pseudo output involving both ``:succeed``
+and ``:fail``, which are mutually exclusive outputs that must both be optional
+if both are used.
+
+Also like task ``:finish`` triggers, use of ``?`` is illegal on a family
+finish trigger, because the underlying member outputs must already be optional.
+
+.. code-block:: cylc-graph
+
+   FAM:finish-all => a  # f1:succeed/fail and f2:succeed/fail are optional
+   FAM:finish-any => a  # (ditto)
+
+   FAM:finish-all? => b  # ERROR
 
 
 .. _Graph Branching:
@@ -1563,7 +1729,7 @@ Graph Branching
 
 Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
 automatically follow different paths depending on events at runtime. This
-relies on :term:`optional outputs` and is called *branching*.
+relies on :term:`optional outputs <optional output>` and is called *branching*.
 
 .. note::
 
@@ -1652,11 +1818,22 @@ example:
    bar -> baz [arrowhead="onormal"]
 
 
+The ``recover`` task would (presumably) analyse the failure of ``bar`` and, if
+the right failure mode is confirmed, attempt to generate the right outputs
+another way. Then ``baz`` can trigger off of either branch, to process the
+outputs.
+
+A more realistic example might have several tasks on each branch. The
+``recover`` task could, via inheritance, run the same underlying code as
+``bar``, but configured differently to avoid the failure.
+
+
 Message Trigger Example
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 Branching is particularly powerful when using :ref:`MessageTriggers` (i.e.
-:term:`custom outputs`) to define multiple parallel paths in the graph.
+:term:`custom outputs <custom output>`) to define multiple parallel paths in
+the graph.
 
 In the following graph there is a task called ``showdown`` which produces one
 of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
@@ -1760,8 +1937,106 @@ When using message triggers in this way there are two things to be aware of:
 
    Check that you understand how your tasks work, if they use custom outputs.
 
-How The Graph Determines Valid Task Cycle Points
-------------------------------------------------
+
+Limiting Workflow Activity
+--------------------------
+
+Cylc will usually try to trigger any task with met dependencies. If this
+risks running more tasks than you wish - if it would overwhelm the job
+platform for example - :ref:`RunaheadLimit` and :ref:`InternalQueues` provide
+tools to limit workflow activity.
+
+.. _RunaheadLimit:
+
+Runahead Limiting
+^^^^^^^^^^^^^^^^^
+
+Runahead limiting, controlled by :cylc:conf:`[scheduling]runahead limit`,
+prevents the fastest tasks in a workflow from getting too far
+ahead (with respect to cycle point) of the slowest ones.
+
+.. note::
+
+   Runahead limiting does not restrict activity within a cycle point.
+   Workflows with a large number of tasks per cycle may need :ref:`internal
+   queues <InternalQueues>` to constrain activity in absolute terms.
+
+Succeeded and failed tasks are ignored when computing the runahead limit.
+
+In the following example the runahead limit of ``P5`` (which is also the
+default) restricts the active window of the workflow to span a maximum of five
+cycle points.
+
+.. code-block:: cylc
+
+    [scheduling]
+        initial cycle point = 1
+        cycling mode = integer
+        runahead limit = P5
+        [[graph]]
+            P1 = foo
+
+When this workflow is started the tasks ``foo.1`` through ``foo.5`` will be
+submitted, but ``foo.6`` (and beyond) are "runahead limited" and will not be
+submitted until the earliest tasks finish.
+
+A low runahead limit restricts Cylc's ability to run multiple cycle at once,
+but it will not stall the workflow unless it fails to extend out past a future
+trigger (see :ref:`InterCyclePointTriggers`).
+
+A high runahead limit allows fast tasks that are not constrained by dependence
+on other tasks or clock-triggers to spawn many cycles ahead.
+:ref:`Internal queues <InternalQueues>` may be needed as well, if this would
+result in too many tasks submitting at once.
+
+
+.. _InternalQueues:
+
+Internal Queues
+^^^^^^^^^^^^^^^
+
+Large workflows can potentially overwhelm the system by submitting too many
+jobs at once. Internal queues can prevent this by limiting the number of
+tasks that can be active (submitted or running) at the same time.
+
+Internal queues are FIFO (first-in-first-out): tasks are released in the same
+order that they were queued. They are configured under
+:cylc:conf:`[scheduling][queues]` with a *name*; a list of *members* assigned
+by task or family name; and a *limit*, which is the maximum number of active
+members allowed.
+
+By default every task is assigned to the ``default`` queue, which by default
+has a zero limit (interpreted by Cylc as no limit). To use a single queue for
+the whole workflow just set the default queue limit:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[queues]]
+           # limit the entire workflow to 5 active tasks at once
+           [[[default]]]
+               limit = 5
+
+To use additional queues just name them, set limits, and assign members:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[queues]]
+           [[[q_foo]]]
+               limit = 5
+               members = foo, bar, baz
+
+Any tasks not assigned to a particular queue will remain in the default
+queue. The following example illustrates how queues work by running two task
+trees side by side, limited to 2 and 3 tasks respectively:
+
+.. literalinclude:: ../../workflows/queues/flow.cylc
+   :language: cylc
+
+
+Valid Task Cycle Points
+-----------------------
 
 Graph triggers determine the sequence of valid cycle points (via the
 recurrence value of the associated graph string) and the prerequisites, for
@@ -1860,3 +2135,10 @@ include or exclude tasks (or anything else) from workflow.
 
 .. [1] For example, in weather forecasting workflows (and similar systems) each
        new forecast depends partly on the outcome of the previous forecast.
+
+.. [2] By distinguishing graph branches that did not run but should have, from
+   those that did not run but were optional.
+
+.. [3] This includes failed job submission, when the ``:submit`` output is not
+   marked as optional.
+

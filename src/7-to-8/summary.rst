@@ -196,7 +196,8 @@ will conclude that the workflow did not run to completion as expected and will
 :term:`stall` rather than shut down.
 
 .. seealso::
-   * :ref:`Cylc User Guide <User Guide Optional Outputs>`
+   * :ref:`Cylc User Guide: optional outputs <User Guide Optional Outputs>`
+   * :ref:`Cylc User Guide: expected outputs <User Guide Expected Outputs>`
 
 
 Window on the Workflow
