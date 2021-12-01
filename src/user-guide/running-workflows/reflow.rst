@@ -23,7 +23,7 @@ flow.
 .. note::
 
    Without the ``--reflow`` option ``cylc trigger`` triggers the target
-   task but ndoes not start a new flow from its completed outputs.
+   task but does not start a new flow from its completed outputs.
 
    Triggering an :term:`incomplete task`, however, will cause its flow to
    continue, if it completes its outputs this time. Incomplete tasks are
@@ -45,15 +45,13 @@ called ``model`` in every cycle, followed by a postprocessing task, two
 product generating tasks, and finally a task that publishes results for
 the cycle point:
 
-   .. code-block:: cylc
+.. code-block:: cylc
 
-      [scheduling]
-          cycling mode = integer
-          initial cycle point = 1
-          [[graph]]
-              P1 = """
-                  model [-P1] => model => post => prod1 & prod2 => publish
-              """
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       [[graph]]
+           P1 = model[-P1] => model => post => prod1 & prod2 => publish
 
 Let's say the workflow has run to cycle 8, but we have just noticed that
 a corrupted ancillary file resulted in bad products at cycle 5.
@@ -61,7 +59,7 @@ a corrupted ancillary file resulted in bad products at cycle 5.
 To rectify this we could fix the corrupted file and trigger a new flow
 (a reflow) from ``post.5``::
 
-   cylc trigger post.5 --reflow <workflow-id>
+   cylc trigger --reflow <workflow-id> post.5
 
 The new flow will regenerate and republish cycle 5 products before naturally
 coming to a halt, because the triggered tasks do not lead on to the next cycle
@@ -72,7 +70,7 @@ Meanwhile, the original flow will carry on unaffected, from cycle 8.
 Flow Merging
 ------------
 
-If a task from one flow catches up to an active sibling from another
+If a task from one flow catches up with an active sibling from another
 (i.e., another active task with the same name and :term:`cycle point`,
 but a different flow number) they will merge and carry both flow numbers
 forward. Downstream tasks can be considered to belong to either flow.

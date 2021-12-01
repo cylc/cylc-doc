@@ -146,7 +146,7 @@ Glossary
       An active waiting task is a task in the :term:`scheduler's <scheduler>`
       active window that is "actively waiting" on (i.e. periodically checking)
       an :term:`external trigger` or :term:`clock trigger`.
-     
+
       These are the only waiting tasks that matter to the :term:scheduler.
       Waiting tasks ahead of the active window in Cylc 8 are entirely
       abstract.
@@ -155,7 +155,7 @@ Glossary
    external trigger
       External triggers allow :term:`tasks <task>` in the :term:`graph` to
       depend on external events, such as a file being delivered to some
-      location, or a database being updated in some way. 
+      location, or a database being updated in some way.
 
       The :term:`scheduler` can repeatedly call a user-supplied Python function
       to check that the external event has occurred.
@@ -169,21 +169,21 @@ Glossary
          * :term:`clock trigger`
          * :ref:`Cylc User Guide <Section External Triggers>`
          * :ref:`Cylc User Guide <Built-in Workflow State Triggers>`
-      
+
 
    internal queue
       Internal queues (so called to distinguish them from external batch
       queueing systems) allow you to limit how many :term:`tasks <task>` can be
       active (submitted or running) at once, across defined groups of tasks.
 
-      Use queues prevent large or busy workflows from swamping their 
+      Use queues prevent large or busy workflows from swamping their
       :term:`job platforms <job platform>` with too many jobs at once.
-      
+
       .. seealso::
 
          * :cylc:conf:`[scheduling][queues]`
          * :ref:`Cylc User Guide <InternalQueues>`
-      
+
 
    workflow id
       A workflow can be uniquely identified by the relative path between the :term:`cylc-run directory`
@@ -1348,23 +1348,23 @@ Glossary
       .. code-block:: cylc
 
          [scheduling]
-            [[graph]]
-               R1 = """
-                  foo:out1 => proc-out-1
-                  foo:out2 => proc-out-2
-               """
+             [[graph]]
+                 R1 = """
+                    foo:out1 => proc-out-1
+                    foo:out2 => proc-out-2
+                 """
          [runtime]
-            [[foo]]
-               script = """
-                  # ...
-                  cylc message "Output 1 completed"
-                  # ...
-                  cylc message "Output 2 completed"
-               """
-               [[[outputs]]]
-                   # output name = output message
-                   out1 = "Output 1 completed"
-                   out2 = "Output 2 completed"
+             [[foo]]
+                 script = """
+                     # ...
+                     cylc message "Output 1 completed"
+                     # ...
+                     cylc message "Output 2 completed"
+                 """
+                 [[[outputs]]]
+                     # output name = output message
+                     out1 = "Output 1 completed"
+                     out2 = "Output 2 completed"
 
       However, if you don't need a descriptive message for the workflow
       log, you can make the message the same as its name:
@@ -1387,11 +1387,11 @@ Glossary
       .. code-block:: cylc
 
          [runtime]
-            [[foo]]
-               [[[outputs]]]
-                   # output name = output message
-                   out1 = "Output 1 completed"
-                   out2 = "Output 2 completed"
+             [[foo]]
+                 [[[outputs]]]
+                     # output name = output message
+                     out1 = "Output 1 completed"
+                     out2 = "Output 2 completed"
 
       .. seealso::
 
@@ -1495,7 +1495,7 @@ Glossary
       .. code-block:: cylc-graph
 
          # the success branch
-         a:succeed => b? => c
+         a => b? => c
          # the fail branch
          b:fail? => r
          # joining the two branches together
@@ -1605,4 +1605,3 @@ Glossary
 
       If there are no more tasks to run, but there are incomplete tasks
       present, the scheduler will :term:`stall` rather than shut down.
-
