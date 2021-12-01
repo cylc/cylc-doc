@@ -6,7 +6,7 @@ External Triggers
 External triggers allow tasks to trigger directly off of external events, which
 is often preferable to implementing long-running polling tasks in the workflow.
 The triggering mechanism described in this section is intended to replace the one
-one documented in :ref:`Push External Triggers` (however, that one is a push
+one documented in :ref:`Old-Style External Triggers` (however, that one is a push
 mechanism, whereas this one involves regular polling by the scheduler).
 
 If you can write a Python function to check the status of an external
@@ -418,7 +418,7 @@ the watcher (e.g. to watch continuously for filesystem events) and have your
 Cylc trigger functions interact with it.
 
 
-.. _Push External Triggers:
+.. _Old-Style External Triggers:
 
 Push External Triggers
 ----------------------
