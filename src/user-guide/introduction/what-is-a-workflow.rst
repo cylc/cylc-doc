@@ -1,6 +1,13 @@
 What is a Workflow?
 ===================
 
-.. TODO flesh this out later; for now just point to the tutorial section
+.. epigraph::
 
-:ref:`Cylc tutorial: What is a Workflow? <cylc-what-is-a-workflow>`
+   A workflow consists of an orchestrated and repeatable pattern of business
+   activity enabled by the systematic organization of resources into processes
+   that transform materials, provide services, or process information.
+
+   -- Wikipedia
+
+
+.. tutorial:: What is a Workflow? <cylc-what-is-a-workflow>
