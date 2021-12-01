@@ -103,12 +103,12 @@ The ``n = 0`` or *active task* window includes:
 - ``preparing`` tasks
 - ``submitted`` and ``running`` tasks - i.e. those with active jobs
 - ``waiting`` tasks, that are :term:`actively waiting <active waiting task>` on:
-  
+
   - :ref:`clock triggers <Built-in Clock Triggers>`
   - :ref:`external triggers <Section External Triggers>`
   - :ref:`internal queues <InternalQueues>`
   - :ref:`runahead limit <RunaheadLimit>`
- 
+
 - finished tasks retained as *incomplete*, in expectation of user intervention:
 
   - ``submit-failed`` tasks, if successful submission was not :term:`optional <optional output>`
@@ -137,3 +137,28 @@ state, with a new clock trigger to handle the configured retry delay.
    A task that is waiting on a retry will already have one or more failed jobs
    associated with it.
 
+Aborting a Retry Sequence
+-------------------------
+
+To prevent a waiting task from retrying, remove it from the scheduler.
+If the example above is installed as ``demo``:
+
+.. code-block:: console
+
+   $ cylc remove demo flaky.1
+
+If a task with retries gets *killed* while running, it goes to the ``held``
+state so you decide whether to release it and continue the retry
+sequence, or abort.
+
+.. code-block:: console
+
+   $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
+   $ cylc release demo flaky.1  # release to continue retrying
+   $ cylc remove demo flaky.1  # OR remove the task to abort retries
+
+
+If you want ``whizz`` to trigger downstream tasks despite ``flaky.1`` being
+removed before it succeeded, use ``cylc set-outputs demo flaky.1`` to
+artificially mark it as succeeded (and use the ``--flow`` option if you want
+the flow to continue after ``whizz``).

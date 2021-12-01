@@ -537,33 +537,6 @@ task ``whizz`` downstream. The scheduler will then stall with
            script = "sleep 10"
 
 
-Aborting a Retry Sequence
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To prevent a waiting task from retrying, remove it from the scheduler.
-If the example above is installed as ``demo``:
-
-.. code-block:: console
-
-   $ cylc remove demo flaky.1
-
-If a task with retries gets *killed* while running, it goes to the ``held``
-state so you decide whether to release it and continue the retry
-sequence, or abort.
-
-.. code-block:: console
-
-   $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
-   $ cylc release demo flaky.1  # release to continue retrying
-   $ cylc remove demo flaky.1  # OR remove the task to abort retries
-
-
-If you want ``whizz`` to trigger downstream tasks despite ``flaky.1`` being
-removed before it succeeded, use ``cylc set-outputs demo flaky.1`` to
-artificially mark it as succeeded (and use the ``--flow`` option if you want
-the flow to continue after ``whizz``).
-
-
 .. _EventHandling:
 
 Event Handling
