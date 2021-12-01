@@ -202,7 +202,7 @@ and also to this:
 .. note::
 
    Multiple graph strings add together to make the complete workflow graph.
-   
+
 
 .. versionadded:: 8.0.0
 
@@ -218,7 +218,7 @@ Non-Cycling
 ^^^^^^^^^^^
 
 The following is a small workflow of non-cycling tasks; these all have a
-single cycle point (``1``), and once they're all finished the scheduler 
+single cycle point (``1``), and once they're all finished the scheduler
 shuts down.
 
 .. Need to use a 'container' directive to get centered image with
@@ -1479,8 +1479,8 @@ ahead (with respect to cycle point) of the slowest ones.
    Runahead limiting does not restrict activity within a cycle point.
    Workflows with a large number of tasks per cycle may need :ref:`internal
    queues <InternalQueues>` to constrain activity in absolute terms.
-   
-Succeeded and failed tasks are ignored when computing the runahead limit. 
+
+Succeeded and failed tasks are ignored when computing the runahead limit.
 
 In the following example the runahead limit of ``P5`` (which is also the
 default) restricts the active window of the workflow to span a maximum of five
@@ -1559,16 +1559,19 @@ trees side by side, limited to 2 and 3 tasks respectively:
 Graph Branching
 ---------------
 
-.. versionadded:: 8.0.0
+.. versionadded:: 8.0b2
 
-Cylc 8 handles :term:`graphs <graph>` in an event-driven way so that
-a workflow can automatically follow different paths in different eventualities.
-This is called :term:`branching`.
+Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
+automatically follow different paths depending on events at runtime. This
+relies on :term:`optional outputs` and is called *branching*.
 
 .. note::
 
-   Before Cylc 8, graphs were not event-driven, so :term:`suicide triggers
-   <suicide trigger>` were needed to clean up unused branches at runtime.
+   In Cylc 7 and earlier, graphs were not event-driven and needed
+   :term:`suicide triggers <suicide trigger>` to clean up unused
+   branches at runtime.
+
+   Cylc 8 does not need suicide triggers for branching.
 
 Basic Example
 ^^^^^^^^^^^^^
@@ -1618,17 +1621,60 @@ Task ``d`` will run after either ``c`` or ``r`` succeeds.
            """
 
 Note the last line of the graph ``c | r => d`` allows the graph to
-continue on to ``d`` regardless of the path taken.
+continue on to ``d`` regardless of the path taken. This is an :term:`artificial
+dependency`.
+
+Branching is often used for automatic failure recovery. Here's a simple
+example:
+
+.. code-block:: cylc-graph
+
+   foo => bar
+   bar:fail? => recover
+   bar? | recover => baz
+
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+      label = ":fail"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      recover
+   }
+
+   foo -> bar
+   bar -> recover
+   recover -> baz [arrowhead="onormal"]
+   bar -> baz [arrowhead="onormal"]
+
 
 Message Trigger Example
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Branching is particularly powerful when using :ref:`MessageTriggers`
-to define multiple parallel pathways.
+Branching is particularly powerful when using :ref:`MessageTriggers` (i.e.
+:term:`custom outputs`) to define multiple parallel paths in the graph.
 
 In the following graph there is a task called ``showdown`` which produces one
 of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
-a different path depending on which of these three outputs is produced:
+a different path depending on which of these three outputs is produced.
+
+As with the previous example each path begins with a different :term:`optional
+output` of a particular task and ends with an "or" dependency to allow the
+workflow to continue regardless of the path taken.
+
+.. code-block:: cylc-graph
+
+   # branch the graph depending on the outcome of "showdown"
+   showdown:good? => good
+   showdown:bad? => bad
+   showdown:ugly? => ugly
+   # join the graph back together
+   good | bad | ugly => fin
+
 
 .. digraph:: Example
    :align: center
@@ -1638,6 +1684,7 @@ a different path depending on which of these three outputs is produced:
       color = "green"
       fontcolor = "green"
       style = "dashed"
+
       good
    }
    subgraph cluster_2 {
@@ -1645,6 +1692,7 @@ a different path depending on which of these three outputs is produced:
       color = "red"
       fontcolor = "red"
       style = "dashed"
+
       bad
    }
    subgraph cluster_3 {
@@ -1652,6 +1700,7 @@ a different path depending on which of these three outputs is produced:
       color = "purple"
       fontcolor = "purple"
       style = "dashed"
+
       ugly
    }
    showdown -> good
@@ -1661,42 +1710,31 @@ a different path depending on which of these three outputs is produced:
    bad -> fin [arrowhead="onormal"]
    ugly -> fin [arrowhead="onormal"]
 
-As with the previous example each path begins with a different outcome
-of a particular task and ends with an "or" dependency to allow the workflow
-to continue regardless of the path taken:
+
+You can test run this example making ``showdown`` randomly generate one of the
+three custom outputs:
 
 .. code-block:: cylc
 
-   [scheduling]
-       [[graph]]
-           R1 = """
-              showdown
-              showdown:good => good
-              showdown:bad => bad
-              showdown:ugly => ugly
-              good | bad | ugly => fin
-           """
-
    [runtime]
-       [[root]]
-           script = sleep 1
        [[showdown]]
            # Randomly return one of the three custom outputs.
            script = """
                SEED=$RANDOM
                if ! (( $SEED % 3 )); then
-                   cylc message 'The-Good'
+                   cylc message 'The Good'
                elif ! (( ( $SEED + 1 ) % 3 )); then
-                   cylc message 'The-Bad'
+                   cylc message 'The Bad'
                else
-                   cylc message 'The-Ugly'
+                   cylc message 'The Ugly'
                fi
            """
            [[[outputs]]]
-               # Register the three custom outputs with cylc.
-               good = 'The-Good'
-               bad = 'The-Bad'
-               ugly = 'The-Ugly'
+               # Register the three custom outputs.
+               good = 'The Good'
+               bad = 'The Bad'
+               ugly = 'The Ugly'
+
 
 When using message triggers in this way there are two things to be aware of:
 
@@ -1714,8 +1752,8 @@ When using message triggers in this way there are two things to be aware of:
       showdown:succeed & showdown:good => good
 
 2. Whether message outputs from a single task are mutually exclusive or not
-   depends on the task, and the workflow should be designed accordingly. 
-  
+   depends on the task, and the workflow should be designed accordingly.
+
    For example, the ``showdown`` task above could instead send all three
    messages in succession, after writing out corresponding *good*, *bad*, and
    *ugly* files.
@@ -1727,7 +1765,7 @@ How The Graph Determines Valid Task Cycle Points
 
 Graph triggers determine the sequence of valid cycle points (via the
 recurrence value of the associated graph string) and the prerequisites, for
-each downstream task in a dependency. In the absence of a cycle point offset 
+each downstream task in a dependency. In the absence of a cycle point offset
 (intercycle trigger) they also determine the sequence of cycle points for
 the upstream tasks:
 
@@ -1737,7 +1775,7 @@ the upstream tasks:
        initial cycle point = 2025-01-01T00
        [[graph]]
            P2D = "foo & bar => baz"
-  
+
 This says ``baz`` depends on ``foo`` and ``bar`` for every point in the
 sequence defined by the recurrence ``P2D`` (i.e. ``R/^/P2D``).
 
@@ -1756,9 +1794,9 @@ defined for ``foo``*:
        [[graph]]
            # ERROR!
            P2D = "foo[-P1D] & bar"
- 
+
 To fix this, ``foo`` should be explicitly tied to the ``P2D`` cycle, and the
-correct offset used: 
+correct offset used:
 
 .. code-block:: cylc
 
@@ -1818,7 +1856,7 @@ them out of the graph. Validation warns about tasks defined under
 or remove them.
 
 You can also use logical Jinja2 switches (:ref:`User Guide Jinja2`) to
-include or exclude tasks (or anything else) from workflow. 
+include or exclude tasks (or anything else) from workflow.
 
 .. [1] For example, in weather forecasting workflows (and similar systems) each
        new forecast depends partly on the outcome of the previous forecast.

@@ -1,3 +1,5 @@
+.. _tutorial-inheritance:
+
 Inheritance
 ===========
 
