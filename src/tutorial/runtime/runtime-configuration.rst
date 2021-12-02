@@ -65,7 +65,7 @@ Job Submission
 
    By default Cylc runs :term:`jobs <job>` on the machine where the workflow is
    running. We can tell Cylc to run jobs on other machines by setting the
-   :term:`platform` setting: If, for example you want to run a task job on a
+   :term:`platform`. If, for example you want to run a task job on a
    platform called ``powerful_computer`` you would write:
 
 .. code-block:: cylc
@@ -75,18 +75,20 @@ Job Submission
            script = echo "Hello Compute Host"
            platform = powerful_computer
 
-.. _background processes: https://en.wikipedia.org/wiki/Background_process
+.. _background: https://en.wikipedia.org/wiki/Background_process
 .. _job scheduler: https://en.wikipedia.org/wiki/Job_scheduler
 
 .. nextslide::
 
 .. ifnotslides::
 
-   Cylc also executes jobs as `background processes`_ by default.
-   When we are running jobs on other compute hosts we will often want to
-   use a :term:`job runner` to submit our job.
+   Platforms are set up in a user/site configuration (see `AdminGuide.PlatformConfigs`).
+   As well as setting which hosts a job can run on, platforms also set which
+   :term:`job-runner` Cylc will use.
+
    Cylc supports the following :term:`job runners <job runner>`:
 
+* `background`_ (default)
 * at
 * loadleveler
 * lsf
@@ -99,11 +101,14 @@ Job Submission
 
 .. ifnotslides::
 
-   :term:`Job runners <job runner>` typically require
-   :term:`directives <directive>` in some form. :term:`Directives <directive>`
-   inform the job runner of the requirements of a :term:`job`, for
-   example how much memory a given job requires or how many CPUs the job will
-   run on. For example:
+   Many :term:`Job runners <job runner>` can accept additional configuration in
+   the form of :term:`directives <directive>`. :term:`Directives <directive>`
+   inform the job runner of the requirements of a :term:`job`. Common examples
+   of directives might state:
+
+   - How much memory a given job requires.
+   - How many CPUs the job will run on.
+   - How long the job should run for.
 
 .. code-block:: cylc
 
@@ -111,7 +116,6 @@ Job Submission
        [[big_task]]
            script = big-executable
 
-           # Submit to the host "big-computer".
            platform = slurm_platform
 
            # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
