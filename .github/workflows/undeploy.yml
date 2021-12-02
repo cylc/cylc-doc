@@ -61,7 +61,7 @@ jobs:
           done
 
       - name: configure git
-        run: cylc/release-actions/configure-git@v1
+        uses: cylc/release-actions/configure-git@v1
 
       - name: remove version
         run: |

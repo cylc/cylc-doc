@@ -90,8 +90,8 @@ jobs:
           pip install -e ../rose[all]
 
       - name: create conda envs
-        uses: ./.github/actions/create-conda-envs
-        continue-on-error: ${{ github.event.inputs.skip_conda_environment_check }}
+        uses: ./docs/.github/actions/create-conda-envs
+        continue-on-error: ${{ github.event.inputs.skip_conda_environment_check == 'true' }}
         with:
           python_version: '3.7'
 
