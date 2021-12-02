@@ -436,17 +436,17 @@ are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
 Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
 ----------------------------------------------
 
-- Every task implicitly depended on previous-instance (same task, previous
-  cycle point) job submission
+- Every task implicitly depended on submission of the previous-instance job
+  (same task, previous cycle point)
+- Which meant tasks could not run out of cycle point order
+- And the scheduler could stall with next-cycle-point successors not spawned
+  downstream of failed tasks
+- The indiscriminate dependency matching process was costly
 - The scheduler had to be aware of at least one active and one waiting
   cycle point instance of every task in the workflow, plus all succeeded tasks
   in the current active task window
-- The indiscriminate dependency matching process was costly
 - To fully understand what tasks appeared in the GUI (why particular
   *waiting* or *succeeded* tasks appeared in some cycles but not in others, for
   instance) you had to understand the scheduling algorithm
 - *Suicide triggers* were needed to clear unused graph paths and avoid
   stalling the scheduler
-- Tasks could not run out of cycle point order
-- The scheduler could stall with next-cycle-point successors not spawned
-  downstream of failed tasks
