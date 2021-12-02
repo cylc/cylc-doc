@@ -86,3 +86,9 @@ A single task can have multiple jobs, by automatic retry or manual triggering.
     |task-succeeded|     |job-succeeded|      succeeded         job succeeded
     |task-failed|        |job-failed|         failed            job failed
     =======================================================     ===========
+
+
+.. note::
+
+   A colour scheme designed to help users with colour blindness is available.
+   In the GUI navigate to dashboard (top left) then settings.

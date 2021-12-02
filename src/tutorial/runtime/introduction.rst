@@ -1,3 +1,35 @@
+.. |task-waiting| image:: ../../img/task-job-icons/task-waiting.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submitted| image:: ../../img/task-job-icons/task-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |task-running| image:: ../../img/task-job-icons/task-running.png
+   :scale: 100%
+   :align: middle
+
+.. |task-succeeded| image:: ../../img/task-job-icons/task-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |job-blank| image:: ../../img/task-job-icons/job-blank.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submitted| image:: ../../img/task-job-icons/job-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |job-running| image:: ../../img/task-job-icons/job-running.png
+   :scale: 100%
+   :align: middle
+
+.. |job-succeeded| image:: ../../img/task-job-icons/job-succeeded.png
+   :scale: 100%
+   :align: middle
+
 .. _tutorial-cylc-runtime-introduction:
 
 Introduction
@@ -16,10 +48,12 @@ Introduction
    the workflow is defined in terms of :term:`tasks <task>` and
    :term:`dependencies <dependency>`.
 
-   In order to make the workflow runnable we must associate tasks with scripts
-   or binaries to be executed when the task runs. This means working with the
-   ``[runtime]`` section which determines what runs, as well as where and how
-   it runs.
+   In order to make the workflow do real work we must associate tasks with
+   scripts or binaries to be executed when the task runs. The ``[runtime]``
+   section which sets:
+
+   - What scripts or binaries run.
+   - What compute platform is used by task-jobs.
 
 .. ifslides::
 
@@ -89,11 +123,14 @@ We can also call other scripts or executables in this way, e.g:
 .. ifnotslides::
 
    It is often a good idea to keep our scripts with the Cylc workflow rather than
-   leaving them somewhere else on the system.
+   leaving them somewhere else on the system. In the previous example
+   ``script = ~/foo/bar/baz/hello_world``, ``~/`` would be different for
+   each user, so this workflow cannot be reliably run by anyone other than the
+   original author.
 
    If you create a ``bin/`` sub-directory within the :term:`source directory`,
-   Cylc will automatically prepend it to the ``PATH`` environment
-   variable when the task runs.
+   Cylc will automatically prepend it to the ``PATH`` environment variable when
+   the task runs, allowing your task to run scripts in this folder.
 
 .. code-block:: bash
    :caption: bin/hello_world
@@ -154,15 +191,16 @@ Tasks And Jobs
       There is more about this in the :ref:`next section
       <tutorial-job-runner>`.
    Running
-      A :term:`task` is in the "Running" state as soon as the :term:`job` is
-      executed.
+      A :term:`task` is in the "Running" state as soon as the :term:`job`
+      execution starts.
    Succeeded
       If the :term:`job` submitted by a :term:`task` has successfully
       completed (i.e. there is zero return code) then it is said to have
       succeeded.
 
    These descriptions, and a few more (e.g. failed), are called the
-   :term:`task states <task state>`.
+   :ref:`task states <task-job-states>`.
+
 
 .. ifslides::
 
@@ -185,35 +223,20 @@ The Cylc GUI
    interface (the Cylc GUI) which can be used for monitoring and
    interaction.
 
-   The Cylc GUI looks quite like ``cylc graph`` but the tasks are colour-coded
-   to represent their state, as in the following diagram.
+   The Cylc GUI uses icons to indicate task states, and colour coded blocks
+   to indicate the state of jobs run for those tasks. For example:
 
-.. digraph:: example
-   :align: center
+   .. table::
 
-   Waiting [color="#88c6ff"]
-   Running [style="filled" color="#00c410"]
-   Succeeded [style="filled" color="#ada5a5"]
+      =======================================================     ===========
+      Task & Job States                                           Description
+      =======================================================     ===========
+      |task-waiting|       |job-blank|          waiting           waiting on prerequisites
+      |task-submitted|     |job-submitted|      submitted         job submitted
+      |task-running|       |job-running|        running           job running
+      |task-succeeded|     |job-succeeded|      succeeded         job succeeded
+      =======================================================     ===========
 
-.. minicylc::
-   :align: center
-
-    a => b => c
-    b => d => f
-    e => f
-
-.. nextslide::
-
-.. ifnotslides::
-
-   This is the "graph view". The Cylc GUI has two other views called "tree" and
-   "dot".
-
-.. figure:: ../img/cylc-gui-graph.png
-   :figwidth: 75%
-   :align: center
-
-   Screenshot of the Cylc GUI in "Graph View" mode.
 
 .. nextslide::
 
@@ -221,15 +244,22 @@ The Cylc GUI
    :figwidth: 75%
    :align: center
 
-   Screenshot of the Cylc GUI in "Tree View" mode.
+   Screenshot of the Cylc GUI "Tree View" tab.
 
 .. nextslide::
 
-.. figure:: ../img/cylc-gui-dot.png
+.. figure:: ../img/cylc-gui-table.png
    :figwidth: 75%
    :align: center
 
-   Screenshot of the Cylc GUI in "Dot View" mode.
+   Screenshot of the Cylc GUI "Table View" tab.
+
+.. TODO - Add new views when these become available.
+
+.. note::
+
+   A colour scheme designed to help users with colour blindness is available.
+   In the GUI navigate to dashboard (top left) then settings.
 
 
 Where Do All The Files Go?
@@ -270,15 +300,6 @@ Where Do All The Files Go?
    The :term:`job submission number` starts at 1 and increments by 1 each time
    a task is re-run.
 
-   .. tip::
-
-      If a task has run and is still visible in the Cylc GUI you can view its
-      :term:`job log files <job log>` by right-clicking on the task and
-      selecting "View".
-
-      .. image:: ../img/cylc-gui-view-log.png
-         :align: center
-         :scale: 75%
 
 .. ifslides::
 
@@ -299,26 +320,31 @@ Where Do All The Files Go?
 Running A Workflow
 ------------------
 
+.. note::
+
+   In this tutorial we are going to develop our workflow in ``~/cylc-scr``,
+   use the ``cylc install`` command to install the workflow in ``~/cylc-run``.
+   This pattern keeps the development and running of workflows separate.
+
 .. ifnotslides::
 
    It is a good idea to check a workflow for errors before running it.
-   Cylc provides a command which automatically checks for any obvious
-   configuration issues called ``cylc validate``, run via:
+   Cylc provides a command which automatically checks for
+   configuration issues called ``cylc validate``, run using:
 
 .. code-block:: sub
 
-   cylc validate <path/to/workflow>
+   # workflow in ~/cylc-src/<name>
+   cylc validate <name>
 
 .. ifnotslides::
 
-   Here ``<path/to/workflow>`` is the path to the workflow's location within the
-   filesystem (so if we create a workflow in ``~/cylc-run/foo`` we would put
-   ``~/cylc-run/foo/flow.cylc``).
-
-   Next we can run the workflow using the ``cylc play`` command.
+   Next we can install the workflow using ``cylc install``
+   and finally run the workflow using the ``cylc play`` command.
 
 .. code-block:: sub
 
+   cylc install <name>
    cylc play <name>
 
 .. ifnotslides::
@@ -326,14 +352,6 @@ Running A Workflow
    The ``name`` is the name of the :term:`run directory` (i.e. ``<name>``
    would be ``foo`` in the above example).
 
-.. note::
-
-   In this tutorial we are writing our workflows in the ``cylc-run`` directory.
-
-   However, you should write real workflows in a separate source location
-   (Cylc expects ``~/cylc-src`` by default) and then use ``cylc install`` to
-   install them to the run directory before use. For more information, see
-   :ref:`Installing-workflows`.
 
 Generated Workflow Files
 ------------------------
@@ -397,8 +415,8 @@ Generated Workflow Files
 
       .. code-block:: bash
 
-         rose tutorial runtime-introduction
-         cd ~/cylc-run/runtime-introduction
+         cylc resource runtime-introduction
+         cd ~/cylc-src/runtime-introduction
 
       In this directory we have the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
@@ -423,10 +441,11 @@ Generated Workflow Files
 
          cylc gui runtime-introduction &
 
-      Finally run the workflow by executing:
+      Finally install and run the workflow by executing:
 
       .. code-block:: bash
 
+         cylc install runtime-introduction
          cylc play runtime-introduction
 
       The tasks will start to run - you should see them going through the
@@ -435,19 +454,6 @@ Generated Workflow Files
       When the workflow reaches the final cycle point and all tasks have succeeded
       it will shutdown automatically and the GUI will go blank.
 
-      .. tip::
-
-         You can also run a workflow from the Cylc GUI by pressing the "play"
-         button.
-
-         .. image:: ../img/gcylc-play.png
-            :align: center
-
-         A box will appear. Ensure that "Cold Start" is selected then press
-         "Start".
-
-         .. image:: ../img/cylc-gui-workflow-start.png
-            :align: center
 
    #. **Inspect A Job Log.**
 
@@ -457,7 +463,7 @@ Generated Workflow Files
 
       .. code-block:: sub
 
-         log/job/<cycle-point>/get_observations_heathrow/01/job.out
+         ~/cylc-run/runtime-introduction/log/job/<cycle-point>/get_observations_heathrow/01/job.out
 
       You should see something like this:
 
@@ -474,9 +480,9 @@ Generated Workflow Files
 
       * The first three lines are information which Cylc has written to the file
         to provide information about the job.
+      * The lines in the middle are the stdout of the job itself.
       * The last two lines were also written by cylc. They provide timestamps
         marking the stages in the job's life.
-      * The lines in the middle are the stdout of the job itself.
 
    #. **Inspect A Work Directory.**
 
@@ -496,20 +502,16 @@ Generated Workflow Files
 
       * Try re-running the workflow.
 
-      * Try changing the current view(s).
+      * Try adding new view tabs:
 
         .. tip::
 
-           You can do this from the "View" menu or from the toolbar:
+           You can do this from the "Add View" button at the top right:
 
            .. image:: ../img/cylc-gui-view-selector.png
               :align: center
               :scale: 75%
 
-      * Try pressing the "Pause" button which is found in the top left-hand
-        corner of the GUI.
+      * Try pressing the "Pause" button which is found near the play button.
 
-      * Try right-clicking on a task. From the right-click menu you could try:
-
-        * "Trigger (run now)"
-        * "Reset State"
+      * Try exanding information on a task or job by pressing on >.
