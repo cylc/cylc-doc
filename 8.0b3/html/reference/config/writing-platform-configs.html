@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Platform Configurations &mdash; Cylc 8.0b3 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc API" href="../api/index.html" />
+    <link rel="prev" title="Cylc Configuration Data Types" href="types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0b3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="workflow.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global.html">Global Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Cylc Configuration Data Types</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Writing Platform Configurations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-platforms">What Are Platforms?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-were-platforms-introduced">Why Were Platforms Introduced?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-install-targets">What Are Install Targets?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#example-platforms">Example Platforms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#on-the-scheduler-host-cylc-server">On the Scheduler Host (Cylc Server)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simple-remote-platform">Simple Remote Platform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cluster-with-multiple-login-nodes">Cluster with Multiple Login Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#background-jobs-on-cluster-with-other-options">Background Jobs on Cluster with Other Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submit-pbs-jobs-from-localhost">Submit PBS Jobs from Localhost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-similar-clusters">Two Similar Clusters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#preferred-and-backup-hosts-and-platforms">Preferred and Backup Hosts and Platforms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lots-of-desktop-computers">Lots of desktop computers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+          <li><a href="index.html">Configuration</a> &raquo;</li>
+      <li>Writing Platform Configurations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/config/writing-platform-configs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="writing-platform-configurations">
+<span id="adminguide-platformconfigs"></span><h1>Writing Platform Configurations<a class="headerlink" href="#writing-platform-configurations" title="Permalink to this headline"></a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.0.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../7-to-8/major-changes/platforms.html#majorchangesplatforms"><span class="std std-ref">Platforms Cylc 7 to 8 user upgrade guide</span></a>.</p></li>
+<li><p><a class="reference internal" href="workflow.html#flow.cylc[runtime][&lt;namespace&gt;]platform" title="flow.cylc[runtime][&lt;namespace&gt;]platform"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]platform</span></code></a></p></li>
+<li><p><a class="reference internal" href="global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a></p></li>
+<li><p><a class="reference internal" href="global.html#global.cylc[platforms][&lt;platform name&gt;]install target" title="global.cylc[platforms][&lt;platform name&gt;]install target"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]install</span> <span class="pre">target</span></code></a></p></li>
+</ul>
+</div>
+<section id="what-are-platforms">
+<h2>What Are Platforms?<a class="headerlink" href="#what-are-platforms" title="Permalink to this headline"></a></h2>
+<p>Platforms define settings, most importantly:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A set of <code class="docutils literal notranslate"><span class="pre">hosts</span></code>.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">job</span> <span class="pre">runner</span></code> (formerly a <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">system</span></code>) where Cylc can submit a
+task job.</p></li>
+<li><p>An <code class="docutils literal notranslate"><span class="pre">install</span> <span class="pre">target</span></code> for Cylc to install task job files on.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="why-were-platforms-introduced">
+<h2>Why Were Platforms Introduced?<a class="headerlink" href="#why-were-platforms-introduced" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Allow a compute cluster with multiple login nodes to be treated as a single
+unit.</p></li>
+<li><p>Allow Cylc to elegantly handle failure of to communicate with login nodes.</p></li>
+<li><p>Configure multiple platforms with the same hosts; for example you can use
+separate platforms to submit jobs to a batch system and to background on
+<code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p></li>
+</ul>
+</section>
+<section id="what-are-install-targets">
+<span id="install-targets"></span><h2>What Are Install Targets?<a class="headerlink" href="#what-are-install-targets" title="Permalink to this headline"></a></h2>
+<p>Install targets represent file systems. More than one platform can use the
+same file system. It defaults to the name of the platform.</p>
+<p>For example, your Cylc scheduler hosts might share a file system with a
+compute cluster. Cylc does not need to install files on this cluster. The
+cluster and scheduler hosts are different platforms, but share an install
+target.</p>
+<p>But you might also have mirrored clusters, each with their own file system.
+Each cluster would be both a platform, and have its own install target.</p>
+</section>
+</section>
+<section id="example-platforms">
+<h1>Example Platforms<a class="headerlink" href="#example-platforms" title="Permalink to this headline"></a></h1>
+<section id="on-the-scheduler-host-cylc-server">
+<h2>On the Scheduler Host (Cylc Server)<a class="headerlink" href="#on-the-scheduler-host-cylc-server" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>There is a built in localhost platform</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>You want to allow users to submit small jobs to the scheduler host:</p>
+</div>
+<p>If a job doesn’t set a platform it will run on the Cylc scheduler host
+using a default <code class="docutils literal notranslate"><span class="pre">localhost</span></code> platform.</p>
+</section>
+<section id="simple-remote-platform">
+<h2>Simple Remote Platform<a class="headerlink" href="#simple-remote-platform" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platforms don’t need to be complicated</strong></p></li>
+<li><p><strong>``install target`` specifies a file system for the task using that platform</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>Users want to run background jobs on a single server,
+which doesn’t share a file system with the workflow host.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[myhost]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> myhost</span>
+        <span class="nv">install target </span><span class="o">=</span><span class="s"> myhost</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="cluster-with-multiple-login-nodes">
+<h2>Cluster with Multiple Login Nodes<a class="headerlink" href="#cluster-with-multiple-login-nodes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platforms can group multiple hosts together.</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>You have a cluster where users submit to a single Slurm job queue from
+either of a pair of identical login nodes which share a file system:</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[spice_cluster]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_2</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+        <span class="nv">install target </span><span class="o">=</span><span class="s"> spice_cluster</span>
+        <span class="nv">retrieve job logs </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+</div>
+<p>If either host is unavailable Cylc will attempt to start and communicate with
+jobs via the other login node.</p>
+<p>Since the platform hosts do not share a file system with the scheduler
+host we need to ask Cylc to retrieve job logs.</p>
+</section>
+<section id="background-jobs-on-cluster-with-other-options">
+<h2>Background Jobs on Cluster with Other Options<a class="headerlink" href="#background-jobs-on-cluster-with-other-options" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platforms are the unique combination of all settings.</strong></p></li>
+</ul>
+<div class="admonition-scenarios admonition">
+<p class="admonition-title">Scenarios</p>
+<ul class="simple">
+<li><p>Allow users to carry out occasional background jobs on a
+cluster with a batch submission system.</p></li>
+<li><p>Allow some background jobs to use an alternative shell,
+or an alternative ssh command.</p></li>
+</ul>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[spice_cluster_background]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_2</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
+    <span class="nt">[[spice_cluster_background_fish]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_1</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
+        <span class="c1"># Use fish shell</span>
+        <span class="nv">shell </span><span class="o">=</span><span class="s"> /bin/fish</span>
+    <span class="nt">[[spice_cluster_long_ssh]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_1</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
+        <span class="c1"># extend the default ssh timeout from 10 to 30 seconds.</span>
+        <span class="nv">ssh command </span><span class="o">=</span><span class="s"> myPeculiarSSHImplementation --someoption=yes</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="submit-pbs-jobs-from-localhost">
+<h2>Submit PBS Jobs from Localhost<a class="headerlink" href="#submit-pbs-jobs-from-localhost" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platforms can share hosts and not share batch systems.</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>You have a cluster where you can submit jobs from the Cylc scheduler host
+using PBS.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id4" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[pbs_cluster]]</span>
+        <span class="nv">host </span><span class="o">=</span><span class="s"> localhost</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+        <span class="nv">install target </span><span class="o">=</span><span class="s"> localhost</span>
+</pre></div>
+</div>
+</div>
+<p>But <code class="docutils literal notranslate"><span class="pre">host</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">localhost</span></code> so you can simplify
+the <code class="docutils literal notranslate"><span class="pre">[[pbs_cluster]]</span></code> definition.</p>
+<p>As a result the above configuration can be simplified to:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[pbs_cluster]]</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="two-similar-clusters">
+<h2>Two Similar Clusters<a class="headerlink" href="#two-similar-clusters" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platform groups allow users to ask for jobs to be run on any
+suitable computer.</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>Your site has two mirrored clusters with seperate PBS queues and
+file systems. Users don’t mind which cluster is used and just
+want to set <code class="docutils literal notranslate"><span class="pre">flow.cylc[runtime][mytask]platform</span> <span class="pre">=</span> <span class="pre">supercomputer</span></code>:</p>
+<p>Remember, because the install target defaults to the platform name
+clusterA and clusterB have different install targets.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id6" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[clusterA]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_A1, login_node_A2</span>
+        <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+    <span class="nt">[[clusterB]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_B1, login_node_B2</span>
+        <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+    <span class="nt">[platform groups]</span>
+        <span class="nt">[[supercomputer]]</span>
+        <span class="nv">platforms </span><span class="o">=</span><span class="s"> clusterA, clusterB</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Why not just have one platform with all 4 login nodes?</p>
+<p>Having hosts in a platform means that Cylc can communicate with
+jobs via any host at any time. Platform groups allow Cylc to
+pick a platform when the job is started, but Cylc will not then
+be able to communicate with that job via hosts on another
+platform in the group.</p>
+</div>
+</section>
+<section id="preferred-and-backup-hosts-and-platforms">
+<h2>Preferred and Backup Hosts and Platforms<a class="headerlink" href="#preferred-and-backup-hosts-and-platforms" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>You can set how hosts are selected from platforms.</strong></p></li>
+<li><p><strong>You can set how platforms are selected from groups.</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>You have operational cluster and a research cluster.
+You want your operational workflow to run on one of the operational
+platforms. If it becomes unavailable you want Cylc to start running
+jobs on the research cluster.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id7" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[operational]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_A1, login_node_A2</span>
+        <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+        <span class="nt">[[selection]]</span>
+            <span class="nv">method </span><span class="o">=</span><span class="s"> random</span>  <span class="c1"># the default anyway</span>
+    <span class="nt">[[research]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> primary, seconday, emergency</span>
+        <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+        <span class="nt">[[selection]]</span>
+            <span class="nv">method </span><span class="o">=</span><span class="s"> definition order</span>
+    <span class="nt">[platform groups]</span>
+        <span class="nt">[[operational_work]]</span>
+            <span class="nv">platforms </span><span class="o">=</span><span class="s"> operational, research</span>
+        <span class="nt">[[[selection]]]</span>
+            <span class="nv">method </span><span class="o">=</span><span class="s"> definition order</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Random is the default selection method.</p>
+</div>
+</section>
+<section id="lots-of-desktop-computers">
+<h2>Lots of desktop computers<a class="headerlink" href="#lots-of-desktop-computers" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><strong>Platform names are regular expressions.</strong></p></li>
+</ul>
+<div class="admonition-scenario admonition">
+<p class="admonition-title">Scenario</p>
+<p>Everyone in your organization has a computer called <code class="docutils literal notranslate"><span class="pre">desktopNNN</span></code>,
+all with a file system shared with the scheduler host. Many users
+will want a platform to run small jobs on their computer:</p>
+</div>
+<p>Cylc treats platform names as regular expressions, so in this case:</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span><a class="headerlink" href="#id8" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[desktop\d\d\d]]</span>
+</pre></div>
+</div>
+</div>
+<p>will set up 1000 platforms, all with the same specification and one host per
+platform. Job files can be installed on the workflow host.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cylc carries out a “fullmatch” regular expression comparison with the
+the platform name so <code class="docutils literal notranslate"><span class="pre">desktop\d\d\d</span></code> is effectively the same as
+<code class="docutils literal notranslate"><span class="pre">^desktop\d\d\d$</span></code>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Platforms and Platform groups are selected in a workflow configuration
+file using the same key (<code class="docutils literal notranslate"><span class="pre">[runtime][&lt;task</span> <span class="pre">name&gt;]platform</span> <span class="pre">=</span> <span class="pre">``).</span>
+<span class="pre">Therefore</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">names</span> <span class="pre">**cannot**</span> <span class="pre">be</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">platforms</span> <span class="pre">and</span> <span class="pre">platform</span>
+<span class="pre">groups.</span> <span class="pre">The</span> <span class="pre">``global.cylc</span></code> file will fail validation if the same name is
+used in both.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="types.html" class="btn btn-neutral float-left" title="Cylc Configuration Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api/index.html" class="btn btn-neutral float-right" title="Cylc API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Dec 02, 2021.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0b3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/config/writing-platform-configs";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

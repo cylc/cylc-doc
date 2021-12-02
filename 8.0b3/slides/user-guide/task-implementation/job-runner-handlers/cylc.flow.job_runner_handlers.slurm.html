@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>slurm &mdash; Cylc 8.0b3 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '8.0b3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Cylc 8.0b3 documentation" href="../../../index.html" />
+    <link rel="up" title="Task Job Submission and Management" href="../job-submission.html" />
+    <link rel="next" title="slurm_packjob" href="cylc.flow.job_runner_handlers.slurm_packjob.html" />
+    <link rel="prev" title="sge" href="cylc.flow.job_runner_handlers.sge.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.job_runner_handlers.slurm">
+
+<h1>slurm<a class="headerlink" href="../../../../html/user-guide/task-implementation/job-runner-handlers/cylc.flow.job_runner_handlers.slurm.html#module-cylc.flow.job_runner_handlers.slurm" title="View HTML">§</a></h1>
+
+<p>Submits task job scripts to Simple Linux Utility for Resource Management.</p>
+<p>Uses the <code class="docutils literal notranslate"><span class="pre">sbatch</span></code> command. SLURM directives can be provided in the flow.cylc
+file:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">global.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[slurm_platform]]</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my_task]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> slurm_platform</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT1H</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">--nodes </span><span class="o">=</span><span class="s"> 5</span>
+            <span class="nv">--account </span><span class="o">=</span><span class="s"> QXZ5W2</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since not all SLURM commands have a short form, cylc requires
+the long form directives.</p>
+</div>
+<p>These are written to the top of the task job script like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --nodes=5</span>
+<span class="c1">#SBATCH --time=60:00</span>
+<span class="c1">#SBATCH --account=QXZ5W2</span>
+</pre></div>
+</div>
+<p>If <a class="reference internal" href="../../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is specified, it is used to generate the
+<code class="docutils literal notranslate"><span class="pre">--time</span></code> directive. Do not specify the <code class="docutils literal notranslate"><span class="pre">--time</span></code> directive explicitly if
+<a class="reference internal" href="../../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is specified.  Otherwise, the execution time
+limit known by the workflow may be out of sync with what is submitted to the
+job runner.</p>
+<p>Cylc supports heterogeneous Slurm jobs via special numbered directive prefixes
+that distinguish repeated directives from one another:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="c1"># run two heterogenous job components:</span>
+    <span class="nv">script </span><span class="o">=</span><span class="s"> srun sleep 10 : sleep 30</span>
+    <span class="nt">[[my_task]]</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT1H</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> slurm_platform</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">--account </span><span class="o">=</span><span class="s"> QXZ5W2</span>
+            <span class="nv">hetjob_0_--mem </span><span class="o">=</span><span class="s"> 1G</span>  <span class="c1"># first prefix must be &quot;0&quot;</span>
+            <span class="nv">hetjob_0_--nodes </span><span class="o">=</span><span class="s"> 3</span>
+            <span class="nv">hetjob_1_--mem </span><span class="o">=</span><span class="s"> 2G</span>
+            <span class="nv">hetjob_1_--nodes </span><span class="o">=</span><span class="s"> 6</span>
+</pre></div>
+</div>
+<p>The resulting formatted directives are:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --time=60:00</span>
+<span class="c1">#SBATCH --account=QXZ5W2</span>
+<span class="c1">#SBATCH --mem=1G</span>
+<span class="c1">#SBATCH --nodes=3</span>
+<span class="c1">#SBATCH hetjob</span>
+<span class="c1">#SBATCH --mem=2G</span>
+<span class="c1">#SBATCH --nodes=6</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For older Slurm versions with <em>packjob</em> instead of <em>hetjob</em>, use
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]job runner" title="global.cylc[platforms][&lt;platform name&gt;]job runner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]job</span> <span class="pre">runner=slurm_packjob</span></code></a> and directive prefixes <code class="docutils literal notranslate"><span class="pre">packjob_0_</span></code> etc.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

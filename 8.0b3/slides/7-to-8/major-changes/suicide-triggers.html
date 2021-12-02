@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Suicide Triggers &mdash; Cylc 8.0b3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b3 documentation" href="../../index.html" />
+    <link rel="up" title="Major Changes" href="index.html" />
+    <link rel="next" title="Template Variables" href="template-vars.html" />
+    <link rel="prev" title="Platforms" href="platforms.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="suicide-triggers">
+
+<h1>Suicide Triggers<a class="headerlink" href="../../../html/7-to-8/major-changes/suicide-triggers.html#suicide-triggers" title="View HTML">§</a></h1>
+
+<div class="tip admonition">
+<p class="first admonition-title">Does This Change Affect Me?</p>
+<p>Suicide triggers are written using an exclamation mark <code class="docutils literal notranslate"><span class="pre">!</span></code> like so:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">task_1</span> <span class="o">=&gt;</span> <span class="c">!</span> <span class="kd">task_2</span>
+</pre></div>
+</div>
+<p class="last">Read this section if your workflows contain suicide triggers.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overview">
+
+<h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/suicide-triggers.html#overview" title="View HTML">§</a></h2>
+
+<p>In Cylc 7 <a class="reference internal" href="../../glossary.html#term-suicide-trigger"><span class="xref std std-term">suicide triggers</span></a> are used to remove
+tasks from the graph automatically at runtime.</p>
+<p>Cylc 8 handles <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a> in an event-driven manner which means
+that a workflow can follow different paths in different eventualities without
+the need for suicide triggers. This is called <a class="reference internal" href="../../glossary.html#term-graph-branching"><span class="xref std std-term">graph branching</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="changes">
+
+<h2>Changes<a class="headerlink" href="../../../html/7-to-8/major-changes/suicide-triggers.html#changes" title="View HTML">§</a></h2>
+
+<p>No changes are required, suicide triggers are still supported in Cylc 8,
+however, they are most likely unnecessary.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="example">
+
+<h2>Example<a class="headerlink" href="../../../html/7-to-8/major-changes/suicide-triggers.html#example" title="View HTML">§</a></h2>
+
+<p>Here is an example Cylc 7 <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># Regular graph.</span>
+<span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+
+<span class="c1"># The fail case.</span>
+<span class="kd">bar</span><span class="c">:</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">recover</span>
+
+<span class="c1"># Remove the &quot;recover&quot; task in the success case.</span>
+<span class="kd">bar</span> <span class="o">=&gt;</span> <span class="c">!</span> <span class="kd">recover</span>
+
+<span class="c1"># Remove the &quot;bar&quot; task in the fail case.</span>
+<span class="kd">recover</span> <span class="o">=&gt;</span> <span class="c">!</span> <span class="kd">bar</span>
+
+<span class="c1"># Downstream dependencies.</span>
+<span class="kd">bar</span> <span class="o">|</span> <span class="kd">recover</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<p>Which results in the following logic:</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f0340e0e7015edec0c8291d929ed0f4f3e28abfb.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+subgraph cluster_1 {
+   label = &quot;:fail&quot;
+   color = &quot;red&quot;
+   fontcolor = &quot;red&quot;
+   style = &quot;dashed&quot;
+   recover
+}
+
+foo -&gt; bar
+bar -&gt; recover
+recover -&gt; baz [arrowhead=&quot;onormal&quot;]
+bar -&gt; baz [arrowhead=&quot;onormal&quot;]
+}</p></object></div>
+</div>
+<p>In Cylc 8 the suicide triggers can be safely removed without changing the
+workflow:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>  # Regular graph.
+  foo =&gt; bar
+
+  # The fail case.
+  bar:fail =&gt; recover
+
+<span class="gd">- # Remove the &quot;recover&quot; task in the success case.</span>
+<span class="gd">- bar =&gt; ! recover</span>
+
+<span class="gd">- # Remove the &quot;bar&quot; task in the fail case.</span>
+<span class="gd">- recover =&gt; ! bar</span>
+
+  # Downstream dependencies.
+  bar | recover =&gt; baz
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

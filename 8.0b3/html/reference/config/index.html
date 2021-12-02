@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; Cylc 8.0b3 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Workflow Configuration" href="workflow.html" />
+    <link rel="prev" title="Data Flow" href="../architecture/data-flow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0b3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="workflow.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global.html">Global Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Cylc Configuration Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writing-platform-configs.html">Writing Platform Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writing-platform-configs.html#example-platforms">Example Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Reference</a> &raquo;</li>
+      <li>Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/config/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="global.html">Global Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Cylc Configuration Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-platform-configs.html">Writing Platform Configurations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#what-are-platforms">What Are Platforms?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#why-were-platforms-introduced">Why Were Platforms Introduced?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#what-are-install-targets">What Are Install Targets?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="writing-platform-configs.html#example-platforms">Example Platforms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#on-the-scheduler-host-cylc-server">On the Scheduler Host (Cylc Server)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#simple-remote-platform">Simple Remote Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#cluster-with-multiple-login-nodes">Cluster with Multiple Login Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#background-jobs-on-cluster-with-other-options">Background Jobs on Cluster with Other Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#submit-pbs-jobs-from-localhost">Submit PBS Jobs from Localhost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#two-similar-clusters">Two Similar Clusters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#preferred-and-backup-hosts-and-platforms">Preferred and Backup Hosts and Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-platform-configs.html#lots-of-desktop-computers">Lots of desktop computers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../architecture/data-flow.html" class="btn btn-neutral float-left" title="Data Flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="workflow.html" class="btn btn-neutral float-right" title="Workflow Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2021 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Dec 02, 2021.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0b3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/config/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

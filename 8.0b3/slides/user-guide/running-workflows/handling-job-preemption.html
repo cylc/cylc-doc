@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Handling Job Preemption &mdash; Cylc 8.0b3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b3 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Cylc Broadcast" href="dynamic-behaviour.html" />
+    <link rel="prev" title="External Command Execution" href="external-command-execution.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="handling-job-preemption">
+
+<h1>Handling Job Preemption<a class="headerlink" href="../../../html/user-guide/running-workflows/handling-job-preemption.html#handling-job-preemption" title="View HTML">§</a></h1>
+
+<p>Some HPC facilities allow job preemption: the resource manager can kill
+or suspend running low priority jobs in order to make way for high
+priority jobs. The preempted jobs may then be automatically restarted
+by the resource manager, from the same point (if suspended) or requeued
+to run again from the start (if killed).</p>
+<p>Suspended jobs will poll as still running (their job status file says they
+started running, and they still appear in the resource manager queue).
+Loadleveler jobs that are preempted by kill-and-requeue (“job vacation”) are
+automatically returned to the submitted state by Cylc. This is possible
+because Loadleveler sends the SIGUSR1 signal before SIGKILL for preemption.
+Other <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a> just send SIGTERM before SIGKILL as normal, so Cylc
+cannot distinguish a preemption job kill from a normal job kill. After this the
+job will poll as failed (correctly, because it was killed, and the job status
+file records that). To handle this kind of preemption automatically you could
+use a task failed or retry event handler that queries the job runner queue
+(after an appropriate delay if necessary) and then, if the job has been
+requeued, uses <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reset</span></code> to reset the task to the submitted state.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

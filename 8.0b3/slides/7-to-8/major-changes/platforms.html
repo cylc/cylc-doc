@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Platforms &mdash; Cylc 8.0b3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b3 documentation" href="../../index.html" />
+    <link rel="up" title="Major Changes" href="index.html" />
+    <link rel="next" title="Suicide Triggers" href="suicide-triggers.html" />
+    <link rel="prev" title="Cylc Install" href="cylc-install.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="platforms">
+
+<h1>Platforms<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#platforms" title="View HTML">§</a></h1>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The terms <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> and <a class="reference internal" href="../../glossary.html#term-job-platform"><span class="xref std std-term">job platform</span></a> are equivalent.</p>
+</div>
+<div class="tip admonition">
+<p class="first admonition-title">Does This Change Affect Me?</p>
+<p>Platforms replace the following items in a Cylc 7 Workflow (suite):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[task_name]]</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> my_supercomputer</span>
+</pre></div>
+</div>
+<p>Read this section if your workflow’s jobs run on a remote computer or if
+you see the following warning on running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WARNING - Task &lt;task&gt;: deprecated &quot;host&quot; and &quot;batch system&quot; will be removed at Cylc 9</span>
+</pre></div>
+</div>
+<p>If you currently use the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">host-select</span></code> utility or a similar host
+selection or load balancing utility the intelligent host selection
+functionality of Cylc 8 may be used instead:</p>
+<div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[task_name]]</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> $(rose host-select my-computer)</span>
+    <span class="nt">[[another_task]]</span>
+        <span class="c1"># An example of a home-rolled host selector</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> $(test $((RANDOM%2)) -eq 0 &amp;&amp; echo &quot;host_a&quot; || echo &quot;host_b&quot;)</span>
+</pre></div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overview">
+
+<h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#overview" title="View HTML">§</a></h2>
+
+<p>Cylc 7 defines settings for remote <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a> in each
+<a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task’s</span></a> definition.</p>
+<dl class="docutils">
+<dt>Cylc 8 allows site administrators (and users) to configure</dt><dd><p><a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platforms</span></a> in <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>. A platform can have
+multiple hosts with associated platform-specific settings. Users only need to
+select the platform for their task jobs.</p>
+<p>Platforms also define how hosts are selected from each platform:</p>
+<ul class="simple">
+<li>Randomly (default)</li>
+<li>By definition order</li>
+</ul>
+</dd>
+</dl>
+<p>There may be cases where sets of platforms (for example a group of
+standalone compute servers, or a pair of mirrored HPC’s) might be equally
+suitable for a task, but not share files systems to allow them to constitute
+a single platform. Such platforms can be set up to be <code class="docutils literal notranslate"><span class="pre">platform</span> <span class="pre">groups</span></code></p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">Writing Platform Configurations</span></a> for detailed examples of platform
+configurations.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Cylc 8 contains upgrade logic which handles Cylc 7
+settings in most cases. Cylc 8 will warn you when it runs
+the upgrade logic. You should upgrade these parts of your
+workflows. Deprecated Cylc 7 settings will be removed at Cylc 9.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="examples">
+
+<h2>Examples<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#examples" title="View HTML">§</a></h2>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a> has a detailed explanation of how
+platforms and platform groups are defined.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="showing-how-the-global-config-changes">
+
+<h3>Showing how the global config changes<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#showing-how-the-global-config-changes" title="View HTML">§</a></h3>
+
+<p>This Cylc 7 workflow:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask]]</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> login_node01</span>
+</pre></div>
+</div>
+<p>Would, at Cylc 8, become:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> our_cluster</span>
+</pre></div>
+</div>
+<p>And the Cylc 8 global config might contain:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[our_cluster]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>  <span class="c1"># Cylc 8 replaced &quot;batch system&quot; with &quot;job runner&quot;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="a-variety-of-other-examples">
+
+<h3>A variety of other examples<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#a-variety-of-other-examples" title="View HTML">§</a></h3>
+
+<p>Here are some example Cylc 7 task definitions:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[mytask_cylc_server]]</span>
+
+   <span class="nt">[[mytask_big_server]]</span>
+      <span class="nt">[[[remote]]]</span>
+         <span class="nv">host </span><span class="o">=</span><span class="s"> linuxbox42</span>
+
+   <span class="nt">[[mytask_submit_local_to_remote_computer]]</span>
+      <span class="nt">[[[job]]]</span>
+         <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+
+   <span class="nt">[[mytask_login_to_hpc_and_submit]]</span>
+      <span class="nt">[[[remote]]]</span>
+         <span class="nv">host </span><span class="o">=</span><span class="s"> $(supercomputer_login_node_selector_script)</span>
+      <span class="nt">[[[job]]]</span>
+         <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+<p>This will result in Cylc running:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">mytask_cylc_server</span></code> on the machine the workflow is running on.</li>
+<li><code class="docutils literal notranslate"><span class="pre">mytask_big_server</span></code> on <code class="docutils literal notranslate"><span class="pre">linuxbox42</span></code>, using background.</li>
+<li><code class="docutils literal notranslate"><span class="pre">mytask_submit_local_to_remote_computer</span></code> on a system where you can
+use PBS to submit from the workflow server.</li>
+<li><code class="docutils literal notranslate"><span class="pre">mytask_login_to_hpc_and_submit</span></code> on a host set by the subshelled
+script using Slurm.</li>
+</ul>
+<p>At Cylc 8 the equivalent might be:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask_cylc_server]]</span>
+
+    <span class="nt">[[mytask_big_server]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> linuxbox42</span>
+
+    <span class="nt">[[mytask_submit_local_to_remote_computer]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> pbs_local</span>
+
+    <span class="nt">[[mytask_login_to_hpc_and_submit]]</span>
+        <span class="c1"># This is still legal, but you could also use host selection.</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> $(supercomputer_login_node_selector_script)</span>
+</pre></div>
+</div>
+<p>And the platform settings for these examples might be:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[linuxbox\d\d]]</span>  <span class="c1"># Regex to allow any linuxboxNN to use this definition</span>
+        <span class="c1"># Without a hosts, platform name is used as a single host.</span>
+
+    <span class="nt">[[pbs_local]]</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
+
+    <span class="nt">[[slurm_supercomputer]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>  <span class="c1"># Cylc will pick a host.</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

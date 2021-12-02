@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simulating Workflow Behaviour &mdash; Cylc 8.0b3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0b3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0b3 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Workflow Server Logs" href="scheduler-log-files.html" />
+    <link rel="prev" title="Client-Server Interaction" href="authentication-files.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="simulating-workflow-behaviour">
+
+<h1>Simulating Workflow Behaviour<a class="headerlink" href="../../../html/user-guide/running-workflows/simulation-modes.html#simulating-workflow-behaviour" title="View HTML">§</a></h1>
+
+<p>Several workflow run modes allow you to simulate workflow behaviour quickly without
+running the workflow’s real jobs - which may be long-running and resource-hungry:</p>
+<dl class="docutils">
+<dt>dummy mode</dt><dd><p>Runs tasks as background jobs on configured job hosts.</p>
+<p>This simulates scheduling, job host connectivity, and generates all job
+files on workflow and job hosts.</p>
+</dd>
+<dt>dummy-local mode</dt><dd><p>Runs real tasks as background jobs on the workflow host, which allows
+dummy-running workflows from other sites.</p>
+<p>This simulates scheduling and generates all job files on the workflow host.</p>
+</dd>
+<dt>simulation mode</dt><dd><p>Does not run any real tasks.</p>
+<p>This simulates scheduling without generating any job files.</p>
+</dd>
+</dl>
+<p>Set the run mode (default <code class="docutils literal notranslate"><span class="pre">live</span></code>) on the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play --mode<span class="o">=</span>dummy WORKFLOW
+</pre></div>
+</div>
+<p>You can get specified tasks to fail in these modes, for more flexible workflow
+testing. See <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][simulation]" title="flow.cylc[runtime][&lt;namespace&gt;][simulation]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][simulation]</span></code></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="proportional-simulated-run-length">
+
+<h2>Proportional Simulated Run Length<a class="headerlink" href="../../../html/user-guide/running-workflows/simulation-modes.html#proportional-simulated-run-length" title="View HTML">§</a></h2>
+
+<p>If <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is set, Cylc
+divides it by <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][simulation]speedup factor" title="flow.cylc[runtime][&lt;namespace&gt;][simulation]speedup factor"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][simulation]speedup</span> <span class="pre">factor</span></code></a> to compute simulated task
+run lengths.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="limitations-of-workflow-simulation">
+
+<h2>Limitations Of Workflow Simulation<a class="headerlink" href="../../../html/user-guide/running-workflows/simulation-modes.html#limitations-of-workflow-simulation" title="View HTML">§</a></h2>
+
+<p>Dummy mode ignores <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> settings because Cylc does not know which
+job resource directives (requested memory, number of compute nodes, etc.) would
+need to be changed for the dummy jobs. If you need to dummy-run jobs on a
+job runner, manually comment out <code class="docutils literal notranslate"><span class="pre">script</span></code> items and modify
+directives in your live workflow, or else use a custom live mode test workflow.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The dummy modes ignore all configured task <code class="docutils literal notranslate"><span class="pre">script</span></code> items
+including <code class="docutils literal notranslate"><span class="pre">init-script</span></code>. If your <code class="docutils literal notranslate"><span class="pre">init-script</span></code> is required
+to run even blank/empty tasks on a job host, note that host environment
+setup should be done elsewhere.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="restarting-workflows-with-a-different-run-mode">
+
+<h2>Restarting Workflows With A Different Run Mode?<a class="headerlink" href="../../../html/user-guide/running-workflows/simulation-modes.html#restarting-workflows-with-a-different-run-mode" title="View HTML">§</a></h2>
+
+<p>The run mode is recorded in the workflow run database files. Cylc will not let
+you <em>restart</em> a non-live mode workflow in live mode, or vice versa. To
+test a live workflow in simulation mode just take a quick copy of it and run the
+the copy in simulation mode.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
