@@ -48,6 +48,8 @@ Cylc Development History - Major Changes
 
 - **cylc-8**
 
-  - Migrated to Python3
-  - New architecture to support a web UI
+  - Migrated to Python 3
+  - New architecture, network layers, security
+  - New web UI
+  - New efficient scheduling algorithm
   - Removed deprecated pre cylc-6 syntax and features
