@@ -32,6 +32,8 @@ jobs:
   undeploy:
     runs-on: ubuntu-18.04
     timeout-minutes: 10
+    env:
+      TAG: ${{ github.event.inputs.tag }}
     steps:
       - name: configure python
         uses: actions/setup-python@v2
@@ -53,10 +55,12 @@ jobs:
             ver_link="$(readlink gh-pages/${ver})"
             if [[ -z "$ver_link" ]]
             then
-              exit "Error: could not determine the '"$ver"' version"
-            elif [[ "$ver" == '${{ github.event.inputs.tag }}' ]]
+              echo "::error::Could not determine the '"$ver"' version"
+              exit 1
+            elif [[ "$ver" == "$TAG" ]]
             then
-              exit "Error: cannot delete the '"$ver"' version"
+              echo "::error::Cannot delete the '"$ver"' version"
+              exit 1
             fi
           done
 
@@ -64,15 +68,17 @@ jobs:
         uses: cylc/release-actions/configure-git@v1
 
       - name: remove version
+        working-directory: gh-pages
         run: |
-          git -C gh-pages rm -r ${{ github.event.inputs.tag }}
+          git rm -r "$TAG"
 
       - name: update version file
         run: |
           bin/version write
-          git -C gh-pages add -u
 
       - name: push changes
+        working-directory: gh-pages
         run: |
-          git -C gh-pages commit -m "remove: ${{ github.event.inputs.tag }}"
-          git -C gh-pages push origin HEAD
+          git add -u
+          git commit -m "remove: ${TAG}"
+          git push origin HEAD
