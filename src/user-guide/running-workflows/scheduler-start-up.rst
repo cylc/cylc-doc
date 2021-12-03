@@ -178,7 +178,7 @@ Files created at workflow start
 Configuration Logs
 ^^^^^^^^^^^^^^^^^^
 
-At startup a folder ``log/flow-config`` is created where the flow configuration
+A folder ``log/flow-config`` is created where the workflow configuration
 is recorded, with all templating expanded:
 
 - ``flow-processed.cylc`` - A record of the current workflow configuration
@@ -190,9 +190,9 @@ is recorded, with all templating expanded:
 
 .. note::
 
-   These are particularly useful files to look at if you are working with a
-   workflow definition containing many template variables as these are filled
-   in these files.
+   These are particularly useful files to look at if the workflow
+   configuration contains many template variables, to see how they are
+   filled in.
 
 
 .. _The Workflow Contact File:
@@ -200,13 +200,13 @@ is recorded, with all templating expanded:
 The Workflow Contact File
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-At start-up, the :term:`scheduler` writes a :term:`contact file`
+The :term:`scheduler` writes a :term:`contact file` at
 ``$HOME/cylc-run/WORKFLOW/.service/contact`` that records workflow host,
 user, port number, process ID, Cylc version, and other information. Client
 commands read this file to find the :term:`scheduler`.
 
-The contact file gets removed automatically at shutdown, if the scheduler shuts
-down cleanly.
+The contact file gets removed automatically at shutdown (assuming the
+scheduler shuts down cleanly).
 
 
 Authentication Files

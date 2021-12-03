@@ -31,7 +31,7 @@ find one client public key per file system for remote jobs.
 On the workflow host, the directory structure should contain:
 
 .. code-block:: none
-  
+
    ~/cylc-run/workflow_x
    `-- .service
        |-- client_public_keys
@@ -40,17 +40,15 @@ On the workflow host, the directory structure should contain:
        |-- client.key_secret
        |-- server.key
        `-- server.key_secret
-  
+
 On the remote job host, the directory structure should contain:
-  
+
 .. code-block:: none
-  
+
    ~/cylc-run/workflow_x
-   `-- .service   
-       |-- client.key   
-       |-- client.key_secret   
-       `-- server.key  
+   `-- .service
+       |-- client.key
+       |-- client.key_secret
+       `-- server.key
 
 Keys are removed as soon as they are no longer required.
-
-
