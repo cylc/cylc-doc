@@ -3,12 +3,12 @@
 Graphing
 ========
 
-In this section we will cover writing basic workflows in cylc.
+.. admonition:: Aims
+   :class: aims
 
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc 7
-   desktop GUI.
+   | You will be able to:
+   | ✅ Recognise the ``flow.cylc`` file format.
+   | ✅ Write simple chains of dependencies.
 
 .. _Cylc file format:
 
@@ -115,7 +115,6 @@ Duplicate settings get overwritten:
          a = foo
          a = bar  # duplicate
 
-     -
       .. code-block:: cylc
          :caption: result
 

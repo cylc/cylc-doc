@@ -5,10 +5,11 @@
 Datetime Cycling
 ================
 
-.. warning::
+.. admonition:: Aims
+   :class: aims
 
-   This section of the tutorial still contains screenshots of the obsolete Cylc 7
-   desktop GUI.
+   | You should be able to:
+   | ✅ Write workflows where cycle points are dates and/or times.
 
 
 In the last section we looked at writing an :term:`integer cycling` workflow,
@@ -25,7 +26,8 @@ one where the :term:`cycle points <cycle point>` are numbered.
    :class: tip
 
    :term:`Cycle points <cycle point>` are labels. Cylc runs tasks as soon as
-   their dependencies are met so cycles do not necessarily run in order.
+   their dependencies are met so cycles do not necessarily run in order, or
+   at the real world time indicated by the cycle point.
 
 
 .. _tutorial-iso8601:
@@ -235,12 +237,12 @@ The Initial & Final Cycle Points
 .. TODO - change terminology as done in the cylc user guide, "repeat" can be
    confusing. Use occur?
 
-Inter-Cycle Dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^
+Intercycle Dependencies
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
-   Inter-cycle dependencies are written as ISO8601 durations, e.g:
+   Intercycle dependencies are written as ISO8601 durations, e.g:
 
 * ``foo[-P1D]``: the task ``foo`` from the cycle one day before.
 * ``bar[-PT1H30M]``: the task ``bar`` from the cycle 1 hour 30 minutes before.
@@ -306,10 +308,10 @@ Putting It All Together
    build a picture of the current weather. Our dummy weather forecast
    will get wind observations from four weather stations:
 
-   * Aldergrove
-   * Camborne
-   * Heathrow
-   * Shetland
+   * Aldergrove (Near Belfast in NW of the UK)
+   * Camborne (In Cornwall, the far SW of England)
+   * Heathrow (Near London in the SE)
+   * Shetland (The northernmost part of the UK)
 
    The tasks which retrieve observation data will be called
    ``get_observations_<site>`` where ``site`` is the name of the weather
@@ -486,7 +488,7 @@ Putting It All Together
       With the help of the graphs and the information above add dependencies to
       your workflow to implement the weather-forecasting workflow.
 
-      You will need to consider the inter-cycle dependencies between tasks.
+      You will need to consider the intercycle dependencies between tasks.
 
       Use ``cylc graph`` to inspect your work.
 
@@ -537,7 +539,7 @@ Putting It All Together
                        get_rainfall => forecast => post_process_exeter
                    """
 
-   #. **Inter-Cycle Offsets.**
+   #. **Intercycle Offsets.**
 
       To ensure the ``forecast`` tasks for different cycles run in order the
       ``forecast`` task will also need to be dependent on the previous run

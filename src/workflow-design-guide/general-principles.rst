@@ -334,7 +334,7 @@ It may be possible for large workflows to overwhelm a job host by submitting too
 many jobs at once:
 
 - Large workflows that are not sufficiently limited by real time clock
-  triggering or inter-cycle dependence may generate a lot of *runahead*
+  triggering or intercycle dependence may generate a lot of *runahead*
   (this refers to Cylc's ability to run multiple cycles at once, restricted
   only by the dependencies of individual tasks).
 - Some workflows may have large families of tasks whose members all
@@ -699,13 +699,11 @@ Failure Recovery Workflows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For recovery from failures that require explicit diagnosis you can configure
-alternate routes through the workflow, together with *suicide triggers*
-that remove the unused route. In the following example, if the model fails a
+alternate graph branches. In the following example, if the model fails a
 diagnosis task will trigger; if it determines the cause of the failure is a
 known numerical instability (e.g. by parsing model job logs) it will succeed,
 triggering a short timestep run. Postprocessing can proceed from either the
-original or the short-step model run, and suicide triggers remove the unused
-path from the workflow:
+original or the short-step model run.
 
 .. Need to use a 'container' directive to get centered image with
    left-aligned caption (as required for code block text).
@@ -728,9 +726,6 @@ path from the workflow:
                  R1 = """
                      model | model_short => postproc
                      model:fail => diagnose => model_short
-                       # Clean up with suicide triggers:
-                     model => ! diagnose & ! model_short
-                     model_short => ! model
                  """
 
 

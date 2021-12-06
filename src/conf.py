@@ -15,8 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from distutils.spawn import find_executable as which
-import sys
 import os
+import sys
+
+from cylc.flow import __version__ as CYLC_VERSION
+
+sys.path.append(os.path.abspath('lib'))  # path to lib.
+
+from cylc_release import CYLC_RELEASE
 
 
 # -- General configuration ------------------------------------------------
@@ -44,6 +50,7 @@ extensions = [
     'cylc.sphinx_ext.practical',
     'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
+    'cylc.sphinx_ext.literal_sub_include',
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
@@ -84,8 +91,9 @@ copyright = (
 )
 
 # Versioning information.
-release = os.environ['CYLC_VERSION']  # set in makefile
-version = '.'.join(release.split('.')[:2])  # short version for display
+# NOTE: Sphinx considers version/release the other way around to us
+release = CYLC_VERSION  # full version e.g. "8.0.0"
+version = CYLC_RELEASE  # short version (for pinning / display) e.g. "8.0"
 
 # Autosummary opts (for auto generation of docs from source code).
 autosummary_generate = True
@@ -213,3 +221,8 @@ texinfo_documents = [
 
 # How to display URL addresses.
 texinfo_show_urls = 'footnote'
+
+literal_sub_include_subs = {
+    'version': version,
+    'release': release.replace('.dev', ''),
+}

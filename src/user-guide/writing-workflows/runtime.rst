@@ -1,15 +1,18 @@
 .. _User Guide Runtime:
 
-Runtime - Task Configuration
-============================
+Task Configuration
+==================
 
 .. tutorial:: Runtime Tutorial <tutorial-runtime>
 
-The :cylc:conf:`flow.cylc` file's :cylc:conf:`[runtime]` section configures
-what each task should run, and where and how to run it. It is a multiple inheritance
-hierarchy that allows all common settings to be factored out into task families
-and defined once only (duplication of configuraiton is a maintenance risk in a
-complex workflow).
+The :cylc:conf:`[runtime]` section of the :cylc:conf:`flow.cylc` file
+defines what job each :term:`task` should run, and where and how to
+submit each one to run.
+
+It is an inheritance hierarchy that allows common settings to be factored
+out and defined once in task :term:`families <family>` (duplication
+of configuration is a maintenance risk in a complex workflow).
+
 
 .. _namespace-names:
 
@@ -534,33 +537,6 @@ task ``whizz`` downstream. The scheduler will then stall with
            script = "sleep 10"
 
 
-Aborting a Retry Sequence
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To prevent a waiting task from retrying, remove it from the scheduler.
-If the example above is installed as ``demo``:
-
-.. code-block:: console
-
-   $ cylc remove demo flaky.1
-
-If a task with retries gets *killed* while running, it goes to the ``held``
-state so you decide whether to release it and continue the retry
-sequence, or abort.
-
-.. code-block:: console
-
-   $ cylc kill demo flaky.1  # flaky.1 goes to held state post kill
-   $ cylc release demo flaky.1  # release to continue retrying
-   $ cylc remove demo flaky.1  # OR remove the task to abort retries
-
-
-If you want ``whizz`` to trigger downstream tasks despite ``flaky.1`` being
-removed before it succeeded, use ``cylc set-outputs demo flaky.1`` to
-artificially mark it as succeeded (and use the ``--flow`` option if you want
-the flow to continue after ``whizz``).
-
-
 .. _EventHandling:
 
 Event Handling
@@ -595,8 +571,9 @@ see :ref:`Managing External Command Execution`.
 Event-Specific Handlers
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Event-specific handlers can be configured in ``<event> handlers``
-under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>`` can be:
+Event-specific handlers are configured by ``<event> handlers``
+under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>``
+can be:
 
 .. table::
 

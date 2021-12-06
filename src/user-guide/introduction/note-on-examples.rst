@@ -1,5 +1,5 @@
-Note on User Guide Examples
-===========================
+How to Run User Guide Examples
+==============================
 
 Many Cylc concepts and features in this document are illustrated with minimal
 snippets of workflow configuration. Most of these can be turned into a complete

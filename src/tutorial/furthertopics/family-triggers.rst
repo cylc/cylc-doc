@@ -163,18 +163,11 @@ Alter the ``[[sell_diamonds]]`` section to look like this:
        script = sleep 5
 
 These changes add a ``close_shafts`` task which is run once all the
-``MINERS`` tasks have finished and any of them have failed. On completion
-it applies a *suicide trigger* to the ``MINERS`` family in order to allow
-the workflow to shutdown.
+``MINERS`` tasks have finished and any of them have failed. 
 
 Save your changes and run your workflow. You should see the new
 ``close_shafts`` run should any of the ``MINERS`` tasks be in the failed
 state once they have all finished.
-
-.. tip::
-
-   See the :ref:`tut-cylc-suicide-triggers` tutorial for handling task
-   failures.
 
 
 Different Triggers

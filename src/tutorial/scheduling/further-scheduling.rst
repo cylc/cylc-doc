@@ -3,8 +3,14 @@
 Further Scheduling
 ==================
 
-In this section we will quickly run through some of the more advanced features
-of Cylc's scheduling logic.
+.. admonition:: Aims
+   :class: aims
+
+   | You should be aware of advanced scheduling features:
+   | ✅ Task state qualifiers.
+   | ✅ Clock triggers.
+   | ✅ Alternative calendars.
+
 
 .. _tutorial-qualifiers:
 

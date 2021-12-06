@@ -85,7 +85,7 @@ The main Cylc system components are:
 - **Cylc UI Server**
    - Interacts with Schedulers and the filesystem
    - Serves the UI to users
-   - Can be lauched by the privileged Hub, for multi-user installations
+   - Can be launched by the privileged Hub, for multi-user installations
    - Or run standalone for use by a single user
    - (Is a `Jupyter Server <https://jupyter-server.readthedocs.io>`_ extension)
 
@@ -134,27 +134,30 @@ Cylc can manage infinite workflows of repeating tasks:
 
 Cylc 8 has an efficient new scheduling algorithm that:
    - Spawns new tasks on demand
-   - Handles alternate path branching without suicide triggers
-   - Distinguishes between *optional* and *expected* task outputs. If a tasks
-     finishes without completing an expected output it will be retained by the
-     scheduler as an *incomplete task*
+   - Distinguishes between :term:`optional <optional output>` and
+     :term:`expected <expected output>` task outputs. This supports:
+
+     - :term:`graph branching` without suicide triggers
+     - correct diagnosis of :term:`workflow completion`
    - Can run tasks out of cycle point order
    - Provides a sensible active-task based window on the evolving workflow
-   - Supports a powerful new capability called **reflow**: you can trigger
-     multiple fronts of activity in the graph at once, in the same scheduler
+   - Supports a powerful new capability called :term:`reflow`: you can trigger
+     multiple concurrent flows in the same graph at once, managed by the same
+     scheduler
 
 See also:
 
    * :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
 
 
-Task/Job Separation and States
-------------------------------
+Task/Job Separation
+-------------------
 
 **Tasks** are nodes in the abstract workflow graph representing processes
 that should run once their prerequisites are satisfied. **Jobs** are the real
-processes submitted to run by workflow tasks. A task can have multiple jobs,
-by automatic retries and manual re-triggering.
+processes submitted to execute these tasks (or at least, at the submission
+stage, real job scripts). A task can have multiple jobs, by automatic retries
+and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.
@@ -170,6 +173,32 @@ The task states removed since Cylc 7 have been absorbed into *waiting*, but
 you can see or infer what is being waited on: e.g. a queue, xtrigger, or retry
 timer. For instance, a waiting task that already has associated jobs is going
 to retry.
+
+
+Optional and Expected Task Outputs
+----------------------------------
+
+Cylc 8 distinguishes between :term:`expected <expected output>` and
+:term:`optional <optional output>` task outputs. This supports optional
+:term:`graph branching` and it allows the scheduler to correctly diagnose
+:term:`workflow completion`.
+
+If a task :term:`job` finishes without completing an expected output the
+scheduler will retain it, pending user intervention, as an :term:`incomplete
+task`.
+
+A task can finish with or without completing optional outputs, on the other
+hand. The primary use for optional outputs is alternate path branching in the
+graph.
+
+If there is nothing left to do, but incomplete tasks are present, the scheduler
+will conclude that the workflow did not run to completion as expected and will
+:term:`stall` rather than shut down.
+
+.. seealso::
+   * :ref:`Cylc User Guide: optional outputs <User Guide Optional Outputs>`
+   * :ref:`Cylc User Guide: expected outputs <User Guide Expected Outputs>`
+
 
 Window on the Workflow
 ----------------------
@@ -407,17 +436,17 @@ are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
 Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
 ----------------------------------------------
 
-- Every task implicitly depended on previous-instance (same task, previous
-  cycle point) job submission
+- Every task implicitly depended on submission of the previous-instance job
+  (same task, previous cycle point)
+- Which meant tasks could not run out of cycle point order
+- And the scheduler could stall with next-cycle-point successors not spawned
+  downstream of failed tasks
+- The indiscriminate dependency matching process was costly
 - The scheduler had to be aware of at least one active and one waiting
   cycle point instance of every task in the workflow, plus all succeeded tasks
   in the current active task window
-- The indiscriminate dependency matching process was costly
 - To fully understand what tasks appeared in the GUI (why particular
   *waiting* or *succeeded* tasks appeared in some cycles but not in others, for
   instance) you had to understand the scheduling algorithm
 - *Suicide triggers* were needed to clear unused graph paths and avoid
   stalling the scheduler
-- Tasks could not run out of cycle point order
-- The scheduler could stall with next-cycle-point successors not spawned
-  downstream of failed tasks

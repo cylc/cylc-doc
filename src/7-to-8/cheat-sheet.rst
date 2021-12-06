@@ -181,7 +181,7 @@ Opening User Interfaces
 -----------------------
 
 Opening the graphical user interface (GUI) or terminal user interface (TUI)
-for monitoring / controling running workflows:
+for monitoring / controlling running workflows:
 
 .. list-table::
    :class: grid-table

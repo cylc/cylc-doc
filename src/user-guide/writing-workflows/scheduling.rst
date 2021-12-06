@@ -1,21 +1,27 @@
 .. _User Guide Scheduling:
 
-Scheduling - Dependency Graphs
-==============================
+Scheduling Configuration
+========================
 
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
-The :term:`graph` defines a workflow in terms of its
-:term:`tasks <task>` and the :term:`dependencies <dependency>` between them.
+The :cylc:conf:`[scheduling]` section of the :cylc:conf:`flow.cylc` file
+defines what tasks exist in the worklow, in a :term:`dependency graph <graph>`,
+and when they should run, relative to each other and to constraints such as
+:term:`clock triggers <clock trigger>`, :term:`external triggers <external
+trigger>`, and :term:`internal queues <internal queue>`
 
-Graph Syntax
-------------
+
+The Graph
+---------
 
 .. tutorial:: Graph Tutorial <tutorial-cylc-graphing>
 
-A Cylc :term:`graph` is composed of one or more
-:term:`graph strings <graph string>` which use a special syntax to define the
-dependencies between tasks:
+The :term:`graph` defines a workflow in terms of its :term:`tasks <task>` and
+the :term:`dependencies <dependency>` between them.
+
+A Cylc :term:`graph` is composed of one or more :term:`graph strings <graph
+string>` which use a special syntax to define the dependencies between tasks:
 
 * arrow symbols ``=>`` declare dependencies
 * logical operators ``&`` (AND) and ``|`` (OR) can be used to write
@@ -28,8 +34,8 @@ For example:
    # baz will not be run until both foo and bar have succeeded
    foo & bar => baz
 
-These :term:`graph strings <graph string>` are configured in the
-:cylc:conf:`[scheduling][graph]` section of the file:
+Graph strings are configured under the :cylc:conf:`[scheduling][graph]` section
+of the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
@@ -55,10 +61,6 @@ Graph strings may contain blank lines, arbitrary white space and comments e.g:
 
            """
 
-
-Interpreting Graph Strings
---------------------------
-
 Graphs can be broken down into pairs of :term:`triggers <trigger>`, where the
 left side is a single task output, or a logical expression involving several of
 them, and the right side is the task or family that triggers when the output
@@ -74,7 +76,7 @@ recurrence expression for the graph string. For example this graph:
            T00,T12 = "A => B"
 
 implies that ``B`` triggers off of ``A`` (i.e. off of the ``A:succeeded`` output)
-for cycle points where the hour matches ``00`` or ``12``. To define inter-cycle
+for cycle points where the hour matches ``00`` or ``12``. To define intercycle
 dependencies, attach an offset indicator to the left side of a pair:
 
 .. code-block:: cylc
@@ -135,8 +137,8 @@ is equivalent to this:
 
 In summary, the branching tree structure of a dependency graph can
 be partitioned into lines (in the :cylc:conf:`flow.cylc` graph string) of
-dependency pairs or chains, in any way you like.
-Use white space and comments to make the graph as clear as possible.
+dependency pairs or chains, in any way you like. Use white space and comments
+to make the graph as clear as possible.
 
 .. code-block:: cylc
 
@@ -202,9 +204,9 @@ and also to this:
 .. note::
 
    Multiple graph strings add together to make the complete workflow graph.
-   
 
-.. versionadded:: 8.0.0
+
+.. versionchanged:: 8.0.0
 
    Graph strings can be broken on ``&`` and ``|`` as well as ``=>``.
 
@@ -218,7 +220,7 @@ Non-Cycling
 ^^^^^^^^^^^
 
 The following is a small workflow of non-cycling tasks; these all have a
-single cycle point (``1``), and once they're all finished the scheduler 
+single cycle point (``1``), and once they're all finished the scheduler
 shuts down.
 
 .. Need to use a 'container' directive to get centered image with
@@ -1236,13 +1238,13 @@ significantly less memory and CPU to store and evaluate.
 
 .. _InterCyclePointTriggers:
 
-Inter-Cycle Triggers
-^^^^^^^^^^^^^^^^^^^^
+Intercycle Triggers
+^^^^^^^^^^^^^^^^^^^
 
 Most tasks in a workflow typically depend on others with the same
 cycle point, but some may depend on other cycle points [1]_.
 
-:term:`Inter-cycle dependence <inter-cycle dependency>` is expressed using
+:term:`Intercycle dependence <intercycle dependency>` is expressed using
 ``[offset]`` syntax such as ``foo[-PT12H] => foo``, which means ``foo`` at the
 current cycle point depends on a previous instance of ``foo`` at 12 hours
 before the current cycle point. Unlike for recurrences (e.g. ``T00,T12``),
@@ -1255,7 +1257,7 @@ initial cycle point.
        # B triggers off A in the previous cycle point
        PT6H = "A[-PT6H] => B"
 
-inter-cycle and trigger type (or message trigger) syntax can be
+intercycle and trigger type (or message trigger) syntax can be
 combined:
 
 .. code-block:: cylc
@@ -1331,7 +1333,7 @@ Tasks that depend on their own previous-cycle instance can be declared as
        [[graph]]
            T00,T12 = "foo => bar"
 
-However, this feature is deprecated in favor of explicit inter-cycle triggers
+However, this feature is deprecated in favor of explicit intercycle triggers
 which expose the associated scheduling behaviour in the graph:
 
 .. code-block:: cylc
@@ -1368,7 +1370,7 @@ can be replaced by a single sequential declaration,
 Future Triggers
 ^^^^^^^^^^^^^^^
 
-Cylc also supports :term:`inter-cycle triggering <inter-cycle trigger>` off
+Cylc also supports :term:`intercycle triggering <intercycle trigger>` off
 tasks "in the future" (with respect to cycle point):
 
 .. code-block:: cylc
@@ -1457,8 +1459,491 @@ This is a substantial topic, documented separately
 in :ref:`Section External Triggers`.
 
 
-How to Limit Triggering
------------------------
+
+.. _User Guide Expected Outputs:
+.. _expected outputs:
+.. _incomplete tasks:
+
+Expected Outputs
+----------------
+
+.. versionadded:: 8.0.0
+
+:term:`Task outputs <task output>` in the :term:`graph` are either
+:term:`expected <expected output>` (the default) or  :term:`optional <optional
+output>`.
+
+The scheduler expects all task outputs to be completed at runtime, unless they
+are marked with ``?`` as optional. This allows it to correctly diagnose
+:term:`workflow completion`. [2]_
+
+Tasks that finish without completing expected outputs  [3]_ are retained as
+:ref:`incomplete <incomplete tasks>` pending user intervention, e.g. to be
+retriggered after a bug fix.
+
+.. note::
+   Incomplete tasks stall the workflow if there are no other tasks to run (see
+   :ref:`workflow completion`).
+
+   They also count toward the :term:`runahead limit`, because they may
+   run again once dealt with.
+
+This graph says task ``bar`` should trigger if ``foo`` succeeds:
+
+.. code-block:: cylc-graph
+
+   foo => bar  # short for "foo:succeed => bar"
+
+Additionally, ``foo`` is expected to succeed, because its success is not marked
+as optional. If ``foo`` does not succeeded, the scheduler will not run ``bar``,
+and ``foo`` will be retained as an incomplete task.
+
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
+
+.. code-block:: cylc-graph
+
+   foo
+   bar:x
+   baz:fail
+
+Tasks that appear with only custom outputs in the graph are also expected to succeed.
+Here, ``foo:succeed`` is an expected output, as well as ``foo:x``, unless it is
+marked as optional elsewhere in the graph:
+
+.. code-block:: cylc-graph
+
+   foo:x => bar
+
+If a task generates multiple custom outputs, they should be "expected" if you
+expect them all to be completed every time the task runs. Here,
+``model:file1``, ``model:file2``, and ``model:file3`` are all expected outputs:
+
+.. code-block:: cylc-graph
+
+   model:file1 => proc1
+   model:file2 => proc2
+   model:file3 => proc3
+
+
+.. _optional outputs:
+.. _User Guide Optional Outputs:
+
+Optional Outputs
+----------------
+
+.. versionadded:: 8.0.0
+
+Optional outputs are marked with ``?``. They may or may not be completed by the
+task at runtime.
+
+Like the first example above, the following graph also says task ``bar`` should
+trigger if ``foo`` succeeds:
+
+.. code-block:: cylc-graph
+
+   foo? => bar  # short for "foo:succeed? => bar"
+
+But now ``foo:succeed`` is optional, so we might expect it to fail sometimes.
+And if it does fail, it will not be marked as an incomplete task.
+
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all optional outputs:
+
+.. code-block:: cylc-graph
+
+   foo?
+   bar:x?
+   baz:fail?
+
+
+Success and failure (of the same task) are mutually exclusive, so they must
+both be optional if one is optional, or if they both appear in the graph:
+
+.. code-block:: cylc-graph
+
+   foo? => bar
+   foo:fail? => baz
+
+
+.. warning::
+
+   Optional outputs must be marked as optional everywhere they appear in the
+   graph, to avoid ambiguity.
+
+
+If a task generates multiple custom outputs, they should all be declared optional
+if you do not expect all of them all to be completed every time the task runs:
+
+.. code-block:: cylc-graph
+
+   # model:x, :y, and :z are all optional outputs:
+   model:x? => proc-x
+   model:y? => proc-y
+   model:z? => proc-z
+
+This is an example of :term:`graph branching` from optional outputs. Whether a
+particular branch is taken or not depends on which optional outputs are
+completed at runtime. For more information see :ref:`Graph Branching`.
+
+Leaf tasks (with nothing downstream of them) can have optional outputs. In the
+following graph, ``foo`` is expected to succeed, but it doesn't matter whether
+``bar`` succeeds or fails:
+
+.. code-block:: cylc-graph
+
+   foo => bar?
+
+
+.. note::
+
+   Optional outputs do not affect *triggering*. They just tell the scheduler
+   what to do with the task if it finishes without completing the output.
+
+   This graph triggers ``bar`` if ``foo`` succeeds, and does not trigger
+   ``bar`` if ``foo`` fails:
+
+   .. code-block:: cylc-graph
+
+      foo => bar
+
+   And so does this graph:
+
+   .. code-block:: cylc-graph
+
+      foo? => bar
+
+   The only difference is whether or not the scheduler regards ``foo`` as
+   incomplete if it fails.
+
+
+Finish Triggers
+^^^^^^^^^^^^^^^
+
+``foo:finish`` is a pseudo output that is short for ``foo:succeed? |
+foo:fail?``. This automatically labels the real outputs as optional, because
+success and failure can't both be expected.
+
+``foo:finish?`` is illegal because it incorrectly suggests that "finishing
+is optional" and that a non-optional version of the trigger makes sense.
+
+.. code-block:: cylc-graph
+
+   # Good:
+   R1 = """
+      foo:finish => bar
+      foo? => baz
+   """
+
+   # Error:
+   R1 = """
+      foo:finish => bar
+      foo => baz  # ERROR : foo:succeed must be optional here!
+   """
+
+
+Family Triggers
+^^^^^^^^^^^^^^^
+
+.. (taken from https://github.com/cylc/cylc-flow/pull/4343#issuecomment-913901972)
+
+Family triggers are based on family pseudo outputs such as ``FAM:succeed-all``
+and ``FAM:fail-any`` that are short for logical expressions involving the
+corresponding member task outputs.
+
+If the member outputs are not singled out explicitly elsewhere in the graph,
+then they default to being expected outputs.
+
+For example, if ``f1`` and ``f2`` are members of ``FAM``, then this:
+
+.. code-block:: cylc-graph
+
+   FAM:fail-all => a
+
+
+means:
+
+.. code-block:: cylc-graph
+
+   f1:fail & f2:fail => a  # f1:fail and f2:fail are expected
+
+
+and this:
+
+.. code-block:: cylc-graph
+
+   FAM:succeed-any => a
+
+
+means:
+
+.. code-block:: cylc-graph
+
+   f1 | f2 => a  # f1:succeed and f2:succeed are expected
+
+
+However, the family default can be changed to optional by using ``?`` on the
+family trigger. So this:
+
+.. code-block:: cylc-graph
+
+   FAM:fail-all? => a
+
+
+means this:
+
+.. code-block:: cylc-graph
+
+   f1:fail? & f2:fail? => a  # f1:fail and f2:fail are optional
+
+
+If particular member tasks are singled out elsewhere in the graph, that
+overrides the family default for expected/optional outputs:
+
+.. code-block:: cylc-graph
+
+   # f1:fail is expected, and f2:fail is optional:
+   FAM:fail-all => a
+   f2:fail? => b
+
+
+Family Finish Triggers
+^^^^^^^^^^^^^^^^^^^^^^
+
+Like task ``:finish`` triggers, family ``:finish-all/any`` triggers are
+different because ``:finish`` is a pseudo output involving both ``:succeed``
+and ``:fail``, which are mutually exclusive outputs that must both be optional
+if both are used.
+
+Also like task ``:finish`` triggers, use of ``?`` is illegal on a family
+finish trigger, because the underlying member outputs must already be optional.
+
+.. code-block:: cylc-graph
+
+   FAM:finish-all => a  # f1:succeed/fail and f2:succeed/fail are optional
+   FAM:finish-any => a  # (ditto)
+
+   FAM:finish-all? => b  # ERROR
+
+
+.. _Graph Branching:
+
+Graph Branching
+---------------
+
+.. versionadded:: 8.0.0
+
+Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
+automatically follow different paths depending on events at runtime. This
+relies on :term:`optional outputs <optional output>` and is called *branching*.
+
+.. note::
+
+   In Cylc 7 and earlier, graphs were not event-driven and needed
+   :term:`suicide triggers <suicide trigger>` to clean up unused
+   branches at runtime.
+
+   Cylc 8 does not need suicide triggers for branching.
+
+Basic Example
+^^^^^^^^^^^^^
+
+Here Cylc will follow one of two "branches" depending on the outcome of task ``b``:
+
+* If ``b`` succeeds then the task ``c`` will run.
+* If ``b`` fails then the task ``r`` will run.
+
+Task ``d`` will run after either ``c`` or ``r`` succeeds.
+
+.. digraph:: example
+   :align: center
+
+   subgraph cluster_success {
+      label = ":succeed"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+
+      c
+   }
+
+   subgraph cluster_failure {
+      label = ":fail"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      r
+   }
+
+   a -> b -> c -> d
+   b -> r -> d
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           R1 = """
+               # the success path
+               a => b => c
+               # the fail path
+               a => b:fail => r
+               # either way, carry on with the rest of the workflow
+               c | r => d
+           """
+
+Note the last line of the graph ``c | r => d`` allows the graph to
+continue on to ``d`` regardless of the path taken. This is an :term:`artificial
+dependency`.
+
+Branching is often used for automatic failure recovery. Here's a simple
+example:
+
+.. code-block:: cylc-graph
+
+   foo => bar
+   bar:fail? => recover
+   bar? | recover => baz
+
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+      label = ":fail"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      recover
+   }
+
+   foo -> bar
+   bar -> recover
+   recover -> baz [arrowhead="onormal"]
+   bar -> baz [arrowhead="onormal"]
+
+
+The ``recover`` task would (presumably) analyse the failure of ``bar`` and, if
+the right failure mode is confirmed, attempt to generate the right outputs
+another way. Then ``baz`` can trigger off of either branch, to process the
+outputs.
+
+A more realistic example might have several tasks on each branch. The
+``recover`` task could, via inheritance, run the same underlying code as
+``bar``, but configured differently to avoid the failure.
+
+
+Message Trigger Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Branching is particularly powerful when using :ref:`MessageTriggers` (i.e.
+:term:`custom outputs <custom output>`) to define multiple parallel paths in
+the graph.
+
+In the following graph there is a task called ``showdown`` which produces one
+of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
+a different path depending on which of these three outputs is produced.
+
+As with the previous example each path begins with a different :term:`optional
+output` of a particular task and ends with an "or" dependency to allow the
+workflow to continue regardless of the path taken.
+
+.. code-block:: cylc-graph
+
+   # branch the graph depending on the outcome of "showdown"
+   showdown:good? => good
+   showdown:bad? => bad
+   showdown:ugly? => ugly
+   # join the graph back together
+   good | bad | ugly => fin
+
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+      label = ":good"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+
+      good
+   }
+   subgraph cluster_2 {
+      label = ":bad"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      bad
+   }
+   subgraph cluster_3 {
+      label = ":ugly"
+      color = "purple"
+      fontcolor = "purple"
+      style = "dashed"
+
+      ugly
+   }
+   showdown -> good
+   showdown -> bad
+   showdown -> ugly
+   good -> fin [arrowhead="onormal"]
+   bad -> fin [arrowhead="onormal"]
+   ugly -> fin [arrowhead="onormal"]
+
+
+You can test run this example making ``showdown`` randomly generate one of the
+three custom outputs:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[showdown]]
+           # Randomly return one of the three custom outputs.
+           script = """
+               SEED=$RANDOM
+               if ! (( $SEED % 3 )); then
+                   cylc message 'The Good'
+               elif ! (( ( $SEED + 1 ) % 3 )); then
+                   cylc message 'The Bad'
+               else
+                   cylc message 'The Ugly'
+               fi
+           """
+           [[[outputs]]]
+               # Register the three custom outputs.
+               good = 'The Good'
+               bad = 'The Bad'
+               ugly = 'The Ugly'
+
+
+When using message triggers in this way there are two things to be aware of:
+
+1. Message triggers are not exit states.
+
+   Custom output messages are generated *before* the task has completed, so it
+   can be useful to combine them with a regular trigger for safety e.g:
+
+   .. code-block:: cylc-graph
+
+      # good will wait for showdown to finish before running
+      showdown:finish & showdown:good => good
+
+      # if showdown fails then good will not run
+      showdown:succeed & showdown:good => good
+
+2. Whether message outputs from a single task are mutually exclusive or not
+   depends on the task, and the workflow should be designed accordingly.
+
+   For example, the ``showdown`` task above could instead send all three
+   messages in succession, after writing out corresponding *good*, *bad*, and
+   *ugly* files.
+
+   Check that you understand how your tasks work, if they use custom outputs.
+
+
+Limiting Workflow Activity
+--------------------------
 
 Cylc will usually try to trigger any task with met dependencies. If this
 risks running more tasks than you wish - if it would overwhelm the job
@@ -1479,8 +1964,8 @@ ahead (with respect to cycle point) of the slowest ones.
    Runahead limiting does not restrict activity within a cycle point.
    Workflows with a large number of tasks per cycle may need :ref:`internal
    queues <InternalQueues>` to constrain activity in absolute terms.
-   
-Succeeded and failed tasks are ignored when computing the runahead limit. 
+
+Succeeded and failed tasks are ignored when computing the runahead limit.
 
 In the following example the runahead limit of ``P5`` (which is also the
 default) restricts the active window of the workflow to span a maximum of five
@@ -1554,180 +2039,12 @@ trees side by side, limited to 2 and 3 tasks respectively:
    :language: cylc
 
 
-.. _Graph Branching:
-
-Graph Branching
----------------
-
-.. versionadded:: 8.0.0
-
-Cylc 8 handles :term:`graphs <graph>` in an event-driven way so that
-a workflow can automatically follow different paths in different eventualities.
-This is called :term:`branching`.
-
-.. note::
-
-   Before Cylc 8, graphs were not event-driven, so :term:`suicide triggers
-   <suicide trigger>` were needed to clean up unused branches at runtime.
-
-Basic Example
-^^^^^^^^^^^^^
-
-Here Cylc will follow one of two "branches" depending on the outcome of task ``b``:
-
-* If ``b`` succeeds then the task ``c`` will run.
-* If ``b`` fails then the task ``r`` will run.
-
-Task ``d`` will run after either ``c`` or ``r`` succeeds.
-
-.. digraph:: example
-   :align: center
-
-   subgraph cluster_success {
-      label = ":succeed"
-      color = "green"
-      fontcolor = "green"
-      style = "dashed"
-
-      c
-   }
-
-   subgraph cluster_failure {
-      label = ":fail"
-      color = "red"
-      fontcolor = "red"
-      style = "dashed"
-
-      r
-   }
-
-   a -> b -> c -> d
-   b -> r -> d
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           R1 = """
-               # the success path
-               a => b => c
-               # the fail path
-               a => b:fail => r
-               # either way, carry on with the rest of the workflow
-               c | r => d
-           """
-
-Note the last line of the graph ``c | r => d`` allows the graph to
-continue on to ``d`` regardless of the path taken.
-
-Message Trigger Example
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Branching is particularly powerful when using :ref:`MessageTriggers`
-to define multiple parallel pathways.
-
-In the following graph there is a task called ``showdown`` which produces one
-of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
-a different path depending on which of these three outputs is produced:
-
-.. digraph:: Example
-   :align: center
-
-   subgraph cluster_1 {
-      label = ":good"
-      color = "green"
-      fontcolor = "green"
-      style = "dashed"
-      good
-   }
-   subgraph cluster_2 {
-      label = ":bad"
-      color = "red"
-      fontcolor = "red"
-      style = "dashed"
-      bad
-   }
-   subgraph cluster_3 {
-      label = ":ugly"
-      color = "purple"
-      fontcolor = "purple"
-      style = "dashed"
-      ugly
-   }
-   showdown -> good
-   showdown -> bad
-   showdown -> ugly
-   good -> fin [arrowhead="onormal"]
-   bad -> fin [arrowhead="onormal"]
-   ugly -> fin [arrowhead="onormal"]
-
-As with the previous example each path begins with a different outcome
-of a particular task and ends with an "or" dependency to allow the workflow
-to continue regardless of the path taken:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           R1 = """
-              showdown
-              showdown:good => good
-              showdown:bad => bad
-              showdown:ugly => ugly
-              good | bad | ugly => fin
-           """
-
-   [runtime]
-       [[root]]
-           script = sleep 1
-       [[showdown]]
-           # Randomly return one of the three custom outputs.
-           script = """
-               SEED=$RANDOM
-               if ! (( $SEED % 3 )); then
-                   cylc message 'The-Good'
-               elif ! (( ( $SEED + 1 ) % 3 )); then
-                   cylc message 'The-Bad'
-               else
-                   cylc message 'The-Ugly'
-               fi
-           """
-           [[[outputs]]]
-               # Register the three custom outputs with cylc.
-               good = 'The-Good'
-               bad = 'The-Bad'
-               ugly = 'The-Ugly'
-
-When using message triggers in this way there are two things to be aware of:
-
-1. Message triggers are not exit states.
-
-   Custom output messages are generated *before* the task has completed, so it
-   can be useful to combine them with a regular trigger for safety e.g:
-
-   .. code-block:: cylc-graph
-
-      # good will wait for showdown to finish before running
-      showdown:finish & showdown:good => good
-
-      # if showdown fails then good will not run
-      showdown:succeed & showdown:good => good
-
-2. Whether message outputs from a single task are mutually exclusive or not
-   depends on the task, and the workflow should be designed accordingly. 
-  
-   For example, the ``showdown`` task above could instead send all three
-   messages in succession, after writing out corresponding *good*, *bad*, and
-   *ugly* files.
-
-   Check that you understand how your tasks work, if they use custom outputs.
-
-How The Graph Determines Valid Task Cycle Points
-------------------------------------------------
+Valid Task Cycle Points
+-----------------------
 
 Graph triggers determine the sequence of valid cycle points (via the
 recurrence value of the associated graph string) and the prerequisites, for
-each downstream task in a dependency. In the absence of a cycle point offset 
+each downstream task in a dependency. In the absence of a cycle point offset
 (intercycle trigger) they also determine the sequence of cycle points for
 the upstream tasks:
 
@@ -1737,7 +2054,7 @@ the upstream tasks:
        initial cycle point = 2025-01-01T00
        [[graph]]
            P2D = "foo & bar => baz"
-  
+
 This says ``baz`` depends on ``foo`` and ``bar`` for every point in the
 sequence defined by the recurrence ``P2D`` (i.e. ``R/^/P2D``).
 
@@ -1756,9 +2073,9 @@ defined for ``foo``*:
        [[graph]]
            # ERROR!
            P2D = "foo[-P1D] & bar"
- 
+
 To fix this, ``foo`` should be explicitly tied to the ``P2D`` cycle, and the
-correct offset used: 
+correct offset used:
 
 .. code-block:: cylc
 
@@ -1813,12 +2130,18 @@ Omitting Tasks
 --------------
 
 It can sometimes be useful to temporarily remove tasks by simply commenting
-them out of the graph. As a reminder to restore them remove them properly,
-validation will warn about tasks defined under :cylc:conf:`[runtime]` but not
-used in the graph.
+them out of the graph. Validation warns about tasks defined under
+:cylc:conf:`[runtime]` but not used in the graph, as a reminder to restore them
+or remove them.
 
 You can also use logical Jinja2 switches (:ref:`User Guide Jinja2`) to
-include or exclude tasks (or anything else) from workflow. 
+include or exclude tasks (or anything else) from workflow.
 
 .. [1] For example, in weather forecasting workflows (and similar systems) each
        new forecast depends partly on the outcome of the previous forecast.
+
+.. [2] By distinguishing graph branches that did not run but should have, from
+   those that did not run but were optional.
+
+.. [3] This includes failed job submission, when the ``:submit`` output is not
+   marked as optional.

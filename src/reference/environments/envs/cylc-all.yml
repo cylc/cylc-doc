@@ -1,0 +1,8 @@
+name: cylc-|release|
+channels:
+  - conda-forge
+dependencies:
+  - cylc-flow =|release|
+  - cylc-uiserver
+  - cylc-rose
+  - metomi-rose

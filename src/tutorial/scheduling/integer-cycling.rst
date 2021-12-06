@@ -3,14 +3,11 @@
 Basic Cycling
 =============
 
+.. admonition:: Aims
+   :class: aims
 
-In this section we will look at how to write :term:`cycling` (repeating)
-workflows.
-
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc
-   7 desktop GUI.
+   | You will be able to:
+   | ✅ Write simple :term:`cycling` (repeating) workflows.
 
 
 Repeating Workflows
@@ -130,8 +127,8 @@ To make a workflow repeat we must tell Cylc three things:
    task is in.
 
 
-Inter-Cycle Dependencies
-------------------------
+Intercycle Dependencies
+-----------------------
 
 .. ifnotslides::
 
@@ -227,7 +224,7 @@ Inter-Cycle Dependencies
 
    Adding this dependency "strings together" the cycles, forcing them to run in
    order. We refer to dependencies between cycles as
-   :term:`inter-cycle dependencies<inter-cycle dependency>`.
+   :term:`intercycle dependencies<intercycle dependency>`.
 
    In the dependency the ``[-P1]`` suffix tells Cylc that we are referring to a
    task in the previous cycle. Equally ``[-P2]`` would refer to a task two
@@ -276,7 +273,7 @@ Inter-Cycle Dependencies
    first two cycles this doesn't make sense as there was no cycle two cycles
    before, so this dependency will be ignored.
 
-   Any inter-cycle dependencies stretching back to before the
+   Any intercycle dependencies stretching back to before the
    :term:`initial cycle point` will be ignored.
 
 .. digraph:: example
@@ -505,10 +502,10 @@ Recurrence Sections
 
       Use ``cylc graph`` to see the effect this has on the workflow.
 
-   #. **Inter-cycle dependencies.**
+   #. **intercycle dependencies.**
 
-      Next we need to add some inter-cycle dependencies. We are going to add
-      three inter-cycle dependencies:
+      Next we need to add some intercycle dependencies. We are going to add
+      three intercycle dependencies:
 
       #. Between ``f`` from the previous cycle and ``c``.
       #. Between ``d`` from the previous cycle and ``a``
@@ -516,7 +513,7 @@ Recurrence Sections
       #. Between ``e`` from the previous cycle and ``a``
          *every even cycle* (e.g. e.1 => a.2).
 
-      Have a go at adding inter-cycle dependencies to your :cylc:conf:`flow.cylc` file to
+      Have a go at adding intercycle dependencies to your :cylc:conf:`flow.cylc` file to
       make your workflow match the diagram below.
 
       .. hint::

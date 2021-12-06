@@ -1,7 +1,7 @@
 .. _User Guide Param:
 
-Parameterized Tasks
-===================
+Task Parameters
+===============
 
 Cylc can automatically generate related tasks and dependencies by expanding
 :term:`parameterized <parameterisation>` names over lists or ranges of
@@ -563,7 +563,7 @@ datetime cycle point into four smaller runs:
                model<chunk=4>[-P1Y] => model<chunk=1>
            """
 
-The inter-cycle trigger connects the first chunk in each cycle point to the
+The intercycle trigger connects the first chunk in each cycle point to the
 last chunk in the previous cycle point. However, in this particular case it
 might be simpler to use a 3-monthly datetime cycle instead:
 

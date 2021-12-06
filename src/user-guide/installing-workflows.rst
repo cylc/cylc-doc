@@ -64,6 +64,12 @@ Any of the above commands may be run from anywhere on the file system with the
 addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
 ``-C PATH/TO/SOURCE/DIRECTORY``).
 
+.. note::
+
+   To avoid confusion, ``cylc install`` will fail if the workflow name
+   contains ``runN`` or ``run<number>``. These directory names are
+   reserved for the automatic numbering of run directories.
+
 Configurable Source Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -395,8 +401,22 @@ If:
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-- the install will create nested run directories, i.e. installing a
-  workflow in a subdirectory of an existing run directory.
+
+- the install will create nested install directories. Neither a new
+  installation in a subdirectory of an existing one, nor a directory containing
+  an existing installation are permitted. For example, having installed a
+  workflow in ``bar`` you would be unable to install one in ``foo``
+  or ``foo/bar/baz``.
+
+  .. code-block:: bash
+
+      foo
+      `-- bar
+         |-- _cylc-install
+         |-- baz
+         |-- run1
+         `-- runN
+
 
 - trying to install a workflow into an already existing run directory,
   ``cylc reinstall`` should be used for this, see

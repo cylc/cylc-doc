@@ -4,9 +4,6 @@ Cylc |version| Caveats
 This is a beta release of Cylc. There are some loose ends and features which
 have not yet been (re)implemented.
 
-The documentation has not been fully reviewed and the command line help may
-be out of date in some places.
-
 
 Cylc Flow
 ---------
@@ -27,7 +24,7 @@ Trigger Edit
 Reflow
    The new "reflow" functionality, which allows multiple
    (potentially concurrent) executions of the same workflow in a single
-   :term:`scheduler`, is not fully supported by all commands or documented.
+   :term:`scheduler`, is not fully supported by all commands
 
 
 Browser Based UI
@@ -36,7 +33,7 @@ Browser Based UI
 The old "GUI" has been replaced by the new browser-based "UI".
 
 Graph View
-   There is no graph view in the Cylc UI as yet. A new graph view will be
+   There is no graph view in the new Cylc UI as yet. A new graph view will be
    developed providing both "live" (AKA ``cylc gui``) and "offline"
    (AKA ``cylc graph``) functionalities.
 
@@ -44,7 +41,7 @@ Graph View
    * https://github.com/cylc/cylc-ui/issues/82
 
 Static Graph Visualization
-   Not yet been reimplemented for Cylc 8. As an interim measure the
+   Not yet reimplemented for Cylc 8. As an interim measure the
    ``cylc graph``` command can generate a basic PNG image of a workflow
    graph if Graphviz is installed in the Cylc environment.
 
@@ -88,7 +85,7 @@ Documentation / Orientation Guide
 Terminal User Interface
 -----------------------
 
-The ``cylc tui`` command (Tui) replaces the old ``cylc monitor``, it provides a
+The ``cylc tui`` command (Tui) replaces the old ``cylc monitor``. It provides a
 tree view that is very similar to the Cylc UI and supports some control
 functionality.
 
