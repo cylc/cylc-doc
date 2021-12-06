@@ -1603,6 +1603,11 @@ Glossary
          * :ref:`Runahead Limiting`
 
 
+   World Meteorological Organization
+   WMO
+      The UN Meteorological arm.
+
+
    workflow completion
       A workflow is deemed complete if there are no more tasks to run,
       according to the graph, and there are no :term:`incomplete task

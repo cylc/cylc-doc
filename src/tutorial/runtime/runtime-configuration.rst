@@ -115,7 +115,6 @@ Job Submission
    [runtime]
        [[big_task]]
            script = big-executable
-
            platform = slurm_platform
 
            # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
@@ -156,22 +155,22 @@ Sometimes jobs fail. This can be caused by two factors:
 * Something going wrong with the job submission e.g:
 
   * A network problem;
-  * The :term:`job host` becoming unavailable or overloaded;
-  * An issue with the directives.
+  * The :term:`job platform` becoming unavailable or overloaded;
+  * An issue with the directives (such as asking for more memory than available).
 
 .. nextslide::
 
 .. ifnotslides::
 
-   In the event of failure Cylc can automatically re-submit (retry) jobs. We
-   configure retries using the ``execution retry delays`` and
-   ``submission retry delays`` settings. These settings are both set to an
-   :term:`ISO8601 duration`, e.g. setting ``execution retry delays`` to ``PT10M``
+   In the event of failure Cylc can automatically re-submit/retry jobs. We
+   configure retries using the ``submission retry delays`` and
+   ``execution retry delays`` settings. These settings are both set to an
+   :term:`ISO8601 duration`. Setting ``execution retry delays`` to ``PT10M``
    would cause the job to retry every 10 minutes in the event of execution
    failure.
 
    We can limit the number of retries by writing a multiple in front of the
-   duration, e.g:
+   duration:
 
 .. code-block:: cylc
 
@@ -179,14 +178,14 @@ Sometimes jobs fail. This can be caused by two factors:
        [[some-task]]
            script = some-script
 
-           # In the event of execution failure, retry a maximum
-           # of three times every 15 minutes.
-           execution retry delays = 3*PT15M
-
            # In the event of submission failure, retry a maximum
            # of two times every ten minutes and then every 30
            # minutes thereafter.
            submission retry delays = 2*PT10M, PT30M
+
+           # In the event of execution failure, retry a maximum
+           # of three times every 15 minutes.
+           execution retry delays = 3*PT15M
 
 
 Start, Stop, Restart
@@ -209,7 +208,7 @@ Start, Stop, Restart
 
    Once a workflow has stopped it is possible to restart it using
    ``cylc play`` command. When the workflow restarts it picks up where it left
-   off and carries on as normal.
+   off and carries on.
 
    .. code-block:: bash
 
@@ -251,6 +250,8 @@ Start, Stop, Restart
       from the :ref:`scheduling tutorial <tutorial-scheduling>`.
 
    #. **Create A New Workflow.**
+
+      .. TODO - needs new workflow gettr cmd
 
       Create a new workflow by running the command:
 
@@ -303,19 +304,21 @@ Start, Stop, Restart
       It requires two environment variables:
 
       ``SITE_ID``:
-          A four digit numerical code which is used to identify a
-          weather station, e.g. ``3772`` is Heathrow Airport.
+          A 4 or 5 digit numerical code issued by the :term:`WMO` which is used
+          to identify a weather station, e.g. ``3772`` is Heathrow Airport.
       ``API_KEY``:
           An authentication key required for access to the service.
 
-      .. TODO: Add instructions for offline configuration
+      .. TODO Add instructions for offline configuration
+
+      .. TODO convert this into a cylc command
 
       Generate a Datapoint API key::
 
          rose tutorial api-key
 
-      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
-      ``xxx...`` with your API key:
+      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file
+      replacing ``xxx...`` with your API key:
 
       .. code-block:: cylc
 
@@ -374,14 +377,21 @@ Start, Stop, Restart
 
       Next we will test the ``get_observations`` tasks.
 
+      Install your workflow:
+
+      .. code-block:: bash
+
+         cylc install runtime-tutorial
+
       Open the Cylc GUI by running the following command:
 
       .. code-block:: bash
 
-         cylc gui runtime-tutorial &
+         cylc gui &
 
-      Run the workflow either by pressing the play button in the Cylc GUI or by
-      running the command:
+      Then navigate to ``runtime-tutorial/runN`` (Where N is the highest number).
+
+      Run the workflow by running the command:
 
       .. code-block:: bash
 
@@ -389,8 +399,8 @@ Start, Stop, Restart
 
       If all goes well the workflow will startup and the tasks will run and
       succeed. Note that the tasks which do not have a ``[runtime]`` section
-      will still run though they will not do anything as they do not call any
-      scripts.
+      will still run (and succeed!) though they will not do anything as they
+      do not call any scripts.
 
       Once the workflow has reached the final cycle point and all tasks have
       succeeded the workflow will automatically shutdown.
@@ -412,7 +422,7 @@ Start, Stop, Restart
 
       * The longitude of the weather station;
       * The latitude of the weather station;
-      * The wind direction (*the direction the wind is blowing towards*)
+      * The wind direction (*the direction the wind is blowing from*)
         in degrees;
       * The wind speed in miles per hour.
 
@@ -438,21 +448,19 @@ Start, Stop, Restart
 
       .. TODO: Add advice on what to do if the command fails.
 
-   #. **Run The Workflow.**
+   #. **Re-install and Run The Workflow.**
 
-      Open the Cylc GUI (if not already open) and run the workflow.
+      Re-install and run the workflow.
 
       .. spoiler:: Hint hint
 
          .. code-block:: bash
 
-            cylc gui runtime-tutorial &
+            cylc install runtime-tutorial
 
          Run the workflow either by:
 
-         * Pressing the play button in the Cylc GUI. Then, ensuring that
-           "Cold Start" is selected within the dialogue window, pressing the
-           "Start" button.
+         * Pressing the play button in the Cylc GUI.
          * Running the command ``cylc play runtime-tutorial``.
 
    #. **View The Forecast Summary.**
