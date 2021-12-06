@@ -64,6 +64,12 @@ Any of the above commands may be run from anywhere on the file system with the
 addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
 ``-C PATH/TO/SOURCE/DIRECTORY``).
 
+.. note::
+
+   To avoid confusion, ``cylc install`` will fail if the workflow name
+   contains ``runN`` or ``run<number>``. These directory names are
+   reserved for the automatic numbering of run directories.
+
 Configurable Source Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
