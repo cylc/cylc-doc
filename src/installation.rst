@@ -186,7 +186,7 @@ using
 
 .. code-block:: bash
 
-   cylc resources etc/cylc /path/to/cylc  # should be in $PATH
+   cylc get-resources etc/cylc /path/to/cylc  # should be in $PATH
    chmod +x /path/to/cylc
 
 Configuration
