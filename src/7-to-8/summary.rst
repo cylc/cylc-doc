@@ -6,13 +6,23 @@ Quick Summary Of Changes
 Terminology
 -----------
 
-- **Suite** is now **WORKFLOW** (a more widely understood term)
-- **Suite daemon** (or **suite server program**) is now **SCHEDULER** (ditto)
-- **Batch system** is now **JOB RUNNER** (not all of our job runners are "batch
-  systems")
-- The **workflow config filename** is now ``flow.cylc``, not ``suite.rc``
+Cylc now uses more widely understood terms for several core concepts.
+
+.. table::
+
+   ==============      =============          ================
+   Cylc 8 Term         Cylc 7 Term            Comment
+   ==============      =============          ================
+   **workflow**        suite                  *suite* isn't known beyond weather forecasting
+   **job runner**      batch system           some job runners are not *batch systems*
+   **scheduler**       suite daemon           the server does not have to run as a daemon
+   ==============      =============          ================
+
 
 .. important::
+   And: the workflow config filename is now ``flow.cylc``, not ``suite.rc``.
+
+.. warning::
    Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
    ``suite.rc`` files in the same :term:`run directory` will result in an error.
 
@@ -70,7 +80,12 @@ Before upgrade, Cylc 8 can run Cylc 7 workflows out of the box. The old
 Architecture
 ------------
 
-The main Cylc system components are:
+.. seealso::
+
+   - Reference :ref:`architecture-reference` 
+
+
+The main Cylc 8 system components are:
 
 - **Cylc Scheduler**
      - The workflow engine core, Python 3 based
@@ -80,14 +95,15 @@ The main Cylc system components are:
 - **Cylc Hub**
    - Authenticates users, spawns and proxies Cylc UI Servers
    - Can run as a regular or privileged user
-   - (Is a `Jupyterhub <https://jupyter.org/hub>`_ instance)
+   - (The Hub is a `Jupyterhub <https://jupyter.org/hub>`_ instance)
 
 - **Cylc UI Server**
    - Interacts with Schedulers and the filesystem
    - Serves the UI to users
    - Can be launched by the privileged Hub, for multi-user installations
    - Or run standalone for use by a single user
-   - (Is a `Jupyter Server <https://jupyter-server.readthedocs.io>`_ extension)
+   - (The UI Server is a `Jupyter Server
+     <https://jupyter-server.readthedocs.io>`_ extension)
 
 - **Cylc UI**
    - In-browser web UI, includes:
@@ -99,6 +115,10 @@ The main Cylc system components are:
 
 - **Network layers**
    - Incremental push updates (c.f. polled full-state updates in Cylc 7)
+
+
+New Web and Terminal UIs
+------------------------
 
 .. figure:: ../img/hub.png
    :figwidth: 100%
@@ -124,34 +144,57 @@ The main Cylc system components are:
 
    Cylc 8 TUI application
 
+
 Scheduling Algorithm
 --------------------
+
+.. seealso::
+
+   User Guide: 
+
+   * :ref:`User Guide Expected Outputs`
+   * :ref:`User Guide Optional Outputs`
+   * :ref:`user-guide-reflow`
+   * :ref:`n-window`
 
 Cylc can manage infinite workflows of repeating tasks:
 
 .. image:: ../img/cycling.png
    :align: center
 
-Cylc 8 has an efficient new scheduling algorithm that:
-   - Spawns new tasks on demand
-   - Distinguishes between :term:`optional <optional output>` and
-     :term:`expected <expected output>` task outputs. This supports:
+Cylc 8 has a new scheduling algorithm that:
+   - Is much more efficient because it only has to manage active tasks
 
-     - :term:`graph branching` without suicide triggers
+     - waiting tasks are not pre-spawned before they are needed
+     - succeeded tasks are not kept across the active task window
+     - no costly indiscriminate dependency matching is done
+   - Distinguishes between :term:`optional <optional output>` and
+     :term:`expected <expected output>` task outputs, to support:
+
+     - :term:`graph branching` without :term:`suicide triggers <suicide trigger>`
      - correct diagnosis of :term:`workflow completion`
-   - Can run tasks out of cycle point order
+   - Causes no implicit dependence on previous-instance job submit
+
+     - instances of same task can run out of cycle point order
+     - the workflow will not unnecessarily stall downstream of failed tasks
    - Provides a sensible active-task based window on the evolving workflow
+
+     - (to fully understand which tasks appeared in the Cylc 7 GUI you had to
+       understand the scheduling algorithm)
    - Supports a powerful new capability called :term:`reflow`: you can trigger
      multiple concurrent flows in the same graph at once, managed by the same
      scheduler
+   - Can start a workflow from any task or tasks in the graph (no need for
+     checkpoint restart) 
+   - Can limit activity within as well as across cycles, without risking a stall
 
-See also:
 
-   * :ref:`Cylc 7 Scheduler Deficiencies Fixed by Cylc 8`
+Task/Job States
+---------------
 
+.. seealso::
 
-Task/Job Separation
--------------------
+   - User Guide :ref:`task-job-states`
 
 **Tasks** are nodes in the abstract workflow graph representing processes
 that should run once their prerequisites are satisfied. **Jobs** are the real
@@ -178,6 +221,14 @@ to retry.
 Optional and Expected Task Outputs
 ----------------------------------
 
+.. seealso::
+
+   User Guide:
+
+   * :ref:`User Guide Expected Outputs`
+   * :ref:`User Guide Optional Outputs`
+
+
 Cylc 8 distinguishes between :term:`expected <expected output>` and
 :term:`optional <optional output>` task outputs. This supports optional
 :term:`graph branching` and it allows the scheduler to correctly diagnose
@@ -195,13 +246,13 @@ If there is nothing left to do, but incomplete tasks are present, the scheduler
 will conclude that the workflow did not run to completion as expected and will
 :term:`stall` rather than shut down.
 
-.. seealso::
-   * :ref:`Cylc User Guide: optional outputs <User Guide Optional Outputs>`
-   * :ref:`Cylc User Guide: expected outputs <User Guide Expected Outputs>`
-
-
 Window on the Workflow
 ----------------------
+
+.. seealso::
+
+   * User Guide :ref:`n-window`
+
 
 .. image:: ../img/n-window.png
    :align: center
@@ -209,10 +260,11 @@ Window on the Workflow
 The Cylc UI can't show "all the tasks" at once because the graph may be huge,
 or even infinite in extent in cycling systems. The Cylc 8 UI shows:
 
-- current **active tasks** (submitted, running) plus tasks waiting on scheduler
+- Current **active tasks** (submitted, running) plus tasks waiting on scheduler
   constraints (queues, runahead limit, clock triggers) and external triggers
 
-- tasks up to ``n`` graph edges away from active tasks (default ``1`` edge)
+- Tasks up to ``n`` graph edges away from active tasks (default ``1`` edge)
+
 
 Platform Awareness
 ------------------
@@ -289,15 +341,17 @@ The functionality of ``rose suite-run`` has been migrated into Cylc 8.
 
 Cylc Install
 ^^^^^^^^^^^^
+
+.. seealso::
+
+   :ref:`Moving to Cylc Install<majorchangesinstall>`.
+
+
 Cylc install cleanly separates workflow source directory from run directory,
 and installs workflow files into the run directory at start-up.
 - ``cylc install`` copies workflow source files to a dedicated run-directory
 - :term:`source directory` locations can be set in global config
 - each install creates a new numbered :term:`run directory` (by default)
-
-.. seealso::
-
-   :ref:`Moving to Cylc Install<majorchangesinstall>`.
 
 .. code-block:: bash
 
@@ -345,6 +399,10 @@ For more information, see :ref:`installing_files`.
 Symlink Dirs
 ^^^^^^^^^^^^
 
+.. seealso::
+
+   * :ref:`RemoteInit`
+
 Symlinking the directories used by Cylc provides a useful way of managing disk
 space. This functionality was previously available with the Rose ``root dir``
 configuration but has now been implemented in Cylc 8.
@@ -360,13 +418,13 @@ These are created on a per install target basis, as configured in
 :cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
 a site level, for more information see :ref:`Install Targets`.
 
-See also:
-
-* :ref:`RemoteInit`
-
 
 Safe Run Semantics
 ------------------
+
+.. seealso::
+   - User Guide :ref:`WorkflowStartUp`
+
 
 Cylc 7 run semantics were somewhat dangerous: if you accidentally typed ``cylc run``
 instead of ``cylc restart`` a new run from scratch would overwrite the existing
@@ -401,7 +459,9 @@ Security
 - Cylc8 supports target users authorizing other users to interact with their
   workflows on the UI.
 
-See :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
+.. seealso::
+
+   - :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 
 
 .. note::
@@ -418,9 +478,9 @@ had to be installed manually.
 Cylc 8 and its core software dependencies can be installed quickly from Conda
 Forge, into a conda environment; or from PyPI, into a Python 3 virtual environment.
 
-See also:
+.. seealso::
 
-* :ref:`Cylc UI Server <CylcUIServer.architecture>`
+   * :ref:`installation`
 
 
 Time Zones
@@ -429,24 +489,6 @@ Time Zones
 :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
 are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
 
-.. seealso:: :ref:`Scheduling syntax rules<writing_flows.scheduling.syntax_rules>`
+.. seealso::
 
-.. _Cylc 7 Scheduler Deficiencies Fixed by Cylc 8:
-
-Cylc 7 Scheduler Deficiencies Fixed by Cylc 8
-----------------------------------------------
-
-- Every task implicitly depended on submission of the previous-instance job
-  (same task, previous cycle point)
-- Which meant tasks could not run out of cycle point order
-- And the scheduler could stall with next-cycle-point successors not spawned
-  downstream of failed tasks
-- The indiscriminate dependency matching process was costly
-- The scheduler had to be aware of at least one active and one waiting
-  cycle point instance of every task in the workflow, plus all succeeded tasks
-  in the current active task window
-- To fully understand what tasks appeared in the GUI (why particular
-  *waiting* or *succeeded* tasks appeared in some cycles but not in others, for
-  instance) you had to understand the scheduling algorithm
-- *Suicide triggers* were needed to clear unused graph paths and avoid
-  stalling the scheduler
+   - User Guide :ref:`writing_flows.scheduling.syntax_rules`

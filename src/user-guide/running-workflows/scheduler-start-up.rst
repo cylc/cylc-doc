@@ -1,9 +1,7 @@
+.. _WorkflowStartUp:
 
 Start, Restart, Reload
 ======================
-
-.. _WorkflowStartUp:
-
 
 The ``cylc play`` command starts a new instance of the Cylc scheduler program
 to manage a workflow, for the duration of the run. It also resumes paused

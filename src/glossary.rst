@@ -147,7 +147,7 @@ Glossary
       active window that is "actively waiting" on (i.e. periodically checking)
       an :term:`external trigger` or :term:`clock trigger`.
 
-      These are the only waiting tasks that matter to the :term:scheduler.
+      These are the only waiting tasks that matter to the :term:`scheduler`.
       Waiting tasks ahead of the active window in Cylc 8 are entirely
       abstract.
 

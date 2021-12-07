@@ -40,6 +40,6 @@ the scheduler is not actively managing them yet.
 
 .. note::
 
-   Th graph-based window around active tasks is intended to display the
-   essential information without overwhelming the UI. Even very large workflows
+   The graph-based active task window is intended to display the essential
+   information without overwhelming the UI. Even very large workflows
    typically do not have a massive number of tasks active at once.
