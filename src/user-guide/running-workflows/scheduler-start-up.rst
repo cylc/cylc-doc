@@ -90,6 +90,38 @@ would only run at cycle ``3``.
    :align: center
 
 
+Restarts and the Initial, Final, Start and Stop Cycle Points
+------------------------------------------------------------
+
+.. cylc-scope:: flow.cylc
+
+When a workflow is started for the first time, the final and stop cycle points
+(if either were set) are saved to the workflow database. In a restart, these
+values are loaded, so the workflow will stop at the originally set cycle point,
+even if :cylc:conf:`[scheduling]final cycle point` or
+:cylc:conf:`[scheduling]stop after cycle point` were changed.
+It is possible to override the original values using the
+``--final-cycle-point`` and ``--stop-cycle-point`` options for ``cylc play``.
+The new values will overwrite the old ones in the database for future restarts.
+
+If the values were changed in ``flow.cylc``, you can pick up these changes
+using a value of ``reload`` (e.g. ``--final-cycle-point=reload``).
+
+.. note::
+
+   If the workflow reached the final cycle point and shut down, it is finished
+   and cannot be restarted; the ``--final-cycle-point`` option will have
+   no effect.
+
+The initial cycle point (and start cycle point, if set) are also saved to the
+database when a workflow is started for the first time. However, the
+``--initial-cycle-point`` and ``--start-cycle-point`` options cannot be used
+in a restart; workflows always start from the cycle point where they
+previously stopped.
+
+.. cylc-scope::
+
+
 .. _Reloading The Workflow Configuration At Runtime:
 
 Reloading the Workflow Configuration at Runtime
