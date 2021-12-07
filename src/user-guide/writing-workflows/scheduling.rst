@@ -1536,7 +1536,7 @@ Optional Outputs
 Optional outputs are marked with ``?``. They may or may not be completed by the
 task at runtime.
 
-Like the first example above, the following graph also says task ``bar`` should
+Like the first example above, the following graph says task ``bar`` should
 trigger if ``foo`` succeeds:
 
 .. code-block:: cylc-graph
@@ -1571,7 +1571,7 @@ both be optional if one is optional, or if they both appear in the graph:
 
 
 If a task generates multiple custom outputs, they should all be declared optional
-if you do not expect all of them all to be completed every time the task runs:
+if you do not expect them to be completed every time the task runs:
 
 .. code-block:: cylc-graph
 
