@@ -130,24 +130,24 @@ Atom
 Emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
-   ``cylc get-resources . etc/syntax/cylc-mode.el``
+   ``cylc get-resources etc/syntax/cylc-mode.el .``
    installation instructions are at the top of the file.
 Gedit
    The syntax file can be obtained from the Cylc library by
    running the following command
-   ``cylc get-resources . etc/syntax/cylc.lang``
+   ``cylc get-resources etc/syntax/cylc.lang .``
    installation instructions are at the top of the file.
 Kate
    The syntax file can be obtained from the Cylc library by
    running the following command
-   ``cylc get-resources . etc/syntax/cylc.xml``
+   ``cylc get-resources etc/syntax/cylc.xml .``
    installation instructions are at the top of the file.
 PyCharm
    Install the `Cylc.tmbundle`_.
 Vim
    The syntax file can be obtained from the Cylc library by
    running the following command
-   ``cylc get-resources . etc/syntax/cylc.vim``
+   ``cylc get-resources etc/syntax/cylc.vim .``
    installation instructions are at the top of the file.
 Visual Studio Code
    Install the `vscode-cylc`_ extension.
