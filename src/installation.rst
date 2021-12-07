@@ -173,7 +173,7 @@ environment before calling the environment's  ``cylc`` command.
 Cylc comes with a wrapper which can be extracted to a directory in your $PATH
 using
 
-.. TODO - make this easier once extract-resources is better.
+.. TODO - make this easier once get-resources is better.
 
 .. code-block:: bash
 
