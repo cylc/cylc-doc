@@ -459,11 +459,6 @@ Security
 - Cylc8 supports target users authorizing other users to interact with their
   workflows on the UI.
 
-.. seealso::
-
-   - :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
-
-
 .. note::
 
    The authorization system in Cylc 8 is complete but we haven't yet provided easy
@@ -472,23 +467,37 @@ Security
 Packaging
 ---------
 
+.. seealso::
+
+   * :ref:`installation`
+
+
 Cylc 7 had to be installed from a release tarball, and its software dependencies
 had to be installed manually.
 
 Cylc 8 and its core software dependencies can be installed quickly from Conda
 Forge, into a conda environment; or from PyPI, into a Python 3 virtual environment.
 
+
+Task Job Scripts
+----------------
+
 .. seealso::
 
-   * :ref:`installation`
+   * User Guide :ref:`JobScripts`
+
+
+All user-defined task scripting now runs in a subshell, so you can safely
+switch Python environments inside tasks without affecting Cylc.
 
 
 Time Zones
 ----------
 
-:cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
-are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
-
 .. seealso::
 
    - User Guide :ref:`writing_flows.scheduling.syntax_rules`
+
+
+:cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
+are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
