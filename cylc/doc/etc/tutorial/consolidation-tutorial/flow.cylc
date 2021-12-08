@@ -11,7 +11,7 @@
     [[graph]]
         # Repeat every three hours starting at the initial cycle point.
         PT3H = """
-            get_observations_belmullet => consolidate_observations
+            get_observations_aldergrove => consolidate_observations
             get_observations_camborne => consolidate_observations
             get_observations_heathrow => consolidate_observations
             get_observations_shetland => consolidate_observations
@@ -32,7 +32,7 @@
             forecast[-PT6H] => forecast
         """
 [runtime]
-    [[get_observations_belmullet]]
+    [[get_observations_aldergrove]]
         script = get-observations
         [[[environment]]]
             SITE_ID = 3976
