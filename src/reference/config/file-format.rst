@@ -6,6 +6,7 @@ The .cylc File Format
 Cylc global and workflow configuration files are written in a nested
 `INI`_-based format.
 
+.. _syntax:
 
 Syntax
 ------
