@@ -15,6 +15,8 @@ Graphing
 The :cylc:conf:`flow.cylc` File Format
 --------------------------------------
 
+.. TODO consider refering to the reference section file-format doc here.
+
 .. ifnotslides::
 
    A :term:`Cylc workflow` is defined by a :cylc:conf:`flow.cylc` configuration
