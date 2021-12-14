@@ -68,7 +68,9 @@ addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
 
    To avoid confusion, ``cylc install`` will fail if the workflow name
    contains directory names that are reserved filenames, such as
-   ``log``, ``work``, ``runN``, ``run<number>``, ``_cylc-install`` etc.
+   ``run<number>``, ``_cylc-install`` etc.
+
+   .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
 
 Configurable Source Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -400,7 +402,10 @@ If:
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
 - the workflow name contains a directory name that is a reserved filename,
-  such as ``log``, ``work``, ``runN``, ``run<number>``, ``_cylc-install`` etc.
+  such as ``work``, ``run<number>`` etc.
+
+  .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
+     :noindex:
 
 - the install will create nested install directories. Neither a new
   installation in a subdirectory of an existing one, nor a directory containing
