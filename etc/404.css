@@ -1,0 +1,143 @@
+/* ------- Defaults ------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+strong, b {
+  font-weight: 700;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+img {
+  -ms-flex-shrink: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+
+/* ------- Main Styling ------- */
+
+html, body {
+    height: 100%;
+}
+body {
+    width: 100%;
+    background: #DDD;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+.wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+#content {
+    padding: 40px 0;
+}
+#content .wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#content section {
+    margin: 40px;
+    font-size: 18px;
+}
+#content section > * {
+    margin: 20px 0;
+}
+#content section h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+#content a:not(.button) {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+}
+#content a:not(.button) {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+}
+#content a:not(.button):hover {
+    color: #00b4fd;
+    border-color: #00b4fd;
+}
+#logo404 {
+    width: 400px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+.button-container > .button {
+    margin-right: 20px;
+}
+.button-container > .button:last-child {
+    margin-right: 0;
+}
+.button {
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 12px 18px;
+    color: inherit;
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+.button:hover {
+    background: #00b4fd;
+    color: #FFF;
+    border-color: #00b4fd;
+}
+
+.no-js #back-button {
+    display: none;
+}
+
+footer {
+    font-size: 14px;
+    text-align: center;
+    color: #555;
+}
