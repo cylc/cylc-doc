@@ -653,22 +653,14 @@ Automating Failure Recovery
 Job Submission Retries
 ^^^^^^^^^^^^^^^^^^^^^^
 
-When submitting jobs to a remote host, use job submission retries to
-automatically resubmit tasks in the event of network outages. Note this is
-distinct from job retries for job execution failure (just below).
+When submitting jobs to a remote host, use a platform with
+job submission retries to automatically resubmit tasks in the event
+of network outages.
 
-Job submission retries should normally be host (or host-group for
-``rose host-select``) specific, not task-specific, so configure them in
-a host (or host-group) specific family. The following :cylc:conf:`flow.cylc`
-fragment configures all HPC jobs to retry on job submission failure up to 10
-times at 1 minute intervals, then another 5 times at 1 hour intervals:
+.. include:: ../reference/config/user-platform-warning.rst
 
-.. code-block:: cylc
-
-   [runtime]
-       [[HPC]]  # Inherited by all jobs submitted to HPC.
-           submission retry delays = 10*PT1M, 5*PT1H
-
+Note that this is distinct from job retries for
+job execution failure (just below).
 
 Job Execution Retries
 ^^^^^^^^^^^^^^^^^^^^^
@@ -678,7 +670,7 @@ believe that a simple retry will usually succeed. This may be the case if the
 job host is known to be flaky, or if the job only ever fails for one known
 reason that can be fixed on a retry. For example, if a model fails occasionally
 with a numerical instability that can be remedied with a short timestep rerun,
-then an automatic retry may be appropriate:
+then an automatic retry may be appropriate.
 
 .. code-block:: cylc
 

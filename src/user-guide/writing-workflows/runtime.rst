@@ -691,8 +691,8 @@ task-specific) ways to configure event handlers:
            script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
            execution retry delays = PT0S, PT30S
            [[[events]]]  # event-specific handlers:
-               retry handler = notify-retry.py
-               failed handler = notify-failed.py
+               retry handlers = notify-retry.py
+               failed handlers = notify-failed.py
 
 .. code-block:: cylc
 
@@ -780,7 +780,7 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
            script = run-model.sh
            [[[events]]]
                late offset = PT40M  # allow a 10 minute delay
-               late handler = my-handler %(message)s
+               late handlers = my-handler %(message)s
 
 .. warning::
    Late offset intervals are not computed automatically so be careful to update

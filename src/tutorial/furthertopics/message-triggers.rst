@@ -60,8 +60,8 @@ triggers another task bar and when fully completed triggers another task, baz.
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              graph = """
+          [[graph]]
+              R1 = """
                   foo:out1 => bar
                   foo => baz
               """
