@@ -13,6 +13,8 @@ Writing Platform Configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
+.. include:: user-platform-warning.rst
+
 What Are Platforms?
 -------------------
 
@@ -75,7 +77,7 @@ Simple Remote Platform
 
    Users want to run background jobs on a single server,
    which doesn't share a file system with the workflow host.
-   
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
