@@ -420,17 +420,59 @@ For this to work:
 Platforms, like other runtime settings, can be declared globally in the root
 family, or in other families, or for individual tasks.
 
+.. note::
 
-Dynamic Platform Selection
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   The platform known as ``localhost`` is the platform where the scheduler
+   is running, in many cases a dedicated server and *not* your desktop.
 
-.. TODO - consider a re-write once dynamic platform selection done
+Internal Platform and Host Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The :cylc:conf:`[runtime][<namespace>]platform` item points to either a
+:cylc:conf:`platform <global.cylc[platforms][<platform name>]>` or a
+:cylc:conf:`platform group <global.cylc[platform groups][<group>]>`.
+
+:term:`Platforms <platform>` are designed to allow sites to set sensible settings
+for compute resources with multiple login nodes.
+
+:term:`Platform groups <platform group>` represent groups of compute resources each
+of which is completely seperate, but where it does not matter which
+resource the scheduler runs a task-job on.
+
+:term:`Platforms <platform>` are selected from a :term:`platform group` once,
+when a job is submitted.
+
+Hosts within a :term:`platform` are re-selected each time the scheduler
+needs to communicate with a job.
+
+.. seealso::
+
+   :ref:`AdminGuide.PlatformConfigs`: For details of how Platforms and
+   Platform Groups are set up and in-depth examples.
+
+External Platform Selection Scripts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+   Cylc 8 can select hosts from a group of suitable hosts listed in the
+   platform config, so in many cases this logic should no longer be necessary.
 
 Instead of hardwiring platform names into the workflow configuration you can
 give a command that prints a platform name, or an environment variable, as the
 value of :cylc:conf:`[runtime][<namespace>]platform`.
 
-Job hosts are always selected dynamically, for the chosen platform.
+For example:
+
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   [runtime]
+       [[mytask]]
+           platform = $(script-which-returns-a-platform-name)
+
+Job hosts are always selected dynamically, for the chosen platform or
+platform group.
 
 Remote Task Job Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
