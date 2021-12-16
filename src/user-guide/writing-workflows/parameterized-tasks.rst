@@ -215,8 +215,8 @@ should be overridden to remove the initial underscore. For example:
 .. code-block:: cylc
 
    [task parameters]
-           i = 1..4
-           obs = ship, buoy, plane
+       i = 1..4
+       obs = ship, buoy, plane
        [[templates]]
            i = i%(i)d  # task name must begin with an alphabet
            obs = %(obs)s

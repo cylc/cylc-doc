@@ -123,12 +123,12 @@ that do not allow TCP or non-interactive SSH from job host to workflow host.
 Be careful to avoid spamming task hosts with polling operations. Each poll
 opens (and then closes) a new SSH connection.
 
-Polling intervals are configurable under
+Polling intervals are configured by
 :cylc:conf:
 `global.cylc[platforms][<platform name>]submission polling intervals`
 and
 :cylc:conf:
-`global.cylc[platforms][<platform name>]execution polling intervals`
+`global.cylc[platforms][<platform name>]execution polling intervals`.
 Under normal conditions you should be able to use site configuration
 for any given platform.
 
