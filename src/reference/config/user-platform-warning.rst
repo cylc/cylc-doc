@@ -1,14 +1,16 @@
 .. warning::
 
-   It is anticipated that most platform settings should be set by
-   site administrators - to see available platforms::
+   In many cases site administrators will create platform settings -
+   to see available platforms::
 
       cylc config -i [platforms]
 
-   If you are absolutely sure that you **need** to add your own platforms
-   these can be created in your user configuration files at locations listed
-   in :ref:`global-config`.
+   If, however, no suitable platforms are available you can
+   write your own platform definitions. These can be created in
+   your user configuration files at locations listed in
+   :cylc:conf:`global.cylc`.
 
    .. seealso::
 
-      :ref:`AdminGuide.PlatformConfigs`
+      :ref:`AdminGuide.PlatformConfigs` contains a detailed descriptin
+      and examples of how to write platforms.

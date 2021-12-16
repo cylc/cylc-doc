@@ -129,8 +129,6 @@ Polling intervals are configured by
 and
 :cylc:conf:
 `global.cylc[platforms][<platform name>]execution polling intervals`.
-Under normal conditions you should be able to use site configuration
-for any given platform.
 
 .. include:: ../../reference/config/user-platform-warning.rst
 
