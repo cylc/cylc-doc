@@ -12,5 +12,5 @@
 
    .. seealso::
 
-      :ref:`AdminGuide.PlatformConfigs` contains a detailed descriptin
+      :ref:`AdminGuide.PlatformConfigs` contains a detailed description
       and examples of how to write platforms.
