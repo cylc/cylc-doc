@@ -132,10 +132,13 @@ and
 
 .. include:: ../../reference/config/user-platform-warning.rst
 
-A common use case is to poll frequently at first, to check that a job
-has started running properly; frequently near the expected end of its run time,
-to get a timely task finished update; and infrequently in the intervening
-period. Configured intervals are used in sequence until
+A common use case is to poll:
+
+- frequently at first, to check that a job has started running properly;
+- frequently near the expected end of its run time, to get a timely task finished update;
+- infrequently in the intervening period.
+
+Configured intervals are used in sequence until
 the last value, which is used repeatedly until the job is finished:
 
 .. code-block:: cylc
