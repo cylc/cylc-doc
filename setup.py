@@ -59,10 +59,6 @@ EXTRAS_REQUIRE = {
         'flake8-mutable>=1.2.0',
         'flake8-simplify>=0.14.0',
     ],
-    'tutorial': [
-        'pillow',
-        'urllib3'
-    ]
 
 }
 EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
