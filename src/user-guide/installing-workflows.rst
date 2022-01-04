@@ -93,7 +93,7 @@ the first match (into ``~/cylc-run/dogs/fido/run1``).
 Symlink Directories
 ^^^^^^^^^^^^^^^^^^^
 
-You can configure workflow :term:`run directories <run directory>` and their
+You can configure workflow :term:`run directories <run directory>` and certain
 sub-directories as symlinks to other locations. This is a useful way of
 offloading data onto other drives to limit the disk space taken up by
 ``~/cylc-run``.
@@ -104,9 +104,9 @@ Directories that can be individually symlinked are:
 * ``share``
 * ``share/cycle``
 * ``work``
+* the :term:`run directory` itself
 
-as well as the the :term:`run directory` itself. They are configured in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
+They are configured in :cylc:conf:`global.cylc[install][symlink dirs]`.
 
 Cylc will automatically create these symlinks on install;
 see :ref:`Symlinking of directories`.
@@ -291,9 +291,11 @@ Looking at the directory structure that has been created
 2. Symlinking of Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If symlink directories are configured in
-:cylc:conf:`global.cylc[install][symlink dirs]`, ``cylc install`` will create
-these symlinks and their target locations.
+If symlink directories are configured in the ``[[[localhost]]]`` section in
+:cylc:conf:`global.cylc[install][symlink dirs]`,
+``cylc install`` will create these symlinks and their target locations
+(symlinks for remote install targets do not get created until
+:term:`starting <start>` the workflow).
 
 Override default symlink locations
 """"""""""""""""""""""""""""""""""
