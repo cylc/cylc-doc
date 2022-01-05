@@ -653,11 +653,8 @@ Automating Failure Recovery
 Job Submission Retries
 ^^^^^^^^^^^^^^^^^^^^^^
 
-When submitting jobs to a remote host, use a platform with
-job submission retries to automatically resubmit tasks in the event
-of network outages.
-
-.. include:: ../reference/config/user-platform-warning.rst
+When submitting jobs to a remote host, use job submission retries to
+automatically resubmit tasks in the event of network outages.
 
 Note that this is distinct from job retries for
 job execution failure (just below).

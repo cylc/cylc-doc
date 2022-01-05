@@ -161,8 +161,9 @@ Sometimes jobs fail. This can be caused by two factors:
 
    In the event of failure Cylc can automatically re-submit or retry jobs.
 
-   Configure retries using the ``execution retry delays`` settings.
-   This setting is an :term:`ISO8601 duration`,
+   Configure retries using the ``submission retry delays`` and
+   ``execution retry delays`` settings.
+   These settings are lists of :term:`ISO8601 durations <ISO8601 duration>`,
    for example; setting ``execution retry delays`` to ``PT10M``
    would cause the job to retry every 10 minutes in the event of execution
    failure.
@@ -170,20 +171,20 @@ Sometimes jobs fail. This can be caused by two factors:
    We can limit the number of retries by writing a multiple in front of the
    duration, e.g:
 
-   .. code-block:: cylc
+.. code-block:: cylc
 
-      [runtime]
-         [[some-task]]
-            script = some-script
+   [runtime]
+      [[some-task]]
+         script = some-script
 
-            # In the event of execution failure, retry a maximum
-            # of three times every 15 minutes.
-            execution retry delays = 3*PT15M
+         # In the event of execution failure, retry a maximum
+         # of three times every 15 minutes.
+         execution retry delays = 3*PT15M
+         # In the envent of a submission failure, retry a maximum
+         # of two times every ten minutes and then every 30
+         # minutes thereafter.
+         submission retry delays = 2*PT10M, PT30M
 
-   When the scheduler will attempt re-submission is set in the
-   :term:`platform` configuration.
-
-   .. include:: ../../reference/config/user-platform-warning.rst
 
 Start, Stop, Restart
 --------------------

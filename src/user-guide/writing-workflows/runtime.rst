@@ -432,12 +432,15 @@ The :cylc:conf:`[runtime][<namespace>]platform` item points to either a
 :cylc:conf:`platform <global.cylc[platforms][<platform name>]>` or a
 :cylc:conf:`platform group <global.cylc[platform groups][<group>]>`.
 
-:term:`Platforms <platform>` are designed to allow sites to set sensible settings
-for compute resources with multiple login nodes.
+:term:`Cylc platforms <platform>` allow you to configure compute platforms
+you wish Cylc to run jobs on.
 
-:term:`Platform groups <platform group>` represent groups of compute resources each
-of which is completely seperate, but where it does not matter which
-resource the scheduler runs a task-job on.
+:term:`Platform groups <platform group>` allow you to group together platforms
+any of which would be suitable for a given job.
+Platform groups can improve robustness by allowing jobs to be submitted on
+any platform in the group, as well as providing an interface for
+:cylc:conf:`basic load balancing
+<global.cylc[platform groups][<group>][selection]method>`.
 
 :term:`Platforms <platform>` are selected from a :term:`platform group` once,
 when a job is submitted.

@@ -130,8 +130,6 @@ and
 :cylc:conf:
 `global.cylc[platforms][<platform name>]execution polling intervals`.
 
-.. include:: ../../reference/config/user-platform-warning.rst
-
 A common use case is to poll:
 
 - frequently at first, to check that a job has started running properly;

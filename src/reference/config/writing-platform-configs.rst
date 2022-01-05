@@ -13,7 +13,16 @@ Writing Platform Configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
-.. include:: user-platform-warning.rst
+If you are working on an institutional network platforms may already
+have been configured for you.
+
+.. TODO update the command below after implementing a platform
+   listing command.
+
+To see available platforms::
+
+   cylc config -i [platforms]
+   cylc config -i [platform groups]
 
 What Are Platforms?
 -------------------
