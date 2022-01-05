@@ -456,7 +456,7 @@ needs to communicate with a job.
 External Platform Selection Scripts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note::
+.. deprecated:: 8.0.0
 
    Cylc 8 can select hosts from a group of suitable hosts listed in the
    platform config, so in many cases this logic should no longer be necessary.
