@@ -420,17 +420,62 @@ For this to work:
 Platforms, like other runtime settings, can be declared globally in the root
 family, or in other families, or for individual tasks.
 
+.. note::
 
-Dynamic Platform Selection
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   The platform known as ``localhost`` is the platform where the scheduler
+   is running, in many cases a dedicated server and *not* your desktop.
 
-.. TODO - consider a re-write once dynamic platform selection done
+Internal Platform and Host Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The :cylc:conf:`[runtime][<namespace>]platform` item points to either a
+:cylc:conf:`platform <global.cylc[platforms][<platform name>]>` or a
+:cylc:conf:`platform group <global.cylc[platform groups][<group>]>`.
+
+:term:`Cylc platforms <platform>` allow you to configure compute platforms
+you wish Cylc to run jobs on.
+
+:term:`Platform groups <platform group>` allow you to group together platforms
+any of which would be suitable for a given job.
+Platform groups can improve robustness by allowing jobs to be submitted on
+any platform in the group, as well as providing an interface for
+:cylc:conf:`basic load balancing
+<global.cylc[platform groups][<group>][selection]method>`.
+
+:term:`Platforms <platform>` are selected from a :term:`platform group` once,
+when a job is submitted.
+
+Hosts within a :term:`platform` are re-selected each time the scheduler
+needs to communicate with a job.
+
+.. seealso::
+
+   :ref:`AdminGuide.PlatformConfigs`: For details of how Platforms and
+   Platform Groups are set up and in-depth examples.
+
+External Platform Selection Scripts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. deprecated:: 8.0.0
+
+   Cylc 8 can select hosts from a group of suitable hosts listed in the
+   platform config, so in many cases this logic should no longer be necessary.
 
 Instead of hardwiring platform names into the workflow configuration you can
 give a command that prints a platform name, or an environment variable, as the
 value of :cylc:conf:`[runtime][<namespace>]platform`.
 
-Job hosts are always selected dynamically, for the chosen platform.
+For example:
+
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   [runtime]
+       [[mytask]]
+           platform = $(script-which-returns-a-platform-name)
+
+Job hosts are always selected dynamically, for the chosen platform or
+platform group.
 
 Remote Task Job Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -649,8 +694,8 @@ task-specific) ways to configure event handlers:
            script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
            execution retry delays = PT0S, PT30S
            [[[events]]]  # event-specific handlers:
-               retry handler = notify-retry.py
-               failed handler = notify-failed.py
+               retry handlers = notify-retry.py
+               failed handlers = notify-failed.py
 
 .. code-block:: cylc
 
@@ -738,7 +783,7 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
            script = run-model.sh
            [[[events]]]
                late offset = PT40M  # allow a 10 minute delay
-               late handler = my-handler %(message)s
+               late handlers = my-handler %(message)s
 
 .. warning::
    Late offset intervals are not computed automatically so be careful to update

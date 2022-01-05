@@ -13,6 +13,17 @@ Writing Platform Configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
+If you are working on an institutional network platforms may already
+have been configured for you.
+
+.. TODO update the command below after implementing a platform
+   listing command.
+
+To see available platforms::
+
+   cylc config -i [platforms]
+   cylc config -i [platform groups]
+
 What Are Platforms?
 -------------------
 
@@ -75,7 +86,7 @@ Simple Remote Platform
 
    Users want to run background jobs on a single server,
    which doesn't share a file system with the workflow host.
-   
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
