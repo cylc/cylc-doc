@@ -477,6 +477,12 @@ For example:
 Job hosts are always selected dynamically, for the chosen platform or
 platform group.
 
+.. caution::
+
+   If ``$(script-which-returns-a-platform-name)`` returns a non-zero exit
+   code then the scheduler will assign the
+   :ref:`submit-failed <task-job-states>` state to this :term:`job`.
+
 Remote Task Job Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
