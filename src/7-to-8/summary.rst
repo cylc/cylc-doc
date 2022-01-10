@@ -405,8 +405,8 @@ Symlink Dirs
    * :ref:`RemoteInit`
 
 Symlinking the directories used by Cylc provides a useful way of managing disk
-space. This functionality was previously available with the Rose ``root dir``
-configuration but has now been implemented in Cylc 8.
+space. This functionality is similar to (and replaces) the Rose ``root dir``
+configuration for Cylc 7.
 
 These are created on a per install target basis, as configured in
 :cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
