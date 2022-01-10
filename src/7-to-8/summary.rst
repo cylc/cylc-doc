@@ -404,13 +404,15 @@ Symlink Dirs
    * :ref:`SymlinkDirs`
    * :ref:`RemoteInit`
 
-Symlinking the directories used by Cylc provides a useful way of managing disk
-space. This functionality is similar to (and replaces) the Rose ``root dir``
-configuration for Cylc 7.
+Symlinking the workflow directories used by Cylc provides a useful way of
+managing disk space.
 
-These are created on a per install target basis, as configured in
+These symlinks are created on a per install target basis, as configured in
 :cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
 a site level, for more information see :ref:`Install Targets`.
+
+This functionality replaces the Rose ``root dir`` configuration
+for Cylc 7 (however, note it does not allow per-workflow configuration).
 
 
 Safe Run Semantics
