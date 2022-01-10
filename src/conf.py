@@ -24,7 +24,6 @@ sys.path.append(os.path.abspath('lib'))  # path to lib.
 
 from cylc_release import CYLC_RELEASE
 
-
 # -- General configuration ------------------------------------------------
 
 # Sphinx extension module names.
@@ -40,6 +39,7 @@ extensions = [
     'hieroglyph',
     'sphinx_rtd_theme',
     # custom project extensions (located in ext/)
+    'autodoc_traits',  # autodoc uiserver traitlets
     'database_diagram',
     # cylc-sphinx-extensions
     'cylc.sphinx_ext.cylc_lang',
@@ -50,7 +50,7 @@ extensions = [
     'cylc.sphinx_ext.practical',
     'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
-    'cylc.sphinx_ext.literal_sub_include',
+    'cylc.sphinx_ext.literal_sub_include'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
