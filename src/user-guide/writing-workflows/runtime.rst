@@ -482,6 +482,9 @@ platform group.
    If ``$(script-which-returns-a-platform-name)`` returns a non-zero exit
    code then the scheduler will assign the
    :ref:`submit-failed <task-job-states>` state to this :term:`job`.
+   If you have submit retries set up for the job, the scheduler will retry
+   running your platform selection script in the same was is it would for
+   any other submission failure.
 
 Remote Task Job Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
