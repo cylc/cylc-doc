@@ -82,7 +82,7 @@ Architecture
 
 .. seealso::
 
-   - Reference :ref:`architecture-reference` 
+   - Reference :ref:`architecture-reference`
 
 
 The main Cylc 8 system components are:
@@ -150,7 +150,7 @@ Scheduling Algorithm
 
 .. seealso::
 
-   User Guide: 
+   User Guide:
 
    * :ref:`User Guide Expected Outputs`
    * :ref:`User Guide Optional Outputs`
@@ -185,7 +185,7 @@ Cylc 8 has a new scheduling algorithm that:
      multiple concurrent flows in the same graph at once, managed by the same
      scheduler
    - Can start a workflow from any task or tasks in the graph (no need for
-     checkpoint restart) 
+     checkpoint restart)
    - Can limit activity within as well as across cycles, without risking a stall
 
 
@@ -401,22 +401,18 @@ Symlink Dirs
 
 .. seealso::
 
+   * :ref:`SymlinkDirs`
    * :ref:`RemoteInit`
 
-Symlinking the directories used by Cylc provides a useful way of managing disk
-space. This functionality was previously available with the Rose ``root dir``
-configuration but has now been implemented in Cylc 8.
-Directories available for symlinking are:
+Symlinking the workflow directories used by Cylc provides a useful way of
+managing disk space.
 
-* ``run``
-* ``log``
-* ``share``
-* ``share/cycle``
-* ``work``
-
-These are created on a per install target basis, as configured in
+These symlinks are created on a per install target basis, as configured in
 :cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
 a site level, for more information see :ref:`Install Targets`.
+
+This functionality replaces the Rose ``root dir`` configuration
+for Cylc 7 (however, note it does not allow per-workflow configuration).
 
 
 Safe Run Semantics

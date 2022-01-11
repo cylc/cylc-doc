@@ -89,6 +89,59 @@ then ``cylc install dogs/fido`` will search for a workflow source directory
 ``~/cylc-src/dogs/fido``, or, failing that, ``~/roses/dogs/fido``, and install
 the first match (into ``~/cylc-run/dogs/fido/run1``).
 
+
+.. _SymlinkDirs:
+
+Symlink Directories
+^^^^^^^^^^^^^^^^^^^
+
+You can configure workflow :term:`run directories <run directory>` and certain
+sub-directories as symlinks to other locations. This is a useful way of
+offloading data onto other drives to limit the disk space taken up by
+``~/cylc-run``.
+
+Directories that can be individually symlinked are:
+
+* ``log``
+* ``share``
+* ``share/cycle``
+* ``work``
+* the :term:`run directory` itself
+
+The symlink targets are configured per install target in
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+
+For example, to configure workflow ``log`` directories (on the
+:term:`scheduler` host) so that they symlink to a different location,
+you could write the following in ``global.cylc``:
+
+.. code-block:: cylc
+
+   [install]
+       [[symlink dirs]]
+           [[[localhost]]]
+               log = /somewhere/else
+
+This would result in the following file structure:
+
+.. code-block:: none
+
+   ~/cylc-run
+   `-- myflow
+       |-- flow.cylc
+       |-- log -> /somewhere/else/cylc-run/myflow/log
+       ...
+
+   /somewhere
+   `-- else
+       `-- cylc-run
+           `-- myflow
+               `-- log
+                   |-- flow-config
+                   |-- install
+                   ...
+
+
 Numbered Runs
 ^^^^^^^^^^^^^
 
@@ -240,10 +293,11 @@ Looking at the directory structure that has been created
 2. Symlinking of Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Upon running ``cylc install``, symlinks for the directories ``run``, ``log``,
-``share``, ``share/cycle`` and ``work`` will be created in accordance with
-the symlink rules for ``localhost`` as defined in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
+If symlink directories are configured in the ``[[[localhost]]]`` section in
+:cylc:conf:`global.cylc[install][symlink dirs]`,
+``cylc install`` will create these symlinks and their target locations
+(symlinks for remote install targets do not get created until
+:term:`starting <start>` the workflow).
 
 Override default symlink locations
 """"""""""""""""""""""""""""""""""
