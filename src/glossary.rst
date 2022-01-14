@@ -227,27 +227,27 @@ Glossary
          subgraph cluster_1 {
              label = "2000-01-01T00:00Z"
              style = dashed
-             "foo.01T00" [label="foo\n2000-01-01T00:00Z"]
-             "bar.01T00" [label="bar\n2000-01-01T00:00Z"]
-             "baz.01T00" [label="baz\n2000-01-01T00:00Z"]
+             "01T00/foo" [label="foo\n2000-01-01T00:00Z"]
+             "01T00/bar" [label="bar\n2000-01-01T00:00Z"]
+             "01T00/baz" [label="baz\n2000-01-01T00:00Z"]
          }
 
          subgraph cluster_2 {
              label = "2000-01-01T12:00Z"
              style = dashed
-             "baz.01T12" [label="baz\n2000-01-01T12:00Z"]
+             "b01T12/az" [label="baz\n2000-01-01T12:00Z"]
          }
 
          subgraph cluster_3 {
              label = "2000-01-02T00:00Z"
              style = dashed
-             "foo.02T00" [label="foo\n2000-01-02T00:00Z"]
-             "bar.02T00" [label="bar\n2000-01-02T00:00Z"]
-             "baz.02T00" [label="baz\n2000-01-02T00:00Z"]
+             "02T00/foo" [label="foo\n2000-01-02T00:00Z"]
+             "02T00/bar" [label="bar\n2000-01-02T00:00Z"]
+             "02T00/baz" [label="baz\n2000-01-02T00:00Z"]
          }
 
-         "foo.01T00" -> "bar.01T00"
-         "foo.02T00" -> "bar.02T00"
+         "01T00/foo" -> "01T00/bar"
+         "02T00/foo" -> "02T00/bar"
 
 
    graph string
@@ -290,31 +290,31 @@ Glossary
          subgraph cluster_1 {
              label = "1"
              style = dashed
-             "foo.1" [label="foo\n1"]
-             "bar.1" [label="bar\n1"]
-             "baz.1" [label="baz\n1"]
+             "1/foo" [label="foo\n1"]
+             "1/bar" [label="bar\n1"]
+             "1/baz" [label="baz\n1"]
          }
 
          subgraph cluster_2 {
              label = "2"
              style = dashed
-             "foo.2" [label="foo\n2"]
-             "bar.2" [label="bar\n2"]
-             "baz.2" [label="baz\n2"]
+             "2/foo" [label="foo\n2"]
+             "2/bar" [label="bar\n2"]
+             "2/baz" [label="baz\n2"]
          }
 
          subgraph cluster_3 {
              label = "3"
              style = dashed
-             "foo.3" [label="foo\n3"]
-             "bar.3" [label="bar\n3"]
-             "baz.3" [label="baz\n3"]
+             "3/foo" [label="foo\n3"]
+             "3/bar" [label="bar\n3"]
+             "3/baz" [label="baz\n3"]
          }
 
-         "foo.1" -> "bar.1" -> "baz.1"
-         "foo.2" -> "bar.2" -> "baz.2"
-         "foo.3" -> "bar.3" -> "baz.3"
-         "bar.1" -> "bar.2" -> "bar.3"
+         "1/foo" -> "1/bar" -> "1/baz"
+         "2/foo" -> "2/bar" -> "2/baz"
+         "3/foo" -> "3/bar" -> "3/baz"
+         "1/bar" -> "2/bar" -> "3/bar"
 
 
 
@@ -521,31 +521,31 @@ Glossary
          subgraph cluster_1 {
              label = "1"
              style = dashed
-             "foo.1" [label="foo\n1"]
-             "bar.1" [label="bar\n1"]
-             "baz.1" [label="baz\n1"]
+             "1/foo" [label="foo\n1"]
+             "1/bar" [label="bar\n1"]
+             "1/baz" [label="baz\n1"]
          }
 
          subgraph cluster_2 {
              label = "2"
              style = dashed
-             "foo.2" [label="foo\n2"]
-             "bar.2" [label="bar\n2"]
-             "baz.2" [label="baz\n2"]
+             "2/foo" [label="foo\n2"]
+             "2/bar" [label="bar\n2"]
+             "2/baz" [label="baz\n2"]
          }
 
          subgraph cluster_3 {
              label = "3"
              style = dashed
-             "foo.3" [label="foo\n3"]
-             "bar.3" [label="bar\n3"]
-             "baz.3" [label="baz\n3"]
+             "3/foo" [label="foo\n3"]
+             "3/bar" [label="bar\n3"]
+             "3/baz" [label="baz\n3"]
          }
 
-         "foo.1" -> "bar.1" -> "baz.1"
-         "foo.2" -> "bar.2" -> "baz.2"
-         "foo.3" -> "bar.3" -> "baz.3"
-         "bar.1" -> "bar.2" -> "bar.3"
+         "1/foo" -> "1/bar" -> "1/baz"
+         "2/foo" -> "2/bar" -> "2/baz"
+         "3/foo" -> "3/bar" -> "3/baz"
+         "1/bar" -> "2/bar" -> "3/bar"
 
 
    qualifier
@@ -569,8 +569,8 @@ Glossary
       A future trigger makes one task depend on another with a later
       :term:`cycle point`.
 
-      Here, ``bar.1`` triggers off ``foo.2``; and ``bar.2`` off of
-      ``foo.3``; and so on:
+      Here, ``1/bar`` triggers off ``2/foo``; and ``2/bar`` off of
+      ``3/foo``; and so on:
 
       .. code-block:: cylc
 

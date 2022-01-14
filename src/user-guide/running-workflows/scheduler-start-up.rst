@@ -231,7 +231,7 @@ The Workflow Contact File
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :term:`scheduler` writes a :term:`contact file` at
-``$HOME/cylc-run/WORKFLOW/.service/contact`` that records workflow host,
+``$HOME/cylc-run/<workflow-name>/.service/contact`` that records workflow host,
 user, port number, process ID, Cylc version, and other information. Client
 commands read this file to find the :term:`scheduler`.
 

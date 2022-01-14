@@ -196,22 +196,22 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "foo.1" [label="foo\n2000-01-01T00"]
-          "foo.2" [label="foo\n2000-01-02T00"]
-          "foo.3" [label="foo\n2000-01-03T00"]
+          "1/foo" [label="foo\n2000-01-01T00"]
+          "2/foo" [label="foo\n2000-01-02T00"]
+          "3/foo" [label="foo\n2000-01-03T00"]
 
-          "foo.1" -> "foo.2" -> "foo.3"
+          "1/foo" -> "2/foo" -> "3/foo"
 
      - .. digraph:: Example
           :align: center
 
           size = "3,3"
 
-          "foo.1" [label="foo\n2000-01-01T12"]
-          "foo.2" [label="foo\n2000-01-02T12"]
-          "foo.3" [label="foo\n2000-01-03T12"]
+          "1/foo" [label="foo\n2000-01-01T12"]
+          "2/foo" [label="foo\n2000-01-02T12"]
+          "3/foo" [label="foo\n2000-01-03T12"]
 
-          "foo.1" -> "foo.2" -> "foo.3"
+          "1/foo" -> "2/foo" -> "3/foo"
 
 .. nextslide::
 

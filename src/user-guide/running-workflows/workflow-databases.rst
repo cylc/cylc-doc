@@ -8,8 +8,8 @@ information on run history:
 
 .. code-block:: console
 
-   $HOME/cylc-run/WORKFLOW-NAME/log/db  # public workflow DB
-   $HOME/cylc-run/WORKFLOW-NAME/.service/db  # private workflow DB
+   $HOME/cylc-run/<workflow-id>/log/db  # public workflow DB
+   $HOME/cylc-run/<workflow-id>/.service/db  # private workflow DB
 
 The private DB is for use only by the :term:`scheduler`. The identical
 public DB is provided for use by external commands such as

@@ -25,8 +25,8 @@ remains protected during transmission. Public keys are used to encrypt the
 data, private keys for decryption.
 
 Authentication files will be created in your
-``$HOME/cylc-run/WORKFLOW/.service/`` directory at start-up. You can expect to
-find one client public key per file system for remote jobs.
+``$HOME/cylc-run/<workflow-id>/.service/`` directory at start-up. You can
+expect to find one client public key per file system for remote jobs.
 
 On the workflow host, the directory structure should contain:
 

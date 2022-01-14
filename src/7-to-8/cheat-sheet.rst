@@ -115,7 +115,7 @@ Restart a stopped workflow and pick up where it left off:
          # optionally reinstall
          cylc reinstall <name>
 
-         # restart
+         # restart
          cylc play <name>
 
 Deleting

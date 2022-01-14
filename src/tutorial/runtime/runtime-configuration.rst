@@ -211,22 +211,22 @@ Start, Stop, Restart
    .. code-block:: bash
 
       # Run the workflow "name".
-      cylc play <name>
+      cylc play <id>
       # Stop the workflow "name", killing any running tasks.
-      cylc stop <name> --kill
+      cylc stop <id> --kill
       # Restart the workflow "name", picking up where it left off.
-      cylc play <name>
+      cylc play <id>
 
 .. ifslides::
 
    .. code-block:: sub
 
-      cylc play <name>
-      cylc stop <name>
-      cylc play <name>
+      cylc play <id>
+      cylc stop <id>
+      cylc play <id>
 
-      cylc stop <name> --kill
-      cylc stop <name> --now --now
+      cylc stop <id> --kill
+      cylc stop <id> --now --now
 
    .. nextslide::
 
