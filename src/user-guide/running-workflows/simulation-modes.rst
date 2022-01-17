@@ -25,7 +25,7 @@ Set the run mode (default ``live``) on the command line:
 
 .. code-block:: console
 
-   $ cylc play --mode=dummy WORKFLOW
+   $ cylc play --mode=dummy <workflow-id>
 
 You can get specified tasks to fail in these modes, for more flexible workflow
 testing. See :cylc:conf:`[runtime][<namespace>][simulation]`.

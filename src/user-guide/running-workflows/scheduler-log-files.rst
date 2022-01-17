@@ -4,7 +4,7 @@ Workflow Server Logs
 --------------------
 
 Each workflow maintains its own log of time-stamped events in the
-:term:`workflow log directory` (``$HOME/cylc-run/WORKFLOW-NAME/log/workflow/``).
+:term:`workflow log directory` (``$HOME/cylc-run/<workflow-id>/log/workflow/``).
 
 The information logged here includes:
 

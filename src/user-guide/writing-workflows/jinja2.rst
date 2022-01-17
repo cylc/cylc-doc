@@ -148,6 +148,7 @@ prior to configuration parsing to provide workflow context:
 
    CYLC_WORKFLOW_ID                # Workflow ID
    CYLC_WORKFLOW_NAME              # Workflow name
+                                   # (the ID with the run name removed)
 
    CYLC_WORKFLOW_LOG_DIR           # Workflow log directory.
    CYLC_WORKFLOW_RUN_DIR           # Location of the run directory in
@@ -244,7 +245,7 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc config -i [runtime][airs]directives WORKFLOW
+   $ cylc config -i [runtime][airs]directives <workflow-id>
    -I = ncpus=9
 
 
@@ -271,7 +272,7 @@ The ``-s`` and ``--set-file`` Options
 .. code-block:: console
 
    $ # set the Jinja2 variable "answer" to 42
-   $ cylc play <flow> -s answer=42
+   $ cylc play <workflow-id> -s answer=42
 
 Or for multiple variables defined in a file, use the ``--set-file`` option:
 
@@ -285,7 +286,7 @@ Or for multiple variables defined in a file, use the ``--set-file`` option:
    __SET_FILE__
 
    $ # run using the options in the set file
-   $ cylc play <flow> --set-file my-set-file
+   $ cylc play <workflow-id> --set-file my-set-file
 
 Values must be Python literals e.g:
 
@@ -311,7 +312,7 @@ Values must be Python literals e.g:
 
       $ # wrap the key=value pair in single quotes stop the shell from
       $ # stripping the inner quotes around the string:
-      $ cylc play <flow> -s 'my_string="a b c"'
+      $ cylc play <workflow-id> -s 'my_string="a b c"'
 
 Here's an example:
 
@@ -322,20 +323,20 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc list WORKFLOW
+   $ cylc list <workflow-id>
    Jinja2 Template Error
    'FIRST_TASK' is undefined
-   cylc-list WORKFLOW  failed:  1
+   cylc-list <workflow-id>  failed:  1
 
    $ # Note: quoting "bob" so that it is evaluated as a string
-   $ cylc list --set 'FIRST_TASK="bob"' WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' <workflow-id>
    bob
    baz
    mem_2
    mem_1
    mem_0
 
-   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' <workflow-id>
    bob
    alice
    mem_2
@@ -343,7 +344,7 @@ Here's the result:
    mem_0
 
    $ # Note: no quotes required for N_MEMBERS since it is an integer
-   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 <workflow-id>
    mem_9
    mem_8
    mem_7
@@ -357,7 +358,7 @@ Here's the result:
    baz
    bob
 
-Note also that ``cylc view --set FIRST_TASK=bob --jinja2 WORKFLOW``
+Note also that ``cylc view --set FIRST_TASK=bob --jinja2 <workflow-id>``
 will show the workflow with the Jinja2 variables as set.
 
 .. note::

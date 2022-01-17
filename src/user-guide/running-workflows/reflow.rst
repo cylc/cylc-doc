@@ -51,9 +51,9 @@ Let's say the workflow has run to cycle 8, but we have just noticed that
 a corrupted ancillary file resulted in bad products at cycle 5.
 
 To rectify this we could fix the corrupted file and trigger a new flow
-(a reflow) from ``post.5``::
+(a reflow) from ``5/post``::
 
-   cylc trigger --reflow <workflow-id> post.5
+   cylc trigger --reflow <workflow-id>//5/post
 
 The new flow will regenerate and republish cycle 5 products before naturally
 coming to a halt, because the triggered tasks do not lead on to the next cycle

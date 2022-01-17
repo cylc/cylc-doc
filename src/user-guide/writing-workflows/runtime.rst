@@ -159,7 +159,7 @@ once [1]_:
 
   .. code-block:: console
 
-     $ cylc config --item "[runtime][model]environment" <workflow-name>
+     $ cylc config --item "[runtime][model]environment" <workflow-id>
 
 
 First-parent Family Hierarchy for Visualization
@@ -302,8 +302,9 @@ These variables provided by the :term:`scheduler` are available to task job scri
 
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
-   CYLC_WORKFLOW_ID                   # Workflow ID - the WORKFLOW_NAME plus the run directory
+   CYLC_WORKFLOW_ID                   # Workflow ID
    CYLC_WORKFLOW_NAME                 # Workflow name
+                                      # (the workflow ID without the run name)
    CYLC_UTC                           # UTC mode, True or False
    CYLC_VERBOSE                       # Verbose mode, True or False
    TZ                                 # Set to "UTC" in UTC mode or not defined
@@ -342,7 +343,7 @@ These variables provided by the :term:`scheduler` are available to task job scri
    CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                       #   e.g. root postproc t1
    CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task
-                                      #   e.g. foo.1 bar.1
+                                      #   e.g. 1/foo 1/bar
 
    CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
    CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",

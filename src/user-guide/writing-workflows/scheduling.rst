@@ -917,9 +917,9 @@ An Integer Cycling Example
 The following workflow definition, as :ref:`graphed above <fig-integer-pipeline>`,
 implements a classical linear pipeline using integer cycling. The workflow
 ensures that one instance each of A, B, and C runs concurrently and the
-pipeline is kept full: when A.1 has finished processing the first dataset, A.2
-can start on the second one at the same time as B.1 begins processing the
-output of A.1, and so on. The artificial cross-cycle dependence ensures that
+pipeline is kept full: when 1/A has finished processing the first dataset, 2/A
+can start on the second one at the same time as 1/B begins processing the
+output of 1/A, and so on. The artificial cross-cycle dependence ensures that
 only one instance of A can run at a time; and similarly B and C. If available
 compute resource supports more than three concurrent jobs, remove the
 cross-cycle dependence and Cylc will run many cycles at once. Task runtime
@@ -1417,7 +1417,7 @@ allowing maximum concurrency until the clock-triggered tasks catch up again.
        [[graph]]
            T00 = foo
 
-Here, ``foo.2025-08-23T00`` would trigger (other dependencies allowing)
+Here, ``2025-08-23T00/foo`` would trigger (other dependencies allowing)
 when the wallclock time reaches ``2025-08-23T02``. Clock-trigger
 offsets are normally positive, to trigger *after* the wallclock time is equal
 to the task cycle point.
@@ -1980,8 +1980,8 @@ cycle points.
         [[graph]]
             P1 = foo
 
-When this workflow is started the tasks ``foo.1`` through ``foo.5`` will be
-submitted, but ``foo.6`` (and beyond) are "runahead limited" and will not be
+When this workflow is started the tasks ``1/foo`` through ``5/foo`` will be
+submitted, but ``6/foo`` (and beyond) are "runahead limited" and will not be
 submitted until the earliest tasks finish.
 
 A low runahead limit restricts Cylc's ability to run multiple cycle at once,
