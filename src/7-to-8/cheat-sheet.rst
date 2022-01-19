@@ -177,6 +177,22 @@ View the parsed workflow configuration:
 
          cylc config <name/path>
 
+
+List configured platforms and platform groups
+---------------------------------------------
+
+.. seealso::
+
+   :ref:`ListingAvailablePlatforms`
+
+
+``cylc config --platform-names``
+   Print a list of configured platforms and platform groups.
+
+``cylc config --platform-meta``
+   Print out the full configuration of ``[platfroms]`` and
+   ``[platform groups]``
+
 Opening User Interfaces
 -----------------------
 
@@ -230,7 +246,7 @@ Generate a visualisation for a workflow without running it:
      - ::
 
          cylc graph <name>
-         
+
        This generates a basic image file if Graphviz is installed.
 
        The web UI will have full graph vis. in a future release.

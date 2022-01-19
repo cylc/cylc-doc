@@ -13,16 +13,21 @@ Writing Platform Configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
+.. _ListingAvailablePlatforms:
+
+Listing available platforms
+---------------------------
+
 If you are working on an institutional network platforms may already
 have been configured for you.
 
-.. TODO update the command below after implementing a platform
-   listing command.
+To see a list of available platforms::
 
-To see available platforms::
+   cylc config --platform-names
 
-   cylc config -i [platforms]
-   cylc config -i [platform groups]
+To see the full configuration of available platforms::
+
+   cylc config --platform-meta
 
 What Are Platforms?
 -------------------
