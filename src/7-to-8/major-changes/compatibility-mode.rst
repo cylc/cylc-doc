@@ -1,27 +1,56 @@
-.. _AutoConfigUpgrades:
+.. _728.compatibility_mode:
 
-Cylc Configuration Upgrader
-===========================
+Cylc 7 Compatibility Mode
+=========================
 
-.. admonition:: Does This Affect Me?
+.. admonition:: Does This Change Affect Me?
    :class: tip
 
-   This may affect you if you are working with workflows written before Cylc 8,
-   and you see warnings or an ``IllegalItemError`` when validating.
+   This will affect you if you want to run run Cylc 7 workflows (using the
+   ``suite.rc`` filename) using Cylc 8.0
 
 Overview
 --------
 
-Cylc has a built in configuration upgrader. **Cylc 8** can upgrade Cylc 7
-workflows on the fly if they use up-to-date Cylc 7 syntax, but *not
-if validation with Cylc 7 gives deprecation warnings*.
+The old ``suite.rc`` filename triggers a backward compatibility mode in which:
 
-Solution
---------
+- :term:`implicit tasks <implicit task>` are allowed by default
 
-To avoid problems with old settings you should validate your workflow using
-Cylc 7. Look for deprecation warnings and edit the workflow configuration to
-eliminate these warnings.
+  - (unless a ``rose-suite.conf`` file is found in the :term:`run directory`
+    for consistency with ``rose suite-run`` behaviour)
+  - (by default, Cylc 8 does not allow implicit tasks)
+
+- :term:`cycle point time zone` defaults to the local time zone
+
+  - (by default, Cylc 8 defaults to UTC)
+
+- waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
+  stall behaviour, and these require
+  :term:`suicide triggers <suicide trigger>`
+  for alternate path :term:`branching <graph branching>`
+
+  - (Cylc 8 spawns tasks on demand and suicide triggers are not needed for
+    branching)
+
+- task ``succeeded`` outputs are *required* so the scheduler will retain
+  failed tasks as incomplete
+
+  - (in Cylc 8, all outputs are *required* unless marked as optional by new
+    ``?`` syntax)
+
+
+Required Changes
+----------------
+
+Providing your Cylc 7 workflow does not use syntax that was deprecated at Cylc 7
+you should be able to run it without any modifications.
+
+To see if your workflow uses deprecated syntax run ``cylc validate`` using
+Cylc 7.
+
+If tasks in your workflow call Cylc commands directly it might be necessary to
+modify them to be compatible with command line interface changes.
+
 
 Example
 -------
@@ -44,10 +73,10 @@ Running ``cylc validate`` on this configuration at **Cylc 7** we see that the
 workflow is valid, but we are warned that ``pre-command scripting``
 was replaced by ``pre-script`` at 6.4.0:
 
-.. code-block::
+.. code-block:: console
    :caption: Cylc 7 warning of a deprecated configuration
 
-   > cylc validate .
+   $ cylc validate .
    WARNING - deprecated items were automatically upgraded in 'suite definition':
    WARNING -  * (6.4.0) [runtime][task][pre-command scripting] -> [runtime][task][pre-script] - value unchanged
    Valid for cylc-7.8.7
@@ -55,10 +84,10 @@ was replaced by ``pre-script`` at 6.4.0:
 **Cylc 7** has upgraded this for us, but at **Cylc 8** this workflow will fail
 validation.
 
-.. code-block::
+.. code-block:: console
    :caption: Cylc 8 failing to validate an obsolete configuration
 
-   > cylc validate .
+   $ cylc validate .
    WARNING - deprecated graph items were automatically upgraded in "workflow definition":
     * (8.0.0) [scheduling][dependencies][X]graph -> [scheduling][graph]X - for X in:
           R1

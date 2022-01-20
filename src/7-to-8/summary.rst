@@ -3,66 +3,35 @@
 Quick Summary Of Changes
 ========================
 
+
 Terminology
 -----------
 
-Cylc now uses more widely understood terms for several core concepts.
+Cylc now uses simpler more widely understood terms for several core concepts.
 
 .. table::
 
-   ==============      =============          ================
-   Cylc 8 Term         Cylc 7 Term            Comment
-   ==============      =============          ================
-   **workflow**        suite                  *suite* isn't known beyond weather forecasting
-   **job runner**      batch system           some job runners are not *batch systems*
-   **scheduler**       suite daemon           the server does not have to run as a daemon
-   ==============      =============          ================
+   =============     ==============
+   Cylc 7 Term       Cylc 8 Term
+   =============     ==============
+   suite             **workflow**
+   batch system      **job runner**
+   suite daemon      **scheduler**
+   =============     ==============
+
+The workflow configuration file has changed from ``suite.rc`` to ``flow.cylc``.
 
 
-.. important::
-   And: the workflow config filename is now ``flow.cylc``, not ``suite.rc``.
+Cylc 7 Compatibility Mode
+-------------------------
 
-.. warning::
-   Attempting to ``cylc play`` a workflow with both ``flow.cylc`` and
-   ``suite.rc`` files in the same :term:`run directory` will result in an error.
+Cylc 8 can run Cylc 7 workflows out of the box.
 
-.. _Cylc_7_compat_mode:
+Run ``cylc validate`` on your ``suite.rc`` (using Cylc 7) to check it does
+not contain any deprecated syntax before attempting to run it with Cylc 8.
 
-Backward Compatibility
-----------------------
-
-:term:`Workflow validation` warns of deprecated Cylc 7 syntax. If your Cylc 7
-workflow *fails* validation in Cylc 8, see :ref:`AutoConfigUpgrades` to learn
-how to fix this.
-
-.. warning::
-
-   Please take action on deprecation warnings from ``cylc validate`` before
-   renaming your ``suite.rc`` file to ``flow.cylc``.
-
-Before upgrade, Cylc 8 can run Cylc 7 workflows out of the box. The old
-``suite.rc`` filename triggers a backward compatibility mode in which:
-
-- :term:`implicit tasks <implicit task>` are allowed by default
-
-  - (unless a ``rose-suite.conf`` file is found in the :term:`run directory`)
-  - (by default, Cylc 8 does not allow implicit tasks)
-
-- :term:`cycle point time zone` defaults to the local time zone
-
-  - (by default, Cylc 8 defaults to UTC)
-
-- waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
-  stall behaviour, and these require :term:`suicide triggers <suicide trigger>` for
-  alternate path :term:`branching <graph branching>`
-
-  - (Cylc 8 spawns tasks on demand and suicide triggers are not needed for branching)
-
-- task ``succeeded`` outputs are *required* so the scheduler will retain failed
-  tasks as incomplete
-
-  - (in Cylc 8, all outputs are *required* unless marked as optional by new ``?`` syntax)
-
+The old ``suite.rc`` filename triggers a backward compatibility mode,
+for more information see :ref:`728.compatibility_mode`.
 
 .. warning::
 
@@ -70,11 +39,22 @@ Before upgrade, Cylc 8 can run Cylc 7 workflows out of the box. The old
    <Workflow Installation>` the workflow to a new run directory and start it
    from scratch at the right cycle point or task(s):
 
-   - ``cylc play --start-cycle-point=<CYCLEPOINT>`` (c.f. Cylc 7 *warm start*), or
-   - ``cylc play --start-task=<CYCLEPOINT/TASKNAME>`` (Cylc 8 can start anywhere in the graph)
+   - ``cylc play --start-cycle-point=<cycle>`` (c.f. Cylc 7 *warm start*), or
+   - ``cylc play --start-task=<cycle/task>``   (Cylc 8 can start anywhere in the graph)
 
    Any previous-cycle workflow data needed by the new run will need to be
    manually copied over from the original run directory.
+
+
+Upgrading To Cylc 8
+-------------------
+
+To take advantage of new Cylc 8 features run ``cylc validate`` (with Cylc 8)
+on your workflow and take action on any warnings then rename the workflow
+configuration file from ``suite.rc`` to ``flow.cylc``.
+
+If your workflow features :term:`graph branching` you may need to upgrade it
+to use :term:`optional outputs <optional output>`.
 
 
 Architecture
@@ -82,7 +62,7 @@ Architecture
 
 .. seealso::
 
-   - Reference :ref:`architecture-reference`
+   - Technical Reference: :ref:`architecture-reference`
 
 
 The main Cylc 8 system components are:
@@ -496,4 +476,4 @@ Time Zones
 
 
 :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
-are working in :ref:`Cylc 7 compatibility mode <Cylc_7_compat_mode>`.
+are working in :ref:`:ref:`728.compatibility_mode`.
