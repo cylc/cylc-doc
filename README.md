@@ -86,8 +86,55 @@ We use a few custom Sphinx extensions, for details see
 $ git clone git@github.com:cylc/cylc-doc.git cylc-doc
 $ cd cylc-doc
 $ pip install -e .
+```
+
+### Simple Build
+
+Build the docs using `make`:
+
+```console
 $ make html
 ```
+
+The documentation builds incrementally, if you make changes to the Cylc source
+files run `make clean`:
+
+```console
+$ make clean html
+```
+
+### Automatic Build
+
+You can also get Sphinx to rebuild automatically when documentation files are
+modified. Fist install the optional dependency `watch`:
+
+```console
+$ pip install -e .[watch]
+
+```
+
+Then build the `watch` target:
+
+```console
+$ make watch  # you do not need to `make clean` with the `watch` target
+```
+
+This will monitor for changes in the `cylc-doc` repository and rebuild the
+documentation incrementally.
+
+To also monitor for changes in the `cylc-flow`, `cylc-uiserver` and `cylc-rose`
+repositories use the `watch-cylc` target:
+
+```console
+$ make watch-cylc  # you do not need to `make clean` with the `watch` target
+```
+
+This forces a complete rebuild every time a file is changed which is slow, but
+allows it to pick up changes to autodocumented items in the source code.
+
+> **Note:** Your Cylc repositories must be installed in editible mode
+> i.e. `pip install -e <repo>` for this to work.
+> **Note:** This might not work for all filesystems.
 
 ## Testing
 
