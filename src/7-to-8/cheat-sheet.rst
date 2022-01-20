@@ -177,22 +177,6 @@ View the parsed workflow configuration:
 
          cylc config <name/path>
 
-
-List configured platforms and platform groups
----------------------------------------------
-
-.. seealso::
-
-   :ref:`ListingAvailablePlatforms`
-
-
-``cylc config --platform-names``
-   Print a list of configured platforms and platform groups.
-
-``cylc config --platform-meta``
-   Print out the full configuration of ``[platfroms]`` and
-   ``[platform groups]``
-
 Opening User Interfaces
 -----------------------
 
