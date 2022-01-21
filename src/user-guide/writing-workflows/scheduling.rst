@@ -1778,18 +1778,17 @@ Task ``d`` will run after either ``c`` or ``r`` succeeds.
    a -> b -> c -> d
    b -> r -> d
 
-.. code-block:: cylc
+.. code-block:: cylc-graph
 
-   [scheduling]
-       [[graph]]
-           R1 = """
-               # the success path
-               a => b => c
-               # the fail path
-               a => b:fail => r
-               # either way, carry on with the rest of the workflow
-               c | r => d
-           """
+   # the success path
+   a => b? => c
+   # the fail path
+   a => b:fail? => r
+   # either way, carry on with the rest of the workflow
+   c | r => d
+
+The ``?`` symbol denotes an :term:`optional output` which allows the graph to
+branch.
 
 Note the last line of the graph ``c | r => d`` allows the graph to
 continue on to ``d`` regardless of the path taken. This is an :term:`artificial
