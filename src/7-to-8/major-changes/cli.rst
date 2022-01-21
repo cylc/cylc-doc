@@ -58,7 +58,7 @@ renamed or removed.
 ``cylc reset``
   - It is no longer possible to manually change a task's state.
   - You can, however, override the outputs the task generated which has a
-    similar effect with ``set-outputs``.
+    similar effect with ``cylc set-outputs``.
 ``cylc restart``
   - ``cylc run``, ``cylc pause`` and ``cylc release`` have been combined into
     ``cylc play``.
