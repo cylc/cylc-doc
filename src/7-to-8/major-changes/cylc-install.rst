@@ -116,6 +116,9 @@ To find out if you have Cylc-Rose installed:
    Plugins:
        cylc-rose       0.1.1   /path/to/cylc-rose
 
+Unlike ``rose suite-run``, the ``cylc install`` command remembers any options
+specified on the command line and preserves them for future re-installations.
+
 You may want to add ``~/roses`` to the list of
 :cylc:conf:`global.cylc[install]source dirs`.
 

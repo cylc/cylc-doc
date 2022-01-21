@@ -101,25 +101,25 @@ New Web and Terminal UIs
 ------------------------
 
 .. figure:: ../img/hub.png
-   :figwidth: 100%
+   :figwidth: 80%
    :align: center
 
    Cylc 8 Hub authentication page
 
 .. figure:: ../img/cylc-ui-dash.png
-   :figwidth: 100%
+   :figwidth: 80%
    :align: center
 
    Cylc 8 UI dashboard
 
 .. figure:: ../img/cylc-ui-tree.png
-   :figwidth: 100%
+   :figwidth: 80%
    :align: center
 
    Cylc 8 UI workflow tree view
 
 .. figure:: ../img/cylc-tui.png
-   :figwidth: 100%
+   :figwidth: 80%
    :align: center
 
    Cylc 8 TUI application
@@ -176,11 +176,11 @@ Task/Job States
 
    - User Guide :ref:`task-job-states`
 
-**Tasks** are nodes in the abstract workflow graph representing processes
-that should run once their prerequisites are satisfied. **Jobs** are the real
-processes submitted to execute these tasks (or at least, at the submission
-stage, real job scripts). A task can have multiple jobs, by automatic retries
-and manual re-triggering.
+:term:`Tasks <task>` are nodes in the abstract workflow graph representing
+processes that should run once their prerequisites are satisfied. :term:`Jobs
+<job>` are the real processes submitted to execute these tasks (or at least, at
+the submission stage, real job scripts). A task can have multiple jobs, by
+automatic retries and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
 from the latest task job.
@@ -208,6 +208,10 @@ Optional and Expected Task Outputs
    * :ref:`User Guide Expected Outputs`
    * :ref:`User Guide Optional Outputs`
 
+   Major Changes:
+
+   * :ref:`728.suicide_triggers`
+
 
 Cylc 8 distinguishes between :term:`expected <expected output>` and
 :term:`optional <optional output>` task outputs. This supports optional
@@ -225,6 +229,7 @@ graph.
 If there is nothing left to do, but incomplete tasks are present, the scheduler
 will conclude that the workflow did not run to completion as expected and will
 :term:`stall` rather than shut down.
+
 
 Window on the Workflow
 ----------------------
@@ -314,6 +319,7 @@ Cylc 8 cleans this up:
 
 .. _Workflow Installation:
 
+
 Workflow Installation
 ---------------------
 
@@ -333,7 +339,7 @@ and installs workflow files into the run directory at start-up.
 - :term:`source directory` locations can be set in global config
 - each install creates a new numbered :term:`run directory` (by default)
 
-.. code-block:: bash
+.. code-block:: console
 
    $ pwd
    ~/cylc-src/demo
@@ -399,8 +405,9 @@ Safe Run Semantics
 ------------------
 
 .. seealso::
-   - User Guide :ref:`WorkflowStartUp`
 
+   - :ref:`728.play_pause_stop`
+   - User Guide :ref:`WorkflowStartUp`
 
 Cylc 7 run semantics were somewhat dangerous: if you accidentally typed ``cylc run``
 instead of ``cylc restart`` a new run from scratch would overwrite the existing
@@ -425,6 +432,12 @@ do a fresh ``cylc install`` and play it safely in the new run directory.
 Security
 --------
 
+.. seealso::
+
+   Techincal reference:
+
+   * :ref:`CylcUIServer.architecture`
+
 - In a multi-user context, users authenticate at the Hub, which
   spawns Cylc UI Servers as the target user (workflow owner).
 - In a single user context, the UI Server can be started directly,
@@ -437,8 +450,10 @@ Security
 
 .. note::
 
-   The authorization system in Cylc 8 is complete but we haven't yet provided easy
-   access to other users' workflows via the UI.
+   The authorization system in Cylc 8 is complete but we haven't yet provided
+   easy access to other users' workflows via the UI. For the time being
+   use the address bar to change user name in the URL.
+
 
 Packaging
 ---------
@@ -477,3 +492,13 @@ Time Zones
 
 :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
 are working in :ref:`:ref:`728.compatibility_mode`.
+
+
+Runahead Limit & Queues
+-----------------------
+
+The default runahead limit has been increased from three cycles to five.
+
+:ref:`Internal queues` are now more efficient (for the :term:`scheduler`),
+we now recommend using queues to restrict the number of running tasks in
+situations where graphing may have been used previously.
