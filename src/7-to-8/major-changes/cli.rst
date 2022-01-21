@@ -77,7 +77,7 @@ renamed or removed.
   - Spawning is now performed automatically, use ``cylc trigger`` to run a task.
 ``cylc submit``
   - It is no longer possible to submit a job from outside of a workflow.
-``cylc warrenty``
+``cylc warranty``
   - The Cylc license remains unchanged from Cylc 7.
 
 .. rubric:: Graphical User Interfaces (GUIs):
