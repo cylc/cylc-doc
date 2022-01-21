@@ -1,4 +1,4 @@
-.. _728.compatibility_mode:
+.. _cylc_7_compat_mode:
 
 Cylc 7 Compatibility Mode
 =========================

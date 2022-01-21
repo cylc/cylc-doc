@@ -15,7 +15,7 @@ Overview
 Cylc 8 uses a simplfied model for controlling workflows based on the controls
 of a tape player.
 
-There are now three controls, play, pause and stop: ▶️  ⏸  ⏹ .
+There are now three controls, play, pause and stop:
 
 * When a workflow is playing, the :term:`scheduler` is running.
 * When a workflow is paused, no new jobs will be submitted.
@@ -52,7 +52,7 @@ Mapping To Old Commands
      - **Rose 2019**
      - **Cylc 8** (Rose 2)
 
-   * - ▶️  Play
+   * - Play
      - ::
 
          cylc run <id>
@@ -63,7 +63,7 @@ Mapping To Old Commands
 
          cylc play <id>
 
-   * - ⏸  Pause
+   * - Pause
      - ::
 
          cylc hold <id>
@@ -74,7 +74,7 @@ Mapping To Old Commands
 
          cylc pause <id>
 
-   * - ⏯  Resume
+   * - Resume
      - ::
 
          cylc release <id>
@@ -85,7 +85,7 @@ Mapping To Old Commands
 
          cylc play <id>
 
-   * - ⏹  Stop
+   * - Stop
      - ::
 
          cylc stop <id>

@@ -80,6 +80,9 @@ Once you have installed a workflow you can use ``cylc play`` to run it - see
 You can delete installed workflows using ``cylc clean`` - see
 :ref:`Removing-workflows`.
 
+A ``.cylcignore`` file can be used to control which files ``cylc install``
+transfers to the installed workflow, see :ref:`File Installation` for details.
+
 
 Remote Installation
 -------------------

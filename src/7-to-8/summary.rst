@@ -31,7 +31,7 @@ Run ``cylc validate`` on your ``suite.rc`` (using Cylc 7) to check it does
 not contain any deprecated syntax before attempting to run it with Cylc 8.
 
 The old ``suite.rc`` filename triggers a backward compatibility mode,
-for more information see :ref:`728.compatibility_mode`.
+for more information see :ref:`cylc_7_compat_mode`.
 
 .. warning::
 
@@ -491,7 +491,7 @@ Time Zones
 
 
 :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
-are working in :ref:`:ref:`728.compatibility_mode`.
+are working in :ref:`cylc_7_compat_mode`.
 
 
 Runahead Limit & Queues
@@ -499,6 +499,6 @@ Runahead Limit & Queues
 
 The default runahead limit has been increased from three cycles to five.
 
-:ref:`Internal queues` are now more efficient (for the :term:`scheduler`),
+:ref:`InternalQueues` are now more efficient (for the :term:`scheduler`),
 we now recommend using queues to restrict the number of running tasks in
 situations where graphing may have been used previously.
