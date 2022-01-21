@@ -14,9 +14,9 @@ Cylc 8 differs from Cylc 7 in many ways: architecture, scheduling
 algorithm, security, UIs, working practices, and more.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    summary
-   caveats
    cheat-sheet
    major-changes/index
+   caveats

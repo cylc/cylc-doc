@@ -395,9 +395,9 @@ section which the plugin makes available to Cylc:
          P1Y = Task1
 
 
-.. code-block:: shell
+.. code-block:: console
 
-   > cylc config . -i "[scheduling]initial cycle point"
+   $ cylc config . -i "[scheduling]initial cycle point"
    1068
 
 

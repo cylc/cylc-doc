@@ -1,3 +1,5 @@
+.. _728.cheat_sheet:
+
 Cheat Sheet
 ===========
 
