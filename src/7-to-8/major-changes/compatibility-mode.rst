@@ -27,7 +27,7 @@ The old ``suite.rc`` filename triggers a backward compatibility mode in which:
 - waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
   stall behaviour, and these require
   :term:`suicide triggers <suicide trigger>`
-  for alternate path :term:`branching <graph branching>`
+  for alternate :term:`graph branching`
 
   - (Cylc 8 spawns tasks on demand and suicide triggers are not needed for
     branching)
