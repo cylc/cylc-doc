@@ -95,7 +95,7 @@ Cylc can automatically:
 Cylc provides a variety of command line and GUI tools for visualising and
 interacting with workflows.
 
-.. image:: img/cylc-gui.png
+.. TODO REPLACE THIS IF APPROPRIATE: .. image:: img/cylc-gui.png
 
 .. nextslide::
 

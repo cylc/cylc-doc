@@ -209,7 +209,7 @@ The Cylc GUI
    This is the "graph view". The Cylc GUI has two other views called "tree" and
    "dot".
 
-.. figure:: ../img/cylc-gui-graph.png
+.. TODO REPLACE THIS IF APPROPRIATE: .. figure:: ../img/cylc-gui-graph.png
    :figwidth: 75%
    :align: center
 
@@ -217,7 +217,7 @@ The Cylc GUI
 
 .. nextslide::
 
-.. figure:: ../img/cylc-gui-tree.png
+.. TODO REPLACE THIS IF APPROPRIATE: .. figure:: ../img/cylc-gui-tree.png
    :figwidth: 75%
    :align: center
 
@@ -225,7 +225,7 @@ The Cylc GUI
 
 .. nextslide::
 
-.. figure:: ../img/cylc-gui-dot.png
+.. TODO REPLACE THIS IF APPROPRIATE: .. figure:: ../img/cylc-gui-dot.png
    :figwidth: 75%
    :align: center
 
@@ -276,7 +276,7 @@ Where Do All The Files Go?
       :term:`job log files <job log>` by right-clicking on the task and
       selecting "View".
 
-      .. image:: ../img/cylc-gui-view-log.png
+      .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/cylc-gui-view-log.png
          :align: center
          :scale: 75%
 
@@ -291,7 +291,7 @@ Where Do All The Files Go?
 
          ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
 
-      .. image:: ../img/cylc-gui-view-log.png
+      .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/cylc-gui-view-log.png
          :align: center
          :scale: 75%
 
@@ -440,13 +440,13 @@ Generated Workflow Files
          You can also run a workflow from the Cylc GUI by pressing the "play"
          button.
 
-         .. image:: ../img/gcylc-play.png
+         .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/gcylc-play.png
             :align: center
 
          A box will appear. Ensure that "Cold Start" is selected then press
          "Start".
 
-         .. image:: ../img/cylc-gui-workflow-start.png
+         .. TODO REPLACE THIS IF APPROPRIATE .. image:: ../img/cylc-gui-workflow-start.png
             :align: center
 
    #. **Inspect A Job Log.**
@@ -502,7 +502,7 @@ Generated Workflow Files
 
            You can do this from the "View" menu or from the toolbar:
 
-           .. image:: ../img/cylc-gui-view-selector.png
+           .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/cylc-gui-view-selector.png
               :align: center
               :scale: 75%
 
