@@ -3,13 +3,6 @@
 Introduction
 ============
 
-.. TODO
-
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc
-   7 desktop GUI.
-
 .. _cylc-what-is-a-workflow:
 
 What Is A Workflow?
@@ -95,7 +88,7 @@ Cylc can automatically:
 Cylc provides a variety of command line and GUI tools for visualising and
 interacting with workflows.
 
-.. TODO REPLACE THIS IF APPROPRIATE: .. image:: img/cylc-gui.png
+.. TODO CYLC8 GUI & TUI & CLI Postcard: .. image:: img/cylc-gui.png
 
 .. nextslide::
 
