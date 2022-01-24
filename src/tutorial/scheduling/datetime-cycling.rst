@@ -12,8 +12,8 @@ Datetime Cycling
    | ✅ Write workflows where cycle points are dates and/or times.
 
 
-In the last section we looked at writing an :term:`integer cycling` workflow,
-one where the :term:`cycle points <cycle point>` are numbered.
+In the last section we looked at writing an :term:`integer cycling` workflow
+where the :term:`cycle points <cycle point>` are numbered.
 
 .. ifnotslides::
 
@@ -121,7 +121,7 @@ Inferred Recurrence
 
    A recurrence can be inferred from a datetime by omitting digits from the
    front. For example, if the year is omitted then the recurrence can be
-   inferred to be annual. E.G:
+   inferred to be annual. E.g.:
 
 .. code-block:: sub
 
@@ -196,9 +196,9 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "1/foo" [label="foo\n2000-01-01T00"]
-          "2/foo" [label="foo\n2000-01-02T00"]
-          "3/foo" [label="foo\n2000-01-03T00"]
+          "1/foo" [label="2000-01-01T00/foo"]
+          "2/foo" [label="2000-01-02T00/foo"]
+          "3/foo" [label="2000-01-03T00/foo"]
 
           "1/foo" -> "2/foo" -> "3/foo"
 
@@ -207,9 +207,9 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "1/foo" [label="foo\n2000-01-01T12"]
-          "2/foo" [label="foo\n2000-01-02T12"]
-          "3/foo" [label="foo\n2000-01-03T12"]
+          "1/foo" [label="2000-01-01T12/foo"]
+          "2/foo" [label="2000-01-02T12/foo"]
+          "3/foo" [label="2000-01-03T12/foo"]
 
           "1/foo" -> "2/foo" -> "3/foo"
 
@@ -276,6 +276,11 @@ UTC Mode
    [scheduler]
        UTC mode = True
 
+.. note::
+
+   UTC is sometimes also labelled ``Z`` ("zulu" from the NATO phonetic alphabet)
+   according to the
+   `military time zone convention <https://en.wikipedia.org/wiki/List_of_military_time_zones>`_.
 
 .. _tutorial-datetime-cycling-practical:
 
@@ -371,21 +376,21 @@ Putting It All Together
    subgraph cluster_T00 {
        label="+PT0H"
        style="dashed"
-       "observations.t00" [label="consolidate observations\n+PT0H"]
+       "observations.t00" [label="+PT0H/consolidate observations"]
    }
 
    subgraph cluster_T03 {
        label="+PT3H"
        style="dashed"
-       "observations.t03" [label="consolidate observations\n+PT3H"]
+       "observations.t03" [label="+PT3H/consolidate observations"]
    }
 
    subgraph cluster_T06 {
        label="+PT6H"
        style="dashed"
-       "forecast.t06" [label="forecast\n+PT6H"]
-       "get_rainfall.t06" [label="get_rainfall\n+PT6H"]
-       "observations.t06" [label="consolidate observations\n+PT6H"]
+       "forecast.t06" [label="+PT6H/forecast"]
+       "get_rainfall.t06" [label="+PT6H/get_rainfall"]
+       "observations.t06" [label="+PT6H/consolidate observations"]
    }
 
    "observations.t00" -> "forecast.t06"
@@ -554,19 +559,19 @@ Putting It All Together
          subgraph cluster_T06 {
              label="T06"
              style="dashed"
-             "forecast.t06" [label="forecast\nT06"]
+             "forecast.t06" [label="T06/forecast"]
          }
 
          subgraph cluster_T12 {
              label="T12"
              style="dashed"
-             "forecast.t12" [label="forecast\nT12"]
+             "forecast.t12" [label="T12/forecast"]
          }
 
          subgraph cluster_T18 {
              label="T18"
              style="dashed"
-             "forecast.t18" [label="forecast\nT18"]
+             "forecast.t18" [label="T18/forecast"]
          }
 
          "forecast.t06" -> "forecast.t12" -> "forecast.t18"
@@ -586,16 +591,18 @@ Putting It All Together
 
       You will notice that there is a dependency which looks like this:
 
+      .. TODO Check that this happens with the current Cylc Graph
+
       .. digraph:: example
         :align: center
 
          size = "4,1"
          rankdir=LR
 
-         "forecast.t00" [label="forecast\n20000101T0000Z"
+         "forecast.t00" [label="20000101T0000Z/forecast"
                          color="#888888"
                          fontcolor="#888888"]
-         "forecast.t06" [label="forecast\n20000101T0600Z"]
+         "forecast.t06" [label="20000101T0600Z/forecast"]
 
 
          "forecast.t00" -> "forecast.t06"
