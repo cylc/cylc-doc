@@ -27,8 +27,8 @@ To see a list of available platforms::
 
 To see the full configuration of available platforms::
 
-   cylc config --platform-meta
-   
+   cylc config --platforms
+
 This is equivalent to `cylc config -i 'platforms' -i 'platform groups'`
 
 What Are Platforms?
