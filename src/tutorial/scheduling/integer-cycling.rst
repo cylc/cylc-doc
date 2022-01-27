@@ -84,34 +84,34 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "1/pur" [label="1/buy_ingredients"]
-       "1/mak" [label="1/make_dough"]
-       "1/bak" [label="1/bake_bread"]
-       "1/sel" [label="1/sell_bread"]
-       "1/cle" [label="1/clean_oven"]
-       "1/pre" [label="1/pre_heat_oven"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "2/pur" [label="2/buy_ingredients"]
-       "2/mak" [label="2/make_dough"]
-       "2/bak" [label="2/bake_bread"]
-       "2/sel" [label="2/sell_bread"]
-       "2/cle" [label="2/clean_oven"]
-       "2/pre" [label="2/pre_heat_oven"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "3/pur" [label="3/buy_ingredients"]
-       "3/mak" [label="3/make_dough"]
-       "3/bak" [label="3/bake_bread"]
-       "3/sel" [label="3/sell_bread"]
-       "3/cle" [label="3/clean_oven"]
-       "3/pre" [label="3/pre_heat_oven"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
    "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
@@ -179,34 +179,34 @@ Intercycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "1/pur" [label="1/buy_ingredients"]
-       "1/mak" [label="1/make_dough"]
-       "1/bak" [label="1/bake_bread"]
-       "1/sel" [label="1/sell_bread"]
-       "1/cle" [label="1/clean_oven"]
-       "1/pre" [label="1/pre_heat_oven"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "2/pur" [label="2/buy_ingredients"]
-       "2/mak" [label="2/make_dough"]
-       "2/bak" [label="2/bake_bread"]
-       "2/sel" [label="2/sell_bread"]
-       "2/cle" [label="2/clean_oven"]
-       "2/pre" [label="2/pre_heat_oven"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "3/pur" [label="3/buy_ingredients"]
-       "3/mak" [label="3/make_dough"]
-       "3/bak" [label="3/bake_bread"]
-       "3/sel" [label="3/sell_bread"]
-       "3/cle" [label="3/clean_oven"]
-       "3/pre" [label="3/pre_heat_oven"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
    "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
@@ -284,45 +284,45 @@ Intercycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "1/pur" [label="1/buy_ingredients"]
-       "1/mak" [label="1/make_dough"]
-       "1/bak" [label="1/bake_bread"]
-       "1/sel" [label="1/sell_bread"]
-       "1/cle" [label="1/clean_oven"]
-       "1/pre" [label="1/pre_heat_oven"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "2/pur" [label="2/buy_ingredients"]
-       "2/mak" [label="2/make_dough"]
-       "2/bak" [label="2/bake_bread"]
-       "2/sel" [label="2/sell_bread"]
-       "2/cle" [label="2/clean_oven"]
-       "2/pre" [label="2/pre_heat_oven"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "3/pur" [label="3/buy_ingredients"]
-       "3/mak" [label="3/make_dough"]
-       "3/bak" [label="3/bake_bread"]
-       "3/sel" [label="3/sell_bread"]
-       "3/cle" [label="3/clean_oven"]
-       "3/pre" [label="3/pre_heat_oven"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
    subgraph cluster_4 {
        label = 4
        style = dashed
-       "4/pur" [label="4/buy_ingredients"]
-       "4/mak" [label="4/make_dough"]
-       "4/bak" [label="4/bake_bread"]
-       "4/sel" [label="4/sell_bread"]
-       "4/cle" [label="4/clean_oven"]
-       "4/pre" [label="4/pre_heat_oven"]
+       "4/pur" [label="buy_ingredients\n4"]
+       "4/mak" [label="make_dough\n4"]
+       "4/bak" [label="bake_bread\n4"]
+       "4/sel" [label="sell_bread\n4"]
+       "4/cle" [label="clean_oven\n4"]
+       "4/pre" [label="pre_heat_oven\n4"]
    }
 
    "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
@@ -533,33 +533,33 @@ Recurrence Sections
          subgraph cluster_1 {
              label = 1
              style = dashed
-             "1/a" [label="1/a"]
-             "1/b" [label="1/b"]
-             "1/d" [label="1/d"]
-             "1/f" [label="1/f"]
-             "1/c" [label="1/c"]
-             "1/e" [label="1/e"]
+             "1/a" [label="a\n1"]
+             "1/b" [label="b\n1"]
+             "1/d" [label="d\n1"]
+             "1/f" [label="f\n1"]
+             "1/c" [label="c\n1"]
+             "1/e" [label="e\n1"]
          }
 
          subgraph cluster_2 {
              label = 2
              style = dashed
-             "2/a" [label="2/a"]
-             "2/b" [label="2/b"]
-             "2/d" [label="2/d"]
-             "2/f" [label="2/f"]
-             "2/c" [label="2/c"]
+             "2/a" [label="a\n2"]
+             "2/b" [label="b\n2"]
+             "2/d" [label="d\n2"]
+             "2/f" [label="f\n2"]
+             "2/c" [label="c\n2"]
          }
 
          subgraph cluster_3 {
              label = 3
              style = dashed
-             "3/a" [label="3/a"]
-             "3/b" [label="3/b"]
-             "3/d" [label="3/d"]
-             "3/f" [label="3/f"]
-             "3/c" [label="3/c"]
-             "3/e" [label="3/e"]
+             "3/a" [label="a\n3"]
+             "3/b" [label="b\n3"]
+             "3/d" [label="d\n3"]
+             "3/f" [label="f\n3"]
+             "3/c" [label="c\n3"]
+             "3/e" [label="e\n3"]
          }
 
          "1/a" -> "1/b" -> "1/f"
