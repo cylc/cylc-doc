@@ -159,10 +159,12 @@ Sometimes jobs fail. This can be caused by two factors:
 
 .. ifnotslides::
 
-   In the event of failure Cylc can automatically re-submit (retry) jobs. We
-   configure retries using the ``execution retry delays`` and
-   ``submission retry delays`` settings. These settings are both set to an
-   :term:`ISO8601 duration`, e.g. setting ``execution retry delays`` to ``PT10M``
+   In the event of failure Cylc can automatically re-submit or retry jobs.
+
+   Configure retries using the ``submission retry delays`` and
+   ``execution retry delays`` settings.
+   These settings are lists of :term:`ISO8601 durations <ISO8601 duration>`,
+   for example; setting ``execution retry delays`` to ``PT10M``
    would cause the job to retry every 10 minutes in the event of execution
    failure.
 
@@ -172,17 +174,16 @@ Sometimes jobs fail. This can be caused by two factors:
 .. code-block:: cylc
 
    [runtime]
-       [[some-task]]
-           script = some-script
+      [[some-task]]
+         script = some-script
 
-           # In the event of execution failure, retry a maximum
-           # of three times every 15 minutes.
-           execution retry delays = 3*PT15M
-
-           # In the event of submission failure, retry a maximum
-           # of two times every ten minutes and then every 30
-           # minutes thereafter.
-           submission retry delays = 2*PT10M, PT30M
+         # In the event of execution failure, retry a maximum
+         # of three times every 15 minutes.
+         execution retry delays = 3*PT15M
+         # In the envent of a submission failure, retry a maximum
+         # of two times every ten minutes and then every 30
+         # minutes thereafter.
+         submission retry delays = 2*PT10M, PT30M
 
 
 Start, Stop, Restart
@@ -210,22 +211,22 @@ Start, Stop, Restart
    .. code-block:: bash
 
       # Run the workflow "name".
-      cylc play <name>
+      cylc play <id>
       # Stop the workflow "name", killing any running tasks.
-      cylc stop <name> --kill
+      cylc stop <id> --kill
       # Restart the workflow "name", picking up where it left off.
-      cylc play <name>
+      cylc play <id>
 
 .. ifslides::
 
    .. code-block:: sub
 
-      cylc play <name>
-      cylc stop <name>
-      cylc play <name>
+      cylc play <id>
+      cylc stop <id>
+      cylc play <id>
 
-      cylc stop <name> --kill
-      cylc stop <name> --now --now
+      cylc stop <id> --kill
+      cylc stop <id> --now --now
 
    .. nextslide::
 

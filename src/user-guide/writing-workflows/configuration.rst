@@ -3,15 +3,26 @@
 Workflow Configuration
 ======================
 
-Cylc workflows are defined in structured, validated, :cylc:conf:`flow.cylc`
-files that specify the properties of, and the relationships between, the
-various tasks to be managed by the Cylc scheduler.
+.. _FlowConfigFile:
 
-Here we will look at:
+The ``flow.cylc`` File
+----------------------
 
-- Folders which may accompany a workflow configuration.
-- The content of the :cylc:conf:`flow.cylc` file.
-- How to configure workflows.
+Cylc workflows are defined in :cylc:conf:`flow.cylc` files that specify the
+tasks to be managed by the Cylc scheduler, the dependencies between them,
+and the schedules to run time on.
+
+General file syntax is described in the :ref:`File Format Reference
+<file-format>`.
+
+Legal configuration settings are documented in :ref:`workflow-configuration`.
+
+.. _template processors: https://en.wikipedia.org/wiki/Template_processor
+
+Cylc also supports two `template processors`_ for use in the ``flow.cylc`` file:
+
+* `Jinja2`_
+* `EmPy`_
 
 
 .. _WorkflowDefinitionDirectories:
@@ -43,75 +54,6 @@ A Cylc :term:`source directory` contains:
 Other files and folders may be placed in the :term:`source directory` too:
 documentation, configuration files, etc. When the workflow is :ref:`installed
 <Installing-workflows>` these will be copied over to the :term:`run directory`.
-
-.. _FlowConfigFile:
-
-flow.cylc File Overview
------------------------
-
-The :cylc:conf:`flow.cylc` file is written in a nested `INI`_-based format.
-
-.. _template processors: https://en.wikipedia.org/wiki/Template_processor
-
-Cylc also supports two `template processors`_ for use in the ``flow.cylc`` file:
-
-* `Jinja2`_
-* `EmPy`_
-
-
-.. _Syntax:
-
-Syntax
-^^^^^^
-
-:cylc:conf:`flow.cylc` syntax, in general terms:
-
-- **Settings** (config items) are of the form ``item = value``.
-- **[Section]** headings are enclosed in square brackets.
-
-  - **Sub-section [[nesting]]** is defined by repeated square brackets.
-  - Sections are **closed** implicitly by the next section heading.
-
-- **Comments** (line and trailing) follow a hash character: ``#``
-- **List values** are comma-separated.
-- **Single-line string values** can be single-, double-, or un-quoted.
-- **Multi-line string values** are triple-quoted (using
-  single or double quote characters).
-- **Boolean values** are capitalized: True, False.
-- **Leading and trailing whitespace** is ignored.
-- **Indentation** is optional but should be used for clarity.
-- **Continuation lines** follow a trailing backslash: ``\``
-- **Duplicate sections** add their items to those previously
-  defined under the same section.
-- **Duplicate items** override, except for ``graph`` strings, which are
-  additive.
-- **Include-files** ``%include inc/foo.cylc`` can be used as a verbatim
-  inlining mechanism.
-
-Workflows that embed templating code (see :ref:`User Guide Jinja2` and
-:ref:`User Guide EmPy`) must process to raw :cylc:conf:`flow.cylc` syntax.
-
-
-Include-Files
-^^^^^^^^^^^^^
-
-Cylc has native support for :cylc:conf:`flow.cylc` include-files, which may help to
-organize large workflows. Inclusion boundaries are completely arbitrary -
-you can think of include-files as chunks of the :cylc:conf:`flow.cylc` file simply
-cut-and-pasted into another file. Include-files may be included
-multiple times in the same file, and even nested. Include-file paths
-can be specified portably relative to the workflow configuration directory,
-e.g.:
-
-.. code-block:: cylc
-
-   # include the file ~/cylc-run/workflow/inc/foo.cylc:
-   %include inc/foo.cylc
-
-.. note::
-
-   Template processors may have their own include functionality
-   which can also be used.
 
 
 .. _SyntaxHighlighting:

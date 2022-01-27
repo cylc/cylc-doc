@@ -159,7 +159,7 @@ once [1]_:
 
   .. code-block:: console
 
-     $ cylc config --item "[runtime][model]environment" <workflow-name>
+     $ cylc config --item "[runtime][model]environment" <workflow-id>
 
 
 First-parent Family Hierarchy for Visualization
@@ -302,8 +302,9 @@ These variables provided by the :term:`scheduler` are available to task job scri
 
    CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
    CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
-   CYLC_WORKFLOW_ID                   # Workflow ID - the WORKFLOW_NAME plus the run directory
+   CYLC_WORKFLOW_ID                   # Workflow ID
    CYLC_WORKFLOW_NAME                 # Workflow name
+                                      # (the workflow ID without the run name)
    CYLC_UTC                           # UTC mode, True or False
    CYLC_VERBOSE                       # Verbose mode, True or False
    TZ                                 # Set to "UTC" in UTC mode or not defined
@@ -342,7 +343,7 @@ These variables provided by the :term:`scheduler` are available to task job scri
    CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                       #   e.g. root postproc t1
    CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task
-                                      #   e.g. foo.1 bar.1
+                                      #   e.g. 1/foo 1/bar
 
    CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
    CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
@@ -420,17 +421,71 @@ For this to work:
 Platforms, like other runtime settings, can be declared globally in the root
 family, or in other families, or for individual tasks.
 
+.. note::
 
-Dynamic Platform Selection
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+   The platform known as ``localhost`` is the platform where the scheduler
+   is running, in many cases a dedicated server and *not* your desktop.
 
-.. TODO - consider a re-write once dynamic platform selection done
+Internal Platform and Host Selection
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The :cylc:conf:`[runtime][<namespace>]platform` item points to either a
+:cylc:conf:`platform <global.cylc[platforms][<platform name>]>` or a
+:cylc:conf:`platform group <global.cylc[platform groups][<group>]>`.
+
+:term:`Cylc platforms <platform>` allow you to configure compute platforms
+you wish Cylc to run jobs on.
+
+:term:`Platform groups <platform group>` allow you to group together platforms
+any of which would be suitable for a given job.
+Platform groups can improve robustness by allowing jobs to be submitted on
+any platform in the group, as well as providing an interface for
+:cylc:conf:`basic load balancing
+<global.cylc[platform groups][<group>][selection]method>`.
+
+:term:`Platforms <platform>` are selected from a :term:`platform group` once,
+when a job is submitted.
+
+Hosts within a :term:`platform` are re-selected each time the scheduler
+needs to communicate with a job.
+
+.. seealso::
+
+   :ref:`AdminGuide.PlatformConfigs`: For details of how Platforms and
+   Platform Groups are set up and in-depth examples.
+
+External Platform Selection Scripts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. deprecated:: 8.0.0
+
+   Cylc 8 can select hosts from a group of suitable hosts listed in the
+   platform config, so in many cases this logic should no longer be necessary.
 
 Instead of hardwiring platform names into the workflow configuration you can
 give a command that prints a platform name, or an environment variable, as the
 value of :cylc:conf:`[runtime][<namespace>]platform`.
 
-Job hosts are always selected dynamically, for the chosen platform.
+For example:
+
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   [runtime]
+       [[mytask]]
+           platform = $(script-which-returns-a-platform-name)
+
+Job hosts are always selected dynamically, for the chosen platform or
+platform group.
+
+.. caution::
+
+   If ``$(script-which-returns-a-platform-name)`` returns a non-zero exit
+   code then the scheduler will assign the
+   :ref:`submit-failed <task-job-states>` state to this :term:`job`.
+   If you have submit retries set up for the job, the scheduler will retry
+   running your platform selection script in the same was is it would for
+   any other submission failure.
 
 Remote Task Job Log Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -649,8 +704,8 @@ task-specific) ways to configure event handlers:
            script = test ${CYLC_TASK_TRY_NUMBER} -eq 2
            execution retry delays = PT0S, PT30S
            [[[events]]]  # event-specific handlers:
-               retry handler = notify-retry.py
-               failed handler = notify-failed.py
+               retry handlers = notify-retry.py
+               failed handlers = notify-failed.py
 
 .. code-block:: cylc
 
@@ -738,7 +793,7 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
            script = run-model.sh
            [[[events]]]
                late offset = PT40M  # allow a 10 minute delay
-               late handler = my-handler %(message)s
+               late handlers = my-handler %(message)s
 
 .. warning::
    Late offset intervals are not computed automatically so be careful to update

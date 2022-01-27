@@ -22,11 +22,33 @@ clean:
 	rm -rf src/plugins/install/built-in
 	rm -rf src/user-guide/task-implementation/job-runner-handlers
 
+watch: clean
+	# rebuild incrementally whenever documentation files are changed
+	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)" \
+		--ignore='**plugins/main-loop/built-in/*.rst' \
+		--ignore='**plugins/install/built-in/*.rst' \
+		--ignore='**/job-runner-handlers/*.rst' \
+		--open-browser
+
+watch-cylc:
+	# rebuild non-incrementally (SLOW) whenever docs files OR Cylc source
+	# code files are changed
+	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)" \
+		-a \
+		--pre-build='make clean' \
+		--ignore='**plugins/main-loop/built-in/*.rst' \
+		--ignore='**plugins/install/built-in/*.rst' \
+		--ignore='**/job-runner-handlers/*.rst' \
+		--watch="$(shell bin/c-locate cylc.flow)" \
+		--watch="$(shell bin/c-locate cylc.uiserver)" \
+		--watch="$(shell bin/c-locate cylc.rose)" \
+		--open-browser
+
 cleanall:
 	(cd doc; echo [0-9]*.*)
 	rm -rI doc/[0-9]*.*
 
-.PHONY: help clean Makefile .EXPORT_ALL_VARIABLES
+.PHONY: help clean watch Makefile .EXPORT_ALL_VARIABLES
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

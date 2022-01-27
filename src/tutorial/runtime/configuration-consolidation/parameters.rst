@@ -18,9 +18,8 @@ Cylc Parameters
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           world = Mercury, Venus, Earth
+   [task parameters]
+       world = Mercury, Venus, Earth
 
 
 .. ifnotslides::
@@ -97,11 +96,10 @@ Parameters can be either words or integers:
 
 .. code-block:: cylc
 
-   [scheduler]
-       [[parameters]]
-           foo = 1..5
-           bar = 1..5..2
-           baz = pub, qux, bol
+   [task parameters]
+       foo = 1..5
+       bar = 1..5..2
+       baz = pub, qux, bol
 
 .. nextslide::
 

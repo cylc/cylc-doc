@@ -201,7 +201,7 @@ To see this, take a look at the job script for one of the downstream tasks:
 
 .. code-block:: console
 
-   % cylc cat-log -f j dn f2.2011
+   % cylc cat-log -f j dn//2011/f22011
    ...
    cylc__job__inst__user_env() {
        # TASK RUNTIME ENVIRONMENT:

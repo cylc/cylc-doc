@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 # THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
 # Copyright (C) NIWA & British Crown (Met Office) & Contributors.
 #
@@ -15,7 +15,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Locate Python repository installations."""
 
-set -eux
+from pathlib import Path
+import sys
 
-cylc validate --check-circular . --icp=2000
+
+def main(arg):
+    if arg == 'cylc.flow':
+        import cylc.flow
+        print(Path(cylc.flow.__file__).parent)
+    elif arg == 'cylc.uiserver':
+        import cylc.uiserver
+        print(Path(cylc.uiserver.__file__).parent)
+    elif arg == 'cylc.rose':
+        import cylc.rose
+        print(Path(cylc.rose.__file__).parent)
+    else:
+        raise ValueError(f'Unsupported arg: {arg}')
+
+
+if __name__ == '__main__':
+    main(sys.argv[1])

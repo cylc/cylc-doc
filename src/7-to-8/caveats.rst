@@ -8,15 +8,6 @@ have not yet been (re)implemented.
 Cylc Flow
 ---------
 
-CLI Change
-   We plan to move to a new way of specifying workflow, cycles, tasks and jobs
-   on the command line (with back support for the old format).
-
-   This will allow targetting of multiple workflows with a single command e.g::
-
-      $ cylc stop '*'  # stop everything
-
-   * https://github.com/cylc/cylc-flow/pull/3931
 Trigger Edit
    Functionality removed pending reimplementation.
 

@@ -123,19 +123,27 @@ that do not allow TCP or non-interactive SSH from job host to workflow host.
 Be careful to avoid spamming task hosts with polling operations. Each poll
 opens (and then closes) a new SSH connection.
 
-Polling intervals are configurable under :cylc:conf:`[runtime]` because they
-may depend on expected job execution time. You may want to poll a job
-frequently at first, to check that it started running properly; frequently
-near the expected end of its run time, to get a timely task finished update;
-and infrequently between times. Configured intervals are used in sequence until
+Polling intervals are configured by
+:cylc:conf:
+`global.cylc[platforms][<platform name>]submission polling intervals`
+and
+:cylc:conf:
+`global.cylc[platforms][<platform name>]execution polling intervals`.
+
+A common use case is to poll:
+
+- frequently at first, to check that a job has started running properly;
+- frequently near the expected end of its run time, to get a timely task finished update;
+- infrequently in the intervening period.
+
+Configured intervals are used in sequence until
 the last value, which is used repeatedly until the job is finished:
 
-.. TODO - platformise this example
-
 .. code-block:: cylc
+   :caption: global.cylc
 
-   [runtime]
-       [[foo]]
+   [platforms]
+       [[my_platform]]
            # poll every minute in the 'submitted' state:
            submission polling intervals = PT1M
 
@@ -143,13 +151,20 @@ the last value, which is used repeatedly until the job is finished:
            # minutes for 50 minutes, then every minute until finished:
            execution polling intervals = PT1M, 5*PT10M, PT1M
 
-.. cylc-scope:: global.cylc[platforms][<platform name>]
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   [runtime]
+      [[task]]
+         platform = my_platform
+
 
 A list of intervals with optional multipliers can be used for both submission
 and execution polling, although a single value is probably sufficient for
 submission. If these items are not configured, default values from
 site and user global config will be used for
-:cylc:conf:`communication method = polling`.
+:cylc:conf:
+`global.cylc[platforms][<platform name>]communication method = poll`.
 
 Polling is not done by default under the other task communications methods, but
 it can be configured as well if you like.

@@ -18,7 +18,7 @@
 
 # you can monitor output processing with:
 # $ watch -n 1 \
-#    "find ~/cylc-run/<WORKFLOW>/share; find ~/cylc-run/<WORKFLOW>/work"
+#    "find ~/cylc-run/<workflow-id>/share; find ~/cylc-run/<workflow-id>/work"
 
 {% set N_DATASETS = 5 %}
 

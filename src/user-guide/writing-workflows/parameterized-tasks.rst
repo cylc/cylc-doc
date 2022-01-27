@@ -22,7 +22,7 @@ values. Uses for this include:
    over a range of parameters*, but unlike general templating it can only be
    used for that specific purpose.
 
-   
+
 Parameter Expansion
 -------------------
 
@@ -34,7 +34,7 @@ For example:
 
 .. code-block:: cylc
 
-   [[task parameters]]
+   [task parameters]
        # parameters: "ship", "buoy", "plane"
        # default task suffixes: _ship, _buoy, _plane
        obs = ship, buoy, plane
@@ -197,7 +197,7 @@ To get thicker padding and/or alternate suffixes, use a template. E.g.:
 
 .. code-block:: cylc
 
-   [[task parameters]]
+   [task parameters]
        i = 1..9
        p = 3..14
        [[templates]]
@@ -215,9 +215,9 @@ should be overridden to remove the initial underscore. For example:
 .. code-block:: cylc
 
    [task parameters]
-           i = 1..4
-           obs = ship, buoy, plane
-       [[parameter templates]]
+       i = 1..4
+       obs = ship, buoy, plane
+       [[templates]]
            i = i%(i)d  # task name must begin with an alphabet
            obs = %(obs)s
    [scheduling]
@@ -539,7 +539,7 @@ The parameterized version has several disadvantages, however:
 
     - (This doesn't apply if it's not a datetime sequence; parameterized
       integer cycling is straightforward.)
-     
+
 
 Parameterized Sub-Cycles
 ^^^^^^^^^^^^^^^^^^^^^^^^

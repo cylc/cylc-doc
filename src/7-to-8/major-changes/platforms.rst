@@ -69,6 +69,9 @@ a single platform. Such platforms can be set up to be ``platform groups``
 
 .. seealso::
 
+   :ref:`ListingAvailablePlatforms` for details of how to list platforms
+   already defined.
+
    :ref:`AdminGuide.PlatformConfigs` for detailed examples of platform
    configurations.
 

@@ -200,20 +200,20 @@ Families and ``cylc graph``
 
    subgraph cluster_1 {
       label = "Grouped"
-      "foo.1" [label="foo"]
-      "BAR.1" [label="BAR", shape="doubleoctagon"]
+      "1/foo" [label="foo"]
+      "1/BAR" [label="BAR", shape="doubleoctagon"]
    }
 
    subgraph cluster_2 {
       label = "Un-Grouped"
-      "foo.2" [label="foo"]
-      "bar.2" [label="bar"]
-      "baz.2" [label="baz"]
+      "2/foo" [label="foo"]
+      "2/bar" [label="bar"]
+      "2/baz" [label="baz"]
    }
 
-   "foo.1" -> "BAR.1"
-   "foo.2" -> "bar.2"
-   "foo.2" -> "baz.2"
+   "1/foo" -> "1/BAR"
+   "2/foo" -> "2/bar"
+   "2/foo" -> "2/baz"
 
 .. nextslide::
 
