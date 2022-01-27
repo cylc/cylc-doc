@@ -14,12 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """Autodoc extension for configurable traits.
 This code auto documents traits from Cylc UI Server:
-Acknowledgment:
-    Code derived from the Jupyter Hub source (BSD).
-    Copyright (c) 2015 Project Jupyter Contributors
-    All rights reserved.
-    https://github.com/jupyterhub/autodoc-traits/
-        __init__.py
 """
 
 __version__ = "0.1.0"
