@@ -196,9 +196,9 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "1/foo" [label="2000-01-01T00/foo"]
-          "2/foo" [label="2000-01-02T00/foo"]
-          "3/foo" [label="2000-01-03T00/foo"]
+          "1/foo" [label="foo\n2000-01-01T00"]
+          "2/foo" [label="foo\n2000-01-02T00"]
+          "3/foo" [label="foo\n2000-01-03T00"]
 
           "1/foo" -> "2/foo" -> "3/foo"
 
@@ -207,9 +207,9 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "1/foo" [label="2000-01-01T12/foo"]
-          "2/foo" [label="2000-01-02T12/foo"]
-          "3/foo" [label="2000-01-03T12/foo"]
+          "1/foo" [label="foo\n2000-01-01T12"]
+          "2/foo" [label="foo\n2000-01-02T12"]
+          "3/foo" [label="foo\n2000-01-03T12"]
 
           "1/foo" -> "2/foo" -> "3/foo"
 
@@ -376,21 +376,21 @@ Putting It All Together
    subgraph cluster_T00 {
        label="+PT0H"
        style="dashed"
-       "observations.t00" [label="+PT0H/consolidate observations"]
+       "observations.t00" [label="consolidate observations\n+PT0H"]
    }
 
    subgraph cluster_T03 {
        label="+PT3H"
        style="dashed"
-       "observations.t03" [label="+PT3H/consolidate observations"]
+       "observations.t03" [label="consolidate observations\n+PT3H"]
    }
 
    subgraph cluster_T06 {
        label="+PT6H"
        style="dashed"
        "forecast.t06" [label="+PT6H/forecast"]
-       "get_rainfall.t06" [label="+PT6H/get_rainfall"]
-       "observations.t06" [label="+PT6H/consolidate observations"]
+       "get_rainfall.t06" [label="get_rainfall\n+PT6H"]
+       "observations.t06" [label="consolidate observations\n+PT6H"]
    }
 
    "observations.t00" -> "forecast.t06"
@@ -559,19 +559,19 @@ Putting It All Together
          subgraph cluster_T06 {
              label="T06"
              style="dashed"
-             "forecast.t06" [label="T06/forecast"]
+             "forecast.t06" [label="forecast\nT06"]
          }
 
          subgraph cluster_T12 {
              label="T12"
              style="dashed"
-             "forecast.t12" [label="T12/forecast"]
+             "forecast.t12" [label="forecast\nT12"]
          }
 
          subgraph cluster_T18 {
              label="T18"
              style="dashed"
-             "forecast.t18" [label="T18/forecast"]
+             "forecast.t18" [label="forecast\nT18"]
          }
 
          "forecast.t06" -> "forecast.t12" -> "forecast.t18"
@@ -599,10 +599,10 @@ Putting It All Together
          size = "4,1"
          rankdir=LR
 
-         "forecast.t00" [label="20000101T0000Z/forecast"
+         "forecast.t00" [label="forecast\n20000101T0000Z"
                          color="#888888"
                          fontcolor="#888888"]
-         "forecast.t06" [label="20000101T0600Z/forecast"]
+         "forecast.t06" [label="forecast\n20000101T0600Z"]
 
 
          "forecast.t00" -> "forecast.t06"
