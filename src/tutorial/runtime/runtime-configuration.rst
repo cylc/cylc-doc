@@ -253,8 +253,8 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
-         rose tutorial runtime-tutorial
-         cd ~/cylc-run/runtime-tutorial
+         cylc get-resouces tutorial/runtime-tutorial
+         cd ~/cylc-src/runtime-tutorial
 
       You will now have a copy of the weather-forecasting workflow along with some
       executables and python modules.
@@ -309,7 +309,7 @@ Start, Stop, Restart
 
       Generate a Datapoint API key::
 
-         rose tutorial api-key
+         grep API_KEY runtime
 
       Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
       ``xxx...`` with your API key:
