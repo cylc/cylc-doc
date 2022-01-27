@@ -232,7 +232,7 @@ Generate a visualisation for a workflow without running it:
      - ::
 
          cylc graph <name>
-         
+
        This generates a basic image file if Graphviz is installed.
 
        The web UI will have full graph vis. in a future release.
