@@ -7,11 +7,6 @@ Several workflow run modes allow you to simulate workflow behaviour quickly with
 running the workflow's real jobs - which may be long-running and resource-hungry:
 
 dummy mode
-   Runs tasks as background jobs on configured job hosts.
-
-   This simulates scheduling, job host connectivity, and generates all job
-   files on workflow and job hosts.
-dummy-local mode
    Runs real tasks as background jobs on the workflow host, which allows
    dummy-running workflows from other sites.
 
