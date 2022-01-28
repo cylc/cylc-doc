@@ -3,66 +3,60 @@
 Simulating Workflow Behaviour
 -----------------------------
 
-Several workflow run modes allow you to simulate workflow behaviour quickly without
-running the workflow's real jobs - which may be long-running and resource-hungry:
+Cylc can simulate scheduling without running real task jobs (which may
+be long-running and resource-hungry).
 
-dummy mode
-   Runs tasks as background jobs on configured job hosts.
-
-   This simulates scheduling, job host connectivity, and generates all job
-   files on workflow and job hosts.
-dummy-local mode
-   Runs real tasks as background jobs on the workflow host, which allows
-   dummy-running workflows from other sites.
-
-   This simulates scheduling and generates all job files on the workflow host.
-simulation mode
-   Does not run any real tasks.
-
-   This simulates scheduling without generating any job files.
-
-Set the run mode (default ``live``) on the command line:
+**Dummy mode** replaces real task jobs with background ``sleep`` jobs on the
+scheduler host. This avoids :term:`job runner` directives that request compute
+resources for real workflow tasks, and it allows any workflow configuration to
+run locally in dummy mode.
 
 .. code-block:: console
 
-   $ cylc play --mode=dummy <workflow-id>
+   $ cylc play --mode=dummy <workflow-id>  # real dummy jobs
 
-You can get specified tasks to fail in these modes, for more flexible workflow
-testing. See :cylc:conf:`[runtime][<namespace>][simulation]`.
+**Simulation mode** does not run real jobs at all.
 
+.. code-block:: console
 
-Proportional Simulated Run Length
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If :cylc:conf:`[runtime][<namespace>]execution time limit` is set, Cylc
-divides it by :cylc:conf:`[runtime][<namespace>][simulation]speedup factor` to compute simulated task
-run lengths.
+   $ cylc play --mode=simulation <workflow-id>  # no real jobs
 
 
-Limitations Of Workflow Simulation
+Simulated Run Length
+^^^^^^^^^^^^^^^^^^^^
+
+The default dummy or simulated task job run length is 10 seconds. It can be
+changed with :cylc:conf:`[runtime][<namespace>][simulation]default run length`.
+
+If :cylc:conf:`[runtime][<namespace>]execution time limit` and
+:cylc:conf:`[runtime][<namespace>][simulation]speedup factor` are both set,
+run length is computed by dividing the time limit by the speedup factor.
+
+
+Limitations of Workflow Simulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Dummy mode ignores :term:`job runner` settings because Cylc does not know which
-job resource directives (requested memory, number of compute nodes, etc.) would
-need to be changed for the dummy jobs. If you need to dummy-run jobs on a
-job runner, manually comment out ``script`` items and modify
-directives in your live workflow, or else use a custom live mode test workflow.
+Dummy tasks run locally, so dummy mode does not test communication with remote
+job platforms. However, it is easy to write a live-mode test workflow with
+simple ``sleep 10`` tasks that submit to a remote platform. 
+
+Alternate path branching is difficult to simulate effectively. You can
+configure certain tasks to fail via
+:cylc:conf:`[runtime][<namespace>][simulation]`, but all branches based
+on mutually exclusive custom outputs will run because custom outputs get
+artificially completed in dummy and simulation mode. 
 
 .. note::
 
-   The dummy modes ignore all configured task ``script`` items
-   including ``init-script``. If your ``init-script`` is required
-   to run even blank/empty tasks on a job host, note that host environment
-   setup should be done elsewhere.
+   All configured task ``script`` items including ``init-script`` are ignored
+   in dummy mode. If your ``init-script`` is required to run even local dummy
+   jobs, the relevant environment setup should be done elsewhere.
 
 
 Restarting Workflows With A Different Run Mode?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The run mode is recorded in the workflow run database files. Cylc will not let
-you *restart* a non-live mode workflow in live mode, or vice versa. To
-test a live workflow in simulation mode just take a quick copy of it and run the
-the copy in simulation mode.
-
-
+Run mode is recorded in the workflow run database. Cylc will not let you
+*restart* a dummy mode workflow in live mode, or vice versa. To do that,
+install a new instance of the workflow and run it from scratch in the new mode.
 
