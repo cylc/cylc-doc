@@ -388,7 +388,7 @@ Putting It All Together
    subgraph cluster_T06 {
        label="+PT6H"
        style="dashed"
-       "forecast.t06" [label="+PT6H/forecast"]
+       "forecast.t06" [label="forecast\n+PT6H"]
        "get_rainfall.t06" [label="get_rainfall\n+PT6H"]
        "observations.t06" [label="consolidate observations\n+PT6H"]
    }

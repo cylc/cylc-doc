@@ -1,3 +1,39 @@
+.. |task-waiting| image:: ../../img/task-job-icons/task-waiting.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submitted| image:: ../../img/task-job-icons/task-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |task-running| image:: ../../img/task-job-icons/task-running.png
+   :scale: 100%
+   :align: middle
+
+.. |task-succeeded| image:: ../../img/task-job-icons/task-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |task-failed| image:: ../../img/task-job-icons/task-failed.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submitted| image:: ../../img/task-job-icons/job-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |job-running| image:: ../../img/task-job-icons/job-running.png
+   :scale: 100%
+   :align: middle
+
+.. |job-succeeded| image:: ../../img/task-job-icons/job-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |job-failed| image:: ../../img/task-job-icons/job-failed.png
+   :scale: 100%
+   :align: middle
+
 .. _tutorial-cylc-runtime-introduction:
 
 Introduction
@@ -20,7 +56,7 @@ Introduction
       Defines the workflow in terms of :term:`tasks <task>` and
       :term:`dependencies <dependency>`.
    ``[runtime]``
-      Defines what runs, where and how tasks run.
+      Defines what runs, where and how it runs.
 
 
 The Task Section
@@ -180,6 +216,24 @@ The Cylc GUI
 
    The Cylc UI has different views you can use to examine your workflows.
 
+- Task states have grey icons.
+- Job states have colour-coded squares.
+
+.. csv-table::
+   :header: Common task and job states, Description
+
+   |task-waiting|, Task waiting on other tasks
+   |task-submitted| |job-submitted|, Job submitted
+   |task-running| |job-running|, Job is running
+   |task-succeeded| |job-succeeded|, Job has run successfully
+   |task-failed| |job-failed|, Job failed
+
+.. ifnotslides::
+
+   .. seealso::
+
+      Full list of :ref:`task-job-states`.
+
 .. nextslide::
 
 .. ifnotslides::
@@ -256,13 +310,18 @@ Where Do All The Files Go?
 
    .. tip::
 
-      If a task has run and is still visible in the Cylc GUI you can view its
-      :term:`job log files <job log>` by right-clicking on the task and
-      selecting "View".
+      You can use ``cylc cat-log <workflow-name>//<cycle-point>/<task-name>``
+      to view the content of this file/.
 
-      .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/cylc-gui-view-log.png
-         :align: center
-         :scale: 75%
+      .. TODO REPLACE THIS IF APPROPRIATE
+
+         If a task has run and is still visible in the Cylc GUI you can view its
+         :term:`job log files <job log>` by right-clicking on the task and
+         selecting "View".
+
+         .. image:: ../img/cylc-gui-view-log.png
+            :align: center
+            :scale: 75%
 
 .. ifslides::
 
@@ -275,9 +334,11 @@ Where Do All The Files Go?
 
          ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
 
-      .. TODO REPLACE THIS IF APPROPRIATE: .. image:: ../img/cylc-gui-view-log.png
-         :align: center
-         :scale: 75%
+      .. TODO REPLACE THIS IF APPROPRIATE
+
+         .. image:: ../img/cylc-gui-view-log.png
+            :align: center
+            :scale: 75%
 
 
 Installing A Workflow
@@ -303,7 +364,7 @@ For a workflow developed in
 
 respectively:
 
-.. code-block:: shell
+.. code-block:: bash
 
    cylc install my_workflow
    cylc install -C /some/location/my_other_workflow
@@ -330,10 +391,10 @@ Validating A Workflow
    it. Cylc provides a command which automatically checks the validity of
    workflow configurations - ``cylc validate``:
 
-.. code-block:: sub
+.. code-block:: console
 
-   cylc validate <path/to/workflow>
-   cylc validate <workflow_id>  # For workflow in `~/cylc-run/`
+   $ cylc validate <path/to/workflow>
+   $ cylc validate <workflow_id>  # For workflow in `~/cylc-run/`
 
 .. ifnotslides::
 
@@ -350,9 +411,9 @@ Running a workflow
    Now we have installed and validated our workflow we can run the
    workflow using the ``cylc play`` command.
 
-.. code-block:: sub
+.. code-block:: console
 
-   cylc play <workflow_id>
+   $ cylc play <workflow_id>
 
 .. ifnotslides::
 

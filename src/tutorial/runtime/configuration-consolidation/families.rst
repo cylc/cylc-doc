@@ -174,6 +174,43 @@ The ``root`` Family
        [[bar]]
            script = echo $FOO
 
+
+.. TODO - Replace once the new GUI supports this.
+
+   Families and ``cylc graph``
+   ---------------------------
+
+
+   .. ifnotslides::
+
+      By default, ``cylc graph`` groups together all members of a family
+      in the :term:`graph`. To un-group a family right click on it and select
+      :menuselection:`UnGroup`.
+
+      For instance if the tasks ``bar`` and ``baz`` both
+      inherited from ``BAR`` ``cylc graph`` would produce:
+
+   .. digraph:: Example
+      :align: center
+
+      subgraph cluster_1 {
+         label = "Grouped"
+         "1/foo" [label="foo"]
+         "1/BAR" [label="BAR", shape="doubleoctagon"]
+      }
+
+      subgraph cluster_2 {
+         label = "Un-Grouped"
+         "2/foo" [label="foo"]
+         "2/bar" [label="bar"]
+         "2/baz" [label="baz"]
+      }
+
+      "1/foo" -> "1/BAR"
+      "2/foo" -> "2/bar"
+      "2/foo" -> "2/baz"
+
+
 .. nextslide::
 
 .. ifslides::
