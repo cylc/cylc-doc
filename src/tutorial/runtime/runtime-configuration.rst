@@ -309,7 +309,7 @@ Start, Stop, Restart
 
       Generate a Datapoint API key::
 
-         grep API_KEY runtime
+         cylc get-resources api-key
 
       Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
       ``xxx...`` with your API key:
