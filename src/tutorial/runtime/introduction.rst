@@ -238,7 +238,7 @@ The Cylc GUI
 
 .. ifnotslides::
 
-   This is the "tree" view. The Cylc GUI has a "table" (of tasks) view.
+   This is the "tree" view:
 
 .. figure:: ../img/cylc-gui-tree-view.png
    :figwidth: 75%
@@ -247,6 +247,8 @@ The Cylc GUI
    Screenshot of the Cylc GUI in "Tree" view mode.
 
 .. nextslide::
+
+This is the "table" view:
 
 .. figure:: ../img/cylc-gui-table-view.png
    :figwidth: 75%
@@ -258,8 +260,8 @@ The Cylc GUI
 
 .. ifnotslides::
 
-   There is a ``cylc scan`` view on the left allowing you to navigate your
-   workflows.
+   There is a GUI "scan" (also known as "GScan") view on the left allowing you
+   to navigate your workflows.
 
 .. TODO - re-do this figure when UI confusing elements removed.
 
@@ -311,7 +313,7 @@ Where Do All The Files Go?
    .. tip::
 
       You can use ``cylc cat-log <workflow-name>//<cycle-point>/<task-name>``
-      to view the content of this file/.
+      to view the content of job logs.
 
       .. TODO REPLACE THIS IF APPROPRIATE
 
@@ -350,10 +352,6 @@ Installing A Workflow
 
       :ref:`The full guide to Cylc install <Installing-workflows>`.
 
-   .. versionchanged:: 8.0.0
-
-      ``cylc install`` is a new feature of Cylc 8.
-
    To allow you to separate the development and running of workflows
    Cylc provides a :term:`cylc install <install>` command.
 
@@ -373,8 +371,6 @@ respectively:
 
    will install your workflow in ``~/cylc-run/my_workflow/runN``.
 
-   (RunN is actually a symlink to runX where X increments each time you
-   install a workflow)
 
    .. note::
 
@@ -399,8 +395,7 @@ Validating A Workflow
 .. ifnotslides::
 
    Here ``<path/to/workflow>`` is the path to the workflow's location within the
-   filesystem (so if we create a workflow in ``~/cylc-src/foo`` we would put
-   ``~/cylc-src/foo/flow.cylc``).
+   filesystem (e.g. ``~/cylc-src/foo``).
 
 
 Running a workflow
@@ -417,7 +412,8 @@ Running a workflow
 
 .. ifnotslides::
 
-   The ``workflow_id`` is the name of the :term:`run directory` (i.e. ``<name>``
+   The :term:`workflow id` is the path of the :term:`run directory` relative
+   to ``~/cylc-run``.
    would be ``foo`` in the above example).
 
 
@@ -437,7 +433,7 @@ Numbered run directories
    By default ``cylc install`` will install your workflow in a new
    numbered run directory each time you run ``cylc install``:
 
-.. code-block:: sub
+.. code-block:: console
 
    $ cylc install my_workflow
    INSTALLED my_workflow/run1 from ...
@@ -450,19 +446,19 @@ Numbered run directories
 
 .. ifnotslides::
 
-   Each time you run ``cylc install`` a symlink pointing to the newest run
-   directory called ``runN`` will be created.
+   Each time you run ``cylc install``, a symlink called ``runN`` is
+   created/updated, pointing to the newest run directory.
 
-   You can run cylc scripts pointing to a specific run number, but if you don't
+   You can run cylc commands using a specific run number, but if you don't,
    ``runN`` will be used:
 
-.. code-block:: sub
+.. code-block:: console
 
    $ cylc validate my_workflow
    # is the same as
    $ cylc validate my_workflow/runN
-   # but not
-   $ cylc validate my_workflow/run1
+   # and the same as (in this case)
+   $ cylc validate my_workflow/run2
 
 
 Files created by ``cylc install``
@@ -473,14 +469,14 @@ Files created by ``cylc install``
    Cylc generates files and directories when it installs a workflow:
 
    ``log/``
-      ``log/install``
+      ``install/``
          A record of the installation of this workflow.
 
 
 .. ifslides::
 
    * ``log/``
-      * ``log/install``
+      * ``install/``
 
 
 Files created by ``cylc play``
