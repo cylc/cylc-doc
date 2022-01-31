@@ -370,7 +370,7 @@ From ``cylc-src/my_workflow``
 From a workflow developed in an arbitrary location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: sub
 
    cylc install -C /some/location/my_other_workflow
 
@@ -420,7 +420,6 @@ Running a workflow
 
    The :term:`workflow id` is the path of the :term:`run directory` relative
    to ``~/cylc-run``.
-   would be ``foo`` in the above example).
 
 
 Generated Workflow Files
