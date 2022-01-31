@@ -16,8 +16,8 @@ Inheritance Hierarchy
 Within your ``~/cylc-run`` directory create a new directory called
 ``inheritance-tutorial``::
 
-   mkdir ~/cylc-run/inheritance-tutorial
-   cd ~/cylc-run/inheritance-tutorial
+   mkdir ~/cylc-src/inheritance-tutorial
+   cd ~/cylc-src/inheritance-tutorial
 
 And paste the following code into a ``flow.cylc`` file. This
 defines two tasks each representing different aircraft, the Airbus A380 jumbo
@@ -74,7 +74,7 @@ jet and the Robson R44 helicopter:
    The ``[meta]`` section is a freeform section where we can define metadata
    to be associated with a task, family or the workflow itself.
 
-   This metadata should not be mistaken with Rose :ref:`conf-meta`.
+   This metadata should not be mistaken for Rose :ref:`conf-meta`.
 
 .. admonition:: Reminder
    :class: hint
@@ -183,7 +183,7 @@ Add the following task to your :cylc:conf:`flow.cylc` file.
            [[[meta]]]
                title = V-22 Osprey Military Aircraft.
 
-Refresh your ``cylc graph`` window or re-run the ``cylc graph`` command.
+Re-run the ``cylc graph`` command.
 
 The inheritance hierarchy should now look like this:
 
