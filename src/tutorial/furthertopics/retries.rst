@@ -71,11 +71,9 @@ Let's see what happens when we run the workflow as it is. Open the
 
 Then install and run the workflow::
 
+   cylc validate .
    cylc install
    cylc play retries-tutorial
-
-.. TODO - check this tutorial still works now that cylc run/restart has been
-   replaced by cylc play
 
 Unless you're lucky, the workflow should fail at the roll_doubles task.
 
@@ -117,6 +115,7 @@ If you closed it, re-open the ``cylc gui``::
 
 Re-install and run the workflow::
 
+   cylc validate .
    cylc install
    cylc play retries-tutorial
 

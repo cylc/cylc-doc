@@ -72,6 +72,7 @@ of times equal to the (cycle point) hour.
 
 Run your workflow using::
 
+   cylc validate .
    cylc install
    cylc play clock-trigger
 
@@ -149,7 +150,9 @@ Note the different values used for the cycle offsets of the clock-trigger tasks.
 
 Save your changes, install and run your workflow using::
 
-   cylc install; cylc play clock-trigger
+   cylc validate .
+   cylc install
+   cylc play clock-trigger
 
 .. note::
 

@@ -65,8 +65,9 @@ And paste the following into :cylc:conf:`flow.cylc`:
 
    ``|`` (or), and ``=>`` act in the same way.
 
-Install and play the workflow, then open the ``cylc gui``::
+Validate, install and play the workflow, then open the ``cylc gui``::
 
+   cylc validate .
    cylc install --run-name without-queues
    cylc play queues-tutorial/without-queues
    cylc gui
@@ -98,6 +99,7 @@ section like so:
 
 Install and play the workflow then open up the GUI (if you closed it)::
 
+   cylc validate .
    cylc install --run-name tutorial-with-queues
    cylc play queues-tutorial/with-queues
    cylc gui

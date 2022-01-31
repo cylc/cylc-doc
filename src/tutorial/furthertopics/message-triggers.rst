@@ -342,10 +342,11 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          cylc gui
 
-      Install and play the workflow:
+      Validate, install and play the workflow:
 
       .. code-block:: bash
 
+         cylc validate .
          cylc install
          cylc play message-triggers
 

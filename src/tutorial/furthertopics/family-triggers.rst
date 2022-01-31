@@ -87,8 +87,10 @@ You have now created a workflow that:
   or fails.
 * Has 7 tasks that inherit from the ``MINERS`` family.
 
-Run the workflow::
+Validate, install and run the workflow::
 
+   cylc validate .
+   cylc install
    cylc play tutorial-family-triggers
 
 You should see the ``visit_mine`` task run, then trigger the members of the
