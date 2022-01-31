@@ -1,8 +1,11 @@
 
 .. _AdminGuide.PlatformConfigs:
 
+Platform Configuration
+======================
+
 Writing Platform Configurations
-===============================
+-------------------------------
 
 .. versionadded:: 8.0.0
 
@@ -16,7 +19,7 @@ Writing Platform Configurations
 .. _ListingAvailablePlatforms:
 
 Listing available platforms
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are working on an institutional network platforms may already
 have been configured for you.
@@ -32,7 +35,7 @@ To see the full configuration of available platforms::
 This is equivalent to ``cylc config -i 'platforms' -i 'platform groups'``
 
 What Are Platforms?
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Platforms define settings, most importantly:
 
@@ -42,7 +45,7 @@ Platforms define settings, most importantly:
  - An ``install target`` for Cylc to install task job files on.
 
 Why Were Platforms Introduced?
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Allow a compute cluster with multiple login nodes to be treated as a single
   unit.
@@ -54,7 +57,7 @@ Why Were Platforms Introduced?
 .. _Install Targets:
 
 What Are Install Targets?
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install targets represent file systems. More than one platform can use the
 same file system. It defaults to the name of the platform.
@@ -69,10 +72,10 @@ Each cluster would be both a platform, and have its own install target.
 
 
 Example Platforms
-=================
+-----------------
 
 On the Scheduler Host (Cylc Server)
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **There is a built in localhost platform**
 
@@ -84,7 +87,7 @@ If a job doesn't set a platform it will run on the Cylc scheduler host
 using a default ``localhost`` platform.
 
 Simple Remote Platform
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms don't need to be complicated**
 - **``install target`` specifies a file system for the task using that platform**
@@ -104,7 +107,7 @@ Simple Remote Platform
 
 
 Cluster with Multiple Login Nodes
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms can group multiple hosts together.**
 
@@ -130,7 +133,7 @@ Since the platform hosts do not share a file system with the scheduler
 host we need to ask Cylc to retrieve job logs.
 
 Background Jobs on Cluster with Other Options
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms are the unique combination of all settings.**
 
@@ -162,7 +165,7 @@ Background Jobs on Cluster with Other Options
 
 
 Submit PBS Jobs from Localhost
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms can share hosts and not share batch systems.**
 
@@ -195,7 +198,7 @@ As a result the above configuration can be simplified to:
 
 
 Two Similar Clusters
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 - **Platform groups allow users to ask for jobs to be run on any
   suitable computer.**
@@ -235,7 +238,7 @@ Two Similar Clusters
 
 
 Preferred and Backup Hosts and Platforms
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **You can set how hosts are selected from platforms.**
 - **You can set how platforms are selected from groups.**
@@ -272,7 +275,7 @@ Preferred and Backup Hosts and Platforms
    Random is the default selection method.
 
 Lots of desktop computers
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platform names are regular expressions.**
 
@@ -309,7 +312,7 @@ platform. Job files can be installed on the workflow host.
    used in both.
 
 Platform with no ``$HOME`` directory
-------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. admonition:: Scenario
 
