@@ -352,21 +352,39 @@ Recurrence Sections
       *other* cycle, and so on. To build more complex workflows we can use
       multiple recurrences:
 
-.. code-block:: cylc
+      .. code-block:: cylc
 
-   [scheduling]
-       cycling mode = integer
-       initial cycle point = 1
-       [[graph]]
-           # Repeat every cycle.
-           P1 = foo
-           # Repeat every second cycle.
-           P2 = bar
-           # Repeat every third cycle.
-           P3 = baz
+         [scheduling]
+            cycling mode = integer
+            initial cycle point = 1
+            [[graph]]
+               # Repeat every cycle.
+               P1 = foo
+               # Repeat every second cycle.
+               P2 = bar
+               # Repeat every third cycle.
+               P3 = baz
 
-.. image:: ../../img/recurrence-sections.svg
-   :align: center
+      .. image:: ../../img/recurrence-sections.svg
+         :align: center
+
+.. ifslides::
+
+   .. code-block:: cylc
+
+      [scheduling]
+         cycling mode = integer
+         initial cycle point = 1
+         [[graph]]
+            # Repeat every cycle.
+            P1 = foo
+            # Repeat every second cycle.
+            P2 = bar
+            # Repeat every third cycle.
+            P3 = baz
+
+   .. image:: ../../img/recurrence-sections.svg
+      :align: center
 
 .. nextslide::
 
