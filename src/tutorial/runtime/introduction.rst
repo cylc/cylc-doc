@@ -1,39 +1,3 @@
-.. |task-waiting| image:: ../../img/task-job-icons/task-waiting.png
-   :scale: 100%
-   :align: middle
-
-.. |task-submitted| image:: ../../img/task-job-icons/task-submitted.png
-   :scale: 100%
-   :align: middle
-
-.. |task-running| image:: ../../img/task-job-icons/task-running.png
-   :scale: 100%
-   :align: middle
-
-.. |task-succeeded| image:: ../../img/task-job-icons/task-succeeded.png
-   :scale: 100%
-   :align: middle
-
-.. |task-failed| image:: ../../img/task-job-icons/task-failed.png
-   :scale: 100%
-   :align: middle
-
-.. |job-submitted| image:: ../../img/task-job-icons/job-submitted.png
-   :scale: 100%
-   :align: middle
-
-.. |job-running| image:: ../../img/task-job-icons/job-running.png
-   :scale: 100%
-   :align: middle
-
-.. |job-succeeded| image:: ../../img/task-job-icons/job-succeeded.png
-   :scale: 100%
-   :align: middle
-
-.. |job-failed| image:: ../../img/task-job-icons/job-failed.png
-   :scale: 100%
-   :align: middle
-
 .. _tutorial-cylc-runtime-introduction:
 
 Introduction
