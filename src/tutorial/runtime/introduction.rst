@@ -490,11 +490,11 @@ Files created by ``cylc play``
    Cylc generates files and directories when it runs a workflow, namely:
 
    ``log``
-      ``log/db``
+      ``db``
          The database which Cylc uses to record the state of the workflow;
-      ``log/job``
+      ``job``
          The directory where the :term:`job log files <job log>` live;
-      ``log/workflow``
+      ``workflow``
          The directory where the :term:`workflow log files <workflow log>` live.
          These files are written by Cylc as the workflow is run and are useful for
          debugging purposes in the event of error.
@@ -513,10 +513,10 @@ Files created by ``cylc play``
 .. ifslides::
 
    * ``log/``
-      * ``log/db``
-      * ``log/job``
-      * ``log/workflow``
-      * ``log/flow-config/flow.cylc.processed``
+      * ``db``
+      * ``job``
+      * ``workflow``
+      * ``flow-config/flow.cylc.processed``
    * ``share/``
    * ``work/``
 
