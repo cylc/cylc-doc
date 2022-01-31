@@ -49,26 +49,32 @@ And paste the following into :cylc:conf:`flow.cylc`:
 
 .. note::
 
-   In graph sections backslash (``\``) is a line continuation character i.e. the
+   In graph sections ``&`` is a line continuation character i.e. the
    following two examples are equivalent:
 
    .. code-block:: cylc
 
-      foo => bar & \
+      foo => bar &
              baz
 
    .. code-block:: cylc
 
       foo => bar & baz
 
-Open the ``cylc gui`` then run the workflow::
+   ``|`` (or), and ``=>`` act in the same way.
 
-   cylc gui queues-tutorial &
-   cylc play queues-tutorial
+Install and play the workflow, then open the ``cylc gui``::
+
+   cylc install --run-name without-queues
+   cylc play queues-tutorial/without-queues
+   cylc gui
 
 You will see that all the ``steak``, ``pasta``, and ``pizza`` tasks are run
 at once, swiftly followed by all the ``ice_cream``, ``cheesecake``,
 ``sticky_toffee`` tasks as the customers order from the dessert menu.
+
+(If you aren't very quick starting the GUI you may find that the entire
+workflow has already run by the time you navigate to it.)
 
 This will overwhelm our restaurant staff! The chef responsible for ``MAINS``
 can only handle 3 tasks at any given time, and the ``DESSERT`` chef can only
@@ -88,7 +94,12 @@ section like so:
                limit = 2  # Only 2 dessert dishes at one time.
                members = DESSERT
 
-Re-open the ``cylc gui`` if you have closed it and re-run the workflow.
+Install and play the workflow then open up the GUI (if you closed it)::
+
+   cylc install --run-name tutorial-with-queues
+   cylc play queues-tutorial/with-queues
+   cylc gui
+
 
 You should see that there are now never more than 3 active ``MAINS`` tasks
 running and never more than 2 active ``DESSERT`` tasks running.
