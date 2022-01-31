@@ -1,3 +1,5 @@
+.. _tutorial.furthertopics.queues:
+
 Queues
 ======
 
@@ -52,12 +54,12 @@ And paste the following into :cylc:conf:`flow.cylc`:
    In graph sections ``&`` is a line continuation character i.e. the
    following two examples are equivalent:
 
-   .. code-block:: cylc
+   .. code-block:: cylc-graph
 
       foo => bar &
              baz
 
-   .. code-block:: cylc
+   .. code-block:: cylc-graph
 
       foo => bar & baz
 

@@ -28,8 +28,8 @@ Example
 
 Create a new workflow by running the following commands::
 
-   mkdir -p ~/cylc-run/retries-tutorial
-   cd ~/cylc-run/retries-tutorial
+   mkdir -p ~/cylc-src/retries-tutorial
+   cd ~/cylc-src/retries-tutorial
 
 And paste the following code into a ``flow.cylc`` file. This workflow has a
 ``roll_doubles`` task that simulates trying to roll doubles using two dice:
@@ -64,12 +64,14 @@ And paste the following code into a ``flow.cylc`` file. This workflow has a
 Running Without Retries
 -----------------------
 
-Let's see what happens when we run the workflow as it is. Open the ``cylc gui``::
+Let's see what happens when we run the workflow as it is. Open the
+``cylc gui`` in a new terminal window::
 
-   cylc gui retries-tutorial &
+   cylc gui
 
-Then run the workflow::
+Then install and run the workflow::
 
+   cylc install
    cylc play retries-tutorial
 
 .. TODO - check this tutorial still works now that cylc run/restart has been
@@ -111,10 +113,11 @@ Running With Retries
 
 If you closed it, re-open the ``cylc gui``::
 
-   cylc gui retries-tutorial &
+   cylc gui
 
-Re-run the workflow::
+Re-install and run the workflow::
 
+   cylc install
    cylc play retries-tutorial
 
 What you should see is Cylc retrying the ``roll_doubles`` task. Hopefully,

@@ -208,6 +208,11 @@ Optional and Expected Task Outputs
    * :ref:`User Guide Expected Outputs`
    * :ref:`User Guide Optional Outputs`
 
+   Tutorials:
+
+   * :ref:`tutorial-cylc-family-triggers` - contains examples of tasks with
+     optional outputs.
+
    Major Changes:
 
    * :ref:`728.suicide_triggers`
@@ -330,7 +335,10 @@ Cylc Install
 
 .. seealso::
 
-   :ref:`Moving to Cylc Install<majorchangesinstall>`.
+   * :ref:`Moving to Cylc Install<majorchangesinstall>`.
+   * :ref:`tutorials.furthertopics` have been re-written to use cylc install.
+   * :ref:`tutorial.furthertopics.queues` provides an example of using
+     named runs.
 
 
 Cylc install cleanly separates workflow source directory from run directory,
