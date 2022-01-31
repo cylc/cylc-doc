@@ -22,11 +22,17 @@ that the dependency refers to the ``succeed`` state e.g:
 .. code-block:: cylc-graph
 
    bake_bread => sell_bread          # sell_bread is dependent on bake_bread succeeding.
-   bake_bread:succeed => sell_bread  # sell_bread is dependent on bake_bread succeeding.
-   sell_bread:fail => through_away   # through_away is dependent on sell_bread failing.
+   bake_bread:succeed => sell_bread?  # sell_bread is dependent on bake_bread succeeding.
+   sell_bread:fail? => throw_away   # through_away is dependent on sell_bread failing.
 
 The left-hand side of a :term:`dependency` (e.g. ``sell_bread:fail``) is
 referred to as the :term:`trigger <task trigger>`.
+
+.. versionchanged:: 8.0.0
+
+   ``sell_bread(:succeed)`` and ``sell_bread:fail`` are mutually exclusive
+   outcomes. To tell Cylc use the ``?`` syntax to mark them as
+   :ref:`optional outputs`.
 
 When we write a trigger involving a family, special qualifiers are required
 to specify whether the dependency is concerned with *all* or *any* of the tasks
@@ -45,8 +51,8 @@ Example
 
 Create a new workflow called ``tutorial-family-triggers``::
 
-   mkdir ~/cylc-run/tutorial-family-triggers
-   cd ~/cylc-run/tutorial-family-triggers
+   mkdir ~/cylc-src/tutorial-family-triggers
+   cd ~/cylc-src/tutorial-family-triggers
 
 Paste the following configuration into the :cylc:conf:`flow.cylc` file:
 
@@ -113,8 +119,8 @@ this:
 
    [[graph]]
        R1 = """
-           visit_mine => MINERS
-           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
+           visit_mine => MINERS?
+           MINERS:finish-all & MINERS:succeed-any? => sell_diamonds
        """
 
 Then, add the following task to the ``[runtime]`` section:
@@ -149,10 +155,9 @@ this:
 
    [[graph]]
        R1 = """
-           visit_mine => MINERS
-           MINERS:finish-all & MINERS:succeed-any => sell_diamonds
-           MINERS:finish-all & MINERS:fail-any => close_shafts
-           close_shafts => !MINERS
+           visit_mine => MINERS?
+           MINERS:finish-all & MINERS:succeed-any? => sell_diamonds
+           MINERS:finish-all & MINERS:fail-any? => close_shafts
        """
 
 Alter the ``[[sell_diamonds]]`` section to look like this:
@@ -163,7 +168,7 @@ Alter the ``[[sell_diamonds]]`` section to look like this:
        script = sleep 5
 
 These changes add a ``close_shafts`` task which is run once all the
-``MINERS`` tasks have finished and any of them have failed. 
+``MINERS`` tasks have finished and any of them have failed.
 
 Save your changes and run your workflow. You should see the new
 ``close_shafts`` run should any of the ``MINERS`` tasks be in the failed
