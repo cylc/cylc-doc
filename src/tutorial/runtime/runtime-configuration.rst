@@ -3,14 +3,6 @@
 Runtime Configuration
 =====================
 
-.. warning::
-
-   This section of the tutorial still uses a command from the ``Rose`` project
-   to copy workflow source files.
-
-
-.. TODO - platformise all the examples in here
-
 In the last section we associated tasks with scripts and ran a simple workflow. In
 this section we will look at how we can configure these tasks.
 

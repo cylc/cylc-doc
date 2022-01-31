@@ -355,22 +355,28 @@ Installing A Workflow
    To allow you to separate the development and running of workflows
    Cylc provides a :term:`cylc install <install>` command.
 
-For a workflow developed in
 
-- ``~/cylc-src/my_workflow`` and
-- ``/some/location/my_other_workflow``
-
-respectively:
+From ``cylc-src/my_workflow``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
    cylc install my_workflow
-   cylc install -C /some/location/my_other_workflow
 
 .. ifnotslides::
 
    will install your workflow in ``~/cylc-run/my_workflow/runN``.
 
+From a workflow developed in an arbitrary location
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   cylc install -C /some/location/my_other_workflow
+
+.. ifnotslides::
+
+   will install your workflow in ``~/cylc-run/my_other_workflow/runN``.
 
    .. note::
 
@@ -468,15 +474,13 @@ Files created by ``cylc install``
 
    Cylc generates files and directories when it installs a workflow:
 
-   ``log/``
-      ``install/``
-         A record of the installation of this workflow.
+   ``log/install/``
+      A record of the installation of this workflow.
 
 
 .. ifslides::
 
-   * ``log/``
-      * ``install/``
+   * ``log/install/``
 
 
 Files created by ``cylc play``
