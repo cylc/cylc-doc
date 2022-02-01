@@ -31,7 +31,8 @@ referred to as the :term:`trigger <task trigger>`.
 .. note::
 
    ``sell_bread(:succeed)`` and ``sell_bread:fail`` are mutually exclusive
-   outcomes. To tell Cylc use the ``?`` syntax to mark them as
+   outcomes. As both appear in the graph above, it is
+   necessary to use the ``?`` syntax to mark them as
    :ref:`optional outputs`.
 
 When we write a trigger involving a family, special qualifiers are required

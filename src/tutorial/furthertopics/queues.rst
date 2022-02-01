@@ -51,7 +51,7 @@ And paste the following into :cylc:conf:`flow.cylc`:
 
 .. note::
 
-   In graph sections ``&`` is a line continuation character i.e. the
+   In graph sections, lines can be split on ``&``, i.e. the
    following two examples are equivalent:
 
    .. code-block:: cylc-graph

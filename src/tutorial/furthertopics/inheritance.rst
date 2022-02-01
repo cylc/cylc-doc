@@ -13,7 +13,7 @@ multiple inheritance.
 Inheritance Hierarchy
 ---------------------
 
-Within your ``~/cylc-run`` directory create a new directory called
+Within your ``~/cylc-src`` directory create a new directory called
 ``inheritance-tutorial``::
 
    mkdir ~/cylc-src/inheritance-tutorial

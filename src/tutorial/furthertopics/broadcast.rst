@@ -20,7 +20,7 @@ runs on.
 Standalone Example
 ------------------
 
-Create a new workflow in the ``cylc-run`` directory called
+Create a new workflow in the ``cylc-src`` directory called
 ``tutorial-broadcast``::
 
    mkdir ~/cylc-src/tutorial-broadcast
