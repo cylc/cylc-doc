@@ -285,10 +285,10 @@ triggers another task bar and when fully completed triggers another task, baz.
          .. code-block:: cylc
 
             [meta]
-            title = "test workflow to demo message triggers"
+                title = "test workflow to demo message triggers"
 
             [scheduler]
-            UTC mode = True
+                UTC mode = True
 
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
@@ -387,9 +387,9 @@ triggers another task bar and when fully completed triggers another task, baz.
          .. code-block:: cylc
 
             [scheduler]
-            UTC mode = True
+                UTC mode = True
             [meta]
-            title = "test workflow to demo message triggers"
+                title = "test workflow to demo message triggers"
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
