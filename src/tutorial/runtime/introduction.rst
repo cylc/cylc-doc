@@ -168,17 +168,53 @@ Tasks And Jobs
    * Running
    * Succeeded / Failed
 
-
-The Cylc GUI
-------------
+The Cylc User Interfaces
+------------------------
 
 .. ifnotslides::
 
-   To help you to keep track of a running workflow Cylc has a graphical user
-   interface (the Cylc GUI) which can be used for monitoring and
-   interaction.
+   To help you to keep track of a running workflow Cylc has
+   - A graphical user interface (Cylc GUI).
+   - A text-based user interface (Cylc TUI).
 
-   The Cylc UI has different views you can use to examine your workflows.
+.. _tutorial.tui:
+
+The Cylc TUI
+^^^^^^^^^^^^
+
+.. ifnotslides::
+
+   The Cylc TUI, (Text User Interface) is bundled with Cylc and
+   enables you to view and interact with your workflow.
+
+   To start the Cylc TUI:
+
+.. code-block:: bash
+
+   cylc tui <workflow_id>
+
+.. _tutorial.gui:
+
+The Cylc GUI
+^^^^^^^^^^^^
+
+.. ifnotslides::
+
+   The Cylc UI has different views you can use to examine your workflows,
+   including a Cylc scan menu allowing you to switch between workflows.
+
+   .. note::
+
+      You only need to have one instance of the Cylc GUI open - you can
+      easily switch between workflows.
+
+   To start the Cylc UI, open a new terminal window or tab, then type:
+
+.. code-block:: bash
+
+   cylc gui
+
+.. nextslide::
 
 - Task states have grey icons.
 - Job states have colour-coded squares.
@@ -532,13 +568,8 @@ Files created by ``cylc play``
 
          cylc install
 
-      Open the Cylc GUI by running the following command in a new terminal:
-
-      .. code-block:: bash
-
-         cylc gui
-
-      When it opens navigate to runtime-introduction/run1 in the sidebar.
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
       Finally run the workflow by executing:
 

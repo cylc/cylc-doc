@@ -363,13 +363,10 @@ Start, Stop, Restart
 
       Next we will test the ``get_observations`` tasks.
 
-      Open the Cylc GUI by running the following command:
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
-      .. code-block:: bash
-
-         cylc gui runtime-tutorial &
-
-      Run the workflow either by pressing the play button in the Cylc GUI or by
+      Run the workflow either by pressing the play button in the Cylc UI or by
       running the command:
 
       .. code-block:: bash
@@ -429,13 +426,16 @@ Start, Stop, Restart
 
    #. **Run The Workflow.**
 
-      Open the Cylc GUI (if not already open) and run the workflow.
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
       .. spoiler:: Hint hint
 
          .. code-block:: bash
 
-            cylc gui runtime-tutorial &
+            cylc tui runtime-tutorial
+            # or
+            cylc gui  # If you haven't already go an instance running.
 
          Run the workflow either by:
 
