@@ -43,7 +43,7 @@ INSTALL_REQUIRES = [
     'eralchemy==1.2.*',
     'hieroglyph>=2.1.0',
     'setuptools>=50',
-    'sphinx>=3.0.0',
+    'sphinx>=4.4',
     'sphinx_rtd_theme>=0.5.0',
     'sphinxcontrib-svg2pdfconverter',
 ]

@@ -7,5 +7,6 @@ Configuration
    file-format
    workflow
    global
+   ui-server
    types
    writing-platform-configs
