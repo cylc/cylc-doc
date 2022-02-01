@@ -140,7 +140,7 @@ triggers another task bar and when fully completed triggers another task, baz.
          while [ $counter -le 10 ]; do
              newrand=$(( (( RANDOM % 40) + 1 ) ));
              echo $newrand >> report.txt;
-             counter=$(((counter + 1)));
+             counter=$((counter + 1));
          done
 
 

@@ -21,14 +21,14 @@ that the dependency refers to the ``succeed`` state e.g:
 
 .. code-block:: cylc-graph
 
-   bake_bread => sell_bread          # sell_bread is dependent on bake_bread succeeding.
+   bake_bread => sell_bread           # sell_bread is dependent on bake_bread succeeding.
    bake_bread:succeed => sell_bread?  # sell_bread is dependent on bake_bread succeeding.
-   sell_bread:fail? => throw_away   # through_away is dependent on sell_bread failing.
+   sell_bread:fail? => throw_away     # throw_away is dependent on sell_bread failing.
 
 The left-hand side of a :term:`dependency` (e.g. ``sell_bread:fail``) is
 referred to as the :term:`trigger <task trigger>`.
 
-.. versionchanged:: 8.0.0
+.. note::
 
    ``sell_bread(:succeed)`` and ``sell_bread:fail`` are mutually exclusive
    outcomes. To tell Cylc use the ``?`` syntax to mark them as
