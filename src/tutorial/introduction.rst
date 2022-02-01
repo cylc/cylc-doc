@@ -88,7 +88,9 @@ Cylc can automatically:
 Cylc provides a variety of command line and GUI tools for visualising and
 interacting with workflows.
 
-.. TODO CYLC8 GUI & TUI & CLI Postcard: .. image:: img/cylc-gui.png
+.. image:: img/cylc-tools.png
+   :caption: A sample of Cylc Tools - Cylc TUI (Text user interface), GUI
+   and cylc scan.
 
 .. nextslide::
 
