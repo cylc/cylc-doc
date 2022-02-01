@@ -365,7 +365,7 @@ Validating A Workflow
 .. ifnotslides::
 
    Here ``<path/to/workflow>`` is the path to the workflow's location within the
-   filesystem (e.g. ``~/cylc-src/foo``).
+   root source directory (e.g. ``~/cylc-src/``).
 
 
 Running a workflow
