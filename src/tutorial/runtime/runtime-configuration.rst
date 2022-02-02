@@ -46,8 +46,10 @@ Environment Variables
        The :term:`cycle point` for the associated task
        *(e.g. 20171009T0950)*.
 
-   There are many more environment variables - see the `Cylc User Guide`_ for more
-   information.
+   .. seealso::
+
+      There are many more environment variables - see
+      :ref:`Task Job Script Variables` for more information.
 
 .. ifslides::
 
