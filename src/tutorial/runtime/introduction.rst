@@ -174,6 +174,7 @@ The Cylc User Interfaces
 .. ifnotslides::
 
    To help you to keep track of a running workflow Cylc has
+
    - A graphical user interface (Cylc GUI).
    - A text-based user interface (Cylc TUI).
 
@@ -184,7 +185,7 @@ The Cylc TUI
 
 .. ifnotslides::
 
-   The Cylc TUI, (Text User Interface) is bundled with Cylc and
+   The Cylc TUI (Terminal User Interface) is bundled with Cylc and
    enables you to view and interact with your workflow.
 
    To start the Cylc TUI:

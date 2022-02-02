@@ -435,7 +435,7 @@ Start, Stop, Restart
 
             cylc tui runtime-tutorial
             # or
-            cylc gui  # If you haven't already go an instance running.
+            cylc gui  # If you haven't already got an instance running.
 
          Run the workflow either by:
 
