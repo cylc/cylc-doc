@@ -345,6 +345,21 @@ Where Do All The Files Go?
             :scale: 75%
 
 
+Validating A Workflow
+---------------------
+
+.. ifnotslides::
+
+   It is a good idea to check a workflow definition for errors before running
+   it. Cylc provides a command which automatically checks the validity of
+   workflow configurations - ``cylc validate``:
+
+.. code-block:: console
+
+   $ cd ~/cylc-src/my_workflow
+   $ cylc validate .
+
+
 Installing A Workflow
 ---------------------
 
@@ -357,10 +372,6 @@ Installing A Workflow
    To allow you to separate the development and running of workflows
    Cylc provides a :term:`cylc install <install>` command.
 
-
-From ``cylc-src/my_workflow``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: bash
 
    cylc install my_workflow
@@ -368,41 +379,6 @@ From ``cylc-src/my_workflow``
 .. ifnotslides::
 
    will install the workflow in ``~/cylc-src/my_workflow`` into ``~/cylc-run/my_workflow/runN``.
-
-From a workflow developed in an arbitrary location
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: sub
-
-   cylc install -C /some/location/my_other_workflow
-
-.. ifnotslides::
-
-   will install your workflow in ``~/cylc-run/my_other_workflow/runN``.
-
-   .. note::
-
-      You can edit workflows directly in ``~/cylc-run``, but this is not
-      recommended.
-
-Validating A Workflow
----------------------
-
-.. ifnotslides::
-
-   It is a good idea to check a workflow definition for errors before running
-   it. Cylc provides a command which automatically checks the validity of
-   workflow configurations - ``cylc validate``:
-
-.. code-block:: console
-
-   $ cylc validate <path/to/workflow>
-   $ cylc validate <workflow_id>  # For workflow in `~/cylc-run/`
-
-.. ifnotslides::
-
-   Here ``<path/to/workflow>`` is the path to the workflow's location within the
-   root source directory (e.g. ``~/cylc-src/``).
 
 
 Running a workflow
