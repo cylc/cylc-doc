@@ -217,6 +217,9 @@ The Cylc GUI
 
 .. nextslide::
 
+Task & Job States
+^^^^^^^^^^^^^^^^^
+
 - Task states have grey icons.
 - Job states have colour-coded squares.
 
@@ -261,10 +264,8 @@ This is the "table" view:
 
 .. ifnotslides::
 
-   There is a GUI "scan" (also known as "GScan") view on the left allowing you
-   to navigate your workflows.
+   You can navigate between workflows using the list on the left.
 
-.. TODO - re-do this figure when UI confusing elements removed.
 
 .. figure:: ../img/cylc-gui-scan-view.png
    :figwidth: 75%
@@ -366,7 +367,7 @@ From ``cylc-src/my_workflow``
 
 .. ifnotslides::
 
-   will install your workflow in ``~/cylc-run/my_workflow/runN``.
+   will install the workflow in ``~/cylc-src/my_workflow`` into ``~/cylc-run/my_workflow/runN``.
 
 From a workflow developed in an arbitrary location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -381,9 +382,8 @@ From a workflow developed in an arbitrary location
 
    .. note::
 
-      You can still develop workflows in ``~/cylc-run``, but this is not
-      recommended because development work may
-      change the behaviour of the workflow as it is running.
+      You can edit workflows directly in ``~/cylc-run``, but this is not
+      recommended.
 
 Validating A Workflow
 ---------------------
@@ -410,8 +410,8 @@ Running a workflow
 
 .. ifnotslides::
 
-   Now we have installed and validated our workflow we can run the
-   workflow using the ``cylc play`` command.
+   Now we have installed the workflow we can run it
+   using the ``cylc play`` command:
 
 .. code-block:: console
 
@@ -450,10 +450,6 @@ Numbered run directories
    $ ls -l ~/cylc-run/my_workflow/runN
    ~/cylc-run/baz/runN -> run2
 
-.. ifnotslides::
-
-   Each time you run ``cylc install``, a symlink called ``runN`` is
-   created/updated, pointing to the newest run directory.
 
    You can run cylc commands using a specific run number, but if you don't,
    ``runN`` will be used:
@@ -465,22 +461,6 @@ Numbered run directories
    $ cylc validate my_workflow/runN
    # and the same as (in this case)
    $ cylc validate my_workflow/run2
-
-
-Files created by ``cylc install``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. ifnotslides::
-
-   Cylc generates files and directories when it installs a workflow:
-
-   ``log/install/``
-      A record of the installation of this workflow.
-
-
-.. ifslides::
-
-   * ``log/install/``
 
 
 Files created by ``cylc play``
