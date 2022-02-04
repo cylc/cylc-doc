@@ -12,8 +12,8 @@ Datetime Cycling
    | ✅ Write workflows where cycle points are dates and/or times.
 
 
-In the last section we looked at writing an :term:`integer cycling` workflow,
-one where the :term:`cycle points <cycle point>` are numbered.
+In the last section we looked at writing an :term:`integer cycling` workflow
+where the :term:`cycle points <cycle point>` are numbered.
 
 .. ifnotslides::
 
@@ -121,7 +121,7 @@ Inferred Recurrence
 
    A recurrence can be inferred from a datetime by omitting digits from the
    front. For example, if the year is omitted then the recurrence can be
-   inferred to be annual. E.G:
+   inferred to be annual. E.g.:
 
 .. code-block:: sub
 
@@ -276,6 +276,11 @@ UTC Mode
    [scheduler]
        UTC mode = True
 
+.. note::
+
+   UTC is sometimes also labelled ``Z`` ("zulu" from the NATO phonetic alphabet)
+   according to the
+   `military time zone convention <https://en.wikipedia.org/wiki/List_of_military_time_zones>`_.
 
 .. _tutorial-datetime-cycling-practical:
 
@@ -573,43 +578,52 @@ Putting It All Together
 
       We can express this dependency as ``forecast[-PT6H] => forecast``.
 
-      Try adding this line to your workflow then visualising it with ``cylc
-      graph``.
+      .. TODO - re-enable this: https://github.com/cylc/cylc-flow/issues/4638
 
-      .. hint::
+            Try adding this line to your workflow then visualising it with ``cylc
+            graph``.
 
-         Try adjusting the number of cycles displayed by ``cylc graph``:
+            .. hint::
 
-         .. code-block:: console
+               Try adjusting the number of cycles displayed by ``cylc graph``:
 
-            $ cylc graph . 2000 20000101T12Z &
+               .. code-block:: console
 
-      You will notice that there is a dependency which looks like this:
+                  $ cylc graph . 2000 20000101T12Z &
 
-      .. digraph:: example
-        :align: center
-
-         size = "4,1"
-         rankdir=LR
-
-         "forecast.t00" [label="forecast\n20000101T0000Z"
-                         color="#888888"
-                         fontcolor="#888888"]
-         "forecast.t06" [label="forecast\n20000101T0600Z"]
+            You will notice that there is a dependency which looks like this:
 
 
-         "forecast.t00" -> "forecast.t06"
+            .. digraph:: example
+            :align: center
 
-      Note in particular that the ``forecast`` task in the 00:00 cycle is
-      grey. The reason for this is that this task does not exist. Remember
-      the forecast task runs every six hours
+               size = "4,1"
+               rankdir=LR
+
+               "forecast.t00" [label="forecast\n20000101T0000Z"
+                              color="#888888"
+                              fontcolor="#888888"]
+               "forecast.t06" [label="forecast\n20000101T0600Z"]
+
+
+               "forecast.t00" -> "forecast.t06"
+
+            Note in particular that the ``forecast`` task in the 00:00 cycle is
+            grey. The reason for this is that this task does not exist. Remember
+            the forecast task runs every six hours
+            **starting 6 hours after the initial cycle point**, so the
+            dependency is only valid from 12:00 onwards. To fix the problem we
+            must add a new dependency section which repeats every six hours
+            **starting 12 hours after the initial cycle point**.
+
+            Make the following changes to your workflow and the grey task should
+            disappear:
+
+      However, the forecast task runs every six hours
       **starting 6 hours after the initial cycle point**, so the
       dependency is only valid from 12:00 onwards. To fix the problem we
       must add a new dependency section which repeats every six hours
-      **starting 12 hours after the initial cycle point**.
-
-      Make the following changes to your workflow and the grey task should
-      disappear:
+      **starting 12 hours after the initial cycle point**:
 
       .. code-block:: diff
 

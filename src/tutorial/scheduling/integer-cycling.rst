@@ -345,42 +345,64 @@ Recurrence Sections
 
 .. ifnotslides::
 
-   In the previous examples we made the workflow repeat by placing the graph
-   in the ``P1`` setting. Here ``P1`` is a :term:`recurrence` meaning
-   repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
-   *other* cycle, and so on. To build more complex workflows we can use multiple
-   recurrences:
+   From initial cycle point:
+      In the previous examples we made the workflow repeat by placing the graph
+      in the ``P1`` setting. Here ``P1`` is a :term:`recurrence` meaning
+      repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
+      *other* cycle, and so on. To build more complex workflows we can use
+      multiple recurrences:
 
-.. code-block:: cylc
+      .. code-block:: cylc
 
-   [scheduling]
-       cycling mode = integer
-       initial cycle point = 1
-       [[graph]]
-           # Repeat every cycle.
-           P1 = foo
-           # Repeat every second cycle.
-           P2 = bar
-           # Repeat every third cycle.
-           P3 = baz
+         [scheduling]
+            cycling mode = integer
+            initial cycle point = 1
+            [[graph]]
+               # Repeat every cycle.
+               P1 = foo
+               # Repeat every second cycle.
+               P2 = bar
+               # Repeat every third cycle.
+               P3 = baz
 
-.. image:: ../../img/recurrence-sections.svg
-   :align: center
+      .. image:: ../../img/recurrence-sections.svg
+         :align: center
+
+.. ifslides::
+
+   .. code-block:: cylc
+
+      [scheduling]
+         cycling mode = integer
+         initial cycle point = 1
+         [[graph]]
+            # Repeat every cycle.
+            P1 = foo
+            # Repeat every second cycle.
+            P2 = bar
+            # Repeat every third cycle.
+            P3 = baz
+
+   .. image:: ../../img/recurrence-sections.svg
+      :align: center
 
 .. nextslide::
 
 .. ifnotslides::
 
-   By default, recurrences start at the
-   :term:`initial cycle point`, however it is possible to make them start at an
-   arbitrary cycle point. This is done by writing the cycle point and the
-   recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means repeat
-   every third cycle starting *from* cycle number 5. Therefore, if you wanted
-   a graph to occur every even cycle point you would use ``2/P2``.
+   After arbitrary cycle point:
+      By default, recurrences start at the:
+      :term:`initial cycle point`, however it is possible to make them start at
+      an arbitrary cycle point. This is done by writing the cycle point and the
+      recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means
+      repeat every third cycle starting *from* cycle number 5. Therefore, if
+      you wanted a graph to occur every even cycle point you would use
+      ``2/P2``.
 
-   The start point of a recurrence can also be defined as an offset from the
-   :term:`initial cycle point`, e.g. ``+P5/P3`` means repeat every third cycle
-   starting 5 cycles *after* the initial cycle point.
+   After offset from initial cycle point:
+      The start point of a recurrence can also be defined as an offset from the
+      :term:`initial cycle point`, e.g. ``+P5/P3`` means repeat every third cycle
+      starting 5 cycles *after* the initial cycle point.
 
 .. ifslides::
 
@@ -426,7 +448,7 @@ Recurrence Sections
 
    #. **Create a new workflow.**
 
-      Within your ``~/cylc-run/`` directory create a new (sub-)directory called
+      In your ``~/cylc-src/`` directory create a new directory called
       ``integer-cycling`` and move into it:
 
       .. code-block:: bash

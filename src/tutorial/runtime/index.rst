@@ -3,13 +3,6 @@
 Runtime
 =======
 
-.. warning::
-
-   This section of the tutorial still contains some screenshots of the obsolete
-   Cylc 7 desktop GUI, and parts of it still use a command from the ``Rose``
-   project to copy workflow source files.
-
-
 This section covers:
 
 * Associating tasks with scripts and executables.

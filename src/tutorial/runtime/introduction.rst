@@ -3,13 +3,6 @@
 Introduction
 ============
 
-.. warning::
-
-   This section of the tutorial still has screenshots of the obsolete Cylc 7
-   desktop GUI, and it still uses a command from the ``Rose`` project to
-   copy workflow source files.
-
-
 .. ifnotslides::
 
    So far we have been working with the ``[scheduling]`` section. This is where
@@ -175,61 +168,110 @@ Tasks And Jobs
    * Running
    * Succeeded / Failed
 
+The Cylc User Interfaces
+------------------------
+
+.. ifnotslides::
+
+   To help you to keep track of a running workflow Cylc has
+
+   - A graphical user interface (Cylc GUI).
+   - A text-based user interface (Cylc TUI).
+
+.. _tutorial.tui:
+
+The Cylc TUI
+^^^^^^^^^^^^
+
+.. ifnotslides::
+
+   The Cylc TUI (Terminal User Interface) is bundled with Cylc and
+   enables you to view and interact with your workflow.
+
+   To start the Cylc TUI:
+
+.. code-block:: bash
+
+   cylc tui <workflow_id>
+
+.. _tutorial.gui:
 
 The Cylc GUI
-------------
+^^^^^^^^^^^^
 
 .. ifnotslides::
 
-   To help you to keep track of a running workflow Cylc has a graphical user
-   interface (the Cylc GUI) which can be used for monitoring and
-   interaction.
+   The Cylc UI has different views you can use to examine your workflows,
+   including a Cylc scan menu allowing you to switch between workflows.
 
-   The Cylc GUI looks quite like ``cylc graph`` but the tasks are colour-coded
-   to represent their state, as in the following diagram.
+   .. note::
 
-.. digraph:: example
-   :align: center
+      You only need to have one instance of the Cylc GUI open - you can
+      easily switch between workflows.
 
-   Waiting [color="#88c6ff"]
-   Running [style="filled" color="#00c410"]
-   Succeeded [style="filled" color="#ada5a5"]
+   To start the Cylc UI, open a new terminal window or tab, then type:
 
-.. minicylc::
-   :align: center
+.. code-block:: bash
 
-    a => b => c
-    b => d => f
-    e => f
+   cylc gui
+
+.. nextslide::
+
+Task & Job States
+^^^^^^^^^^^^^^^^^
+
+- Task states have grey icons.
+- Job states have colour-coded squares.
+
+.. csv-table::
+   :header: Common task and job states, Description
+
+   |task-waiting|, Task waiting on other tasks
+   |task-submitted| |job-submitted|, Job submitted
+   |task-running| |job-running|, Job is running
+   |task-succeeded| |job-succeeded|, Job has run successfully
+   |task-failed| |job-failed|, Job failed
+
+.. ifnotslides::
+
+   .. seealso::
+
+      Full list of :ref:`task-job-states`.
 
 .. nextslide::
 
 .. ifnotslides::
 
-   This is the "graph view". The Cylc GUI has two other views called "tree" and
-   "dot".
+   This is the "tree" view:
 
-.. figure:: ../img/cylc-gui-graph.png
+.. figure:: ../img/cylc-gui-tree-view.png
    :figwidth: 75%
    :align: center
 
-   Screenshot of the Cylc GUI in "Graph View" mode.
+   Screenshot of the Cylc GUI in "Tree" view mode.
 
 .. nextslide::
 
-.. figure:: ../img/cylc-gui-tree.png
+This is the "table" view:
+
+.. figure:: ../img/cylc-gui-table-view.png
    :figwidth: 75%
    :align: center
 
-   Screenshot of the Cylc GUI in "Tree View" mode.
+   Screenshot of the Cylc GUI in "Table" view mode.
 
 .. nextslide::
 
-.. figure:: ../img/cylc-gui-dot.png
+.. ifnotslides::
+
+   You can navigate between workflows using the list on the left.
+
+
+.. figure:: ../img/cylc-gui-scan-view.png
    :figwidth: 75%
    :align: center
 
-   Screenshot of the Cylc GUI in "Dot View" mode.
+   Screenshot of the Cylc GUI "Scan" bar.
 
 
 Where Do All The Files Go?
@@ -272,13 +314,18 @@ Where Do All The Files Go?
 
    .. tip::
 
-      If a task has run and is still visible in the Cylc GUI you can view its
-      :term:`job log files <job log>` by right-clicking on the task and
-      selecting "View".
+      You can use ``cylc cat-log <workflow-name>//<cycle-point>/<task-name>``
+      to view the content of job logs.
 
-      .. image:: ../img/cylc-gui-view-log.png
-         :align: center
-         :scale: 75%
+      .. TODO REPLACE THIS IF APPROPRIATE
+
+         If a task has run and is still visible in the Cylc GUI you can view its
+         :term:`job log files <job log>` by right-clicking on the task and
+         selecting "View".
+
+         .. image:: ../img/cylc-gui-view-log.png
+            :align: center
+            :scale: 75%
 
 .. ifslides::
 
@@ -291,65 +338,120 @@ Where Do All The Files Go?
 
          ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
 
-      .. image:: ../img/cylc-gui-view-log.png
-         :align: center
-         :scale: 75%
+      .. TODO REPLACE THIS IF APPROPRIATE
+
+         .. image:: ../img/cylc-gui-view-log.png
+            :align: center
+            :scale: 75%
 
 
-Running A Workflow
+Validating A Workflow
+---------------------
+
+.. ifnotslides::
+
+   It is a good idea to check a workflow definition for errors before running
+   it. Cylc provides a command which automatically checks the validity of
+   workflow configurations - ``cylc validate``:
+
+.. code-block:: console
+
+   $ cd ~/cylc-src/my_workflow
+   $ cylc validate .
+
+
+Installing A Workflow
+---------------------
+
+.. ifnotslides::
+
+   .. seealso::
+
+      :ref:`The full guide to Cylc install <Installing-workflows>`.
+
+   To allow you to separate the development and running of workflows
+   Cylc provides a :term:`cylc install <install>` command.
+
+.. code-block:: bash
+
+   cylc install my_workflow
+
+.. ifnotslides::
+
+   will install the workflow in ``~/cylc-src/my_workflow`` into ``~/cylc-run/my_workflow/runN``.
+
+
+Running a workflow
 ------------------
 
 .. ifnotslides::
 
-   It is a good idea to check a workflow for errors before running it.
-   Cylc provides a command which automatically checks for any obvious
-   configuration issues called ``cylc validate``, run via:
+   Now we have installed the workflow we can run it
+   using the ``cylc play`` command:
 
-.. code-block:: sub
+.. code-block:: console
 
-   cylc validate <path/to/workflow>
-
-.. ifnotslides::
-
-   Here ``<path/to/workflow>`` is the path to the workflow's location within the
-   filesystem (so if we create a workflow in ``~/cylc-run/foo`` we would put
-   ``~/cylc-run/foo/flow.cylc``).
-
-   Next we can run the workflow using the ``cylc play`` command.
-
-.. code-block:: sub
-
-   cylc play <name>
+   $ cylc play <workflow_id>
 
 .. ifnotslides::
 
-   The ``name`` is the name of the :term:`run directory` (i.e. ``<name>``
-   would be ``foo`` in the above example).
+   The :term:`workflow id` is the path of the :term:`run directory` relative
+   to ``~/cylc-run``.
 
-.. note::
-
-   In this tutorial we are writing our workflows in the ``cylc-run`` directory.
-
-   However, you should write real workflows in a separate source location
-   (Cylc expects ``~/cylc-src`` by default) and then use ``cylc install`` to
-   install them to the run directory before use. For more information, see
-   :ref:`Installing-workflows`.
 
 Generated Workflow Files
 ------------------------
+
+Numbered run directories
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. ifnotslides::
+
+   .. seealso::
+
+      :ref:`Installing-workflows` for a fuller description of Cylc install,
+      including the option of naming rather than numbering runs.
+
+   By default ``cylc install`` will install your workflow in a new
+   numbered run directory each time you run ``cylc install``:
+
+.. code-block:: console
+
+   $ cylc install my_workflow
+   INSTALLED my_workflow/run1 from ...
+   $ cylc install my_workflow
+   INSTALLED my_workflow/run2 from ...
+
+   # The most recent ``runX`` directory is symlinked to ``runN``
+   $ ls -l ~/cylc-run/my_workflow/runN
+   ~/cylc-run/baz/runN -> run2
+
+
+You can run cylc commands using a specific run number, but if you don't,
+``runN`` will be used:
+
+.. code-block:: console
+
+   $ cylc validate my_workflow
+   # is the same as
+   $ cylc validate my_workflow/runN
+   # and the same as (in this case)
+   $ cylc validate my_workflow/run2
+
+
+Files created by ``cylc play``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
    Cylc generates files and directories when it runs a workflow, namely:
 
-   ``log/``
-      Directory containing log files, including:
-
-      ``log/db``
+   ``log``
+      ``db``
          The database which Cylc uses to record the state of the workflow;
-      ``log/job``
+      ``job``
          The directory where the :term:`job log files <job log>` live;
-      ``log/workflow``
+      ``workflow``
          The directory where the :term:`workflow log files <workflow log>` live.
          These files are written by Cylc as the workflow is run and are useful for
          debugging purposes in the event of error.
@@ -368,10 +470,10 @@ Generated Workflow Files
 .. ifslides::
 
    * ``log/``
-      * ``log/db``
-      * ``log/job``
-      * ``log/workflow``
-      * ``log/flow-config/flow.cylc.processed``
+      * ``db``
+      * ``job``
+      * ``workflow``
+      * ``flow-config/flow.cylc.processed``
    * ``share/``
    * ``work/``
 
@@ -397,8 +499,8 @@ Generated Workflow Files
 
       .. code-block:: bash
 
-         rose tutorial runtime-introduction
-         cd ~/cylc-run/runtime-introduction
+         cylc get-resouces tutorial
+         cd ~/cylc-src/tutorial/runtime-introduction
 
       In this directory we have the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
@@ -417,11 +519,14 @@ Generated Workflow Files
 
          cylc validate .
 
-      Open the Cylc GUI (in the background) by running the following command:
+      Then install the workflow:
 
       .. code-block:: bash
 
-         cylc gui runtime-introduction &
+         cylc install
+
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
       Finally run the workflow by executing:
 
@@ -438,16 +543,7 @@ Generated Workflow Files
       .. tip::
 
          You can also run a workflow from the Cylc GUI by pressing the "play"
-         button.
-
-         .. image:: ../img/gcylc-play.png
-            :align: center
-
-         A box will appear. Ensure that "Cold Start" is selected then press
-         "Start".
-
-         .. image:: ../img/cylc-gui-workflow-start.png
-            :align: center
+         button at the top of the GUI.
 
    #. **Inspect A Job Log.**
 
@@ -457,6 +553,7 @@ Generated Workflow Files
 
       .. code-block:: sub
 
+         cd ~/cylc-run/runtime-introduction/runN
          log/job/<cycle-point>/get_observations_heathrow/01/job.out
 
       You should see something like this:
@@ -474,9 +571,9 @@ Generated Workflow Files
 
       * The first three lines are information which Cylc has written to the file
         to provide information about the job.
-      * The last two lines were also written by cylc. They provide timestamps
+      * **The lines in the middle are the stdout of the job.**
+      * The last two lines were also written by Cylc. They provide timestamps
         marking the stages in the job's life.
-      * The lines in the middle are the stdout of the job itself.
 
    #. **Inspect A Work Directory.**
 
@@ -494,22 +591,27 @@ Generated Workflow Files
 
    #. **Extension: Explore The Cylc GUI**
 
-      * Try re-running the workflow.
+      * Try re-installing the workflow and running it from the GUI.
 
-      * Try changing the current view(s).
+      * Try adding a new view(s).
 
         .. tip::
 
-           You can do this from the "View" menu or from the toolbar:
+           You can do this from the "Add View" button (top-right):
 
-           .. image:: ../img/cylc-gui-view-selector.png
+           .. image:: ../img/cylc-gui-views-button.png
               :align: center
               :scale: 75%
 
       * Try pressing the "Pause" button which is found in the top left-hand
         corner of the GUI.
 
-      * Try right-clicking on a task. From the right-click menu you could try:
+      * Try clicking on a task state icon. From the menu you could try:
 
-        * "Trigger (run now)"
-        * "Reset State"
+        * "Trigger"
+        * "Hold"
+        * "Release"
+
+   .. seealso::
+
+      See guide to :ref:`task-job-states` for a guide to the icons.

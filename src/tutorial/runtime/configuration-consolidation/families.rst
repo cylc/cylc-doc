@@ -3,14 +3,6 @@
 Families
 ========
 
-
-.. warning::
-
-   This section of the tutorial still has screenshots of the obsolete Cylc 7
-   desktop GUI, and it still uses a command from the ``Rose`` project to
-   copy workflow source files.
-
-
 :term:`Families <family>` provide a way of grouping tasks together so they can
 be treated as one.
 
@@ -183,37 +175,41 @@ The ``root`` Family
            script = echo $FOO
 
 
-Families and ``cylc graph``
----------------------------
+.. TODO - Replace once the new GUI supports this.
 
-.. ifnotslides::
+   Families and ``cylc graph``
+   ---------------------------
 
-   By default, ``cylc graph`` groups together all members of a family
-   in the :term:`graph`. To un-group a family right click on it and select
-   :menuselection:`UnGroup`.
 
-   For instance if the tasks ``bar`` and ``baz`` both
-   inherited from ``BAR`` ``cylc graph`` would produce:
+   .. ifnotslides::
 
-.. digraph:: Example
-   :align: center
+      By default, ``cylc graph`` groups together all members of a family
+      in the :term:`graph`. To un-group a family right click on it and select
+      :menuselection:`UnGroup`.
 
-   subgraph cluster_1 {
-      label = "Grouped"
-      "1/foo" [label="foo"]
-      "1/BAR" [label="BAR", shape="doubleoctagon"]
-   }
+      For instance if the tasks ``bar`` and ``baz`` both
+      inherited from ``BAR`` ``cylc graph`` would produce:
 
-   subgraph cluster_2 {
-      label = "Un-Grouped"
-      "2/foo" [label="foo"]
-      "2/bar" [label="bar"]
-      "2/baz" [label="baz"]
-   }
+   .. digraph:: Example
+      :align: center
 
-   "1/foo" -> "1/BAR"
-   "2/foo" -> "2/bar"
-   "2/foo" -> "2/baz"
+      subgraph cluster_1 {
+         label = "Grouped"
+         "1/foo" [label="foo"]
+         "1/BAR" [label="BAR", shape="doubleoctagon"]
+      }
+
+      subgraph cluster_2 {
+         label = "Un-Grouped"
+         "2/foo" [label="foo"]
+         "2/bar" [label="bar"]
+         "2/baz" [label="baz"]
+      }
+
+      "1/foo" -> "1/BAR"
+      "2/foo" -> "2/bar"
+      "2/foo" -> "2/baz"
+
 
 .. nextslide::
 
@@ -240,8 +236,8 @@ Families and ``cylc graph``
 
       .. code-block:: bash
 
-         rose tutorial consolidation-tutorial
-         cd ~/cylc-run/consolidation-tutorial
+         cylc get-resources tutorial/consolidation-tutorial
+         cd ~/cylc-src/consolidation-tutorial
 
    2. **Move Site-Wide Settings Into The** ``root`` **Family.**
 

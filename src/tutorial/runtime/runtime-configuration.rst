@@ -3,14 +3,6 @@
 Runtime Configuration
 =====================
 
-.. warning::
-
-   This section of the tutorial still uses a command from the ``Rose`` project
-   to copy workflow source files.
-
-
-.. TODO - platformise all the examples in here
-
 In the last section we associated tasks with scripts and ran a simple workflow. In
 this section we will look at how we can configure these tasks.
 
@@ -255,8 +247,8 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
-         rose tutorial runtime-tutorial
-         cd ~/cylc-run/runtime-tutorial
+         cylc get-resouces tutorial/runtime-tutorial
+         cd ~/cylc-src/runtime-tutorial
 
       You will now have a copy of the weather-forecasting workflow along with some
       executables and python modules.
@@ -311,7 +303,7 @@ Start, Stop, Restart
 
       Generate a Datapoint API key::
 
-         rose tutorial api-key
+         cylc get-resources api-key
 
       Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
       ``xxx...`` with your API key:
@@ -373,13 +365,10 @@ Start, Stop, Restart
 
       Next we will test the ``get_observations`` tasks.
 
-      Open the Cylc GUI by running the following command:
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
-      .. code-block:: bash
-
-         cylc gui runtime-tutorial &
-
-      Run the workflow either by pressing the play button in the Cylc GUI or by
+      Run the workflow either by pressing the play button in the Cylc UI or by
       running the command:
 
       .. code-block:: bash
@@ -439,13 +428,16 @@ Start, Stop, Restart
 
    #. **Run The Workflow.**
 
-      Open the Cylc GUI (if not already open) and run the workflow.
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
+      your workflow.
 
       .. spoiler:: Hint hint
 
          .. code-block:: bash
 
-            cylc gui runtime-tutorial &
+            cylc tui runtime-tutorial
+            # or
+            cylc gui  # If you haven't already got an instance running.
 
          Run the workflow either by:
 
