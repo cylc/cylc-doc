@@ -65,12 +65,13 @@ And paste the following into :cylc:conf:`flow.cylc`:
 
    ``|`` (or), and ``=>`` act in the same way.
 
-Validate, install and play the workflow, then open the ``cylc gui``::
+Validate, install and play the workflow::
 
    cylc validate .
    cylc install --run-name without-queues
    cylc play queues-tutorial/without-queues
-   cylc gui
+
+Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
 
 You will see that all the ``steak``, ``pasta``, and ``pizza`` tasks are run
 at once, swiftly followed by all the ``ice_cream``, ``cheesecake``,
@@ -97,13 +98,13 @@ section like so:
                limit = 2  # Only 2 dessert dishes at one time.
                members = DESSERT
 
-Install and play the workflow then open up the GUI (if you closed it)::
+Install and play the workflow::
 
    cylc validate .
    cylc install --run-name tutorial-with-queues
    cylc play queues-tutorial/with-queues
-   cylc gui
 
+Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
 
 You should see that there are now never more than 3 active ``MAINS`` tasks
 running and never more than 2 active ``DESSERT`` tasks running.

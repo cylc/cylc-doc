@@ -140,6 +140,10 @@ Save your changes and run your workflow. You should see the new
 ``sell_diamonds`` task being run once all the miners have finished and at
 least one of them has succeeded. Stop your workflow as described above.
 
+.. seealso::
+
+   User guide on
+   :ref:`family triggers and optional outputs<optional outputs.family triggers>`.
 
 Family Triggering: Failure
 --------------------------

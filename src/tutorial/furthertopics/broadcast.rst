@@ -69,6 +69,7 @@ whilst the workflow is running. For instance we could change the value of the
 Run the workflow then try using the ``cylc broadcast`` command to change the
 message::
 
+   cylc validate .
    cylc install
    cylc play tutorial-broadcast
    cylc broadcast tutorial-broadcast -n announce -s "[environment]WORD=it"
@@ -119,7 +120,8 @@ Add the following runtime configuration to the ``runtime`` section:
            [[[environment]]]
                WORDS = ni, it, ekke ekke ptang zoo boing
 
-Run the workflow and inspect the log. You should see the message change randomly
+Re-install and run the workflow, and inspect the log.
+You should see the message change randomly
 after every third entry (because the ``change_word`` task runs every 3 hours)
 e.g::
 

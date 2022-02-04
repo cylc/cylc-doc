@@ -64,12 +64,10 @@ And paste the following code into a ``flow.cylc`` file. This workflow has a
 Running Without Retries
 -----------------------
 
-Let's see what happens when we run the workflow as it is. Open the
-``cylc gui`` in a new terminal window::
+Let's see what happens when we run the workflow as it is.
+Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
 
-   cylc gui
-
-Then install and run the workflow::
+Then validate install and run the workflow::
 
    cylc validate .
    cylc install
@@ -109,9 +107,7 @@ then once after one hour then once after three hours.
 Running With Retries
 --------------------
 
-If you closed it, re-open the ``cylc gui``::
-
-   cylc gui
+Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
 
 Re-install and run the workflow::
 

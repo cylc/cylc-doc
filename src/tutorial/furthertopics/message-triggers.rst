@@ -335,14 +335,8 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Install and Play the workflow.**
 
-      Now we are ready to run our workflow. Open the Cylc GUI by running the
-      following command in a new terminal:
-
-      .. code-block:: bash
-
-         cylc gui
-
-      Validate, install and play the workflow:
+      Now we are ready to run our workflow. Open the :ref:`tutorial.gui` or
+      :ref:`tutorial.tui`, then validate, install and play the workflow.
 
       .. code-block:: bash
 
