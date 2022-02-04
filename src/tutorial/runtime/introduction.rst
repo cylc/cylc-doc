@@ -427,8 +427,8 @@ Numbered run directories
    ~/cylc-run/baz/runN -> run2
 
 
-   You can run cylc commands using a specific run number, but if you don't,
-   ``runN`` will be used:
+You can run cylc commands using a specific run number, but if you don't,
+``runN`` will be used:
 
 .. code-block:: console
 
