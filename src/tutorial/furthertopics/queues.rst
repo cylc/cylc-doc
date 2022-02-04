@@ -102,9 +102,9 @@ Install and play the workflow::
 
    cylc validate .
    cylc install --run-name tutorial-with-queues
-   cylc play queues-tutorial/with-queues
 
-Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
+Play the workflow using the ref:`GUI <tutorial.gui>`
+or :ref:`TUI <tutorial.tui>`.
 
 You should see that there are now never more than 3 active ``MAINS`` tasks
 running and never more than 2 active ``DESSERT`` tasks running.

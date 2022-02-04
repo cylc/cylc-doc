@@ -335,8 +335,9 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Install and Play the workflow.**
 
-      Now we are ready to run our workflow. Open the :ref:`tutorial.gui` or
-      :ref:`tutorial.tui`, then validate, install and play the workflow.
+      Now we are ready to run our workflow. Validate, install, then open
+      the :ref:`GUI <tutorial.gui>` or :ref:`TUI <tutorial.tui>` and play
+      the workflow.
 
       .. code-block:: bash
 
