@@ -609,7 +609,6 @@ Files created by ``cylc play``
       * Try clicking on a task state icon. From the menu you could try:
 
         * "Trigger"
-        * "Reset State"
         * "Hold"
         * "Release"
 
