@@ -92,45 +92,49 @@ to, and trailing comments should be preceded by two spaces, as shown above.
 Script String Lines
 ^^^^^^^^^^^^^^^^^^^
 
-Script strings are written verbatim to task job scripts so they should really
-be indented from the left margin:
+Script strings are written verbatim to task job scripts.
+
+.. code-block:: cylc
+
+   [runtime]
+       [[foo]]
+           script = echo "Hello, Mr. Thompson"
+
+If using a triple-quoted string, any common leading whitespace is trimmed
+using the logic of
+`Python's textwrap.dedent <https://docs.python.org/2/library/textwrap.html#textwrap.dedent>`_.
+As such, it is recommended to indent like any other triple-quoted string
+setting in Cylc:
 
 .. code-block:: cylc
 
    [runtime]
        [[foo]]
            # Recommended.
-           post-script = """
-               if [[ $RESULT == "bad" ]]; then
-                   echo Goodbye World!
+           script = """
+               if [[ "$RESULT" == "bad" ]]; then
+                   echo "Goodbye World!"
                    exit 1
                fi
            """
 
-Indentation is *mostly* ignored by the bash interpreter, but is useful for
-readability. It is *mostly* harmless to indent internal script lines as if
-part of the Cylc syntax, or even out to the triple quotes:
+The example above would result in the following being written to the job
+script:
 
-.. code-block:: cylc
+.. code-block:: bash
 
-   [runtime]
-       [[foo]]
-           # OK, but...
-           post-script = """if [[ $RESULT == "bad" ]]; then
-   echo Goodbye World!
-   exit 1
-   fi"""
+   if [[ "$RESULT" == "bad" ]]; then
+       echo "Goodbye World!"
+       exit 1
+   fi
 
-On parsing the triple quoted value, Cylc will remove any common leading
-whitespace from each line using the logic of
-`Python's textwrap.dedent <https://docs.python.org/2/library/textwrap.html#textwrap.dedent>`_
-so the script block would end up being the same as the previous example.
-However, you should watch your line length (see :ref:`Line Length`) when you
-have many levels of indentations.
+.. tip::
 
-.. note::
+   Take care when indenting here documents (aka heredocs) to match the
+   common leading whitespace.
 
-   Take care when indenting here documents:
+   For the following example, each line in ``log.txt`` would end up with
+   4 leading white spaces:
 
    .. code-block:: cylc
 
@@ -143,8 +147,7 @@ have many levels of indentations.
                _EOF_
            """
 
-   Each line in ``log.txt`` would end up with 4 leading white spaces. The
-   following will give you lines with no white spaces.
+   The following will give you lines with no white spaces:
 
    .. code-block:: cylc
 
