@@ -161,23 +161,8 @@ script:
 Graph String Lines
 ^^^^^^^^^^^^^^^^^^
 
-Multiline ``graph`` strings can be entirely free-form:
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[graph]]
-           R1 = """
-       # Main workflow:
-     FAMILY:succeed-all => bar & baz => qux
-
-       # Housekeeping:
-     qux => rose_arch => rose_prune"""
-
-Whitespace is ignored in graph string parsing, however, so internal graph lines
-can be indented as if part of the :cylc:conf:`flow.cylc` syntax, or even out to the triple
-quotes, if you feel it aids readability (but watch line length with large
-indents; see :ref:`Line Length`):
+Whitespace is ignored in graph string parsing so internal graph lines
+should be indented as if part of the :cylc:conf:`flow.cylc` syntax:
 
 .. code-block:: cylc
 
@@ -190,8 +175,6 @@ indents; see :ref:`Line Length`):
                # Housekeeping:
                qux => rose_arch => rose_prune
            """
-
-Both styles are acceptable; choose one and use it consistently.
 
 
 Jinja2 Code
@@ -237,6 +220,8 @@ Titles, Descriptions, And URLs
 
 Document the workflow and its tasks with ``title``,
 ``description``, and ``url`` items instead of comments.
+See the :cylc:conf:`flow.cylc[meta]` and
+:cylc:conf:`flow.cylc[runtime][<namespace>][meta]` sections.
 
 
 .. _Line Length:
@@ -313,7 +298,7 @@ domains without causing confusion.
 Rose Config Files
 -----------------
 
-Use ``rose config-dump`` to load and re-save new Rose .conf files. This
+Use ``rose config-dump`` to load and re-save new ``rose.conf`` files. This
 puts the files in a standard format (ordering of lines etc.) to ensure that
 spurious changes aren't generated when you next use ``rose edit``.
 
