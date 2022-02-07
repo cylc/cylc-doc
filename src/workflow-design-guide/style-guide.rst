@@ -101,10 +101,8 @@ Script strings are written verbatim to task job scripts.
            script = echo "Hello, Mr. Thompson"
 
 If using a triple-quoted string, any common leading whitespace is trimmed
-using the logic of
-`Python's textwrap.dedent <https://docs.python.org/2/library/textwrap.html#textwrap.dedent>`_.
-As such, it is recommended to indent like any other triple-quoted string
-setting in Cylc:
+using the logic of :py:func:`textwrap.dedent`. As such, it is recommended to
+indent like any other triple-quoted string setting in Cylc:
 
 .. code-block:: cylc
 
