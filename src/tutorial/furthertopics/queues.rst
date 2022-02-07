@@ -103,7 +103,7 @@ Install and play the workflow::
    cylc validate .
    cylc install --run-name tutorial-with-queues
 
-Play the workflow using the ref:`GUI <tutorial.gui>`
+Play the workflow using the :ref:`GUI <tutorial.gui>`
 or :ref:`TUI <tutorial.tui>`.
 
 You should see that there are now never more than 3 active ``MAINS`` tasks
