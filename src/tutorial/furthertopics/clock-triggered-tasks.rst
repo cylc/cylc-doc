@@ -161,7 +161,7 @@ Save your changes, install and run your workflow using::
 
 Again, notice how the tasks trigger until the current time is reached.
 
-eave your workflow running for a while to confirm it is working as expected
+Leave your workflow running for a while to confirm it is working as expected
 before stopping it.
 
 
