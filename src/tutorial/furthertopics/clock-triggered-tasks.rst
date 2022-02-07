@@ -161,9 +161,8 @@ Save your changes, install and run your workflow using::
 
 Again, notice how the tasks trigger until the current time is reached.
 
-Leave your workflow running for a while to confirm it is working as expected
-and then shut it down using the :guilabel:`stop` button in the
-:ref:`tutorial.gui`.
+eave your workflow running for a while to confirm it is working as expected
+before stopping it.
 
 
 .. note::
