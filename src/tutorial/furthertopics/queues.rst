@@ -69,16 +69,17 @@ Validate, install and play the workflow::
 
    cylc validate .
    cylc install --run-name without-queues
-   cylc play queues-tutorial/without-queues
 
 Look at the workflow with :ref:`tutorial.gui` or :ref:`tutorial.tui`
+
+Play the workflow, either from the GUI or the command line::
+
+   cylc play queues-tutorial/without-queues
 
 You will see that all the ``steak``, ``pasta``, and ``pizza`` tasks are run
 at once, swiftly followed by all the ``ice_cream``, ``cheesecake``,
 ``sticky_toffee`` tasks as the customers order from the dessert menu.
 
-(If you aren't very quick starting the GUI you may find that the entire
-workflow has already run by the time you navigate to it.)
 
 This will overwhelm our restaurant staff! The chef responsible for ``MAINS``
 can only handle 3 tasks at any given time, and the ``DESSERT`` chef can only
