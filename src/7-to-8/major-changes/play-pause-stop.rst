@@ -51,10 +51,10 @@ previous run that is no longer desired:
 .. code-block:: bash
 
    # remove the workflow database, the work, share and log directories
-   cylc clean <id> --rm .serice/db --rm work --rm share --rm log
+   cylc clean <id> --rm .service/db:work:share:log
 
    # only remove the worflow database
-   $ cylc clean <id> --rm .serice/db
+   $ cylc clean <id> --rm .service/db
 
 Then restart with ``cylc play``.
 
