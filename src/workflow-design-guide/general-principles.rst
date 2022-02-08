@@ -275,7 +275,7 @@ to delay job submission until the expected data arrival time:
 Clock-triggered tasks typically have to handle late data arrival. Task
 :cylc:conf:`execution retry delays` can be used to simply retrigger
 the task at intervals until the data is found, but frequently retrying small
-tasks should probably not go to a :term:`job runner`, and multiple task
+tasks is inefficient, and multiple task
 failures will be logged for what is a essentially a normal condition (at least
 it is normal until the data is really late).
 
