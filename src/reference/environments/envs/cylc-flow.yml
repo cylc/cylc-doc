@@ -1,0 +1,5 @@
+name: cylc-flow
+channels:
+  - conda-forge
+dependencies:
+  - cylc-flow =|release|

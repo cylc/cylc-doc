@@ -11,7 +11,7 @@ List Item Override In Site Include-Files
 ----------------------------------------
 
 
-A few Cylc config items hold lists of task (or family) names, e.g.:
+A few Cylc settings hold lists of task (or family) names, e.g.:
 
 .. code-block:: cylc
 
@@ -21,7 +21,7 @@ A few Cylc config items hold lists of task (or family) names, e.g.:
        #...
    #...
 
-Currently a repeated config item completely overrides a previously set value
+Currently a repeated setting completely overrides the previous value
 (apart from graph strings which are always additive). This means a site
 include-file (for example) can't add a new site-specific clock-triggered task
 without writing out the complete list of all clock-triggered tasks in the
@@ -76,7 +76,7 @@ on-site rather than polluting the source and revision control record of
 the core workflow that everyone sees.
 
 We note that this can already be done to a limited extent by using 
-``rose suite-run`` to install flow.cylc fragments from an external
+``rose suite-run`` to install ``flow.cylc`` fragments from an external
 location. However, as a literal inlining mechanism with no encapsulation or 
 interface, the internals of the "imported" fragments would have to be
 compatible with the workflow definition in every respect.

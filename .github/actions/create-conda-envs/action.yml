@@ -1,0 +1,50 @@
+name: Build Conda Envs
+description: Create Conda environments from documented env files.
+
+inputs:
+  python_version:
+    description: Version to install.
+    required: true
+  cylc_flow_version:
+    description: Version to install.
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        # get cylc version...
+        if [[ -z '${{ inputs.cylc_flow_version }}' ]]; then
+          # ... from cylc library
+          CYLC_RELEASE="$(python src/lib/cylc_release.py)"
+        else
+          # ... from GitHub action input
+          CYLC_RELEASE="${{ inputs.cylc_flow_version }}"
+        fi
+        echo "CYLC_RELEASE=$CYLC_RELEASE" >> "${GITHUB_ENV}"
+
+    - shell: bash
+      run: |
+        # use mamba (much faster)
+        # use this when released: https://github.com/mamba-org/setup-mamba
+        conda install -n base -c conda-forge -y mamba
+
+    - shell: bash
+      run: |
+        for env_file in $(echo src/reference/environments/envs/*.yml); do
+        echo "# creating env from: ${env_file}"
+          new_env_file="$(sed 's/\(.*\)\.yml/\1-2.yml/' <<< "${env_file}")"
+          # substitute the python and cylc-flow versions in the env files
+          # TODO: add explicit python dep
+          sed \
+            -e 's/python =.*/python =${{ inputs.python_version }}/' \
+            -e "s/|release|/${CYLC_RELEASE}/" \
+            "${env_file}" \
+            > "${new_env_file}"
+          # create the env
+          conda run -n base mamba env create -f "${new_env_file}" -n cylc-env
+          # test the env
+          conda run -n cylc-env cylc version
+          conda env remove -n cylc-env
+        done

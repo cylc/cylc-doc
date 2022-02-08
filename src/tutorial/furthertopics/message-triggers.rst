@@ -60,8 +60,8 @@ triggers another task bar and when fully completed triggers another task, baz.
    .. code-block:: cylc
 
       [scheduling]
-          [[dependencies]]
-              graph = """
+          [[graph]]
+              R1 = """
                   foo:out1 => bar
                   foo => baz
               """
@@ -89,14 +89,14 @@ triggers another task bar and when fully completed triggers another task, baz.
 
    #. **Create a new directory.**
 
-      Within your ``~/cylc-run`` directory create a new directory called
+      Within your ``~/cylc-src`` directory create a new directory called
 
       ``message-triggers`` and move into it:
 
       .. code-block:: bash
 
-         mkdir ~/cylc-run/message-triggers
-         cd ~/cylc-run/message-triggers
+         mkdir ~/cylc-src/message-triggers
+         cd ~/cylc-src/message-triggers
 
    #. **Install the script needed for our workflow**
 
@@ -114,7 +114,7 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       .. code-block:: bash
 
-         mkdir ~/cylc-run/message-triggers/bin
+         mkdir ~/cylc-src/message-triggers/bin
 
       Create a bash script in the bin directory:
 
@@ -133,14 +133,14 @@ triggers another task bar and when fully completed triggers another task, baz.
       .. code-block:: bash
 
          #!/usr/bin/env bash
-         set -eu
+         set -eu  # Prevent bash script failing quietly.
 
          counter=1
 
          while [ $counter -le 10 ]; do
-            newrand=$[ (( $RANDOM % 40) + 1 ) ];
-            echo $newrand >> report.txt;
-            counter=$[($counter + 1)];
+             newrand=$(( (( RANDOM % 40) + 1 ) ));
+             echo $newrand >> report.txt;
+             counter=$((counter + 1));
          done
 
 
@@ -150,24 +150,21 @@ triggers another task bar and when fully completed triggers another task, baz.
 
       .. code-block:: cylc
 
-         [scheduler]
-             UTC mode = True
-
          [meta]
              title = "test workflow to demo message triggers"
+
+         [scheduler]
+             UTC mode = True
 
          [scheduling]
              initial cycle point = 2019-06-27T00Z
              final cycle point = 2019-10-27T00Z
-
-             [[dependencies]]
-
-                 [[[P2M]]]
-                     graph = """
-                         long_forecasting_task =>  another_weather_task
-                         long_forecasting_task => different_weather_task
-                         long_forecasting_task[-P2M] => long_forecasting_task
-                     """
+             [[graph]]
+                 P2M = """
+                     long_forecasting_task =>  another_weather_task
+                     long_forecasting_task => different_weather_task
+                     long_forecasting_task[-P2M] => long_forecasting_task
+                 """
 
       This is a basic workflow, currently it does not have any message triggers
       attached to any task.
@@ -220,7 +217,7 @@ triggers another task bar and when fully completed triggers another task, baz.
       and ``different_weather_task`` after a second set of random numbers has
       been created.
 
-      There are three aspects of creating messsage triggers.
+      There are three aspects of creating message triggers.
       The first is to create the messages. Within ``runtime``, ``TASK`` in our
       workflow, we need to create a sub-section called ``outputs``. Here we create
       our custom outputs.
@@ -252,11 +249,11 @@ triggers another task bar and when fully completed triggers another task, baz.
                      sleep 2
                      random.sh
          +           cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
-                          "Task partially complete, report ready to view"
+         +                "Task partially complete, report ready to view"
                      sleep 2
                      random.sh
          +           cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
-                          "Task partially complete, report updated"
+         +               "Task partially complete, report updated"
                      sleep 2
                      random.sh
                  """
@@ -287,27 +284,24 @@ triggers another task bar and when fully completed triggers another task, baz.
 
          .. code-block:: cylc
 
-            [scheduler]
-            UTC mode = True
-
             [meta]
-            title = "test workflow to demo message triggers"
+                title = "test workflow to demo message triggers"
+
+            [scheduler]
+                UTC mode = True
 
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
 
-                [[dependencies]]
-
-                    [[[P2M]]]
-                        graph = """
-                            long_forecasting_task:update1 =>  another_weather_task
-                            long_forecasting_task:update2 => different_weather_task
-                            long_forecasting_task[-P2M] => long_forecasting_task
-                        """
+                [[graph]]
+                    P2M = """
+                        long_forecasting_task:update1 =>  another_weather_task
+                        long_forecasting_task:update2 => different_weather_task
+                        long_forecasting_task[-P2M] => long_forecasting_task
+                    """
 
             [runtime]
-
                 [[long_forecasting_task]]
                     script = """
                         sleep 2
@@ -321,7 +315,6 @@ triggers another task bar and when fully completed triggers another task, baz.
                         sleep 2
                         random.sh
                     """
-
                     [[[outputs]]]
                         update1 = "Task partially complete, report ready to view"
                         update2 = "Task partially complete, report updated"
@@ -340,20 +333,16 @@ triggers another task bar and when fully completed triggers another task, baz.
 
           cylc validate .
 
-   #. **Run the workflow.**
+   #. **Install and Play the workflow.**
 
-      Now we are ready to run our workflow. Open the Cylc GUI by running the
-      following command:
-
-      .. code-block:: bash
-
-         cylc gui message-triggers &
-
-      Run the workflow either by pressing the play button in the Cylc GUI or by
-      running the command:
+      Now we are ready to run our workflow. Validate, install, then open
+      the :ref:`GUI <tutorial.gui>` or :ref:`TUI <tutorial.tui>` and play
+      the workflow.
 
       .. code-block:: bash
 
+         cylc validate .
+         cylc install
          cylc play message-triggers
 
       Your workflow should now run, the tasks should succeed.
@@ -393,9 +382,9 @@ triggers another task bar and when fully completed triggers another task, baz.
          .. code-block:: cylc
 
             [scheduler]
-            UTC mode = True
+                UTC mode = True
             [meta]
-            title = "test workflow to demo message triggers"
+                title = "test workflow to demo message triggers"
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z

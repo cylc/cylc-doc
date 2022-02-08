@@ -3,16 +3,11 @@
 External Triggers
 =================
 
-.. warning::
-
-   This is a new capability and its workflow configuration
-   interface may change somewhat in future releases - see Current
-   Limitations below in :ref:`Current Trigger Function Limitations`.
-
 External triggers allow tasks to trigger directly off of external events, which
 is often preferable to implementing long-running polling tasks in the workflow.
-The triggering mechanism described in this section replaces an older and less
-powerful one documented in :ref:`Old-Style External Triggers`.
+The triggering mechanism described in this section is intended to replace the one
+one documented in :ref:`Old-Style External Triggers` (however, that one is a push
+mechanism, whereas this one involves regular polling by the scheduler).
 
 If you can write a Python function to check the status of an external
 condition or event, the :term:`scheduler` can call it at configurable
@@ -73,12 +68,12 @@ the main process. The clock trigger function signature looks like this:
 
    wall_clock(offset=None)
 
-The ``offset`` argument is a date-time duration (``PT1H`` is 1
+The ``offset`` argument is a datetime duration (``PT1H`` is 1
 hour) relative to the dependent task's cycle point (automatically passed to the
 function via a second argument not shown above).
 
 In the following workflow, task ``foo`` has a daily cycle point sequence,
-and each task instance can trigger once the wall clock time has passed its
+and each task instance can trigger once the wallclock time has passed its
 cycle point value by one hour:
 
 .. code-block:: cylc
@@ -206,7 +201,7 @@ To see this, take a look at the job script for one of the downstream tasks:
 
 .. code-block:: console
 
-   % cylc cat-log -f j dn f2.2011
+   % cylc cat-log -f j dn//2011/f22011
    ...
    cylc__job__inst__user_env() {
        # TASK RUNTIME ENVIRONMENT:
@@ -397,7 +392,7 @@ The following issues may be addressed in future Cylc releases:
   referred to by label alone in the graph. It would be convenient (and less
   verbose, although no more functional) if we could just declare a label
   against the *common* arguments, and give remaining arguments (such as
-  different wall clock offsets in clock triggers) as needed in the graph.
+  different wallclock offsets in clock triggers) as needed in the graph.
 - we may move away from the string templating method for providing workflow
   and task attributes to trigger function arguments.
 
@@ -425,26 +420,28 @@ Cylc trigger functions interact with it.
 
 .. _Old-Style External Triggers:
 
-Old-Style External Triggers (Deprecated)
-----------------------------------------
+Push External Triggers
+----------------------
 
 .. note::
 
-   This mechanism is now technically deprecated by the newer external
-   trigger functions (:ref:`Section External Triggers`). (However we don't recommend
-   wholesale conversion to the new method yet, until its interface has
-   stabilized - see :ref:`Current Trigger Function Limitations`.)
+   The external triggering mechanism described here is harder to use than the
+   newer method of :ref:`Section External Triggers`. The trigger is a task
+   property rather than something the task depends on, it requires the
+   external system to push a message to the scheduler, and it has a less
+   flexible way to pass information to downstream tasks. However, a push
+   mechanism may sometimes be preferred over polling by the scheduler, so we
+   have retained support pending something better in a future Cylc 8 release.
 
-These old-style external triggers are hidden task prerequisites that must be
-satisfied by using the ``cylc ext-trigger`` client command to send an
-associated pre-defined event message to the workflow along with an ID string that
-distinguishes one instance of the event from another (the name of the target
-task and its current cycle point are not required). The event ID is just an
-arbitrary string to Cylc, but it can be used to identify something associated
-with the event to the workflow - such as the filename of a new
-externally-generated dataset. When the :term:`scheduler` receives the event
-notification it will trigger the next instance of any task waiting on that
-trigger (whatever its cycle point) and then broadcast
+These external triggers are hidden task prerequisites that must be satisfied by
+using the ``cylc ext-trigger`` client command to send a pre-defined message to
+the workflow along with an ID string that distinguishes one instance of the
+event from another (the name of the target task and its current cycle point are
+not required). The event ID is just an arbitrary string to Cylc, but it can be
+used to identify something associated with the event to the workflow - such as
+the filename of a new externally-generated dataset. When the :term:`scheduler`
+receives the event notification it will trigger the next instance of any task
+waiting on that trigger (whatever its cycle point) and then broadcast
 (see :ref:`cylc-broadcast`) the event ID to the cycle point of the triggered
 task as ``$CYLC_EXT_TRIGGER_ID``. Downstream tasks with the same cycle
 point therefore know the new event ID too and can use it, if they need to, to
@@ -487,7 +484,7 @@ Here is a working example of a simulated satellite processing workflow:
 .. literalinclude:: ../../workflows/satellite/ext-trigger/flow.cylc
    :language: cylc
 
-External triggers are not normally needed in date-time cycling workflows driven
+External triggers are not normally needed in datetime cycling workflows driven
 by real time data that comes in at regular intervals. In these cases a data
 retrieval task can be clock-triggered (and have appropriate retry intervals) to
 submit at the expected data arrival time, so little time is wasted in polling.
@@ -527,8 +524,8 @@ Triggering Off Of Tasks In Other Workflows
 
 .. note::
 
-   Please read :ref:`Section External Triggers` before using
-   the older inter-workflow triggering mechanism described in this section.
+   Please read :ref:`Section External Triggers` before using the older
+   inter-workflow triggering mechanism described in this section.
 
 The ``cylc workflow-state`` command interrogates workflow run databases. It
 has a polling mode that waits for a given task in the target workflow to achieve a

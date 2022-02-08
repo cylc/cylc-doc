@@ -3,64 +3,50 @@
 Installation
 ============
 
-.. warning::
+.. The following note is also included in the main index.
 
-   Cylc 8.0b3 is the final *beta release* of Cylc 8, a major upgrade from Cylc 7.
-
-   All Cylc 8 system components are in place but not yet heavily tested by users. 
-   Cylc 7 is still available if needed.
-
-   This documentation has been revised for Cylc 8, but some new features are
-   yet to be fully described.
-
+.. include:: release-note.rst
 
 Quick Installation
 ------------------
 
-Cylc runs on Unix systems including Linux and Mac OS.
+Cylc runs on Unix-like systems including Linux and Mac OS.
 
-.. highlight:: sub
+Via Conda (recommended)
+^^^^^^^^^^^^^^^^^^^^^^^
 
-.. list-table::
-   :class: grid-table
+.. code-block:: sub
 
-   * - .. rubric:: Via Conda (recommended):
-     - .. rubric:: Via Pip (+npm):
+   $ conda install -c conda-forge cylc-flow
 
-   * - ::
+   # install the browser-GUI (optional)
+   $ conda install -c conda-forge cylc-uiserver
 
-          $ conda install cylc-flow
+   # install Rose support (optional)
+   $ conda install -c conda-forge cylc-rose metomi-rose
 
-          # install the browser-GUI (optional)
-          $ conda install cylc-uiserver
+Via Pip (+npm)
+^^^^^^^^^^^^^^
 
-          # install Rose support (optional)
-          $ conda install cylc-rose
+.. note::
 
-     - ::
+   Requires Python 3.7+
 
-          $ pip install cylc-flow
+.. note::
 
-          # install the browser-GUI (optional)
-          # (requires nodejs & npm)
-          $ pip install cylc-uiserver
-          $ npm install configurable-http-proxy
+   We recommend using a virtual environment.
 
-          # install Rose support (optional)
-          $ pip install cylc-rose
+.. code-block:: sub
 
-   * -
-     -
-       .. note::
+   $ pip install cylc-flow
 
-          Requires Python 3.7+
+   # install the browser-GUI (optional)
+   # (requires nodejs & npm)
+   $ pip install cylc-uiserver
+   $ npm install configurable-http-proxy
 
-       .. note::
-
-          We recommend using a virtual environment.
-
-
-.. highlight:: bash
+   # install Rose support (optional)
+   $ pip install cylc-rose metomi-rose
 
 
 .. _non-python-requirements:
@@ -78,7 +64,7 @@ These dependencies are not installed by Conda or pip:
 
 These dependencies are installed by Conda but not by pip (you can use npm):
 
-* `configurable-http-proxy`_
+* `configurable-http-proxy`_ (optional: for multi-user setups)
 
 
 Installing On Mac OS
@@ -90,9 +76,9 @@ Installing On Mac OS
 Cylc requires some extra packages to function on Mac OS, we recommend
 installing them using the `Homebrew`_ package manager:
 
-.. code-block::
+.. code-block:: console
 
-   brew install bash coreutils gnu-sed
+   $ brew install bash coreutils gnu-sed
 
 You will need to prepend the ``coreutils`` and ``gnu-sed`` installations to
 your ``$PATH``, follow the instructions in the ``brew install`` output.
@@ -119,23 +105,28 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
    for instructions on enabling SSH.
 
 
-Site Installation
------------------
+Advanced Installation
+---------------------
 
-For multi-user installation we recommend using Conda and installing
-Cylc components only where required.
+For distributed and multi-user installation we recommend using Conda and
+installing Cylc components only where required.
 
-The Cylc Packages
-^^^^^^^^^^^^^^^^^
+.. tip::
 
-Cylc is split into a number of packages providing different functionality:
+   For examples of Conda environments and installation options see
+   :ref:`conda environments` for examples and details.
+
+The Cylc Components
+^^^^^^^^^^^^^^^^^^^
+
+Cylc is split into a number of components providing different functionality:
 
 `Cylc Flow`_
    Provides the scheduler "kernel" of Cylc along with the command line interface.
 `Cylc UI Server`_
    Provides the "Cylc Hub" and the browser-based "Cylc GUI".
 :ref:`Cylc Rose`
-   Provides support for :ref:`Rose` suite configurations in Cylc workflows.
+   Provides support for `Rose`_ suite configurations in Cylc workflows.
 
 Installation Types
 ^^^^^^^^^^^^^^^^^^
@@ -158,14 +149,14 @@ Recommended Installation
 
 User Machines
    * `Cylc Flow`_
-   * :ref:`Cylc Rose` (if using :ref:`Rose`)
+   * :ref:`Cylc Rose` (if using `Rose`_)
 Cylc Servers
    * `Cylc Flow`_
-   * :ref:`Cylc Rose` (if using :ref:`Rose`)
+   * :ref:`Cylc Rose` (if using `Rose`_)
    * `Cylc UI Server`_
 Job Hosts:
    * `Cylc Flow`_
-   * :ref:`Rose` (if running Rose applications on the job host)
+   * `Rose`_ (if running Rose applications on the job host)
 
 .. _managing environments:
 
@@ -179,13 +170,16 @@ available too.
 We recommend using a wrapper script named ``cylc`` to activate the correct
 environment before calling the environment's  ``cylc`` command.
 
-.. TODO - update this once the wrapper has been added to cylc-flow package data.
+Cylc comes with a wrapper which can be extracted to a directory in your ``$PATH``
+using
 
-.. important::
+.. TODO - make this easier once get-resources is better.
 
-   Cylc comes with a wrapper that you can use with minimal adaptation.
-   This should be installed somewhere in the system search ``$PATH`` such
-   as ``/usr/local/bin``.
+.. code-block:: bash
+
+   cylc get-resources etc/cylc /path/to/cylc  # should be in $PATH
+   chmod +x /path/to/cylc
+
 
 Configuration
 -------------
@@ -213,7 +207,7 @@ Bash Profile
 
 Cylc task job scripts are bash scripts, which is good for manipulating files
 and processes, They invoke ``bash -l`` to allow environment configuration in
-login scripts. 
+login scripts.
 
 .. warning::
 

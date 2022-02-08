@@ -64,6 +64,14 @@ Any of the above commands may be run from anywhere on the file system with the
 addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
 ``-C PATH/TO/SOURCE/DIRECTORY``).
 
+.. note::
+
+   To avoid confusion, ``cylc install`` will fail if the workflow name
+   contains directory names that are reserved filenames, such as
+   ``run<number>``, ``_cylc-install`` etc.
+
+   .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
+
 Configurable Source Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -80,6 +88,59 @@ and the GUI will search for source directories inside, using
 then ``cylc install dogs/fido`` will search for a workflow source directory
 ``~/cylc-src/dogs/fido``, or, failing that, ``~/roses/dogs/fido``, and install
 the first match (into ``~/cylc-run/dogs/fido/run1``).
+
+
+.. _SymlinkDirs:
+
+Symlink Directories
+^^^^^^^^^^^^^^^^^^^
+
+You can configure workflow :term:`run directories <run directory>` and certain
+sub-directories as symlinks to other locations. This is a useful way of
+offloading data onto other drives to limit the disk space taken up by
+``~/cylc-run``.
+
+Directories that can be individually symlinked are:
+
+* ``log``
+* ``share``
+* ``share/cycle``
+* ``work``
+* the :term:`run directory` itself
+
+The symlink targets are configured per install target in
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+
+For example, to configure workflow ``log`` directories (on the
+:term:`scheduler` host) so that they symlink to a different location,
+you could write the following in ``global.cylc``:
+
+.. code-block:: cylc
+
+   [install]
+       [[symlink dirs]]
+           [[[localhost]]]
+               log = /somewhere/else
+
+This would result in the following file structure:
+
+.. code-block:: none
+
+   ~/cylc-run
+   `-- myflow
+       |-- flow.cylc
+       |-- log -> /somewhere/else/cylc-run/myflow/log
+       ...
+
+   /somewhere
+   `-- else
+       `-- cylc-run
+           `-- myflow
+               `-- log
+                   |-- flow-config
+                   |-- install
+                   ...
+
 
 Numbered Runs
 ^^^^^^^^^^^^^
@@ -232,10 +293,11 @@ Looking at the directory structure that has been created
 2. Symlinking of Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Upon running ``cylc install``, symlinks for the directories ``run``, ``log``,
-``share``, ``share/cycle`` and ``work`` will be created in accordance with
-the symlink rules for ``localhost`` as defined in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
+If symlink directories are configured in the ``[[[localhost]]]`` section in
+:cylc:conf:`global.cylc[install][symlink dirs]`,
+``cylc install`` will create these symlinks and their target locations
+(symlinks for remote install targets do not get created until
+:term:`starting <start>` the workflow).
 
 Override default symlink locations
 """"""""""""""""""""""""""""""""""
@@ -386,8 +448,6 @@ If:
 - Both :cylc:conf:`flow.cylc` and the deprecated suite.rc are found in
   the :term:`source directory`. Only one should be present.
 
-- the run-name is specified as ``_cylc-install``
-
 - the workflow name is an absolute path or invalid
 
   Workflow names are validated by
@@ -395,8 +455,27 @@ If:
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-- the install will create nested run directories, i.e. installing a
-  workflow in a subdirectory of an existing run directory.
+- the workflow name contains a directory name that is a reserved filename,
+  such as ``work``, ``run<number>`` etc.
+
+  .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
+     :noindex:
+
+- the install will create nested install directories. Neither a new
+  installation in a subdirectory of an existing one, nor a directory containing
+  an existing installation are permitted. For example, having installed a
+  workflow in ``bar`` you would be unable to install one in ``foo``
+  or ``foo/bar/baz``.
+
+  .. code-block:: bash
+
+      foo
+      `-- bar
+         |-- _cylc-install
+         |-- baz
+         |-- run1
+         `-- runN
+
 
 - trying to install a workflow into an already existing run directory,
   ``cylc reinstall`` should be used for this, see

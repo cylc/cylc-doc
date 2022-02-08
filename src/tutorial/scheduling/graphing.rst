@@ -3,12 +3,12 @@
 Graphing
 ========
 
-In this section we will cover writing basic workflows in cylc.
+.. admonition:: Aims
+   :class: aims
 
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc 7
-   desktop GUI.
+   | You will be able to:
+   | ✅ Recognise the ``flow.cylc`` file format.
+   | ✅ Write simple chains of dependencies.
 
 .. _Cylc file format:
 
@@ -40,6 +40,9 @@ The :cylc:conf:`flow.cylc` File Format
       Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
       but that name is now deprecated.
 
+      See :ref:`cylc_7_compat_mode` for more information on using Cylc 7
+      suites with a ``suite.rc`` file.
+
 Example
 ^^^^^^^
 
@@ -66,11 +69,11 @@ Throughout this tutorial we will refer to settings in the following format:
 ``[section]key``
    Refers to a setting within the section.
 ``[section]key=value``
-   Expresses the value of the setting.
+   Expresses the value of the setting, within the section.
 ``[section][sub-section]another-key``
-   Note we only use one set of square brackets per section heading when writing
-   config items on one line like this, but in the config file each nesting level
-   gets a another set of square brackets.
+   Note that we only use one set of square brackets per section heading when
+   writing on one line like this, but in the config file each nesting level
+   gets another set of square brackets.
 
 Duplicate Items
 ^^^^^^^^^^^^^^^
@@ -115,7 +118,6 @@ Duplicate settings get overwritten:
          a = foo
          a = bar  # duplicate
 
-     -
       .. code-block:: cylc
          :caption: result
 
@@ -143,7 +145,8 @@ Except for duplicate graph string items, which get merged:
 Indentation
 ^^^^^^^^^^^
 
-It is advisable to indent :cylc:conf:`flow.cylc` files.
+It is a good idea to indent :cylc:conf:`flow.cylc` files because it makes them
+easier to read.
 
 However, Cylc ignores this indentation meaning the following two examples
 are equivalent:
@@ -367,7 +370,7 @@ Cylc Graphs
 
    #. **Write a graph.**
 
-      We now have a blank Cylc workflow, next we need to define a workflow.
+      We now have a blank Cylc workflow, next we need to define a graph.
 
       Edit your :cylc:conf:`flow.cylc` file to add graph strings representing the
       following graph:

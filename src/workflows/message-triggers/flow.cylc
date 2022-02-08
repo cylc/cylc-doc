@@ -1,6 +1,3 @@
-[meta]
-    title = "test workflow for cylc-6 message triggers"
-
 [scheduling]
     initial cycle point = 20140801T00
     final cycle point = 20141201T00
@@ -9,7 +6,6 @@
             foo:out1 => bar
             foo[-P2M]:out2 => baz
         """
-
 [runtime]
     [[foo]]
         script = """

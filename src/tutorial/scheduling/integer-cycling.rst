@@ -3,14 +3,11 @@
 Basic Cycling
 =============
 
+.. admonition:: Aims
+   :class: aims
 
-In this section we will look at how to write :term:`cycling` (repeating)
-workflows.
-
-.. warning::
-
-   This section of the tutorial still contains screenshots of the obsolete Cylc
-   7 desktop GUI.
+   | You will be able to:
+   | ✅ Write simple :term:`cycling` (repeating) workflows.
 
 
 Repeating Workflows
@@ -87,42 +84,42 @@ To make a workflow repeat we must tell Cylc three things:
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="buy_ingredients\n1"]
-       "mak.1" [label="make_dough\n1"]
-       "bak.1" [label="bake_bread\n1"]
-       "sel.1" [label="sell_bread\n1"]
-       "cle.1" [label="clean_oven\n1"]
-       "pre.1" [label="pre_heat_oven\n1"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="buy_ingredients\n2"]
-       "mak.2" [label="make_dough\n2"]
-       "bak.2" [label="bake_bread\n2"]
-       "sel.2" [label="sell_bread\n2"]
-       "cle.2" [label="clean_oven\n2"]
-       "pre.2" [label="pre_heat_oven\n2"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="buy_ingredients\n3"]
-       "mak.3" [label="make_dough\n3"]
-       "bak.3" [label="bake_bread\n3"]
-       "sel.3" [label="sell_bread\n3"]
-       "cle.3" [label="clean_oven\n3"]
-       "pre.3" [label="pre_heat_oven\n3"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
-   "pur.1" -> "mak.1" -> "bak.1" -> "sel.1"
-   "pre.1" -> "bak.1" -> "cle.1"
-   "pur.2" -> "mak.2" -> "bak.2" -> "sel.2"
-   "pre.2" -> "bak.2" -> "cle.2"
-   "pur.3" -> "mak.3" -> "bak.3" -> "sel.3"
-   "pre.3" -> "bak.3" -> "cle.3"
+   "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
+   "1/pre" -> "1/bak" -> "1/cle"
+   "2/pur" -> "2/mak" -> "2/bak" -> "2/sel"
+   "2/pre" -> "2/bak" -> "2/cle"
+   "3/pur" -> "3/mak" -> "3/bak" -> "3/sel"
+   "3/pre" -> "3/bak" -> "3/cle"
 
 .. ifnotslides::
 
@@ -130,8 +127,8 @@ To make a workflow repeat we must tell Cylc three things:
    task is in.
 
 
-Inter-Cycle Dependencies
-------------------------
+Intercycle Dependencies
+-----------------------
 
 .. ifnotslides::
 
@@ -182,44 +179,44 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="buy_ingredients\n1"]
-       "mak.1" [label="make_dough\n1"]
-       "bak.1" [label="bake_bread\n1"]
-       "sel.1" [label="sell_bread\n1"]
-       "cle.1" [label="clean_oven\n1"]
-       "pre.1" [label="pre_heat_oven\n1"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="buy_ingredients\n2"]
-       "mak.2" [label="make_dough\n2"]
-       "bak.2" [label="bake_bread\n2"]
-       "sel.2" [label="sell_bread\n2"]
-       "cle.2" [label="clean_oven\n2"]
-       "pre.2" [label="pre_heat_oven\n2"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="buy_ingredients\n3"]
-       "mak.3" [label="make_dough\n3"]
-       "bak.3" [label="bake_bread\n3"]
-       "sel.3" [label="sell_bread\n3"]
-       "cle.3" [label="clean_oven\n3"]
-       "pre.3" [label="pre_heat_oven\n3"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
-   "pur.1" -> "mak.1" -> "bak.1" -> "sel.1"
-   "pre.1" -> "bak.1" -> "cle.1"
-   "cle.1" -> "pre.2"
-   "pur.2" -> "mak.2" -> "bak.2" -> "sel.2"
-   "pre.2" -> "bak.2" -> "cle.2"
-   "cle.2" -> "pre.3"
-   "pur.3" -> "mak.3" -> "bak.3" -> "sel.3"
-   "pre.3" -> "bak.3" -> "cle.3"
+   "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
+   "1/pre" -> "1/bak" -> "1/cle"
+   "1/cle" -> "2/pre"
+   "2/pur" -> "2/mak" -> "2/bak" -> "2/sel"
+   "2/pre" -> "2/bak" -> "2/cle"
+   "2/cle" -> "3/pre"
+   "3/pur" -> "3/mak" -> "3/bak" -> "3/sel"
+   "3/pre" -> "3/bak" -> "3/cle"
 
 .. nextslide::
 
@@ -227,7 +224,7 @@ Inter-Cycle Dependencies
 
    Adding this dependency "strings together" the cycles, forcing them to run in
    order. We refer to dependencies between cycles as
-   :term:`inter-cycle dependencies<inter-cycle dependency>`.
+   :term:`intercycle dependencies<intercycle dependency>`.
 
    In the dependency the ``[-P1]`` suffix tells Cylc that we are referring to a
    task in the previous cycle. Equally ``[-P2]`` would refer to a task two
@@ -276,7 +273,7 @@ Inter-Cycle Dependencies
    first two cycles this doesn't make sense as there was no cycle two cycles
    before, so this dependency will be ignored.
 
-   Any inter-cycle dependencies stretching back to before the
+   Any intercycle dependencies stretching back to before the
    :term:`initial cycle point` will be ignored.
 
 .. digraph:: example
@@ -287,60 +284,60 @@ Inter-Cycle Dependencies
    subgraph cluster_1 {
        label = 1
        style = dashed
-       "pur.1" [label="buy_ingredients\n1"]
-       "mak.1" [label="make_dough\n1"]
-       "bak.1" [label="bake_bread\n1"]
-       "sel.1" [label="sell_bread\n1"]
-       "cle.1" [label="clean_oven\n1"]
-       "pre.1" [label="pre_heat_oven\n1"]
+       "1/pur" [label="buy_ingredients\n1"]
+       "1/mak" [label="make_dough\n1"]
+       "1/bak" [label="bake_bread\n1"]
+       "1/sel" [label="sell_bread\n1"]
+       "1/cle" [label="clean_oven\n1"]
+       "1/pre" [label="pre_heat_oven\n1"]
    }
 
    subgraph cluster_2 {
        label = 2
        style = dashed
-       "pur.2" [label="buy_ingredients\n2"]
-       "mak.2" [label="make_dough\n2"]
-       "bak.2" [label="bake_bread\n2"]
-       "sel.2" [label="sell_bread\n2"]
-       "cle.2" [label="clean_oven\n2"]
-       "pre.2" [label="pre_heat_oven\n2"]
+       "2/pur" [label="buy_ingredients\n2"]
+       "2/mak" [label="make_dough\n2"]
+       "2/bak" [label="bake_bread\n2"]
+       "2/sel" [label="sell_bread\n2"]
+       "2/cle" [label="clean_oven\n2"]
+       "2/pre" [label="pre_heat_oven\n2"]
    }
 
    subgraph cluster_3 {
        label = 3
        style = dashed
-       "pur.3" [label="buy_ingredients\n3"]
-       "mak.3" [label="make_dough\n3"]
-       "bak.3" [label="bake_bread\n3"]
-       "sel.3" [label="sell_bread\n3"]
-       "cle.3" [label="clean_oven\n3"]
-       "pre.3" [label="pre_heat_oven\n3"]
+       "3/pur" [label="buy_ingredients\n3"]
+       "3/mak" [label="make_dough\n3"]
+       "3/bak" [label="bake_bread\n3"]
+       "3/sel" [label="sell_bread\n3"]
+       "3/cle" [label="clean_oven\n3"]
+       "3/pre" [label="pre_heat_oven\n3"]
    }
 
    subgraph cluster_4 {
        label = 4
        style = dashed
-       "pur.4" [label="buy_ingredients\n4"]
-       "mak.4" [label="make_dough\n4"]
-       "bak.4" [label="bake_bread\n4"]
-       "sel.4" [label="sell_bread\n4"]
-       "cle.4" [label="clean_oven\n4"]
-       "pre.4" [label="pre_heat_oven\n4"]
+       "4/pur" [label="buy_ingredients\n4"]
+       "4/mak" [label="make_dough\n4"]
+       "4/bak" [label="bake_bread\n4"]
+       "4/sel" [label="sell_bread\n4"]
+       "4/cle" [label="clean_oven\n4"]
+       "4/pre" [label="pre_heat_oven\n4"]
    }
 
-   "pur.1" -> "mak.1" -> "bak.1" -> "sel.1"
-   "pre.1" -> "bak.1" -> "cle.1"
-   "cle.1" -> "pre.2"
-   "sel.1" -> "pur.3"
-   "pur.2" -> "mak.2" -> "bak.2" -> "sel.2"
-   "pre.2" -> "bak.2" -> "cle.2"
-   "cle.2" -> "pre.3"
-   "sel.2" -> "pur.4"
-   "pur.3" -> "mak.3" -> "bak.3" -> "sel.3"
-   "pre.3" -> "bak.3" -> "cle.3"
-   "cle.3" -> "pre.4"
-   "pur.4" -> "mak.4" -> "bak.4" -> "sel.4"
-   "pre.4" -> "bak.4" -> "cle.4"
+   "1/pur" -> "1/mak" -> "1/bak" -> "1/sel"
+   "1/pre" -> "1/bak" -> "1/cle"
+   "1/cle" -> "2/pre"
+   "1/sel" -> "3/pur"
+   "2/pur" -> "2/mak" -> "2/bak" -> "2/sel"
+   "2/pre" -> "2/bak" -> "2/cle"
+   "2/cle" -> "3/pre"
+   "2/sel" -> "4/pur"
+   "3/pur" -> "3/mak" -> "3/bak" -> "3/sel"
+   "3/pre" -> "3/bak" -> "3/cle"
+   "3/cle" -> "4/pre"
+   "4/pur" -> "4/mak" -> "4/bak" -> "4/sel"
+   "4/pre" -> "4/bak" -> "4/cle"
 
 
 Recurrence Sections
@@ -348,42 +345,64 @@ Recurrence Sections
 
 .. ifnotslides::
 
-   In the previous examples we made the workflow repeat by placing the graph
-   in the ``P1`` setting. Here ``P1`` is a :term:`recurrence` meaning
-   repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
-   *other* cycle, and so on. To build more complex workflows we can use multiple
-   recurrences:
+   From initial cycle point:
+      In the previous examples we made the workflow repeat by placing the graph
+      in the ``P1`` setting. Here ``P1`` is a :term:`recurrence` meaning
+      repeat every cycle, where ``P1`` means every cycle, ``P2`` means every
+      *other* cycle, and so on. To build more complex workflows we can use
+      multiple recurrences:
 
-.. code-block:: cylc
+      .. code-block:: cylc
 
-   [scheduling]
-       cycling mode = integer
-       initial cycle point = 1
-       [[graph]]
-           # Repeat every cycle.
-           P1 = foo
-           # Repeat every second cycle.
-           P2 = bar
-           # Repeat every third cycle.
-           P3 = baz
+         [scheduling]
+            cycling mode = integer
+            initial cycle point = 1
+            [[graph]]
+               # Repeat every cycle.
+               P1 = foo
+               # Repeat every second cycle.
+               P2 = bar
+               # Repeat every third cycle.
+               P3 = baz
 
-.. image:: ../../img/recurrence-sections.svg
-   :align: center
+      .. image:: ../../img/recurrence-sections.svg
+         :align: center
+
+.. ifslides::
+
+   .. code-block:: cylc
+
+      [scheduling]
+         cycling mode = integer
+         initial cycle point = 1
+         [[graph]]
+            # Repeat every cycle.
+            P1 = foo
+            # Repeat every second cycle.
+            P2 = bar
+            # Repeat every third cycle.
+            P3 = baz
+
+   .. image:: ../../img/recurrence-sections.svg
+      :align: center
 
 .. nextslide::
 
 .. ifnotslides::
 
-   By default, recurrences start at the
-   :term:`initial cycle point`, however it is possible to make them start at an
-   arbitrary cycle point. This is done by writing the cycle point and the
-   recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means repeat
-   every third cycle starting *from* cycle number 5. Therefore, if you wanted
-   a graph to occur every even cycle point you would use ``2/P2``.
+   After arbitrary cycle point:
+      By default, recurrences start at the:
+      :term:`initial cycle point`, however it is possible to make them start at
+      an arbitrary cycle point. This is done by writing the cycle point and the
+      recurrence separated by a forward slash (``/``), e.g. ``5/P3`` means
+      repeat every third cycle starting *from* cycle number 5. Therefore, if
+      you wanted a graph to occur every even cycle point you would use
+      ``2/P2``.
 
-   The start point of a recurrence can also be defined as an offset from the
-   :term:`initial cycle point`, e.g. ``+P5/P3`` means repeat every third cycle
-   starting 5 cycles *after* the initial cycle point.
+   After offset from initial cycle point:
+      The start point of a recurrence can also be defined as an offset from the
+      :term:`initial cycle point`, e.g. ``+P5/P3`` means repeat every third cycle
+      starting 5 cycles *after* the initial cycle point.
 
 .. ifslides::
 
@@ -429,7 +448,7 @@ Recurrence Sections
 
    #. **Create a new workflow.**
 
-      Within your ``~/cylc-run/`` directory create a new (sub-)directory called
+      In your ``~/cylc-src/`` directory create a new directory called
       ``integer-cycling`` and move into it:
 
       .. code-block:: bash
@@ -505,18 +524,18 @@ Recurrence Sections
 
       Use ``cylc graph`` to see the effect this has on the workflow.
 
-   #. **Inter-cycle dependencies.**
+   #. **intercycle dependencies.**
 
-      Next we need to add some inter-cycle dependencies. We are going to add
-      three inter-cycle dependencies:
+      Next we need to add some intercycle dependencies. We are going to add
+      three intercycle dependencies:
 
       #. Between ``f`` from the previous cycle and ``c``.
       #. Between ``d`` from the previous cycle and ``a``
-         *every odd cycle* (e.g. d.2 => a.3).
+         *every odd cycle* (e.g. 2/d => 3/a).
       #. Between ``e`` from the previous cycle and ``a``
-         *every even cycle* (e.g. e.1 => a.2).
+         *every even cycle* (e.g. 1/e => 2/a).
 
-      Have a go at adding inter-cycle dependencies to your :cylc:conf:`flow.cylc` file to
+      Have a go at adding intercycle dependencies to your :cylc:conf:`flow.cylc` file to
       make your workflow match the diagram below.
 
       .. hint::
@@ -532,49 +551,49 @@ Recurrence Sections
          subgraph cluster_1 {
              label = 1
              style = dashed
-             "a.1" [label="a\n1"]
-             "b.1" [label="b\n1"]
-             "d.1" [label="d\n1"]
-             "f.1" [label="f\n1"]
-             "c.1" [label="c\n1"]
-             "e.1" [label="e\n1"]
+             "1/a" [label="a\n1"]
+             "1/b" [label="b\n1"]
+             "1/d" [label="d\n1"]
+             "1/f" [label="f\n1"]
+             "1/c" [label="c\n1"]
+             "1/e" [label="e\n1"]
          }
 
          subgraph cluster_2 {
              label = 2
              style = dashed
-             "a.2" [label="a\n2"]
-             "b.2" [label="b\n2"]
-             "d.2" [label="d\n2"]
-             "f.2" [label="f\n2"]
-             "c.2" [label="c\n2"]
+             "2/a" [label="a\n2"]
+             "2/b" [label="b\n2"]
+             "2/d" [label="d\n2"]
+             "2/f" [label="f\n2"]
+             "2/c" [label="c\n2"]
          }
 
          subgraph cluster_3 {
              label = 3
              style = dashed
-             "a.3" [label="a\n3"]
-             "b.3" [label="b\n3"]
-             "d.3" [label="d\n3"]
-             "f.3" [label="f\n3"]
-             "c.3" [label="c\n3"]
-             "e.3" [label="e\n3"]
+             "3/a" [label="a\n3"]
+             "3/b" [label="b\n3"]
+             "3/d" [label="d\n3"]
+             "3/f" [label="f\n3"]
+             "3/c" [label="c\n3"]
+             "3/e" [label="e\n3"]
          }
 
-         "a.1" -> "b.1" -> "f.1"
-         "b.1" -> "d.1"
-         "c.1" -> "b.1"
-         "a.2" -> "b.2" -> "f.2"
-         "b.2" -> "d.2"
-         "c.2" -> "b.2"
-         "a.3" -> "b.3" -> "f.3"
-         "b.3" -> "d.3"
-         "c.3" -> "b.3"
-         "d.1" -> "e.1" -> "a.2"
-         "d.3" -> "e.3"
-         "d.2" -> "a.3"
-         "f.1" -> "c.2"
-         "f.2" -> "c.3"
+         "1/a" -> "1/b" -> "1/f"
+         "1/b" -> "1/d"
+         "1/c" -> "1/b"
+         "2/a" -> "2/b" -> "2/f"
+         "2/b" -> "2/d"
+         "2/c" -> "2/b"
+         "3/a" -> "3/b" -> "3/f"
+         "3/b" -> "3/d"
+         "3/c" -> "3/b"
+         "1/d" -> "1/e" -> "2/a"
+         "3/d" -> "3/e"
+         "2/d" -> "3/a"
+         "1/f" -> "2/c"
+         "2/f" -> "3/c"
 
       .. spoiler:: Solution warning
 

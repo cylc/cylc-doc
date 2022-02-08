@@ -15,9 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from distutils.spawn import find_executable as which
-import sys
 import os
+import sys
 
+from cylc.flow import __version__ as CYLC_VERSION
+
+sys.path.append(os.path.abspath('lib'))  # path to lib.
+
+from cylc_release import CYLC_RELEASE
 
 # -- General configuration ------------------------------------------------
 
@@ -34,6 +39,7 @@ extensions = [
     'hieroglyph',
     'sphinx_rtd_theme',
     # custom project extensions (located in ext/)
+    'autodoc_traits',  # autodoc uiserver traitlets
     'database_diagram',
     # cylc-sphinx-extensions
     'cylc.sphinx_ext.cylc_lang',
@@ -45,6 +51,7 @@ extensions = [
     'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
     'sphinxcontrib.spelling'
+    'cylc.sphinx_ext.literal_sub_include'
 ]
 
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
@@ -79,14 +86,15 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-__copyright_year = 2021  # NOTE: this is automatically set by GH Actions
+__copyright_year = 2022  # NOTE: this is automatically set by GH Actions
 copyright = (
     f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
 )
 
 # Versioning information.
-release = os.environ['CYLC_VERSION']  # set in makefile
-version = '.'.join(release.split('.')[:2])  # short version for display
+# NOTE: Sphinx considers version/release the other way around to us
+release = CYLC_VERSION  # full version e.g. "8.0.0"
+version = CYLC_RELEASE  # short version (for pinning / display) e.g. "8.0"
 
 # Autosummary opts (for auto generation of docs from source code).
 autosummary_generate = True
@@ -221,3 +229,7 @@ tokenizer_lang='en_UK'
 spelling_word_list_filename=['spelling_wordlist.txt']
 spelling_show_suggestions=False
 spelling_ignore_importable_modules=True
+literal_sub_include_subs = {
+    'version': version,
+    'release': release.replace('.dev', ''),
+}

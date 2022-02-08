@@ -35,8 +35,8 @@ Cylc Development History - Major Changes
 
 - **cylc-6**
 
-  - specification of all date-times and cycling suites via the ISO8601
-    date-times, durations, and recurrence expressions
+  - specification of all datetimes and cycling suites via ISO8601
+    datetimes, durations, and recurrence expressions
   - integer cycling
   - a multi-process pool to execute job submissions, event handlers, and poll
     and kill commands
@@ -48,6 +48,8 @@ Cylc Development History - Major Changes
 
 - **cylc-8**
 
-  - Migrated to Python3
-  - New architecture to support a web UI
+  - Migrated to Python 3
+  - New architecture, network layers, security
+  - New web UI
+  - New efficient scheduling algorithm
   - Removed deprecated pre cylc-6 syntax and features

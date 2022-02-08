@@ -1,5 +1,4 @@
-.. This document contains hyperlink references to be used throughout the
-   documentation.
+.. This document contains hyperlink references for use throughout the documentation.
 
 .. _Apollo Client: https://www.apollographql.com/docs/react/
 .. _Configurable HTTP Proxy: https://github.com/AbdealiJK/configurable-http-proxy
@@ -7,7 +6,9 @@
 .. _Cylc User Guide: https://cylc.github.io/cylc-doc/latest/html/index.html
 .. _Cylc Workflow Design Guide: https://cylc.github.io/cylc-doc/latest/html/workflow-design-guide/index.html
 .. _Cylc: https://cylc.github.io/
+.. _Cylc Discourse Forum (7-to-8 topic): https://cylc.discourse.group/c/cylc/7-to-8/13
 .. _DataPoint: https://www.metoffice.gov.uk/services/data/datapoint
+.. _Discourse: https://cylc.discourse.group/
 .. _EmPy: http://www.alcyone.com/software/empy/
 .. _FCM User Guide: http://metomi.github.io/fcm/doc/user_guide/
 .. _FCM: https://metomi.github.io/fcm/doc/
@@ -22,6 +23,7 @@
 .. _Python: https://www.python.org/
 .. _Rose Documentation: https://metomi.github.io/rose
 .. _Rose GitHub: https://github.com/metomi/rose
+.. _Rose: https://github.com/metomi/rose
 .. _SRS: https://code.metoffice.gov.uk/
 .. _SVN: https://subversion.apache.org/
 .. _Websocket: https://en.wikipedia.org/wiki/WebSocket
@@ -35,3 +37,60 @@
 .. _UI: https://github.com/cylc/cylc-ui
 .. _Cylc UI Server: https://github.com/cylc/cylc-uiserver
 .. _UI Server: https://github.com/cylc/cylc-uiserver
+
+.. |task-waiting| image:: /img/task-job-icons/task-waiting.png
+   :scale: 100%
+   :align: middle
+
+.. |task-expired| image:: /img/task-job-icons/task-expired.png
+   :scale: 100%
+   :align: middle
+
+.. |task-preparing| image:: /img/task-job-icons/task-preparing.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submitted| image:: /img/task-job-icons/task-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |task-submit-failed| image:: /img/task-job-icons/task-submit-failed.png
+   :scale: 100%
+   :align: middle
+
+.. |task-running| image:: /img/task-job-icons/task-running.png
+   :scale: 100%
+   :align: middle
+
+.. |task-succeeded| image:: /img/task-job-icons/task-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |task-failed| image:: /img/task-job-icons/task-failed.png
+   :scale: 100%
+   :align: middle
+
+
+.. |job-blank| image:: /img/task-job-icons/job-blank.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submitted| image:: /img/task-job-icons/job-submitted.png
+   :scale: 100%
+   :align: middle
+
+.. |job-submit-failed| image:: /img/task-job-icons/job-submit-failed.png
+   :scale: 100%
+   :align: middle
+
+.. |job-running| image:: /img/task-job-icons/job-running.png
+   :scale: 100%
+   :align: middle
+
+.. |job-succeeded| image:: /img/task-job-icons/job-succeeded.png
+   :scale: 100%
+   :align: middle
+
+.. |job-failed| image:: /img/task-job-icons/job-failed.png
+   :scale: 100%
+   :align: middle

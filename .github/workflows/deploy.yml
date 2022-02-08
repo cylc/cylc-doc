@@ -46,6 +46,10 @@ on:
         type: boolean
         default: true
         required: false
+      skip_conda_environment_check:
+        description: "Don't fail if the conda environments fail to build."
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -80,9 +84,16 @@ jobs:
           #       have extra dependencies.
           pip install  \
             "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
             "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
             "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
+          git clone --depth 1 --branch "${meto_rose}" https://github.com/metomi/rose ../rose
+          pip install -e ../rose[all]
+
+      - name: create conda envs
+        uses: ./docs/.github/actions/create-conda-envs
+        continue-on-error: ${{ github.event.inputs.skip_conda_environment_check == 'true' }}
+        with:
+          python_version: '3.7'
 
       - name: checkout gh-pages
         uses: actions/checkout@v2

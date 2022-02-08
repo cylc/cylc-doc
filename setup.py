@@ -39,10 +39,11 @@ VERSION = get_version(
 )
 
 INSTALL_REQUIRES = [
-    'cylc-sphinx-extensions>=1.3.2',
+    'cylc-sphinx-extensions>=1.3.4',
     'eralchemy==1.2.*',
     'hieroglyph>=2.1.0',
-    'sphinx>=3.0.0',
+    'setuptools>=50',
+    'sphinx>=4.4',
     'sphinx_rtd_theme>=0.5.0',
     'sphinxcontrib-svg2pdfconverter',
 ]
@@ -58,11 +59,9 @@ EXTRAS_REQUIRE = {
         'flake8-mutable>=1.2.0',
         'flake8-simplify>=0.14.0',
     ],
-    'tutorial': [
-        'pillow',
-        'urllib3'
-    ]
-
+    'watch': [
+        'sphinx-autobuild',
+    ],
 }
 EXTRAS_REQUIRE['all'] = [y for x in EXTRAS_REQUIRE.values() for y in x]
 

@@ -7,44 +7,35 @@ Jinja2
 .. tutorial::
    Configuration Consolidation Tutorial <tutorial-cylc-consolidating-configuration>
 
-.. note::
+Cylc supports use of the `Jinja2`_ template processor in workflow
+configurations. Jinja2 variables, expressions, loop control structures,
+conditional logic, etc., are processed to generate the final configuration. To
+the template processor, Jinja2 code is embedded in arbitrary text, but the
+result after processing must be valid Cylc syntax.
 
-   This section needs to be revised - the Parameterized Task feature
-   introduced in cylc-6.11.0 (see :ref:`User Guide Param`) provides
-   a cleaner way to auto-generate tasks without coding messy Jinja2 loops.
-
-Cylc has built in support for the `Jinja2`_ template processor in workflow
-configurations. Jinja2 variables, mathematical expressions, loop control
-structures, conditional logic, etc., are automatically processed to
-generate the final workflow configuration seen by Cylc.
-
-The need for Jinja2 processing must be declared with a hash-bang
-comment as the first line of the :cylc:conf:`flow.cylc` file:
+To use Jinja2, put a hash-bang comment in the first line of :cylc:conf:`flow.cylc`:
 
 .. code-block:: cylc
 
    #!jinja2
-   # ...
 
-Potential uses for this include automatic generation of repeated groups
-of similar tasks and dependencies, and inclusion or exclusion of entire
-workflow sections according to the value of a single flag. Consider a
-large complicated operational workflow and several related parallel test
-workflows with slightly different task content and structure (the parallel
-workflows, for instance, might take certain large input files from the
-operation or the archive rather than downloading them again) - these can
-now be maintained as a single master workflow configuration that reconfigures
-itself according to the value of a flag variable indicating the intended use.
+Template processing is the first thing done on parsing a workflow configuration
+so Jinja2 can appear anywhere in the file. 
 
-Template processing is the first thing done on parsing a workflow
-configuration so Jinja2 expressions can appear anywhere in the file (inside
-strings and namespace headings, for example).
+Embedded Jinja2 code should be reasonably easy to understand for those with
+coding experience; but if not, Jinja2 is well documented `here
+<https://jinja.palletsprojects.com/>`_. 
 
-Jinja2 is `well documented <https://jinja.palletsprojects.com/>`_, so here
-we just provide an example workflow that uses it. The meaning of the
-embedded Jinja2 code should be reasonably self-evident to anyone familiar
-with standard programming techniques.
+Uses of Jinja2 in Cylc include:
 
+ - Inclusion or exclusion of config sections by logical switch, e.g. to make
+   portable workflows
+ - Computation of config values from in input data
+ - Inclusion of files and sub-templates
+ - Loop over parameters to generate groups of similar tasks and associated
+   dependencies - but see :ref:`Parameterized Tasks <User Guide Param>` for a
+   simpler alternative to this use case
+  
 .. _fig-jinja2-ensemble:
 
 .. figure:: ../../img/jinja2-ensemble-graph.png
@@ -53,8 +44,7 @@ with standard programming techniques.
    The Jinja2 ensemble example workflow graph.
 
 
-The ``jinja2.ensemble`` example :ref:`graphed above <fig-jinja2-ensemble>`
-shows an ensemble of similar tasks generated using Jinja2:
+The graph above shows an ensemble of similar tasks generated with a Jinja2 loop:
 
 .. code-block:: cylc
 
@@ -66,9 +56,22 @@ shows an ensemble of similar tasks generated using Jinja2:
    {# generate ensemble dependencies #}
    {% for I in range( 0, N_MEMBERS ) %}
                foo => mem_{{ I }} => post_{{ I }} => bar
-   {% endfor %}"""
+   {% endfor %}
+           """
 
-Here is the generated workflow configuration, after Jinja2 processing:
+Note that Jinja2 code is encapsulated in curly braces to distinguish it from
+the surrounding text.
+
+
+    ================= ======================
+    Jinja2 Syntax     Description
+    ================= ======================
+    ``{# comment #}`` Comment
+    ``{% if true %}`` Expression 
+    ``{{ var }}``     Print statement
+    ================= ======================
+
+Here is the workflow configuration after Jinja2 processing:
 
 .. code-block:: cylc
 
@@ -76,20 +79,34 @@ Here is the generated workflow configuration, after Jinja2 processing:
    [scheduling]
        [[graph]]
            R1 = """
-             foo => mem_0 => post_0 => bar
-             foo => mem_1 => post_1 => bar
-             foo => mem_2 => post_2 => bar
-             foo => mem_3 => post_3 => bar
-             foo => mem_4 => post_4 => bar
-                   """
+               foo => mem_0 => post_0 => bar
+               foo => mem_1 => post_1 => bar
+               foo => mem_2 => post_2 => bar
+               foo => mem_3 => post_3 => bar
+               foo => mem_4 => post_4 => bar
+           """
 
-And finally, the ``jinja2.cities`` example uses variables,
-includes or excludes special cleanup tasks according to the value of a
-logical flag, and it automatically generates all dependencies and family
-relationships for a group of tasks that is repeated for each city in the
-workflow. To add a new city and associated tasks and dependencies simply
-add the city name to list at the top of the file. Here is the workflow graphed,
-with the New York City task family expanded:
+This example illustrates Jinja2 loops nicely, but note it is now easier
+to generate task names automatically with built-in
+:ref:`task parameters <User Guide Param>`:
+
+.. code-block:: cylc
+
+   [task parameters]
+       m = 0..4
+   [scheduling]
+       [[graph]]
+           R1 = "foo => mem<m> => post<m> => bar"
+
+
+The next example, which generates weather forecasts over a number of cities, is
+more complex. To add a new city and associated tasks and dependencies just add
+the new city name to list at the top of the file. It makes use of Jinja2
+variables, loops, math, and logical flags to include or exclude tasks.
+
+.. note::
+   This example could also be simplified with built in
+   :ref:`task parameters <User Guide Param>`
 
 .. literalinclude:: ../../workflows/jinja2/cities/flow.cylc
    :language: cylc
@@ -99,17 +116,15 @@ with the New York City task family expanded:
 .. figure:: ../../img/jinja2-workflow-graph.png
    :align: center
 
-   The Jinja2 cities example workflow graph, with the
+   Jinja2 cities example workflow graph, with the
    New York City task family expanded.
 
 
-Accessing Environment Variables With Jinja2
--------------------------------------------
+Accessing Environment Variables
+-------------------------------
 
-This functionality is not provided by Jinja2 by default, but Cylc
-automatically imports the user environment to template's global namespace
-(see :ref:`CustomJinja2Filters`) in a dictionary structure called
-*environ*. A usage example:
+Cylc automatically imports the environment to the template's global namespace
+(see :ref:`CustomJinja2Filters`) in a dictionary called *environ*:
 
 .. code-block:: cylc
 
@@ -133,6 +148,7 @@ prior to configuration parsing to provide workflow context:
 
    CYLC_WORKFLOW_ID                # Workflow ID
    CYLC_WORKFLOW_NAME              # Workflow name
+                                   # (the ID with the run name removed)
 
    CYLC_WORKFLOW_LOG_DIR           # Workflow log directory.
    CYLC_WORKFLOW_RUN_DIR           # Location of the run directory in
@@ -142,22 +158,21 @@ prior to configuration parsing to provide workflow context:
    CYLC_WORKFLOW_WORK_DIR          # Workflow work directory.
 
 
-.. note::
+.. warning::
 
-   The example above emphasizes that *the environment - including the workflow
-   context variables - is read on the workflow host when the workflow configuration
-   is parsed*, not at task run time on job hosts.
+   The environment is read on the workflow host when the configuration is
+   parsed. It is not read at run time by task jobs on the job platform.
 
 .. _CustomJinja2Filters:
 
 Custom Jinja2 Filters, Tests and Globals
 ----------------------------------------
 
-Jinja2 has three different namespaces used to separate "globals",
-"filters" and "tests". Globals are template-wide accessible variables
-and functions. Cylc extends this namespace with "environ" dictionary and
+Jinja2 has three namespaces that separate "globals", "filters" and "tests".
+Globals are template-wide variables and functions. Cylc extends this namespace
+with the ``environ`` dictionary above, and
 :ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
-functions for raising exceptions.
+functions for raising exceptions to abort Cylc config parsing.
 
 Filters can be used to modify variable values and are applied using pipe
 notation. For example, the built-in ``trim`` filter strips leading
@@ -169,19 +184,16 @@ and trailing white space from a string:
    {{ MyString | trim() }}  # "dog"
 
 Variable values can be tested using the ``is`` keyword followed by
-the name of the test, e.g. ``VARIABLE is defined``.
-See official Jinja2 documentation for available built-in globals, filters
-and tests.
+the name of the test, e.g. ``{% if VARIABLE is defined %}``. See Jinja2
+documentation for available built-in globals, filters and tests.
 
 Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
 filter or test is a single Python function in a source file with the same name
-as the function (plus ``.py`` extension) and stored in one of the following
-locations:
+as the function (plus ``.py`` extension).
 
-In the argument list of filter or test function, the first argument is
-the variable value to be "filtered" or "tested", respectively, and
-subsequent arguments can be whatever else is needed. Currently there are three
-custom filters:
+In the argument list of a filter or test function, the first argument is
+the variable value to be filtered or tested, and subsequent arguments can be
+whatever is needed. Currently three custom filters are supplied:
 
 .. import the filters to allow their doctests to pass (make doctest)
 
@@ -208,10 +220,7 @@ custom filters:
 Associative Arrays In Jinja2
 ----------------------------
 
-Associative arrays (*dicts* in Python) can be very useful.
-Here's an example:
-
-.. TODO - platformise?
+Associative arrays (or **dictionaries**) are very useful. For example:
 
 .. code-block:: cylc
 
@@ -236,14 +245,14 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc config -i [runtime][airs]directives WORKFLOW
+   $ cylc config -i [runtime][airs]directives <workflow-id>
    -I = ncpus=9
 
 
 .. _jinja2-template-variables:
 
-Jinja2 Default Values And Template Variables
---------------------------------------------
+Default Values and Template Variables
+-------------------------------------
 
 You can provide template variables to Cylc in 3 ways:
 
@@ -257,16 +266,15 @@ You can provide template variables to Cylc in 3 ways:
    above list is used.
 
 
-Using the ``-s`` and ``--set-file`` options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The ``-s`` and ``--set-file`` Options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: console
 
    $ # set the Jinja2 variable "answer" to 42
-   $ cylc play <flow> -s answer=42
+   $ cylc play <workflow-id> -s answer=42
 
-Or for multiple options using a Cylc "set file" with ``--set-file``
-e.g:
+Or for multiple variables defined in a file, use the ``--set-file`` option:
 
 .. code-block:: console
 
@@ -278,7 +286,7 @@ e.g:
    __SET_FILE__
 
    $ # run using the options in the set file
-   $ cylc play <flow> --set-file my-set-file
+   $ cylc play <workflow-id> --set-file my-set-file
 
 Values must be Python literals e.g:
 
@@ -304,7 +312,7 @@ Values must be Python literals e.g:
 
       $ # wrap the key=value pair in single quotes stop the shell from
       $ # stripping the inner quotes around the string:
-      $ cylc play <flow> -s 'my_string="a b c"'
+      $ cylc play <workflow-id> -s 'my_string="a b c"'
 
 Here's an example:
 
@@ -315,20 +323,20 @@ Here's the result:
 
 .. code-block:: console
 
-   $ cylc list WORKFLOW
+   $ cylc list <workflow-id>
    Jinja2 Template Error
    'FIRST_TASK' is undefined
-   cylc-list WORKFLOW  failed:  1
+   cylc-list <workflow-id>  failed:  1
 
    $ # Note: quoting "bob" so that it is evaluated as a string
-   $ cylc list --set 'FIRST_TASK="bob"' WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' <workflow-id>
    bob
    baz
    mem_2
    mem_1
    mem_0
 
-   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' --set 'LAST_TASK="alice"' <workflow-id>
    bob
    alice
    mem_2
@@ -336,7 +344,7 @@ Here's the result:
    mem_0
 
    $ # Note: no quotes required for N_MEMBERS since it is an integer
-   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 WORKFLOW
+   $ cylc list --set 'FIRST_TASK="bob"' --set N_MEMBERS=10 <workflow-id>
    mem_9
    mem_8
    mem_7
@@ -350,13 +358,13 @@ Here's the result:
    baz
    bob
 
-Note also that ``cylc view --set FIRST_TASK=bob --jinja2 WORKFLOW``
+Note also that ``cylc view --set FIRST_TASK=bob --jinja2 <workflow-id>``
 will show the workflow with the Jinja2 variables as set.
 
 .. note::
 
    Workflows started with template variables set on the command
-   line will :term:`restart` with the same settings. However, you can set
+   line will :term:`restart` with the same settings. You can set
    them again on the ``cylc play`` command line if they need to
    be overridden.
 
@@ -387,9 +395,9 @@ section which the plugin makes available to Cylc:
          P1Y = Task1
 
 
-.. code-block:: shell
+.. code-block:: console
 
-   > cylc config . -i "[scheduling]initial cycle point"
+   $ cylc config . -i "[scheduling]initial cycle point"
    1068
 
 
@@ -397,9 +405,9 @@ section which the plugin makes available to Cylc:
 Jinja2 Variable Scope
 ---------------------
 
-Jinja2 variable scoping rules may be surprising. Variables set inside a
-*for loop* block, for instance, are not accessible outside of the block,
-so the following will never print ``# FOO is True``:
+Jinja2 variable scoping rules may be surprising. For instance, variables set
+inside a ``for`` loop can't be accessed outside of the block,
+so the following will not print ``# FOO is True``:
 
 .. code-block:: cylc
 
@@ -411,10 +419,9 @@ so the following will never print ``# FOO is True``:
    {% endfor %}
    # FOO is {{FOO}}
 
-Jinja2 documentation suggests using alternative constructs like the loop else
-block or the special ``loop`` variable. More complex use cases can be
-handled using ``namespace`` objects which allow propagating of changes
-across scopes:
+Jinja2 documentation suggests using alternative constructs like the loop
+``else`` block or the special ``loop`` variable. More complex use cases can be
+handled using ``namespace`` objects that allow propagating of changes across scopes:
 
 .. code-block:: cylc
 
@@ -436,14 +443,14 @@ For detail, see
 Raising Exceptions
 ------------------
 
-Cylc provides two functions for raising exceptions using Jinja2. These
-exceptions are raised when the :cylc:conf:`flow.cylc` file is loaded and will prevent a workflow
-from running.
+Cylc provides two functions for raising exceptions in Jinja2 code. These
+exceptions are raised when the :cylc:conf:`flow.cylc` file is loaded and will
+prevent a workflow from running.
 
 .. note::
 
-   These functions must be contained within ``{{`` Jinja2
-   blocks as opposed to ``{%`` blocks.
+   These functions must be contained within ``{{`` Jinja2 print statements, not
+   ``{%`` code blocks.
 
 .. _jinja2-raise:
 
@@ -472,8 +479,8 @@ following example is equivalent to the "raise" example above.
    {{ assert(VARIABLE is defined, 'VARIABLE must be defined for this workflow.') }}
 
 
-Importing additional Python modules
------------------------------------
+Importing Python modules
+------------------------
 
 Jinja2 allows to gather variable and macro definitions in a separate template
 that can be imported into (and thus shared among) other templates.
@@ -506,7 +513,7 @@ Logging
 -------
 
 It is possible to output messages to the Cylc log from within Jinja2, these
-messages will appear on the console when running or validating a workflow.
+messages will appear on the console when validating or starting a workflow.
 This can be useful for development or debugging.
 
 Example :cylc:conf:`flow.cylc`:

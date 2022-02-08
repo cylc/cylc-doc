@@ -11,3 +11,4 @@ Writing Workflows
    jinja2
    empy
    external-triggers
+   suicide-triggers

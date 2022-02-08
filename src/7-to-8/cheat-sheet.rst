@@ -1,3 +1,5 @@
+.. _728.cheat_sheet:
+
 Cheat Sheet
 ===========
 
@@ -115,7 +117,7 @@ Restart a stopped workflow and pick up where it left off:
          # optionally reinstall
          cylc reinstall <name>
 
-         # restart
+         # restart
          cylc play <name>
 
 Deleting
@@ -181,7 +183,7 @@ Opening User Interfaces
 -----------------------
 
 Opening the graphical user interface (GUI) or terminal user interface (TUI)
-for monitoring / controling running workflows:
+for monitoring / controlling running workflows:
 
 .. list-table::
    :class: grid-table
@@ -230,7 +232,7 @@ Generate a visualisation for a workflow without running it:
      - ::
 
          cylc graph <name>
-         
+
        This generates a basic image file if Graphviz is installed.
 
        The web UI will have full graph vis. in a future release.

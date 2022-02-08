@@ -1,7 +1,6 @@
 #!Jinja2
 
-# WARNING: this uses deprecated old-style external trigger
-# mechanism.
+# WARNING: this uses the old-style push external trigger mechanism.
 
 [meta]
     title = Real time satellite data processing demo, variant 3 of 3
@@ -19,7 +18,7 @@
 
 # you can monitor output processing with:
 # $ watch -n 1 \
-#    "find ~/cylc-run/<WORKFLOW>/share; find ~/cylc-run/<WORKFLOW>/work"
+#    "find ~/cylc-run/<workflow-id>/share; find ~/cylc-run/<workflow-id>/work"
 
 {% set N_DATASETS = 5 %}
 

@@ -2,22 +2,23 @@
 
 .. _tutorial-datetime-cycling:
 
-Date-Time Cycling
-=================
+Datetime Cycling
+================
 
-.. warning::
+.. admonition:: Aims
+   :class: aims
 
-   This section of the tutorial still contains screenshots of the obsolete Cylc 7
-   desktop GUI.
+   | You should be able to:
+   | ✅ Write workflows where cycle points are dates and/or times.
 
 
-In the last section we looked at writing an :term:`integer cycling` workflow,
-one where the :term:`cycle points <cycle point>` are numbered.
+In the last section we looked at writing an :term:`integer cycling` workflow
+where the :term:`cycle points <cycle point>` are numbered.
 
 .. ifnotslides::
 
    Typically workflows are repeated at a regular time interval, say every day
-   or every few hours. To make this easier Cylc has a date-time cycling mode
+   or every few hours. To make this easier Cylc has a datetime cycling mode
    where the :term:`cycle points <cycle point>` use date and time specifications
    rather than numbers.
 
@@ -25,7 +26,8 @@ one where the :term:`cycle points <cycle point>` are numbered.
    :class: tip
 
    :term:`Cycle points <cycle point>` are labels. Cylc runs tasks as soon as
-   their dependencies are met so cycles do not necessarily run in order.
+   their dependencies are met so cycles do not necessarily run in order, or
+   at the real world time indicated by the cycle point.
 
 
 .. _tutorial-iso8601:
@@ -38,8 +40,8 @@ In Cylc, dates, times and durations are written using the :term:`ISO8601` format
 
 .. _tutorial-iso8601-datetimes:
 
-ISO8601 Date-Times
-^^^^^^^^^^^^^^^^^^
+ISO8601 Datetimes
+^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
@@ -98,17 +100,17 @@ ISO8601 Durations
   minute and a second.
 
 
-Date-Time Recurrences
----------------------
+Datetime Recurrences
+--------------------
 
 In :term:`integer cycling`, workflows' recurrences are written ``P1``, ``P2``,
 etc.
 
-In :term:`date-time cycling <datetime cycling>` there are two ways to write
+In :term:`datetime cycling <datetime cycling>` there are two ways to write
 recurrences:
 
 1. Using ISO8601 durations (e.g. ``P1D``, ``PT1H``).
-2. Using ISO8601 date-times with inferred recurrence.
+2. Using ISO8601 datetimes with inferred recurrence.
 
 .. _tutorial-inferred-recurrence:
 
@@ -117,9 +119,9 @@ Inferred Recurrence
 
 .. ifnotslides::
 
-   A recurrence can be inferred from a date-time by omitting digits from the
+   A recurrence can be inferred from a datetime by omitting digits from the
    front. For example, if the year is omitted then the recurrence can be
-   inferred to be annual. E.G:
+   inferred to be annual. E.g.:
 
 .. code-block:: sub
 
@@ -194,22 +196,22 @@ might produce different results for the recurrences.
 
           size = "3,3"
 
-          "foo.1" [label="foo\n2000-01-01T00"]
-          "foo.2" [label="foo\n2000-01-02T00"]
-          "foo.3" [label="foo\n2000-01-03T00"]
+          "1/foo" [label="foo\n2000-01-01T00"]
+          "2/foo" [label="foo\n2000-01-02T00"]
+          "3/foo" [label="foo\n2000-01-03T00"]
 
-          "foo.1" -> "foo.2" -> "foo.3"
+          "1/foo" -> "2/foo" -> "3/foo"
 
      - .. digraph:: Example
           :align: center
 
           size = "3,3"
 
-          "foo.1" [label="foo\n2000-01-01T12"]
-          "foo.2" [label="foo\n2000-01-02T12"]
-          "foo.3" [label="foo\n2000-01-03T12"]
+          "1/foo" [label="foo\n2000-01-01T12"]
+          "2/foo" [label="foo\n2000-01-02T12"]
+          "3/foo" [label="foo\n2000-01-03T12"]
 
-          "foo.1" -> "foo.2" -> "foo.3"
+          "1/foo" -> "2/foo" -> "3/foo"
 
 .. nextslide::
 
@@ -235,12 +237,12 @@ The Initial & Final Cycle Points
 .. TODO - change terminology as done in the cylc user guide, "repeat" can be
    confusing. Use occur?
 
-Inter-Cycle Dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^
+Intercycle Dependencies
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
-   Inter-cycle dependencies are written as ISO8601 durations, e.g:
+   Intercycle dependencies are written as ISO8601 durations, e.g:
 
 * ``foo[-P1D]``: the task ``foo`` from the cycle one day before.
 * ``bar[-PT1H30M]``: the task ``bar`` from the cycle 1 hour 30 minutes before.
@@ -274,6 +276,11 @@ UTC Mode
    [scheduler]
        UTC mode = True
 
+.. note::
+
+   UTC is sometimes also labelled ``Z`` ("zulu" from the NATO phonetic alphabet)
+   according to the
+   `military time zone convention <https://en.wikipedia.org/wiki/List_of_military_time_zones>`_.
 
 .. _tutorial-datetime-cycling-practical:
 
@@ -306,10 +313,10 @@ Putting It All Together
    build a picture of the current weather. Our dummy weather forecast
    will get wind observations from four weather stations:
 
-   * Aldergrove
-   * Camborne
-   * Heathrow
-   * Shetland
+   * Aldergrove (Near Belfast in NW of the UK)
+   * Camborne (In Cornwall, the far SW of England)
+   * Heathrow (Near London in the SE)
+   * Shetland (The northernmost part of the UK)
 
    The tasks which retrieve observation data will be called
    ``get_observations_<site>`` where ``site`` is the name of the weather
@@ -428,7 +435,7 @@ Putting It All Together
 .. practical::
 
    .. rubric:: In this practical we will create a dummy forecasting workflow
-      using date-time cycling.
+      using datetime cycling.
 
    #. **Create A New Workflow.**
 
@@ -459,7 +466,7 @@ Putting It All Together
 
       .. hint::
 
-         See :ref:`Date-Time Recurrences<tutorial-cylc-datetime-offset-icp>`.
+         See :ref:`Datetime Recurrences<tutorial-cylc-datetime-offset-icp>`.
 
       .. spoiler:: Solution warning
 
@@ -486,7 +493,7 @@ Putting It All Together
       With the help of the graphs and the information above add dependencies to
       your workflow to implement the weather-forecasting workflow.
 
-      You will need to consider the inter-cycle dependencies between tasks.
+      You will need to consider the intercycle dependencies between tasks.
 
       Use ``cylc graph`` to inspect your work.
 
@@ -537,7 +544,7 @@ Putting It All Together
                        get_rainfall => forecast => post_process_exeter
                    """
 
-   #. **Inter-Cycle Offsets.**
+   #. **Intercycle Offsets.**
 
       To ensure the ``forecast`` tasks for different cycles run in order the
       ``forecast`` task will also need to be dependent on the previous run
@@ -571,43 +578,52 @@ Putting It All Together
 
       We can express this dependency as ``forecast[-PT6H] => forecast``.
 
-      Try adding this line to your workflow then visualising it with ``cylc
-      graph``.
+      .. TODO - re-enable this: https://github.com/cylc/cylc-flow/issues/4638
 
-      .. hint::
+            Try adding this line to your workflow then visualising it with ``cylc
+            graph``.
 
-         Try adjusting the number of cycles displayed by ``cylc graph``:
+            .. hint::
 
-         .. code-block:: console
+               Try adjusting the number of cycles displayed by ``cylc graph``:
 
-            $ cylc graph . 2000 20000101T12Z &
+               .. code-block:: console
 
-      You will notice that there is a dependency which looks like this:
+                  $ cylc graph . 2000 20000101T12Z &
 
-      .. digraph:: example
-        :align: center
-
-         size = "4,1"
-         rankdir=LR
-
-         "forecast.t00" [label="forecast\n20000101T0000Z"
-                         color="#888888"
-                         fontcolor="#888888"]
-         "forecast.t06" [label="forecast\n20000101T0600Z"]
+            You will notice that there is a dependency which looks like this:
 
 
-         "forecast.t00" -> "forecast.t06"
+            .. digraph:: example
+            :align: center
 
-      Note in particular that the ``forecast`` task in the 00:00 cycle is
-      grey. The reason for this is that this task does not exist. Remember
-      the forecast task runs every six hours
+               size = "4,1"
+               rankdir=LR
+
+               "forecast.t00" [label="forecast\n20000101T0000Z"
+                              color="#888888"
+                              fontcolor="#888888"]
+               "forecast.t06" [label="forecast\n20000101T0600Z"]
+
+
+               "forecast.t00" -> "forecast.t06"
+
+            Note in particular that the ``forecast`` task in the 00:00 cycle is
+            grey. The reason for this is that this task does not exist. Remember
+            the forecast task runs every six hours
+            **starting 6 hours after the initial cycle point**, so the
+            dependency is only valid from 12:00 onwards. To fix the problem we
+            must add a new dependency section which repeats every six hours
+            **starting 12 hours after the initial cycle point**.
+
+            Make the following changes to your workflow and the grey task should
+            disappear:
+
+      However, the forecast task runs every six hours
       **starting 6 hours after the initial cycle point**, so the
       dependency is only valid from 12:00 onwards. To fix the problem we
       must add a new dependency section which repeats every six hours
-      **starting 12 hours after the initial cycle point**.
-
-      Make the following changes to your workflow and the grey task should
-      disappear:
+      **starting 12 hours after the initial cycle point**:
 
       .. code-block:: diff
 

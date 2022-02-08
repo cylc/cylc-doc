@@ -1,8 +1,11 @@
 
 .. _AdminGuide.PlatformConfigs:
 
+Platform Configuration
+======================
+
 Writing Platform Configurations
-===============================
+-------------------------------
 
 .. versionadded:: 8.0.0
 
@@ -13,8 +16,26 @@ Writing Platform Configurations
    - :cylc:conf:`global.cylc[platforms]`
    - :cylc:conf:`global.cylc[platforms][<platform name>]install target`
 
+.. _ListingAvailablePlatforms:
+
+Listing available platforms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are working on an institutional network platforms may already
+have been configured for you.
+
+To see a list of available platforms::
+
+   cylc config --platform-names
+
+To see the full configuration of available platforms::
+
+   cylc config --platforms
+
+This is equivalent to ``cylc config -i 'platforms' -i 'platform groups'``
+
 What Are Platforms?
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Platforms define settings, most importantly:
 
@@ -24,7 +45,7 @@ Platforms define settings, most importantly:
  - An ``install target`` for Cylc to install task job files on.
 
 Why Were Platforms Introduced?
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Allow a compute cluster with multiple login nodes to be treated as a single
   unit.
@@ -33,8 +54,10 @@ Why Were Platforms Introduced?
   separate platforms to submit jobs to a batch system and to background on
   ``localhost``.
 
+.. _Install Targets:
+
 What Are Install Targets?
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install targets represent file systems. More than one platform can use the
 same file system. It defaults to the name of the platform.
@@ -49,10 +72,10 @@ Each cluster would be both a platform, and have its own install target.
 
 
 Example Platforms
-=================
+-----------------
 
 On the Scheduler Host (Cylc Server)
------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **There is a built in localhost platform**
 
@@ -64,7 +87,7 @@ If a job doesn't set a platform it will run on the Cylc scheduler host
 using a default ``localhost`` platform.
 
 Simple Remote Platform
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms don't need to be complicated**
 - **``install target`` specifies a file system for the task using that platform**
@@ -73,7 +96,7 @@ Simple Remote Platform
 
    Users want to run background jobs on a single server,
    which doesn't share a file system with the workflow host.
-   
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
@@ -84,7 +107,7 @@ Simple Remote Platform
 
 
 Cluster with Multiple Login Nodes
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms can group multiple hosts together.**
 
@@ -110,7 +133,7 @@ Since the platform hosts do not share a file system with the scheduler
 host we need to ask Cylc to retrieve job logs.
 
 Background Jobs on Cluster with Other Options
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms are the unique combination of all settings.**
 
@@ -142,7 +165,7 @@ Background Jobs on Cluster with Other Options
 
 
 Submit PBS Jobs from Localhost
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms can share hosts and not share batch systems.**
 
@@ -175,7 +198,7 @@ As a result the above configuration can be simplified to:
 
 
 Two Similar Clusters
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 - **Platform groups allow users to ask for jobs to be run on any
   suitable computer.**
@@ -215,7 +238,7 @@ Two Similar Clusters
 
 
 Preferred and Backup Hosts and Platforms
-----------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **You can set how hosts are selected from platforms.**
 - **You can set how platforms are selected from groups.**
@@ -252,7 +275,7 @@ Preferred and Backup Hosts and Platforms
    Random is the default selection method.
 
 Lots of desktop computers
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platform names are regular expressions.**
 
@@ -287,3 +310,44 @@ platform. Job files can be installed on the workflow host.
    Therefore the same names **cannot** be used for platforms and platform
    groups. The ``global.cylc`` file will fail validation if the same name is
    used in both.
+
+Platform with no ``$HOME`` directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. admonition:: Scenario
+
+   You are trying to run jobs on a platform where the compute nodes don't
+   have a configured ``HOME`` directory.
+
+So long as the login and compute nodes share a filesystem the workflow can be
+installed on the shared filesystem using
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+
+The ``$CYLC_RUN_DIR`` variable can then be set on the compute node to point
+at the ``cylc-run`` directory on the shared filesystem using
+:cylc:conf:`global.cylc[platforms][<platform name>]global init-script`.
+
+ .. code-block:: cylc
+   :caption: part of a ``global.cylc`` config file
+
+   [platforms]
+       [[homeless-hpc]]
+           job runner = my-job-runner
+           install target = homeless-hpc
+           global init-script = """
+               export CYLC_RUN_DIR=/shared/filesystem/cylc-run
+           """
+
+   [install]
+       [[symlink dirs]]
+           [[[homeless-hpc]]]
+               run = /shared/filesystem/
+
+In this example Cylc will install workflows into
+``/shared/filesystem/cylc-run``.
+
+.. note::
+
+   If you are running :term:`schedulers <scheduler>` directly on the login node
+   and submitting jobs locally then the platform name and install target should
+   be ``localhost``.

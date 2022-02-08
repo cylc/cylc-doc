@@ -52,7 +52,7 @@ In cycling workflows tasks repeat on sequences that may represent forecast
 cycles, chunks of a simulation too long for a single run, steps in some
 multi-program iterative process (e.g. for optimizing model parameters), or
 datasets to be processed as they are generated or received, and so forth.
-Cycling in Cylc is controlled by ISO 8601 date-time recurrence expressions
+Cycling in Cylc is controlled by ISO 8601 datetime recurrence expressions
 (e.g. for environmental forecasting), or integer recurrence expressions (e.g.
 for iterative processes). Dependence across cycles creates ongoing, potentially
 never-ending, workflows (rather than simply a succession of disconnected single
