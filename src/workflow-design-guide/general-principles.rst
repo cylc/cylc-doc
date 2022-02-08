@@ -264,7 +264,7 @@ to delay job submission until the expected data arrival time:
 
    [scheduling]
        initial cycle point = now
-       [[special tasks]]
+       [[xtriggers]]
            # Trigger 5 min after wallclock time is equal to cycle point.
            clock = wall_clock(offset=PT5M)
        [[graph]]
