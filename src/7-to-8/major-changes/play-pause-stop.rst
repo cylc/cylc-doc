@@ -40,7 +40,7 @@ The ``cylc play`` command will always pick up where it left off (a
 
 If you want to re-run the entire workflow again from the start either:
 
-* Install a new run.
+* :ref:`Install a new run<Using Cylc Install>`.
 * Or if you want to keep the data from the old run start a :term:`reflow`.
 
 It is still possible to re-run workflows in-place in the Cylc 7 manner, however,
