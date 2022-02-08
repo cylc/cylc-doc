@@ -50,7 +50,7 @@ extensions = [
     'cylc.sphinx_ext.practical',
     'cylc.sphinx_ext.rtd_theme_addons',
     'cylc.sphinx_ext.sub_lang',
-    'sphinxcontrib.spelling'
+    'sphinxcontrib.spelling',
     'cylc.sphinx_ext.literal_sub_include'
 ]
 
