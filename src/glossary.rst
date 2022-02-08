@@ -497,7 +497,7 @@ Glossary
    intercycle dependency
    intercycle trigger
       In a :term:`cycling workflow <cycling>`, intercycle dependence refers to
-      a :term:`task` dependending on other tasks at different cycle points.
+      a :term:`task` depending on other tasks at different cycle points.
 
       For example, in the following workflow the task ``bar`` depends on
       its own previous instance:
@@ -552,7 +552,7 @@ Glossary
       A qualifier is what follows :term:`task` or family :term:`family` names
       after a colon ``:`` in :term:`triggers <trigger>`, in the :term:`graph`,
       to specify exactly which :term:`task outputs <task output>` must be
-      completed for the :term:`dependency` to be satisified.
+      completed for the :term:`dependency` to be satisfied.
 
       For example, in ``foo:start => bar``, the ``:start`` qualifier means that
       the ``started`` output of task ``foo`` must be completed to satisfy the
@@ -1270,7 +1270,7 @@ Glossary
 
    task output
       Task outputs mark the progression of a :term:`task` from waiting (for
-      prerequisites to be satisified) through to success or failure at run
+      prerequisites to be satisfied) through to success or failure at run
       time. Downstream tasks can trigger off of the outputs of other tasks, as
       determined by the :term:`graph`.
 

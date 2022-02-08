@@ -27,7 +27,7 @@ The simplest Cylc installation consists only of `Cylc Flow`_:
 .. tip::
 
    We suggest installing `Cylc Flow`_ at a "minor" version (e.g. ``8.1`` rather
-   than ``8.1.2``) to pick up the latest "maintainance" release.
+   than ``8.1.2``) to pick up the latest "mainteinance" release.
 
 If you do not specify your Python version you will be provided with the most
 recent compatible one.
@@ -112,7 +112,7 @@ Working With Other Conda Channels
 ---------------------------------
 
 Cylc projects are published to Conda Forge and the above environments install
-all dependences from Conda Forge.
+all dependencies from Conda Forge.
 
 If you want to install other dependencies (e.g. Python), from other channels
 (e.g. Anaconda), list the dependency explicitly and place the channel *above*
