@@ -1640,6 +1640,7 @@ is optional" and that a non-optional version of the trigger makes sense.
       foo => baz  # ERROR : foo:succeed must be optional here!
    """
 
+.. _optional outputs.family triggers:
 
 Family Triggers
 ^^^^^^^^^^^^^^^

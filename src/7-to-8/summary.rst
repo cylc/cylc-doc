@@ -330,7 +330,7 @@ Cylc Install
 
 .. seealso::
 
-   :ref:`Moving to Cylc Install<majorchangesinstall>`.
+   * :ref:`Moving to Cylc Install<majorchangesinstall>`.
 
 
 Cylc install cleanly separates workflow source directory from run directory,

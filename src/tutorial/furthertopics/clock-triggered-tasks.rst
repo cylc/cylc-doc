@@ -38,11 +38,11 @@ Example
 
 Our example workflow will simulate a clock chiming on the hour.
 
-Within your ``~/cylc-run`` directory create a new directory called
+Within your ``~/cylc-src`` directory create a new directory called
 ``clock-trigger``::
 
-   mkdir ~/cylc-run/clock-trigger
-   cd ~/cylc-run/clock-trigger
+   mkdir ~/cylc-src/clock-trigger
+   cd ~/cylc-src/clock-trigger
 
 Paste the following code into a ``flow.cylc`` file:
 
@@ -72,14 +72,13 @@ of times equal to the (cycle point) hour.
 
 Run your workflow using::
 
+   cylc validate .
+   cylc install
    cylc play clock-trigger
 
 Stop the workflow after a few cycles using ``cylc stop --now --now clock-trigger``.
 Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.
-
-.. TODO - check this tutorial still works now that cylc run/restart has been
-   replaced by cylc play
 
 
 Clock-Triggering Tasks
@@ -98,7 +97,7 @@ your ``flow.cylc``:
 This tells the workflow to clock trigger the ``bell`` task with a cycle
 offset of ``0`` hours.
 
-Save your changes and run your workflow.
+Save your changes, install and run your workflow.
 
 Your workflow should now be running the ``bell`` task in real-time. Any cycle times
 that have already passed (such as the one defined by ``initial cycle time``)
@@ -133,6 +132,8 @@ Edit the ``[[scheduling]]`` section to read:
 
 .. code-block:: cylc
 
+   initial cycle point = now
+   final cycle point = +P1D # Run for one day
    [[xtriggers]]
        quarter_past_trigger = wall_clock(offset=PT15M):PT30S
        half_past_trigger = wall_clock(offset=PT30M):PT30S
@@ -147,19 +148,21 @@ Edit the ``[[scheduling]]`` section to read:
 
 Note the different values used for the cycle offsets of the clock-trigger tasks.
 
-Save your changes and run your workflow using::
+Save your changes, install and run your workflow using::
 
-   cylc play clock-trigger now
+   cylc validate .
+   cylc install
+   cylc play clock-trigger
 
 .. note::
 
-   The ``now`` argument will run your workflow using the current time for the
-   initial cycle point.
+   Setting ``initial cycle point = now`` will run your workflow using the
+   current time at startup as the initial cycle point.
 
 Again, notice how the tasks trigger until the current time is reached.
 
 Leave your workflow running for a while to confirm it is working as expected
-and then shut it down using the :guilabel:`stop` button in the ``cylc gui``.
+before stopping it.
 
 
 .. note::
