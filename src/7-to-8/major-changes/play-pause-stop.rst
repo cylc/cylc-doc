@@ -29,9 +29,34 @@ commands:
 * ``cylc stop``
 
 A workflow can be safely played, paused and stopped any number of times without
-interrupting the workflow. The play command will always pick up where it left
-off. If you want to run again from the start, install a new run or start a
-:term:`reflow`.
+interrupting the workflow.
+
+
+Re-Running Workflows
+--------------------
+
+The ``cylc play`` command will always pick up where it left off (a
+:term:`restart`).
+
+If you want to re-run the entire workflow again from the start either:
+
+* :ref:`Install a new run<Using Cylc Install>`.
+* Or if you want to keep the data from the old run start a :term:`reflow`.
+
+It is still possible to re-run workflows in-place in the Cylc 7 manner, however,
+this is discouraged.
+To do this remove the workflow database as well as any other evidence of the 
+previous run that is no longer desired:
+
+.. code-block:: bash
+
+   # remove the workflow database, the work, share and log directories
+   cylc clean <id> --rm .service/db:work:share:log
+
+   # only remove the worflow database
+   $ cylc clean <id> --rm .service/db
+
+Then restart with ``cylc play``.
 
 
 Hold & Release
