@@ -130,8 +130,12 @@ workflow configuration at run time. This is an alternative to shutting a
 workflow down and restarting it after making changes.
 
 .. note::
-   Before reload, be sure to :ref:`reinstall <Reinstalling a workflow>` your
-   changes from source to run directory
+   If writing your workflows in a :term:`source directory`, then be sure to
+   :ref:`reinstall <Reinstalling a workflow>` your changes to the
+   :term:`run directory` before doing a reload.
+
+If you make an error in the ``flow.cylc`` file before a reload, the workflow
+log will report an error and the reload will have no effect.
 
 
 Restarting or Reloading after Graph Changes
