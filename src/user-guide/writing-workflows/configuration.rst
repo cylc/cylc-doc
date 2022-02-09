@@ -41,7 +41,7 @@ A Cylc :term:`source directory` contains:
 
    Task jobs can also run scripting defined in the ``flow.cylc`` file,
    executables installed to user-defined locations of the workflow run
-   directory, and external excutables.
+   directory, and external executables.
 
 ``lib/python/`` (optional)
    A directory for Python modules. It is added to ``$PYTHONPATH`` in

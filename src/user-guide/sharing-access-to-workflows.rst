@@ -30,7 +30,7 @@ There are three methods of identifying a user to grant access to:
 
 
 Using glob (``*``) to pattern match usernames and group names is not currently
-supported. 
+supported.
 
 Permissions are additive. If the user appears elsewhere in configuration, for
 example as a member of a system group, the permission level is taken as the
@@ -51,7 +51,7 @@ Assigning permissions can be done in two ways:
 Using both methods is supported, e.g ["READ", "stop", "pause"]
 
 Individual Operations
-^^^^^^^^^^^^^^^^^^^^^ 
+^^^^^^^^^^^^^^^^^^^^^
 To assign users permissions, you can list the operations you wish to grant
 
 .. code-block:: python
@@ -117,7 +117,7 @@ to operations in these groups, use ``!READ``, ``!CONTROL``, ``!ALL``.
 .. note::
 
    The ``READ`` access group is shorthand for all read-only operations. At present,
-   this is soley the ``read`` operation, which grants access to GraphQL queries and
+   this is solely the ``read`` operation, which grants access to GraphQL queries and
    subscriptions, and enables users to see the workflows in the UI. In future
    the ``READ`` access group may be extended.
 
@@ -164,7 +164,7 @@ In this scenario:
   workflows, even if ``user1`` is a member of the system ``groupA``. This is due
   to negations taking precedence over additions.
 
-- ``"user2"`` is not permitted to view workflows, or perform any operations. 
+- ``"user2"`` is not permitted to view workflows, or perform any operations.
 
 .. _site_configuration:
 
@@ -190,7 +190,7 @@ Defaults and Limits
 ^^^^^^^^^^^^^^^^^^^
 Sites set both limits and defaults for users.
 
-- ``limit`` determines the maximum access users can grant to their workflows. 
+- ``limit`` determines the maximum access users can grant to their workflows.
 
 - ``default`` sets a default access level, which applies if the user does
   not appear in the user-authorization configuration (via explicit user name or group).
@@ -295,7 +295,7 @@ If authorization is not performing as expected, check
 - you have provided ``read`` permissions, which enables the user to see your
   workflows.
 
-- check the spelling in your configuration. The correct spelling is 
+- check the spelling in your configuration. The correct spelling is
   ``c.CylcUIServer.user_authorization``
 
 - the server has been started by the user of the workflows you are trying to

@@ -12,7 +12,7 @@ Play Pause Stop
 Overview
 --------
 
-Cylc 8 uses a simplfied model for controlling workflows based on the controls
+Cylc 8 uses a simplified model for controlling workflows based on the controls
 of a tape player.
 
 There are now three controls, play, pause and stop:
