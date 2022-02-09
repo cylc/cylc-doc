@@ -6,7 +6,7 @@ Scheduling Configuration
 .. tutorial:: Scheduling Tutorial <tutorial-scheduling>
 
 The :cylc:conf:`[scheduling]` section of the :cylc:conf:`flow.cylc` file
-defines what tasks exist in the worklow, in a :term:`dependency graph <graph>`,
+defines what tasks exist in the workflow, in a :term:`dependency graph <graph>`,
 and when they should run, relative to each other and to constraints such as
 :term:`clock triggers <clock trigger>`, :term:`external triggers <external
 trigger>`, and :term:`internal queues <internal queue>`

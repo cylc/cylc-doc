@@ -46,6 +46,7 @@ INSTALL_REQUIRES = [
     'sphinx>=4.4',
     'sphinx_rtd_theme>=0.5.0',
     'sphinxcontrib-svg2pdfconverter',
+    'sphinxcontrib-spelling'
 ]
 
 EXTRAS_REQUIRE = {
