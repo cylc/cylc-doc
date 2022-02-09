@@ -36,10 +36,6 @@ Max
 Metadata
 Moab
 Multiline
-Parameterise
-Parameterised
-Parameterize
-Parameterized
 Plugins
 Posix
 Postprocessing
@@ -99,14 +95,12 @@ dirs
 env
 exeter
 facade
-favor
 filename
 filenames
 filesystem
 filesystems
 fillchar
 freeform
-fulfill
 fullmatch
 gscan
 hardwired
@@ -127,7 +121,6 @@ iterable
 jobscript
 latin
 lifecycle
-linearization
 loadleveler
 localhost
 lowercase
@@ -146,10 +139,6 @@ npm
 obs
 offline
 packjob
-parameterisation
-parameterise
-parameterization
-parameterized
 passX
 passphrase
 pbs
@@ -172,7 +161,6 @@ rc
 refactor
 reflow
 reinstallation
-relase
 repo
 requeue
 requeued
@@ -235,3 +223,4 @@ xtrigger
 xtriggers
 zmq
 zulu
+linearization
