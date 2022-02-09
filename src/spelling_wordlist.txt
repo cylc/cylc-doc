@@ -74,7 +74,6 @@ args
 auth
 baz
 behavior
-booleans
 clusterA
 clusterB
 colored
@@ -230,3 +229,9 @@ parameterise
 parameterised
 parameterisation
 parameterization
+aren
+Boolean
+roadmap
+shouldn
+customization
+ve
