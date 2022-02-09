@@ -109,6 +109,4 @@ Authorization
 CLI Via UIS
    The ability to route Cylc commands via the UIS is planned for a future release
 
-   furbulgulbleguvb
-
    * https://github.com/cylc/cylc-flow/issues/3528
