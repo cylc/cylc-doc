@@ -1334,7 +1334,7 @@ Tasks that depend on their own previous-cycle instance can be declared as
        [[graph]]
            T00,T12 = "foo => bar"
 
-However, this feature is deprecated in favor of explicit intercycle triggers
+However, this feature is deprecated in favour of explicit intercycle triggers
 which expose the associated scheduling behaviour in the graph:
 
 .. code-block:: cylc

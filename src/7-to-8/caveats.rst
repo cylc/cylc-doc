@@ -107,6 +107,8 @@ Authorization
    the UI doesn't yet provide easy access to other users' UI Servers.
 
 CLI Via UIS
-   The ability to route Cylc commands via the UIS is planned for a future relase
+   The ability to route Cylc commands via the UIS is planned for a future release
+
+   furbulgulbleguvb
 
    * https://github.com/cylc/cylc-flow/issues/3528
