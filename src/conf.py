@@ -224,8 +224,8 @@ texinfo_documents = [
 texinfo_show_urls = 'footnote'
 
 # Spelling extension
-spelling_lang='en_UK'
-tokenizer_lang='en_UK'
+spelling_lang='en_GB'
+tokenizer_lang='en_GB'
 spelling_word_list_filename=['spelling_wordlist.txt']
 spelling_show_suggestions=False
 spelling_ignore_importable_modules=True
