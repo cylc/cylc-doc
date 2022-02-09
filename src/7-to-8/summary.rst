@@ -434,7 +434,7 @@ Security
 
 .. seealso::
 
-   Techincal reference:
+   Technical reference:
 
    * :ref:`CylcUIServer.architecture`
 
