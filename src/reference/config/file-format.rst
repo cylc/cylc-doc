@@ -55,7 +55,7 @@ Boolean Values
 
 
 Sections and Sub-sections
-   Settings have a level-dependendent number of square brackets:
+   Settings have a level-dependent number of square brackets:
 
    .. code-block:: cylc
 
@@ -97,7 +97,7 @@ Duplicate Sections and Items
       [animals]
         dog = fido
         cat = dusty
- 
+
    is equivalent to this:
 
    .. code-block:: cylc

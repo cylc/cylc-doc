@@ -70,7 +70,7 @@ jobs:
 
       - name: build
         run: |
-          make html slides linkcheck doctest SPHINXOPTS='-Wn'
+          make html slides linkcheck spelling doctest SPHINXOPTS='-Wn'
 
       - name: debug
         if: failure()
