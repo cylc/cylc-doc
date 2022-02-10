@@ -11,7 +11,8 @@ Cylc Flow
 Trigger Edit
    Functionality removed pending reimplementation.
 
-   * https://github.com/cylc/cylc-flow/issues/3743
+   * https://github.com/cylc/cylc-flow/issues/3751
+
 Reflow
    The new "reflow" functionality, which allows multiple
    (potentially concurrent) executions of the same workflow in a single
@@ -33,7 +34,7 @@ Graph View
 
 Static Graph Visualization
    Not yet reimplemented for Cylc 8. As an interim measure the
-   ``cylc graph``` command can generate a basic PNG image of a workflow
+   ``cylc graph`` command can generate a basic PNG image of a workflow
    graph if Graphviz is installed in the Cylc environment.
 
 Log Files
