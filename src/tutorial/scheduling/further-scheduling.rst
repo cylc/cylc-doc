@@ -59,7 +59,7 @@ Clock Triggers
 .. ifnotslides::
 
    In Cylc, :term:`cycle points <cycle point>` are just labels. Tasks are
-   triggered when their dependencies are met regardles of their cycle point.
+   triggered when their dependencies are met regardless of their cycle point.
    But we can use *clock triggers* to force tasks to wait for a particular time,
    relative to their cycle point time, before running.
    This is necessary for certain operational and monitoring systems, e.g. for

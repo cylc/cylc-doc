@@ -9,7 +9,7 @@ scheduler program when they are ready to run, and how to define new
 
 .. note::
 
-   For the requirements a command, script, or program, must fulfill in order to
+   For the requirements a command, script, or program, must fulfil in order to
    function as a Cylc task, see :ref:`TaskImplementation`.
 
 When a task is ready Cylc generates a :term:`job script` (see :ref:`JobScripts`).
@@ -156,7 +156,7 @@ Overriding The Job Submission Command
 -------------------------------------
 
 To change the form of the actual command used to submit a job you
-need to define a new 
+need to define a new
 :cylc:conf:`global.cylc[platforms][<platform name>]job runner command template`.
 
 .. code-block:: cylc
