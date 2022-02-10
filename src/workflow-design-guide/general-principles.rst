@@ -117,8 +117,8 @@ they can run directly on target platforms, and you can rerun them later without
 restarting the workflow.
 
 
-Confining Ouput To The Run Directory
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Confining Output To The Run Directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Output files should be confined to the run directory tree. Then all
 output is easy to find, multiple instances of the same workflow can run

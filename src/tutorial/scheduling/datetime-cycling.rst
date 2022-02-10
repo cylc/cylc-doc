@@ -53,7 +53,7 @@ ISO8601 Datetimes
    For brevity we may omit seconds (and minutes) from the time i.e:
    ``20000101T0000`` (``20000101T00``).
 
-   For reability we can add hyphens (``-``) between the date components
+   For readability we can add hyphens (``-``) between the date components
    and colons (``:``) between the time components.
    This is optional, but if you do this you must use both hyphens *and* colons.
 

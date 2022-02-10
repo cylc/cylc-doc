@@ -620,7 +620,7 @@ Glossary
       Implicit tasks submit real jobs that just exit without doing anything
       useful. They may be useful placeholders during workflow development but
       are not allowed by default because they can be created accidentally by
-      smply misspelling a task name in the graph or under ``[runtime]``.
+      simply misspelling a task name in the graph or under ``[runtime]``.
 
       Here ``bar`` is implicit:
 
