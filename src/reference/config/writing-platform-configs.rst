@@ -90,7 +90,7 @@ Simple Remote Platform
 ^^^^^^^^^^^^^^^^^^^^^^
 
 - **Platforms don't need to be complicated**
-- **``install target`` specifies a file system for the task using that platform**
+- ``install target`` **specifies a file system for the task using that platform**
 
 .. admonition:: Scenario
 
@@ -305,11 +305,11 @@ platform. Job files can be installed on the workflow host.
 
 .. warning::
 
-   Platforms and Platform groups are selected in a workflow configuration
-   file using the same key (``[runtime][<task name>]platform = ``).
-   Therefore the same names **cannot** be used for platforms and platform
-   groups. The ``global.cylc`` file will fail validation if the same name is
-   used in both.
+   Platforms and platform groups are both configured by
+   :cylc:conf:`flow.cylc[runtime][<namespace>]platform`.
+   Therefore a platform group cannot be given the same name as a platform.
+   The :cylc:conf:`global.cylc` file will fail validation if the same name is
+   used for both.
 
 Platform with no ``$HOME`` directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
