@@ -34,13 +34,6 @@ Simple example of using ``cylc clean``:
    $ cylc clean myflow/run1
    INFO - Removing directory: ~/cylc-run/myflow/run1
 
-.. note::
-
-   Trying to clean a directory that contains more than one
-   run directory is not allowed, as a safety feature. You can override
-   this using the ``--force`` option, but this will not clean remote install
-   targets or follow symlink dirs as described below.
-
 
 Cleaning on remote install targets
 ----------------------------------
@@ -60,8 +53,9 @@ filesystem.
 .. note::
 
    This relies on determining which platforms were used from the workflow
-   database. If the database is missing, you will have to manually remove the
-   files on remote install targets.
+   database. If the platforms recorded in the database are out of date with
+   the global configuration, or if the database is missing altogether, you will
+   have to manually remove the files on remote install targets.
 
 You can also clean on just the local filesystem using the ``--local`` option,
 or just the remote install target using the ``--remote`` option.
@@ -110,12 +104,13 @@ A note on symlink directories
    :cylc:conf:`global.cylc[install][symlink dirs]`, you might want to read
    this explanation of how Cylc handles them during cleaning.
 
-If you manually delete a run directory (e.g., using ``rm`` or the file
-manager), only the symlinks themselves will be deleted, not the actual targets.
-In contrast, ``cylc clean`` follows the symlinks and deletes the targets.
+If you manually delete a run directory (e.g., using the ``rm`` command or the
+file manager), only the symlinks themselves will be deleted, not the actual
+targets. In contrast, ``cylc clean`` follows the symlinks and deletes the
+targets.
 
-- It does this for the symlinks that can be set in
-  :cylc:conf:`global.cylc[install][symlink dirs]` only, not any custom
+- It only does this for the symlinks that can be set in
+  :cylc:conf:`global.cylc[install][symlink dirs]`, not any custom
   user-created symlinks.
 - It does not actually look up the global configuration at time of cleaning;
   it simply detects what symlinks are present out of the possible ones.
