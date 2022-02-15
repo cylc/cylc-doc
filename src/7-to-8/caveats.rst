@@ -1,8 +1,8 @@
 Cylc |version| Caveats
 ======================
 
-This is a beta release of Cylc. There are some loose ends and features which
-have not yet been (re)implemented.
+This is a Cylc pre-release. There are some loose ends and features which
+have not yet been implemented.
 
 
 Cylc Flow
@@ -58,7 +58,7 @@ Multiple Selection
 
    * https://github.com/cylc/cylc-ui/issues/434
 Installing Workflows
-   At present there is no way to view or install non-installed workflows (a.k.a.
+   At present there is no way to view or install
    :term:`source workflows <source directory>`) in the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation in the UI.
@@ -107,7 +107,7 @@ Authorization
    A full-featured authorization system has been implemented for Cylc 8, but
    the UI doesn't yet provide easy access to other users' UI Servers.
 
-CLI Via UIS
+CLI via UIS
    The ability to route Cylc commands via the UIS is planned for a future release
 
    * https://github.com/cylc/cylc-flow/issues/3528
