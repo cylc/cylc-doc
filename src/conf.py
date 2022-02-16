@@ -130,6 +130,11 @@ linkcheck_ignore = [
     r'https://github.com/metomi/isodatetime.*#.*'
 ]
 
+nitpick_ignore_regex = [
+    # intersphinx has trouble with pyzmq classes:
+    ('py:class', 'zmq\.asyncio\.\w+')
+]
+
 # -- Options for Slides output ----------------------------------------------
 
 slide_theme = 'single-level'
