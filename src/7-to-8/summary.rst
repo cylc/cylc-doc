@@ -25,13 +25,29 @@ The workflow configuration file has changed from ``suite.rc`` to ``flow.cylc``.
 Cylc 7 Compatibility Mode
 -------------------------
 
-Cylc 8 can run Cylc 7 workflows out of the box.
+The old ``suite.rc`` filename triggers a :ref:`backward
+compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
+workflow configruations out of the box, with the following caveats:
 
-Run ``cylc validate`` on your ``suite.rc`` (using Cylc 7) to check it does
-not contain any deprecated syntax before attempting to run it with Cylc 8.
+.. warning::
 
-The old ``suite.rc`` filename triggers a backward compatibility mode,
-for more information see :ref:`cylc_7_compat_mode`.
+   Cylc 6 syntax deprecated by Cylc 7 is now obsolete. Run ``cylc validate``
+   *with Cylc 7* on your ``suite.rc`` to check for deprecation warnings and fix
+   those before validating with Cylc 8.
+
+.. warning::
+
+   Check for any use of Cylc commands in task scripting. Some Cylc 7 commands
+   have been removed and some others now behave differently.
+   See :ref:`command line interface changes<MajorChangesCLI>`.
+
+.. warning::
+
+   Cylc 8 does not support
+   :ref:`excluding tasks at start-up<MajorChangesExcludingTasksAtStartup>`.
+   If your workflow used this old functionality, it may have been used in
+   combination with the ``cylc insert`` command (which has been removed from
+   Cylc 8) and ``cylc remove`` (which still exists but is much less needed).
 
 .. warning::
 
@@ -63,7 +79,6 @@ Architecture
 .. seealso::
 
    - Technical Reference: :ref:`architecture-reference`
-
 
 The main Cylc 8 system components are:
 
@@ -335,8 +350,11 @@ Cylc Install
 
 Cylc install cleanly separates workflow source directory from run directory,
 and installs workflow files into the run directory at start-up.
+
 - ``cylc install`` copies workflow source files to a dedicated run-directory
+
 - :term:`source directory` locations can be set in global config
+
 - each install creates a new numbered :term:`run directory` (by default)
 
 .. code-block:: console
