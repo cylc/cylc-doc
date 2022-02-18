@@ -1,7 +1,7 @@
 Cylc |version| Caveats
 ======================
 
-This is a Cylc pre-release. There are some loose ends and features which
+This is a Cylc pre-release. There are some features which
 have not yet been implemented.
 
 
