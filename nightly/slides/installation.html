@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Cylc 8.0rc1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '8.0rc1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="_static/js/addons.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Cylc 8.0rc1 documentation" href="index.html" />
+    <link rel="next" title="Tutorial" href="tutorial/index.html" />
+    <link rel="prev" title="Cylc 8.0rc1 Caveats" href="7-to-8/caveats.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="installation">
+
+<h1>Installation<a class="headerlink" href="../html/installation.html#installation" title="View HTML">§</a></h1>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Cylc 8.0rc1 is a Cylc 8 <em>release candidate</em>. It is largely
+complete and can be used to manage real workflows, but it has not yet been
+heavily tested by users. Python 2 based Cylc 7 is stable and still available
+if needed for production systems.</p>
+<p class="last">Please report migration issues to the <a class="reference external" href="https://cylc.discourse.group/c/cylc/7-to-8/13">Cylc Discourse Forum (7-to-8 topic)</a>.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="quick-installation">
+
+<h2>Quick Installation<a class="headerlink" href="../html/installation.html#quick-installation" title="View HTML">§</a></h2>
+
+<p>Cylc runs on Unix-like systems including Linux and Mac OS.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="via-conda-recommended">
+
+<h3>Via Conda (recommended)<a class="headerlink" href="../html/installation.html#via-conda-recommended" title="View HTML">§</a></h3>
+
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge cylc-flow
+
+<span class="c"># install the browser-GUI (optional)</span>
+$ conda install -c conda-forge cylc-uiserver
+
+<span class="c"># install Rose support (optional)</span>
+$ conda install -c conda-forge cylc-rose metomi-rose
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="via-pip-npm">
+
+<h3>Via Pip (+npm)<a class="headerlink" href="../html/installation.html#via-pip-npm" title="View HTML">§</a></h3>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Requires Python 3.7+</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We recommend using a virtual environment.</p>
+</div>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>$ pip install cylc-flow
+
+<span class="c"># install the browser-GUI (optional)</span>
+<span class="c"># (requires nodejs &amp; npm)</span>
+$ pip install cylc-uiserver
+$ npm install configurable-http-proxy
+
+<span class="c"># install Rose support (optional)</span>
+$ pip install cylc-rose metomi-rose
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="non-python-requirements">
+
+<h2>Non-Python Requirements<a class="headerlink" href="../html/installation.html#non-python-requirements" title="View HTML">§</a></h2>
+
+<p>These dependencies are not installed by Conda or pip:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">bash</span></code></li>
+<li>GNU <a class="reference external" href="https://www.gnu.org/software/coreutils/coreutils.html">coreutils</a></li>
+<li><code class="docutils literal notranslate"><span class="pre">mail</span></code> (optional: for automated email functionality)</li>
+</ul>
+<p>These dependencies are installed by Conda but not by pip (you can use npm):</p>
+<ul class="simple">
+<li><a class="reference external" href="https://anaconda.org/conda-forge/configurable-http-proxy">configurable-http-proxy</a> (optional: for multi-user setups)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="installing-on-mac-os">
+
+<h2>Installing On Mac OS<a class="headerlink" href="../html/installation.html#installing-on-mac-os" title="View HTML">§</a></h2>
+
+<p>Cylc requires some extra packages to function on Mac OS, we recommend
+installing them using the <a class="reference external" href="https://formulae.brew.sh/">Homebrew</a> package manager:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew install bash coreutils gnu-sed
+</pre></div>
+</div>
+<p>You will need to prepend the <code class="docutils literal notranslate"><span class="pre">coreutils</span></code> and <code class="docutils literal notranslate"><span class="pre">gnu-sed</span></code> installations to
+your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>, follow the instructions in the <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span></code> output.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="https://www.unix.com/man-page/FreeBSD/8/atrun/">atrun</a> (the <code class="docutils literal notranslate"><span class="pre">at</span></code> command) does not run out-of-the-box on Mac OS
+for security reasons and must be manually enabled.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Newer version of Mac OS set <code class="docutils literal notranslate"><span class="pre">zsh</span></code> as the default shell (as opposed to
+<code class="docutils literal notranslate"><span class="pre">bash</span></code>). You do not need to change this but be aware that Cylc uses
+<code class="docutils literal notranslate"><span class="pre">bash</span></code> (for task job scripts) which has a subtly different syntax.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>For Mac OS Versions 10.15.0 (Catalina) and higher SSH is disabled by
+default. The ability to SSH into your Mac OS box may be required for
+certain Cylc installations.</p>
+<p class="last">See the <a class="reference external" href="https://support.apple.com/en-gb/guide/mac-help/mchlp1066/mac">Apple support page</a>
+for instructions on enabling SSH.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="advanced-installation">
+
+<h2>Advanced Installation<a class="headerlink" href="../html/installation.html#advanced-installation" title="View HTML">§</a></h2>
+
+<p>For distributed and multi-user installation we recommend using Conda and
+installing Cylc components only where required.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For examples of Conda environments and installation options see
+<a class="reference internal" href="reference/environments/conda.html#conda-environments"><span class="std std-ref">Conda Environments</span></a> for examples and details.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="the-cylc-components">
+
+<h3>The Cylc Components<a class="headerlink" href="../html/installation.html#the-cylc-components" title="View HTML">§</a></h3>
+
+<p>Cylc is split into a number of components providing different functionality:</p>
+<dl class="docutils">
+<dt><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></dt><dd>Provides the scheduler “kernel” of Cylc along with the command line interface.</dd>
+<dt><a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a></dt><dd>Provides the “Cylc Hub” and the browser-based “Cylc GUI”.</dd>
+<dt><a class="reference internal" href="plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a></dt><dd>Provides support for <a class="reference external" href="https://github.com/metomi/rose">Rose</a> suite configurations in Cylc workflows.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="installation-types">
+
+<h3>Installation Types<a class="headerlink" href="../html/installation.html#installation-types" title="View HTML">§</a></h3>
+
+<p>Cylc install locations may fall into the following “roles”:</p>
+<dl class="docutils">
+<dt>User Machines</dt><dd>Where users write workflows and interact with the command line.</dd>
+<dt>Cylc Servers</dt><dd>Where Cylc schedulers run to manage workflows.</dd>
+<dt>Job Hosts</dt><dd>Where task jobs run, e.g. supercomputers or clusters</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These roles may overlap. For example, Cylc servers can also be job hosts.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="recommended-installation">
+
+<h3>Recommended Installation<a class="headerlink" href="../html/installation.html#recommended-installation" title="View HTML">§</a></h3>
+
+<dl class="docutils">
+<dt>User Machines</dt><dd><ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></li>
+<li><a class="reference internal" href="plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a> (if using <a class="reference external" href="https://github.com/metomi/rose">Rose</a>)</li>
+</ul>
+</dd>
+<dt>Cylc Servers</dt><dd><ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></li>
+<li><a class="reference internal" href="plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a> (if using <a class="reference external" href="https://github.com/metomi/rose">Rose</a>)</li>
+<li><a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a></li>
+</ul>
+</dd>
+<dt>Job Hosts:</dt><dd><ul class="simple">
+<li><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></li>
+<li><a class="reference external" href="https://github.com/metomi/rose">Rose</a> (if running Rose applications on the job host)</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="managing-environments">
+
+<h3>Managing Environments<a class="headerlink" href="../html/installation.html#managing-environments" title="View HTML">§</a></h3>
+
+<p>For Cylc to run, the correct environment must be activated. Cylc can
+not do this automatically. You may need to have multiple Cylc versions
+available too.</p>
+<p>We recommend using a wrapper script named <code class="docutils literal notranslate"><span class="pre">cylc</span></code> to activate the correct
+environment before calling the environment’s  <code class="docutils literal notranslate"><span class="pre">cylc</span></code> command.</p>
+<p>Cylc comes with a wrapper which can be extracted to a directory in your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>
+using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc get-resources etc/cylc /path/to/cylc  <span class="c1"># should be in $PATH</span>
+chmod +x /path/to/cylc
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="configuration">
+
+<h2>Configuration<a class="headerlink" href="../html/installation.html#configuration" title="View HTML">§</a></h2>
+
+<p>Cylc uses “sane and safe” defaults and is suitable for use “out of the box”.
+However, many things may need to be configured, e.g:</p>
+<ul class="simple">
+<li>Job hosts</li>
+<li>Communication methods</li>
+<li>User/Site preferences</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="cylc-flow">
+
+<h3>Cylc Flow<a class="headerlink" href="../html/installation.html#cylc-flow" title="View HTML">§</a></h3>
+
+<p><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> is configured by the <a class="reference internal" href="reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a> file which supports
+configuration of the system on both a site and user basis.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Prior to Cylc 8, <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> was named <code class="docutils literal notranslate"><span class="pre">global.rc</span></code>, but that name is
+no longer supported.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="bash-profile">
+
+<h3>Bash Profile<a class="headerlink" href="../html/installation.html#bash-profile" title="View HTML">§</a></h3>
+
+<p>Cylc task job scripts are bash scripts, which is good for manipulating files
+and processes, They invoke <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-l</span></code> to allow environment configuration in
+login scripts.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Sites and users should ensure their bash login scripts configure the
+environment correctly for Cylc and <em>do not write anything to stdout</em>.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

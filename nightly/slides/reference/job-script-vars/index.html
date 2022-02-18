@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Job Script Environment Variables &mdash; Cylc 8.0rc1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc1 documentation" href="../../index.html" />
+    <link rel="up" title="Reference" href="../index.html" />
+    <link rel="next" title="Architecture" href="../architecture/index.html" />
+    <link rel="prev" title="Platform Configuration" href="../config/writing-platform-configs.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="job-script-environment-variables">
+
+<h1>Job Script Environment Variables<a class="headerlink" href="../../../html/reference/job-script-vars/index.html#job-script-environment-variables" title="View HTML">§</a></h1>
+
+<p>These variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available to Cylc job scripts:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_DEBUG                         <span class="c"># Debug mode, true or not defined</span>
+CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+
+CYLC_CYCLING_MODE                  <span class="c"># Cycling mode, e.g. gregorian</span>
+ISODATETIMECALENDAR                <span class="c"># Calendar mode for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_CYCLING_MODE</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_WORKFLOW_FINAL_CYCLE_POINT    <span class="c"># Final cycle point</span>
+CYLC_WORKFLOW_INITIAL_CYCLE_POINT  <span class="c"># Initial cycle point</span>
+CYLC_WORKFLOW_ID                   <span class="c"># Workflow ID</span>
+CYLC_WORKFLOW_NAME                 <span class="c"># Workflow name</span>
+                                   <span class="c"># (the workflow ID without the run name)</span>
+CYLC_UTC                           <span class="c"># UTC mode, True or False</span>
+CYLC_VERBOSE                       <span class="c"># Verbose mode, True or False</span>
+TZ                                 <span class="c"># Set to &quot;UTC&quot; in UTC mode or not defined</span>
+
+CYLC_WORKFLOW_RUN_DIR              <span class="c"># Location of the run directory in</span>
+                                   <span class="c"># job host, e.g. ~/cylc-run/foo</span>
+CYLC_WORKFLOW_HOST                 <span class="c"># Host running the workflow process</span>
+CYLC_WORKFLOW_OWNER                <span class="c"># User ID running the workflow process</span>
+
+CYLC_WORKFLOW_SHARE_DIR            <span class="c"># Workflow (or task!) shared directory (see below)</span>
+CYLC_WORKFLOW_UUID                 <span class="c"># Workflow UUID string</span>
+CYLC_WORKFLOW_WORK_DIR             <span class="c"># Workflow work directory (see below)</span>
+
+CYLC_TASK_JOB                      <span class="c"># Task job identifier expressed as</span>
+                                   <span class="c"># CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER</span>
+                                   <span class="c">#   e.g. 20110511T1800Z/t1/01</span>
+
+CYLC_TASK_CYCLE_POINT              <span class="c"># Cycle point, e.g. 20110511T1800Z</span>
+ISODATETIMEREF                     <span class="c"># Reference time for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_TASK_CYCLE_POINT</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_TASK_NAME                     <span class="c"># Job&#39;s task name, e.g. t1</span>
+CYLC_TASK_SUBMIT_NUMBER            <span class="c"># Job&#39;s submit number, e.g. 1,</span>
+                                   <span class="c">#   increments with every submit</span>
+CYLC_TASK_TRY_NUMBER               <span class="c"># Number of execution tries, e.g. 1</span>
+                                   <span class="c">#   increments with automatic retry-on-fail</span>
+CYLC_TASK_ID                       <span class="c"># Task instance identifier TASK-NAME.CYCLE-POINT</span>
+                                   <span class="c">#   e.g. t1.20110511T1800Z</span>
+CYLC_TASK_LOG_DIR                  <span class="c"># Location of the job log directory</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/</span>
+CYLC_TASK_LOG_ROOT                 <span class="c"># The task job file path</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job</span>
+CYLC_TASK_WORK_DIR                 <span class="c"># Location of task work directory (see below)</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1</span>
+CYLC_TASK_NAMESPACE_HIERARCHY      <span class="c"># Linearised family namespace of the task,</span>
+                                   <span class="c">#   e.g. root postproc t1</span>
+CYLC_TASK_DEPENDENCIES             <span class="c"># List of met dependencies that triggered the task</span>
+                                   <span class="c">#   e.g. 1/foo 1/bar</span>
+
+CYLC_TASK_COMMS_METHOD             <span class="c"># Set to &quot;ssh&quot; if communication method is &quot;ssh&quot;</span>
+CYLC_TASK_SSH_LOGIN_SHELL          <span class="c"># With &quot;ssh&quot; communication, if set to &quot;True&quot;,</span>
+                                   <span class="c">#   use login shell on workflow host</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

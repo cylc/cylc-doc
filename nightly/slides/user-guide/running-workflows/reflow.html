@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Flows &amp; Reflow &mdash; Cylc 8.0rc1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc1 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Retrying Tasks" href="retrying-tasks.html" />
+    <link rel="prev" title="Tasks in the UI" href="tasks-jobs-ui.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="flows-reflow">
+
+<h1>Flows &amp; Reflow<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#flows-reflow" title="View HTML">§</a></h1>
+
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.0.</span></p>
+</div>
+<p>In Cylc, a <em>flow</em> is a single logical run of a <a class="reference internal" href="../../glossary.html#term-workflow"><span class="xref std std-term">workflow</span></a> that “flows”
+on from some start point in the <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>. Cylc <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> can manage more than one flow in the same graph, at the same time.
+This capability is called <em>reflow</em>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="triggering-a-flow">
+
+<h2>Triggering a Flow<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#triggering-a-flow" title="View HTML">§</a></h2>
+
+<p>The first flow in a new workflow run gets triggered automatically when the
+scheduler is <a class="reference internal" href="../../glossary.html#term-startup"><span class="xref std std-term">started</span></a> with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command. Its
+tasks are have <a class="reference internal" href="../../glossary.html#term-flow-number"><span class="xref std std-term">flow number</span></a> <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>Subsequent flows can be triggered from particular task(s) in the graph using
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--reflow</span></code>. The flow number increments by one, each time.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> does not start a new flow from the triggered
+task. Use the <code class="docutils literal notranslate"><span class="pre">--reflow</span></code> option to start a new flow. <a class="reference internal" href="../../glossary.html#term-incomplete-task"><span class="xref std std-term">Incomplete
+tasks</span></a> are the exception to this rule
+because they are considered to be an unfinished part of the existing flow.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="reflow-use-cases">
+
+<h2>Reflow Use Cases<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#reflow-use-cases" title="View HTML">§</a></h2>
+
+<p>Reflows are useful if you need to re-wind your <a class="reference internal" href="../../glossary.html#term-workflow"><span class="xref std std-term">workflow</span></a> to allow
+it to evolve a new path into the future, or to repeat-run some subgraph
+to regenerate its outputs after making changes.</p>
+<p>For example, the following <a class="reference internal" href="../../glossary.html#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a> runs a <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a>
+called <code class="docutils literal notranslate"><span class="pre">model</span></code> in every cycle, followed by a postprocessing task, two
+product generating tasks, and finally a task that publishes results for
+the cycle point:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 </span><span class="o">=</span><span class="s"> model[-P1] =&gt; model =&gt; post =&gt; prod1 &amp; prod2 =&gt; publish</span>
+</pre></div>
+</div>
+<p>Let’s say the workflow has run to cycle 8, but we have just noticed that
+a corrupted ancillary file resulted in bad products at cycle 5.</p>
+<p>To rectify this we could fix the corrupted file and trigger a new flow
+(a reflow) from <code class="docutils literal notranslate"><span class="pre">5/post</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">trigger</span> <span class="o">--</span><span class="n">reflow</span> <span class="o">&lt;</span><span class="n">workflow</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;//</span><span class="mi">5</span><span class="o">/</span><span class="n">post</span>
+</pre></div>
+</div>
+<p>The new flow will regenerate and republish cycle 5 products before naturally
+coming to a halt, because the triggered tasks do not lead on to the next cycle
+and the rest of the graph.</p>
+<p>Meanwhile, the original flow will carry on unaffected, from cycle 8.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="flow-merging">
+
+<h2>Flow Merging<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#flow-merging" title="View HTML">§</a></h2>
+
+<p>If a task from one flow catches up with an active sibling from another
+(i.e. an active task with the same name and <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a>, but a
+different flow number) they will merge and carry both flow numbers
+forward. Downstream tasks can be considered to belong to either flow.
+Any number of flows can merge like this.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="stopping-flows">
+
+<h2>Stopping Flows<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#stopping-flows" title="View HTML">§</a></h2>
+
+<p>By default, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code> halts the entire workflow and shuts the scheduler down.</p>
+<p>Individual flows can be stopped with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span> <span class="pre">--flow=&lt;flow-number&gt;</span></code>, however.
+This removes the flow number from all tasks in the <a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a>. Tasks
+with no flow numbers do not spawn downstream. If there are no active flows
+left, the scheduler will shut down.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Flow numbers are not yet exposed in the UI. Consult the <a class="reference internal" href="../../glossary.html#term-scheduler-log"><span class="xref std std-term">scheduler
+log</span></a> to see the flow number of active tasks.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

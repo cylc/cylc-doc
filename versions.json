@@ -3,19 +3,15 @@
         "slides",
         "html"
     ],
+    "8.0b1": [
+        "slides",
+        "html"
+    ],
     "7.9.3": [
-        "html",
-        "singlehtml"
+        "singlehtml",
+        "html"
     ],
     "8.0b2": [
-        "slides",
-        "html"
-    ],
-    "8.0b3": [
-        "slides",
-        "html"
-    ],
-    "8.0b1": [
         "slides",
         "html"
     ],
@@ -23,15 +19,23 @@
         "slides",
         "html"
     ],
-    "7.8.8": [
-        "html",
-        "singlehtml"
-    ],
-    "stable": [
+    "8.0b3": [
         "slides",
         "html"
     ],
+    "7.8.8": [
+        "singlehtml",
+        "html"
+    ],
+    "stable": [
+        "singlehtml",
+        "html"
+    ],
     "latest": [
+        "slides",
+        "html"
+    ],
+    "nightly": [
         "slides",
         "html"
     ]
