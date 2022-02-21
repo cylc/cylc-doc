@@ -3,6 +3,18 @@
 Excluding Tasks at Start-up is Not Supported
 ============================================
 
+.. admonition:: Does This Change Affect Me?
+   :class: tip
+
+   This will affect you if your workflows use the following configurations:
+
+   * ``[scheduling][special tasks]include at start-up``
+   * ``[scheduling][special tasks]exclude at start-up``
+
+
+Overview
+--------
+
 The Cylc 7 sheduler allowed you to exclude tasks from the scheduler at start-up: 
 
 .. code-block:: cylc
