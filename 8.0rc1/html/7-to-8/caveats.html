@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cylc 8.0rc1 Caveats &mdash; Cylc 8.0rc1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation" href="../installation.html" />
+    <link rel="prev" title="Template Variables" href="major-changes/template-vars.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0rc1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="summary.html">Quick Summary Of Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/index.html">Major Changes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cylc 8.0rc1 Caveats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-flow">Cylc Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#browser-based-ui">Browser Based UI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#terminal-user-interface">Terminal User Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ui-server">UI Server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Cylc 8 Migration Guide</a> &raquo;</li>
+      <li>Cylc 8.0rc1 Caveats</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/7-to-8/caveats.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cylc-version-caveats">
+<h1>Cylc 8.0rc1 Caveats<a class="headerlink" href="#cylc-version-caveats" title="Permalink to this headline"></a></h1>
+<p>This is a Cylc pre-release. There are some features which
+have not yet been implemented.</p>
+<section id="cylc-flow">
+<h2>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt>Trigger Edit</dt><dd><p>Functionality removed pending reimplementation.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3751">https://github.com/cylc/cylc-flow/issues/3751</a></p></li>
+</ul>
+</dd>
+<dt>Reflow</dt><dd><p>The new “reflow” functionality, which allows multiple
+(potentially concurrent) executions of the same workflow in a single
+<a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, is not fully supported by all commands</p>
+</dd>
+</dl>
+</section>
+<section id="browser-based-ui">
+<h2>Browser Based UI<a class="headerlink" href="#browser-based-ui" title="Permalink to this headline"></a></h2>
+<p>The old “GUI” has been replaced by the new browser-based “UI”.</p>
+<dl class="simple">
+<dt>Graph View</dt><dd><p>There is no graph view in the new Cylc UI as yet. A new graph view will be
+developed providing both “live” (AKA <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gui</span></code>) and “offline”
+(AKA <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code>) functionalities.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/74">https://github.com/cylc/cylc-ui/issues/74</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/82">https://github.com/cylc/cylc-ui/issues/82</a></p></li>
+</ul>
+</dd>
+<dt>Static Graph Visualization</dt><dd><p>Not yet reimplemented for Cylc 8. As an interim measure the
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> command can generate a basic PNG image of a workflow
+graph if Graphviz is installed in the Cylc environment.</p>
+</dd>
+<dt>Log Files</dt><dd><p>The ability to view job logs and other files in the web UI is yet to be
+implemented. For the moment:</p>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code></p></li>
+<li><p>look in your <code class="docutils literal notranslate"><span class="pre">cylc-run</span></code> directory</p></li>
+<li><p>use Cylc Review from Cylc 7.9.5/7.8.10 (the latest version is compatible
+with Cylc 8)</p></li>
+</ul>
+</dd>
+<dt>Multiple Selection</dt><dd><p>Multiple selection is yet to be implemented, however, it is possible
+to issue action for multiple tasks (e.g. <code class="docutils literal notranslate"><span class="pre">kill</span></code>) without using
+multiple selection:</p>
+<ul class="simple">
+<li><p>From the UI click on a workflow/cycle/task/job.</p></li>
+<li><p>Find the action you want to call (e.g. kill).</p></li>
+<li><p>Click the pencil symbol next to this action.</p></li>
+<li><p>Edit the workflows/cycles/tasks/jobs in the form and press submit.</p></li>
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/434">https://github.com/cylc/cylc-ui/issues/434</a></p></li>
+</ul>
+</dd>
+<dt>Installing Workflows</dt><dd><p>At present there is no way to view or install
+<a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source workflows</span></a>) in the UI.</p>
+</dd>
+<dt>Rose Edit</dt><dd><p>Rose Edit is awaiting reimplementation in the UI.</p>
+</dd>
+<dt>Trigger Edit</dt><dd><p>Functionality removed pending reimplementation.</p>
+</dd>
+<dt>Xtrigger Visibility</dt><dd><p>Xtriggers are not yet visible in the UI.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/331">https://github.com/cylc/cylc-ui/issues/331</a></p></li>
+</ul>
+</dd>
+<dt>Documentation / Orientation Guide</dt><dd><p>Some form of documentation will be provided within the UI itself.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/issues/155">https://github.com/cylc/cylc-ui/issues/155</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="terminal-user-interface">
+<h2>Terminal User Interface<a class="headerlink" href="#terminal-user-interface" title="Permalink to this headline"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> command (Tui) replaces the old <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code>. It provides a
+tree view that is very similar to the Cylc UI and supports some control
+functionality.</p>
+<dl>
+<dt>Performance</dt><dd><p>TUI currently refreshes its display every second. Large workflows which
+change rapidly may evolve faster than TUI is able to keep pace with which
+will cause TUI to freeze.</p>
+<p>A more performant implementation which does not rely on a scheduled global
+update will follow in due course.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3527">https://github.com/cylc/cylc-flow/issues/3527</a></p></li>
+</ul>
+</dd>
+<dt>GScan</dt><dd><p>The old <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gscan</span></code> GUI has been removed. You can now find the gscan
+display on the left-hand side of the Cylc UI.</p>
+<p>In a future release <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> will be able to list workflows in a similar
+way.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3464">https://github.com/cylc/cylc-flow/issues/3464</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ui-server">
+<h2>UI Server<a class="headerlink" href="#ui-server" title="Permalink to this headline"></a></h2>
+<dl class="simple">
+<dt>Authorization</dt><dd><p>A full-featured authorization system has been implemented for Cylc 8, but
+the UI doesn’t yet provide easy access to other users’ UI Servers.</p>
+</dd>
+<dt>CLI via UIS</dt><dd><p>The ability to route Cylc commands via the UIS is planned for a future release</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3528">https://github.com/cylc/cylc-flow/issues/3528</a></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="major-changes/template-vars.html" class="btn btn-neutral float-left" title="Template Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Feb 21, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0rc1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/caveats";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
