@@ -1,3 +1,5 @@
+.. _MajorChangesCLI:
+
 Command Line Interface
 ======================
 
