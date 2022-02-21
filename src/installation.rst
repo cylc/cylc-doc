@@ -36,7 +36,15 @@ Via Pip (+npm)
 
    We recommend using a virtual environment.
 
+.. warning::
+
+   For Cylc 8.0rc1, a bug in the currently used version of Jinja2 means you
+   will have to manually install ``markupsafe`` at less than version 2.1
+
 .. code-block:: sub
+
+   # workaround jinja2 bug in Cylc 8.0rc1
+   $ pip install 'markupsafe<2.1'
 
    $ pip install cylc-flow
 
