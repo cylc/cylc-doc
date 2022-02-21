@@ -17,7 +17,7 @@ runs:
         # get cylc version...
         if [[ -z '${{ inputs.cylc_flow_version }}' ]]; then
           # ... from cylc library
-          CYLC_RELEASE="$(python src/lib/cylc_release.py)"
+          CYLC_RELEASE="$(python ./docs/src/lib/cylc_release.py)"
         else
           # ... from GitHub action input
           CYLC_RELEASE="${{ inputs.cylc_flow_version }}"
