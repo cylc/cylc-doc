@@ -36,9 +36,15 @@ Via Pip (+npm)
 
    We recommend using a virtual environment.
 
+.. warning::
+
+   If using ``pip`` to install Cylc versions 8.0rc1 and below, a bug in
+   Jinja2 means you will have to manually install ``markupsafe`` at less
+   than version 2.1.
+
 .. code-block:: sub
 
-   $ pip install cylc-flow
+   $ pip install 'markupsafe<2.1' cylc-flow
 
    # install the browser-GUI (optional)
    # (requires nodejs & npm)
