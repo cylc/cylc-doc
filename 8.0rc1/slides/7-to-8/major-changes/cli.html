@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command Line Interface &mdash; Cylc 8.0rc1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc1 documentation" href="../../index.html" />
+    <link rel="up" title="Major Changes" href="index.html" />
+    <link rel="next" title="Cylc 7 Compatibility Mode" href="compatibility-mode.html" />
+    <link rel="prev" title="Major Changes" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="command-line-interface">
+
+<h1>Command Line Interface<a class="headerlink" href="../../../html/7-to-8/major-changes/cli.html#command-line-interface" title="View HTML">§</a></h1>
+
+<div class="tip admonition">
+<p class="first admonition-title">Does This Change Affect Me?</p>
+<p class="last">This will affect you if you use the Cylc command line interface.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overview">
+
+<h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/cli.html#overview" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>Some commands have been renamed e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</li>
+<li>Some tools have been added or removed.</li>
+<li>The task ID format has changed.</li>
+</ul>
+<p>For a quick side by side comparison see the <a class="reference internal" href="../cheat-sheet.html#cheat-sheet"><span class="std std-ref">Cheat Sheet</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="full-list-of-command-changes">
+
+<h2>Full List Of Command Changes<a class="headerlink" href="../../../html/7-to-8/major-changes/cli.html#full-list-of-command-changes" title="View HTML">§</a></h2>
+
+<p>The command line has been simplified from Cylc 7 with some commands being
+renamed or removed.</p>
+<p class="rubric">Commands which have been removed or changed:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">checkpoint</span></code></dt><dd><ul class="simple">
+<li>Database checkpoints are no longer needed.</li>
+<li>All task state changes are written to the database when they occur.</li>
+<li>Remaining use cases can be handled by <a class="reference internal" href="../../glossary.html#term-reflow"><span class="xref std std-term">reflows</span></a>
+which allow a new execution of the graph to be started from an
+arbitrary point in the graph.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">conditions</span></code></dt><dd><ul class="simple">
+<li>See the <a class="reference external" href="https://github.com/cylc/cylc-flow/blob/master/COPYING">license</a> file for conditions of usage</li>
+<li>The Cylc license remains unchanged from Cylc 7.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">documentation</span></code></dt><dd><ul class="simple">
+<li>We no longer include a command for locating this documentation.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">edit</span></code></dt><dd><ul class="simple">
+<li>Use a text editor to edit the workflow configuration file.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code></dt><dd><ul class="simple">
+<li>Task insertion is now automatic, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">jobscript</span></code></dt><dd><ul class="simple">
+<li>It is no longer possible generate a jobscript from outside of a workflow.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code></dt><dd><ul class="simple">
+<li>There is now a new more powerful terminal user interface (TUI).</li>
+<li>Try <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">nudge</span></code></dt><dd><ul class="simple">
+<li>No longer required.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">print</span></code></dt><dd><ul class="simple">
+<li>Equivalent to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span> <span class="pre">--states=all</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">register</span></code></dt><dd><ul class="simple">
+<li>Registration is no longer required, all workflows in the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>
+directory are “registered” automatically.</li>
+<li>To install a workflow from a working copy use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reset</span></code></dt><dd><ul class="simple">
+<li>It is no longer possible to manually change a task’s state.</li>
+<li>You can, however, override the outputs the task generated which has a
+similar effect with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set-outputs</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">restart</span></code></dt><dd><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> have been combined into
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">review</span></code></dt><dd><ul class="simple">
+<li>The read-only <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">review</span></code> web GUI has been removed.</li>
+<li>The latest Cylc 7 version of <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">review</span></code> is Cylc 8 compatible
+so can still be used to monitor both Cylc 7 and Cylc 8 workflows
+side by side.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code></dt><dd><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> have been combined into
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">search</span></code></dt><dd><ul class="simple">
+<li>Use <code class="docutils literal notranslate"><span class="pre">grep</span></code> or a text editor to search the workflow configuration or
+source directory.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">spawn</span></code></dt><dd><ul class="simple">
+<li>Spawning is now performed automatically, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> to run a task.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">submit</span></code></dt><dd><ul class="simple">
+<li>It is no longer possible to submit a job from outside of a workflow.</li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">warranty</span></code></dt><dd><ul class="simple">
+<li>The Cylc license remains unchanged from Cylc 7.</li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Graphical User Interfaces (GUIs):</p>
+<p>The GTK based GUI based GUIs have been removed, please use the new web based
+GUI. Consequently the following commands have also been removed:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gpanel</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gscan</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gcylc</span></code></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gui</span></code> command remains, it launches a standalone version of the
+web GUI (providing the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is installed).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-8-standardised-ids">
+
+<h2>Cylc 8 Standardised IDs<a class="headerlink" href="../../../html/7-to-8/major-changes/cli.html#cylc-8-standardised-ids" title="View HTML">§</a></h2>
+
+<p>In Cylc 7 there were two ways to specify a task:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>task.cycle
+cycle/task
+</pre></div>
+</div>
+<p>At Cylc 8 we have removed the former and extended the latter to provide a
+unique identifier for all workflows, cycles, tasks and jobs using a
+standardised format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~user/workflow//cycle/task/job
+</pre></div>
+</div>
+<p>Consequently task IDs have changed:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># old
+cycle.task
+
+# new
+cycle/task
+</pre></div>
+</div>
+<p>An example using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># old</span>
+cylc trigger workflow task.cycle
+
+<span class="c1"># new</span>
+cylc trigger workflow//cycle/task
+</pre></div>
+</div>
+<p>Cylc 8 still supports the old format, however, the new format unlocks extra
+functionality e.g:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># stop all running workflows</span>
+cylc stop <span class="s1">&#39;*&#39;</span>
+
+<span class="c1"># pause all running workflows</span>
+cylc pause <span class="s1">&#39;*&#39;</span>
+
+<span class="c1"># (re-)trigger all failed tasks in all running workflows</span>
+cylc trigger <span class="s1">&#39;*//*:failed&#39;</span>
+
+<span class="c1"># hold all tasks in the cycle &quot;2000&quot; in workflows with IDs</span>
+ <span class="c1"># beginning with &quot;model&quot;</span>
+cylc hold <span class="s1">&#39;model*//2000&#39;</span>
+
+<span class="c1"># delete the run directories for all workflows with IDs</span>
+<span class="c1"># beginning with &quot;model_a/&quot;</span>
+cylc clean <span class="s1">&#39;model_a/*&#39;</span>
+</pre></div>
+</div>
+<p>For more information run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">help</span> <span class="pre">id</span></code>.</p>
+<p>For a quick overview of the motivation see the <a class="reference external" href="https://cylc.discourse.group/t/cylc-8-id-changes/425">ID post on Discourse</a>.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
