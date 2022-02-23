@@ -11,6 +11,8 @@ on:
       cylc_flow_version:
         description: 'Version to install.'
         required: true
+  schedule:
+    - cron: '45 0 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
