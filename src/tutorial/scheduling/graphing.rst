@@ -118,6 +118,7 @@ Duplicate settings get overwritten:
          a = foo
          a = bar  # duplicate
 
+     -
       .. code-block:: cylc
          :caption: result
 
