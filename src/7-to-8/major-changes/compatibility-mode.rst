@@ -39,7 +39,6 @@ The old ``suite.rc`` filename triggers a backward compatibility mode in which:
     ``?`` syntax)
 
 
-
 Required Changes
 ----------------
 
@@ -113,7 +112,8 @@ Fixing the deprecation warning
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the example given Cylc 8 will validate without warning after making the
-following changes.
+following changes. See explanation of
+-:ref:`changes to graph section. <7-to-8.graph_syntax>`.
 
 .. code-block:: diff
 

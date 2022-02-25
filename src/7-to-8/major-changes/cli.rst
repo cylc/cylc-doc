@@ -95,7 +95,6 @@ The ``cylc gui`` command remains, it launches a standalone version of the
 web GUI (providing the `Cylc UI Server`_ is installed).
 
 
-
 Cylc 8 Standardised IDs
 -----------------------
 

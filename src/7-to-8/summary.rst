@@ -116,12 +116,12 @@ Optional and Expected Task Outputs
 .. seealso::
 
    User Guide:
-   
+
    * :ref:`User Guide Expected Outputs`
    * :ref:`User Guide Optional Outputs`
 
    Major Changes:
-   
+
    * :ref:`728.suicide_triggers`
 
 Unless it configured otherwise, at Cylc 8, all tasks are assumed to be
@@ -143,6 +143,7 @@ The functionality of ``rose suite-run`` has been migrated into Cylc 8.
 
 Cylc Install
 ^^^^^^^^^^^^
+
 .. seealso::
 
    * :ref:`Moving to Cylc Install<majorchangesinstall>`.
@@ -170,7 +171,7 @@ By default, run numbers increment with each install.
 
 File Installation
 ^^^^^^^^^^^^^^^^^
-When the first job runs on a remote platform, a remote initialization process 
+When the first job runs on a remote platform, a remote initialization process
 is triggered which will install files onto platforms.
 
 Symlink Dirs
