@@ -274,6 +274,10 @@ UI Server to be restarted before any changes are applied.
 
 Interacting with Others' Workflows
 ----------------------------------
+
+The authorization system in Cylc 8 is complete, although expect access to other
+users' workflows via the UI to be further developed in future.
+
 If you have been granted access to another user's workflows, you can view and
 interact with these workflows.
 Say, you, userA, wish to interact with userB's workflows.

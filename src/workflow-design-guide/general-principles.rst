@@ -85,37 +85,6 @@ In some case you may need to symlink to large external files anyway, if space
 or copy speed is a problem, but otherwise workflows with private copies of all the
 files they need are more robust.
 
-.. _installing_files:
-
-Installing Files At Start-up
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Files can be installed on any remote platform. By default, Cylc installs the
-following directories: ``app``, ``bin``, ``etc``, ``lib``.
-Cylc supports adding custom directories and files to the file installation.
-
-If, for example, you wished to install directories ``dir1``, ``dir2``, and
-files ``file1``, ``file2``, add the following configuration to your
-:cylc:conf:`flow.cylc`, under the section
-:cylc:conf:`[scheduler]install`.
-To mark an item as a directory, add a trailing slash.
-
-.. code-block:: cylc
-
-    [scheduler]
-        install = dir1/, dir2/, file1, file2
-
-.. note::
-
-   Ensure files and directories to be installed are located in the top
-   level of your workflow.
-
-The file installation will timeout after 10 minutes.
-Install tasks are preferred for time-consuming installations because
-they don't slow the workflow start-up process, they can be monitored,
-they can run directly on target platforms, and you can rerun them later without
-restarting the workflow.
-
 
 Confining Output To The Run Directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -9,5 +9,6 @@ Cylc components intended for developers and system administrators.
 .. toctree::
    :maxdepth: 2
 
+   architecture
    ui-server
    data-flow

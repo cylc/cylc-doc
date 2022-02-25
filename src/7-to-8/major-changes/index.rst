@@ -9,3 +9,7 @@ understand to migrate from Cylc 7 to Cylc 8.
    :glob:
 
    *
+
+.. TODO - Split into breaking changes and other Major Changes
+
+.. TODO - Add a page with a Cylc 7 suite needing upgrading.

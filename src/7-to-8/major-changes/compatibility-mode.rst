@@ -39,6 +39,7 @@ The old ``suite.rc`` filename triggers a backward compatibility mode in which:
     ``?`` syntax)
 
 
+
 Required Changes
 ----------------
 
@@ -200,3 +201,43 @@ Likewise, ``task2`` will run on ``supercomputer_B``.
    here. In reality, **Cylc 8 compares the whole of**
    ``[<task>][job]`` **and** ``[<task>][remote]``
    **sections and all items must match to select a platform.**
+
+.. _major-changes-compatibility-caveats:
+
+Caveats
+-------
+
+The following are some caveats to be aware of when using Cylc 8
+Compatibility Mode.
+
+.. warning::
+
+   Cylc 6 syntax deprecated by Cylc 7 is now obsolete. Run ``cylc validate``
+   *with Cylc 7* on your ``suite.rc`` to check for deprecation warnings and fix
+   those before validating with Cylc 8.
+
+.. warning::
+
+   Check for any use of Cylc commands in task scripting. Some Cylc 7 commands
+   have been removed and some others now behave differently.
+   See :ref:`command line interface changes<MajorChangesCLI>`.
+
+.. warning::
+
+   Cylc 8 does not support
+   :ref:`excluding tasks at start-up<MajorChangesExcludingTasksAtStartup>`.
+   If your workflow used this old functionality, it may have been used in
+   combination with the ``cylc insert`` command (which has been removed from
+   Cylc 8) and ``cylc remove`` (which still exists but is much less needed).
+
+.. warning::
+
+   Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. Instead, :ref:`install
+   <Installing-workflows>` the workflow to a new run directory and start it
+   from scratch at the right cycle point or task(s):
+
+   - ``cylc play --start-cycle-point=<cycle>`` (c.f. Cylc 7 *warm start*), or
+   - ``cylc play --start-task=<cycle/task>``   (Cylc 8 can start anywhere in the graph)
+
+   Any previous-cycle workflow data needed by the new run will need to be
+   manually copied over from the original run directory.

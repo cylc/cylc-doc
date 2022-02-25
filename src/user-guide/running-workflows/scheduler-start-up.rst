@@ -173,13 +173,40 @@ Directories included, as standard, in the remote install are:
 
 These will be transferred from the workflow run directory on the :term:`scheduler`.
 In addition, file and directories configured in :cylc:conf:`[scheduler]install`
-of the ``flow.cylc`` will be included in the transfer. See :ref:`installing_files`
-for an example.
+of the ``flow.cylc`` will be included in the transfer.
 
 This remote initialization process also creates symlinks on the remote
 platform, if these are configured using
 :cylc:conf:`global.cylc[install][symlink dirs]`. Using this functionality is an
 efficient way to manage disk space.
+
+
+Installing Custom Files At Start-up
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc supports adding custom directories and files to the file installation.
+
+If, for example, you wished to install directories ``dir1``, ``dir2``, and
+files ``file1``, ``file2``, add the following configuration to your
+:cylc:conf:`flow.cylc`, under the section
+:cylc:conf:`[scheduler]install`.
+To mark an item as a directory, add a trailing slash.
+
+.. code-block:: cylc
+
+    [scheduler]
+        install = dir1/, dir2/, file1, file2
+
+.. note::
+
+   Ensure files and directories to be installed are located in the top
+   level of your workflow.
+
+Install tasks are preferred for time-consuming installations because
+they don't slow the workflow start-up process, they can be monitored,
+they can run directly on target platforms, and you can rerun them later without
+restarting the workflow.
+
 
 Troubleshooting
 ^^^^^^^^^^^^^^^
@@ -204,6 +231,7 @@ platform, are correctly in place.
 Sites can configure these platforms, insuring they match up with the correct
 install target. Cylc uses install targets as a way of recognising which platforms
 share the same file system. For more information, see :ref:`Install Targets`.
+
 
 
 Files created at workflow start
