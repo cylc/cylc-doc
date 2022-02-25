@@ -1,6 +1,6 @@
 .. _overview:
 
-Quick Summary Of Changes
+Summary Of Major Changes
 ========================
 
 
@@ -230,3 +230,6 @@ minor changes include:
    All user-defined task scripting now runs in a subshell, so you can safely
    switch Python environments inside tasks without affecting Cylc.
    Further information is available in the User Guide :ref:`JobScripts`.
+- Packaging
+   Cylc 8 (and its package dependencies) is now available from Conda Forge and PyPI
+   for installations into a Python 3 virtual environment.
