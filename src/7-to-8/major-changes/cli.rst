@@ -95,30 +95,6 @@ The ``cylc gui`` command remains, it launches a standalone version of the
 web GUI (providing the `Cylc UI Server`_ is installed).
 
 
-.. figure:: ../../img/hub.png
-   :figwidth: 80%
-   :align: center
-
-   Cylc 8 Hub authentication page
-
-.. figure:: ../../img/cylc-ui-dash.png
-   :figwidth: 80%
-   :align: center
-
-   Cylc 8 UI dashboard
-
-.. figure:: ../../img/cylc-ui-tree.png
-   :figwidth: 80%
-   :align: center
-
-   Cylc 8 UI workflow tree view
-
-.. figure:: ../../img/cylc-tui.png
-   :figwidth: 80%
-   :align: center
-
-   Cylc 8 TUI application
-
 
 Cylc 8 Standardised IDs
 -----------------------

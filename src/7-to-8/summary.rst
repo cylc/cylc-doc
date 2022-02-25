@@ -21,20 +21,16 @@ Cylc now uses simpler more widely understood terms for several core concepts.
 
 The workflow configuration file has changed from ``suite.rc`` to ``flow.cylc``.
 
-
-Cylc 7 Compatibility Mode
--------------------------
-
-The old ``suite.rc`` filename triggers a :ref:`backward
-compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
-workflow configurations out of the box. There are certain scenarios to be aware of
-if using backward compatibility mode, these are documented here:
-:ref:`major-changes-compatibility-caveats`.
-
-
 Upgrading To Cylc 8
 -------------------
+.. seealso::
 
+   Major Changes:
+
+   * :ref:`configuration-changes`
+   * :ref:`cylc_7_compat_mode`
+
+There have been many configuration changes at Cylc 8.
 To upgrade your Cylc 7 suite to a Cylc 8 workflow, run ``cylc validate``. Take
 action on any warnings then rename the workflow configuration file from
 ``suite.rc`` to ``flow.cylc``.
@@ -42,8 +38,23 @@ action on any warnings then rename the workflow configuration file from
 .. TODO Add ref to breaking changes section within Major changes, once created,
    including optional ouputs.
 
+Cylc 7 Compatibility Mode
+-------------------------
+
+Continuing to use the old ``suite.rc`` filename triggers a :ref:`backward
+compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
+workflow configurations out of the box. There are certain scenarios to be aware of
+if using backward compatibility mode, these are documented here:
+:ref:`major-changes-compatibility-caveats`.
+
+
 New Web and Terminal UIs
 ------------------------
+.. seealso::
+
+   Major Changes:
+
+   * :ref:`728.ui`
 
 At Cylc 8, there are two UIs available to view your workflows:
 
@@ -59,9 +70,28 @@ At Cylc 8, there are two UIs available to view your workflows:
 
       cylc gui
 
-For more information on how the UI displays the workflow, see :ref:`n-window`.
+Major Command Changes
+---------------------
 
-.. TODO - Add link to more detailed gui instructions.
+``cylc run <workflow_id>`` at Cylc 7 has become ``cylc play <workflow_id>``.
+
+.. seealso::
+
+   User Guide
+
+   * :ref:`WorkflowStartUp`
+
+   Major Changes
+
+   * :ref:`728.play_pause_stop`
+
+At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, halting all job
+submission. To restart this workflow, use ``cylc play <workflow_id>``.
+
+To start a fresh run, use ``cylc install`` and play it safely in the new run
+directory.
+
+(Note that ``cylc hold`` and ``cylc release`` pause and release individual tasks.)
 
 Task/Job States
 ---------------
@@ -80,82 +110,30 @@ in the GUI.
 For more information, see :ref:`728.task_job_states`.
 
 
-Scheduling Algorithm
---------------------
-
-The scheduling algorithm has been changed, more information is available:
-:ref:`728.scheduling_algorithm`.
-
 Optional and Expected Task Outputs
 ----------------------------------
 
 .. seealso::
 
    User Guide:
-
+   
    * :ref:`User Guide Expected Outputs`
    * :ref:`User Guide Optional Outputs`
 
    Major Changes:
-
+   
    * :ref:`728.suicide_triggers`
 
 Unless it configured otherwise, at Cylc 8, all tasks are assumed to be
 required to complete, this is the :term:`expected output <expected output>`.
 If they do not complete, they are marked as an :term:`incomplete
-task` and user intervention is required. If there is nothing left to do, the
-scheduler will :term:`stall` rather than shut down.
+task` and user intervention is required. In a workflow with incomplete tasks,
+if there is nothing left to do, the scheduler will :term:`stall` rather than
+shut down.
 
 Alternatively, task outputs can be marked as :term:`optional <optional output>`.
-This supports optional :term:`graph branching` and it allows the scheduler to
+This supports :term:`graph branching` and it allows the scheduler to
 correctly diagnose :term:`workflow completion`.
-
-Platforms
----------
-
-.. seealso::
-
-   - :ref:`Platforms at Cylc 8. <majorchangesplatforms>`
-   - :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
-
-At Cylc 7 job hosts were defined to indicate where a job should run, at Cylc 8
-use Platforms.
-
-.. code-block:: diff
-
-     [runtime]
-        [[model]]
-   -        [[[remote]]]
-   -            host = hpc1.login.1
-   +        platform = hpc1
-
-
-.. _7-to-8.summary.graph_syntax:
-
-Configuration Changes
----------------------
-
-Cylc 7 had unnecessarily deep nesting of graph config sections:
-
-.. code-block:: cylc
-
-   [scheduling]
-      initial cycle point = now
-      [[dependencies]]  # Deprecated Cylc 7
-          [[[R1]]]
-              graph = "prep => foo"
-          [[[R/^/P1D]]]
-              graph = "foo => bar => baz"
-
-Cylc 8 cleans this up:
-
-.. code-block:: cylc
-
-   [scheduling]
-      initial cycle point = now
-      [[graph]]  # Cylc 8
-          R1 = "prep => foo"
-          R/^/P1D = "foo => bar => baz"
 
 
 Rose Suite-Run Migration
@@ -208,7 +186,7 @@ managing disk space.
 
 These symlinks are created on a per install target basis, as configured in
 :cylc:conf:`global.cylc[install][symlink dirs]`. Install targets are managed on
-a site level, for more information see :ref:`Install Targets`.
+a site level, for more information see :ref:`Install Targets`
 
 This functionality replaces the Rose ``root dir`` configuration
 for Cylc 7 (however, note it does not allow per-workflow configuration).
@@ -220,32 +198,20 @@ Removing Workflows
 Workflows can be deleted with ``cylc clean`` - see :ref:`Removing-workflows`. This
 replaces the ``rose suite-clean`` functionality.
 
-
-Restart Behaviour
------------------
-.. seealso::
-
-   - User Guide :ref:`WorkflowStartUp`
-   - Major Channges :ref:`728.play_pause_stop`
-
-At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, halting all job
-submission. To restart this workflow, use ``cylc play <workflow_id>``.
-
-To start a fresh run, use ``cylc install`` and play it safely in the new run
-directory.
-
-(Note that ``cylc hold`` and ``cylc release`` pause and release individual tasks.)
-
-
 Architecture
 ------------
 
 There have been fundamental changes to the architecture of Cylc. You can read
 about the new system design here :ref:`architecture-reference`.
 
+Scheduling Algorithm
+--------------------
 
-Other Minor Changes
--------------------
+The scheduling algorithm has been changed, more information is available:
+:ref:`728.scheduling_algorithm`.
+
+Other Changes
+-------------
 
 There are an assortment of other features implemented at Cylc 8. Some noteworthy
 minor changes include:

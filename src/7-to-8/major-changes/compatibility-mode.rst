@@ -113,9 +113,7 @@ Fixing the deprecation warning
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the example given Cylc 8 will validate without warning after making the
-following changes. (explanation of
-:ref:`changes to graph section. <7-to-8.summary.graph_syntax>`
-):
+following changes.
 
 .. code-block:: diff
 
