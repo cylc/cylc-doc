@@ -7,19 +7,20 @@ Quick Summary Of Changes
 Terminology
 -----------
 
-Cylc now uses simpler more widely understood terms for several core concepts.
+Cylc now uses more widely understood terms for several core concepts.
 
 .. table::
 
    =============     ==============
    Cylc 7 Term       Cylc 8 Term
    =============     ==============
-   suite             **workflow**
-   batch system      **job runner**
-   suite daemon      **scheduler**
+   suite             *workflow*
+   batch system      *job runner*
+   suite daemon      *scheduler*
+   ``suite.rc``      ``flow.cylc``
    =============     ==============
 
-The workflow configuration file has changed from ``suite.rc`` to ``flow.cylc``.
+Note the configuration filename is now ``flow.cylc``, not ``suite.rc``.
 
 
 Cylc 7 Compatibility Mode
