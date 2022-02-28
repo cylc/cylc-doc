@@ -15,6 +15,7 @@ Cylc Scheduler
 Cylc Hub
 --------
 
+- For proving the UI in multi-user setups.
    - Authenticates users, spawns and proxies Cylc UI Servers
    - Can run as a regular or privileged user
    - (The Hub is a `Jupyterhub <https://jupyter.org/hub>`_ instance)
