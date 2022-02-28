@@ -3,7 +3,9 @@
 Configuration Changes at Cylc 8
 ===============================
 
-There are many configuration changes at Cylc 8. These will be highlighted upon
+Some configurations have moved or been renamed at Cylc 8.
+
+The old configurations are now deprecated, but still supported. These will be highlighted upon
 ``cylc validate``.
 
 There are some examples below of how to upgrade:
