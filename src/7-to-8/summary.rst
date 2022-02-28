@@ -72,7 +72,7 @@ At Cylc 8, there are two UIs available to monitor and control your workflows:
 Command Changes
 ---------------
 
-``cylc run <workflow_id>`` at Cylc 7 has become ``cylc play <workflow_id>``.
+``cylc run <suite_name>`` at Cylc 7 has become ``cylc play <workflow_id>``.
 
 .. seealso::
 
