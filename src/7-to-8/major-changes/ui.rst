@@ -28,7 +28,7 @@ Cylc Web GUI
 ^^^^^^^^^^^^
 
 Cylc 8 web GUI is available, both as a single user application, ``cylc gui``
-and as a multi user hub. Both are dependent on `Cylc UI Server`_ installation.
+and as a multi user hub, ``cylc hub``. Both are dependent on `Cylc UI Server`_ installation.
 
 .. figure:: ../../img/cylc-ui-dash.png
    :figwidth: 80%
