@@ -19,3 +19,6 @@ from the latest task job.
 Cylc 8 has only 8 task/job states. The Cylc 8 UI shows both task and jobs.
 Task icons are monochrome circles; job icons are coloured squares. The running
 task icon incorporates a radial progress indicator.
+
+.. image:: ../../img/task-job.png
+   :align: center

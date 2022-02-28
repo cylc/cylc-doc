@@ -13,7 +13,7 @@ There are some examples below of how to upgrade:
 .. _7-to-8.graph_syntax:
 
 Graph
-^^^^^
+-----
 Cylc 7 had unnecessarily deep nesting of graph config sections:
 
 .. code-block:: cylc
@@ -37,7 +37,7 @@ Cylc 8 cleans this up:
           R/^/P1D = "foo => bar => baz"
 
 Platforms
-^^^^^^^^^
+---------
 .. seealso::
 
    - :ref:`Platforms at Cylc 8. <majorchangesplatforms>`

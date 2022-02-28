@@ -1,13 +1,13 @@
 .. _728.ui:
 
 Cylc 8 UIs
-----------
+==========
 
-There are two UI options available to view workflows at Cylc 8.
+There are two UI options available to monitor and control workflows at Cylc 8.
 
 
 Cylc TUI
-^^^^^^^^
+--------
 
 Cylc TUI is a text based UI, available on the command line with
 ``cylc tui <workflow_id>``.
@@ -25,7 +25,7 @@ This replaces Cylc 7's ``cylc monitor``.
 
 
 Cylc Web GUI
-^^^^^^^^^^^^
+------------
 
 Cylc 8 web GUI is available, both as a single user application, ``cylc gui``
 and as a multi user hub, ``cylc hub``. Both are dependent on `Cylc UI Server`_ installation.
