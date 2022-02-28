@@ -171,7 +171,7 @@ By default, run numbers increment with each install.
 File Installation
 ^^^^^^^^^^^^^^^^^
 When the first job runs on a remote platform, a remote initialization process
-is triggered which will install files onto platforms.
+is triggered to install files onto platforms.
 
 Symlink Dirs
 ^^^^^^^^^^^^
