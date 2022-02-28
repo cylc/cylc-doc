@@ -123,10 +123,10 @@ Optional and Expected Task Outputs
 
    * :ref:`728.suicide_triggers`
 
-Unless it configured otherwise, at Cylc 8, all tasks are assumed to be
-required to complete, this is the :term:`expected output <expected output>`.
-If they do not complete, they are marked as an :term:`incomplete
-task` and user intervention is required. In a workflow with incomplete tasks,
+By default, all Cylc 8 tasks are expected to succeed - i.e., success is
+an :term:`expected output <expected output>`. Otherwise they will be marked
+as :term:`incomplete tasks<incomplete task>` requiring user intervention.
+ In a workflow with incomplete tasks,
 if there is nothing left to do, the scheduler will :term:`stall` rather than
 shut down.
 
