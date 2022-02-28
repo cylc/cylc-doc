@@ -85,7 +85,7 @@ Command Changes
    * :ref:`728.play_pause_stop`
 
 At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, halting all job
-submission. To restart this workflow, use ``cylc play <workflow_id>``.
+submission. To restart the workflow, use ``cylc play <workflow_id>``.
 
 To start a fresh run, use ``cylc install`` and play it safely in the new run
 directory.
