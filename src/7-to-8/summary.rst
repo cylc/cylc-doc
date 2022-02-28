@@ -95,8 +95,7 @@ directory.
 Task/Job States
 ---------------
 
-:term:`Tasks <task>` are nodes in the abstract workflow graph,
-a :term:`Job <job>` is an instance of a task. A task can have
+:term:`Tasks <task>` are nodes in the abstract workflow graph, representing applications to run at the appropriate point in the workflow. A :term:`job <job>` (or a *task job*) is the script (and subsequent process) submitted by Cylc to actually run the application. A task can have
 multiple jobs as the result of automatic retries or manual re-triggering.
 
 
