@@ -55,7 +55,7 @@ New Web and Terminal UIs
 
    * :ref:`728.ui`
 
-At Cylc 8, there are two UIs available to view your workflows:
+At Cylc 8, there are two UIs available to monitor and control your workflows:
 
 - a terminal UI application
 
