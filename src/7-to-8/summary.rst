@@ -26,7 +26,7 @@ Cylc 7 Compatibility Mode
 Continuing to use the old ``suite.rc`` filename triggers a :ref:`backward
 compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
 workflow configurations out of the box, with 
-:ref:`several caveats<major-changes-compatibility-caveats>`. However, to future-proof
+:ref:`some caveats<major-changes-compatibility-caveats>`. However, to future-proof
 your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.
 
 Upgrading To Cylc 8
