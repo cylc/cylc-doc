@@ -33,10 +33,8 @@ Upgrading To Cylc 8
 -------------------
 .. seealso::
 
-   Major Changes:
-
-   * :ref:`configuration-changes`
-   * :ref:`cylc_7_compat_mode`
+   * Major Changes: :ref:`configuration-changes`
+   * Major Changes: :ref:`cylc_7_compat_mode`
 
 There have been some configuration changes at Cylc 8.
 To upgrade your Cylc 7 suite to a Cylc 8 workflow, run ``cylc validate``. Take
@@ -52,9 +50,7 @@ New Web and Terminal UIs
 ------------------------
 .. seealso::
 
-   Major Changes:
-
-   * :ref:`728.ui`
+   * Major Changes: :ref:`728.ui`
 
 At Cylc 8, there are two UIs available to monitor and control your workflows:
 
@@ -77,14 +73,9 @@ Command Changes
 
 .. seealso::
 
-   User Guide
-
-   * :ref:`WorkflowStartUp`
-
-   Major Changes
-
-   * :ref:`728.play_pause_stop`
-   * :ref:`MajorChangesCLI`
+   * User Guide: :ref:`WorkflowStartUp`
+   * Major Changes: :ref:`728.play_pause_stop`
+   * Major Changes: :ref:`MajorChangesCLI`
 
 At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, halting all job
 submission. To restart the workflow, use ``cylc play <workflow_id>``.
@@ -118,11 +109,9 @@ Optional and Expected Task Outputs
 
 .. seealso::
 
-   User Guide:
-
-   * :ref:`User Guide Expected Outputs`
-   * :ref:`User Guide Optional Outputs`
-   * :ref:`728.suicide_triggers`
+   * User Guide::ref:`User Guide Expected Outputs`
+   * User Guide::ref:`User Guide Optional Outputs`
+   * Major Changes::ref:`728.suicide_triggers`
 
 By default, all Cylc 8 tasks are expected to succeed - i.e., success is
 an :term:`expected output <expected output>`. Otherwise they will be marked
@@ -147,7 +136,7 @@ Cylc Install
 
 .. seealso::
 
-   * :ref:`Moving to Cylc Install<majorchangesinstall>`
+   * Major Changes: :ref:`Moving to Cylc Install<majorchangesinstall>`
 
 Cylc install cleanly separates workflow :term:`source directory` from
 :term:`run directory`. It installs workflow files ready for ``cylc play``.
@@ -180,8 +169,8 @@ Symlink Dirs
 
 .. seealso::
 
-   * :ref:`SymlinkDirs`
-   * :ref:`RemoteInit`
+   * User Guide: :ref:`SymlinkDirs`
+   * User Guide: :ref:`RemoteInit`
 
 Symlinking the workflow directories used by Cylc provides a useful way of
 managing disk space.
