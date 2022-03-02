@@ -416,7 +416,7 @@ Recurrence Sections
 
 .. practical::
 
-   .. rubric:: In this practical we will turn the :term:`workflow <Cylc workflow>`
+   .. rubric:: In this practical we will turn the :term:`workflow <workflow>`
       of the previous section into a :term:`cycling workflow <cycling>`.
 
    If you have not completed the previous practical use the following code for
