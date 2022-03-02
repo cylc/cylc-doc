@@ -6,7 +6,7 @@ Further Scheduling
 .. admonition:: Aims
    :class: aims
 
-   | You should be aware of advanced scheduling features:
+   | You should be aware of some more advanced scheduling features:
    | ✅ Task state qualifiers.
    | ✅ Clock triggers.
    | ✅ Alternative calendars.
@@ -45,7 +45,7 @@ Qualifiers
 
 .. nextslide::
 
-It is also possible to create your own custom :term:`qualifiers <qualifier>`
+It is also possible to create your own :term:`qualifiers <qualifier>`
 to handle events within your code (custom outputs).
 
 .. ifnotslides::
@@ -53,15 +53,17 @@ to handle events within your code (custom outputs).
    *For more information see the* `Cylc User Guide`_.
 
 
+.. _tutorial-clock-triggers:
+
 Clock Triggers
 --------------
 
 .. ifnotslides::
 
-   In Cylc, :term:`cycle points <cycle point>` are just labels. Tasks are
-   triggered when their dependencies are met regardless of their cycle point.
-   But we can use *clock triggers* to force tasks to wait for a particular time,
-   relative to their cycle point time, before running.
+   In Cylc, :term:`cycle points <cycle point>` are just task labels. Tasks are
+   triggered when their dependencies are met, regardless of cycle point.
+   But *clock triggers* can be used to force tasks to wait for a particular
+   real time, relative to their cycle point, before running.
    This is necessary for certain operational and monitoring systems, e.g. for
    tasks that process real-time data.
 
@@ -89,7 +91,7 @@ Alternative Calendars
 .. ifnotslides::
 
    By default Cylc uses the Gregorian calendar for :term:`datetime cycling`,
-   but Cylc also supports:
+   but it also supports:
 
    - Integer cycling.
    - 360-day calendar (12 months of 30 days each in a year).

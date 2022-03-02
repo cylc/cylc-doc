@@ -39,9 +39,9 @@ Consolidating Configuration
 
    In this code the ``script`` item and the ``API_KEY`` environment variable have
    been repeated for each task. This is bad practice as it makes the
-   configuration lengthy and making changes can become difficult.
+   configuration lengthy and harder to maintain.
 
-   Likewise the graphing relating to the ``get_observations`` tasks is highly
+   Likewise the graph relating to the ``get_observations`` tasks is highly
    repetitive:
 
 .. ifslides::
@@ -89,22 +89,22 @@ The ``cylc config`` Command
 
    The ``cylc config`` command reads in either the
    :cylc:conf:`global.cylc` file, or a specific workflow's :cylc:conf:`flow.cylc`
-   file, and it prints out the configuration to the terminal.
+   file, and it prints the parsed configuration out to the terminal.
 
-   Throughout this section we will be introducing methods for consolidating
+   Throughout this section as we introduce methods for consolidating
    the :cylc:conf:`flow.cylc` file, the ``cylc config`` command can be used to
-   "expand" the :cylc:conf:`flow.cylc` file back to its full form.
+   "expand" the file back to its full form.
 
    .. note::
 
-      Often, the main use of ``cylc config`` is inspecting the
-      ``[runtime]`` section of a workflow. The ``cylc config`` command does not
+      A primary use of ``cylc config`` is inspecting the
+      ``[runtime]`` section of a workflow. However, the command does not
       expand :term:`parameterisations <parameterisation>` and
-      :term:`families <family>` in the workflow's :term:`graph`. To inspect the
-      graphing use the ``cylc graph`` command.
+      :term:`families <family>` in the workflow :term:`graph`. To see the
+      expanded graph use the ``cylc graph`` command.
 
-   Call ``cylc config`` with the path of the workflow (``.`` if you are already
-   in the :term:`run directory`).
+   Call ``cylc config`` with the path of the workflow (or ``.`` if you are
+   already in the :term:`source directory` or the :term:`run directory`).
 
 .. code-block:: sub
 

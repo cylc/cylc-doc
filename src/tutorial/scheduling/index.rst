@@ -3,7 +3,7 @@
 Scheduling
 ==========
 
-This section looks at how to write workflows in Cylc.
+This section shows how to create basic Cylc workflows.
 
 .. toctree::
    :name: rug-scheduling-toc

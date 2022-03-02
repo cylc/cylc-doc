@@ -7,8 +7,8 @@ Jinja2
 ======
 
 
-`Jinja2`_ is a templating language often used in web design with some
-similarities to python. It can be used to make a workflow definition more
+`Jinja2`_ is a templating language often used in web design, with some
+similarities to Python. It can be used to make a workflow definition more
 dynamic.
 
 
@@ -21,7 +21,7 @@ In Jinja2 statements are wrapped with ``{%`` characters, i.e:
 
    {% ... %}
 
-Variables are initiated using the ``set`` statement, e.g:
+Variables are initialised with the ``set`` statement, e.g:
 
 .. code-block:: css+jinja
 
@@ -29,8 +29,8 @@ Variables are initiated using the ``set`` statement, e.g:
 
 .. nextslide::
 
-Expressions wrapped with ``{{`` characters will be replaced with the value of
-the evaluation of the expression, e.g:
+Expressions wrapped with ``{{`` characters will be replaced with
+the evaluated expression, e.g:
 
 .. code-block:: css+jinja
 
@@ -67,7 +67,7 @@ top of the file:
 
    #!Jinja2
 
-For more information see the `Jinja2`_ docs.
+For more information see the `Jinja2`_ documentation.
 
 
 Example

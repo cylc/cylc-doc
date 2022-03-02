@@ -4,7 +4,7 @@ Runtime Configuration
 =====================
 
 In the last section we associated tasks with scripts and ran a simple workflow. In
-this section we will look at how we can configure these tasks.
+this section we will look at how to configure these tasks.
 
 
 Environment Variables
@@ -12,9 +12,8 @@ Environment Variables
 
 .. ifnotslides::
 
-   We can specify environment variables in a task's ``[environment]`` section.
-   These environment variables are then provided to :term:`jobs <job>` when they
-   run.
+   We can define environment variables in task ``[environment]`` sections,
+   to be provided to task :term:`jobs <job>` at runtime.
 
 .. code-block:: cylc
 
@@ -57,17 +56,16 @@ Job Submission
 
 .. ifnotslides::
 
-   By default Cylc runs :term:`jobs <job>` on the machine where the workflow is
-   running. We can tell Cylc to run jobs on other machines by setting the
-   :term:`platform` setting: If, for example you want to run a task job on a
-   platform called ``powerful_computer`` you would write:
+   By default Cylc runs :term:`task jobs <job>` on the same machine as
+   the scheduler. It can run them on other machines too if we set the
+   :term:`platform` like this:
 
 .. code-block:: cylc
 
    [runtime]
        [[hello_computehost]]
            script = echo "Hello Compute Host"
-           platform = powerful_computer
+           platform = powerful_computer  # Must be defined in Cylc global config!
 
 .. _background processes: https://en.wikipedia.org/wiki/Background_process
 .. _job scheduler: https://en.wikipedia.org/wiki/Job_scheduler
@@ -76,10 +74,10 @@ Job Submission
 
 .. ifnotslides::
 
-   Cylc also executes jobs as `background processes`_ by default.
-   When we are running jobs on other compute hosts we will often want to
-   use a :term:`job runner` to submit our job.
-   Cylc supports the following :term:`job runners <job runner>`:
+   By default Cylc also executes jobs as `background processes`_.
+   We often want to submit jobs to a :term:`job runner` instead,
+   particularly on shared compute resources. Cylc supports the following
+   job runners:
 
 * at
 * loadleveler
@@ -94,10 +92,9 @@ Job Submission
 .. ifnotslides::
 
    :term:`Job runners <job runner>` typically require
-   :term:`directives <directive>` in some form. :term:`Directives <directive>`
-   inform the job runner of the requirements of a :term:`job`, for
-   example how much memory a given job requires or how many CPUs the job will
-   run on. For example:
+   :term:`directives <directive>` in some form, to specify
+   job requirements such as memory use and number of CPUs to run on. For
+   example:
 
 .. code-block:: cylc
 
@@ -114,15 +111,14 @@ Job Submission
                --ntasks = 4
 
 
-Timeouts
---------
+Time Limits
+-----------
 
 .. ifnotslides::
 
-   We can specify a time limit after which a job will be terminated using the
-   ``[job]execution time limit`` setting. The value of the setting is an
-   :term:`ISO8601 duration`. Cylc automatically inserts this into a job's
-   directives as appropriate.
+   We can specify an execution time limit, as an :term:`ISO8601 duration`, after
+   which a task job will be terminated. Cylc automatically translates this to
+   the correct :term:`job runner` directives.
 
 .. code-block:: cylc
 
@@ -135,35 +131,32 @@ Timeouts
 Retries
 -------
 
-Sometimes jobs fail. This can be caused by two factors:
+Task jobs can fail for several reasons:
 
-* Something going wrong with the job's execution e.g:
+* Something went wrong with job submission, e.g:
+
+  * A network problem;
+  * The :term:`job host` became unavailable or overloaded;
+  * The job runner rejected your job directives.
+
+* Something went wrong with job execution, e.g:
 
   * A bug;
   * A system error;
   * The job hitting the ``execution time limit``.
 
-* Something going wrong with the job submission e.g:
-
-  * A network problem;
-  * The :term:`job host` becoming unavailable or overloaded;
-  * An issue with the directives.
 
 .. nextslide::
 
 .. ifnotslides::
 
-   In the event of failure Cylc can automatically re-submit or retry jobs.
+   We can configure Cylc to automatically retry tasks that fail,
+   by setting ``submission retry delays`` and/or ``execution retry delays``
+   to a list of :term:`ISO8601 durations <ISO8601 duration>`.
+   For example, setting ``execution retry delays = PT10M``
+   will cause the job to retry every 10 minutes on execution failure.
 
-   Configure retries using the ``submission retry delays`` and
-   ``execution retry delays`` settings.
-   These settings are lists of :term:`ISO8601 durations <ISO8601 duration>`,
-   for example; setting ``execution retry delays`` to ``PT10M``
-   would cause the job to retry every 10 minutes in the event of execution
-   failure.
-
-   We can limit the number of retries by writing a multiple in front of the
-   duration, e.g:
+   Use a multiplier to limit retries to a specific number:
 
 .. code-block:: cylc
 
@@ -171,12 +164,11 @@ Sometimes jobs fail. This can be caused by two factors:
       [[some-task]]
          script = some-script
 
-         # In the event of execution failure, retry a maximum
-         # of three times every 15 minutes.
+         # On execution failure
+         #   retry up to 3 times every 15 minutes.
          execution retry delays = 3*PT15M
-         # In the envent of a submission failure, retry a maximum
-         # of two times every ten minutes and then every 30
-         # minutes thereafter.
+         # On submission failure
+         #   retry up to 2 times every 10 min, then every 30 mins thereafter.
          submission retry delays = 2*PT10M, PT30M
 
 
@@ -186,21 +178,18 @@ Start, Stop, Restart
 .. ifnotslides::
 
    We have seen how to start and stop Cylc workflows with ``cylc play`` and
-   ``cylc stop`` respectively. The ``cylc stop`` command causes Cylc to wait
-   for all running jobs to finish before it stops the workflow. There are two
-   options which change this behaviour:
+   ``cylc stop``. By default ``cylc stop`` causes the scheduler to wait
+   for running jobs to finish before it shuts down. There are several
+   other stop options, however. For example:
 
    ``cylc stop --kill``
-      When the ``--kill`` option is used Cylc will kill all running jobs
-      before stopping. *Cylc can kill jobs on remote hosts and uses the
-      appropriate command when a* :term:`job runner` *is used.*
+      Kill all running jobs before stopping. (Cylc can kill jobs on remote
+      hosts, via the configured :term:`job runner`).
    ``cylc stop --now --now``
-      When the ``--now`` option is used twice Cylc stops straight away, leaving
-      any jobs running.
+      stop right now, leaving any jobs running.
 
-   Once a workflow has stopped it is possible to restart it using
-   ``cylc play`` command. When the workflow restarts it picks up where it left
-   off and carries on as normal.
+   Once a workflow has stopped you can restart it with ``cylc play``.
+   The scheduler will pick up where it left off, and carry on as normal.
 
    .. code-block:: bash
 
@@ -381,7 +370,7 @@ Start, Stop, Restart
       scripts.
 
       Once the workflow has reached the final cycle point and all tasks have
-      succeeded the workflow will automatically shutdown.
+      succeeded the scheduler will shut down automatically.
 
       .. TODO: Advise on what to do if all does not go well.
 

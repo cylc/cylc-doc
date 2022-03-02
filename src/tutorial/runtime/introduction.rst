@@ -5,14 +5,12 @@ Introduction
 
 .. ifnotslides::
 
-   So far we have been working with the ``[scheduling]`` section. This is where
-   the workflow is defined in terms of :term:`tasks <task>` and
-   :term:`dependencies <dependency>`.
+   So far we have worked with the ``[scheduling]`` section of the ``flow.cylc``
+   file, where workflow :term:`tasks <task>` and :term:`dependencies
+   <dependency>` are defined.
 
-   In order to make the workflow runnable we must associate tasks with scripts
-   or binaries to be executed when the task runs. This means working with the
-   ``[runtime]`` section which determines what runs, as well as where and how
-   it runs.
+   Now, in the ``[runtime]`` section, we need to associate each task with a
+   script or application to run when its dependencies are met. 
 
 .. ifslides::
 
@@ -20,10 +18,9 @@ Introduction
       Defines the workflow in terms of :term:`tasks <task>` and
       :term:`dependencies <dependency>`.
    ``[runtime]``
-      Defines what runs, where and how it runs.
+      Determines what runs, where, and how it runs, for each task.
 
-
-The Task Section
+Task Definitions
 ----------------
 
 .. ifnotslides::
@@ -50,12 +47,12 @@ The ``script`` Setting
 
 .. ifnotslides::
 
-   We tell Cylc *what* to execute when a task is run using the ``script``
-   setting.
+   The task ``script`` setting tells Cylc *what* to execute when a task is
+   ready to run.
 
-   This setting is interpreted as a bash script. The following example defines a
-   task called ``hello_world`` which writes ``Hello World!`` to stdout upon
-   execution.
+   This value of this setting is interpreted as a bash script. The following
+   example defines a task called ``hello_world`` which simply writes ``Hello
+   World!`` to standard output.
 
 .. code-block:: cylc
 
@@ -65,7 +62,9 @@ The ``script`` Setting
 
 .. note::
 
-   If you do not set the ``script`` for a task then nothing will be run.
+   A task with no ``script`` defined will run a job that does nothing but
+   communicate its status back to the scheduler before exiting immediately.
+
 
 We can also call other scripts or executables in this way, e.g:
 
@@ -81,12 +80,12 @@ We can also call other scripts or executables in this way, e.g:
 
 .. ifnotslides::
 
-   It is often a good idea to keep our scripts with the Cylc workflow rather than
-   leaving them somewhere else on the system.
+   Keeping task scripts with the workflow, rather than leaving them elsewhere on
+   the system, helps isolate the workflow from external changes.
 
-   If you create a ``bin/`` sub-directory within the :term:`source directory`,
-   Cylc will automatically prepend it to the ``PATH`` environment
-   variable when the task runs.
+   To help with this, Cylc automatically adds a ``bin/`` sub-directory of the
+   workflow :term:`source directory` to the executable search path (``$PATH``)
+   in task job environments.
 
 .. code-block:: bash
    :caption: bin/hello_world
@@ -129,41 +128,38 @@ Tasks And Jobs
 
 .. ifnotslides::
 
-   When a :term:`task` is "Run" it creates a :term:`job`. The job is a bash
-   file containing the script you have told the task to run along with
-   configuration specifications and a system for trapping errors. It is the
-   :term:`job` which actually gets executed and not the task itself. This
-   "job file" is called the :term:`job script`.
+   When a :term:`task` is ready to run Cylc creates a :term:`job script` for
+   it: a bash file containing the scripting defined for the task along with
+   other configuration and error trapping code. This is what actually executes
+   as the task job.
 
-   During its life a typical :term:`task` goes through the following states:
+   :term:`Tasks<task>` typically go through the following states as a workflow
+   runs:
 
    Waiting
-      :term:`Tasks <task>` wait for their dependencies to be satisfied before
-      running. In the meantime they are in the "Waiting" state.
+      Waiting for dependencies to be met.
+   Preparing
+      Dependencies met; preparing the task :term:`job script` for submission.
    Submitted
-      When a :term:`task's <task>` dependencies have been met it is ready for
-      submission. During this phase the :term:`job script` is created.
-      The :term:`job` is then submitted to the specified :term:`job runner`.
-      There is more about this in the :ref:`next section
-      <tutorial-job-runner>`.
+      Task job script submitted to the :term:`job runner`; waiting on execution.
    Running
-      A :term:`task` is in the "Running" state as soon as the :term:`job` is
-      executed.
+      Task job script executing.
    Succeeded
-      If the :term:`job` submitted by a :term:`task` has successfully
-      completed (i.e. there is zero return code) then it is said to have
-      succeeded.
+      Task job completed successfully (i.e. exited with 0 return status). 
 
-   These descriptions, and a few more (e.g. failed), are called the
-   :term:`task states <task state>`.
+   There are several other task states as well, such as **failed**.
+
+   See the :ref:`next section for more about running jobs <tutorial-job-runner>`.
+
 
 .. ifslides::
 
-   When a :term:`task` is "Run" it creates a :term:`job`.
+   When a :term:`task` is ready to run, Cylc creates a :term:`job`.
 
-   The life-cycle of a job:
+   The life-cycle of a task:
 
    * Waiting
+   * Preparing
    * Submitted
    * Running
    * Succeeded / Failed
@@ -173,10 +169,30 @@ The Cylc User Interfaces
 
 .. ifnotslides::
 
-   To help you to keep track of a running workflow Cylc has
+   To help you to keep monitor and control running workflows Cylc has
 
    - A graphical user interface (Cylc GUI).
-   - A text-based user interface (Cylc TUI).
+   - A terminal-based user interface (Cylc TUI).
+   - A comprehensive command line interface (Cylc CLI).
+
+
+.. _tutorial.cli:
+
+The Cylc CLI
+^^^^^^^^^^^^
+
+.. ifnotslides::
+
+   You can start, stop, query, and control workflow, in every possible way,
+   from the command line. 
+
+   All Cylc commands have built-in help information:
+
+.. code-block:: bash
+
+   cylc help
+   cylc play --help  # etc.
+
 
 .. _tutorial.tui:
 
@@ -185,8 +201,8 @@ The Cylc TUI
 
 .. ifnotslides::
 
-   The Cylc TUI (Terminal User Interface) is bundled with Cylc and
-   enables you to view and interact with your workflow.
+   The Cylc TUI (Terminal User Interface) enables you to view and interact
+   with your workflows.
 
    To start the Cylc TUI:
 
@@ -201,7 +217,7 @@ The Cylc GUI
 
 .. ifnotslides::
 
-   The Cylc UI has different views you can use to examine your workflows,
+   The Cylc GUI has different views you can use to examine your workflows,
    including a Cylc scan menu allowing you to switch between workflows.
 
    .. note::
@@ -226,10 +242,10 @@ Task & Job States
 .. csv-table::
    :header: Common task and job states, Description
 
-   |task-waiting|, Task waiting on other tasks
+   |task-waiting|, Task waiting
    |task-submitted| |job-submitted|, Job submitted
-   |task-running| |job-running|, Job is running
-   |task-succeeded| |job-succeeded|, Job has run successfully
+   |task-running| |job-running|, Job running
+   |task-succeeded| |job-succeeded|, Job ran successfully
    |task-failed| |job-failed|, Job failed
 
 .. ifnotslides::
@@ -264,7 +280,8 @@ This is the "table" view:
 
 .. ifnotslides::
 
-   You can navigate between workflows using the list on the left.
+   You can navigate between workflows using the list on the left (the
+   screenshot shows only one, however).
 
 
 .. figure:: ../img/cylc-gui-scan-view.png
@@ -274,85 +291,14 @@ This is the "table" view:
    Screenshot of the Cylc GUI "Scan" bar.
 
 
-Where Do All The Files Go?
---------------------------
-
-.. ifnotslides::
-
-   The Work Directory
-   ^^^^^^^^^^^^^^^^^^
-
-   When a :term:`task` is run Cylc creates a directory for the :term:`job` to
-   run in. This is called the :term:`work directory`.
-
-   By default the work directory is located in a directory structure
-   under the relevant :term:`cycle point` and :term:`task` name:
-
-   .. code-block:: sub
-
-      ~/cylc-run/<workflow-name>/work/<cycle-point>/<task-name>
-
-   The Job Log Directory
-   ^^^^^^^^^^^^^^^^^^^^^
-
-   When a task is run Cylc generates a :term:`job script` which is stored in the
-   :term:`job log directory` as the file ``job``.
-
-   When the :term:`job script` is executed the stdout and stderr are redirected
-   into the ``job.out`` and ``job.err`` files which are also stored in the
-   :term:`job log directory`.
-
-   The :term:`job log directory` lives in a directory structure under the
-   :term:`cycle point`, :term:`task` name and :term:`job submission number`:
-
-   .. code-block:: sub
-
-      ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
-
-   The :term:`job submission number` starts at 1 and increments by 1 each time
-   a task is re-run.
-
-   .. tip::
-
-      You can use ``cylc cat-log <workflow-name>//<cycle-point>/<task-name>``
-      to view the content of job logs.
-
-      .. TODO REPLACE THIS IF APPROPRIATE
-
-         If a task has run and is still visible in the Cylc GUI you can view its
-         :term:`job log files <job log>` by right-clicking on the task and
-         selecting "View".
-
-         .. image:: ../img/cylc-gui-view-log.png
-            :align: center
-            :scale: 75%
-
-.. ifslides::
-
-   The Work Directory
-      .. code-block:: sub
-
-         ~/cylc-run/<workflow-name>/work/<cycle-point>/<task-name>
-   The Job Log Directory
-      .. code-block:: sub
-
-         ~/cylc-run/<workflow-name>/log/job/<cycle-point>/<task-name>/<job-submission-num>/
-
-      .. TODO REPLACE THIS IF APPROPRIATE
-
-         .. image:: ../img/cylc-gui-view-log.png
-            :align: center
-            :scale: 75%
-
 
 Validating A Workflow
 ---------------------
 
 .. ifnotslides::
 
-   It is a good idea to check a workflow definition for errors before running
-   it. Cylc provides a command which automatically checks the validity of
-   workflow configurations - ``cylc validate``:
+   We recommend using ``cylc validate`` to check a workflow definition for
+   errors before running it.
 
 .. code-block:: console
 
@@ -369,8 +315,8 @@ Installing A Workflow
 
       :ref:`The full guide to Cylc install <Installing-workflows>`.
 
-   To allow you to separate the development and running of workflows
-   Cylc provides a :term:`cylc install <install>` command.
+   To separate the development and running of workflows, use the
+   :term:`cylc install <install>` command.
 
 .. code-block:: bash
 
@@ -378,7 +324,7 @@ Installing A Workflow
 
 .. ifnotslides::
 
-   will install the workflow in ``~/cylc-src/my_workflow`` into ``~/cylc-run/my_workflow/runN``.
+   This will install ``~/cylc-src/my_workflow`` to ``~/cylc-run/my_workflow/runN``.
 
 
 Running a workflow
@@ -412,8 +358,8 @@ Numbered run directories
       :ref:`Installing-workflows` for a fuller description of Cylc install,
       including the option of naming rather than numbering runs.
 
-   By default ``cylc install`` will install your workflow in a new
-   numbered run directory each time you run ``cylc install``:
+   By default ``cylc install`` will create a new numbered run directory each
+   time you run it:
 
 .. code-block:: console
 
@@ -439,8 +385,8 @@ You can run cylc commands using a specific run number, but if you don't,
    $ cylc validate my_workflow/run2
 
 
-Files created by ``cylc play``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Files Generated at Runtime
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. ifnotslides::
 
@@ -450,22 +396,37 @@ Files created by ``cylc play``
       ``db``
          The database which Cylc uses to record the state of the workflow;
       ``job``
-         The directory where the :term:`job log files <job log>` live;
+         The directory where all :term:`job log files <job log>` live,
+         primarily the job script itself (``job``) and the job output logs
+         (``job.out`` and ``job.err``);
       ``workflow``
-         The directory where the :term:`workflow log files <workflow log>` live.
-         These files are written by Cylc as the workflow is run and are useful for
-         debugging purposes in the event of error.
+         The directory where :term:`scheduler log files <workflow log>` live.
+         These are written as the workflow runs and are useful when troubleshooting.
       ``flow-config/flow.cylc.processed``
          A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
          processed - we will cover this in the
          :ref:`tutorial-cylc-consolidating-configuration` section.
 
    ``share/``
-      The :term:`share directory` is a place where :term:`tasks <task>` can
-      write files which are intended to be shared within that cycle.
+      The :term:`share directory` is where :term:`tasks <task>` can
+      read or write files shared with other tasks.
    ``work/``
-      A directory hierarchy containing task's :term:`work directories
-      <work directory>`.
+      Contains task :term:`work directories <work directory>`, i.e. the
+      *current working directories* of running task jobs. These are
+      removed automatically if empty when a task finishes.
+
+    The job log directory path ends in ``<cycle-point>/<task-name>/<job-submission-num>/``,
+    where the :term:`job submission number` starts at 1 and increments each time a
+    task re-runs.
+
+    You can use the command line to view scheduler or task job logs without
+    having to find them yourself on the filesystem:
+    
+    .. code-block:: bash
+
+       cylc cat-log <workflow-name>
+       cylc cat-log <workflow-name>//<cycle-point>/<task-name>
+
 
 .. ifslides::
 
@@ -494,15 +455,15 @@ Files created by ``cylc play``
 
    #. **Create A New Workflow.**
 
-      The following command will copy some files for us to work with into
-      a new workflow called ``runtime-introduction``:
+      The following command will copy some workflow files into
+      a new source directory called ``runtime-introduction``:
 
       .. code-block:: bash
 
          cylc get-resouces tutorial
          cd ~/cylc-src/tutorial/runtime-introduction
 
-      In this directory we have the :cylc:conf:`flow.cylc` file from the
+      This includes the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
       with some runtime configuration added to it.
 
@@ -535,26 +496,27 @@ Files created by ``cylc play``
          cylc play runtime-introduction
 
       The tasks will start to run - you should see them going through the
-      "Waiting", "Running" and "Succeeded" states.
+      *waiting*, *running* and *succeeded* states. The *preparing* and
+      *submitted* states may be too quick to notice.
 
       When the workflow reaches the final cycle point and all tasks have succeeded
-      it will shutdown automatically and the GUI will go blank.
+      the scheduler will shutdown automatically.
 
       .. tip::
 
-         You can also run a workflow from the Cylc GUI by pressing the "play"
-         button at the top of the GUI.
+         You can run a workflow from the Cylc GUI by pressing the "play"
+         button at the top.
 
    #. **Inspect A Job Log.**
 
-      Try opening the file ``job.out`` for one of the
-      ``get_observations`` jobs in a text editor. The file will be
-      located within the :term:`job log directory`:
+      Try opening the ``job.out`` log for one of the
+      ``get_observations`` tasks in a text editor. The file will be
+      in the :term:`job log directory`:
 
       .. code-block:: sub
 
          cd ~/cylc-run/runtime-introduction/runN
-         log/job/<cycle-point>/get_observations_heathrow/01/job.out
+         cat log/job/<cycle-point>/get_observations_heathrow/01/job.out
 
       You should see something like this:
 
@@ -566,14 +528,15 @@ Files created by ``cylc play``
 
          Guessing Weather Conditions
          Writing Out Wind Data
+
          1970-01-01T00:00:00Z NORMAL - started
          2038-01-19T03:14:08Z NORMAL - succeeded
 
-      * The first three lines are information which Cylc has written to the file
-        to provide information about the job.
-      * **The lines in the middle are the stdout of the job.**
-      * The last two lines were also written by Cylc. They provide timestamps
-        marking the stages in the job's life.
+      * The first three lines are identifying information written by Cylc.
+      * *The lines in the middle are the job stdout.*
+      * The last two lines are written by Cylc, to record job start and finish
+        times. The started message would be above the job stdout for a
+        longer-running job.
 
    #. **Inspect A Work Directory.**
 

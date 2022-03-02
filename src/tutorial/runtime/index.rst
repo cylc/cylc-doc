@@ -5,8 +5,9 @@ Runtime
 
 This section covers:
 
-* Associating tasks with scripts and executables.
-* Providing executables with runtime configurations.
+* Associating workflow tasks with executable applications (scripts and
+  programs).
+* Providing executables with runtime configurations, within the workflow.
 * Running Cylc workflows.
 
 .. toctree::
