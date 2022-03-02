@@ -3,7 +3,7 @@
 Tutorial
 ========
 
-This section will cover the Cylc framework and writing basic Cylc workflows.
+This tutorial shows how to write and run basic Cylc workflows.
 
 .. toctree::
    :name: cylc-tutorial

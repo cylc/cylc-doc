@@ -92,7 +92,7 @@ Environment Variables
 Parameter Types
 ---------------
 
-Parameters can be either words or integers:
+Parameters can be either strings or integers:
 
 .. code-block:: cylc
 
@@ -105,7 +105,7 @@ Parameters can be either words or integers:
 
 .. hint::
 
-   Remember that Cylc automatically inserts an underscore between the task and
+   Remember that by default Cylc automatically inserts an underscore between the task and
    the parameter, e.g. the following lines are equivalent:
 
    .. code-block:: cylc-graph
