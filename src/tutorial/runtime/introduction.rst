@@ -10,7 +10,7 @@ Introduction
    <dependency>` are defined.
 
    Now, in the ``[runtime]`` section, we need to associate each task with a
-   script or application to run when its dependencies are met. 
+   script or application to run when its dependencies are met.
 
 .. ifslides::
 
@@ -145,7 +145,7 @@ Tasks And Jobs
    Running
       Task job script executing.
    Succeeded
-      Task job completed successfully (i.e. exited with 0 return status). 
+      Task job completed successfully (i.e. exited with 0 return status).
 
    There are several other task states as well, such as **failed**.
 
@@ -184,7 +184,7 @@ The Cylc CLI
 .. ifnotslides::
 
    You can start, stop, query, and control workflow, in every possible way,
-   from the command line. 
+   from the command line.
 
    All Cylc commands have built-in help information:
 
@@ -236,17 +236,21 @@ The Cylc GUI
 Task & Job States
 ^^^^^^^^^^^^^^^^^
 
-- Task states have grey icons.
-- Job states have colour-coded squares.
+.. ifnotslides::
+
+   - Task states have grey icons.
+   - Job states have colour coded squares.
 
 .. csv-table::
-   :header: Common task and job states, Description
+   :header: Task Icon, Job Icon, Description
+   :align: left
+   :widths: 25, 25, 50
 
-   |task-waiting|, Task waiting
-   |task-submitted| |job-submitted|, Job submitted
-   |task-running| |job-running|, Job running
-   |task-succeeded| |job-succeeded|, Job ran successfully
-   |task-failed| |job-failed|, Job failed
+   |task-waiting|, , Task waiting
+   |task-submitted|, |job-submitted|, Job submitted
+   |task-running|, |job-running|, Job running
+   |task-succeeded|, |job-succeeded|, Job ran successfully
+   |task-failed|, |job-failed|, Job failed
 
 .. ifnotslides::
 
@@ -372,9 +376,12 @@ Numbered run directories
    $ ls -l ~/cylc-run/my_workflow/runN
    ~/cylc-run/baz/runN -> run2
 
+.. nextslide::
 
-You can run cylc commands using a specific run number, but if you don't,
-``runN`` will be used:
+.. ifnotslides::
+
+   You can run cylc commands using a specific run number, but if you don't,
+   ``runN`` will be used:
 
 .. code-block:: console
 
@@ -421,7 +428,7 @@ Files Generated at Runtime
 
     You can use the command line to view scheduler or task job logs without
     having to find them yourself on the filesystem:
-    
+
     .. code-block:: bash
 
        cylc cat-log <workflow-name>

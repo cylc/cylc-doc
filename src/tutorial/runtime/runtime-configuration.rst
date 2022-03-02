@@ -65,7 +65,9 @@ Job Submission
    [runtime]
        [[hello_computehost]]
            script = echo "Hello Compute Host"
-           platform = powerful_computer  # Must be defined in Cylc global config!
+
+           # Must be defined in Cylc global config!
+           platform = powerful_computer
 
 .. _background processes: https://en.wikipedia.org/wiki/Background_process
 .. _job scheduler: https://en.wikipedia.org/wiki/Job_scheduler
@@ -105,7 +107,9 @@ Job Submission
            # Submit to the host "big-computer".
            platform = slurm_platform
 
-           # Inform "slurm" that this job requires 500MB of RAM and 4 CPUs.
+           # Inform "slurm" that this job requires
+           # - 500MB of RAM
+           # - 4 CPUs
            [[[directives]]]
                --mem = 500
                --ntasks = 4
@@ -133,11 +137,15 @@ Retries
 
 Task jobs can fail for several reasons:
 
+.. nextslide::
+
 * Something went wrong with job submission, e.g:
 
   * A network problem;
   * The :term:`job host` became unavailable or overloaded;
   * The job runner rejected your job directives.
+
+.. nextslide::
 
 * Something went wrong with job execution, e.g:
 
@@ -168,7 +176,8 @@ Task jobs can fail for several reasons:
          #   retry up to 3 times every 15 minutes.
          execution retry delays = 3*PT15M
          # On submission failure
-         #   retry up to 2 times every 10 min, then every 30 mins thereafter.
+         #   retry up to 2 times every 10 min,
+         #   then every 30 mins thereafter.
          submission retry delays = 2*PT10M, PT30M
 
 

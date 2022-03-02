@@ -36,7 +36,7 @@ The :cylc:conf:`flow.cylc` File Format
       Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
       but that name is now deprecated.
 
-      See :ref:`cylc_7_compat_mode` for information compatibility with 
+      See :ref:`cylc_7_compat_mode` for information compatibility with
       existing Cylc 7 ``suite.rc`` files.
 
 Example
@@ -142,7 +142,7 @@ Except for duplicate graph string items, which get merged:
 Indentation
 ^^^^^^^^^^^
 
-It is a good idea to indent :cylc:conf:`flow.cylc` files for readability. 
+It is a good idea to indent :cylc:conf:`flow.cylc` files for readability.
 
 However, Cylc ignores indentation, so the following examples are equivalent:
 
@@ -189,7 +189,7 @@ Cylc workflows are defined in terms of :term:`tasks <task>` and
    Task have names, and dependencies are represented by arrows
    (``=>``) between them. For example, here's a task ``make_dough`` that should
    run after another task ``buy_ingredients`` has succeeded:
- 
+
 .. minicylc::
    :align: center
    :snippet:
@@ -214,7 +214,7 @@ Cylc workflows are defined in terms of :term:`tasks <task>` and
 .. nextslide::
 
 .. ifnotslides::
-   
+
    Graph strings can be combined to form more complex graphs:
 
 .. minicylc::
@@ -281,7 +281,8 @@ Cylc Graphs
        [[graph]]
            R1 = """
                buy_ingredients => make_dough
-               pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+               pre_heat_oven & make_dough => bake_bread
+               bake_bread => sell_bread & clean_oven
            """
 
 .. nextslide::

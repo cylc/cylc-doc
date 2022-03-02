@@ -56,7 +56,8 @@ To make a workflow repeat we must tell Cylc three things:
    -        R1 = """
    +        P1 = """
                 buy_ingredients => make_dough
-                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+                pre_heat_oven & make_dough => bake_bread
+                bake_bread => sell_bread & clean_oven
             """
 
 .. nextslide::
@@ -155,7 +156,8 @@ Intercycle Dependencies
         [[graph]]
             P1 = """
                 buy_ingredients => make_dough
-                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+                pre_heat_oven & make_dough => bake_bread
+                bake_bread => sell_bread & clean_oven
    +            clean_oven[-P1] => pre_heat_oven
             """
 
@@ -217,7 +219,7 @@ Intercycle Dependencies
 .. ifnotslides::
 
    The :term:`intercycle dependency` forces the connected tasks, in
-   different cycle points, to run in order. 
+   different cycle points, to run in order.
 
    Note that the ``buy_ingredients`` task has no arrows pointing at it.
    This means it has no *parent tasks* to wait on, upstream in the graph.
@@ -245,7 +247,8 @@ Intercycle Dependencies
         [[graph]]
             P1 = """
                 buy_ingredients => make_dough
-                pre_heat_oven & make_dough => bake_bread => sell_bread & clean_oven
+                pre_heat_oven & make_dough => bake_bread
+                bake_bread => sell_bread & clean_oven
                 clean_oven[-P1] => pre_heat_oven
    +            sell_bread[-P2] => buy_ingredients
             """
@@ -381,7 +384,7 @@ Recurrence Sections
       By default, recurrences start at the: :term:`initial cycle point`.
 
    From an arbitrary cycle point:
-      We can give a different start point like this: 
+      We can give a different start point like this:
       ``5/P3`` means repeat every third cycl, starting from cycle number 5.
       To run a graph at every other cycle point, use ``2/P2``.
 
@@ -393,7 +396,7 @@ Recurrence Sections
 .. ifslides::
 
    ``2/P2``
-      Repeat every even cycle (If your initial cycle point was odd)
+      Repeat every even cycle (Even if your initial cycle point was odd)
 
    .. image:: ../../img/recurrence-sections2.svg
       :align: center
@@ -404,7 +407,7 @@ Recurrence Sections
 
    .. nextslide::
 
-   .. rubric:: In this practical we will turn the term:`workflow <Cylc workflow>`
+   .. rubric:: In this practical we will turn the :term:`workflow <workflow>`
       of the previous section into a :term:`cycling workflow <cycling>`.
 
    Next section: :ref:`tutorial-datetime-cycling`
@@ -470,7 +473,7 @@ Recurrence Sections
 
          You can use the ``-c`` (``--cycles``) option
          to draw a box around each cycle:
-       
+
 
          .. code-block:: none
 
