@@ -41,6 +41,7 @@ extensions = [
     # custom project extensions (located in ext/)
     'autodoc_traits',  # autodoc uiserver traitlets
     'database_diagram',
+    'autodoc_enum_values',
     # cylc-sphinx-extensions
     'cylc.sphinx_ext.cylc_lang',
     'cylc.sphinx_ext.diff_selection',
