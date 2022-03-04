@@ -1,3 +1,5 @@
+.. _UI_Server_config:
+
 UI Server Configuration
 =======================
 

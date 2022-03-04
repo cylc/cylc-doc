@@ -3,6 +3,9 @@
 Installation
 ============
 
+Cylc 8 and its core software dependencies can be installed quickly from Conda
+Forge, into a conda environment; or from PyPI, into a Python 3 virtual environment.
+
 .. The following note is also included in the main index.
 
 .. include:: release-note.rst
