@@ -16,8 +16,6 @@ Running Workflows
    authentication-files
    simulation-modes
    scheduler-log-files
-   external-command-execution
    handling-job-preemption
-   dynamic-behaviour.rst
-   workflow-databases.rst
-   workflow-migration.rst
+   dynamic-behaviour
+   workflow-databases
