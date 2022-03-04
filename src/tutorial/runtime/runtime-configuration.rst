@@ -236,7 +236,7 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
-         cylc get-resouces tutorial/runtime-tutorial
+         cylc get-resources tutorial/runtime-tutorial
          cd ~/cylc-src/runtime-tutorial
 
       You will now have a copy of the weather-forecasting workflow along with some
