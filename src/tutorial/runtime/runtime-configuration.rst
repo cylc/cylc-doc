@@ -105,9 +105,7 @@ Job Submission
            # Submit to the host "big-computer".
            platform = slurm_platform
 
-           # Inform "slurm" that this job requires
-           # - 500MB of RAM
-           # - 4 CPUs
+           # job requires 500MB of RAM & 4 CPUs
            [[[directives]]]
                --mem = 500
                --ntasks = 4
