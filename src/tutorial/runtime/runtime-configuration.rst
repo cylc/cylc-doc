@@ -65,8 +65,6 @@ Job Submission
    [runtime]
        [[hello_computehost]]
            script = echo "Hello Compute Host"
-
-           # Must be defined in Cylc global config!
            platform = powerful_computer
 
 .. _background processes: https://en.wikipedia.org/wiki/Background_process
