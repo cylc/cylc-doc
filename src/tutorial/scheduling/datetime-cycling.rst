@@ -21,15 +21,15 @@ with numbered :term:`cycle points <cycle point>`.
    or every few hours. To support this Cylc can generate datetime sequences
    as :term:`cycle points <cycle point>` instead of integers.
 
-.. admonition:: Reminder
-   :class: tip
+   .. admonition:: Reminder
+      :class: tip
 
-   In Cylc, :term:`cycle points <cycle point>` are task labels that anchor the
-   depedencies between individual tasks: this task depends on that task in
-   that cycle. Tasks can run as soon as their individual dependencies are met,
-   so cycles do not necessarily run in order, or at the real world time
-   corresponding to the cycle point value (to do that, see
-   :ref:`tutorial-clock-triggers`).
+      In Cylc, :term:`cycle points <cycle point>` are task labels that anchor the
+      depedencies between individual tasks: this task depends on that task in
+      that cycle. Tasks can run as soon as their individual dependencies are met,
+      so cycles do not necessarily run in order, or at the real world time
+      corresponding to the cycle point value (to do that, see
+      :ref:`tutorial-clock-triggers`).
 
 
 .. _tutorial-iso8601:
@@ -127,14 +127,17 @@ Inferred Recurrence
    front. For example, if the year is omitted then the recurrence can be
    inferred to be annual. E.g.:
 
-.. code-block:: sub
+.. csv-table::
+   :header: Recurrence, Description
+   :align: left
+   :widths: 30, 70
 
-   2000-01-01T00   # Datetime - midnight on the 1st of January 2000.
-
-        01-01T00   # Every year on the 1st of January.
-           01T00   # Every month on the first of the month.
-             T00   # Every day at midnight.
-             T-00  # Every hour at zero minutes past (every hour on the hour).
+   ``2000-01-01T00``, Midnight on the 1st of January 2000
+   ,
+   ``01-01T00``, Every year on the 1st of January.
+   ``01T00``, Every month on the first of the month.
+   ``T00``, Every day at midnight.
+   ``T-00``, Every hour at zero minutes past (every hour on the hour).
 
 .. note::
 
@@ -149,24 +152,33 @@ Recurrence Formats
    As with integer cycling, recurrences start at the :term:`initial cycle
    point` by default. We can override this in two ways:
 
-1. By giving an arbitrary start cycle point (``datetime/recurrence``):
+By giving an arbitrary start cycle point (``datetime/recurrence``):
 
-   * ``2000/P4Y``: every fourth year starting with the year 2000.
-   * ``2000-01-01T00/T00``: every day at midnight starting on the 1st of January
-     2000
-   * ``2000-01-01T12/T00``: every day at midnight starting on the first midnight
-     after the 1st of January at 12:00 (i.e. ``2000-01-02T00``).
+.. csv-table::
+   :header: Example, Description
+   :align: left
+   :widths: 30, 70
+
+   ``2000/P4Y``, every fourth year starting with the year 2000.
+   ``2000-01-01T00/T00``, every day at midnight starting on the 1st of January 2000
+   ``2000-01-01T12/T00``, "every day at midnight starting on the first midnight
+   after the 1st of January at 12:00 (i.e. ``2000-01-02T00``)."
 
 .. nextslide::
 
 .. _tutorial-cylc-datetime-offset-icp:
 
-2. By offset, relative to the initial cycle point (``offset/recurrence``).
-   The offset must be an ISO8601 duration preceded by a plus character:
+By offset, relative to the initial cycle point (``offset/recurrence``).
+The offset must be an ISO8601 duration preceded by a plus character:
 
-   * ``+P1Y/P1Y``: every year starting one year after the initial cycle point.
-   * ``+PT1H/T00``: every day starting on the first midnight after the point one
-     hour after the initial cycle point.
+.. csv-table::
+   :header: Example, Description
+   :align: left
+   :widths: 30, 70
+
+   ``+P1Y/P1Y``, every year starting one year after the initial cycle point.
+   ``+PT1H/T00``, "every day starting on the first midnight after the point one
+   hour after the initial cycle point."
 
 Durations and the Initial Cycle Point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -178,12 +190,14 @@ might produce different results for the recurrences.
 
 .. list-table::
    :class: grid-table
+   :width: 50%
 
    * - .. code-block:: cylc
           :emphasize-lines: 2
 
           [scheduling]
-              initial cycle point = 2000-01-01T00
+              initial cycle point = \
+                  2000-01-01T00
               [[graph]]
                   P1D = foo[-P1D] => foo
 
@@ -191,7 +205,8 @@ might produce different results for the recurrences.
           :emphasize-lines: 2
 
           [scheduling]
-              initial cycle point = 2000-01-01T12
+              initial cycle point = \
+                  2000-01-01T12
               [[graph]]
                   P1D = foo[-P1D] => foo
 
@@ -276,7 +291,7 @@ UTC Mode
 
 .. note::
 
-   UTC is sometimes also labelled ``Z`` ("zulu" from the NATO phonetic alphabet)
+   UTC is sometimes also labelled ``Z`` ("Zulu" from the NATO phonetic alphabet)
    according to the
    `military time zone convention <https://en.wikipedia.org/wiki/List_of_military_time_zones>`_.
 

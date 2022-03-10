@@ -5,7 +5,8 @@ Consolidating Configuration
 
 .. ifnotslides::
 
-   In the last section we wrote out the following code in the :cylc:conf:`flow.cylc` file:
+   In the last section we wrote out the following code in the
+   :cylc:conf:`flow.cylc` file:
 
 .. slide:: Weather Forecasting Workflow
    :level: 2
