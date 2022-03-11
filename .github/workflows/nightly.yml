@@ -48,15 +48,7 @@ jobs:
         run: pip install "${{ github.workspace }}/docs[all]"
 
       - name: install libs to document
-        run: |
-          # NOTE: Install with [all] so we can import plugins which may
-          #       have extra dependencies.
-          pip install  \
-            'cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@master' \
-            'cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@master' \
-            'cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@master'
-          git clone --depth 1 https://github.com/metomi/rose ../rose
-          pip install -e ../rose[all]
+        uses: ./docs/.github/actions/install-libs
 
       - name: checkout gh-pages branch
         uses: actions/checkout@v2

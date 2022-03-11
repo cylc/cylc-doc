@@ -50,6 +50,7 @@ on:
         description: "Don't fail if the conda environments fail to build."
         type: boolean
         default: false
+        required: false
 
 jobs:
   deploy:
@@ -74,20 +75,7 @@ jobs:
         run: pip install "${{ github.workspace }}/docs[all]"
 
       - name: install libs to document
-        env:
-          cylc_flow: ${{ github.event.inputs.cylc-flow-tag }}
-          meto_rose: ${{ github.event.inputs.metomi-rose-tag }}
-          cylc_rose: ${{ github.event.inputs.cylc-rose-tag }}
-          cylc_uis: ${{ github.event.inputs.cylc-uis-tag }}
-        run: |
-          # NOTE: Install with [all] so we can import plugins which may
-          #       have extra dependencies.
-          pip install  \
-            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
-            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}" \
-            "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}"
-          git clone --depth 1 --branch "${meto_rose}" https://github.com/metomi/rose ../rose
-          pip install -e ../rose[all]
+        uses: cylc/cylc-doc/.github/actions/install-libs@master
 
       - name: create conda envs
         uses: ./docs/.github/actions/create-conda-envs
