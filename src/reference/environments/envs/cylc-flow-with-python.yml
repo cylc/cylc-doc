@@ -3,4 +3,4 @@ channels:
   - conda-forge
 dependencies:
   - python =3.7
-  - cylc-flow =|release|
+  - cylc-flow =|version|

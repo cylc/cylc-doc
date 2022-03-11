@@ -2,4 +2,4 @@ name: cylc-flow-base
 channels:
   - conda-forge
 dependencies:
-  - cylc-flow-base =|release|
+  - cylc-flow-base =|version|

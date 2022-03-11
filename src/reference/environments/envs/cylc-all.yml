@@ -1,8 +1,8 @@
-name: cylc-|release|
+name: cylc-|version|
 channels:
   - conda-forge
 dependencies:
-  - cylc-flow =|release|
+  - cylc-flow =|version|
   - cylc-uiserver
   - cylc-rose
   - metomi-rose

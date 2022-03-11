@@ -229,5 +229,5 @@ texinfo_show_urls = 'footnote'
 
 literal_sub_include_subs = {
     'version': version,
-    'release': release.replace('.dev', ''),
+    'release': release,
 }
