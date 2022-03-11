@@ -9,10 +9,11 @@
 ></div>
 
 {% set ROOT_DIR = pathto('').rsplit('.html', 1)[0] + '../..' %}
+{% set CUR_VERSION = sidebar_version_name if sidebar_version_name else release %}
 
 <script type="text/javascript">
     const CUR_FORMAT = "{{ builder }}";
-    const CUR_VERSION = "{{ release }}";
+    const CUR_VERSION = "{{ CUR_VERSION }}";
     // name of page (in URL), for singlepage builds this will be `index`
     const PAGE_NAME = "{{ current_page_name }}";
     // URL path to the base docs dir i.e. ROOT_DIR/version/format
