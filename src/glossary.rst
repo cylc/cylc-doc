@@ -63,6 +63,7 @@ Glossary
    workflow window
       This is a :term:`graph`-based window or view of the workflow at runtime,
       including tasks out to ``n`` graph edges from current active tasks.
+      The *active window* is ``n=0``.
 
       .. seealso::
 
@@ -1539,21 +1540,29 @@ Glossary
          * :ref:`Cylc User Guide <Graph Branching>`
 
 
-   flow number
-      Flow number is an integer identifier for a particular :term:`flow`
-      in a :term:`workflow` run.
-
-
    flow
-   reflow
-      In Cylc, a *flow* is a single logical run of a :term:`workflow` that "flows"
-      on from some start point in the :term:`graph`.
+      A flow is a self-propagating run through the a Cylc :term:`workflow`
+      :term:`graph` starting from some initial task or tasks.
 
-      Cylc :term:`schedulers <scheduler>` can manage more than one flow in the
-      same graph, at the same time.  We call this capability *reflow*.
+      Cylc :term:`schedulers <scheduler>` can manage multiple flows at once.
+
+      Flows are identified by a :term:`flow number`. The original flow
+      started automatically by ``cylc play`` has flow number ``1``.
 
       .. seealso::
          * :ref:`user-guide-reflow`
+
+
+   flow number
+      Flow numbers are integers passed down from parent task to child task in
+      the :term:`graph` as a flow progresses, to identify which :term:`flow`
+      (or flows) the tasks belong to. 
+
+
+   flow front
+      Active (submitted or running) tasks, i.e. tasks in the ``n=0``
+      :term:`active window`, with a common :term:`flow number` comprise the
+      active front of that flow.
 
 
    event
