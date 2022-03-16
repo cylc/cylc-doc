@@ -13,10 +13,9 @@ Trigger Edit
 
    * https://github.com/cylc/cylc-flow/issues/3751
 
-Reflow
-   The new "reflow" functionality, which allows multiple
-   (potentially concurrent) executions of the same workflow in a single
-   :term:`scheduler`, is not fully supported by all commands
+Multiple Flows
+   The new :term:`scheduler` can manage multiple flows in the workflow graph.
+   Commands and options for interacting with flows are still being refined.
 
 
 Browser Based UI

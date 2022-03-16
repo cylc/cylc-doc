@@ -32,7 +32,7 @@ renamed or removed.
 ``cylc checkpoint``
   - Database checkpoints are no longer needed.
   - All task state changes are written to the database when they occur.
-  - Remaining use cases can be handled by :term:`reflows <reflow>`
+  - Remaining use cases can be handled by starting a new :term:`flow`
     which allow a new execution of the graph to be started from an
     arbitrary point in the graph.
 ``cylc conditions``
