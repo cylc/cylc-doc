@@ -44,44 +44,44 @@ finish, unless you start it with the ``wait`` command to prevent that.
 
 .. digraph:: example
 
-    rankdir="LR"
-    packmode="array_u";
+   rankdir="TB"
+   packmode="array_u";
 
-    subgraph cluster_legend {
-        style="dashed"
-        label="Legend"
+   subgraph cluster_legend {
+       style="dashed"
+       label="Legend"
 
-        "user defined script"
-        "cylc defined script" [shape="rect"]
+       "user defined script"
+       "cylc defined script" [shape="rect"]
 
-        "user defined script" -> "cylc defined script" [style="invis"]
-    }
+       "user defined script" -> "cylc defined script" [style="invis"]
+   }
 
-    subgraph cluster_diagram {
-        style="invis"
-        margin=20
+   subgraph cluster_diagram {
+       style="invis"
+       margin=20
 
-        "cylc-env" [shape="rect"]
-        "user-env" [shape="rect"]
+       "cylc-env" [shape="rect"]
+       "user-env" [shape="rect"]
 
-        "init-script" ->
-        "cylc-env" ->
-        "env-script"
+       "init-script" ->
+       "cylc-env" ->
+       "env-script"
 
-        subgraph cluster_subshell {
-            style="dashed"
-            label="Subshell process"
+       subgraph cluster_subshell {
+           style="dashed"
+           label="Subshell process"
 
-            "env-script" ->
-            "user-env" ->
-            "pre-script" ->
-            "script" ->
-            "post-script"
-        }
+           "env-script" ->
+           "user-env" ->
+           "pre-script" ->
+           "script" ->
+           "post-script"
+       }
 
-        "post-script" -> "err-script"
-        "post-script" -> "exit-script"
-    }
+       "post-script" -> "err-script"
+       "post-script" -> "exit-script"
+   }
 
 The two "Cylc defined scripts" are:
 
