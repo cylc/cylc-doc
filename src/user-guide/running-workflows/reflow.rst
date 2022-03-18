@@ -8,13 +8,13 @@ Multiple Flows
 In Cylc, a *flow* is a self-propagating run through the workflow :term:`graph`
 from some initial task or tasks.
 
-Usually there is only one flow, the original one starting from the beginning of
-the graph, but Cylc can manage multiple flows at once.
+Often there is only one flow: the original one started automatically at the
+beginning of the graph. But Cylc can manage multiple flows at once.
 
 When a flow advances to a new task in the :term:`graph`, the task will only run
 if it did not already run in the same flow.
 
-See :ref:`below<flow-trigger-use-cases>` for suggested use cases and an
+See below for suggested :ref:`use cases<flow-trigger-use-cases>` and an
 :ref:`example<new-flow-example>`.
 
 .. note::
@@ -32,7 +32,7 @@ Flow number ``1`` is triggered automatically by ``cylc play`` at :term:`schedule
 start-up. The next flow started by :ref:`manual triggering<triggering-flows>`
 gets the number ``2``, then ``3``, and so on.
 
-Tasks with multiple flow numbers belong to multiple flows as a result of
+Tasks can carry multiple flow numbers as a result of
 :ref:`flow merging<flow-merging>` and :ref:`manual triggering<triggering-flows>`.
 
 .. note::
@@ -64,15 +64,12 @@ Triggering in Current Flows
 
    .. image:: ../../img/same-flow-n.png
 
-   With ``--wait`` the triggered task runs immediately but any downstream action
-   is delayed until the flows catch up. If there are multiple active flows at
-   trigger time, each one can continue on separately from the triggered task
-   (without re-running it) as they separately catch-up to it. Without
-   ``--wait`` a single front of activity representing all active flows
-   continues immediately after triggering.
+   With ``--wait``, the result is the same except that any action downstream of 
+   the triggered task is delayed until the first flow catches it.
 
    **Behind active flows** the triggered task itself will re-run, then activity
-   will cease if the original flows already traversed the same part of the graph.
+   will cease if any of the original flows already traversed that part of the
+   graph.
 
 Triggering in Specific Flows
    ``cylc trigger --flow=1,2 ID``
@@ -86,7 +83,7 @@ Triggering in Specific Flows
 Triggering a New Flow
    ``cylc trigger --flow=new ID``
 
-   This triggers the task with a new flow number.
+   This triggers the task with a new, incremented flow number.
 
    The new flow will re-run tasks that already ran in previous flows.
 
@@ -116,30 +113,41 @@ Special Case: Triggering ``n=0`` Tasks
 Flow Merging In ``n=0``
 -----------------------
 
-If a task spawning into the ``n=0`` window encounters another instance of
-itself (same name and :term:`cycle point`) from another flow, the two task
-instances merge and carry both (sets of) flow numbers forward.
+If a task spawning into the ``n=0`` :term:`window` finds another instance
+of itself (same name and cycle point, different flow) already there, a single
+instance of it will carry both (sets of) flow numbers forward from that point.
+Downstream tasks belong to both flows.
 
-Downstream tasks are considered to belong to both flows. Any number of flows
-can merge like this.
+Flow merging in ``n=0`` means flows are not entirely independent. One flow
+might not be able to overtake another because one or more of its tasks might
+merge in ``n=0``. Merging is necessary while task IDs - and associated log
+directory paths etc. - do not incorporate flow numbers, because task IDs must
+be unique in the active task pool.
 
-.. note::
-   Flow merging in ``n=0`` means flows are not entirely independent. One flow
-   *might* not be able to overtake another because a task *might* merge in
-   ``n=0``. Merging is necessary while task IDs do not incorporate flow numbers,
-   because we can't have multiple active tasks with the same ID.
+Incomplete tasks
+^^^^^^^^^^^^^^^^
+
+Incomplete tasks are retained in the active window in expectation of
+retriggering once fixed, to complete expected outputs and continue the flow.
+
+If another flow encounters an incomplete task, one task will carry both flow
+numbers forward on successfully completing its expected outputs.
+
+.. TODO whether or not it automatically reruns in the later flow is still an
+   open question: https://github.com/cylc/cylc-flow/pull/4737
 
 
 Stopping Flows
 --------------
 
-By default, ``cylc stop`` halts the entire workflow and shuts the scheduler
-down. Individual flows can be stopped with ``cylc stop --flow=F``, however.
-This removes the flow number ``F`` from all ``n=0`` tasks, and removes any
-active-waiting tasks that have no remaining flow numbers.
+By default, ``cylc stop`` halts the workflow and shuts the scheduler down.
 
-Tasks with no flow numbers do not spawn children in the graph. If there are no
-active flows left, the scheduler shut downs.
+It can also stop specific flows: ``cylc stop --flow=N`` removes the flow number
+``N`` from tasks in the active pool. Tasks that have no flow numbers left as a
+result do not spawn children at all. If there are no active flows left, the
+scheduler shuts down.
+
+.. TODO update this section post https://github.com/cylc/cylc-flow/issues/4741
 
 
 .. _flow-trigger-use-cases:
@@ -148,10 +156,9 @@ Use Cases
 ---------
 
 Running Tasks Ahead of Time
-   To run a task now even though its prerequisites are not yet satisfied, just
-   trigger it. Use `--wait` if you don't want the triggered front to continue
-   immediately. The triggered task(s) will not re-run when the main flow front
-   catches up.
+   To run a task even though its prerequisites are not satisfied, just trigger
+   it. Use ``--wait`` if you don't want the new front to continue immediately.
+   Triggered task(s) will not re-run when the main flow front catches up.
 
 Regenerating Products Behind a Flow
    To re-run a sub-graph (e.g. because the original run was affected by a
@@ -163,15 +170,24 @@ Regenerating Products Behind a Flow
    trunk of the graph.
 
 Rewinding a Workflow
-   To rewind the workflow to an earlier point, to regenerate data or perhaps
-   to allow the workflow to evolve a new path into the future, trigger a new
-   flow at the right task(s) and then stop the original flow. (Alternatively,
-   stop the scheduler and play it again from the desired task(s)).
+   To rewind the workflow to an earlier point, perhaps to regenerate data and/or 
+   allow the workflow to evolve a new path into the future, trigger a new
+   flow at the right place and then stop the original flow. (Alternatively,
+   stop the scheduler, install a new instance of the workflow, and play it
+   from the desired place in the graph).
 
 Test-running Tasks in a Live Workflow
    You can trigger individual tasks as many times as you like with
    ``--flow=none``, without affecting the workflow.
+
+Processing Flow-specific Data
+   Flow numbers are passed to task environments, so it is possible to have
+   different flows process different datasets through the same graph. However
+   we do not recommend doing this. Generally, that's what cycling is for; and
+   besides, each task would have to be capable of processing multiple datasets
+   at once in case of :ref:`flow-merging`.
  
+
 .. _new-flow-example:
 
 Example: Rerun a Past Sub-graph
