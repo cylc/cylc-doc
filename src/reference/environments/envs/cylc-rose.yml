@@ -2,6 +2,6 @@ name: cylc-rose
 channels:
   - conda-forge
 dependencies:
-  - cylc-flow =|release|
+  - cylc-flow =|version|
   - cylc-rose
   - metomi-rose

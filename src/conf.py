@@ -165,6 +165,12 @@ html_sidebars = {
     ],
 }
 
+# Values to pass into the templating context. Can be overridden using the
+# sphinx-build opt `-A name=value` (add to SPHINXOPTS if using make).
+html_context = {
+    'sidebar_version_name': None,  # override name in version picker
+}
+
 html_static_path = ['_static']
 
 # These paths are either relative to html_static_path
@@ -229,5 +235,5 @@ texinfo_show_urls = 'footnote'
 
 literal_sub_include_subs = {
     'version': version,
-    'release': release.replace('.dev', ''),
+    'release': release,
 }

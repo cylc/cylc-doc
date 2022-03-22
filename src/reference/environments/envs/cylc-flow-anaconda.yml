@@ -4,4 +4,4 @@ channels:
   - conda-forge
 dependencies:
   - python
-  - cylc-flow =|release|
+  - cylc-flow =|version|

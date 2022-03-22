@@ -39,7 +39,7 @@ runs:
           # TODO: add explicit python dep
           sed \
             -e 's/python =.*/python =${{ inputs.python_version }}/' \
-            -e "s/|release|/${CYLC_RELEASE}/" \
+            -e "s/|version|/${CYLC_RELEASE}/" \
             "${env_file}" \
             > "${new_env_file}"
           # create the env

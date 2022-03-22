@@ -44,19 +44,7 @@ jobs:
         run: pip install .[all]
 
       - name: install libs to document
-        env:
-          cylc_flow: ${{ github.event.inputs.cylc-flow-tag || 'master' }}
-          meto_rose: ${{ github.event.inputs.metomi-rose-tag || 'master' }}
-          cylc_rose: ${{ github.event.inputs.cylc-rose-tag || 'master' }}
-          cylc_uis: ${{ github.event.inputs.cylc-uis-tag || 'master' }}
-        run: |
-          # NOTE: Install with [all] so we can import plugins which may
-          #       have extra dependencies.
-          pip install \
-            "cylc-flow[all] @ git+https://github.com/cylc/cylc-flow@${cylc_flow}" \
-            "cylc-uiserver[all] @ git+https://github.com/cylc/cylc-uiserver@${cylc_uis}" \
-            "metomi-rose[all] @ git+https://github.com/metomi/rose@${meto_rose}" \
-            "cylc-rose[all] @ git+https://github.com/cylc/cylc-rose@${cylc_rose}"
+        uses: ./.github/actions/install-libs
 
       - name: install eslint
         run: |
