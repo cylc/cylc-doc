@@ -25,7 +25,7 @@ with numbered :term:`cycle points <cycle point>`.
       :class: tip
 
       In Cylc, :term:`cycle points <cycle point>` are task labels that anchor the
-      depedencies between individual tasks: this task depends on that task in
+      dependencies between individual tasks: this task depends on that task in
       that cycle. Tasks can run as soon as their individual dependencies are met,
       so cycles do not necessarily run in order, or at the real world time
       corresponding to the cycle point value (to do that, see

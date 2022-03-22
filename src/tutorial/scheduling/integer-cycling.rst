@@ -385,7 +385,7 @@ Recurrence Sections
 
    From an arbitrary cycle point:
       We can give a different start point like this:
-      ``5/P3`` means repeat every third cycl, starting from cycle number 5.
+      ``5/P3`` means repeat every third cycle, starting from cycle number 5.
       To run a graph at every other cycle point, use ``2/P2``.
 
    Offset from the initial cycle point:
