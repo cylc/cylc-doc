@@ -42,7 +42,7 @@ and as a multi user hub, ``cylc hub``. Both are dependent on `Cylc UI Server`_ i
 
    Cylc 8 UI workflow tree view
 
-Lauching the UI via the hub will require authentication.
+Launching the UI via the hub will require authentication.
 The default Authenticator uses PAM to authenticate system users with their
 username and password.
 Going via the hub unlocks the :ref:`Authorization` feature.
