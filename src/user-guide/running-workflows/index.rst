@@ -9,13 +9,13 @@ Running Workflows
    scheduler-start-up
    task-job-states
    tasks-jobs-ui
-   reflow
    retrying-tasks
-   workflow-completion
    tracking-task-state
-   authentication-files
+   workflow-completion
+   dynamic-behaviour.rst
+   reflow
    simulation-modes
    scheduler-log-files
-   handling-job-preemption
    dynamic-behaviour
    workflow-databases
+   handling-job-preemption

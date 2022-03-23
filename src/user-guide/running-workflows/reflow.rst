@@ -1,25 +1,28 @@
 .. _user-guide-reflow:
 
-Multiple Flows
-==============
+Concurrent Flows
+================
 
 .. versionadded:: 8.0.0
 
 In Cylc, a *flow* is a self-propagating run through the workflow :term:`graph`
-from some initial task or tasks.
+from some initial task(s).
 
-Often there is only one flow: the original one started automatically at the
-beginning of the graph. But Cylc can manage multiple flows at once.
+At start-up the :term:`scheduler` automatically launches a flow from the start
+of the graph. But you can use ``cylc trigger --flow=new ID`` to start additional 
+flows anywhere in the graph, while the original (and any other) flow still
+runs. New flows continue on from triggered tasks as dictated by the graph.
 
 When a flow advances to a new task in the :term:`graph`, the task will only run
 if it did not already run in the same flow.
 
-See below for suggested :ref:`use cases<flow-trigger-use-cases>` and an
-:ref:`example<new-flow-example>`.
+See below for suggested :ref:`use cases<flow-trigger-use-cases>` of this
+multi-flow capability, and a concrete :ref:`example<new-flow-example>`.
 
 .. note::
-   Flows are not entirely independent: they :ref:`merge<flow-merging>`
-   where (and if) tasks collide in the ``n=0`` :term:`active window`.
+   Flows :ref:`merge<flow-merging>` where (and if) tasks collide in the ``n=0``
+   :term:`active window`. Downstream of a merge, tasks are considered to belong
+   to all constituent flows.
 
 
 Flow Numbers
@@ -77,8 +80,8 @@ Triggering in Specific Flows
    This triggers the task with flow numbers ``1`` and ``2``.
 
    The result is like the default above, except that tasks in the new front
-   belong only to the specified flow(s), regardless of which flows are active
-   at triggering time.
+   belong only to the specified flow(s), regardless of which flows are
+   :term:`active` at triggering time.
 
 Triggering a New Flow
    ``cylc trigger --flow=new ID``
@@ -100,41 +103,42 @@ Triggering a Flow-Independent Single Task
    .. image:: ../../img/no-flow-n.png
 
 Special Case: Triggering ``n=0`` Tasks
-   Tasks in the ``n=0`` window are active, active-waiting, or incomplete. Their
-   flow membership is already determined - that of the parents that spawned them.
+   Tasks in the ``n=0`` window are :term:`active`, :term:`active-waiting`, or
+   :term:`incomplete`. Their flow membership is already determined - that of
+   the parent tasks that spawned them.
 
-   - Triggering an active task has no effect (it is already triggered).
-   - Triggering an active-waiting task runs it immediately in the same flow.
-   - Triggering an incomplete task re-runs it immediately in the same flow.
+   - Triggering an :term:`active task` has no effect (it is already triggered).
+   - Triggering an :term:`active-waiting task` runs it immediately in the same flow.
+   - Triggering an :term:`incomplete task` re-runs it immediately in the same flow.
 
 
 .. _flow-merging:
 
-Flow Merging In ``n=0``
+Flow Merging in ``n=0``
 -----------------------
 
 If a task spawning into the ``n=0`` :term:`window` finds another instance
-of itself (same name and cycle point, different flow) already there, a single
-instance of it will carry both (sets of) flow numbers forward from that point.
-Downstream tasks belong to both flows.
+of itself already there (i.e., same name and cycle point, different flow
+number) a single instance will carry both (sets of) flow numbers forward from
+that point. Downstream tasks belong to both flows.
 
-Flow merging in ``n=0`` means flows are not entirely independent. One flow
-might not be able to overtake another because one or more of its tasks might
-merge in ``n=0``. Merging is necessary while task IDs - and associated log
-directory paths etc. - do not incorporate flow numbers, because task IDs must
-be unique in the active task pool.
+Flow merging in ``n=0`` means flows are not completely independent. One flow
+might not be able to entirely overtake another because one or more of its tasks
+might merge in ``n=0``. Merging is necessary while task IDs - and associated
+log directory paths etc. - do not incorporate flow numbers, because task IDs
+must be unique in the :term:`active task pool`.
 
-Incomplete tasks
-^^^^^^^^^^^^^^^^
+Merging with Incomplete tasks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Incomplete tasks are retained in the active window in expectation of
-retriggering once fixed, to complete expected outputs and continue the flow.
+:term:`Incomplete<incomplete>` tasks are retained in the active window in
+expectation of retriggering to complete :term:`expected outputs<expected
+output>` and continue their flow.
 
-If another flow encounters an incomplete task, one task will carry both flow
-numbers forward on successfully completing its expected outputs.
-
-.. TODO whether or not it automatically reruns in the later flow is still an
-   open question: https://github.com/cylc/cylc-flow/pull/4737
+If another flow encounters an incomplete task (i.e. if another instance of the
+same task collides with it in the ``n=0`` :term:`active window`) the task will
+run again and carry both flow numbers forward if it successfully completes its
+expected outputs.
 
 
 Stopping Flows
@@ -143,22 +147,23 @@ Stopping Flows
 By default, ``cylc stop`` halts the workflow and shuts the scheduler down.
 
 It can also stop specific flows: ``cylc stop --flow=N`` removes the flow number
-``N`` from tasks in the active pool. Tasks that have no flow numbers left as a
-result do not spawn children at all. If there are no active flows left, the
-scheduler shuts down.
+``N`` from tasks in the :term:`active task pool`. Tasks that have no flow
+numbers left as a result do not spawn children at all. If there are no active
+flows left, the scheduler shuts down.
 
 .. TODO update this section post https://github.com/cylc/cylc-flow/issues/4741
 
 
 .. _flow-trigger-use-cases:
 
-Use Cases
----------
+Some Use Cases
+--------------
 
 Running Tasks Ahead of Time
-   To run a task even though its prerequisites are not satisfied, just trigger
-   it. Use ``--wait`` if you don't want the new front to continue immediately.
-   Triggered task(s) will not re-run when the main flow front catches up.
+   To run a task within the existing flow(s) even though its prerequisites are
+   not satisfied yet, just trigger it. Use ``--wait`` if you don't want the new
+   flow front to continue immediately. Triggered task(s) will not re-run when
+   the main front catches up.
 
 Regenerating Products Behind a Flow
    To re-run a sub-graph (e.g. because the original run was affected by a
@@ -178,20 +183,21 @@ Rewinding a Workflow
 
 Test-running Tasks in a Live Workflow
    You can trigger individual tasks as many times as you like with
-   ``--flow=none``, without affecting the workflow.
+   ``--flow=none``, without affecting the workflow. The task :term:`submit
+   number` will increment each time.
 
-Processing Flow-specific Data
-   Flow numbers are passed to task environments, so it is possible to have
+Processing Flow-Specific Data
+   Flow numbers are passed to job environments, so it is possible to have
    different flows process different datasets through the same graph. However
-   we do not recommend doing this. Generally, that's what cycling is for; and
-   besides, each task would have to be capable of processing multiple datasets
-   at once in case of :ref:`flow-merging`.
+   **we do not recommend this**. That's what cycling is for; and besides, every
+   task would have to be capable of processing multiple datasets at once in
+   case of :ref:`flow-merging`.
  
 
 .. _new-flow-example:
 
-Example: Rerun a Past Sub-graph
--------------------------------
+Example: Rerun a Sub-Graph
+---------------------------
 
 The following :term:`cycling workflow` runs a :term:`task` called ``model`` in
 every cycle, followed by a postprocessing task, two product-generating tasks,

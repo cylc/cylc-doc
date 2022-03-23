@@ -43,27 +43,36 @@ Glossary
 
 
    retry
-      Tasks configured to retry on failure will return to the ``waiting`` state
-      with a :term:`clock trigger` to delay the next try.
+   task retry
+   try number
+      Tasks can be configured to retry automatically on failure, one or more
+      times. They return to the ``waiting`` state with a :term:`clock trigger`
+      to delay the retry, and only go to the ``failed`` :term:`state <task
+      state>` once the final try fails.
 
-      Any number of retries, with configurable delays between them, are possible.
-      Task jobs can get their own try number from ``$CYLC_TASK_TRY_NUMBER``.
-
-      If the final try fails, the task goes to the ``failed`` :term:`state
-      <task state>`.
+      The task try number increments with every automatic retry, and is
+      passed to the job environment as ``$CYLC_TASK_TRY_NUMBER``.
 
       .. seealso::
 
          * :ref:`Cylc User Guide <TaskRetries>`
 
 
+   submit number
+   task submit number
+      Every time a task re-runs, whether by automatic :term:`retry` or manual
+      triggering, its submit number increments. Submit number appears in the
+      job log path so that log files don't get overwritten.
+
+
    window
    n-window
    active window
    workflow window
+   active task pool
       This is a :term:`graph`-based window or view of the workflow at runtime,
-      including tasks out to ``n`` graph edges from current active tasks.
-      The *active window* is ``n=0``.
+      including tasks out to ``n`` graph edges from current :term:`active
+      tasks<active task>`. The *active window* is ``n=0``.
 
       .. seealso::
 
@@ -143,14 +152,17 @@ Glossary
          the same as :term:`workflow id`.
 
 
-   active waiting task
-      An active waiting task is a task in the :term:`scheduler's <scheduler>`
-      active window that is "actively waiting" on (i.e. periodically checking)
-      an :term:`external trigger` or :term:`clock trigger`.
+   active
+   active task
+      An active task is a task in the submitted or running state.
 
-      These are the only waiting tasks that matter to the :term:`scheduler`.
-      Waiting tasks ahead of the active window in Cylc 8 are entirely
-      abstract.
+
+   active-waiting
+   active-waiting task
+      An active-waiting task is a task in the :term:`scheduler's <scheduler>`
+      ``n=0`` :term:`active window` that is ready to run according to its task
+      prerequisites, but is still waiting on a limiting mechanism such as a
+      :term:`clock trigger`, task :term:`hold`, or :term:`internal queue`.
 
 
    external trigger
@@ -172,6 +184,7 @@ Glossary
          * :ref:`Cylc User Guide <Built-in Workflow State Triggers>`
 
 
+   queue
    internal queue
       Internal queues (so called to distinguish them from external batch
       queueing systems) allow you to limit how many :term:`tasks <task>` can be
@@ -1424,14 +1437,15 @@ Glossary
    expected output
       Task outputs that are not marked as :term:`optional <optional output>`
       in the :term:`graph` are expected to be completed at runtime. If not, the
-      :term:`scheduler` retains the task as :term:`incomplete <incomplete
-      task>` pending user intervention.
+      :term:`scheduler` retains the task as :term:`incomplete` pending user
+      intervention.
 
       .. seealso::
 
          * :ref:`Cylc User Guide <expected outputs>`
 
 
+   incomplete
    incomplete task
       Incomplete tasks are :term:`tasks <task>` that finish (succeed or fail)
       without completing all :term:`expected outputs <expected output>`. They
