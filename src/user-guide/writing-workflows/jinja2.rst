@@ -479,6 +479,8 @@ following example is equivalent to the "raise" example above.
    {{ assert(VARIABLE is defined, 'VARIABLE must be defined for this workflow.') }}
 
 
+.. _jinja2.importing_python_modules:
+
 Importing Python modules
 ------------------------
 
