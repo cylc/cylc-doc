@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/create-conda-envs.yml'
+      - '.github/actions/create-conda-envs/*'
       - 'src/reference/environments/env/*.ya?ml'
   workflow_dispatch:
     inputs:

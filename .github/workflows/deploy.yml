@@ -82,6 +82,7 @@ jobs:
         continue-on-error: ${{ github.event.inputs.skip_conda_environment_check == 'true' }}
         with:
           python_version: '3.7'
+          working_directory: ./docs
 
       - name: checkout gh-pages
         uses: actions/checkout@v2
