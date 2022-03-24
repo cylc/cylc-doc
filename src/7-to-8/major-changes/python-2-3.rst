@@ -25,7 +25,7 @@ As a result if you are moving from Cylc 7 to Cylc 8 you must upgrade any
 scripts from Python 2 to Python 3 in the process.
 
 If you want to support both Cylc 7 and 8 you must support both Python 2 and 3.
-There are tools to help you do this e.g. `six`_.
+There are tools to help you do this. E.g. `six`_.
 
 
 Impacted Scripts
