@@ -8,16 +8,21 @@ inputs:
   cylc_flow_version:
     description: Version to install.
     required: false
+  working_directory:
+    description: Path to the cylc-doc repo for this run, if it isn't the default working directory.
+    required: false
+    default: '.'
 
 runs:
   using: composite
   steps:
     - shell: bash
+      working-directory: ${{ inputs.working_directory }}
       run: |
         # get cylc version...
         if [[ -z '${{ inputs.cylc_flow_version }}' ]]; then
           # ... from cylc library
-          CYLC_RELEASE="$(python ./docs/src/lib/cylc_release.py)"
+          CYLC_RELEASE="$(python ./src/lib/cylc_release.py)"
         else
           # ... from GitHub action input
           CYLC_RELEASE="${{ inputs.cylc_flow_version }}"
@@ -25,12 +30,14 @@ runs:
         echo "CYLC_RELEASE=$CYLC_RELEASE" >> "${GITHUB_ENV}"
 
     - shell: bash
+      working-directory: ${{ inputs.working_directory }}
       run: |
         # use mamba (much faster)
         # use this when released: https://github.com/mamba-org/setup-mamba
         conda install -n base -c conda-forge -y mamba
 
     - shell: bash
+      working-directory: ${{ inputs.working_directory }}
       run: |
         for env_file in $(echo src/reference/environments/envs/*.yml); do
         echo "# creating env from: ${env_file}"
