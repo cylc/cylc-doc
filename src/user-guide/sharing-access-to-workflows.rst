@@ -130,7 +130,7 @@ to operations in these groups, use ``!READ``, ``!CONTROL``, ``!ALL``.
 User Authorization Configuration
 --------------------------------
 ``c.CylcUIServer.user_authorization``, which is loaded from
-``~/.cylc/hub/jupyter_config.py``, contains your preferences for granting access
+``~/.cylc/uiserver/jupyter_config.py``, contains your preferences for granting access
 to other users. This configuration should be entered as a Python
 dictionary. If a user does not appear in your user config, the default site
 access will apply.
@@ -181,7 +181,7 @@ workflow owner cannot unilaterally gain access to any other user's account or
 workflows by configuring their own UI Server.
 
 ``c.CylcUIServer.site-authorization``, which is loaded from
-``/etc/cylc/hub/jupyter_config.py``, or, alternatively, the environment variable
+``/etc/cylc/uiserver/jupyter_config.py``, or, alternatively, the environment variable
 ``CYLC_SITE_CONF_PATH``, contains these site default and limit settings for
 users. This configuration should be entered as a Python dictionary.
 
