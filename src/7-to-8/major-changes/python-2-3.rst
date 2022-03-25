@@ -53,16 +53,16 @@ The following scripts must be upgraded if used:
    Any custom x-trigger functions.
 
 
-Module Changes
---------------
+Package Name Changes
+--------------------
 
-Three Python modules have been renamed between Cylc 7 and Cylc 8:
+Three Python packages have been renamed between Cylc 7 and Cylc 8:
 
 * ``cylc`` => ``cylc.flow``
 * ``isodatetime`` => ``metomi.isodatetime``
 * ``rose`` => ``metomi.rose``
 
-If you are importing these modules you will need to update the module names.
+If you are importing from these packages you will need to update the package names.
 
 Here are some examples:
 
@@ -75,7 +75,7 @@ Here are some examples:
    - from isodatetime.data import Duration
    + from metomi.isodatetime.data import Duration
 
-.. rubric:: Pyhton code which supports both Cylc 7 & Cylc 8:
+.. rubric:: Python code which supports both Cylc 7 & Cylc 8:
 
 .. code-block:: python
 
