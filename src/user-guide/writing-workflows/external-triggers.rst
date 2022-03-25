@@ -258,24 +258,7 @@ properties:
    because each call is executed in an independent process in the process
    pool. If necessary the filesystem can be used for this purpose.
 
-The following string templates are available for use, if the trigger function
-needs any of this information, in function arguments in the workflow configuration:
-
-- ``%(name)s`` - name of the dependent task
-- ``%(id)s`` - identity of the dependent task (name.cycle-point)
-- ``%(point)s`` - cycle point of the dependent task
-- ``%(debug)s`` - workflow debug mode
-
-and less commonly needed:
-
-- ``%(user_name)s`` - workflow owner's user name
-- ``%(workflow_name)s`` - installed workflow name
-- ``%(workflow_run_dir)s`` - run directory
-- ``%(workflow_share_dir)s`` - workflow share directory
-
-If you need to pass a string template into an xtrigger function as a string
-literal - i.e. to be used as a template inside the function - escape it with
-``%`` to avoid detection by the Cylc xtrigger parser: ``%%(cat)s``.
+.. autoenumvalues:: cylc.flow.task_events_mgr.EventData
 
 Function return values should be as follows:
 
