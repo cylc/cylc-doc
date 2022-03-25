@@ -177,6 +177,8 @@ Task jobs can fail for several reasons:
          submission retry delays = 2*PT10M, PT30M
 
 
+.. _tutorial.start_stop_restart:
+
 Start, Stop, Restart
 --------------------
 
