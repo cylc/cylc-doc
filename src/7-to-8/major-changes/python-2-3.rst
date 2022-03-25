@@ -14,7 +14,7 @@ Python 2 => 3
 Overview
 --------
 
-.. _six: src/7-to-8/major-changes/python-2-3.py
+.. _six: https://pypi.org/project/six/
 
 Cylc 7 ran under Python 2, Cylc 8 runs under Python 3.
 
