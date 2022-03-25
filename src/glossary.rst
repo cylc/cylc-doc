@@ -1076,7 +1076,7 @@ Glossary
          * :term:`start`
          * :term:`restart`
          * :term:`reload`
-         * :ref:`Cylc User Guide <Stopping Suites>`
+         * :ref:`Tutorial <tutorial.start_stop_restart>`.
 
 
    restart
@@ -1096,7 +1096,7 @@ Glossary
          * :term:`start`
          * :term:`stop`
          * :term:`reload`
-         * :ref:`Cylc User Guide <Restarting Suites>`
+         * :ref:`Tutorial <tutorial.start_stop_restart>`.
 
 
    reload
