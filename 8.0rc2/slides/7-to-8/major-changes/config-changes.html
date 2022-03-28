@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration Changes at Cylc 8 &mdash; Cylc 8.0rc2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc2 documentation" href="../../index.html" />
+    <link rel="up" title="Detailed Description of Major Changes" href="index.html" />
+    <link rel="next" title="Cylc Install" href="cylc-install.html" />
+    <link rel="prev" title="Cylc 7 Compatibility Mode" href="compatibility-mode.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="configuration-changes-at-cylc-8">
+
+<h1>Configuration Changes at Cylc 8<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#configuration-changes-at-cylc-8" title="View HTML">§</a></h1>
+
+<p>Some configurations have moved or been renamed at Cylc 8.</p>
+<p>The old configurations are now deprecated, but still supported. These will be highlighted upon
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>.</p>
+<p>There are some examples below of how to upgrade:</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="graph">
+
+<h2>Graph<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#graph" title="View HTML">§</a></h2>
+
+<p>Cylc 7 had unnecessarily deep nesting of graph config sections:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+   <span class="nt">[[dependencies]]</span>  <span class="c1"># Deprecated Cylc 7</span>
+       <span class="nt">[[[R1]]]</span>
+           <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;prep =&gt; foo&quot;</span>
+       <span class="nt">[[[R/^/P1D]]]</span>
+           <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;foo =&gt; bar =&gt; baz&quot;</span>
+</pre></div>
+</div>
+<p>Cylc 8 cleans this up:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+   <span class="nt">[[graph]]</span>  <span class="c1"># Cylc 8</span>
+       <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">       R/^/P1D = &quot;foo =&gt; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="platforms">
+
+<h2>Platforms<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#platforms" title="View HTML">§</a></h2>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference internal" href="platforms.html#majorchangesplatforms"><span class="std std-ref">Platforms at Cylc 8.</span></a></li>
+<li><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">System admin’s guide to writing platforms.</span></a></li>
+</ul>
+</div>
+<p>At Cylc 7 job hosts were defined to indicate where a job should run, at Cylc 8
+use Platforms.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span> [runtime]<span class="w"></span>
+<span class="w"> </span>    [[model]]<span class="w"></span>
+<span class="gd">-        [[[remote]]]</span><span class="w"></span>
+<span class="gd">-            host = hpc1.login.1</span><span class="w"></span>
+<span class="gi">+        platform = hpc1</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For a comprehensive list of valid configuration, see: <a class="reference internal" href="../../reference/config/workflow.html#workflow-configuration"><span class="std std-ref">Workflow Configuration</span></a>
+and <a class="reference internal" href="../../reference/config/global.html#global-configuration"><span class="std std-ref">Global Configuration</span></a>.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

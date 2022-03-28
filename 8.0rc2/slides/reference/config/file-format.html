@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The .cylc File Format &mdash; Cylc 8.0rc2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc2 documentation" href="../../index.html" />
+    <link rel="up" title="Configuration" href="index.html" />
+    <link rel="next" title="Workflow Configuration" href="workflow.html" />
+    <link rel="prev" title="Configuration" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="the-cylc-file-format">
+
+<h1>The .cylc File Format<a class="headerlink" href="../../../html/reference/config/file-format.html#the-cylc-file-format" title="View HTML">§</a></h1>
+
+<p>Cylc global and workflow configuration files are written in a nested
+<a class="reference external" href="https://en.wikipedia.org/wiki/INI_file">INI</a>-based format.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="syntax">
+
+<h2>Syntax<a class="headerlink" href="../../../html/reference/config/file-format.html#syntax" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt>Comments</dt><dd>Comments follow a <code class="docutils literal notranslate"><span class="pre">#</span></code> character.</dd>
+<dt>Settings</dt><dd>Configuration items (settings) are written as <code class="docutils literal notranslate"><span class="pre">key</span> <span class="pre">=</span> <span class="pre">value</span></code> pairs, and can
+be contained within sections. Setting names (the keys) may contain spaces.</dd>
+<dt>String Values</dt><dd><p>Quoting single-line string values is optional:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[animals]</span>
+   <span class="nv">cat </span><span class="o">=</span><span class="s"> dusty</span>
+   <span class="nv">dog </span><span class="o">=</span><span class="s"> &quot;fido&quot;</span>  <span class="c1"># or single quotes: &#39;fido&#39;</span>
+</pre></div>
+</div>
+<p>Multiline string values must be triple-quoted:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[song]</span>
+   <span class="nv">lyrics </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>  <span class="c1"># (or triple single-quotes: &#39;&#39;&#39;value&#39;&#39;&#39;)</span><span class="s2"></span>
+<span class="s2">      No stop signs</span>
+<span class="s2">      Speed limit</span>
+<span class="s2">      Nobody&#39;s gonna slow me down</span>
+<span class="s2">   &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt>List Values</dt><dd><p>List values are comma-separated:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">animals </span><span class="o">=</span><span class="s"> dusty, fido, cujo</span>
+</pre></div>
+</div>
+</dd>
+<dt>Boolean Values</dt><dd><p>Booleans are capitalized:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">ice cream is good </span><span class="o">=</span><span class="s"> True</span>  <span class="c1"># or False</span>
+</pre></div>
+</div>
+</dd>
+<dt>Sections and Sub-sections</dt><dd><p>Settings have a level-dependent number of square brackets:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[section]</span>
+<span class="nt">[[sub-section]]</span>
+<span class="nt">[[[sub-sub-section]]]</span>
+</pre></div>
+</div>
+</dd>
+<dt>Indentation</dt><dd><p>It is advisable to indent sections and subsections, for clarity. However,
+Cylc ignores indentation, so this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[section]</span>
+   <span class="nv">a </span><span class="o">=</span><span class="s"> A</span>
+   <span class="nt">[[sub-section]]</span>
+      <span class="nv">b </span><span class="o">=</span><span class="s"> B</span>
+   <span class="nv">b </span><span class="o">=</span><span class="s"> C</span>  <span class="c1"># WARNING: this is still in sub-section!</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[section]</span>
+   <span class="nv">a </span><span class="o">=</span><span class="s"> A</span>
+   <span class="nt">[[sub-section]]</span>
+      <span class="nv">b </span><span class="o">=</span><span class="s"> C</span>
+</pre></div>
+</div>
+</dd>
+<dt>Duplicate Sections and Items</dt><dd><p>Duplicate sections get merged into one. Duplicate settings overwrite
+previously defined values. So this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[animals]</span>
+  <span class="nv">cat </span><span class="o">=</span><span class="s"> fluffy</span>
+<span class="nt">[animals]</span>
+  <span class="nv">dog </span><span class="o">=</span><span class="s"> fido</span>
+  <span class="nv">cat </span><span class="o">=</span><span class="s"> dusty</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[animals]</span>
+  <span class="nv">cat </span><span class="o">=</span><span class="s"> dusty</span>
+  <span class="nv">dog </span><span class="o">=</span><span class="s"> fido</span>
+</pre></div>
+</div>
+<p>The only exception to this rule is <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph strings</span></a>,
+which get merged. So these graph strings:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;</span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+<span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;</span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>merge to this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;</span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span> <span class="o">&amp;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt>Continuation lines</dt><dd><p>If necessary, you can continue on the next line after a backslash character:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">verse </span><span class="o">=</span><span class="s"> &quot;the quick \</span>
+<span class="s">         brown fox&quot;</span>
+</pre></div>
+</div>
+<p>However, backslash line continuation is fragile (trailing invisible
+whitespace breaks it). Long <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph strings</span></a> strings
+should be split on graph symbols instead:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+     <span class="p">(</span><span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="p">)</span> <span class="o">|</span>
+         <span class="kd">baz</span> <span class="o">=&gt;</span>
+             <span class="kd">qux</span>
+<span class="c">&quot;&quot;&quot;</span>
+<span class="c1"># Equivalent to:</span>
+<span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+     <span class="p">(</span><span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="p">)</span> <span class="o">|</span> <span class="kd">baz</span> <span class="o">=&gt;</span> <span class="kd">qux</span>
+<span class="c">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt>Include-files</dt><dd><p><code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> fragments can be included verbatim with the <code class="docutils literal notranslate"><span class="pre">%include</span></code>
+directive. Include-files can be included multiple times, and even nested.
+Include-file paths should relative to the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">include</span> <span class="s2">&quot;inc/site-a.cylc&quot;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja"><span class="std std-ref">Jinja2’s</span></a> template inclusion mechanism can be used with Cylc
+too.</p>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="shorthand">
+
+<h2>Shorthand<a class="headerlink" href="../../../html/reference/config/file-format.html#shorthand" title="View HTML">§</a></h2>
+
+<p>Throughout the documentation we refer to configuration settings in the
+following way:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">[section]</span></code></dt><dd>An entire section.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section]setting</span></code></dt><dd>A setting within a section.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section]setting=value</span></code></dt><dd>The value of a setting within a section.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[section][sub-section]another-setting</span></code></dt><dd>A setting within a sub-section.</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">We only use one set of square brackets at each level when writing nested
+sections on one line like this. But in the file, each sub-section
+gets additional square brackets as shown above.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

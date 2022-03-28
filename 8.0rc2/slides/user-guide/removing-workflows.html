@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Removing Workflows &mdash; Cylc 8.0rc2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0rc2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0rc2 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Authorizing Others to Access Your Workflows" href="sharing-access-to-workflows.html" />
+    <link rel="prev" title="Remote Job Management" href="task-implementation/ssh-job-management.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="removing-workflows">
+
+<h1>Removing Workflows<a class="headerlink" href="../../html/user-guide/removing-workflows.html#removing-workflows" title="View HTML">§</a></h1>
+
+<p>To delete an installed workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>, we recommend using
+the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> command. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> takes care of deleting workflows
+on the local filesystem and any remote install targets.
+It follows any symlink directories specified in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>
+(see <a class="reference internal" href="#cleansymlinkdirsnote"><span class="std std-ref">A note on symlink directories</span></a> below). You can also use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> to
+just delete certain files or subdirectories (see <a class="reference internal" href="#targetedclean"><span class="std std-ref">Cleaning specific subdirectories or files</span></a> below).</p>
+<p>If you’ve used <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-clean</span></code> before, the functionality is similar, but
+not identical.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> only affects workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directories</span></a>
+(located in the <a class="reference internal" href="../glossary.html#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>). It will not affect
+workflow <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directories</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> is intended for use on workflows installed with
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>. If you clean a workflow that was instead written
+directly in the cylc-run directory and not backed up elsewhere,
+it will be lost.</p>
+</div>
+<p>Simple example of using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc clean myflow/run1
+<span class="go">INFO - Removing directory: ~/cylc-run/myflow/run1</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="cleaning-on-remote-install-targets">
+
+<h2>Cleaning on remote install targets<a class="headerlink" href="../../html/user-guide/removing-workflows.html#cleaning-on-remote-install-targets" title="View HTML">§</a></h2>
+
+<p>If any jobs in your workflow ran on a remote <a class="reference internal" href="../glossary.html#term-platform"><span class="xref std std-term">platform</span></a>, Cylc will
+automatically remove the workflow files on there in addition to the local
+filesystem.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc clean remote-example
+<span class="go">INFO - Cleaning on install target: enterprise1701</span>
+<span class="go">INFO - [enterprise1701]</span>
+<span class="go">        INFO - Removing directory: /home/user/cylc-run/remote-example/run1</span>
+<span class="go">INFO - Removing directory: ~/cylc-run/remote-example/run1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This relies on determining which platforms were used from the workflow
+database. If the platforms recorded in the database are out of date with
+the global configuration, or if the database is missing altogether, you will
+have to manually remove the files on remote install targets.</p>
+</div>
+<p>You can also clean on just the local filesystem using the <code class="docutils literal notranslate"><span class="pre">--local</span></code> option,
+or just the remote install target using the <code class="docutils literal notranslate"><span class="pre">--remote</span></code> option.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cleaning-specific-subdirectories-or-files">
+
+<h2>Cleaning specific subdirectories or files<a class="headerlink" href="../../html/user-guide/removing-workflows.html#cleaning-specific-subdirectories-or-files" title="View HTML">§</a></h2>
+
+<p>You can clean specific subdirectories or files inside a run directory using
+the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option (we refer to this as a targeted clean).
+For example, to remove the <code class="docutils literal notranslate"><span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">work</span></code> directories:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc clean myflow --rm log --rm work
+</pre></div>
+</div>
+<p>Colons can be used to delimit the items to clean, so the following is
+equivalent:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc clean myflow --rm log:work
+</pre></div>
+</div>
+<p>You can also use globs. E.g., to remove all job logs for cycle points
+beginning with <code class="docutils literal notranslate"><span class="pre">2020</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc clean myflow --rm <span class="s1">&#39;log/job/2020*&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Make sure to place glob patterns in quotes.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="a-note-on-symlink-directories">
+
+<h2>A note on symlink directories<a class="headerlink" href="../../html/user-guide/removing-workflows.html#a-note-on-symlink-directories" title="View HTML">§</a></h2>
+
+<div class="tip admonition">
+<p class="first admonition-title">Does this affect me?</p>
+<p class="last">If you use symlink directories specified in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>, you might want to read
+this explanation of how Cylc handles them during cleaning.</p>
+</div>
+<p>If you manually delete a run directory (e.g., using the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command or the
+file manager), only the symlinks themselves will be deleted, not the actual
+targets. In contrast, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> follows the symlinks and deletes the
+targets.</p>
+<ul class="simple">
+<li>It only does this for the symlinks that can be set in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>, not any custom
+user-created symlinks.</li>
+<li>It does not actually look up the global configuration at time of cleaning;
+it simply detects what symlinks are present out of the possible ones.</li>
+<li>It also does this for targeted clean (using the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option).</li>
+</ul>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

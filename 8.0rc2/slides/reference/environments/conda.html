@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Conda Environments &mdash; Cylc 8.0rc2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc2 documentation" href="../../index.html" />
+    <link rel="up" title="Reference" href="../index.html" />
+    <link rel="next" title="Cylc Development History - Major Changes" href="../dev-history-major-changes.html" />
+    <link rel="prev" title="Workflow Runtime Interface" href="../api/zmq.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="conda-environments">
+
+<h1>Conda Environments<a class="headerlink" href="../../../html/reference/environments/conda.html#conda-environments" title="View HTML">§</a></h1>
+
+<p>Cylc consists of multiple components.</p>
+<p>This Conda environment will provide you with the “recommended” installation of
+all components:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-8.0rc2</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-rose</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metomi-rose</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The following sections outline alternatives for finer control over installation.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-flow">
+
+<h2>Cylc Flow<a class="headerlink" href="../../../html/reference/environments/conda.html#cylc-flow" title="View HTML">§</a></h2>
+
+<p>The simplest Cylc installation consists only of <a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a>:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">We suggest installing <a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> at a “minor” version (e.g. <code class="docutils literal notranslate"><span class="pre">8.1</span></code> rather
+than <code class="docutils literal notranslate"><span class="pre">8.1.2</span></code>) to pick up the latest “maintenance” release.</p>
+</div>
+<p>If you do not specify your Python version you will be provided with the most
+recent compatible one.</p>
+<p>If you are installing Cylc on multiple machines across a network it is
+advisable to keep the Python versions consistent.</p>
+<p>You can do this by adding Python into the environment at a particular version:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow-with-python-3.7</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python =3.7</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> provides a cut-down package containing only the bare essentials
+called <code class="docutils literal notranslate"><span class="pre">cylc-flow-base</span></code>.</p>
+<p>This may be useful for installing onto job hosts where client-facing extra
+features are not of interest:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow-base</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow-base =8.0rc2</span><span class="w"></span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-uiserver">
+
+<h2>Cylc UIServer<a class="headerlink" href="../../../html/reference/environments/conda.html#cylc-uiserver" title="View HTML">§</a></h2>
+
+<p>The default <a class="reference internal" href="#cylc-uiserver">Cylc UIServer</a> package comes with <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> and the
+<a class="reference external" href="https://github.com/AbdealiJK/configurable-http-proxy">Configurable HTTP Proxy</a> (required by <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>) bundled:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">We suggest <em>not</em> specifying the version of other Cylc components to
+(i.e. <a class="reference internal" href="#cylc-uiserver">Cylc UIServer</a> and <a class="reference internal" href="#cylc-rose">Cylc Rose</a>). This will pick up the most recent
+version compatible with the specified <a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> version.</p>
+</div>
+<p><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> is only required for multi-user setups, the <a class="reference internal" href="#cylc-uiserver">Cylc UIServer</a>
+can be run as a standalone application.</p>
+<p>To exclude <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> from the installation use <code class="docutils literal notranslate"><span class="pre">cylc-uiserver-base</span></code>:</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver-without-jupyterhub</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver-base</span><span class="w"></span>
+</pre></div>
+</div>
+<p>If you want to use <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> with an alternative proxy use
+<code class="docutils literal notranslate"><span class="pre">cylc-uiserver-hub-base</span></code> (this depends on <code class="docutils literal notranslate"><span class="pre">jupyterhub-base</span></code>, see the
+<a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> documentation for details):</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver-with-traefik-proxy</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver-hub-base</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyterhub-traefik-proxy</span><span class="w"></span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-rose">
+
+<h2>Cylc Rose<a class="headerlink" href="../../../html/reference/environments/conda.html#cylc-rose" title="View HTML">§</a></h2>
+
+<p>For working with Rose add <code class="docutils literal notranslate"><span class="pre">metomi-rose</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc-rose</span></code> (the bridge
+between Cylc &amp; Rose):</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-rose</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-rose</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metomi-rose</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We will look at providing more installation options for Rose in the near
+future.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="adding-cylc-to-your-conda-package">
+
+<h2>Adding Cylc To Your Conda Package<a class="headerlink" href="../../../html/reference/environments/conda.html#adding-cylc-to-your-conda-package" title="View HTML">§</a></h2>
+
+<p>If you want to publish a package (e.g. to Conda Forge) that depends on Cylc,
+consider using the minimal package (e.g. <code class="docutils literal notranslate"><span class="pre">cylc-flow-base</span></code>) as a dependency
+to allow the installer to maintain flexibility over the installation.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="working-with-other-conda-channels">
+
+<h2>Working With Other Conda Channels<a class="headerlink" href="../../../html/reference/environments/conda.html#working-with-other-conda-channels" title="View HTML">§</a></h2>
+
+<p>Cylc projects are published to Conda Forge and the above environments install
+all dependencies from Conda Forge.</p>
+<p>If you want to install other dependencies (e.g. Python), from other channels
+(e.g. Anaconda), list the dependency explicitly and place the channel <em>above</em>
+the Conda Forge channel.</p>
+<div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow</span><span class="w"></span>
+<span class="nt">channels</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w"></span>
+<span class="nt">dependencies</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow =8.0rc2</span><span class="w"></span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

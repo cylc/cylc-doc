@@ -23,6 +23,10 @@
         "slides",
         "html"
     ],
+    "8.0rc2": [
+        "slides",
+        "html"
+    ],
     "7.8.8": [
         "singlehtml",
         "html"

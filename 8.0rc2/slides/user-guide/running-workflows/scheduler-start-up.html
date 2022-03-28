@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Start, Restart, Reload &mdash; Cylc 8.0rc2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0rc2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0rc2 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Task &amp; Job States" href="task-job-states.html" />
+    <link rel="prev" title="Running Workflows" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="start-restart-reload">
+
+<h1>Start, Restart, Reload<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#start-restart-reload" title="View HTML">§</a></h1>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command starts a new instance of the Cylc scheduler program
+to manage a workflow, for the duration of the run. It also resumes paused
+workflows.</p>
+<p>There are several ways to start a workflow that is not running:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> <strong>from the initial cycle point</strong><ul>
+<li>This is the default for a workflow that has not run yet</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span></code> is taken from <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> or the command line</li>
+<li>Dependence on earlier tasks is ignored, for convenience</li>
+<li>(In Cylc 7, this was called a <em>cold start</em>)</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-cycle-point=POINT</span></code> <strong>from a later start cycle point</strong><ul>
+<li>This is an option for a workflow that has not run yet</li>
+<li>The start point must be given on the command line</li>
+<li>Dependence on earlier tasks is ignored, for convenience</li>
+<li>The initial cycle point value defined in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> is preserved</li>
+<li>(In Cylc 7, this was called a <em>warm start</em>)</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-task=TASK-ID</span></code> <strong>from any task(s) in the graph</strong><ul>
+<li>This is an option for a workflow that has not run yet</li>
+<li>The start task(s) must be given on the command line</li>
+<li>The flow will follow the graph onward from the start task(s)</li>
+<li>(In Cylc 7, this was not possible)</li>
+<li>(This makes Cylc 7 restart-from-checkpoint obsolete)</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> to <strong>restart from previous state</strong><ul>
+<li>This is automatic for a workflow that previously ran</li>
+<li>The scheduler will carry on from exactly where it got to before</li>
+<li>At start-up, it will automatically find out what happened to any active
+tasks that were orphaned during shutdown</li>
+<li>Failed tasks are not automatically resubmitted at restart, in case the
+underlying problem has not been addressed</li>
+<li>(In Cylc 7, this used the now-obsolete restart command)</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a workflow gets stopped or killed it can be restarted, but to avoid
+corrupting an existing run directory it cannot be started again from scratch
+(unless you delete certain files from the run directory). To start from
+scratch again, install a new copy of the workflow to a new run directory.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference internal" href="../installing-workflows.html#installing-workflows"><span class="std std-ref">Installing Workflows</span></a></li>
+</ul>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="start-and-stop-vs-initial-and-final-cycle-points">
+
+<h2>Start and Stop vs Initial and Final Cycle Points<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#start-and-stop-vs-initial-and-final-cycle-points" title="View HTML">§</a></h2>
+
+<p>All workflows have an <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> and some may have a
+<a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>. These define extent of the graph of tasks that Cylc
+can schedule to run.</p>
+<p>Start and stop cycle points, if used, define a sub-section of the graph that
+the scheduler actually does run. For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 5</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># every cycle: 1, 2, 3, 4, 5</span>
+        <span class="nv">P1 </span><span class="o">=</span> <span class="kd">foo</span>
+        <span class="c1"># every other cycle: 1, 3, 5</span>
+        <span class="nv">P2 </span><span class="o">=</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>With a <a class="reference internal" href="../../glossary.html#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a> of <code class="docutils literal notranslate"><span class="pre">2</span></code> and a <a class="reference internal" href="../../glossary.html#term-stop-cycle-point"><span class="xref std std-term">stop cycle point</span></a> of
+<code class="docutils literal notranslate"><span class="pre">4</span></code>, the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> would run at cycles 2, 3 &amp; 4 and the task <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+would only run at cycle <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<img alt="../../_images/initial-start-stop-final-cp.svg" class="align-center" src="../../_images/initial-start-stop-final-cp.svg" />
+
+
+
+</article>
+<article class="slide level-2" id="restarts-and-the-initial-final-start-and-stop-cycle-points">
+
+<h2>Restarts and the Initial, Final, Start and Stop Cycle Points<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#restarts-and-the-initial-final-start-and-stop-cycle-points" title="View HTML">§</a></h2>
+
+<p>When a workflow is started for the first time, the final and stop cycle points
+(if either were set) are saved to the workflow database. In a restart, these
+values are loaded, so the workflow will stop at the originally set cycle point,
+even if <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]final cycle point" title="flow.cylc[scheduling]final cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]final</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a> or
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]stop after cycle point" title="flow.cylc[scheduling]stop after cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]stop</span> <span class="pre">after</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a> were changed.
+It is possible to override the original values using the
+<code class="docutils literal notranslate"><span class="pre">--final-cycle-point</span></code> and <code class="docutils literal notranslate"><span class="pre">--stop-cycle-point</span></code> options for <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.
+The new values will overwrite the old ones in the database for future restarts.</p>
+<p>If the values were changed in <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, you can pick up these changes
+using a value of <code class="docutils literal notranslate"><span class="pre">reload</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">--final-cycle-point=reload</span></code>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the workflow reached the final cycle point and shut down, it is finished
+and cannot be restarted; the <code class="docutils literal notranslate"><span class="pre">--final-cycle-point</span></code> option will have
+no effect.</p>
+</div>
+<p>The initial cycle point (and start cycle point, if set) are also saved to the
+database when a workflow is started for the first time. However, the
+<code class="docutils literal notranslate"><span class="pre">--initial-cycle-point</span></code> and <code class="docutils literal notranslate"><span class="pre">--start-cycle-point</span></code> options cannot be used
+in a restart; workflows always start from the cycle point where they
+previously stopped.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="reloading-the-workflow-configuration-at-runtime">
+
+<h2>Reloading the Workflow Configuration at Runtime<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#reloading-the-workflow-configuration-at-runtime" title="View HTML">§</a></h2>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code> command tells the target <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to reload its
+workflow configuration at run time. This is an alternative to shutting a
+workflow down and restarting it after making changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If writing your workflows in a <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>, then be sure to
+<a class="reference internal" href="../installing-workflows.html#reinstalling-a-workflow"><span class="std std-ref">reinstall</span></a> your changes to the
+<a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> before doing a reload.</p>
+</div>
+<p>If you make an error in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file before a reload, the workflow
+log will report an error and the reload will have no effect.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="restarting-or-reloading-after-graph-changes">
+
+<h2>Restarting or Reloading after Graph Changes<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#restarting-or-reloading-after-graph-changes" title="View HTML">§</a></h2>
+
+<p>If dependencies have changed, tasks that were already active will spawn
+children according to their original outputs. Subsequent instances will have
+the new settings.</p>
+<p>If tasks were removed from the graph, any active instances will be left to
+finish, but they will not spawn children. They can be removed manually if
+necessary, with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code>.</p>
+<p>If new tasks were added to the graph, instances will be spawned automatically
+as upstream tasks complete the outputs that they depend on. If they have no
+parents to do that, you can trigger the first ones manually with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="remote-initialization">
+
+<h2>Remote Initialization<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#remote-initialization" title="View HTML">§</a></h2>
+
+<p>For workflows that run on remote platforms, i.e. using a host other than
+<code class="docutils literal notranslate"><span class="pre">localhost</span></code>, Cylc performs an initialization process. This involves transferring
+files and directories required to run jobs, including authentication keys
+(see <a class="reference internal" href="authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a> for more information).</p>
+<p>Directories included, as standard, in the remote install are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">app</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">bin</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">etc</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">lib</span></code></li>
+</ul>
+<p>These will be transferred from the workflow run directory on the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.
+In addition, file and directories configured in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]install" title="flow.cylc[scheduler]install"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]install</span></code></a>
+of the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> will be included in the transfer.</p>
+<p>This remote initialization process also creates symlinks on the remote
+platform, if these are configured using
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. Using this functionality is an
+efficient way to manage disk space.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="installing-custom-files-at-start-up">
+
+<h3>Installing Custom Files At Start-up<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#installing-custom-files-at-start-up" title="View HTML">§</a></h3>
+
+<p>Cylc supports adding custom directories and files to the file installation.</p>
+<p>If, for example, you wished to install directories <code class="docutils literal notranslate"><span class="pre">dir1</span></code>, <code class="docutils literal notranslate"><span class="pre">dir2</span></code>, and
+files <code class="docutils literal notranslate"><span class="pre">file1</span></code>, <code class="docutils literal notranslate"><span class="pre">file2</span></code>, add the following configuration to your
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>, under the section
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]install" title="flow.cylc[scheduler]install"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]install</span></code></a>.
+To mark an item as a directory, add a trailing slash.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">install </span><span class="o">=</span><span class="s"> dir1/, dir2/, file1, file2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ensure files and directories to be installed are located in the top
+level of your workflow.</p>
+</div>
+<p>Install tasks are preferred for time-consuming installations because
+they don’t slow the workflow start-up process, they can be monitored,
+they can run directly on target platforms, and you can rerun them later without
+restarting the workflow.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="troubleshooting">
+
+<h3>Misconfiguration<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#misconfiguration" title="View HTML">§</a></h3>
+
+<p>There are certain scenarios where remote initialization may fail. Cylc will return
+a <code class="docutils literal notranslate"><span class="pre">REMOTE</span> <span class="pre">INIT</span> <span class="pre">FAILED</span></code> message.</p>
+<div class="section level-4" id="timeout">
+<p>Remote initialization has a timeout set at 10 minutes, after which remote
+initialization will fail. If you have particularly large files files to
+transfer, which you expect to exceed the 10 minute timeout, consider using an
+install task in your workflow.</p>
+</div><div class="section level-4" id="misconfiguration">
+<p>Platforms must be correctly configured to ensure authentication keys, which are
+responsible for secure communication between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> and the
+platform, are correctly in place.
+Sites can configure these platforms, insuring they match up with the correct
+install target. Cylc uses install targets as a way of recognising which platforms
+share the same file system. For more information, see <a class="reference internal" href="../../reference/config/writing-platform-configs.html#install-targets"><span class="std std-ref">What Are Install Targets?</span></a>.</p>
+</div>
+
+
+
+</article>
+<article class="slide level-2" id="files-created-at-workflow-start">
+
+<h2>Files created at workflow start<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#files-created-at-workflow-start" title="View HTML">§</a></h2>
+
+
+
+
+
+</article>
+<article class="slide level-3" id="configuration-logs">
+
+<h3>Configuration Logs<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#configuration-logs" title="View HTML">§</a></h3>
+
+<p>A folder <code class="docutils literal notranslate"><span class="pre">log/flow-config</span></code> is created where the workflow configuration
+is recorded, with all templating expanded:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">flow-processed.cylc</span></code> - A record of the current workflow configuration
+with templating expanded, but without being fully parsed: Duplicate sections
+will not be merged.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;datetime-stamp&gt;-&lt;start/restart/reload&gt;</span></code> - A record of the config at
+the time a workflow was started, restarted or reloaded, parsed by Cylc:
+Duplicate sections will be merged.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These are particularly useful files to look at if the workflow
+configuration contains many template variables, to see how they are
+filled in.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="the-workflow-contact-file">
+
+<h3>The Workflow Contact File<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#the-workflow-contact-file" title="View HTML">§</a></h3>
+
+<p>The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> writes a <a class="reference internal" href="../../glossary.html#term-contact-file"><span class="xref std std-term">contact file</span></a> at
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-name&gt;/.service/contact</span></code> that records workflow host,
+user, port number, process ID, Cylc version, and other information. Client
+commands read this file to find the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+<p>The contact file gets removed automatically at shutdown (assuming the
+scheduler shuts down cleanly).</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="authentication-files">
+
+<h3>Authentication Files<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-start-up.html#authentication-files" title="View HTML">§</a></h3>
+
+<p>See <a class="reference internal" href="authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a>.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
