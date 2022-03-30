@@ -427,7 +427,6 @@ Glossary
 
    .. TODO - remove wall-clock definition
 
-   wall-clock time
    wallclock time
       The actual time (in the real world).
 
