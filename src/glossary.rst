@@ -425,7 +425,6 @@ Glossary
          * :term:`integer cycling`
          * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
-   .. TODO - remove wall-clock definition
 
    wallclock time
       The actual time (in the real world).
