@@ -46,7 +46,7 @@ requests_).
  - Mel Hall
  - Ronnie Dutta
  - Damien François
- - (David Matthews)
+ - David Matthews
  - (Neil Swart)
  - Tomek Trzeciak
 <!-- end-shortlog -->
