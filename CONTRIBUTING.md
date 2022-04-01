@@ -48,7 +48,7 @@ requests_).
  - Damien François
  - (David Matthews)
  - (Neil Swart)
- - (TomekTrzeciak)
+ - Tomek Trzeciak
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
