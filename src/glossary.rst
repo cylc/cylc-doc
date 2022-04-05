@@ -338,8 +338,8 @@ Glossary
       The unique label given to tasks that belong to a particular :term:`cycle`.
       For :term:`integer cycling` these will be integers, e.g. ``1``, ``2``,
       ``3``, etc.
-      For :term:`datetime cycling` they will be :term:`ISO8601` datetimes, e.g.
-      ``2000-01-01T00:00Z``.
+      For :term:`datetime cycling` they will be :term:`ISO 8601` datetimes,
+      e.g. ``2000-01-01T00:00Z``.
 
       .. seealso::
 
@@ -415,9 +415,9 @@ Glossary
 
    datetime cycling
       A datetime :term:`cycling` workflow uses
-      :term:`ISO8601 datetime <ISO8601 datetime>` :term:`cycle points <cycle
-      point>` (e.g.  ``2000-01-01T00:00Z``) and :term:`recurrences
-      <recurrence>` (e.g. ``P3D`` means every third day).
+      :term:`ISO 8601 datetime` :term:`cycle points <cycle point>`
+      (e.g.  ``2000-01-01T00:00Z``) and :term:`recurrences <recurrence>`
+      (e.g. ``P3D`` means every third day).
 
       .. seealso::
 
@@ -435,23 +435,25 @@ Glossary
          * :term:`clock trigger`
 
 
+   ISO 8601
    ISO8601
-      ISO8601 is an international standard for writing datetimes, durations,
+      ISO 8601 is an international standard for writing datetimes, durations,
       and :term:`recurrences <recurrence>` (sequences of datetimes). Cylc uses
-      ISO8601 for :term:`datetime cycling`.
+      ISO 8601 for :term:`datetime cycling`.
 
       .. seealso::
 
-         * :term:`ISO8601 datetime`
-         * `Wikipedia (ISO8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
+         * :term:`ISO 8601 datetime`
+         * `Wikipedia (ISO 8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
          * `International Organisation For Standardisation
            <https://www.iso.org/iso-8601-date-and-time-format.html>`_
          * `a summary of the international standard date and time notation
            <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
 
 
+   ISO 8601 datetime
    ISO8601 datetime
-      A datetime written in the :term:`ISO8601` format, e.g:
+      A datetime written in the :term:`ISO 8601` format, e.g:
 
       * ``2000-01-01T00:00Z``: midnight on the 1st of January 2000, UTC.
 
@@ -460,14 +462,15 @@ Glossary
          * :ref:`Cylc tutorial <tutorial-iso8601-datetimes>`
 
 
+   ISO 8601 duration
    ISO8601 duration
-      A duration written in the ISO8601 format e.g:
+      A duration written in the ISO 8601 format e.g:
 
       * ``PT1H30M``: one hour and thirty minutes.
 
       .. seealso::
 
-         * :term:`ISO8601`
+         * :term:`ISO 8601`
          * :ref:`Cylc tutorial <tutorial-iso8601-durations>`
 
 
@@ -479,6 +482,44 @@ Glossary
       Recurrences for :term:`datetime cycling` are based on the :term:`ISO8601`
       standard. Those for :term:`integer cycling` are designed to have similar
       syntax, but are much simpler.
+
+
+   exact datetime unit
+      An exact datetime unit is any unit of a datetime that has a fixed
+      duration, which does not depend on its position in the calendar.
+      In Cylc, the following are exact units:
+
+      * second: SI base unit
+      * minute: 60 seconds
+      * hour: 60 minutes
+      * day: 24 hours
+      * week: 7 days
+
+      .. note::
+         Although the :term:`ISO 8601` standard specifies that weeks and days
+         are :term:`inexact <inexact datetime unit>` due to the possibility of
+         daylight saving time, leap seconds etc., they are always exact in
+         Cylc because workflows always maintain the same time zone, and leap
+         seconds are not supported.
+
+      .. seealso::
+
+         * :term:`inexact datetime unit`
+
+
+   inexact datetime unit
+   nominal duration
+      An inexact datetime unit is any unit of a datetime that does not have
+      a fixed duration; it instead depends on its position in the calendar.
+      In Cylc, the following are inexact units (when using the Gregorian
+      calendar):
+
+      * year: either 365 or 366 days depending on whether it is a leap year
+      * month: between 28 - 31 days depending on the specific month and year
+
+      .. seealso::
+
+         * :term:`exact datetime unit`
 
 
    clock trigger
