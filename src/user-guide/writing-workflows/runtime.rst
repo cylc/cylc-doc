@@ -610,30 +610,12 @@ are triggered.
 
 .. cylc-scope::
 
-Event Handler Command Line Arguments
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. _task_event_template_variables:
 
-Cylc makes event data available to event handler command lines, via string
-templates. The data includes: task ID, name, cycle point, message, submit
-number; and any workflow :cylc:conf:`[meta]` or task
-:cylc:conf:`[runtime][<namespace>][meta]` item.
-See :cylc:conf:`workflow events <[scheduler][events]>` and
-:cylc:conf:`task events <[runtime][<namespace>][events]>` for options.
+Task Event Template Variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If no templates or arguments are specified the following default command line
-will be used:
-
-.. code-block:: none
-
-   <event-handler> %(event)s %(workflow)s %(id)s %(message)s
-
-The ``%(event)s`` string, for instance, will be replaced by the actual event
-name when the handler is invoked.
-
-.. warning::
-
-   Substitution patterns should not be quoted in the template strings.
-   This is done automatically where required.
+.. autoenumvalues:: cylc.flow.task_events_mgr.EventData
 
 Examples
 ^^^^^^^^
@@ -742,46 +724,6 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
 .. warning::
    Late offset intervals are not computed automatically so be careful to update
    them after any workflow change that affects triggering times.
-
-
-Workflow Events
-^^^^^^^^^^^^^^^
-
-Cylc also supports general and event-specific workflow event handling so
-you can run an event handler or send and email when the scheduler starts up or
-shuts down, for example.
-
-Workflow events are configured in :cylc:conf:`[scheduler][events]`. The list of
-events is:
-
-- startup
-
-  - the scheduler started running the workflow
-- shutdown
-
-  - the workflow finished and the scheduler will shut down
-- abort
-
-  - the scheduler will shut down even though the workflow didn't finish
-- workflow timeout
-
-  - the workflow run timed out
-- stall
-
-  - the workflow stalled
-- stall timeout
-
-  - the workflow timed out after stalling
-- inactivity timeout
-
-  - the workflow timed out with no activity
-
-You can also tell the scheduler to abort the run on certain workflow events,
-with the following settings:
-
-- abort on stall timeout
-- abort on inactivity timeout
-- abort on workflow timeout
 
 .. [1] The order of precedence for inheritance from multiple parents is
   determined by the `C3 algorithm

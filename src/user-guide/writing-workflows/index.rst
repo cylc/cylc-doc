@@ -5,6 +5,7 @@ Writing Workflows
    :maxdepth: 2
 
    configuration
+   scheduler
    scheduling
    runtime
    parameterized-tasks

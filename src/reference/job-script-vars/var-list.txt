@@ -37,7 +37,8 @@ CYLC_TASK_NAME                     # Job's task name, e.g. t1
 CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
                                    #   increments with every submit
 CYLC_TASK_TRY_NUMBER               # Number of execution tries, e.g. 1
-                                   #   increments with automatic retry-on-fail
+                                   #   increments with automatic
+                                   #   execution retry delays.
 CYLC_TASK_ID                       # Task instance identifier TASK-NAME.CYCLE-POINT
                                    #   e.g. t1.20110511T1800Z
 CYLC_TASK_LOG_DIR                  # Location of the job log directory
