@@ -35,14 +35,16 @@ Via Pip (+npm)
 
    Requires Python 3.7+
 
+.. note::
+
+   We recommend installing Cylc versions into virtual environments.
+   This avoids software dependency conflicts and allows multiple
+   Cylc versions to be installed on your system.
+
 .. warning::
-
-   We recommend installing Cylc into a fresh virtual environment. This
-   simplifies software dependency resolution and allows multiple Cylc versions
-   to be installed at once.
-
-   If you install Cylc into the system Python libraries, local packages in
-   ``$HOME/.local`` can override the central ones that Cylc depends on.
+   Without virtual environments, users can inadvertently break Cylc (or other
+   Python programs) by ``pip``-installing conflicting package versions to
+   ``$HOME/.local``, which takes precedence over central library locations.
 
 
 .. code-block:: sub
