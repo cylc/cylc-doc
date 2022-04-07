@@ -57,6 +57,7 @@ Via Pip (+npm)
 Non-Python Requirements
 -----------------------
 
+.. _Graphviz: https://graphviz.org/download/
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
 
 These dependencies are not installed by Conda or pip:
@@ -65,9 +66,16 @@ These dependencies are not installed by Conda or pip:
 * GNU `coreutils`_
 * ``mail`` (optional: for automated email functionality)
 
-These dependencies are installed by Conda but not by pip (you can use npm):
+These dependencies are installed by Conda but not by pip:
 
-* `configurable-http-proxy`_ (optional: for multi-user setups)
+* `Graphviz`_ (optional - used by ``cylc graph`` for displaying workflow
+  graphs)
+* `configurable-http-proxy`_ (optional - for multi-user setups; can also be
+  installed using npm)
+
+.. seealso::
+
+   :ref:`SyntaxHighlighting`
 
 
 Installing On Mac OS
