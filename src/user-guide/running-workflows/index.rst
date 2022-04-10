@@ -12,10 +12,10 @@ Running Workflows
    retrying-tasks
    tracking-task-state
    workflow-completion
-   dynamic-behaviour.rst
    reflow
    simulation-modes
    scheduler-log-files
    dynamic-behaviour
+   authentication-files
    workflow-databases
    handling-job-preemption
