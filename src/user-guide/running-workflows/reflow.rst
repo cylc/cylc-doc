@@ -16,8 +16,8 @@ runs. New flows continue on from triggered tasks as dictated by the graph.
 When a flow advances to a new task in the :term:`graph`, the task will only run
 if it did not already run in the same flow.
 
-See below for suggested :ref:`use cases<flow-trigger-use-cases>` of this
-multi-flow capability, and a concrete :ref:`example<new-flow-example>`.
+See :ref:`below<flow-trigger-use-cases>` for suggested use cases, and an
+:ref:`example<new-flow-example>`, of this capability.
 
 .. note::
    Flows :ref:`merge<flow-merging>` where (and if) tasks collide in the ``n=0``
@@ -35,8 +35,8 @@ Flow number ``1`` is triggered automatically by ``cylc play`` at :term:`schedule
 start-up. The next flow started by :ref:`manual triggering<triggering-flows>`
 gets the number ``2``, then ``3``, and so on.
 
-Tasks can carry multiple flow numbers as a result of
-:ref:`flow merging<flow-merging>` and :ref:`manual triggering<triggering-flows>`.
+Tasks can carry multiple flow numbers as a result of :ref:`flow
+merging<flow-merging>`.
 
 .. note::
    Flow numbers are not yet exposed in the UI, but they are logged with task
@@ -52,27 +52,32 @@ By default, manual triggering (with ``cylc trigger`` or the UI) starts a new
 :term:`front of activity<flow front>` in current flows.
 But it can also start new flows and trigger flow-independent single tasks.
 
-In the diagrams below, the grey nodes represent tasks in flow ``1``, and
-the blue ones stem from a single manual triggering event.
+In the diagrams below, the grey tasks run in the original flow (``1``), and the
+blue ones run as a result of a manual triggering event. They may be triggered
+as part of flow ``1``, or as a new flow ``2``, or with no flow number.
 
 Triggering in Current Flows
    ``cylc trigger [--wait] ID``
 
-   This is the default trigger action: trigger the task and give it all current
-   active flow numbers. Subsequently, each of those flows will consider this
-   task to have run already.
+   This is the default action. The triggered task gets all current active flow
+   numbers. Subsequently, each of those flows will consider the task to have
+   run already.
 
-   **Ahead of active flows** this starts a new front of activity for the active
-   flows, which by default can continue on without waiting for catch up.
+   **Ahead of active flows** this starts a new front of activity for the
+   existing flows, which by default can continue on without waiting for them to
+   catch up:
 
    .. image:: ../../img/same-flow-n.png
 
-   With ``--wait``, the result is the same except that any action downstream of 
-   the triggered task is delayed until the first flow catches it.
+   With ``--wait``, action downstream of the triggered task is delayed until
+   the first flow catches up:
 
-   **Behind active flows** the triggered task itself will re-run, then activity
-   will cease if any of the original flows already traversed that part of the
-   graph.
+   .. image:: ../../img/same-flow-wait-n.png
+
+   **Behind active flows** the triggered task will run, but nothing more will
+   happen if any of the original flows already passed by there:
+
+   .. image:: ../../img/same-flow-behind.png
 
 Triggering in Specific Flows
    ``cylc trigger --flow=1,2 ID``
@@ -88,7 +93,7 @@ Triggering a New Flow
 
    This triggers the task with a new, incremented flow number.
 
-   The new flow will re-run tasks that already ran in previous flows.
+   The new flow will re-run tasks that already ran in previous flows:
 
    .. image:: ../../img/new-flow-n.png
 
@@ -108,8 +113,8 @@ Special Case: Triggering ``n=0`` Tasks
    the parent tasks that spawned them.
 
    - Triggering an :term:`active task` has no effect (it is already triggered).
-   - Triggering an :term:`active-waiting task` runs it immediately in the same flow.
-   - Triggering an :term:`incomplete task` re-runs it immediately in the same flow.
+   - Triggering an :term:`active-waiting task` queues it to run in the same flow.
+   - Triggering an :term:`incomplete task` queues it to re-run in the same flow.
 
 
 .. _flow-merging:
@@ -161,38 +166,34 @@ Some Use Cases
 
 Running Tasks Ahead of Time
    To run a task within the existing flow(s) even though its prerequisites are
-   not satisfied yet, just trigger it. Use ``--wait`` if you don't want the new
+   not yet satisfied, just trigger it. Use ``--wait`` if you don't want the new
    flow front to continue immediately. Triggered task(s) will not re-run when
    the main front catches up.
 
-Regenerating Products Behind a Flow
+Regenerating Outputs Behind a Flow
    To re-run a sub-graph (e.g. because the original run was affected by a
    corrupt file), just trigger the task(s) at the top of the sub-graph with
    ``--flow=new``.
 
-   You may need to manually stop the new flow once its job is done, to avoid
-   re-running more than you want to, if the new flow leads into the main
-   trunk of the graph.
+   You may need to manually stop the new flow if it leads into the main trunk
+   of the graph, and you do not want it to carry on indefinitely.
 
 Rewinding a Workflow
    To rewind the workflow to an earlier point, perhaps to regenerate data and/or 
    allow the workflow to evolve a new path into the future, trigger a new
-   flow at the right place and then stop the original flow. (Alternatively,
-   stop the scheduler, install a new instance of the workflow, and play it
-   from the desired place in the graph).
+   flow at the right place and then stop the original flow.
 
 Test-running Tasks in a Live Workflow
    You can trigger individual tasks as many times as you like with
    ``--flow=none``, without affecting the workflow. The task :term:`submit
    number` will increment each time.
 
-Processing Flow-Specific Data
-   Flow numbers are passed to job environments, so it is possible to have
-   different flows process different datasets through the same graph. However
-   **we do not recommend this**. That's what cycling is for; and besides, every
-   task would have to be capable of processing multiple datasets at once in
-   case of :ref:`flow-merging`.
- 
+Processing Flow-Specific Data?
+   :term:`Flow numbers<flow number>` are passed to job environments, so it is
+   possible for tasks to process flow-specific data. Every task would have to
+   be capable of processing multiple datasets at once, however, in case of
+   :term:`flow merging<flow merge>`. Generally, you should use :term:`cycling`
+   for this kind of use case.
 
 .. _new-flow-example:
 

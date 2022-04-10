@@ -61,8 +61,11 @@ Glossary
    submit number
    task submit number
       Every time a task re-runs, whether by automatic :term:`retry` or manual
-      triggering, its submit number increments. Submit number appears in the
-      job log path so that log files don't get overwritten.
+      triggering, its submit number increments. It is passed to
+      the job environment as ``$CYLC_TASK_SUBMIT_NUMBER``.
+
+      Submit number also appears in the job log path so that job log files
+      don't get overwritten. 
 
 
    window
@@ -1570,13 +1573,20 @@ Glossary
    flow number
       Flow numbers are integers passed down from parent task to child task in
       the :term:`graph` as a flow progresses, to identify which :term:`flow`
-      (or flows) the tasks belong to. 
+      (or flows) the tasks belong to. They are passed to job environments as
+      ``$CYLC_TASK_FLOW_NUMBERS``.
 
 
    flow front
       Active (submitted or running) tasks, i.e. tasks in the ``n=0``
       :term:`active window`, with a common :term:`flow number` comprise the
       active front of that flow.
+
+
+   flow merge
+      When a :term:`flow` tries to spawn a child task and finds an instance
+      with the same task ID already exists in the ``n=0`` :term:`active
+      window`, the one active task will carry both flow numbers forward.
 
 
    event
