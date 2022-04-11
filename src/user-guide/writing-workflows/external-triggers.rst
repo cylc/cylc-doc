@@ -57,9 +57,7 @@ Built-in Clock Triggers
 
 These are more transparent (exposed in the graph) and efficient (shared among
 dependent tasks) than the older clock triggers described
-in :ref:`ClockTriggerTasks`. (However we don't recommend wholesale conversion
-to the new method yet, until its interface has stabilized -
-see :ref:`Current Trigger Function Limitations`.)
+in :ref:`ClockTriggerTasks`.
 
 Clock triggers, unlike other trigger functions, are executed synchronously in
 the main process. The clock trigger function signature looks like this:
@@ -128,9 +126,7 @@ Built-in Workflow State Triggers
 
 These can be used instead of the older workflow state polling tasks described
 in :ref:`WorkflowStatePolling` for inter-workflow triggering - i.e. to trigger local
-tasks off of remote task statuses or messages in other workflows. (However we
-don't recommend wholesale conversion to the new method yet, until its
-interface has stabilized - see :ref:`Current Trigger Function Limitations`.)
+tasks off of remote task statuses or messages in other workflows.
 
 The workflow state trigger function signature looks like this:
 
