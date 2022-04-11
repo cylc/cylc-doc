@@ -37,7 +37,15 @@ Via Pip (+npm)
 
 .. note::
 
-   We recommend using a virtual environment.
+   We recommend installing Cylc versions into virtual environments.
+   This avoids software dependency conflicts and allows multiple
+   Cylc versions to be installed on your system.
+
+.. warning::
+   Without virtual environments, users can inadvertently break Cylc (or other
+   Python programs) by ``pip``-installing conflicting package versions to
+   ``$HOME/.local``, which takes precedence over central library locations.
+
 
 .. code-block:: sub
 
@@ -173,14 +181,12 @@ available too.
 We recommend using a wrapper script named ``cylc`` to activate the correct
 environment before calling the environment's  ``cylc`` command.
 
-Cylc comes with a wrapper which can be extracted to a directory in your ``$PATH``
-using
-
-.. TODO - make this easier once get-resources is better.
+Cylc comes with a wrapper that can be adapted to point at your Cylc
+environments. Extract it to a directory in your ``$PATH`` like this:
 
 .. code-block:: bash
 
-   cylc get-resources etc/cylc /path/to/cylc  # should be in $PATH
+   cylc get-resources cylc /path/to/cylc  # should be in $PATH
    chmod +x /path/to/cylc
 
 
