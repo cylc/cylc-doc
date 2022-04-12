@@ -292,9 +292,12 @@ number of repetitions.
 Cycling Syntax Rules
 --------------------
 
-:term:`Datetime cycling <datetime cycling>` information is made up of a
-starting :term:`datetime <ISO 8601 datetime>`, an interval, and an optional
-limit.
+:term:`Datetime cycling <datetime cycling>` information is made up of:
+
+* a :term:`datetime <ISO 8601 datetime>` that typically specifies the start
+  point of the sequence
+* an interval between points in the sequence
+* and an optional limit on the number of points in the sequence
 
 The time is assumed to be in UTC unless you set
 :cylc:conf:`[scheduler]cycle point time zone`.
@@ -325,6 +328,9 @@ inferred from context (rules below).
    except where specific tasks, if any, depend on :term:`clock triggers <clock
    trigger>`.
 
+There are three ISO 8601 recurrence formats supported by Cylc, detailed below
+in order from most commonly used to least commonly used.
+
 
 Format 3: ``R[limit?]/[datetime]/[interval]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -332,7 +338,9 @@ Format 3: ``R[limit?]/[datetime]/[interval]``
 The most common full form for recurrences is
 ``R[limit?]/[datetime]/[interval]``. This is format number 3 in the ISO 8601
 standard. The datetime specifies the start of the cycling sequence.
-For example, ``R3/2000-01-01T00Z/P2D`` means
+For example, ``R3/2000-01-01T00Z/P2D`` means "run 3 times, every 2 days,
+starting at 2000-01-01T00Z (midnight, Jan 1st 2000)"; the list of points
+on this sequence is:
 
 .. code-block:: none
 
@@ -389,7 +397,9 @@ Format 4: ``R[limit?]/[interval]/[datetime]``
 Another supported recurrence form is:
 ``R[limit?]/[interval]/[datetime]`` (format number 4 in the ISO 8601 standard).
 This uses the datetime as the end of the cycling sequence rather than the start.
-For example, ``R3/P5D/2014-04-30T06`` means:
+For example, ``R3/P5D/2014-04-30T06`` means "run 3 times, every 5 days, ending
+at 2014-04-30T06 (06:00, April 30th 2014)"; the list of points on this
+sequence is:
 
 .. code-block:: none
 
@@ -397,8 +407,10 @@ For example, ``R3/P5D/2014-04-30T06`` means:
    2014-04-25T06
    2014-04-30T06
 
-This form can be used to get special behaviour near the end of the workflow, at
-the final cycle point. We can also represent this in Cylc with a collapsed form:
+This form can be used to get special behaviour relative to
+the final cycle point.
+
+We can also represent this in Cylc with a collapsed form:
 
 .. code-block:: none
 
@@ -423,7 +435,8 @@ A less common recurrence form is ``R[limit?]/[datetime]/[datetime]``
 (format number 1 in the ISO 8601 standard). This uses the difference between
 the first datetime and the second datetime to set the recurrence interval.
 The first datetime is the start point. For example,
-``R3/2020-07-10/2020-07-15`` means
+``R3/2020-07-10/2020-07-15`` means "run 3 times, every 5 days, starting at
+2020-07-10 (midnight, July 10th 2020)"; the list of points on this sequence is:
 
 .. code-block:: none
 
