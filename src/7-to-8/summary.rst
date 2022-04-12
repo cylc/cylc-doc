@@ -162,8 +162,8 @@ By default, run numbers increment with each install.
 
 File Installation
 ^^^^^^^^^^^^^^^^^
-When the first job runs on a remote platform, a remote initialization process
-is triggered to install files onto platforms.
+When the first job runs on a remote platform (after start-up, or after a ``cylc reload``), a
+remote initialization process is triggered to install workflow files there.
 
 Symlink Dirs
 ^^^^^^^^^^^^

@@ -1108,6 +1108,8 @@ Glossary
       workflow :term:`source directory` before reload, rather than made by
       editing the installed files directly.
 
+      :ref:`RemoteInit` will be redone for each job platform, when the first job is submitted there after a reload.
+
       Any :term:`task` that is active at reload will continue with its
       pre-reload configuration. It's next instance (at the next cycle point)
       will adopt the new configuration.

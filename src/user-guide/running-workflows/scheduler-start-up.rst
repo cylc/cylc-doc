@@ -137,6 +137,8 @@ workflow down and restarting it after making changes.
 If you make an error in the ``flow.cylc`` file before a reload, the workflow
 log will report an error and the reload will have no effect.
 
+Note, :ref:`RemoteInit` will be redone for each job platform, when the first
+job is submitted there after a reload.
 
 Restarting or Reloading after Graph Changes
 -------------------------------------------
@@ -207,6 +209,9 @@ they don't slow the workflow start-up process, they can be monitored,
 they can run directly on target platforms, and you can rerun them later without
 restarting the workflow.
 
+.. note::
+
+   Files configured for installation to remote job platforms can be reinstalled by doing a reload. The reinstallation is done when the first job submits to a platform after the reload.
 
 Troubleshooting
 ^^^^^^^^^^^^^^^
