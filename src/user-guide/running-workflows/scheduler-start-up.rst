@@ -211,8 +211,7 @@ restarting the workflow.
 
 .. note::
 
-   Any files configured to be included in the remote file installation that are
-   changed, can be reinstalled on the remote with ``cylc reload``.
+   Files configured for installation to remote job platforms can be reinstalled by doing a reload. The reinstallation is done when the first job submits to a platform after the reload.
 
 Troubleshooting
 ^^^^^^^^^^^^^^^
