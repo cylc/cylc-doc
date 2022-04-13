@@ -7,8 +7,11 @@ If there is nothing more to run (according to the graph) and there are no
 :term:`incomplete tasks <incomplete task>` present, the scheduler will report
 workflow completion and shut down when current active tasks finish. 
 
-Workflow Stall
-==============
+
+.. _scheduler stall:
+
+Scheduler Stall
+===============
 
 If there is nothing more to run (according to the graph) but there are
 :term:`incomplete tasks <incomplete task>` present, the scheduler will

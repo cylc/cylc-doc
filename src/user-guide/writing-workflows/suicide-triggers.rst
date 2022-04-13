@@ -56,7 +56,7 @@ To remove a task after any one of several events, use an OR operator:
    * In Cylc 8 all waiting tasks in front of the active window are virtual and
      don't need to be "removed"
    * The only non-virtual waiting tasks in Cylc 8 are those :term:`actively
-     waiting <active waiting task>` on an external trigger; these might need to
+     waiting <active-waiting>` on an external trigger; these might need to
      be removed if they will never run
 
 
@@ -65,7 +65,7 @@ To remove a task after any one of several events, use an OR operator:
 Remaining Use Case
 ------------------
 
-Suicide triggers may be needed to remove an :term:`active waiting task` when it
+Suicide triggers may be needed to remove an :term:`active-waiting task` when it
 can be inferred from the status of another task that the external trigger will
 never be satisfied.
 

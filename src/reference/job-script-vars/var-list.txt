@@ -34,19 +34,22 @@ ISODATETIMEREF                     # Reference time for the `isodatetime` comman
                                    #   when in any datetime cycling mode
 
 CYLC_TASK_NAME                     # Job's task name, e.g. t1
+CYLC_TASK_ID                       # Task instance identifier CYCLE-POINT/TASK-NAME
+                                   #   e.g. 20110511T1800Z/t1
+
 CYLC_TASK_SUBMIT_NUMBER            # Job's submit number, e.g. 1,
                                    #   increments with every submit
 CYLC_TASK_TRY_NUMBER               # Number of execution tries, e.g. 1
-                                   #   increments with automatic
-                                   #   execution retry delays.
-CYLC_TASK_ID                       # Task instance identifier TASK-NAME.CYCLE-POINT
-                                   #   e.g. t1.20110511T1800Z
+                                   #   increments with automatic execution retry delays.
+CYLC_TASK_FLOW_NUMBERS             # Flows this task belongs to, e.g. 1,2
+
 CYLC_TASK_LOG_DIR                  # Location of the job log directory
                                    #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
 CYLC_TASK_LOG_ROOT                 # The task job file path
                                    #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
 CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
                                    #   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
+
 CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                    #   e.g. root postproc t1
 CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task

@@ -3,19 +3,16 @@
 Cylc Broadcast
 --------------
 
-The ``cylc broadcast`` command overrides :cylc:conf:`[runtime]`
-settings in a running workflow.
+The ``cylc broadcast`` command overrides task :cylc:conf:`[runtime]`
+settings in a running scheduler. You can think of it as communicating
+new configuration settings (including information via environment variables) to
+selected upcoming tasks via the scheduler.
 
-Broadcast can be used to communicate information to downstream tasks by
-setting environment variables. Broadcasts can target all tasks, groups of
-tasks, or specific tasks, at all cycle points or at specific cycle points.
-See broadcast command help for details.
+See ``cylc broadcast --help`` for detailed information.
 
-Broadcast settings targeted at a specific task ID or cycle point expire and
-are forgotten as the workflow moves on. Un-targeted variables and those
-targeted at a task name persist throughout the workflow run, even across
-restarts, unless manually cleared using the broadcast command - and so
-should be used sparingly.
+Broadcast settings targeting a specific cycle point expire as the workflow
+moves on. Otherwise they persist for lifetime of the run, and across restarts,
+unless cleared with another invocation of the command.
 
 
 .. _Sub-Workflows:

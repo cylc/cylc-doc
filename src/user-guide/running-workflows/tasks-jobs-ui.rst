@@ -15,7 +15,7 @@ The ``n = 0`` or *active task* window includes:
 
 - ``preparing`` tasks
 - ``submitted`` and ``running`` tasks - i.e. those with active jobs
-- ``waiting`` tasks, that are :term:`actively waiting <active waiting task>` on:
+- ``waiting`` tasks, that are :term:`actively waiting <active-waiting>` on:
 
   - :ref:`clock triggers <Built-in Clock Triggers>`
   - :ref:`external triggers <Section External Triggers>`

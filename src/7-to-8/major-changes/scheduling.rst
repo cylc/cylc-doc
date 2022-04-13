@@ -37,9 +37,7 @@ Cylc 8 has a new scheduling algorithm that:
 
   - (to fully understand which tasks appeared in the Cylc 7 GUI you had to
     understand the scheduling algorithm)
-- Supports a powerful new capability called :term:`reflow`: you can trigger
-  multiple concurrent flows in the same graph at once, managed by the same
-  scheduler
+- Supports multiple concurrent :term:`flows<flow>` within the same workflow.
 - Can start a workflow from any task or tasks in the graph (no need for
   checkpoint restart)
 - Can limit activity within as well as across cycles, without risking a stall

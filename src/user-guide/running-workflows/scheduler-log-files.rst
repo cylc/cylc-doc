@@ -1,7 +1,7 @@
-.. _Workflow Server Logs:
+.. _Scheduler Logs:
 
-Workflow Server Logs
---------------------
+Scheduler Logs
+--------------
 
 Each workflow maintains its own log of time-stamped events in the
 :term:`workflow log directory` (``$HOME/cylc-run/<workflow-id>/log/workflow/``).
