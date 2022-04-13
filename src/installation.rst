@@ -197,6 +197,33 @@ environments. Extract it to a directory in your ``$PATH`` like this:
    cylc get-resources cylc /path/to/cylc  # should be in $PATH
    chmod +x /path/to/cylc
 
+You may need to modify this file for your local installation e.g:
+
+.. code-block:: diff
+
+   - CYLC_HOME_ROOT="${CYLC_HOME_ROOT:-/opt}"
+   + CYLC_HOME_ROOT="${CYLC_HOME_ROOT:-/path/to}"
+
+.. note::
+
+   Developers can set ``$CYLC_HOME_ROOT_ALT`` to point
+   to their development environments. For example:
+
+   .. code-block:: bash
+
+      CYLC_HOME_ROOT_ALT=${HOME}/.conda/envs
+
+You may wish to use the same approach for the ``isodatetime`` command, and, if using
+`Rose`_ for the ``rose`` and ``rosie`` commands.
+
+To do so create a symbolic link to the wrapper, for each of these commands:
+
+.. code-block:: bash
+
+   cd /path/to       # Using the path where you installed the wrapper script
+   ln -s cylc rose
+   ln -s cylc rosie
+   ln -s cylc isodatetime
 
 Configuration
 -------------
