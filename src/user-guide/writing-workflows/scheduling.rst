@@ -289,12 +289,15 @@ number of repetitions.
 
 .. _writing_flows.scheduling.syntax_rules:
 
-Syntax Rules
-^^^^^^^^^^^^
+Cycling Syntax Rules
+--------------------
 
-:term:`Datetime cycling <datetime cycling>` information is made up of a
-starting :term:`datetime <ISO8601 datetime>`, an interval, and an optional
-limit.
+:term:`Datetime cycling <datetime cycling>` information is made up of:
+
+* a :term:`datetime <ISO 8601 datetime>` that typically specifies the start
+  point of the sequence
+* an interval between points in the sequence
+* and an optional limit on the number of points in the sequence
 
 The time is assumed to be in UTC unless you set
 :cylc:conf:`[scheduler]cycle point time zone`.
@@ -312,7 +315,7 @@ The time is assumed to be in UTC unless you set
 The calendar is assumed to be the proleptic Gregorian calendar unless
 you set :cylc:conf:`[scheduling]cycling mode`.
 
-The syntax is based on the :term:`ISO8601` datetime standard, which includes
+The syntax is based on the :term:`ISO 8601` datetime standard, which includes
 the representation of datetimes and intervals. Cylc (optionally) allows these
 representations to be heavily condensed by omitting information that can be
 inferred from context (rules below).
@@ -325,8 +328,27 @@ inferred from context (rules below).
    except where specific tasks, if any, depend on :term:`clock triggers <clock
    trigger>`.
 
+There are three ISO 8601 recurrence formats supported by Cylc, detailed below
+in order from most commonly used to least commonly used.
+
+
+Format 3: ``R[limit?]/[datetime]/[interval]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 The most common full form for recurrences is
-``R[limit?]/[datetime]/[interval]``. In Cylc this can be condensed to:
+``R[limit?]/[datetime]/[interval]``. This is format number 3 in the ISO 8601
+standard. The datetime specifies the start of the cycling sequence.
+For example, ``R3/2000-01-01T00Z/P2D`` means "run 3 times, every 2 days,
+starting at 2000-01-01T00Z (midnight, Jan 1st 2000)"; the list of points
+on this sequence is:
+
+.. code-block:: none
+
+   2000-01-01T00Z
+   2000-01-03T00Z
+   2000-01-05T00Z
+
+In Cylc, this form can be condensed to:
 
 .. code-block:: sub
 
@@ -341,12 +363,12 @@ Here are some examples for each form:
 
 .. code-block:: sub
 
-   R5/T00           # Run 5 times at 00:00 every day
-   R//PT1H          # Run every hour (Note the R// is redundant)
-   20000101T00Z/P1D # Run every day starting at 00:00 1st Jan 2000
-   R1               # Run once at the initial cycle point
-   R1/20000101T00Z  # Run once at 00:00 1st Jan 2000
-   P1Y              # Run every year
+   R5/T00            # Run 5 times at 00:00 every day
+   R//PT1H           # Run every hour (Note the R// is optional)
+   20000101T06Z/P1D  # Run every day starting at 06:00 1st Jan 2000
+   R1                # Run once at the initial cycle point
+   R1/20000101T00Z   # Run once at 00:00 1st Jan 2000
+   P1Y               # Run every year
 
 .. note::
 
@@ -368,19 +390,27 @@ hours, so the inferred interval is 1 day (daily), ``P1D``.
 If the limit is omitted, unlimited cycling is assumed. This will be
 bounded by the workflow's final cycle point if given.
 
-Another supported form of ISO8601 :term:`recurrence` is:
-``R[limit?]/[interval]/[datetime]``. This form uses the
-datetime as the end of the cycling sequence rather than the start.
-For example, ``R3/P5D/20140430T06`` means:
+
+Format 4: ``R[limit?]/[interval]/[datetime]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Another supported recurrence form is:
+``R[limit?]/[interval]/[datetime]`` (format number 4 in the ISO 8601 standard).
+This uses the datetime as the end of the cycling sequence rather than the start.
+For example, ``R3/P5D/2014-04-30T06`` means "run 3 times, every 5 days, ending
+at 2014-04-30T06 (06:00, April 30th 2014)"; the list of points on this
+sequence is:
 
 .. code-block:: none
 
-   20140420T06
-   20140425T06
-   20140430T06
+   2014-04-20T06
+   2014-04-25T06
+   2014-04-30T06
 
-This form can be used to get special behaviour near the end of the workflow, at
-the final cycle point. We can also represent this in Cylc with a collapsed form:
+This form can be used to get special behaviour relative to
+the final cycle point.
+
+We can also represent this in Cylc with a collapsed form:
 
 .. code-block:: none
 
@@ -393,12 +423,41 @@ So, for example, you can write:
 .. code-block:: sub
 
    R1//+P0D  # Run once at the final cycle point
-   R5/P1D    # Run 5 times, every 1 day, ending at the final
-             # cycle point
-   P2W/T00   # Run every 2 weeks ending at 00:00 following
-             # the final cycle point
-   R//T00    # Run every 1 day ending at 00:00 following the
-             # final cycle point
+   R5/P2D    # Run 5 times, every 2 days, ending at the final cycle point
+   P2W/T00   # Run every 2 weeks ending at 00:00 before/at the final cycle point
+   R//T00    # Run every day ending at 00:00 before/at the final cycle point
+
+
+Format 1: ``R[limit?]/[datetime]/[datetime]``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A less common recurrence form is ``R[limit?]/[datetime]/[datetime]``
+(format number 1 in the ISO 8601 standard). This uses the difference between
+the first datetime and the second datetime to set the recurrence interval.
+The first datetime is the start point. For example,
+``R3/2020-07-10/2020-07-15`` means "run 3 times, every 5 days, starting at
+2020-07-10 (midnight, July 10th 2020)"; the list of points on this sequence is:
+
+.. code-block:: none
+
+   2020-07-10
+   2020-07-15
+   2020-07-20
+
+.. caution::
+
+   Cylc will always calculate the interval in
+   :term:`exact datetime units <exact datetime unit>`. So for the example
+   of ``R/2004/2005``, the interval will be ``P366D`` (2004 is a leap year)
+   rather then ``P1Y``, because year is an
+   :term:`inexact unit <inexact datetime unit>`.
+
+.. note::
+
+   In versions of Cylc prior to 8.0.0, this syntax was undocumented and
+   behaved differently, in a way which was not in accordance with the
+   :term:`ISO 8601` standard.
+
 
 .. _referencing-the-initial-and-final-cycle-points:
 
@@ -464,7 +523,7 @@ Setting The Initial Cycle Point Relative To The Current Time
    It does not work for alternative calendars like the 360, 365 or 366 day
    calendars, or integer cycling.
 
-The ``next`` and ``previous`` syntax can be used with truncated ISO8601
+The ``next`` and ``previous`` syntax can be used with truncated ISO 8601
 representations, to set the initial cycle point:
 ``next(Thh:mmZ)``, ``previous(T-mm)``; e.g.
 
@@ -510,7 +569,7 @@ Offsets used without ``next`` or ``previous`` are interpreted as offsets from "n
    ====================================  ==================
 
 Relative initial cycle points also work with truncated dates, including
-weeks and ordinal date, using ISO8601 truncated date representations.
+weeks and ordinal date, using ISO 8601 truncated date representations.
 Note that day-of-week should always be specified when using weeks. If a time
 is not included, the calculation of the next or previous corresponding
 point will be done from midnight of the current day.
@@ -580,7 +639,7 @@ This graph can be written more concisely, with the same result, like this:
 Excluding Dates
 ^^^^^^^^^^^^^^^
 
-:term:`datetimes <ISO8601 datetime>` can be excluded from a :term:`recurrence`
+:term:`datetimes <ISO 8601 datetime>` can be excluded from a :term:`recurrence`
 by an exclamation mark for example ``PT1D!20000101`` means run daily except on
 the first of January 2000.
 
