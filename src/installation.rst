@@ -213,8 +213,8 @@ You may need to modify this file for your local installation e.g:
 
       CYLC_HOME_ROOT_ALT=${HOME}/.conda/envs
 
-You may wish to use the same approach for the `isodatetime` command, and, if using
-`Rose`_ for the `rose` and `rosie` commands.
+You may wish to use the same approach for the ``isodatetime`` command, and, if using
+`Rose`_ for the ``rose`` and ``rosie`` commands.
 
 To do so create a symbolic link to the wrapper, for each of these commands:
 
