@@ -93,17 +93,20 @@ Restarts and the Initial, Final, Start and Stop Cycle Points
 
 .. cylc-scope:: flow.cylc
 
-When a workflow is started for the first time, the final and stop cycle points
-(if either were set) are saved to the workflow database. In a restart, these
-values are loaded, so the workflow will stop at the originally set cycle point,
-even if :cylc:conf:`[scheduling]final cycle point` or
-:cylc:conf:`[scheduling]stop after cycle point` were changed.
-It is possible to override the original values using the
-``--final-cycle-point`` and ``--stop-cycle-point`` options for ``cylc play``.
-The new values will overwrite the old ones in the database for future restarts.
+When a workflow is restarted or reloaded, any changes to
+:cylc:conf:`[scheduling]final cycle point` or
+:cylc:conf:`[scheduling]stop after cycle point` are normally picked up by Cylc.
 
-If the values were changed in ``flow.cylc``, you can pick up these changes
-using a value of ``reload`` (e.g. ``--final-cycle-point=reload``).
+However, this is not the case if you used the ``--final-cycle-point`` or
+``--stop-cycle-point`` options in a prior run. If you use either of these
+options, the values you specify are stored in the workflow database, so the
+original values will be used if you restart the workflow later on.
+You can override these original values using the options again, and the new
+value will persist over restarts. Or, you can pick up the workflow config
+values by passing ``reload`` to the options
+(e.g. ``--final-cycle-point=reload``); this will remove the stored value from
+the database so future restarts will go back to picking up any changes
+to the config.
 
 .. note::
 
@@ -111,9 +114,7 @@ using a value of ``reload`` (e.g. ``--final-cycle-point=reload``).
    and cannot be restarted; the ``--final-cycle-point`` option will have
    no effect.
 
-The initial cycle point (and start cycle point, if set) are also saved to the
-database when a workflow is started for the first time. However, the
-``--initial-cycle-point`` and ``--start-cycle-point`` options cannot be used
+The ``--initial-cycle-point`` and ``--start-cycle-point`` options cannot be used
 in a restart; workflows always start from the cycle point where they
 previously stopped.
 
