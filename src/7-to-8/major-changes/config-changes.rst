@@ -5,8 +5,9 @@ Configuration Changes at Cylc 8
 
 Some configurations have moved or been renamed at Cylc 8.
 
-The old configurations are now deprecated, but still supported. These will be highlighted upon
-``cylc validate``.
+The old configurations are now deprecated, but still supported.
+These will be highlighted upon ``cylc validate`` after renaming ``suite.rc``
+to ``flow.cylc``.
 
 There are some examples below of how to upgrade:
 
@@ -20,7 +21,7 @@ Cylc 7 had unnecessarily deep nesting of graph config sections:
 
    [scheduling]
       initial cycle point = now
-      [[dependencies]]  # Deprecated Cylc 7
+      [[dependencies]]
           [[[R1]]]
               graph = "prep => foo"
           [[[R/^/P1D]]]
@@ -32,7 +33,7 @@ Cylc 8 cleans this up:
 
    [scheduling]
       initial cycle point = now
-      [[graph]]  # Cylc 8
+      [[graph]]
           R1 = "prep => foo"
           R/^/P1D = "foo => bar => baz"
 

@@ -306,8 +306,7 @@ Validating A Workflow
 
 .. code-block:: console
 
-   $ cd ~/cylc-src/my_workflow
-   $ cylc validate .
+   $ cylc validate ~/cylc-src/my_workflow
 
 
 Installing A Workflow
@@ -385,11 +384,11 @@ Numbered run directories
 
 .. code-block:: console
 
-   $ cylc validate my_workflow
+   $ cylc play my_workflow
    # is the same as
-   $ cylc validate my_workflow/runN
+   $ cylc play my_workflow/runN
    # and the same as (in this case)
-   $ cylc validate my_workflow/run2
+   $ cylc play my_workflow/run2
 
 
 Files Generated at Runtime

@@ -435,17 +435,15 @@ The run directory now looks as follows:
 Expected Errors
 ---------------
 
-There are some occasions when installation is expected to fail.
-
-If:
+There are some occasions when installation is expected to fail:
 
 - ``log``, ``share``, ``work`` or ``_cylc-install`` directories exist in the
   :term:`source directory`
 
-- neither :cylc:conf:`flow.cylc` nor the deprecated suite.rc are found in
+- neither :cylc:conf:`flow.cylc` nor the deprecated ``suite.rc`` are found in
   the :term:`source directory`
 
-- Both :cylc:conf:`flow.cylc` and the deprecated suite.rc are found in
+- Both :cylc:conf:`flow.cylc` and the deprecated ``suite.rc`` are found in
   the :term:`source directory`. Only one should be present.
 
 - the workflow name is an absolute path or invalid
