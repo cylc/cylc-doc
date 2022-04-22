@@ -40,42 +40,52 @@ the :term:`run directory` structure and some service files underneath it.
    However, it is considered best practice to write your workflow in a source
    directory and use ``cylc install`` to create a fresh run directory for you.
 
+
 .. _Using Cylc Install:
 
 Using Cylc Install
 ------------------
 
-The following commands, executed from the :term:`source directory`
-``~/cylc-src/my-flow``, result in the following installations:
+``cylc install`` accepts as its only argument either:
 
-+--------------------------------------+--------------------------------------+
-| Command                              | Results in Installation in Directory |
-+======================================+======================================+
-| cylc install                         |    ~/cylc-run/my-flow/run1           |
-+--------------------------------------+--------------------------------------+
-| cylc install --no-run-name           |    ~/cylc-run/my-flow                |
-+--------------------------------------+--------------------------------------+
-| cylc install --run-name=new-run      |    ~/cylc-run/my-flow/new-run        |
-+--------------------------------------+--------------------------------------+
-| cylc install --flow-name=new-name    |    ~/cylc-run/new-name/run1          |
-+--------------------------------------+--------------------------------------+
+* a workflow source name (see :ref:`configurable source dirs` below) e.g.
+  ``foo/bar``
+* a path to the source directory e.g. ``./foo/bar`` or ``/path/to/foo/bar``
+  (note that relative paths must begin with ``./`` to distinguish them from
+  workflow source names)
 
-Any of the above commands may be run from anywhere on the file system with the
-addition of the option ``--directory=PATH/TO/SOURCE/DIRECTORY`` (alternatively,
-``-C PATH/TO/SOURCE/DIRECTORY``).
+If no argument is supplied, the current working directory is used as the
+source directory.
 
 .. note::
 
-   To avoid confusion, ``cylc install`` will fail if the workflow name
-   contains directory names that are reserved filenames, such as
-   ``run<number>``, ``_cylc-install`` etc.
+   To avoid confusion, ``cylc install`` does not permit any of the following
+   reserved directory names: |reserved_filenames|
 
-   .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
+
+Options
+^^^^^^^
+
+The table below illustrates several command line options that control naming
+of run directories for installed workflows (the current working directory in
+these examples is ``~/cylc-src/my-flow``):
+
+.. csv-table::
+   :header: Command, Results in Installation in Directory
+   :align: left
+
+   ``cylc install``, ``~/cylc-run/my-flow/run1``
+   ``cylc install --no-run-name``, ``~/cylc-run/my-flow``
+   ``cylc install --run-name=new-run``, ``~/cylc-run/my-flow/new-run``
+   ``cylc install --workflow-name=new-name``, ``~/cylc-run/new-name/run1``
+
+
+.. _configurable source dirs:
 
 Configurable Source Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-It is also possible to configure a list of directories that ``cylc install``
+You can configure a list of directories that ``cylc install SOURCE_NAME``
 and the GUI will search for source directories inside, using
 :cylc:conf:`global.cylc[install]source dirs`. For example, if you have
 
@@ -127,34 +137,29 @@ This would result in the following file structure:
 .. code-block:: none
 
    ~/cylc-run
-   `-- myflow
-       |-- flow.cylc
-       |-- log -> /somewhere/else/cylc-run/myflow/log
+   └── myflow
+       ├── flow.cylc
+       ├── log -> /somewhere/else/cylc-run/myflow/log
        ...
 
    /somewhere
-   `-- else
-       `-- cylc-run
-           `-- myflow
-               `-- log
-                   |-- flow-config
-                   |-- install
+   └── else
+       └── cylc-run
+           └── myflow
+               └── log
+                   ├── flow-config
+                   ├── install
                    ...
 
 
 Numbered Runs
 ^^^^^^^^^^^^^
 
-By default, cylc install will install the workflow found in the current working
-directory into ``~/cylc-run/$(basename $PWD)/runN``, where runN = run1, run2,
-run3,...
-
-``cylc install`` will automatically increment the run number of each install,
-provided the options ``--no-run-name`` or ``--run-name`` are not used. See
-:ref:`Using Cylc Install` for example behaviour.
-
-For convenience, a symlink to the most recent (highest numbered) run will be
-created in the workflow directory, ``runN``.
+By default, ``cylc install`` creates numbered run directories, i.e.
+``~/cylc-run/<workflow-name>/run<number>``, provided the options
+``--run-name`` or ``--no-run-name`` are not used. The run number automatically
+increments each time ``cylc install`` is run, and a symlink ``runN`` is
+created/updated to point to the run.
 
 Example: A typical run directory structure, after three executions of
 ``cylc install`` will look as follows.
@@ -189,8 +194,9 @@ Named Runs
 
 As an alternative to numbered runs, it is possible to name the runs, using the
 ``--run-name`` option.
-In this case, the runN symlink will not be created.
-This option cannot be used in conjunction with numbered runs.
+In this case, the ``runN`` symlink will not be created.
+This option cannot be used if numbered runs are already present. Likewise,
+numbered runs cannot be used if named runs are already present.
 
 
 The Cylc Install Process
@@ -435,66 +441,51 @@ The run directory now looks as follows:
 Expected Errors
 ---------------
 
-There are some occasions when installation is expected to fail.
-
-If:
+There are some occasions when installation is expected to fail:
 
 - ``log``, ``share``, ``work`` or ``_cylc-install`` directories exist in the
   :term:`source directory`
 
-- neither :cylc:conf:`flow.cylc` nor the deprecated suite.rc are found in
+- Neither :cylc:conf:`flow.cylc` nor the deprecated suite.rc are found in
   the :term:`source directory`
 
 - Both :cylc:conf:`flow.cylc` and the deprecated suite.rc are found in
   the :term:`source directory`. Only one should be present.
 
-- the workflow name is an absolute path or invalid
+- The workflow name is an absolute path or invalid
 
   Workflow names are validated by
   :py:class:`cylc.flow.unicode_rules.WorkflowNameValidator`.
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-- the workflow name contains a directory name that is a reserved filename,
-  such as ``work``, ``run<number>`` etc.
+- The workflow name contains any of these reserved directory names:
+  |reserved_filenames|
 
-  .. autoattribute:: cylc.flow.workflow_files.WorkflowFiles.RESERVED_NAMES
-     :noindex:
-
-- the install will create nested install directories. Neither a new
+- The install would create nested install directories. Neither a new
   installation in a subdirectory of an existing one, nor a directory containing
   an existing installation are permitted. For example, having installed a
   workflow in ``bar`` you would be unable to install one in ``foo``
   or ``foo/bar/baz``.
 
-  .. code-block:: bash
+  .. code-block:: none
 
       foo
-      `-- bar
-         |-- _cylc-install
-         |-- baz
-         |-- run1
-         `-- runN
+      └── bar
+          ├── _cylc-install
+          ├── baz
+          ├── run1
+          └── runN
 
+  This means you cannot install using ``--no-run-name`` for a workflow that
+  has installed numbered/named runs, nor can you install numbered/named runs
+  for a workflow where ``--no-run-name`` was used.
 
-- trying to install a workflow into an already existing run directory,
+- Trying to install a workflow into an already existing run directory.
   ``cylc reinstall`` should be used for this, see
   :ref:`Reinstalling a Workflow`.
 
-- the source directory path does not match the source directory path of a
+- The source directory path does not match the source directory path of a
   previous installation. i.e. running ``cylc install`` in
   ``~/cylc-src/my-flow``, followed by running ``cylc install`` from
-  ``~/cylc-different-sources/my-flow``.
-
-.. warning::
-
-    The following combinations of ``cylc install`` are forbidden and will
-    result in error.
-
-    - ``cylc install --run-name=my-run-name --no-run-name``
-
-    - Running ``cylc install --run-name=my-run-name`` followed by
-      ``cylc install --no-run-name``
-
-    - Running ``cylc install --no-run-name`` followed by
-      ``cylc install --run-name=my-run-name``
+  ``~/different/my-flow``.

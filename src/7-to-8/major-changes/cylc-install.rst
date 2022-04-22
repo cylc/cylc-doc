@@ -30,7 +30,7 @@ install your workflows manually or with another tool.
 
 We designed Cylc 8 to help you keep your development and
 running copies separate. By default you can now develop workflows in the
-``~/cylc-src`` directory. As a result you will not change your development
+``~/cylc-src`` directory. As a result, you will not change your development
 copy by running a workflow. You will, however, need to install your workflow
 from ``~/cylc-src`` to ``~/cylc-run`` using the ``cylc install`` command.
 
@@ -50,7 +50,7 @@ You can install from inside the development directory:
    $ cylc install
    INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow
 
-You can install by workflow name if the workflow is in ``~/cylc-src``.
+You can install by workflow source name if the workflow is in ``~/cylc-src``.
 
 .. code-block:: console
 
@@ -68,11 +68,11 @@ You can install by workflow name if the workflow is in ``~/cylc-src``.
 
    Unwanted run directories can be removed with ``cylc clean``.
 
-You can also use ``-C`` (or ``--directory``) to set a source path:
+You can also use install by source path:
 
 .. code-block:: bash
 
-   cylc install -C /path/to/another-workflow
+   cylc install /path/to/another-workflow
 
 Once you have installed a workflow you can use ``cylc play`` to run it - see
 :ref:`RunningWorkflows`.
