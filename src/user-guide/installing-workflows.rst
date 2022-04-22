@@ -100,6 +100,53 @@ then ``cylc install dogs/fido`` will search for a workflow source directory
 the first match (into ``~/cylc-run/dogs/fido/run1``).
 
 
+Numbered Runs
+^^^^^^^^^^^^^
+
+By default, ``cylc install`` creates numbered run directories, i.e.
+``~/cylc-run/<workflow-name>/run<number>``, provided the options
+``--run-name`` or ``--no-run-name`` are not used. The run number automatically
+increments each time ``cylc install`` is run, and a symlink ``runN`` is
+created/updated to point to the run.
+
+Example: A typical run directory structure, after three executions of
+``cylc install`` will look as follows.
+
+.. code-block:: none
+
+   ├── _cylc-install
+   │   └── source -> /home/cylc-src/test-flow
+   ├── run1
+   │   ├── flow.cylc
+   │   └── log
+   │       └── install
+   │           └── <time-stamp>-install.log
+   ├── run2
+   │   ├── flow.cylc
+   │   └── log
+   │       └── install
+   │           └── <time-stamp>-install.log
+   ├── run3
+   │   ├── flow.cylc
+   │   └── log
+   │       └── install
+   │           └── <time-stamp>-install.log
+   └── runN -> /home/cylc-run/test-flow/run3
+
+The numbered runs option may be overridden, using either the ``--no-run-name``
+or the ``--run-name`` options.
+
+
+Named Runs
+^^^^^^^^^^
+
+As an alternative to numbered runs, it is possible to name the runs, using the
+``--run-name`` option.
+In this case, the ``runN`` symlink will not be created.
+This option cannot be used if numbered runs are already present. Likewise,
+numbered runs cannot be used if named runs are already present.
+
+
 .. _SymlinkDirs:
 
 Symlink Directories
@@ -150,53 +197,6 @@ This would result in the following file structure:
                    ├── flow-config
                    ├── install
                    ...
-
-
-Numbered Runs
-^^^^^^^^^^^^^
-
-By default, ``cylc install`` creates numbered run directories, i.e.
-``~/cylc-run/<workflow-name>/run<number>``, provided the options
-``--run-name`` or ``--no-run-name`` are not used. The run number automatically
-increments each time ``cylc install`` is run, and a symlink ``runN`` is
-created/updated to point to the run.
-
-Example: A typical run directory structure, after three executions of
-``cylc install`` will look as follows.
-
-.. code-block:: none
-
-   ├── _cylc-install
-   │   └── source -> /home/cylc-src/test-flow
-   ├── run1
-   │   ├── flow.cylc
-   │   └── log
-   │       └── install
-   │           └── <time-stamp>-install.log
-   ├── run2
-   │   ├── flow.cylc
-   │   └── log
-   │       └── install
-   │           └── <time-stamp>-install.log
-   ├── run3
-   │   ├── flow.cylc
-   │   └── log
-   │       └── install
-   │           └── <time-stamp>-install.log
-   └── runN -> /home/cylc-run/test-flow/run3
-
-The numbered runs option may be overridden, using either the ``--no-run-name``
-or the ``--run-name`` options.
-
-
-Named Runs
-^^^^^^^^^^
-
-As an alternative to numbered runs, it is possible to name the runs, using the
-``--run-name`` option.
-In this case, the ``runN`` symlink will not be created.
-This option cannot be used if numbered runs are already present. Likewise,
-numbered runs cannot be used if named runs are already present.
 
 
 The Cylc Install Process
