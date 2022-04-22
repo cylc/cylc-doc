@@ -453,6 +453,17 @@ Files Generated at Runtime
 
    Next section: :ref:`tutorial-cylc-runtime-configuration`
 
+.. ifnotslides::
+
+   .. note::
+      If you used pip to install Cylc, you will need to run
+
+      .. code-block:: bash
+
+         pip install 'cylc-flow[tutorial]'
+
+      to install extra dependencies needed for running the following
+      tutorial workflows.
 
 .. practical::
 
