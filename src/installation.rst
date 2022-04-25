@@ -22,10 +22,10 @@ Via Conda (recommended)
 
    $ conda install -c conda-forge cylc-flow
 
-   # install the browser-GUI (optional)
+   # Install the browser-GUI (optional)
    $ conda install -c conda-forge cylc-uiserver
 
-   # install Rose support (optional)
+   # Install Rose support (optional)
    $ conda install -c conda-forge cylc-rose metomi-rose
 
 Via Pip (+npm)
@@ -35,29 +35,41 @@ Via Pip (+npm)
 
    Requires Python 3.7+
 
-.. note::
+.. important::
 
    We recommend installing Cylc versions into virtual environments.
    This avoids software dependency conflicts and allows multiple
    Cylc versions to be installed on your system.
 
-.. warning::
    Without virtual environments, users can inadvertently break Cylc (or other
    Python programs) by ``pip``-installing conflicting package versions to
    ``$HOME/.local``, which takes precedence over central library locations.
-
 
 .. code-block:: sub
 
    $ pip install cylc-flow
 
-   # install the browser-GUI (optional)
+   # Install the browser-GUI (optional)
    # (requires nodejs & npm)
    $ pip install cylc-uiserver
-   $ npm install configurable-http-proxy
 
-   # install Rose support (optional)
+   # Install Rose support (optional)
    $ pip install cylc-rose metomi-rose
+
+There are also certain optional extra requirements which you may choose to
+install:
+
+.. code-block:: sub
+
+   # EmPy support
+   $ pip install 'cylc-flow[empy]'
+
+   # Support for running the tutorial workflows
+   $ pip install 'cylc-flow[tutorial]'
+
+   # The GUI with multi-user (hub) support
+   $ pip install 'cylc-uiserver[hub]'
+   $ npm install configurable-http-proxy
 
 
 .. _non-python-requirements:
@@ -72,7 +84,7 @@ These dependencies are not installed by Conda or pip:
 
 * ``bash``
 * GNU `coreutils`_
-* ``mail`` (optional: for automated email functionality)
+* ``mail`` (optional - for automated email functionality)
 
 These dependencies are installed by Conda but not by pip:
 
@@ -92,7 +104,7 @@ Installing On Mac OS
 .. _Homebrew: https://formulae.brew.sh/
 .. _atrun: https://www.unix.com/man-page/FreeBSD/8/atrun/
 
-Cylc requires some extra packages to function on Mac OS, we recommend
+Cylc requires some extra packages to function on Mac OS. We recommend
 installing them using the `Homebrew`_ package manager:
 
 .. code-block:: console

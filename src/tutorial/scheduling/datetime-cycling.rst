@@ -133,11 +133,10 @@ Inferred Recurrence
    :widths: 30, 70
 
    ``2000-01-01T00``, Midnight on the 1st of January 2000
-   ,
-   ``01-01T00``, Every year on the 1st of January.
-   ``01T00``, Every month on the first of the month.
-   ``T00``, Every day at midnight.
-   ``T-00``, Every hour at zero minutes past (every hour on the hour).
+   ``01-01T00``, Every year on the 1st of January
+   ``01T00``, Every month on the first of the month
+   ``T00``, Every day at midnight
+   ``T-00``, Every hour at zero minutes past (i.e. every hour on the hour)
 
 .. note::
 
@@ -159,9 +158,9 @@ By giving an arbitrary start cycle point (``datetime/recurrence``):
    :align: left
    :widths: 30, 70
 
-   ``2000/P4Y``, every fourth year starting with the year 2000.
-   ``2000-01-01T00/T00``, every day at midnight starting on the 1st of January 2000
-   ``2000-01-01T12/T00``, "every day at midnight starting on the first midnight
+   ``2000/P4Y``, "Every fourth year, starting with the year 2000"
+   ``2000-01-01T00/T00``, "Every day at midnight, starting on the 1st of January 2000"
+   ``2000-01-01T12/T00``, "Every day at midnight, starting on the first midnight
    after the 1st of January at 12:00 (i.e. ``2000-01-02T00``)."
 
 .. nextslide::
@@ -193,7 +192,7 @@ might produce different results for the recurrences.
    :width: 50%
 
    * - .. code-block:: cylc
-          :emphasize-lines: 2
+          :emphasize-lines: 3
 
           [scheduling]
               initial cycle point = \
@@ -202,7 +201,7 @@ might produce different results for the recurrences.
                   P1D = foo[-P1D] => foo
 
      - .. code-block:: cylc
-          :emphasize-lines: 2
+          :emphasize-lines: 3
 
           [scheduling]
               initial cycle point = \
