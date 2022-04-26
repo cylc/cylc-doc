@@ -39,40 +39,37 @@ from ``~/cylc-src`` to ``~/cylc-run`` using the ``cylc install`` command.
    If you have previously used Rose, ``cylc install`` functions in a
    similar way to ``rose suite-run --install-only``.
 
-Examples
---------
+Examples:
 
-You can install from inside the development directory:
+- You can install a workflow from inside the source directory:
 
-.. code-block:: console
+  .. code-block:: console
 
-   $ cd ~/cylc-src/my-workflow
-   $ cylc install
-   INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow
+     $ cd ~/cylc-src/my-workflow
+     $ cylc install
+     INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow
 
-You can install by workflow source name if the workflow is in ``~/cylc-src``.
+- You can install a workflow by providing the workflow source name
+  (if the source directory is located in any of the
+  :ref:`configurable source dirs`, e.g. ``~/cylc-src``):
 
-.. code-block:: console
+  .. code-block:: console
 
-   $ cylc install my-workflow
-   INSTALLED my-workflow/run2 from /home/me/cylc-src/my-workflow
+     $ cylc install my-workflow
+     INSTALLED my-workflow/run2 from /home/me/cylc-src/my-workflow
+
+- You can install a workflow by providing the path to the source directory:
+
+  .. code-block:: console
+
+     $ cylc install ~/cylc-src/my-workflow
+     INSTALLED my-workflow/run3 from /home/me/cylc-src/my-workflow
 
 .. note::
 
-   Each time you run ``cylc install`` a new copy of the workflow is installed
-   to a new run directory. In the previous case this is the ``run2`` directory.
-   ``cylc install`` also creates a symlink from the most recently installed run
-   directory to ``~/cylc-run/<my_workflow>/runN``.
-
-.. tip::
-
-   Unwanted run directories can be removed with ``cylc clean``.
-
-You can also use install by source path:
-
-.. code-block:: bash
-
-   cylc install /path/to/another-workflow
+   Each time you run ``cylc install`` for a particular workflow, a new copy of
+   the workflow is installed to a new run directory. In the example above, we
+   created three run directories inside ``~/cylc-run/my-workflow``.
 
 Once you have installed a workflow you can use ``cylc play`` to run it - see
 :ref:`RunningWorkflows`.
@@ -87,6 +84,7 @@ transfers to the installed workflow, see :ref:`File Installation` for details.
 Remote Installation
 -------------------
 
+Remote file installation does not occur until running the workflow.
 When the first task runs on a remote platform, Cylc will copy files from the
 :term:`run directory` to the remote platform.
 

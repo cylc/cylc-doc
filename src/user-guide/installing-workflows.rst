@@ -22,7 +22,7 @@ workflows in the example below: ``nwp/oper/region1``, ``nwp/oper/region2`` and
 
 This chapter will demonstrate how to install a workflow from an arbitrary
 location, called a :term:`source directory`.
-``cylc install`` will create a new directory in the :term:`cylc-run directory`
+``cylc install`` will create a new run directory in the :term:`cylc-run directory`
 for each installation of a workflow.
 
 .. _Install-Workflow:
@@ -36,9 +36,9 @@ the :term:`run directory` structure and some service files underneath it.
 .. note::
 
    It is possible to run a workflow without installation by writing it
-   directly in the :term:`run directory`.
-   However, it is considered best practice to write your workflow in a source
-   directory and use ``cylc install`` to create a fresh run directory for you.
+   directly in the run directory.
+   However, we recommend that you write your workflow in a source
+   directory and use ``cylc install`` to create a fresh run directory.
 
 
 .. _Using Cylc Install:
@@ -459,8 +459,8 @@ There are some occasions when installation is expected to fail:
 
   .. autoclass:: cylc.flow.unicode_rules.WorkflowNameValidator
 
-- The workflow name contains any of these reserved directory names:
-  |reserved_filenames|
+- The workflow name contains a directory name that is any of these reserved
+  filenames: |reserved_filenames|
 
 - The install would create nested install directories. Neither a new
   installation in a subdirectory of an existing one, nor a directory containing
