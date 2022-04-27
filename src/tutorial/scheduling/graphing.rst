@@ -36,7 +36,7 @@ The :cylc:conf:`flow.cylc` File Format
       Prior to Cylc 8, :cylc:conf:`flow.cylc` was named ``suite.rc``,
       but that name is now deprecated.
 
-      See :ref:`cylc_7_compat_mode` for information compatibility with
+      See :ref:`cylc_7_compat_mode` for information on compatibility with
       existing Cylc 7 ``suite.rc`` files.
 
 Example
