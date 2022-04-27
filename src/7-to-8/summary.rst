@@ -26,7 +26,7 @@ Cylc 7 Compatibility Mode
 
 Continuing to use the old ``suite.rc`` filename triggers a :ref:`backward
 compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
-workflow configurations out of the box, with 
+workflow configurations out of the box, with
 :ref:`some caveats<major-changes-compatibility-caveats>`. However, to future-proof
 your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.
 
@@ -38,9 +38,10 @@ Upgrading To Cylc 8
    * Major Changes: :ref:`cylc_7_compat_mode`
 
 There have been some configuration changes at Cylc 8.
-To upgrade your Cylc 7 suite to a Cylc 8 workflow, run ``cylc validate``. Take
-action on any warnings then rename the workflow configuration file from
-``suite.rc`` to ``flow.cylc``.
+To upgrade your Cylc 7 suite to a Cylc 8 workflow, first make sure it validates
+in Cylc 7 without any warnings, then rename the workflow configuration file
+from ``suite.rc`` to  ``flow.cylc``, then run ``cylc validate`` in Cylc 8 and
+take action on any warnings.
 
 .. TODO Add ref to breaking changes section within Major changes, once created,
    including optional ouputs.
@@ -128,7 +129,7 @@ correctly diagnose :term:`workflow completion`.
 Workflow Installation
 ---------------------
 
-Cylc 8 supports workflow installation. 
+Cylc 8 supports workflow installation.
 
 For users of `Rose`_, this replaces the functionality of ``rose suite-run``.
 

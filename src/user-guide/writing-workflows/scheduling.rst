@@ -1790,8 +1790,6 @@ finish trigger, because the underlying member outputs must already be optional.
 Graph Branching
 ---------------
 
-.. versionadded:: 8.0.0
-
 Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
 automatically follow different paths depending on events at runtime. This
 relies on :term:`optional outputs <optional output>` and is called *branching*.
