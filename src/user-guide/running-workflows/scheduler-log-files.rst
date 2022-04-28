@@ -4,7 +4,7 @@ Scheduler Logs
 --------------
 
 Each workflow maintains its own log of time-stamped events in the
-:term:`workflow log directory` (``$HOME/cylc-run/<workflow-id>/log/workflow/``).
+:term:`workflow log directory` (``$HOME/cylc-run/<workflow-id>/log/scheduler/``).
 
 The information logged here includes:
 
@@ -16,8 +16,9 @@ The information logged here includes:
 - Workflow stalled warnings.
 - Client commands (e.g. ``cylc hold``)
 - Job IDs.
-- Information relating to the remote file installation, contained in a
-  separate log file, the ``file-installation-log``.
+- Information relating to the remote file installation is contained in a
+  separate log file, which can be found in
+  ``$HOME/cylc-run/<workflow-id>/log/remote-install/``.
 
 .. note::
 
