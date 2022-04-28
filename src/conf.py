@@ -19,6 +19,7 @@ import os
 import sys
 
 from cylc.flow import __version__ as CYLC_VERSION
+from cylc.flow.workflow_files import WorkflowFiles
 
 sys.path.append(os.path.abspath('lib'))  # path to lib.
 
@@ -54,7 +55,12 @@ extensions = [
     'cylc.sphinx_ext.literal_sub_include'
 ]
 
+# Can define substitutions in prolog/epilog:
+rst_prolog = f"""
+.. |reserved_filenames| replace:: ``{'``, ``'.join(WorkflowFiles.RESERVED_NAMES)}``
+"""
 rst_epilog = open('hyperlinks.rst.include', 'r').read()
+
 default_role = 'cylc:conf'
 
 # Select best available SVG image converter.
@@ -234,6 +240,7 @@ texinfo_documents = [
 # How to display URL addresses.
 texinfo_show_urls = 'footnote'
 
+# Substitutions (e.g. |version|) to make when using literalsubinclude
 literal_sub_include_subs = {
     'version': version,
     'release': release,
