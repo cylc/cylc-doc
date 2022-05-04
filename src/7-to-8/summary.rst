@@ -209,19 +209,23 @@ Other Changes
 There are an assortment of other features implemented at Cylc 8. Some noteworthy
 minor changes include:
 
-- Runahead Limit
+Runahead Limit
    The default runahead limit has been increased from three cycles to five.
-- Queues
+Queues
    :ref:`InternalQueues` are now more efficient (for the :term:`scheduler`),
    we now recommend using queues to restrict the number of running tasks in
    situations where graphing may have been used previously.
-- Time Zones
+Time Zones
    :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
    are working in :ref:`cylc_7_compat_mode`.
-- Task Job Scripts
+Task Job Scripts
    All user-defined task scripting now runs in a subshell, so you can safely
    switch Python environments inside tasks without affecting Cylc.
    Further information is available in the User Guide: :ref:`JobScripts`.
-- Packaging
+Packaging
    Cylc 8 (and its package dependencies) is now available from Conda Forge and PyPI
    for installations into a Python 3 virtual environment.
+Remote usernames
+   If usernames differ on remote job hosts they must now be configured using
+   an SSH config file rather than the via Cylc 7 ``[remote]owner`` configuration.
+   See :ref:`728.remote_owner`.
