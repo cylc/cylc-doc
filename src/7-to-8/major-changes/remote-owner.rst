@@ -34,15 +34,6 @@ remote machine.
 Since Cylc uses SSH and RSync to manage job hosts, the SSH config also configures
 Cylc.
 
-.. warning::
-
-   GNU/BSD RSync is usually configured to use SSH for its transport layer,
-   however, other options, namely RSH may also be available.
-
-   If using the SSH config to set your remote username ensure RSync is configured
-   to use the SSH transport layer, or that the chosen transport layer is itself
-   appropriately configured.
-
 .. note::
 
    This approach using the SSH configuration file also works with Cylc 7.
