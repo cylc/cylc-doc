@@ -137,13 +137,9 @@ Delete the workflow :term:`run directory` (leave source files untouched):
      - ::
 
          rose suite-clean <name>
-     - Recommended::
+     - ::
 
          cylc clean <name>
-
-       Or alternatively::
-
-         rm -rf ~/cylc-run/<name>
 
 Scanning
 --------
