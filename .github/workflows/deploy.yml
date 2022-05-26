@@ -55,7 +55,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-18.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: configure python
         uses: actions/setup-python@v2
