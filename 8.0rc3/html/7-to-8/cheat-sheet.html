@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheat Sheet &mdash; Cylc 8.0rc3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Detailed Description of Major Changes" href="major-changes/index.html" />
+    <link rel="prev" title="Summary Of Major Changes" href="summary.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0rc3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cheat Sheet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validating">Validating</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-running">Installing &amp; Running</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pausing-unpausing">Pausing &amp; Unpausing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stopping">Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restarting">Restarting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deleting">Deleting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scanning">Scanning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#view-a-workflow-s-configuration">View A Workflow’s Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#opening-user-interfaces">Opening User Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#static-graph-visualisation">Static Graph Visualisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rose-stem">Rose Stem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/index.html">Detailed Description of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html">Cylc 8.0rc3 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Cylc 8 Migration Guide</a> &raquo;</li>
+      <li>Cheat Sheet</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/7-to-8/cheat-sheet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cheat-sheet">
+<span id="id1"></span><h1>Cheat Sheet<a class="headerlink" href="#cheat-sheet" title="Permalink to this headline"></a></h1>
+<p>Quick summary of the command line changes between Cylc 7 / Rose 2019 and Cylc 8.</p>
+<section id="validating">
+<h2>Validating<a class="headerlink" href="#validating" title="Permalink to this headline"></a></h2>
+<p>Check the workflow configuration for errors:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc validate <span class="s">&lt;name/path&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># validate from $PWD</span>
+rose suite-run --validate
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc validate <span class="s">&lt;name/path&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="installing-running">
+<h2>Installing &amp; Running<a class="headerlink" href="#installing-running" title="Permalink to this headline"></a></h2>
+<p>Install a workflow from source and run it:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># no installation capability</span>
+<span class="c"># run from source</span>
+cylc run <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install from $PWD</span>
+<span class="c"># then run</span>
+rose suite-run
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install from $PWD</span>
+cylc install
+
+<span class="c"># run the installed workflow</span>
+cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pausing-unpausing">
+<h2>Pausing &amp; Unpausing<a class="headerlink" href="#pausing-unpausing" title="Permalink to this headline"></a></h2>
+<p>Tell a workflow not to submit any new jobs:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong> &amp; Rose 2019</p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc hold <span class="s">&lt;name&gt;</span>
+
+cylc unhold <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc pause <span class="s">&lt;name&gt;</span>
+
+cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stopping">
+<h2>Stopping<a class="headerlink" href="#stopping" title="Permalink to this headline"></a></h2>
+<p>Stop a running workflow:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc stop <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="restarting">
+<h2>Restarting<a class="headerlink" href="#restarting" title="Permalink to this headline"></a></h2>
+<p>Restart a stopped workflow and pick up where it left off:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># no installation capability</span>
+<span class="c"># restart from source</span>
+cylc restart <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># regular restart</span>
+rose suite-restart
+</pre></div>
+</div>
+<p>Or alternatively:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># reinstall and restart</span>
+rose suite-run --restart
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># optionally reinstall</span>
+cylc reinstall <span class="s">&lt;name&gt;</span>
+
+<span class="c"># restart</span>
+cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="deleting">
+<h2>Deleting<a class="headerlink" href="#deleting" title="Permalink to this headline"></a></h2>
+<p>Delete the workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> (leave source files untouched):</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>rm -rf ~/cylc-run/<span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>rose suite-clean <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc clean <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="scanning">
+<h2>Scanning<a class="headerlink" href="#scanning" title="Permalink to this headline"></a></h2>
+<p>List all running workflows:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc scan
+</pre></div>
+</div>
+</section>
+<section id="view-a-workflow-s-configuration">
+<h2>View A Workflow’s Configuration<a class="headerlink" href="#view-a-workflow-s-configuration" title="Permalink to this headline"></a></h2>
+<p>View the parsed workflow configuration:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc get-config --sparse \
+    <span class="s">&lt;name/path&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install workflow</span>
+rose suite-run -l
+
+<span class="c"># view installed config</span>
+cylc get-config --sparse \
+    <span class="s">&lt;name/path&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc config <span class="s">&lt;name/path&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="opening-user-interfaces">
+<h2>Opening User Interfaces<a class="headerlink" href="#opening-user-interfaces" title="Permalink to this headline"></a></h2>
+<p>Opening the graphical user interface (GUI) or terminal user interface (TUI)
+for monitoring / controlling running workflows:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p><strong>Cylc 7</strong> &amp; Rose 2019</p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><p>Terminal</p></td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc monitor <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc tui <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Graphical</p></td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc gui <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><ul>
+<li><p>Run your own Cylc UI Server:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc gui
+</pre></div>
+</div>
+<p>then open the printed URL in a web browser</p>
+</li>
+<li><p>Or open your site’s Cylc Hub URL in a web browser</p></li>
+<li><p>Or run your own Hub:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc hub
+</pre></div>
+</div>
+<p>then open the URL <code class="docutils literal notranslate"><span class="pre">0.0.0.0:8000</span></code> in a web browser</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="static-graph-visualisation">
+<h2>Static Graph Visualisation<a class="headerlink" href="#static-graph-visualisation" title="Permalink to this headline"></a></h2>
+<p>Generate a visualisation for a workflow without running it:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong> &amp; Rose 2019</p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc graph <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc graph <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+<p>This generates a basic image file if Graphviz is installed.</p>
+<p>The web UI will have full graph vis. in a future release.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rose-stem">
+<h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this headline"></a></h2>
+<p>Run a <a class="reference external" href="http://metomi.github.io/rose/2.0rc3/html/tutorial/rose/furthertopics/rose-stem.html#rose-stem" title="(in Rose Documentation v2.0rc3)"><span>Rose Stem</span></a> test suite.</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Rose 2</strong> (Cylc 8)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install and start</span>
+rose stem
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install</span>
+rose stem
+
+<span class="c"># start</span>
+cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="summary.html" class="btn btn-neutral float-left" title="Summary Of Major Changes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="major-changes/index.html" class="btn btn-neutral float-right" title="Detailed Description of Major Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on May 26, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0rc3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/cheat-sheet";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

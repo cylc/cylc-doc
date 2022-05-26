@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main Loop Plugins &mdash; Cylc 8.0rc3 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="cylc.flow.main_loop.auto_restart" href="built-in/cylc.flow.main_loop.auto_restart.html" />
+    <link rel="prev" title="Cylc Rose" href="../cylc-rose.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0rc3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Plugins</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cylc-rose.html">Cylc Rose</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Main Loop Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#built-in-plugins">Built In Plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.auto_restart.html">cylc.flow.main_loop.auto_restart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.health_check.html">cylc.flow.main_loop.health_check</a></li>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.log_data_store.html">cylc.flow.main_loop.log_data_store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.log_main_loop.html">cylc.flow.main_loop.log_main_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.log_memory.html">cylc.flow.main_loop.log_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.main_loop.reset_bad_hosts.html">cylc.flow.main_loop.reset_bad_hosts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring">Configuring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#developing-main-loop-plugins">Developing Main Loop Plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hello-world">Hello World</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#coroutines">Coroutines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#event-types">Event Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../install/index.html">Pre-Configure And Post-Install Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Plugins</a> &raquo;</li>
+      <li>Main Loop Plugins</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/plugins/main-loop/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cylc.flow.main_loop">
+<span id="main-loop-plugins"></span><h1>Main Loop Plugins<a class="headerlink" href="#module-cylc.flow.main_loop" title="Permalink to this headline"></a></h1>
+<p>Plugins for running Python code inside of the Cylc scheduler.</p>
+<section id="built-in-plugins">
+<span id="builtinplugins"></span><h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Permalink to this headline"></a></h2>
+<p>Cylc Flow provides the following plugins:</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.auto_restart.html#module-cylc.flow.main_loop.auto_restart" title="cylc.flow.main_loop.auto_restart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.auto_restart</span></code></a></p></td>
+<td><p>Automatically restart workflows if they are running on bad servers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.health_check.html#module-cylc.flow.main_loop.health_check" title="cylc.flow.main_loop.health_check"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.health_check</span></code></a></p></td>
+<td><p>Checks the integrity of the workflow run directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.log_data_store.html#module-cylc.flow.main_loop.log_data_store" title="cylc.flow.main_loop.log_data_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.log_data_store</span></code></a></p></td>
+<td><p>Log the number and size of each type of object in the data store.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.log_main_loop.html#module-cylc.flow.main_loop.log_main_loop" title="cylc.flow.main_loop.log_main_loop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.log_main_loop</span></code></a></p></td>
+<td><p>Main loop plugin for monitoring main loop plugins.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.log_memory.html#module-cylc.flow.main_loop.log_memory" title="cylc.flow.main_loop.log_memory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.log_memory</span></code></a></p></td>
+<td><p>Log the memory usage of a running scheduler over time.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="built-in/cylc.flow.main_loop.reset_bad_hosts.html#module-cylc.flow.main_loop.reset_bad_hosts" title="cylc.flow.main_loop.reset_bad_hosts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.main_loop.reset_bad_hosts</span></code></a></p></td>
+<td><p>Resets the list of bad hosts.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="configuring">
+<h2>Configuring<a class="headerlink" href="#configuring" title="Permalink to this headline"></a></h2>
+<p>Main loop plugins can be activated either by:</p>
+<ul>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">--main-loop</span></code> option with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> e.g:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># run a workflow using the &quot;health check&quot; and &quot;auto restart&quot; plugins:</span>
+<span class="gp">$ </span>cylc play my-workflow --main-loop <span class="s1">&#39;health check&#39;</span> --main-loop <span class="s1">&#39;auto restart&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Adding them to the default list of plugins in
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][main loop]plugins" title="global.cylc[scheduler][main loop]plugins"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][main</span> <span class="pre">loop]plugins</span></code></a> e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[main loop]]</span>
+        <span class="nv">plugins </span><span class="o">=</span><span class="s"> health check, auto restart</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Main loop plugins can be individually configured in their
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][main loop][&lt;plugin name&gt;]" title="global.cylc[scheduler][main loop][&lt;plugin name&gt;]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][main</span> <span class="pre">loop][&lt;plugin</span> <span class="pre">name&gt;]</span></code></a> section e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[main loop]]</span>
+        <span class="nt">[[[health check]]]</span>
+            <span class="nv">interval </span><span class="o">=</span><span class="s"> PT5M</span>  <span class="c1"># perform check every 5 minutes</span>
+</pre></div>
+</div>
+</section>
+<section id="developing-main-loop-plugins">
+<h2>Developing Main Loop Plugins<a class="headerlink" href="#developing-main-loop-plugins" title="Permalink to this headline"></a></h2>
+<p>Main loop plugins are Python modules containing asynchronous function(s)
+(sometimes referred to as coroutines) which Cylc Flow executes within the
+scheduler.</p>
+<section id="hello-world">
+<h3>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline"></a></h3>
+<p>Here is the “hello world” of main loop plugins:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">my_plugin.py</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cylc.flow</span> <span class="kn">import</span> <span class="n">LOG</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.main_loop</span> <span class="kn">import</span> <span class="n">startup</span>
+
+<span class="nd">@startup</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">my_startup_coroutine</span><span class="p">(</span><span class="n">schd</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+   <span class="c1"># write Hello &lt;workflow name&gt; to the Cylc log.</span>
+   <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Hello </span><span class="si">{</span><span class="n">schd</span><span class="o">.</span><span class="n">workflow</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Plugins are registered by registering them with the <code class="docutils literal notranslate"><span class="pre">cylc.main_loop</span></code>
+entry point:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">setup.py</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plugins must be properly installed, in-place PYTHONPATH meddling will</span>
+<span class="c1"># not work.</span>
+
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-plugin&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+    <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;my_plugin&#39;</span><span class="p">],</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+       <span class="c1"># register this plugin with Cylc</span>
+       <span class="s1">&#39;cylc.main_loop&#39;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="c1"># name = python.namespace.of.module</span>
+         <span class="s1">&#39;my_plugin=my_plugin.my_plugin&#39;</span>
+       <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<p>For examples see the built-in plugins in the <a class="reference internal" href="#module-cylc.flow.main_loop" title="cylc.flow.main_loop"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cylc.flow.main_loop</span></code></a>
+module which are registered in the Cylc Flow <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file.</p>
+</section>
+<section id="coroutines">
+<h3>Coroutines<a class="headerlink" href="#coroutines" title="Permalink to this headline"></a></h3>
+<p>Plugins provide asynchronous functions (<a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#coroutines">coroutines</a>) which Cylc will
+then run inside the scheduler.</p>
+<p>Coroutines should be fast running (read as gentle on the scheduler)
+and perform IO asynchronously e.g. by using <a class="reference external" href="https://github.com/Tinche/aiofiles">aiofiles</a>.</p>
+<p>Coroutines shouldn’t meddle with the state of the scheduler and should be
+parallel-safe with other plugins.</p>
+</section>
+<section id="event-types">
+<h3>Event Types<a class="headerlink" href="#event-types" title="Permalink to this headline"></a></h3>
+<p>Coroutines must be decorated using one of the main loop decorators. The
+choice of decorator effects when the coroutine is called and what
+arguments are provided to it.</p>
+<p>The available event types are:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.startup">
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.</span></span><span class="sig-name descname"><span class="pre">startup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.main_loop.startup" title="Permalink to this definition"></a></dt>
+<dd><p>Decorates a coroutine which is run at workflow startup.</p>
+<p>The decorated coroutine should have the signature:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">coroutine(scheduler,</span> <span class="pre">plugin_state)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+</div></blockquote>
+<p>Exceptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Regular Exceptions are caught and logged.</p></li>
+<li><p>Exceptions which subclass CylcError are re-raised as
+MainLoopPluginException</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.shutdown">
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.</span></span><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.main_loop.shutdown" title="Permalink to this definition"></a></dt>
+<dd><p>Decorates a coroutine which is run at workflow shutdown.</p>
+<p>Note shutdown refers to “clean” shutdown as opposed to workflow abort.</p>
+<p>The decorated coroutine should have the signature:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">coroutine(scheduler,</span> <span class="pre">plugin_state)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+</div></blockquote>
+<p>Exceptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Regular Exceptions are caught and logged.</p></li>
+<li><p>Exceptions which subclass CylcError are re-raised as
+MainLoopPluginException</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.periodic">
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.</span></span><span class="sig-name descname"><span class="pre">periodic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fcn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.main_loop.periodic" title="Permalink to this definition"></a></dt>
+<dd><p>Decorates a coroutine which is run at a set interval.</p>
+<p>The decorated coroutine should have the signature:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">coroutine(scheduler,</span> <span class="pre">plugin_state)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></code></p>
+</div></blockquote>
+<p>Exceptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Regular Exceptions are caught and logged.</p></li>
+<li><p>Exceptions which subclass CylcError are re-raised as
+MainLoopPluginException</p></li>
+</ul>
+</div></blockquote>
+<p>Configuration:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The interval of execution can be altered using
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][main loop][&lt;plugin name&gt;]interval" title="global.cylc[scheduler][main loop][&lt;plugin name&gt;]interval"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][main</span> <span class="pre">loop][&lt;plugin</span> <span class="pre">name&gt;]interval</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cylc-rose.html" class="btn btn-neutral float-left" title="Cylc Rose" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="built-in/cylc.flow.main_loop.auto_restart.html" class="btn btn-neutral float-right" title="cylc.flow.main_loop.auto_restart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on May 26, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0rc3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "plugins/main-loop/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
