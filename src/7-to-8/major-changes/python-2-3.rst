@@ -107,8 +107,30 @@ Here are some examples:
    {% else -%}
        {% from "cylc" import LOG -%}
    {% endif -%}
-   
+
    {% do LOG.debug("Hello World!") %}
+
+
+Jinja2 - integers with leading zeros
+------------------------------------
+
+Integers with leading zeros in Jinja2 expressions are now illegal and will
+cause an error like  ``Jinja2Error: expected token 'x', got 'integer'``.
+For example:
+
+.. code-block:: console
+
+   $ cylc validate my-workflow
+   Jinja2Error: expected token 'end of statement block', got 'integer'
+   File ~/cylc-run/my-workflow/flow.cylc
+     {% if START_HOUR == 06 or START_HOUR == 12 %}	 <-- TemplateSyntaxError
+
+The solution in this case is:
+
+.. code-block:: diff
+
+   -{% if START_HOUR == 06 or START_HOUR == 12 %}
+   +{% if START_HOUR == 6 or START_HOUR == 12 %}
 
 
 Rose
