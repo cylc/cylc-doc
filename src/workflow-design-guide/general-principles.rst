@@ -314,7 +314,7 @@ time, but this value is configurable:
    [scheduling]
        initial cycle point = 2020-01-01T00
        # Don't allow any cycle interleaving:
-       runahead limit = P1
+       runahead limit = P0
 
 
 Internal Queues

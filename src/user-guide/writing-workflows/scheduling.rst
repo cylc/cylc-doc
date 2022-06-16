@@ -1542,11 +1542,9 @@ Tasks that finish without completing expected outputs  [3]_ are retained as
 retriggered after a bug fix.
 
 .. note::
-   Incomplete tasks stall the workflow if there are no other tasks to run (see
-   :ref:`workflow completion`).
-
-   They also count toward the :term:`runahead limit`, because they may
-   run again once dealt with.
+   Incomplete tasks stall the workflow if there is nothing else to do (see
+   :ref:`workflow completion`). They also count toward the :term:`runahead
+   limit`, because they may run again once dealt with.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
@@ -2013,9 +2011,71 @@ tools to limit workflow activity.
 Runahead Limiting
 ^^^^^^^^^^^^^^^^^
 
-Runahead limiting, controlled by :cylc:conf:`[scheduling]runahead limit`,
-prevents the fastest tasks in a workflow from getting too far
-ahead (with respect to cycle point) of the slowest ones.
+The scheduler runahead limit determines how many consecutive cycle points can
+be active at once. The base point of the runahead calculation is the current
+lowest-valued point with :term:`active` or :term:`incomplete` tasks present.
+
+The runahead limit can be set with :cylc:conf:`[scheduling]runahead limit`,
+to an integer interval (for datetime or integer cycling workflows) or to
+a datetime interval (datetime cycling only). 
+
+The integer format ``Pn`` is an interval that spans ``n+1`` consecutive cycle
+points, regardless of how the cycle point values increment from one point to
+the next (i.e. regardless of the cycling interval).
+
+For example, the default runahead limit of ``P4`` allows 5 active cycle points
+(base point plus the 4 next points) whether the cycling is defined by
+``R/^/P1`` or ``R/^/P3`` etc. (for integer cycling) or ``R/^/PT6H`` etc. (for
+datetime cycling).
+
+In the following example, tasks ``1/foo`` through ``4/foo`` will submit to
+run immediately at start-up, but ``5/foo`` will be held back until ``1/foo``
+finishes and allows the runahead limit to move on:
+
+.. code-block:: cylc
+
+    [scheduling]
+        cycling mode = integer
+        initial cycle point = 1
+        runahead limit = P3  # max 4 active points
+        [[graph]]
+            P2 = foo  # cycle points 1, 3, 5, 7, 9, ...
+
+The active cycle points in this workflow, at some point during the run, 
+might be ``29, 31, 33, 35``, for example. 
+
+.. code-block:: cylc
+
+    [scheduling]
+        initial cycle point = 2050
+        runahead limit = P3  # max 4 active points
+        [[graph]]
+            P2Y = foo  # cycle points 2050, 2052, 2054, ...
+
+The active points in this workflow, at some point during the run, might be
+``2060, 2062, 2064, 2068``.
+
+With a datetime interval, on the other hand, the number of active cycle points
+depends on the cycling intervals:
+
+.. code-block:: cylc
+
+    [scheduling]
+        initial cycle point = 2050
+        runahead limit = P4Y  # max active point: base point + P4Y
+        [[graph]]
+            P2Y = foo  # cycle points 2050, 2052, 2054, ...
+
+The active points in this workflow, at some point during the run, might be
+``2060, 2062, 2064``. If the cycling interval was ``P1Y`` instead of ``P2Y``,
+they might be ``2060, 2061, 2062, 2063, 2064``.
+
+
+.. note::
+
+   To restrict activity to a single cycle point at a time (just the base point)
+   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``. 
+
 
 .. note::
 
@@ -2023,33 +2083,12 @@ ahead (with respect to cycle point) of the slowest ones.
    Workflows with a large number of tasks per cycle may need :ref:`internal
    queues <InternalQueues>` to constrain activity in absolute terms.
 
-Succeeded and failed tasks are ignored when computing the runahead limit.
 
-In the following example the runahead limit of ``P5`` (which is also the
-default) restricts the active window of the workflow to span a maximum of five
-cycle points.
+.. note::
 
-.. code-block:: cylc
-
-    [scheduling]
-        initial cycle point = 1
-        cycling mode = integer
-        runahead limit = P5
-        [[graph]]
-            P1 = foo
-
-When this workflow is started the tasks ``1/foo`` through ``5/foo`` will be
-submitted, but ``6/foo`` (and beyond) are "runahead limited" and will not be
-submitted until the earliest tasks finish.
-
-A low runahead limit restricts Cylc's ability to run multiple cycle at once,
-but it will not stall the workflow unless it fails to extend out past a future
-trigger (see :ref:`InterCyclePointTriggers`).
-
-A high runahead limit allows fast tasks that are not constrained by dependence
-on other tasks or clock-triggers to spawn many cycles ahead.
-:ref:`Internal queues <InternalQueues>` may be needed as well, if this would
-result in too many tasks submitting at once.
+   The runahead limit may be raised automatically to accommodate
+   :term:`future triggered<future trigger>` tasks without stalling
+   the workflow.
 
 
 .. _InternalQueues:

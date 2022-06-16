@@ -624,10 +624,10 @@ Glossary
 
 
    future trigger
-      A future trigger makes one task depend on another with a later
-      :term:`cycle point`.
+      A future trigger expresses dependence on a task in a "future"
+      (higher-valued) :term:`cycle point`.
 
-      Here, ``1/bar`` triggers off ``2/foo``; and ``2/bar`` off of
+      Here, ``1/bar`` triggers off of ``2/foo``; ``2/bar`` triggers off of
       ``3/foo``; and so on:
 
       .. code-block:: cylc
@@ -1669,9 +1669,8 @@ Glossary
 
    runahead limit
    runahead
-      In a :term:`cycling workflow`, the runahead limit holds the fastest tasks
-      back if they get too far ahead of the slowest ones. The default limit is
-      5 cycles.
+      In a :term:`cycling workflow`, the runahead limit determines the maximum
+      number of consecutive cycle points that can be active at once.
 
       .. seealso::
 
