@@ -9,6 +9,12 @@ The old configurations are now deprecated, but still supported.
 These will be highlighted upon ``cylc validate`` after renaming ``suite.rc``
 to ``flow.cylc``.
 
+Because some workflows use includes which may not be switched on at
+the time of the initial ``cylc validate`` we have also provided
+a script, :ref:`cylc 728 <cylc_728_script>` to check for Cylc 7
+syntax which may be deprecated.
+
+
 There are some examples below of how to upgrade:
 
 .. _7-to-8.graph_syntax:
@@ -57,3 +63,10 @@ use Platforms.
 
 For a comprehensive list of valid configuration, see: :ref:`workflow-configuration`
 and :ref:`global-configuration`.
+
+.. _cylc_728_script:
+
+``cylc 728``
+------------
+
+.. automodule:: cylc.flow.scripts.lint
