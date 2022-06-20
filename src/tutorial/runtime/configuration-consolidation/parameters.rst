@@ -205,6 +205,7 @@ Parameters can be either strings or integers:
       Add a parameter called ``station``:
 
       .. code-block:: diff
+
          +[task parameters]
          +    station = aldergrove, camborne, heathrow, shetland
 
