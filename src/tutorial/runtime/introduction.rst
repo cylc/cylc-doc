@@ -340,12 +340,9 @@ Running a workflow
 
 .. code-block:: console
 
-   $ cylc play <workflow_id>
+   $ cylc play my_workflow
 
 .. ifnotslides::
-
-   The :term:`workflow id` is the path of the :term:`run directory` relative
-   to ``~/cylc-run``.
 
 
 Generated Workflow Files
