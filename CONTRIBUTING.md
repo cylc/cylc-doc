@@ -50,7 +50,7 @@ requests_).
  - (Neil Swart)
  - Tomek Trzeciak
  - Douglas Lowe
- - Alexander Pletzer
+ - Alex Pletzer
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
