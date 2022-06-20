@@ -49,6 +49,7 @@ requests_).
  - David Matthews
  - (Neil Swart)
  - Tomek Trzeciak
+ - Douglas Lowe
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
