@@ -42,6 +42,9 @@ renamed or removed.
   - We no longer include a command for locating this documentation.
 ``cylc edit``
   - Use a text editor to edit the workflow configuration file.
+``cylc hold``
+  - Now used on tasks only; use ``cylc pause`` to pause an entire workflow
+    (halt all job submissions).
 ``cylc insert``
   - Task insertion is now automatic, use ``cylc trigger``.
 ``cylc jobscript``
@@ -57,21 +60,21 @@ renamed or removed.
   - Registration is no longer required, all workflows in the ``~/cylc-run``
     directory are "registered" automatically.
   - To install a workflow from a working copy use ``cylc install``.
+``cylc release``
+  - Now used on tasks only; use ``cylc play`` to resume a paused workflow.
 ``cylc reset``
   - It is no longer possible to manually change a task's state.
   - You can, however, override the outputs the task generated which has a
     similar effect with ``cylc set-outputs``.
 ``cylc restart``
-  - ``cylc run``, ``cylc pause`` and ``cylc release`` have been combined into
-    ``cylc play``.
+  - Replaced by ``cylc play``.
 ``cylc review``
   - The read-only ``cylc review`` web GUI has been removed.
   - The latest Cylc 7 version of ``cylc review`` is Cylc 8 compatible
     so can still be used to monitor both Cylc 7 and Cylc 8 workflows
     side by side.
 ``cylc run``
-  - ``cylc run``, ``cylc pause`` and ``cylc release`` have been combined into
-    ``cylc play``.
+  - Replaced by ``cylc play``.
 ``cylc search``
   - Use ``grep`` or a text editor to search the workflow configuration or
     source directory.
@@ -140,17 +143,17 @@ functionality e.g:
 
    # stop all running workflows
    cylc stop '*'
-   
+
    # pause all running workflows
    cylc pause '*'
-   
+
    # (re-)trigger all failed tasks in all running workflows
    cylc trigger '*//*:failed'
-   
+
    # hold all tasks in the cycle "2000" in workflows with IDs
     # beginning with "model"
    cylc hold 'model*//2000'
-   
+
    # delete the run directories for all workflows with IDs
    # beginning with "model_a/"
    cylc clean 'model_a/*'
