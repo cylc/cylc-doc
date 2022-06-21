@@ -81,16 +81,36 @@ A ``.cylcignore`` file can be used to control which files ``cylc install``
 transfers to the installed workflow, see :ref:`File Installation` for details.
 
 
+.. _728.remote-install:
+
 Remote Installation
 -------------------
 
 Remote file installation does not occur until running the workflow.
-When the first task runs on a remote platform, Cylc will copy files from the
-:term:`run directory` to the remote platform.
+When the first task runs on a remote platform, Cylc will transfer files from
+the :term:`run directory` to the install target.
 
-By default Cylc will transfer the ``app``, ``bin``, ``etc`` and ``lib``
-directories. This list is configurable see :ref:`RemoteInit` for more details.
+If you have used Rose 2019, you may be used to all files and directories in
+the run directory being included.
+However, Cylc 8 will only copy the ``app``, ``bin``, ``etc`` and ``lib``
+directories by default (in addition to authentication files in ``.service``).
+If you want to include custom files and directories in remote installation,
+use :cylc:conf:`flow.cylc[scheduler]install`.
 
+.. tip::
+
+   If you need to ensure your workflow is still
+   :ref:`interoperable <cylc_7_compat_mode>` with Cylc 7, wrap it in a
+   Jinja2 check like so:
+
+   .. code-block:: cylc
+
+      {% if CYLC_VERSION is defined and CYLC_VERSION[0] == '8' %}
+      [scheduler]
+          install = my-dir/, my-file
+      {% endif %}
+
+See :ref:`the user guide <RemoteInit>` for more details.
 
 Rose Integration
 ----------------
