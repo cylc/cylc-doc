@@ -159,7 +159,7 @@ Host Pool
 The hosts must:
 
 1. Share a common ``$HOME`` directory
-   (with eachother and anywhere the ``cylc play`` command is run).
+   (with each other and anywhere the ``cylc play`` command is run).
 2. Share a common Cylc global config (:cylc:conf:`global.cylc`).
 3. Be set up to allow passwordless SSH between them.
 
