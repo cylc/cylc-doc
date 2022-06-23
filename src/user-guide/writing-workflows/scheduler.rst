@@ -158,7 +158,8 @@ Host Pool
 
 The hosts must:
 
-1. Share a common ``$HOME`` directory.
+1. Share a common ``$HOME`` directory
+   (with each other and anywhere the ``cylc play`` command is run).
 2. Share a common Cylc global config (:cylc:conf:`global.cylc`).
 3. Be set up to allow passwordless SSH between them.
 
@@ -217,4 +218,14 @@ Example:
            # tell workflows on host_1 to move to another available host
            condemned = host_1
 
-For more information see :cylc:conf:`global.cylc[scheduler][run hosts]ranking`.
+.. note::
+
+   .. cylc-scope:: global.cylc[scheduler][main loop]
+
+   This feature requires the :cylc:conf:`[auto restart]`
+   plugin to be enabled, e.g. in the configured list of
+   :cylc:conf:`plugins`.
+
+   .. cylc-scope::
+
+For more information see: :cylc:conf:`global.cylc[scheduler][run hosts]ranking`.
