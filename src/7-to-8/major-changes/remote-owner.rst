@@ -6,7 +6,7 @@ Remote Usernames
 .. admonition:: does this change affect me?
    :class: tip
 
-   * If set task's ``[runtime][remote]owner`` configuration.
+   * If you set :cylc:conf:`flow.cylc[runtime][<namespace>][remote]owner`
    * If you use ``--owner`` on the command line
 
 
@@ -15,7 +15,8 @@ Overview
 
 If your username differs beteen the :term:`scheduler` host and job hosts, then
 you may have configured Cylc to run jobs under the correct account using
-``[runtime][remote]owner`` or used the ``--owner`` Cylc command line option
+:cylc:conf:`flow.cylc[runtime][<namespace>][remote]owner`
+or used the ``--owner`` Cylc command line option
 with commands which access remote hosts.
 
 .. _SSH configuration file: https://man.openbsd.org/ssh_config

@@ -37,6 +37,61 @@ Cylc 8 cleans this up:
           R1 = "prep => foo"
           R/^/P1D = "foo => bar => baz"
 
+
+Fixing deprecation warnings
+---------------------------
+
+Take the following example ``flow.cylc`` file:
+
+.. code-block:: cylc
+
+   [cylc]
+      UTC mode = True
+   [scheduling]
+       initial cycle point = 2000-01-01
+       [[dependencies]]
+           [[[R1]]]
+               graph = foo => bar
+   [runtime]
+       [[foo, bar]]
+
+This workflow will pass validation at Cylc 8, but will give warnings:
+
+.. code-block:: console
+
+   $ cylc validate .
+   WARNING - deprecated items were automatically upgraded in "workflow definition"
+   WARNING -  * (8.0.0) [cylc] -> [scheduler] - value unchanged
+   WARNING - deprecated graph items were automatically upgraded in "workflow definition":
+      * (8.0.0) [scheduling][dependencies][X]graph -> [scheduling][graph]X - for X in:
+            R1
+   Valid for cylc-8.0.0
+
+The warnings explain what needs to be fixed. After making the following changes,
+the workflow will validate without any warnings:
+
+.. code-block:: diff
+
+   -[cylc]
+   +[scheduler]
+        UTC mode = True
+    [scheduling]
+        initial cycle point = 2000-01-01
+   -    [[dependencies]]
+   -        [[[R1]]]
+   -            graph = foo => bar
+   +    [[graph]]
+   +        R1 = foo => bar
+    [runtime]
+        [[foo, bar]]
+
+.. tip::
+
+   Later Cylc releases will not be able to upgrade obsolete Cylc 7
+   configurations. It's a good idea to address warnings as part of routine
+   workflow review and maintenance to avoid problems later on.
+
+
 Platforms
 ---------
 .. seealso::

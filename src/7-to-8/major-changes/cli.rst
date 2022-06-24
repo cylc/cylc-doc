@@ -14,7 +14,7 @@ Overview
 
 * Some commands have been renamed e.g. ``cylc run`` -> ``cylc play``.
 * Some tools have been added or removed.
-* The task ID format has changed.
+* A new task ID format has been introduced.
 
 For a quick side by side comparison see the :ref:`728.cheat_sheet`.
 
@@ -108,8 +108,8 @@ In Cylc 7 there were two ways to specify a task:
    task.cycle
    cycle/task
 
-At Cylc 8 we have removed the former and extended the latter to provide a
-unique identifier for all workflows, cycles, tasks and jobs using a
+In Cylc 8 the former is now deprecated, and the latter has been extended to
+provide a unique identifier for all workflows, cycles, tasks and jobs using a
 standardised format:
 
 .. code-block:: none
