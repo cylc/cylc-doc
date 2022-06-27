@@ -9,7 +9,7 @@ Python 2 => 3
    This change will affect you if your workflows extend Cylc or Jinja2 with
    custom Python scripts.
 
-   This does not impact :term:`task` scripts, Cylc can still run Python 2
+   This does not impact :term:`task` scripts; Cylc can still run Python 2
    tasks if desired.
 
 
@@ -18,16 +18,16 @@ Overview
 
 .. _six: https://pypi.org/project/six/
 
-Cylc 7 ran under Python 2, Cylc 8 runs under Python 3.
+Cylc 7 ran under Python 2; Cylc 8 runs under Python 3.
 
 Cylc can be extended with custom Python scripts. These scripts are run under
 the same version of Python used by Cylc.
 
-As a result if you are moving from Cylc 7 to Cylc 8 you must upgrade any
+As a result, if you are moving from Cylc 7 to Cylc 8, you must upgrade any
 scripts from Python 2 to Python 3 in the process.
 
-If you want to support both Cylc 7 and 8 you must support both Python 2 and 3.
-There are tools to help you do this. E.g. `six`_.
+If you want to support both Cylc 7 and 8, you must support both Python 2 and 3.
+There are tools to help you do this, e.g. `six`_.
 
 
 Impacted Scripts
@@ -40,9 +40,9 @@ The following scripts must be upgraded if used:
 
    These scripts are located in the following directories within a workflow:
 
-   * Jinja2Filters
-   * Jinja2Tests
-   * Jinja2Globals
+   * ``Jinja2Filters``
+   * ``Jinja2Tests``
+   * ``Jinja2Globals``
 
 :ref:`Modules imported by Jinja2 <jinja2.importing_python_modules>`
    Python modules can be imported from Jinja2 e.g:
@@ -52,7 +52,7 @@ The following scripts must be upgraded if used:
       {% from "os" import path %}
 
 :ref:`Custom Trigger Functions`
-   Any custom x-trigger functions.
+   Any custom xtrigger functions.
 
 
 Package Name Changes

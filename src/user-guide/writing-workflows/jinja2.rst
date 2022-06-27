@@ -104,7 +104,7 @@ more complex. To add a new city and associated tasks and dependencies just add
 the new city name to list at the top of the file. It makes use of Jinja2
 variables, loops, math, and logical flags to include or exclude tasks.
 
-.. note::
+.. tip::
    This example could also be simplified with built in
    :ref:`task parameters <User Guide Param>`
 

@@ -13,7 +13,7 @@ Remote Usernames
 Overview
 --------
 
-If your username differs beteen the :term:`scheduler` host and job hosts, then
+If your username differs between the :term:`scheduler` host and job hosts, then
 you may have configured Cylc to run jobs under the correct account using
 :cylc:conf:`flow.cylc[runtime][<namespace>][remote]owner`
 or used the ``--owner`` Cylc command line option

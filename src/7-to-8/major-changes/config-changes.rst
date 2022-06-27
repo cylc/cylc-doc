@@ -11,31 +11,33 @@ to ``flow.cylc``.
 
 There are some examples below of how to upgrade:
 
+
 .. _7-to-8.graph_syntax:
 
 Graph
 -----
+
 Cylc 7 had unnecessarily deep nesting of graph config sections:
 
 .. code-block:: cylc
 
    [scheduling]
-      initial cycle point = now
-      [[dependencies]]
-          [[[R1]]]
-              graph = "prep => foo"
-          [[[R/^/P1D]]]
-              graph = "foo => bar => baz"
+       initial cycle point = now
+       [[dependencies]]
+           [[[R1]]]
+               graph = "prep => foo"
+           [[[R/^/P1D]]]
+               graph = "foo => bar => baz"
 
 Cylc 8 cleans this up:
 
 .. code-block:: cylc
 
    [scheduling]
-      initial cycle point = now
-      [[graph]]
-          R1 = "prep => foo"
-          R/^/P1D = "foo => bar => baz"
+       initial cycle point = now
+       [[graph]]
+           R1 = "prep => foo"
+           R/^/P1D = "foo => bar => baz"
 
 
 Fixing deprecation warnings
@@ -94,17 +96,18 @@ the workflow will validate without any warnings:
 
 Platforms
 ---------
+
 .. seealso::
 
    - :ref:`Platforms at Cylc 8. <majorchangesplatforms>`
    - :ref:`System admin's guide to writing platforms. <AdminGuide.PlatformConfigs>`
 
-At Cylc 7 job hosts were defined to indicate where a job should run, at Cylc 8
-use Platforms.
+At Cylc 7, job hosts were defined to indicate where a job should run.
+At Cylc 8, this has been replaced by Platforms.
 
 .. code-block:: diff
 
-     [runtime]
+    [runtime]
         [[model]]
    -        [[[remote]]]
    -            host = hpc1.login.1

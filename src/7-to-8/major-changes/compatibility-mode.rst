@@ -6,8 +6,8 @@ Cylc 7 Compatibility Mode
 .. admonition:: Does This Change Affect Me?
    :class: tip
 
-   This will affect you if you want to run run Cylc 7 workflows (using the
-   ``suite.rc`` filename) using Cylc 8.0
+   This will affect you if you want to run Cylc 7 (``suite.rc``) workflows
+   using Cylc 8.0
 
 Overview
 --------
@@ -284,7 +284,7 @@ How Cylc 8 handles host-to-platform upgrades
 
    .. TODO reference to how to write platforms page
 
-If you have a Cylc 7 workflow where tasks submit jobs to remote hosts
+If you have a Cylc 7 workflow where tasks submit jobs to remote hosts,
 Cylc 8 will attempt to find a platform which matches the task specification.
 
 .. important::
