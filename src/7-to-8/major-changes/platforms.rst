@@ -27,22 +27,11 @@ Platforms
 
    .. code-block:: console
 
-      WARNING - Task <task>: deprecated "host" and "batch system" will be removed at Cylc 9
+      WARNING - Task Wambenger: deprecated "host" and "batch system" use "platform".
 
    If you currently use the ``rose host-select`` utility or a similar host
    selection or load balancing utility the intelligent host selection
-   functionality of Cylc 8 may be used instead:
-
-   .. code-block:: cylc
-
-      [runtime]
-          [[task_name]]
-              [[[remote]]]
-                  host = $(rose host-select my-computer)
-          [[another_task]]
-              # An example of a home-rolled host selector
-              [[[remote]]]
-                  host = $(test $((RANDOM%2)) -eq 0 && echo "host_a" || echo "host_b")
+   functionality of Cylc 8 may be used instead in many circumstances.
 
 
 Overview
@@ -144,6 +133,7 @@ Here are some example Cylc 7 task definitions:
 
       [[mytask_login_to_hpc_and_submit]]
          [[[remote]]]
+            # e.g. rose host-select
             host = $(supercomputer_login_node_selector_script)
          [[[job]]]
             batch system = slurm
@@ -172,8 +162,10 @@ At Cylc 8 the equivalent might be:
            platform = pbs_local
 
        [[mytask_login_to_hpc_and_submit]]
-           # This is still legal, but you could also use host selection.
-           platform = $(supercomputer_login_node_selector_script)
+           # Recommended:
+           platform = just_run_it
+           # ...but This is still legal:
+           #platform = $(selector-script)
 
 And the platform settings for these examples might be:
 
@@ -184,9 +176,16 @@ And the platform settings for these examples might be:
            # Without a hosts, platform name is used as a single host.
 
        [[pbs_local]]
+           # Some compute with PBS takes local submissions
            job runner = pbs
            hosts = localhost
 
        [[slurm_supercomputer]]
+           # This compute with slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
+
+   [platform groups]
+       [[just_run_it]]
+          # You want it run, but not worried about where.
+          platforms = pbs_local, slurm_supercomputer

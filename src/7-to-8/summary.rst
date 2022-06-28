@@ -125,6 +125,33 @@ Alternatively, task outputs can be marked as :term:`optional <optional output>`.
 This supports :term:`graph branching` and it allows the scheduler to
 correctly diagnose :term:`workflow completion`.
 
+Platform Awareness
+------------------
+
+.. seealso::
+
+   :ref:`Platforms at Cylc 8.<majorchangesplatforms>`
+
+Cylc 7 was aware of individual job hosts - one selected a host using:
+``[runtime][<namespace>][remote]host``.
+
+Cylc 8 is aware of sets of host settings called
+:term:`[job] platforms <platform>`. To set a platform use
+``[runtime][<namespace>]platform``
+
+Hosts of a platform must share a file system and :term:`job runner`:
+If one host is unavailable Cylc 8 can use other hosts
+on the same platform to interact with task jobs.
+
+The same hosts can belong to different platforms, for example
+you might be able to use your local computer to launch background or slurm
+jobs.
+
+.. note::
+
+   Cylc 8 will pick a sensible platform for your Cylc 7 settings,
+   These deprecated settings will be removed at Cylc 9.
+
 
 Workflow Installation
 ---------------------
