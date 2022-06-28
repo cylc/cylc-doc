@@ -1,5 +1,6 @@
-CYLC_DEBUG                         # Debug mode, true or not defined
 CYLC_VERSION                       # Version of cylc installation used
+CYLC_VERBOSE                       # Verbose mode, true or false
+CYLC_DEBUG                         # Debug mode (even more verbose), true or false
 
 CYLC_CYCLING_MODE                  # Cycling mode, e.g. gregorian
 ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command,
@@ -12,7 +13,6 @@ CYLC_WORKFLOW_ID                   # Workflow ID
 CYLC_WORKFLOW_NAME                 # Workflow name
                                    # (the workflow ID without the run name)
 CYLC_UTC                           # UTC mode, True or False
-CYLC_VERBOSE                       # Verbose mode, True or False
 TZ                                 # Set to "UTC" in UTC mode or not defined
 
 CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
