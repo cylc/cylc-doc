@@ -357,14 +357,10 @@ Cylc plugins (such as :ref:`Cylc Rose`) may generate additional files.
 Reinstalling a Workflow
 -----------------------
 
-To apply changes made in your workflow source directory to the installed
-workflow directory, run ``cylc reinstall`` from within the workflow run
+To apply changes from your source directory to the installed run directory,
+use ``cylc reinstall``.  Changes made will be recorded in the workflow log
 directory.
-A new log file will be created in the workflow install log directory, detailing
-changes made.
 
-``cylc reinstall`` can be executed from anywhere on the file system. To do this
-provide the named run you wish to reinstall.
 For example:
 
 .. code-block:: console
