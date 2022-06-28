@@ -11,9 +11,8 @@ to ``flow.cylc``.
 
 Because some workflows use includes which may not be switched on at
 the time of the initial ``cylc validate`` we have also provided
-a script, :ref:`cylc 728 <cylc_728_script>` to check for Cylc 7
+a script, :ref:`cylc lint -r 728 <cylc_lint_script>` to check for Cylc 7
 syntax which may be deprecated.
-
 
 There are some examples below of how to upgrade:
 
@@ -63,10 +62,3 @@ use Platforms.
 
 For a comprehensive list of valid configuration, see: :ref:`workflow-configuration`
 and :ref:`global-configuration`.
-
-.. _cylc_728_script:
-
-``cylc 728``
-------------
-
-.. automodule:: cylc.flow.scripts.lint
