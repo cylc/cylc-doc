@@ -27,7 +27,7 @@ Platforms
 
    .. code-block:: console
 
-      WARNING - Task Wambenger: deprecated "host" and "batch system" use "platform".
+      WARNING - Task <task>: deprecated "host" and "batch system" use "platform".
 
    If you currently use the ``rose host-select`` utility or a similar host
    selection or load balancing utility the intelligent host selection
