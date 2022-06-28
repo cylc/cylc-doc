@@ -172,7 +172,7 @@ Background Jobs on Cluster with Other Options
 Submit PBS Jobs from Localhost
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- **Platforms can share hosts without sharing batch systems.**
+- **Platforms can share hosts without sharing job runners.**
 
 .. admonition:: Scenario
 
