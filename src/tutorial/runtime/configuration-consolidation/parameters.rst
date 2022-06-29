@@ -321,8 +321,8 @@ Parameters can be either strings or integers:
 
              [scheduler]
                  UTC mode = True
-                 [[parameters]]
-                     station = aldergrove, camborne, heathrow, shetland
+             [task parameters]
+                 station = aldergrove, camborne, heathrow, shetland
             +        site = exeter, edinburgh
 
          Next we parameterise the task in the graph:
