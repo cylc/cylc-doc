@@ -407,12 +407,6 @@ and ``dir3``:
 
     $ cylc reinstall test-flow/run1
 
-or cylc reinstall from within the run directory
-
-.. code-block:: console
-
-    $ cylc reinstall
-
 The run directory now looks as follows:
 
 .. code-block:: console
