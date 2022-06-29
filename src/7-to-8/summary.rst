@@ -143,14 +143,14 @@ Hosts of a platform must share a file system and :term:`job runner`:
 If one host is unavailable Cylc 8 can use other hosts
 on the same platform to interact with task jobs.
 
-The same hosts can belong to different platforms, for example
-you might be able to use your local computer to launch background or slurm
+The same hosts can belong to multiple platforms, for example
+you might be able to use the same host to launch both background and slurm
 jobs.
 
 .. note::
 
    Cylc 8 will pick a sensible platform for your Cylc 7 settings,
-   These deprecated settings will be removed at Cylc 9.
+   These deprecated settings will be removed in future.
 
 
 Workflow Installation

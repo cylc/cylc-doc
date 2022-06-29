@@ -27,7 +27,7 @@ Platforms
 
    .. code-block:: console
 
-      WARNING - Task <task>: deprecated "host" and "batch system" use "platform".
+      WARNING - Task <task>: deprecated "host" and "batch system"; use "platform".
 
    If you currently use the ``rose host-select`` utility or a similar host
    selection or load balancing utility the intelligent host selection
@@ -176,12 +176,12 @@ And the platform settings for these examples might be:
            # Without a hosts, platform name is used as a single host.
 
        [[pbs_local]]
-           # Some compute with PBS takes local submissions
+           # Some computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
 
        [[slurm_supercomputer]]
-           # This compute with slurm requires you to use a login node.
+           # This computer with slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
