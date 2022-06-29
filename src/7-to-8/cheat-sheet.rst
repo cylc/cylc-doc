@@ -59,6 +59,37 @@ Install a workflow from source and run it:
          # run the installed workflow
          cylc play <name>
 
+
+Reloading
+---------
+
+To update a running workflow with changes from the source directory:
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 7**
+     - **Rose 2019**
+     - **Cylc 8** (Rose 2)
+   * - ::
+
+         # update the live source
+         # directly, then
+         cylc reload <name>
+     - ::
+
+         # re-install from source
+         # and do ``cylc reload`` 
+         rose suite-run --reload
+     - ::
+
+         # re-install from source
+         cylc reinstall <name>
+
+         # reload the worklow
+         cylc reload <name>
+
+
 Pausing & Unpausing
 -------------------
 
