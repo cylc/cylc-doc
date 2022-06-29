@@ -51,6 +51,7 @@ requests_).
  - Tomek Trzeciak
  - Douglas Lowe
  - Alex Pletzer
+ - Yinjing Lin
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
