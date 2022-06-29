@@ -62,7 +62,7 @@ Paste the following code into a ``flow.cylc`` file:
            [[[events]]]
                mail events = failed
        [[bell]]
-           script = printf 'bong%.0s\n' $(seq 1 $(cylc cyclepoint --print-hour))
+           script = printf 'bong%.0d\n' $(seq 1 $(cylc cyclepoint --print-hour))
 
 Change the initial cycle point to 00:00 this morning (e.g. if it was
 the first of January 2000 we would write ``2000-01-01T00Z``).

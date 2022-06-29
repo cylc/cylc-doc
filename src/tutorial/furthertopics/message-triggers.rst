@@ -388,15 +388,12 @@ triggers another task bar and when fully completed triggers another task, baz.
             [scheduling]
                 initial cycle point = 2019-06-27T00Z
                 final cycle point = 2019-10-27T00Z
-
-                [[dependencies]]
-
-                    [[[P2M]]]
-                        graph = """
-                            long_forecasting_task:update1 =>  another_weather_task
-                            long_forecasting_task:update2 => different_weather_task
-                            long_forecasting_task[-P2M] => long_forecasting_task
-                        """
+                [[graph]]
+                    P2M = """
+                        long_forecasting_task:update1 =>  another_weather_task
+                        long_forecasting_task:update2 => different_weather_task
+                        long_forecasting_task[-P2M] => long_forecasting_task
+                    """
             [runtime]
                 [[long_forecasting_task]]
                     script = """
