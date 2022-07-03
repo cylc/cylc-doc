@@ -68,7 +68,7 @@ cluster and scheduler hosts are different platforms, but share an install
 target.
 
 But you might also have mirrored clusters, each with their own file system.
-Each cluster would be both a platform, and have its own install target.
+Each cluster would be a platform with its own install target.
 
 
 Example Platforms
