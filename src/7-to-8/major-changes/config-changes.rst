@@ -108,7 +108,9 @@ At Cylc 8, this has been replaced by Platforms.
 .. code-block:: diff
 
     [runtime]
-        [[model]]
+        [[foo]]
+   -        [[[job]]]
+   -            batch system = slurm
    -        [[[remote]]]
    -            host = hpc1.login.1
    +        platform = hpc1
