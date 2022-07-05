@@ -44,7 +44,7 @@ renamed or removed.
   - Use a text editor to edit the workflow configuration file.
 ``cylc hold``
   - Now used on tasks only; use ``cylc pause`` to pause an entire workflow
-    (halt all job submissions).
+    (i.e. to halt all job submissions).
 ``cylc insert``
   - Task insertion is now automatic, use ``cylc trigger``.
 ``cylc jobscript``
@@ -110,7 +110,7 @@ In Cylc 7 there were two ways to specify a task:
 
 In Cylc 8 the former is now deprecated, and the latter has been extended to
 provide a unique identifier for all workflows, cycles, tasks and jobs using a
-standardised format:
+standard format:
 
 .. code-block:: none
 

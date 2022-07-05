@@ -81,11 +81,11 @@ Whereas Cylc 7 runs using Python 2, Cylc 8 runs using Python 3. This affects:
 - Jinja2 filters, tests and globals
 - custom xtrigger functions
 
-Note that task scripts are not affected - they can run using an independent
+Note that task scripts are not affected - they run in an independent
 environment.
 
 See :ref:`py23` for more information and examples of how to implement
-interoperability.
+interoperability if your workflows extend Cylc or Jinja2 with custom Python scripts.
 
 
 Restarting a Cylc 7 workflow
@@ -234,7 +234,7 @@ Alternatively, you could use :ref:`Jinja` like so:
            {% endif %}
 
 Note this logic (and the ``CYLC_VERSION`` Jinja2 variable) is executed locally
-prior to parsing the workflow configuration.
+prior to Cylc parsing the workflow configuration.
 
 
 .. _compat.eg.custom_remote_install:
