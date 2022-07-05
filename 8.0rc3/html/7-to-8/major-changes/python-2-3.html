@@ -75,7 +75,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
 <li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
 <li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
@@ -120,23 +120,23 @@
            <div itemprop="articleBody">
              
   <section id="python-2-3">
-<h1>Python 2 =&gt; 3<a class="headerlink" href="#python-2-3" title="Permalink to this heading"></a></h1>
+<span id="py23"></span><h1>Python 2 =&gt; 3<a class="headerlink" href="#python-2-3" title="Permalink to this heading"></a></h1>
 <div class="tip admonition">
 <p class="admonition-title">Does This Change Affect Me?</p>
 <p>This change will affect you if your workflows extend Cylc or Jinja2 with
 custom Python scripts.</p>
-<p>This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts, Cylc can still run Python 2
+<p>This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts; Cylc can still run Python 2
 tasks if desired.</p>
 </div>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
-<p>Cylc 7 ran under Python 2, Cylc 8 runs under Python 3.</p>
+<p>Cylc 7 ran under Python 2; Cylc 8 runs under Python 3.</p>
 <p>Cylc can be extended with custom Python scripts. These scripts are run under
 the same version of Python used by Cylc.</p>
-<p>As a result if you are moving from Cylc 7 to Cylc 8 you must upgrade any
+<p>As a result, if you are moving from Cylc 7 to Cylc 8, you must upgrade any
 scripts from Python 2 to Python 3 in the process.</p>
-<p>If you want to support both Cylc 7 and 8 you must support both Python 2 and 3.
-There are tools to help you do this. E.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
+<p>If you want to support both Cylc 7 and 8, you must support both Python 2 and 3.
+There are tools to help you do this, e.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
 </section>
 <section id="impacted-scripts">
 <h2>Impacted Scripts<a class="headerlink" href="#impacted-scripts" title="Permalink to this heading"></a></h2>
@@ -145,9 +145,9 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 <dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a></dt><dd><p>These allow you to extend Jinja2 with Python code.</p>
 <p>These scripts are located in the following directories within a workflow:</p>
 <ul class="simple">
-<li><p>Jinja2Filters</p></li>
-<li><p>Jinja2Tests</p></li>
-<li><p>Jinja2Globals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Filters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Tests</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Globals</span></code></p></li>
 </ul>
 </dd>
 <dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja2-importing-python-modules"><span class="std std-ref">Modules imported by Jinja2</span></a></dt><dd><p>Python modules can be imported from Jinja2 e.g:</p>
@@ -155,7 +155,7 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd><p>Any custom x-trigger functions.</p>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd><p>Any custom xtrigger functions.</p>
 </dd>
 </dl>
 </section>

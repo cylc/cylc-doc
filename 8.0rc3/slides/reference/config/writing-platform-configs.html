@@ -164,7 +164,7 @@ compute cluster. Cylc does not need to install files on this cluster. The
 cluster and scheduler hosts are different platforms, but share an install
 target.</p>
 <p>But you might also have mirrored clusters, each with their own file system.
-Each cluster would be both a platform, and have its own install target.</p>
+Each cluster would be a platform with its own install target.</p>
 
 
 
@@ -272,19 +272,24 @@ cluster with a batch submission system.</li>
 or an alternative ssh command.</li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The “background” and “at” job runners require single-host platforms,
+because the job ID is only valid on the submission host.</p>
+</div>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">part of a <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> config file</span></div>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
     <span class="nt">[[spice_cluster_background]]</span>
-        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_2</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1</span>
         <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
     <span class="nt">[[spice_cluster_background_fish]]</span>
-        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_1</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_2</span>
         <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
         <span class="c1"># Use fish shell</span>
         <span class="nv">shell </span><span class="o">=</span><span class="s"> /bin/fish</span>
     <span class="nt">[[spice_cluster_long_ssh]]</span>
-        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1, login_node_1</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node_1</span>
         <span class="nv">job runner </span><span class="o">=</span><span class="s"> background</span>
         <span class="c1"># extend the default ssh timeout from 10 to 30 seconds.</span>
         <span class="nv">ssh command </span><span class="o">=</span><span class="s"> myPeculiarSSHImplementation --someoption=yes</span>
@@ -301,7 +306,7 @@ or an alternative ssh command.</li>
 <h3>Submit PBS Jobs from Localhost<a class="headerlink" href="../../../html/reference/config/writing-platform-configs.html#submit-pbs-jobs-from-localhost" title="View HTML">§</a></h3>
 
 <ul class="simple">
-<li><strong>Platforms can share hosts and not share batch systems.</strong></li>
+<li><strong>Platforms can share hosts without sharing job runners.</strong></li>
 </ul>
 <div class="admonition-scenario admonition">
 <p class="first admonition-title">Scenario</p>

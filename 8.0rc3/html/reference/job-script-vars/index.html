@@ -100,9 +100,11 @@
              
   <section id="job-script-environment-variables">
 <h1>Job Script Environment Variables<a class="headerlink" href="#job-script-environment-variables" title="Permalink to this heading"></a></h1>
-<p>These variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available to Cylc job scripts:</p>
-<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_DEBUG                         <span class="c"># Debug mode, true or not defined</span>
-CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+<p>These environment variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available
+to Cylc job scripts at run time:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+CYLC_VERBOSE                       <span class="c"># Verbose mode, true or false</span>
+CYLC_DEBUG                         <span class="c"># Debug mode (even more verbose), true or false</span>
 
 CYLC_CYCLING_MODE                  <span class="c"># Cycling mode, e.g. gregorian</span>
 ISODATETIMECALENDAR                <span class="c"># Calendar mode for the `isodatetime` command,</span>
@@ -115,7 +117,6 @@ CYLC_WORKFLOW_ID                   <span class="c"># Workflow ID</span>
 CYLC_WORKFLOW_NAME                 <span class="c"># Workflow name</span>
                                    <span class="c"># (the workflow ID without the run name)</span>
 CYLC_UTC                           <span class="c"># UTC mode, True or False</span>
-CYLC_VERBOSE                       <span class="c"># Verbose mode, True or False</span>
 TZ                                 <span class="c"># Set to &quot;UTC&quot; in UTC mode or not defined</span>
 
 CYLC_WORKFLOW_RUN_DIR              <span class="c"># Location of the run directory in</span>
@@ -162,6 +163,10 @@ CYLC_TASK_COMMS_METHOD             <span class="c"># Set to &quot;ssh&quot; if c
 CYLC_TASK_SSH_LOGIN_SHELL          <span class="c"># With &quot;ssh&quot; communication, if set to &quot;True&quot;,</span>
                                    <span class="c">#   use login shell on workflow host</span>
 </pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../user-guide/writing-workflows/runtime.html#task-job-script-variables"><span class="std std-ref">Task Job Script Variables</span></a></p>
 </div>
 </section>
 

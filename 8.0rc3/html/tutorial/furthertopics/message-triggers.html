@@ -443,15 +443,12 @@ Here, we specify a list of events for which notifications should be sent.</p>
 <span class="nt">[scheduling]</span>
     <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
     <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
-
-    <span class="nt">[[dependencies]]</span>
-
-        <span class="nt">[[[P2M]]]</span>
-            <span class="nv">graph </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">                long_forecasting_task:update1 =&gt;  another_weather_task</span>
-<span class="s2">                long_forecasting_task:update2 =&gt; different_weather_task</span>
-<span class="s2">                long_forecasting_task[-P2M] =&gt; long_forecasting_task</span>
-<span class="s2">            &quot;&quot;&quot;</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2M </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update1</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update2</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+            <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+        <span class="s2">&quot;&quot;&quot;</span>
 <span class="nt">[runtime]</span>
     <span class="nt">[[long_forecasting_task]]</span>
         <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>

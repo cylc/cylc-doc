@@ -76,7 +76,7 @@
 <p class="first admonition-title">Does This Change Affect Me?</p>
 <p>This change will affect you if your workflows extend Cylc or Jinja2 with
 custom Python scripts.</p>
-<p class="last">This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts, Cylc can still run Python 2
+<p class="last">This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts; Cylc can still run Python 2
 tasks if desired.</p>
 </div>
 
@@ -88,13 +88,13 @@ tasks if desired.</p>
 
 <h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#overview" title="View HTML">§</a></h2>
 
-<p>Cylc 7 ran under Python 2, Cylc 8 runs under Python 3.</p>
+<p>Cylc 7 ran under Python 2; Cylc 8 runs under Python 3.</p>
 <p>Cylc can be extended with custom Python scripts. These scripts are run under
 the same version of Python used by Cylc.</p>
-<p>As a result if you are moving from Cylc 7 to Cylc 8 you must upgrade any
+<p>As a result, if you are moving from Cylc 7 to Cylc 8, you must upgrade any
 scripts from Python 2 to Python 3 in the process.</p>
-<p>If you want to support both Cylc 7 and 8 you must support both Python 2 and 3.
-There are tools to help you do this. E.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
+<p>If you want to support both Cylc 7 and 8, you must support both Python 2 and 3.
+There are tools to help you do this, e.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
 
 
 
@@ -109,9 +109,9 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 <dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a></dt><dd><p>These allow you to extend Jinja2 with Python code.</p>
 <p>These scripts are located in the following directories within a workflow:</p>
 <ul class="simple">
-<li>Jinja2Filters</li>
-<li>Jinja2Tests</li>
-<li>Jinja2Globals</li>
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Filters</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Tests</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Globals</span></code></li>
 </ul>
 </dd>
 <dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja2-importing-python-modules"><span class="std std-ref">Modules imported by Jinja2</span></a></dt><dd><p>Python modules can be imported from Jinja2 e.g:</p>
@@ -119,7 +119,7 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 </pre></div>
 </div>
 </dd>
-<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd>Any custom x-trigger functions.</dd>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd>Any custom xtrigger functions.</dd>
 </dl>
 
 

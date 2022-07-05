@@ -163,7 +163,7 @@ which the offset has been applied.</p>
         <span class="nt">[[[events]]]</span>
             <span class="nv">mail events </span><span class="o">=</span><span class="s"> failed</span>
     <span class="nt">[[bell]]</span>
-        <span class="nv">script </span><span class="o">=</span><span class="s"> printf &#39;bong%.0s\n&#39; $(seq 1 $(cylc cyclepoint --print-hour))</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> printf &#39;bong%.02d\n&#39; $(seq 1 $(cylc cyclepoint --print-hour))</span>
 </pre></div>
 </div>
 <p>Change the initial cycle point to 00:00 this morning (e.g. if it was

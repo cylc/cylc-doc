@@ -362,8 +362,9 @@ parent variable:</p>
 <section id="task-job-script-variables">
 <span id="id2"></span><h3>Task Job Script Variables<a class="headerlink" href="#task-job-script-variables" title="Permalink to this heading"></a></h3>
 <p>These variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available to task job scripts:</p>
-<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_DEBUG                         <span class="c"># Debug mode, true or not defined</span>
-CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+CYLC_VERBOSE                       <span class="c"># Verbose mode, true or false</span>
+CYLC_DEBUG                         <span class="c"># Debug mode (even more verbose), true or false</span>
 
 CYLC_CYCLING_MODE                  <span class="c"># Cycling mode, e.g. gregorian</span>
 ISODATETIMECALENDAR                <span class="c"># Calendar mode for the `isodatetime` command,</span>
@@ -376,7 +377,6 @@ CYLC_WORKFLOW_ID                   <span class="c"># Workflow ID</span>
 CYLC_WORKFLOW_NAME                 <span class="c"># Workflow name</span>
                                    <span class="c"># (the workflow ID without the run name)</span>
 CYLC_UTC                           <span class="c"># UTC mode, True or False</span>
-CYLC_VERBOSE                       <span class="c"># Verbose mode, True or False</span>
 TZ                                 <span class="c"># Set to &quot;UTC&quot; in UTC mode or not defined</span>
 
 CYLC_WORKFLOW_RUN_DIR              <span class="c"># Location of the run directory in</span>

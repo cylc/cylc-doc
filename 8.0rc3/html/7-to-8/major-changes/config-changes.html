@@ -63,6 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration Changes at Cylc 8</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#graph">Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fixing-deprecation-warnings">Fixing deprecation warnings</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#platforms">Platforms</a></li>
 </ul>
 </li>
@@ -73,7 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
 <li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
 <li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
@@ -128,21 +129,68 @@ to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span>
 <span id="to-8-graph-syntax"></span><h2>Graph<a class="headerlink" href="#graph" title="Permalink to this heading"></a></h2>
 <p>Cylc 7 had unnecessarily deep nesting of graph config sections:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
-   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
-   <span class="nt">[[dependencies]]</span>
-       <span class="nt">[[[R1]]]</span>
-           <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;prep =&gt; foo&quot;</span>
-       <span class="nt">[[[R/^/P1D]]]</span>
-           <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;foo =&gt; bar =&gt; baz&quot;</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;prep =&gt; foo&quot;</span>
+        <span class="nt">[[[R/^/P1D]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;foo =&gt; bar =&gt; baz&quot;</span>
 </pre></div>
 </div>
 <p>Cylc 8 cleans this up:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
-   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
-   <span class="nt">[[graph]]</span>
-       <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
-<span class="nv">       R/^/P1D = &quot;foo =&gt; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        R/^/P1D = &quot;foo =&gt; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
 </pre></div>
+</div>
+</section>
+<section id="fixing-deprecation-warnings">
+<h2>Fixing deprecation warnings<a class="headerlink" href="#fixing-deprecation-warnings" title="Permalink to this heading"></a></h2>
+<p>Take the following example <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[cylc]</span>
+   <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2000-01-01</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> foo =&gt; bar</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo, bar]]</span>
+</pre></div>
+</div>
+<p>This workflow will pass validation at Cylc 8, but will give warnings:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc validate .
+<span class="go">WARNING - deprecated items were automatically upgraded in &quot;workflow definition&quot;</span>
+<span class="go">WARNING -  * (8.0.0) [cylc] -&gt; [scheduler] - value unchanged</span>
+<span class="go">WARNING - deprecated graph items were automatically upgraded in &quot;workflow definition&quot;:</span>
+<span class="go">   * (8.0.0) [scheduling][dependencies][X]graph -&gt; [scheduling][graph]X - for X in:</span>
+<span class="go">         R1</span>
+<span class="go">Valid for cylc-8.0.0</span>
+</pre></div>
+</div>
+<p>The warnings explain what needs to be fixed. After making the following changes,
+the workflow will validate without any warnings:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-[cylc]</span><span class="w"></span>
+<span class="gi">+[scheduler]</span><span class="w"></span>
+<span class="w"> </span>    UTC mode = True<span class="w"></span>
+<span class="w"> </span>[scheduling]<span class="w"></span>
+<span class="w"> </span>    initial cycle point = 2000-01-01<span class="w"></span>
+<span class="gd">-    [[dependencies]]</span><span class="w"></span>
+<span class="gd">-        [[[R1]]]</span><span class="w"></span>
+<span class="gd">-            graph = foo =&gt; bar</span><span class="w"></span>
+<span class="gi">+    [[graph]]</span><span class="w"></span>
+<span class="gi">+        R1 = foo =&gt; bar</span><span class="w"></span>
+<span class="w"> </span>[runtime]<span class="w"></span>
+<span class="w"> </span>    [[foo, bar]]<span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Later Cylc releases will not be able to upgrade obsolete Cylc 7
+configurations. It’s a good idea to address warnings as part of routine
+workflow review and maintenance to avoid problems later on.</p>
 </div>
 </section>
 <section id="platforms">
@@ -154,10 +202,12 @@ to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span>
 <li><p><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">System admin’s guide to writing platforms.</span></a></p></li>
 </ul>
 </div>
-<p>At Cylc 7 job hosts were defined to indicate where a job should run, at Cylc 8
-use Platforms.</p>
-<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span> [runtime]<span class="w"></span>
-<span class="w"> </span>    [[model]]<span class="w"></span>
+<p>At Cylc 7, job hosts were defined to indicate where a job should run.
+At Cylc 8, this has been replaced by Platforms.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[runtime]<span class="w"></span>
+<span class="w"> </span>    [[foo]]<span class="w"></span>
+<span class="gd">-        [[[job]]]</span><span class="w"></span>
+<span class="gd">-            batch system = slurm</span><span class="w"></span>
 <span class="gd">-        [[[remote]]]</span><span class="w"></span>
 <span class="gd">-            host = hpc1.login.1</span><span class="w"></span>
 <span class="gi">+        platform = hpc1</span><span class="w"></span>

@@ -159,6 +159,50 @@ cylc play <span class="s">&lt;name&gt;</span>
 
 
 </article>
+<article class="slide level-2" id="reloading">
+
+<h2>Reloading<a class="headerlink" href="../../html/7-to-8/cheat-sheet.html#reloading" title="View HTML">§</a></h2>
+
+<p>To update a running workflow with changes from the source directory:</p>
+<table border="1" class="grid-table docutils align-default">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Cylc 7</strong></td>
+<td><strong>Rose 2019</strong></td>
+<td><strong>Cylc 8</strong> (Rose 2)</td>
+</tr>
+<tr class="row-even"><td><div class="first last highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># update the live source</span>
+<span class="c"># directly, then</span>
+cylc reload <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># re-install from source</span>
+<span class="c"># and do ``cylc reload``</span>
+rose suite-run --reload
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># re-install from source</span>
+cylc reinstall <span class="s">&lt;name&gt;</span>
+
+<span class="c"># reload the worklow</span>
+cylc reload <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+</article>
 <article class="slide level-2" id="pausing-unpausing">
 
 <h2>Pausing &amp; Unpausing<a class="headerlink" href="../../html/7-to-8/cheat-sheet.html#pausing-unpausing" title="View HTML">§</a></h2>

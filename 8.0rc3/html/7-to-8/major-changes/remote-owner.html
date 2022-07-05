@@ -72,7 +72,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
 <li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
@@ -121,15 +121,16 @@
 <div class="tip admonition">
 <p class="admonition-title">does this change affect me?</p>
 <ul class="simple">
-<li><p>If set task’s <code class="docutils literal notranslate"><span class="pre">[runtime][remote]owner</span></code> configuration.</p></li>
+<li><p>If you set <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a></p></li>
 <li><p>If you use <code class="docutils literal notranslate"><span class="pre">--owner</span></code> on the command line</p></li>
 </ul>
 </div>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
-<p>If your username differs beteen the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host and job hosts, then
+<p>If your username differs between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host and job hosts, then
 you may have configured Cylc to run jobs under the correct account using
-<code class="docutils literal notranslate"><span class="pre">[runtime][remote]owner</span></code> or used the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> Cylc command line option
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a>
+or used the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> Cylc command line option
 with commands which access remote hosts.</p>
 <p>Cylc no longer supports specifying the username in this way, we suggest
 configuring your remote username using the <a class="reference external" href="https://man.openbsd.org/ssh_config">SSH configuration file</a> e.g:</p>

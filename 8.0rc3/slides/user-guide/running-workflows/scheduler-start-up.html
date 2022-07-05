@@ -236,20 +236,21 @@ parents to do that, you can trigger the first ones manually with <code class="do
 <code class="docutils literal notranslate"><span class="pre">localhost</span></code>, Cylc performs an initialization process. This involves transferring
 files and directories required to run jobs, including authentication keys
 (see <a class="reference internal" href="authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a> for more information).</p>
-<p>Directories included, as standard, in the remote install are:</p>
+<p>The default directories included in the remote install are:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">app</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">bin</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">etc</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">lib</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">app/</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">bin/</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">etc/</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">lib/</span></code></li>
 </ul>
-<p>These will be transferred from the workflow run directory on the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.
-In addition, file and directories configured in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]install" title="flow.cylc[scheduler]install"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]install</span></code></a>
-of the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> will be included in the transfer.</p>
+<p>These will be transferred from the workflow run directory on the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host to the remote host.
+In addition, custom file and directories configured in
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]install" title="flow.cylc[scheduler]install"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]install</span></code></a> will be included in the transfer.</p>
 <p>This remote initialization process also creates symlinks on the remote
 platform, if these are configured using
-<a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. Using this functionality is an
-efficient way to manage disk space.</p>
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. This provides a
+way to manage disk space.</p>
 
 
 

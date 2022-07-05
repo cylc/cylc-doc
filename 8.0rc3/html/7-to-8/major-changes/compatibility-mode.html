@@ -63,9 +63,8 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Cylc 7 Compatibility Mode</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#required-changes">Required Changes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#host-to-platform-upgrade-logic">Host to platform upgrade logic</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#caveats">Caveats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renaming-to-flow-cylc">Renaming to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
@@ -76,7 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
 <li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
 <li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
@@ -124,12 +123,13 @@
 <span id="cylc-7-compat-mode"></span><h1>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this heading"></a></h1>
 <div class="tip admonition">
 <p class="admonition-title">Does This Change Affect Me?</p>
-<p>This will affect you if you want to run run Cylc 7 workflows (using the
-<code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename) using Cylc 8.0</p>
+<p>This will affect you if you want to run Cylc 7 (<code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>) workflows
+using Cylc 8.0</p>
 </div>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
-<p>The old <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a backward compatibility mode in which:</p>
+<p>Cylc 8 can run most Cylc 7 workflows “as is”.
+The <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a backward compatibility mode in which:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../../glossary.html#term-implicit-task"><span class="xref std std-term">implicit tasks</span></a> are allowed by default</p>
 <ul>
@@ -162,17 +162,73 @@ meaning the scheduler will retain tasks that do not succeed as incomplete</p>
 </ul>
 </section>
 <section id="required-changes">
-<h2>Required Changes<a class="headerlink" href="#required-changes" title="Permalink to this heading"></a></h2>
+<span id="compat-required-changes"></span><h2>Required Changes<a class="headerlink" href="#required-changes" title="Permalink to this heading"></a></h2>
 <p>Providing your Cylc 7 workflow does not use syntax that was deprecated at Cylc 7,
-you may be able to run it with Cylc 8 without any modifications to begin with.</p>
-<p>To see if your workflow is compatible with Cylc 8, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>
-<strong>using Cylc 7</strong>.</p>
-<p>If tasks in your workflow call Cylc commands directly it might be necessary to
-modify them to be compatible with command line interface changes
-(unfortunately, this is not possible to detect at validation).</p>
+you may be able to run it using Cylc 8 without any modifications while in
+compatibility mode.</p>
+<p>First, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> <strong>with Cylc 7</strong> on your <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> workflow
+to check for deprecation warnings and fix those before validating with Cylc 8.
+See <a class="reference internal" href="#compat-eg-c7val"><span class="std std-ref">below</span></a> for an example.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> operates on the processed <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>, which
+means it will not detect any deprecated syntax that is inside a
+currently-unused Jinja2/EmPy <code class="docutils literal notranslate"><span class="pre">if...else</span></code> branch.</p>
+</div>
+<p>Some workflows may require modifications to either upgrade to Cylc 8 or make
+interoperable with Cylc 8 backward compatibility mode. Read on for more details.</p>
+<section id="cylc-commands-in-task-scripts">
+<h3>Cylc commands in task scripts<a class="headerlink" href="#cylc-commands-in-task-scripts" title="Permalink to this heading"></a></h3>
+<p>Check for any use of Cylc commands in task scripting. Some Cylc 7 commands
+have been removed and some others now behave differently.
+However, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> have <em>not</em> changed.
+See the <a class="reference internal" href="cli.html#majorchangescli"><span class="std std-ref">full list of command line interface changes</span></a>
+and see <a class="reference internal" href="#compat-eg-cylc-commands"><span class="std std-ref">below</span></a> for an example.</p>
 </section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
+<section id="python-2-to-3">
+<h3>Python 2 to 3<a class="headerlink" href="#python-2-to-3" title="Permalink to this heading"></a></h3>
+<p>Whereas Cylc 7 runs using Python 2, Cylc 8 runs using Python 3. This affects:
+- modules imported in Jinja2
+- Jinja2 filters, tests and globals
+- custom xtrigger functions</p>
+<p>Note that task scripts are not affected - they run in an independent
+environment.</p>
+<p>See <a class="reference internal" href="python-2-3.html#py23"><span class="std std-ref">Python 2 =&gt; 3</span></a> for more information and examples of how to implement
+interoperability if your workflows extend Cylc or Jinja2 with custom Python scripts.</p>
+</section>
+<section id="restarting-a-cylc-7-workflow">
+<h3>Restarting a Cylc 7 workflow<a class="headerlink" href="#restarting-a-cylc-7-workflow" title="Permalink to this heading"></a></h3>
+<p>Cylc 8 cannot <em>restart</em> a Cylc 7 workflow mid-run. Instead, <a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">install</span></a> the workflow to a new run directory and start it
+from scratch at the right cycle point or task(s):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-cycle-point=&lt;cycle&gt;</span></code> (c.f. Cylc 7 <em>warm start</em>), or</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-task=&lt;cycle/task&gt;</span></code>   (Cylc 8 can start anywhere in the graph)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any previous-cycle workflow data needed by the new run will need to be
+manually copied over from the original run directory.</p>
+</div>
+</section>
+<section id="other-caveats">
+<h3>Other caveats<a class="headerlink" href="#other-caveats" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Cylc 8 only transfers certain files and directories by default during
+remote installation. See <a class="reference internal" href="cylc-install.html#remote-install"><span class="std std-ref">Remote Installation</span></a> for more information.</p></li>
+<li><p>Cylc 8 does not support
+<a class="reference internal" href="excluding-tasks.html#majorchangesexcludingtasksatstartup"><span class="std std-ref">excluding/including tasks at start-up</span></a>.
+If your workflow used this old functionality, it may have been used in
+combination with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code> command (which has been removed from
+Cylc 8) and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code> (which still exists but is much less needed).</p></li>
+<li><p>Cylc 8 does not support <a class="reference internal" href="remote-owner.html#remote-owner"><span class="std std-ref">specifying remote usernames</span></a>
+using <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<section id="validating-with-cylc-7">
+<span id="compat-eg-c7val"></span><h3>Validating with Cylc 7<a class="headerlink" href="#validating-with-cylc-7" title="Permalink to this heading"></a></h3>
 <p>Consider this configuration:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
@@ -188,7 +244,7 @@ modify them to be compatible with command line interface changes
 </pre></div>
 </div>
 </div>
-<p>Running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> on this configuration at <strong>Cylc 7</strong> we see that the
+<p>Running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> at <strong>Cylc 7</strong> we see that the
 workflow is valid, but we are warned that <code class="docutils literal notranslate"><span class="pre">pre-command</span> <span class="pre">scripting</span></code>
 was replaced by <code class="docutils literal notranslate"><span class="pre">pre-script</span></code> at 6.4.0:</p>
 <div class="literal-block-wrapper docutils container" id="id3">
@@ -212,149 +268,70 @@ workflow will fail validation.</p>
 </div>
 </div>
 </div>
-<section id="fixing-the-validation-failure">
-<h3>Fixing the validation failure<a class="headerlink" href="#fixing-the-validation-failure" title="Permalink to this heading"></a></h3>
 <p>You must change the configuration yourself. In this case:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-     pre-command scripting = echo &quot;Hello World&quot;</span><span class="w"></span>
 <span class="gi">+     pre-script = echo &quot;Hello World&quot;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Validation will now succeed.</p>
-<p>The workflow is now ready for renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code></p>
 </section>
-<section id="fixing-deprecation-warnings-after-renaming-suite-rc-to-flow-cylc">
-<h3>Fixing deprecation warnings after renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code><a class="headerlink" href="#fixing-deprecation-warnings-after-renaming-suite-rc-to-flow-cylc" title="Permalink to this heading"></a></h3>
-<p>After renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, backwards compatibility mode will
-be turned off and validation in Cylc 8 will show warnings (and may fail if
-<a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-optional-outputs"><span class="std std-ref">Optional Outputs</span></a> and <a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-expected-outputs"><span class="std std-ref">Expected Outputs</span></a>
-conflict).</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">Cylc 8 validation</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc validate .
-<span class="go">WARNING - deprecated graph items were automatically upgraded in &quot;workflow definition&quot;:</span>
-<span class="go"> * (8.0.0) [scheduling][dependencies][X]graph -&gt; [scheduling][graph]X - for X in:</span>
-<span class="go">       R1</span>
-<span class="go">Valid for cylc-8.0.0</span>
+<section id="compat-eg-cylc-commands">
+<span id="id1"></span><h3>Cylc commands in task scripts<a class="headerlink" href="#compat-eg-cylc-commands" title="Permalink to this heading"></a></h3>
+<p>You might have a task script that calls a Cylc command like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
 </pre></div>
 </div>
-</div>
-<p>For the example given, Cylc 8 will validate without warning after making the
-following changes. See <a class="reference internal" href="config-changes.html#to-8-graph-syntax"><span class="std std-ref">changes to the graph section.</span></a>.</p>
-<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]<span class="w"></span>
-<span class="w"> </span>    initial cycle point = 11000101T00<span class="w"></span>
-<span class="gd">-    [[dependencies]]</span><span class="w"></span>
-<span class="gd">-        [[[R1]]]</span><span class="w"></span>
-<span class="gd">-            graph = task</span><span class="w"></span>
-<span class="gi">+    [[graph]]</span><span class="w"></span>
-<span class="gi">+        R1 = task</span><span class="w"></span>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> command has changed in Cylc 8. It is now used for holding
+tasks only; use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> for entire workflows.
+(Additionally, <code class="docutils literal notranslate"><span class="pre">$CYLC_SUITE_NAME</span></code> is deprecated in favour of
+<code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_ID</span></code>, though still supported.)</p>
+<p>In order to make this interoperable, so that you can run it with both Cylc 7
+and Cylc 8 backward compatibility mode, you could do something like this
+in the bash script:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            if [[ &quot;${CYLC_VERSION:0:1}&quot; == 7 ]]; then</span>
+<span class="s2">                cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
+<span class="s2">            else</span>
+<span class="s2">                cylc pause &quot;$CYLC_WORKFLOW_ID&quot;</span>
+<span class="s2">            fi</span>
+<span class="s2">        &quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Cylc 9 will not be able to upgrade obsolete Cylc 7
-configurations. It’s a good idea to try and remove the configuration items
-causing to these warnings as part of routine workflow review and
-maintenance to avoid problems when a major Cylc version is released.</p>
+<p>Note this logic (and the <code class="docutils literal notranslate"><span class="pre">$CYLC_VERSION</span></code> environment variable) is executed
+at runtime on the <a class="reference internal" href="../../glossary.html#term-job-host"><span class="xref std std-term">job host</span></a>.</p>
+<p>Alternatively, you could use <a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja"><span class="std std-ref">Jinja2</span></a> like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="cp">{% if CYLC_VERSION is defined and CYLC_VERSION[0] == &#39;8&#39; %}</span>
+            <span class="nv">script </span><span class="o">=</span><span class="s"> cylc pause &quot;$CYLC_WORKFLOW_ID&quot;</span>
+        <span class="cp">{% else %}</span>
+            <span class="nv">script </span><span class="o">=</span><span class="s"> cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
+        <span class="cp">{% endif %}</span>
+</pre></div>
 </div>
+<p>Note this logic (and the <code class="docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code> Jinja2 variable) is executed locally
+prior to Cylc parsing the workflow configuration.</p>
 </section>
 </section>
-<section id="host-to-platform-upgrade-logic">
-<h2>Host to platform upgrade logic<a class="headerlink" href="#host-to-platform-upgrade-logic" title="Permalink to this heading"></a></h2>
+<section id="renaming-to-flow-cylc">
+<h2>Renaming to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code><a class="headerlink" href="#renaming-to-flow-cylc" title="Permalink to this heading"></a></h2>
+<p>When your workflow runs successfully in backward compatibility mode, it is
+ready for renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>. Doing this will turn off
+backward compatibility mode, and validation in Cylc 8 will show
+deprecation warnings.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="platforms.html#majorchangesplatforms"><span class="std std-ref">Details of how platforms work.</span></a></p>
+<p><a class="reference internal" href="config-changes.html#configuration-changes"><span class="std std-ref">Configuration Changes at Cylc 8</span></a></p>
 </div>
-<p>If you have a Cylc 7 workflow where tasks submit jobs to remote hosts
-Cylc 8 will attempt to find a platform which matches the task specification.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Cylc 8 needs platforms matching the Cylc 7 job configuration to be
-available in <a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a>.</p>
-</div>
-<section id="id1">
-<h3>Example<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In the following example <code class="docutils literal notranslate"><span class="pre">job</span> <span class="pre">runner</span></code> in <strong>Cylc 8</strong> configurations
-and <code class="docutils literal notranslate"><span class="pre">batch</span> <span class="pre">system</span></code> in <strong>Cylc 7</strong> configurations refer to the same item.</p>
-</div>
-<p>If, for example you had a <strong>Cylc 8</strong> <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> with the following
-platforms section:</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">Part of a Cylc global configuration</span><a class="headerlink" href="#id6" title="Permalink to this code"></a></div>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
-    <span class="nt">[[supercomputer_A]]</span>
-        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
-        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
-    <span class="nt">[[supercomputer_B]]</span>
-        <span class="nv">hosts </span><span class="o">=</span><span class="s"> tigger, wol, eeyore</span>
-        <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
-</pre></div>
-</div>
-</div>
-<p>And you have a <strong>cylc 7</strong> workflow runtime configuration:</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">Part of <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code"></a></div>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
-    <span class="nt">[[task1]]</span>
-        <span class="nt">[[[job]]]</span>
-            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
-    <span class="nt">[[task2]]</span>
-        <span class="nt">[[[remote]]]</span>
-            <span class="nv">hosts </span><span class="o">=</span><span class="s"> eeyore</span>
-        <span class="nt">[[[job]]]</span>
-            <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
-</pre></div>
-</div>
-</div>
-<p>Then, <code class="docutils literal notranslate"><span class="pre">task1</span></code> will be assigned platform
-<code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> because the specified host (implicitly <code class="docutils literal notranslate"><span class="pre">localhost</span></code>)
-is in the list of hosts for <code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> <strong>and</strong> the batch system is the same.
-Likewise, <code class="docutils literal notranslate"><span class="pre">task2</span></code> will run on <code class="docutils literal notranslate"><span class="pre">supercomputer_B</span></code>.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>For simplicity, and because the <code class="docutils literal notranslate"><span class="pre">host</span></code> key is a special case (it can
-match and host in <code class="docutils literal notranslate"><span class="pre">[platform]hosts</span></code>) we only show these two config keys
-here. In reality, <strong>Cylc 8 compares the whole of</strong>
-<code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][job]</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][remote]</span></code>
-<strong>sections and all items must match to select a platform.</strong></p>
-</div>
-</section>
-</section>
-<section id="caveats">
-<span id="major-changes-compatibility-caveats"></span><h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this heading"></a></h2>
-<p>The following are some caveats to be aware of when using Cylc 8
-Compatibility Mode.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Cylc 6 syntax deprecated by Cylc 7 is now obsolete. Run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>
-<em>with Cylc 7</em> on your <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to check for deprecation warnings and fix
-those before validating with Cylc 8.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Check for any use of Cylc commands in task scripting. Some Cylc 7 commands
-have been removed and some others now behave differently.
-See <a class="reference internal" href="cli.html#majorchangescli"><span class="std std-ref">command line interface changes</span></a>.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Cylc 8 does not support
-<a class="reference internal" href="excluding-tasks.html#majorchangesexcludingtasksatstartup"><span class="std std-ref">excluding tasks at start-up</span></a>.
-If your workflow used this old functionality, it may have been used in
-combination with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code> command (which has been removed from
-Cylc 8) and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code> (which still exists but is much less needed).</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Cylc 8 cannot <em>restart</em> a Cylc 7 workflow mid-run. Instead, <a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">install</span></a> the workflow to a new run directory and start it
-from scratch at the right cycle point or task(s):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-cycle-point=&lt;cycle&gt;</span></code> (c.f. Cylc 7 <em>warm start</em>), or</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-task=&lt;cycle/task&gt;</span></code>   (Cylc 8 can start anywhere in the graph)</p></li>
-</ul>
-<p>Any previous-cycle workflow data needed by the new run will need to be
-manually copied over from the original run directory.</p>
+<p>More complex workflows (e.g. those with suicide triggers) may
+fail validation once backward compatibility is off - see
+<a class="reference internal" href="suicide-triggers.html#optional-outputs"><span class="std std-ref">Graph branching, optional outputs and suicide triggers</span></a></p>
 </div>
 </section>
 </section>

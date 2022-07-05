@@ -399,7 +399,7 @@ intervention.</p>
 </ul>
 </div>
 </dd>
-<dt id="term-external-trigger">external trigger</dt><dd><p>External triggers allow <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> to
+<dt id="term-external-trigger">external trigger</dt><dt id="term-xtrigger">xtrigger</dt><dd><p>External triggers allow <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> to
 depend on external events, such as a file being delivered to some
 location, or a database being updated in some way.</p>
 <p>The <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> can repeatedly call a user-supplied Python function
@@ -1300,13 +1300,13 @@ inheritance</span></a> and templating with <a class="reference internal" href="u
         <span class="nv">R1 = bar&lt;m&gt; </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span>&lt;<span class="nb">m</span>&gt;
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-990b40a80befcff50d87f99776edf085e08d68ed.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-04d99861e6945f7aa5d6103e8926574fb91ab19d.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bar_m2 -&gt; baz_m2
 baz_m3
-bar_m3 -&gt; baz_m3
-baz_m2
 baz_m1
+bar_m2 -&gt; baz_m2
+baz_m2
+bar_m3 -&gt; baz_m3
 bar_m1 -&gt; baz_m1
 }</p></object></div>
 </div><div class="admonition seealso">

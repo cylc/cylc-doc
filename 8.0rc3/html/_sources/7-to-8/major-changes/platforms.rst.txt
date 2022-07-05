@@ -3,31 +3,34 @@
 Platforms
 =========
 
-.. note::
-
-   The terms :term:`platform` and :term:`job platform` are equivalent.
-
-
 .. admonition:: Does This Change Affect Me?
    :class: tip
 
-   Platforms replace the following items in a Cylc 7 Workflow (suite):
+   .. cylc-scope:: flow.cylc
+
+   Platforms replace the deprecated :cylc:conf:`[runtime][<namespace>][job]`
+   and :cylc:conf:`[runtime][<namespace>][remote]`
+   sections:
 
    .. code-block:: cylc
 
       [runtime]
-          [[task_name]]
+          [[foo]]
               [[[job]]]
                   batch system = slurm
               [[[remote]]]
                   host = my_supercomputer
+
+   .. cylc-scope::
 
    Read this section if your workflow's jobs run on a remote computer or if
    you see the following warning on running ``cylc validate``:
 
    .. code-block:: console
 
-      WARNING - Task <task>: deprecated "host" and "batch system" will be removed at Cylc 9
+      WARNING - deprecated settings found (please replace with [runtime][foo]platform):
+          [runtime][foo][remote]host
+          [runtime][foo][job]batch system
 
    If you currently use the ``rose host-select`` utility or a similar host
    selection or load balancing utility the intelligent host selection
@@ -36,10 +39,10 @@ Platforms
    .. code-block:: cylc
 
       [runtime]
-          [[task_name]]
+          [[task1]]
               [[[remote]]]
                   host = $(rose host-select my-computer)
-          [[another_task]]
+          [[task2]]
               # An example of a home-rolled host selector
               [[[remote]]]
                   host = $(test $((RANDOM%2)) -eq 0 && echo "host_a" || echo "host_b")
@@ -48,24 +51,29 @@ Platforms
 Overview
 --------
 
+.. note::
+
+   - The terms :term:`platform` and job platform are equivalent.
+   - The terms :term:`job runner` (in Cylc 8 configurations) and batch system
+     (in Cylc 7 configurations) are equivalent.
+
 Cylc 7 defines settings for remote :term:`jobs <job>` in each
 :term:`task's <task>` definition.
 
 Cylc 8 allows site administrators (and users) to configure
-  :term:`platforms <platform>` in ``global.cylc``. A platform can have
-  multiple hosts with associated platform-specific settings. Users only need to
-  select the platform for their task jobs.
+:term:`platforms <platform>` in ``global.cylc``. A platform can have
+multiple hosts with associated platform-specific settings. Users only need to
+select the platform for their task jobs.
 
-  Platforms also define how hosts are selected from each platform:
+Platforms also define how hosts are selected from each platform:
 
-  - Randomly (default)
-  - By definition order
+- Randomly (default)
+- By definition order
 
 There may be cases where sets of platforms (for example a group of
 standalone compute servers, or a pair of mirrored HPC's) might be equally
 suitable for a task, but not share files systems to allow them to constitute
 a single platform. Such platforms can be set up to be ``platform groups``
-
 
 .. seealso::
 
@@ -75,12 +83,13 @@ a single platform. Such platforms can be set up to be ``platform groups``
    :ref:`AdminGuide.PlatformConfigs` for detailed examples of platform
    configurations.
 
-.. warning::
+.. tip::
 
-   Cylc 8 contains upgrade logic which handles Cylc 7
-   settings in most cases. Cylc 8 will warn you when it runs
-   the upgrade logic. You should upgrade these parts of your
-   workflows. Deprecated Cylc 7 settings will be removed at Cylc 9.
+   Cylc 8 contains upgrade logic (:ref:`see below <host-to-platform-logic>`)
+   which handles the deprecated Cylc 7 settings in most cases.
+   Unless you are in :ref:`backward compatibility mode <cylc_7_compat_mode>`,
+   you should upgrade to using platforms instead.
+   Deprecated settings will be removed in a later release of Cylc.
 
 
 Examples
@@ -91,10 +100,10 @@ Examples
    :cylc:conf:`global.cylc[platforms]` has a detailed explanation of how
    platforms and platform groups are defined.
 
-Showing how the global config changes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Simple example
+^^^^^^^^^^^^^^
 
-This Cylc 7 workflow:
+Consider this Cylc 7 syntax in a ``flow.cylc`` file:
 
 .. code-block:: cylc
 
@@ -102,26 +111,37 @@ This Cylc 7 workflow:
        [[mytask]]
            [[[job]]]
                batch system = slurm
-
            [[[remote]]]
                host = login_node01
 
-Would, at Cylc 8, become:
-
-.. code-block:: cylc
-
-   [runtime]
-       [[mytask]]
-           platform = our_cluster
-
-And the Cylc 8 global config might contain:
+The Cylc 8 global config (``global.cylc``) might contain:
 
 .. code-block:: cylc
 
    [platforms]
        [[our_cluster]]
            hosts = login_node01, login_node02
-           job runner = slurm  # Cylc 8 replaced "batch system" with "job runner"
+           job runner = slurm
+
+.. tip::
+
+   You can view the platforms available at your site by running::
+
+      cylc config --platforms
+
+The platform ``our_cluster`` matches the current configuration due to having
+the same job runner (batch system) and correct hosts. Thus we can replace the
+deprecated syntax:
+
+.. code-block:: diff
+
+    [runtime]
+        [[mytask]]
+   -        [[[job]]]
+   -            batch system = slurm
+   -        [[[remote]]]
+   -            host = login_node01
+   +        platform = our_cluster
 
 
 A variety of other examples
@@ -190,3 +210,61 @@ And the platform settings for these examples might be:
        [[slurm_supercomputer]]
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
+
+
+.. _host-to-platform-logic:
+
+How Cylc 8 handles host-to-platform upgrades
+--------------------------------------------
+
+If you are using the deprecated ``[remote]`` and ``[job]`` runtime sections,
+Cylc 8 will attempt to find a platform which matches the task specification.
+
+.. important::
+
+   Cylc 8 needs platforms matching the Cylc 7 job configuration to be
+   available in :cylc:conf:`global.cylc[platforms]`.
+
+
+Example
+^^^^^^^
+
+If, for example you have a **Cylc 8** ``global.cylc`` with the following
+platforms section:
+
+.. code-block:: cylc
+
+   [platforms]
+       [[supercomputer_A]]
+           hosts = localhost
+           job runner = slurm
+       [[supercomputer_B]]
+           hosts = tigger, wol, eeyore
+           job runner = pbs
+
+And you have a workflow runtime configuration:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[task1]]
+           [[[job]]]
+               batch system = slurm
+       [[task2]]
+           [[[remote]]]
+               hosts = eeyore
+           [[[job]]]
+               batch system = pbs
+
+Then, ``task1`` will be assigned platform
+``supercomputer_A`` because the specified host (implicitly ``localhost``)
+is in the list of hosts for ``supercomputer_A`` **and** the batch system is the same.
+Likewise, ``task2`` will run on ``supercomputer_B``.
+
+.. important::
+
+   For simplicity, and because the ``host`` key is a special case (it can
+   match and host in ``[platform]hosts``) we only show these two config keys
+   here. In reality, **Cylc 8 compares the whole of**
+   ``[<task>][job]`` **and** ``[<task>][remote]``
+   **sections and all items must match to select a platform.**

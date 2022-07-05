@@ -60,6 +60,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Cheat Sheet</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#validating">Validating</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-running">Installing &amp; Running</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reloading">Reloading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pausing-unpausing">Pausing &amp; Unpausing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stopping">Stopping</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#restarting">Restarting</a></li>
@@ -174,6 +175,44 @@ cylc install
 
 <span class="c"># run the installed workflow</span>
 cylc play <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reloading">
+<h2>Reloading<a class="headerlink" href="#reloading" title="Permalink to this heading"></a></h2>
+<p>To update a running workflow with changes from the source directory:</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># update the live source</span>
+<span class="c"># directly, then</span>
+cylc reload <span class="s">&lt;name&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># re-install from source</span>
+<span class="c"># and do ``cylc reload``</span>
+rose suite-run --reload
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># re-install from source</span>
+cylc reinstall <span class="s">&lt;name&gt;</span>
+
+<span class="c"># reload the worklow</span>
+cylc reload <span class="s">&lt;name&gt;</span>
 </pre></div>
 </div>
 </td>

@@ -75,7 +75,7 @@
 <div class="tip admonition">
 <p class="first admonition-title">does this change affect me?</p>
 <ul class="last simple">
-<li>If set task’s <code class="docutils literal notranslate"><span class="pre">[runtime][remote]owner</span></code> configuration.</li>
+<li>If you set <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a></li>
 <li>If you use <code class="docutils literal notranslate"><span class="pre">--owner</span></code> on the command line</li>
 </ul>
 </div>
@@ -88,9 +88,10 @@
 
 <h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/remote-owner.html#overview" title="View HTML">§</a></h2>
 
-<p>If your username differs beteen the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host and job hosts, then
+<p>If your username differs between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host and job hosts, then
 you may have configured Cylc to run jobs under the correct account using
-<code class="docutils literal notranslate"><span class="pre">[runtime][remote]owner</span></code> or used the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> Cylc command line option
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a>
+or used the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> Cylc command line option
 with commands which access remote hosts.</p>
 <p>Cylc no longer supports specifying the username in this way, we suggest
 configuring your remote username using the <a class="reference external" href="https://man.openbsd.org/ssh_config">SSH configuration file</a> e.g:</p>

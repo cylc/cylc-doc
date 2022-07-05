@@ -224,8 +224,8 @@ to generate task names automatically with built-in
 more complex. To add a new city and associated tasks and dependencies just add
 the new city name to list at the top of the file. It makes use of Jinja2
 variables, loops, math, and logical flags to include or exclude tasks.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>This example could also be simplified with built in
 <a class="reference internal" href="parameterized-tasks.html#user-guide-param"><span class="std std-ref">task parameters</span></a></p>
 </div>
@@ -293,7 +293,7 @@ New York City task family expanded.</span><a class="headerlink" href="#id3" titl
 <section id="accessing-environment-variables">
 <h2>Accessing Environment Variables<a class="headerlink" href="#accessing-environment-variables" title="Permalink to this heading"></a></h2>
 <p>Cylc automatically imports the environment to the template’s global namespace
-(see <a class="reference internal" href="#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a>) in a dictionary called <em>environ</em>:</p>
+(see <a class="reference internal" href="#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a>) in a dictionary called <code class="docutils literal notranslate"><span class="pre">environ</span></code>:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
 <span class="c1">#...</span>
 <span class="nt">[runtime]</span>
@@ -303,12 +303,9 @@ New York City task family expanded.</span><a class="headerlink" href="#id3" titl
 </pre></div>
 </div>
 <p>In addition, the following variables are exported to this environment
-prior to configuration parsing to provide workflow context:</p>
-<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_DEBUG                      <span class="c"># Debug mode, true or not defined</span>
-CYLC_TEMPLATE_VARS              <span class="c"># All variables set by -s, --set-file or</span>
-                                <span class="c"># by a plugin.</span>
-CYLC_VERBOSE                    <span class="c"># Verbose mode, True or False</span>
-CYLC_VERSION                    <span class="c"># Version of cylc installation used</span>
+(hence are available in the <code class="docutils literal notranslate"><span class="pre">environ</span></code> dict) to provide workflow context:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_VERBOSE                    <span class="c"># Verbose mode, true or false</span>
+CYLC_DEBUG                      <span class="c"># Debug mode (even more verbose), true or false</span>
 
 CYLC_WORKFLOW_ID                <span class="c"># Workflow ID</span>
 CYLC_WORKFLOW_NAME              <span class="c"># Workflow name</span>
@@ -327,6 +324,14 @@ CYLC_WORKFLOW_WORK_DIR          <span class="c"># Workflow work directory.</span
 <p>The environment is read on the workflow host when the configuration is
 parsed. It is not read at run time by task jobs on the job platform.</p>
 </div>
+<p>The following Jinja2 variables are also available (i.e. standalone,
+not in the <code class="docutils literal notranslate"><span class="pre">environ</span></code> dict):</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></dt><dd><p>Version of Cylc used.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_TEMPLATE_VARS</span></code></dt><dd><p>All variables set by the <code class="docutils literal notranslate"><span class="pre">-s</span></code> or <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> options, or by a plugin.</p>
+</dd>
+</dl>
 </section>
 <section id="custom-jinja2-filters-tests-and-globals">
 <span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this heading"></a></h2>

@@ -72,15 +72,13 @@
 
 <h1>Platforms<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#platforms" title="View HTML">§</a></h1>
 
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The terms <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> and <a class="reference internal" href="../../glossary.html#term-job-platform"><span class="xref std std-term">job platform</span></a> are equivalent.</p>
-</div>
 <div class="tip admonition">
 <p class="first admonition-title">Does This Change Affect Me?</p>
-<p>Platforms replace the following items in a Cylc 7 Workflow (suite):</p>
+<p>Platforms replace the deprecated <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][job]" title="flow.cylc[runtime][&lt;namespace&gt;][job]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][job]</span></code></a>
+and <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]" title="flow.cylc[runtime][&lt;namespace&gt;][remote]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][remote]</span></code></a>
+sections:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
-    <span class="nt">[[task_name]]</span>
+    <span class="nt">[[foo]]</span>
         <span class="nt">[[[job]]]</span>
             <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
         <span class="nt">[[[remote]]]</span>
@@ -89,17 +87,19 @@
 </div>
 <p>Read this section if your workflow’s jobs run on a remote computer or if
 you see the following warning on running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WARNING - Task &lt;task&gt;: deprecated &quot;host&quot; and &quot;batch system&quot; will be removed at Cylc 9</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WARNING - deprecated settings found (please replace with [runtime][foo]platform):</span>
+<span class="go">    [runtime][foo][remote]host</span>
+<span class="go">    [runtime][foo][job]batch system</span>
 </pre></div>
 </div>
 <p>If you currently use the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">host-select</span></code> utility or a similar host
 selection or load balancing utility the intelligent host selection
 functionality of Cylc 8 may be used instead:</p>
 <div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
-    <span class="nt">[[task_name]]</span>
+    <span class="nt">[[task1]]</span>
         <span class="nt">[[[remote]]]</span>
             <span class="nv">host </span><span class="o">=</span><span class="s"> $(rose host-select my-computer)</span>
-    <span class="nt">[[another_task]]</span>
+    <span class="nt">[[task2]]</span>
         <span class="c1"># An example of a home-rolled host selector</span>
         <span class="nt">[[[remote]]]</span>
             <span class="nv">host </span><span class="o">=</span><span class="s"> $(test $((RANDOM%2)) -eq 0 &amp;&amp; echo &quot;host_a&quot; || echo &quot;host_b&quot;)</span>
@@ -115,10 +115,18 @@ functionality of Cylc 8 may be used instead:</p>
 
 <h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#overview" title="View HTML">§</a></h2>
 
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>The terms <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> and job platform are equivalent.</li>
+<li>The terms <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> (in Cylc 8 configurations) and batch system
+(in Cylc 7 configurations) are equivalent.</li>
+</ul>
+</div>
 <p>Cylc 7 defines settings for remote <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a> in each
 <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task’s</span></a> definition.</p>
-<dl class="docutils">
-<dt>Cylc 8 allows site administrators (and users) to configure</dt><dd><p><a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platforms</span></a> in <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>. A platform can have
+<p>Cylc 8 allows site administrators (and users) to configure
+<a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platforms</span></a> in <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>. A platform can have
 multiple hosts with associated platform-specific settings. Users only need to
 select the platform for their task jobs.</p>
 <p>Platforms also define how hosts are selected from each platform:</p>
@@ -126,8 +134,6 @@ select the platform for their task jobs.</p>
 <li>Randomly (default)</li>
 <li>By definition order</li>
 </ul>
-</dd>
-</dl>
 <p>There may be cases where sets of platforms (for example a group of
 standalone compute servers, or a pair of mirrored HPC’s) might be equally
 suitable for a task, but not share files systems to allow them to constitute
@@ -139,12 +145,13 @@ already defined.</p>
 <p class="last"><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">Platform Configuration</span></a> for detailed examples of platform
 configurations.</p>
 </div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Cylc 8 contains upgrade logic which handles Cylc 7
-settings in most cases. Cylc 8 will warn you when it runs
-the upgrade logic. You should upgrade these parts of your
-workflows. Deprecated Cylc 7 settings will be removed at Cylc 9.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Cylc 8 contains upgrade logic (<a class="reference internal" href="#host-to-platform-logic"><span class="std std-ref">see below</span></a>)
+which handles the deprecated Cylc 7 settings in most cases.
+Unless you are in <a class="reference internal" href="compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">backward compatibility mode</span></a>,
+you should upgrade to using platforms instead.
+Deprecated settings will be removed in a later release of Cylc.</p>
 </div>
 
 
@@ -165,31 +172,43 @@ platforms and platform groups are defined.</p>
 
 
 </article>
-<article class="slide level-3" id="showing-how-the-global-config-changes">
+<article class="slide level-3" id="simple-example">
 
-<h3>Showing how the global config changes<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#showing-how-the-global-config-changes" title="View HTML">§</a></h3>
+<h3>Simple example<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#simple-example" title="View HTML">§</a></h3>
 
-<p>This Cylc 7 workflow:</p>
+<p>Consider this Cylc 7 syntax in a <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[mytask]]</span>
         <span class="nt">[[[job]]]</span>
             <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
-
         <span class="nt">[[[remote]]]</span>
             <span class="nv">host </span><span class="o">=</span><span class="s"> login_node01</span>
 </pre></div>
 </div>
-<p>Would, at Cylc 8, become:</p>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
-    <span class="nt">[[mytask]]</span>
-        <span class="nv">platform </span><span class="o">=</span><span class="s"> our_cluster</span>
-</pre></div>
-</div>
-<p>And the Cylc 8 global config might contain:</p>
+<p>The Cylc 8 global config (<code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>) might contain:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
     <span class="nt">[[our_cluster]]</span>
         <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>
-        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>  <span class="c1"># Cylc 8 replaced &quot;batch system&quot; with &quot;job runner&quot;</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can view the platforms available at your site by running:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">config</span> <span class="o">--</span><span class="n">platforms</span>
+</pre></div>
+</div>
+</div>
+<p>The platform <code class="docutils literal notranslate"><span class="pre">our_cluster</span></code> matches the current configuration due to having
+the same job runner (batch system) and correct hosts. Thus we can replace the
+deprecated syntax:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[runtime]<span class="w"></span>
+<span class="w"> </span>    [[mytask]]<span class="w"></span>
+<span class="gd">-        [[[job]]]</span><span class="w"></span>
+<span class="gd">-            batch system = slurm</span><span class="w"></span>
+<span class="gd">-        [[[remote]]]</span><span class="w"></span>
+<span class="gd">-            host = login_node01</span><span class="w"></span>
+<span class="gi">+        platform = our_cluster</span><span class="w"></span>
 </pre></div>
 </div>
 
@@ -257,6 +276,66 @@ script using Slurm.</li>
         <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>  <span class="c1"># Cylc will pick a host.</span>
         <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
 </pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="how-cylc-8-handles-host-to-platform-upgrades">
+
+<h2>How Cylc 8 handles host-to-platform upgrades<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#how-cylc-8-handles-host-to-platform-upgrades" title="View HTML">§</a></h2>
+
+<p>If you are using the deprecated <code class="docutils literal notranslate"><span class="pre">[remote]</span></code> and <code class="docutils literal notranslate"><span class="pre">[job]</span></code> runtime sections,
+Cylc 8 will attempt to find a platform which matches the task specification.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Cylc 8 needs platforms matching the Cylc 7 job configuration to be
+available in <a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a>.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="example">
+
+<h3>Example<a class="headerlink" href="../../../html/7-to-8/major-changes/platforms.html#example" title="View HTML">§</a></h3>
+
+<p>If, for example you have a <strong>Cylc 8</strong> <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> with the following
+platforms section:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[supercomputer_A]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+    <span class="nt">[[supercomputer_B]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> tigger, wol, eeyore</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+</pre></div>
+</div>
+<p>And you have a workflow runtime configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[task1]]</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+    <span class="nt">[[task2]]</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">hosts </span><span class="o">=</span><span class="s"> eeyore</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+</pre></div>
+</div>
+<p>Then, <code class="docutils literal notranslate"><span class="pre">task1</span></code> will be assigned platform
+<code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> because the specified host (implicitly <code class="docutils literal notranslate"><span class="pre">localhost</span></code>)
+is in the list of hosts for <code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> <strong>and</strong> the batch system is the same.
+Likewise, <code class="docutils literal notranslate"><span class="pre">task2</span></code> will run on <code class="docutils literal notranslate"><span class="pre">supercomputer_B</span></code>.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">For simplicity, and because the <code class="docutils literal notranslate"><span class="pre">host</span></code> key is a special case (it can
+match and host in <code class="docutils literal notranslate"><span class="pre">[platform]hosts</span></code>) we only show these two config keys
+here. In reality, <strong>Cylc 8 compares the whole of</strong>
+<code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][job]</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][remote]</span></code>
+<strong>sections and all items must match to select a platform.</strong></p>
 </div>
 
 

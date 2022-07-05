@@ -243,10 +243,11 @@ so:</p>
 <strong>Tasks</strong>.</p>
 <p>Next we will parameterise the <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks.</p>
 <p>Add a parameter called <code class="docutils literal notranslate"><span class="pre">station</span></code>:</p>
-<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduler]<span class="w"></span>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+[task parameters]</span><span class="w"></span>
+<span class="gi">+    station = aldergrove, camborne, heathrow, shetland</span><span class="w"></span>
+
+<span class="w"> </span>[scheduler]<span class="w"></span>
 <span class="w"> </span>    UTC mode = True<span class="w"></span>
-<span class="gi">+    [[parameters]]</span><span class="w"></span>
-<span class="gi">+        station = aldergrove, camborne, heathrow, shetland</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Remove the four <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks and insert the following code
@@ -341,8 +342,8 @@ avoid having to write out this section twice.</p>
 <p>First we must create the <code class="docutils literal notranslate"><span class="pre">site</span></code> parameter:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduler]<span class="w"></span>
 <span class="w"> </span>    UTC mode = True<span class="w"></span>
-<span class="w"> </span>    [[parameters]]<span class="w"></span>
-<span class="w"> </span>        station = aldergrove, camborne, heathrow, shetland<span class="w"></span>
+<span class="w"> </span>[task parameters]<span class="w"></span>
+<span class="w"> </span>    station = aldergrove, camborne, heathrow, shetland<span class="w"></span>
 <span class="gi">+        site = exeter, edinburgh</span><span class="w"></span>
 </pre></div>
 </div>

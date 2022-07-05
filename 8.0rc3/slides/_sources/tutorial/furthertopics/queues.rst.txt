@@ -15,8 +15,8 @@ In this example, our workflow manages a particularly understaffed restaurant.
 
 Create a new workflow called ``queues-tutorial``::
 
-   mkdir -p ~/cylc-run/queues-tutorial
-   cd ~/cylc-run/queues-tutorial
+   mkdir -p ~/cylc-src/queues-tutorial
+   cd ~/cylc-src/queues-tutorial
 
 And paste the following into :cylc:conf:`flow.cylc`:
 

@@ -5,6 +5,10 @@ Scheduling Algorithm
 
 .. seealso::
 
+   Migration Guide:
+
+   * :ref:`728.optional_outputs`
+
    User Guide:
 
    * :ref:`User Guide Expected Outputs`

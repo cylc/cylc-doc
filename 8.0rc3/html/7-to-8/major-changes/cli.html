@@ -74,7 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
 <li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
 <li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
 <li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
@@ -129,7 +129,7 @@
 <ul class="simple">
 <li><p>Some commands have been renamed e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p></li>
 <li><p>Some tools have been added or removed.</p></li>
-<li><p>The task ID format has changed.</p></li>
+<li><p>A new task ID format has been introduced.</p></li>
 </ul>
 <p>For a quick side by side comparison see the <a class="reference internal" href="../cheat-sheet.html#cheat-sheet"><span class="std std-ref">Cheat Sheet</span></a>.</p>
 </section>
@@ -137,7 +137,7 @@
 <h2>Full List Of Command Changes<a class="headerlink" href="#full-list-of-command-changes" title="Permalink to this heading"></a></h2>
 <p>The command line has been simplified from Cylc 7 with some commands being
 renamed or removed.</p>
-<p class="rubric">Commands which have been removed or changed:</p>
+<p class="rubric">Commands that have been removed entirely:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">checkpoint</span></code></dt><dd><ul class="simple">
 <li><p>Database checkpoints are no longer needed.</p></li>
@@ -145,11 +145,6 @@ renamed or removed.</p>
 <li><p>Remaining use cases can be handled by starting a new <a class="reference internal" href="../../glossary.html#term-flow"><span class="xref std std-term">flow</span></a>
 which allow a new execution of the graph to be started from an
 arbitrary point in the graph.</p></li>
-</ul>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">conditions</span></code></dt><dd><ul class="simple">
-<li><p>See the <a class="reference external" href="https://github.com/cylc/cylc-flow/blob/master/COPYING">license</a> file for conditions of usage</p></li>
-<li><p>The Cylc license remains unchanged from Cylc 7.</p></li>
 </ul>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">documentation</span></code></dt><dd><ul class="simple">
@@ -160,42 +155,18 @@ arbitrary point in the graph.</p></li>
 <li><p>Use a text editor to edit the workflow configuration file.</p></li>
 </ul>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code></dt><dd><ul class="simple">
-<li><p>Task insertion is now automatic, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>.</p></li>
-</ul>
-</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">jobscript</span></code></dt><dd><ul class="simple">
 <li><p>It is no longer possible generate a jobscript from outside of a workflow.</p></li>
-</ul>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code></dt><dd><ul class="simple">
-<li><p>There is now a new more powerful terminal user interface (TUI).</p></li>
-<li><p>Try <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code>.</p></li>
 </ul>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">nudge</span></code></dt><dd><ul class="simple">
 <li><p>No longer required.</p></li>
 </ul>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">print</span></code></dt><dd><ul class="simple">
-<li><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span> <span class="pre">--states=all</span></code>.</p></li>
-</ul>
-</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">register</span></code></dt><dd><ul class="simple">
 <li><p>Registration is no longer required, all workflows in the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>
 directory are “registered” automatically.</p></li>
 <li><p>To install a workflow from a working copy use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</p></li>
-</ul>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reset</span></code></dt><dd><ul class="simple">
-<li><p>It is no longer possible to manually change a task’s state.</p></li>
-<li><p>You can, however, override the outputs the task generated which has a
-similar effect with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set-outputs</span></code>.</p></li>
-</ul>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">restart</span></code></dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> have been combined into
-<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p></li>
 </ul>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">review</span></code></dt><dd><ul class="simple">
@@ -205,18 +176,9 @@ so can still be used to monitor both Cylc 7 and Cylc 8 workflows
 side by side.</p></li>
 </ul>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code></dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> have been combined into
-<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p></li>
-</ul>
-</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">search</span></code></dt><dd><ul class="simple">
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">grep</span></code> or a text editor to search the workflow configuration or
 source directory.</p></li>
-</ul>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">spawn</span></code></dt><dd><ul class="simple">
-<li><p>Spawning is now performed automatically, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> to run a task.</p></li>
 </ul>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">submit</span></code></dt><dd><ul class="simple">
@@ -225,6 +187,74 @@ source directory.</p></li>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">warranty</span></code></dt><dd><ul class="simple">
 <li><p>The Cylc license remains unchanged from Cylc 7.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Commands that have been replaced:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">conditions</span></code></dt><dd><ul class="simple">
+<li><p>See the <a class="reference external" href="https://github.com/cylc/cylc-flow/blob/master/COPYING">license</a> file for conditions of usage, or <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">help</span> <span class="pre">license</span></code></p></li>
+<li><p>The Cylc license remains unchanged from Cylc 7.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-config</span></code>,</dt><dd><ul class="simple">
+<li><p>Replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-*-config</span></code></dt><dd><ul class="simple">
+<li><p>(Where <code class="docutils literal notranslate"><span class="pre">*</span></code> is <code class="docutils literal notranslate"><span class="pre">site</span></code>, <code class="docutils literal notranslate"><span class="pre">suite</span></code> or <code class="docutils literal notranslate"><span class="pre">global</span></code>)</p></li>
+<li><p>Replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph-diff</span></code></dt><dd><ul class="simple">
+<li><p>Replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">&lt;flow1&gt;</span> <span class="pre">--diff</span> <span class="pre">&lt;flow2&gt;</span></code></p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code></dt><dd><ul class="simple">
+<li><p>Task insertion is now automatic, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code></dt><dd><ul class="simple">
+<li><p>There is now a new more powerful terminal user interface (TUI).</p></li>
+<li><p>Try <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">print</span></code></dt><dd><ul class="simple">
+<li><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span> <span class="pre">--states=all</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reset</span></code></dt><dd><ul class="simple">
+<li><p>It is no longer possible to manually change a task’s state.</p></li>
+<li><p>You can, however, override the outputs the task generated which has a
+similar effect with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set-outputs</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">restart</span></code></dt><dd><ul class="simple">
+<li><p>Replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span></code></dt><dd><ul class="simple">
+<li><p>Replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">spawn</span></code></dt><dd><ul class="simple">
+<li><p>Spawning is now performed automatically, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> to run a task.</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">suite-state</span></code></dt><dd><ul class="simple">
+<li><p>Renamed as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">workflow-state</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Commands that have changed:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code></dt><dd><ul class="simple">
+<li><p>Now used on tasks only; use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> to pause an entire workflow
+(i.e. to halt all job submissions).</p></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code></dt><dd><ul class="simple">
+<li><p>Now used on tasks only; use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> to resume a paused workflow.</p></li>
 </ul>
 </dd>
 </dl>
@@ -246,9 +276,9 @@ web GUI (providing the <a class="reference external" href="https://github.com/cy
 cycle/task
 </pre></div>
 </div>
-<p>At Cylc 8 we have removed the former and extended the latter to provide a
-unique identifier for all workflows, cycles, tasks and jobs using a
-standardised format:</p>
+<p>In Cylc 8 the former is now deprecated, and the latter has been extended to
+provide a unique identifier for all workflows, cycles, tasks and jobs using a
+standard format:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~user/workflow//cycle/task/job
 </pre></div>
 </div>
