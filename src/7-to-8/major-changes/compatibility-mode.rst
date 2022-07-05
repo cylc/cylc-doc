@@ -104,19 +104,11 @@ from scratch at the right cycle point or task(s):
    manually copied over from the original run directory.
 
 
-Custom remote installation
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you have used Rose 2019 you may be used to all files and directories inside
-your :term:`source directory` being installed on remote install targets.
-However, by default, Cylc 8 only installs
-:ref:`certain files and directories <RemoteInit>` onto remote install targets.
-See :ref:`below <compat.eg.custom_remote_install>` for an example of how to specify
-custom files to be installed.
-
-
 Other caveats
 ^^^^^^^^^^^^^
+
+- Cylc 8 only transfers certain files and directories by default during
+  remote installation. See :ref:`728.remote-install` for more information.
 
 - Cylc 8 does not support
   :ref:`excluding/including tasks at start-up<MajorChangesExcludingTasksAtStartup>`.
@@ -235,23 +227,6 @@ Alternatively, you could use :ref:`Jinja` like so:
 
 Note this logic (and the ``CYLC_VERSION`` Jinja2 variable) is executed locally
 prior to Cylc parsing the workflow configuration.
-
-
-.. _compat.eg.custom_remote_install:
-
-Custom remote installation
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you want to include certain files and directories in remote installation,
-use :cylc:conf:`flow.cylc[scheduler]install`. To ensure your workflow is still
-interoperable with Cylc 7, wrap it in a Jinja2 check like so:
-
-.. code-block:: cylc
-
-   {% if CYLC_VERSION is defined and CYLC_VERSION[0] == '8' %}
-   [scheduler]
-       install = my-dir/, my-file
-   {% endif %}
 
 
 Renaming to ``flow.cylc``
