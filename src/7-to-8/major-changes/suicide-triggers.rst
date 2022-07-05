@@ -1,5 +1,3 @@
-.. TODO: rename to "Graph branching, optional outputs and suicide triggers", and give example (the one I posted on Element)
-
 .. _728.optional_outputs:
 
 Graph branching, optional outputs and suicide triggers
@@ -19,12 +17,9 @@ the need for suicide triggers). This is called :term:`graph branching`.
    at runtime. You might get a ``GraphParseError`` during validation with
    Cylc 8.
 
-   Typically this will be the case if you are using any of the following in
-   the workflow graph:
-
-   - :term:`suicide triggers <suicide trigger>`
-   - the ``|`` (OR) operator
-   - the ``:fail`` output or custom ouputs
+   Typically this will be the case if you are using
+   :term:`suicide triggers <suicide trigger>` (marked by ``!`` before the
+   task name in the graph, e.g. ``foo:fail => !foo``).
 
    You should *not* perform this upgrade if still in :ref:`cylc_7_compat_mode`
    (``suite.rc`` filename).
