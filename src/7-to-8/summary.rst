@@ -27,7 +27,7 @@ Cylc 7 Compatibility Mode
 Continuing to use the old ``suite.rc`` filename triggers a :ref:`backward
 compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
 workflow configurations out of the box, with
-:ref:`some caveats<major-changes-compatibility-caveats>`. However, to future-proof
+:ref:`some caveats <compat_required_changes>`. However, to future-proof
 your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.
 
 Upgrading To Cylc 8
@@ -111,9 +111,9 @@ Optional and Expected Task Outputs
 
 .. seealso::
 
+   * Major Changes::ref:`728.optional_outputs`
    * User Guide::ref:`User Guide Expected Outputs`
    * User Guide::ref:`User Guide Optional Outputs`
-   * Major Changes::ref:`728.suicide_triggers`
 
 By default, all Cylc 8 tasks are expected to succeed - i.e., success is
 an :term:`expected output <expected output>`. Otherwise they will be marked

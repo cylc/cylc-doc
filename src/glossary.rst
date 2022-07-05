@@ -65,7 +65,7 @@ Glossary
       the job environment as ``$CYLC_TASK_SUBMIT_NUMBER``.
 
       Submit number also appears in the job log path so that job log files
-      don't get overwritten. 
+      don't get overwritten.
 
 
    window
@@ -169,6 +169,7 @@ Glossary
 
 
    external trigger
+   xtrigger
       External triggers allow :term:`tasks <task>` in the :term:`graph` to
       depend on external events, such as a file being delivered to some
       location, or a database being updated in some way.
