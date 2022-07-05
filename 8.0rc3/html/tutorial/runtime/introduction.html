@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -113,13 +114,13 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<span id="tutorial-cylc-runtime-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-runtime-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
 <p>So far we have worked with the <code class="docutils literal notranslate"><span class="pre">[scheduling]</span></code> section of the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>
 file, where workflow <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> and <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> are defined.</p>
 <p>Now, in the <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section, we need to associate each task with a
 script or application to run when its dependencies are met.</p>
 <section id="task-definitions">
-<h2>Task Definitions<a class="headerlink" href="#task-definitions" title="Permalink to this headline"></a></h2>
+<h2>Task Definitions<a class="headerlink" href="#task-definitions" title="Permalink to this heading"></a></h2>
 <p>The runtime settings for each task are stored in a sub-section of the
 <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section. E.g. for a task called <code class="docutils literal notranslate"><span class="pre">hello_world</span></code> we would write
 settings inside the following section:</p>
@@ -136,7 +137,7 @@ See <a class="reference internal" href="../../user-guide/writing-workflows/runti
 </div>
 </section>
 <section id="the-script-setting">
-<h2>The <code class="docutils literal notranslate"><span class="pre">script</span></code> Setting<a class="headerlink" href="#the-script-setting" title="Permalink to this headline"></a></h2>
+<h2>The <code class="docutils literal notranslate"><span class="pre">script</span></code> Setting<a class="headerlink" href="#the-script-setting" title="Permalink to this heading"></a></h2>
 <p>The task <code class="docutils literal notranslate"><span class="pre">script</span></code> setting tells Cylc <em>what</em> to execute when a task is
 ready to run.</p>
 <p>This value of this setting is interpreted as a bash script. The following
@@ -160,7 +161,7 @@ communicate its status back to the scheduler before exiting immediately.</p>
 </div>
 </section>
 <section id="path-and-pythonpath">
-<h2><code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <span class="target" id="index-0"></span><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" title="(in Python v3.10)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a><a class="headerlink" href="#path-and-pythonpath" title="Permalink to this headline"></a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <span class="target" id="index-0"></span><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH" title="(in Python v3.10)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONPATH</span></code></a><a class="headerlink" href="#path-and-pythonpath" title="Permalink to this heading"></a></h2>
 <p>Keeping task scripts with the workflow, rather than leaving them elsewhere on
 the system, helps isolate the workflow from external changes.</p>
 <p>To help with this, Cylc automatically adds a <code class="docutils literal notranslate"><span class="pre">bin/</span></code> sub-directory of the
@@ -200,7 +201,7 @@ in task job environments.</p>
 </div>
 </section>
 <section id="tasks-and-jobs">
-<span id="tutorial-tasks-and-jobs"></span><h2>Tasks And Jobs<a class="headerlink" href="#tasks-and-jobs" title="Permalink to this headline"></a></h2>
+<span id="tutorial-tasks-and-jobs"></span><h2>Tasks And Jobs<a class="headerlink" href="#tasks-and-jobs" title="Permalink to this heading"></a></h2>
 <p>When a <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> is ready to run Cylc creates a <a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">job script</span></a> for
 it: a bash file containing the scripting defined for the task along with
 other configuration and error trapping code. This is what actually executes
@@ -223,7 +224,7 @@ runs:</p>
 <p>See the <a class="reference internal" href="runtime-configuration.html#tutorial-job-runner"><span class="std std-ref">next section for more about running jobs</span></a>.</p>
 </section>
 <section id="the-cylc-user-interfaces">
-<h2>The Cylc User Interfaces<a class="headerlink" href="#the-cylc-user-interfaces" title="Permalink to this headline"></a></h2>
+<h2>The Cylc User Interfaces<a class="headerlink" href="#the-cylc-user-interfaces" title="Permalink to this heading"></a></h2>
 <p>To help you to keep monitor and control running workflows Cylc has</p>
 <ul class="simple">
 <li><p>A graphical user interface (Cylc GUI).</p></li>
@@ -231,7 +232,7 @@ runs:</p>
 <li><p>A comprehensive command line interface (Cylc CLI).</p></li>
 </ul>
 <section id="the-cylc-cli">
-<span id="tutorial-cli"></span><h3>The Cylc CLI<a class="headerlink" href="#the-cylc-cli" title="Permalink to this headline"></a></h3>
+<span id="tutorial-cli"></span><h3>The Cylc CLI<a class="headerlink" href="#the-cylc-cli" title="Permalink to this heading"></a></h3>
 <p>You can start, stop, query, and control workflow, in every possible way,
 from the command line.</p>
 <p>All Cylc commands have built-in help information:</p>
@@ -241,7 +242,7 @@ cylc play --help  <span class="c1"># etc.</span>
 </div>
 </section>
 <section id="the-cylc-tui">
-<span id="tutorial-tui"></span><h3>The Cylc TUI<a class="headerlink" href="#the-cylc-tui" title="Permalink to this headline"></a></h3>
+<span id="tutorial-tui"></span><h3>The Cylc TUI<a class="headerlink" href="#the-cylc-tui" title="Permalink to this heading"></a></h3>
 <p>The Cylc TUI (Terminal User Interface) enables you to view and interact
 with your workflows.</p>
 <p>To start the Cylc TUI:</p>
@@ -250,7 +251,7 @@ with your workflows.</p>
 </div>
 </section>
 <section id="the-cylc-gui">
-<span id="tutorial-gui"></span><h3>The Cylc GUI<a class="headerlink" href="#the-cylc-gui" title="Permalink to this headline"></a></h3>
+<span id="tutorial-gui"></span><h3>The Cylc GUI<a class="headerlink" href="#the-cylc-gui" title="Permalink to this heading"></a></h3>
 <p>The Cylc GUI has different views you can use to examine your workflows,
 including a Cylc scan menu allowing you to switch between workflows.</p>
 <div class="admonition note">
@@ -264,7 +265,7 @@ easily switch between workflows.</p>
 </div>
 </section>
 <section id="task-job-states">
-<h3>Task &amp; Job States<a class="headerlink" href="#task-job-states" title="Permalink to this headline"></a></h3>
+<h3>Task &amp; Job States<a class="headerlink" href="#task-job-states" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Task states have grey icons.</p></li>
 <li><p>Job states have colour coded squares.</p></li>
@@ -333,7 +334,7 @@ screenshot shows only one, however).</p>
 </section>
 </section>
 <section id="validating-a-workflow">
-<h2>Validating A Workflow<a class="headerlink" href="#validating-a-workflow" title="Permalink to this headline"></a></h2>
+<h2>Validating A Workflow<a class="headerlink" href="#validating-a-workflow" title="Permalink to this heading"></a></h2>
 <p>We recommend using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> to check a workflow definition for
 errors before running it.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc validate ~/cylc-src/my_workflow
@@ -341,7 +342,7 @@ errors before running it.</p>
 </div>
 </section>
 <section id="installing-a-workflow">
-<h2>Installing A Workflow<a class="headerlink" href="#installing-a-workflow" title="Permalink to this headline"></a></h2>
+<h2>Installing A Workflow<a class="headerlink" href="#installing-a-workflow" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">The full guide to Cylc install</span></a>.</p>
@@ -354,7 +355,7 @@ errors before running it.</p>
 <p>This will install <code class="docutils literal notranslate"><span class="pre">~/cylc-src/my_workflow</span></code> to <code class="docutils literal notranslate"><span class="pre">~/cylc-run/my_workflow/runN</span></code>.</p>
 </section>
 <section id="running-a-workflow">
-<h2>Running a workflow<a class="headerlink" href="#running-a-workflow" title="Permalink to this headline"></a></h2>
+<h2>Running a workflow<a class="headerlink" href="#running-a-workflow" title="Permalink to this heading"></a></h2>
 <p>Now we have installed the workflow we can run it
 using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc play &lt;workflow_id&gt;
@@ -364,9 +365,9 @@ using the <code class="docutils literal notranslate"><span class="pre">cylc</spa
 to <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>.</p>
 </section>
 <section id="generated-workflow-files">
-<h2>Generated Workflow Files<a class="headerlink" href="#generated-workflow-files" title="Permalink to this headline"></a></h2>
+<h2>Generated Workflow Files<a class="headerlink" href="#generated-workflow-files" title="Permalink to this heading"></a></h2>
 <section id="numbered-run-directories">
-<h3>Numbered run directories<a class="headerlink" href="#numbered-run-directories" title="Permalink to this headline"></a></h3>
+<h3>Numbered run directories<a class="headerlink" href="#numbered-run-directories" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">Installing Workflows</span></a> for a fuller description of Cylc install,
@@ -395,7 +396,7 @@ time you run it:</p>
 </div>
 </section>
 <section id="files-generated-at-runtime">
-<h3>Files Generated at Runtime<a class="headerlink" href="#files-generated-at-runtime" title="Permalink to this headline"></a></h3>
+<h3>Files Generated at Runtime<a class="headerlink" href="#files-generated-at-runtime" title="Permalink to this heading"></a></h3>
 <p>Cylc generates files and directories when it runs a workflow, namely:</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">log</span></code></dt><dd><dl class="simple">
@@ -571,7 +572,7 @@ corner of the GUI.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -115,11 +116,11 @@
            <div itemprop="articleBody">
              
   <section id="retries">
-<h1>Retries<a class="headerlink" href="#retries" title="Permalink to this headline"></a></h1>
+<h1>Retries<a class="headerlink" href="#retries" title="Permalink to this heading"></a></h1>
 <p>Retries allow us to automatically re-submit tasks which have failed due to
 failure in submission or execution.</p>
 <section id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h2>
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading"></a></h2>
 <p>Retries can be useful for tasks that may occasionally fail due to external
 events, and are routinely fixable when they do - an example would be a task
 that is dependent on a system that experiences temporary outages.</p>
@@ -129,7 +130,7 @@ is incremented and passed into the task - this means you can write your
 task script so that it changes behaviour accordingly.</p>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/7/73/Double-six-dice.jpg"><img alt="Two dice both showing the number six" class="align-right" src="https://upload.wikimedia.org/wikipedia/commons/7/73/Double-six-dice.jpg" style="width: 200px;" /></a>
 <p>Create a new workflow by running the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">retries</span><span class="o">-</span><span class="n">tutorial</span>
@@ -165,7 +166,7 @@ task script so that it changes behaviour accordingly.</p>
 </div>
 </section>
 <section id="running-without-retries">
-<h2>Running Without Retries<a class="headerlink" href="#running-without-retries" title="Permalink to this headline"></a></h2>
+<h2>Running Without Retries<a class="headerlink" href="#running-without-retries" title="Permalink to this heading"></a></h2>
 <p>Let’s see what happens when we run the workflow as it is.
 Look at the workflow with <a class="reference internal" href="../runtime/introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a> or <a class="reference internal" href="../runtime/introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a></p>
 <p>Then validate install and run the workflow:</p>
@@ -181,7 +182,7 @@ Look at the workflow with <a class="reference internal" href="../runtime/introdu
 </div>
 </section>
 <section id="configuring-retries">
-<h2>Configuring Retries<a class="headerlink" href="#configuring-retries" title="Permalink to this headline"></a></h2>
+<h2>Configuring Retries<a class="headerlink" href="#configuring-retries" title="Permalink to this heading"></a></h2>
 <p>We need to tell Cylc to retry it a few times. To do this, add the following
 to the end of the <code class="docutils literal notranslate"><span class="pre">[[roll_doubles]]</span></code> task section in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 5*PT6S</span>
@@ -199,7 +200,7 @@ then once after one hour then once after three hours.</p>
 </div>
 </section>
 <section id="running-with-retries">
-<h2>Running With Retries<a class="headerlink" href="#running-with-retries" title="Permalink to this headline"></a></h2>
+<h2>Running With Retries<a class="headerlink" href="#running-with-retries" title="Permalink to this heading"></a></h2>
 <p>Look at the workflow with <a class="reference internal" href="../runtime/introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a> or <a class="reference internal" href="../runtime/introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a></p>
 <p>Re-install and run the workflow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">validate</span> <span class="o">.</span>
@@ -212,7 +213,7 @@ it will succeed (there is only about a about a 1 in 3 chance of every task
 failing) and the workflow will continue.</p>
 </section>
 <section id="altering-behaviour">
-<h2>Altering Behaviour<a class="headerlink" href="#altering-behaviour" title="Permalink to this headline"></a></h2>
+<h2>Altering Behaviour<a class="headerlink" href="#altering-behaviour" title="Permalink to this heading"></a></h2>
 <p>We can alter the behaviour of the task based on the number of retries, using
 <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_TRY_NUMBER</span></code>.</p>
 <p>Change the <code class="docutils literal notranslate"><span class="pre">script</span></code> setting for the <code class="docutils literal notranslate"><span class="pre">roll_doubles</span></code> task to this:</p>
@@ -235,7 +236,7 @@ fi
 <p>This time, the task should definitely succeed before the third retry.</p>
 </section>
 <section id="further-reading">
-<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading"></a></h2>
 <p>For more information see the <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
 </section>
 </section>
@@ -252,7 +253,7 @@ fi
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

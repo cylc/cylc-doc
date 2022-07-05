@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -113,7 +114,7 @@
            <div itemprop="articleBody">
              
   <section id="clock-triggered-tasks">
-<span id="tutorial-cylc-clock-trigger"></span><h1>Clock Triggered Tasks<a class="headerlink" href="#clock-triggered-tasks" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-clock-trigger"></span><h1>Clock Triggered Tasks<a class="headerlink" href="#clock-triggered-tasks" title="Permalink to this heading"></a></h1>
 <p>In a <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflow the time represented by the
 <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a> bear no relation to the real-world time.
 Using clock-triggers we can make tasks wait until their cycle point time before
@@ -126,7 +127,7 @@ running.</p>
 custom external triggers only in that they are provided with Cylc.</p>
 </div>
 <section id="clock-triggering">
-<h2>Clock Triggering<a class="headerlink" href="#clock-triggering" title="Permalink to this headline"></a></h2>
+<h2>Clock Triggering<a class="headerlink" href="#clock-triggering" title="Permalink to this heading"></a></h2>
 <p>When clock-triggering tasks we can use different
 <a class="reference internal" href="../scheduling/datetime-cycling.html#tutorial-iso8601-durations"><span class="std std-ref">offsets</span></a> to the cycle time as follows:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">my_clock_trigger </span><span class="o">=</span><span class="s"> wall_clock(offset=&lt;iso8601 duration&gt;)</span>
@@ -139,7 +140,7 @@ which the offset has been applied.</p>
 </div>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <p>Our example workflow will simulate a clock chiming on the hour.</p>
 <p>Within your <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code> directory create a new directory called
 <code class="docutils literal notranslate"><span class="pre">clock-trigger</span></code>:</p>
@@ -180,7 +181,7 @@ Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.</p>
 </section>
 <section id="clock-triggering-tasks">
-<h2>Clock-Triggering Tasks<a class="headerlink" href="#clock-triggering-tasks" title="Permalink to this headline"></a></h2>
+<h2>Clock-Triggering Tasks<a class="headerlink" href="#clock-triggering-tasks" title="Permalink to this heading"></a></h2>
 <p>We want our clock to only ring in real-time rather than the simulated
 cycle time.</p>
 <p>To do this, modify the <code class="docutils literal notranslate"><span class="pre">[scheduling][graph]</span></code> section of
@@ -203,7 +204,7 @@ real-time. Thus, when the wallclock time caught up with the cycle time, the
 <code class="docutils literal notranslate"><span class="pre">bell</span></code> task triggered.</p>
 </section>
 <section id="adding-more-clock-triggered-tasks">
-<h2>Adding More Clock-Triggered Tasks<a class="headerlink" href="#adding-more-clock-triggered-tasks" title="Permalink to this headline"></a></h2>
+<h2>Adding More Clock-Triggered Tasks<a class="headerlink" href="#adding-more-clock-triggered-tasks" title="Permalink to this heading"></a></h2>
 <p>Running clock triggered tests at the cycle time is a special case:
 We will now modify our workflow to run tasks at quarter-past, half-past and
 quarter-to the hour.</p>
@@ -254,7 +255,7 @@ running the workflow and it may not be necessary to check this often.</p>
 </div>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Clock triggers are a type of <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependency</span></a> which cause
 <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> to wait for the <a class="reference internal" href="../../glossary.html#term-wallclock-time"><span class="xref std std-term">wallclock time</span></a> to reach the
@@ -278,7 +279,7 @@ running the workflow and it may not be necessary to check this often.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -105,7 +106,7 @@
            <div itemprop="articleBody">
              
   <section id="conda-environments">
-<span id="id1"></span><h1>Conda Environments<a class="headerlink" href="#conda-environments" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Conda Environments<a class="headerlink" href="#conda-environments" title="Permalink to this heading"></a></h1>
 <p>Cylc consists of multiple components.</p>
 <p>This Conda environment will provide you with the “recommended” installation of
 all components:</p>
@@ -121,7 +122,7 @@ all components:</p>
 </div>
 <p>The following sections outline alternatives for finer control over installation.</p>
 <section id="cylc-flow">
-<h2>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this headline"></a></h2>
+<h2>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this heading"></a></h2>
 <p>The simplest Cylc installation consists only of <a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a>:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow</span><span class="w"></span>
 <span class="nt">channels</span><span class="p">:</span><span class="w"></span>
@@ -161,7 +162,7 @@ features are not of interest:</p>
 </div>
 </section>
 <section id="cylc-uiserver">
-<h2>Cylc UIServer<a class="headerlink" href="#cylc-uiserver" title="Permalink to this headline"></a></h2>
+<h2>Cylc UIServer<a class="headerlink" href="#cylc-uiserver" title="Permalink to this heading"></a></h2>
 <p>The default <a class="reference internal" href="#cylc-uiserver">Cylc UIServer</a> package comes with <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> and the
 <a class="reference external" href="https://github.com/AbdealiJK/configurable-http-proxy">Configurable HTTP Proxy</a> (required by <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>) bundled:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver</span><span class="w"></span>
@@ -205,7 +206,7 @@ can be run as a standalone application.</p>
 </div>
 </section>
 <section id="cylc-rose">
-<h2>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this headline"></a></h2>
+<h2>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this heading"></a></h2>
 <p>For working with Rose add <code class="docutils literal notranslate"><span class="pre">metomi-rose</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc-rose</span></code> (the bridge
 between Cylc &amp; Rose):</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-rose</span><span class="w"></span>
@@ -221,13 +222,13 @@ between Cylc &amp; Rose):</p>
 future.</p>
 </section>
 <section id="adding-cylc-to-your-conda-package">
-<h2>Adding Cylc To Your Conda Package<a class="headerlink" href="#adding-cylc-to-your-conda-package" title="Permalink to this headline"></a></h2>
+<h2>Adding Cylc To Your Conda Package<a class="headerlink" href="#adding-cylc-to-your-conda-package" title="Permalink to this heading"></a></h2>
 <p>If you want to publish a package (e.g. to Conda Forge) that depends on Cylc,
 consider using the minimal package (e.g. <code class="docutils literal notranslate"><span class="pre">cylc-flow-base</span></code>) as a dependency
 to allow the installer to maintain flexibility over the installation.</p>
 </section>
 <section id="working-with-other-conda-channels">
-<h2>Working With Other Conda Channels<a class="headerlink" href="#working-with-other-conda-channels" title="Permalink to this headline"></a></h2>
+<h2>Working With Other Conda Channels<a class="headerlink" href="#working-with-other-conda-channels" title="Permalink to this heading"></a></h2>
 <p>Cylc projects are published to Conda Forge and the above environments install
 all dependencies from Conda Forge.</p>
 <p>If you want to install other dependencies (e.g. Python), from other channels
@@ -257,7 +258,7 @@ the Conda Forge channel.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

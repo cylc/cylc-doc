@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -111,7 +112,7 @@
            <div itemprop="articleBody">
              
   <section id="data-flow">
-<h1>Data Flow<a class="headerlink" href="#data-flow" title="Permalink to this headline"></a></h1>
+<h1>Data Flow<a class="headerlink" href="#data-flow" title="Permalink to this heading"></a></h1>
 <p>This section looks at how Cylc synchronises data between its different
 components, the transports, security and formats used to do so.</p>
 <div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-bbc033dc2abc4e5b314270dae1e5c178111a46e8.svg" type="image/svg+xml" class="graphviz">
@@ -124,10 +125,10 @@ UIS -&gt; UI [label=&quot; Websocket\n GraphQL&quot;]
 }</p></object></div>
 </div>
 <section id="protocols-transport-security">
-<span id="arch-protocols"></span><h2>Protocols, Transport &amp; Security<a class="headerlink" href="#protocols-transport-security" title="Permalink to this headline"></a></h2>
+<span id="arch-protocols"></span><h2>Protocols, Transport &amp; Security<a class="headerlink" href="#protocols-transport-security" title="Permalink to this heading"></a></h2>
 <p>Cylc uses the following schemes for data and control:</p>
 <section id="zmq-over-tcp">
-<span id="arch-zmq"></span><h3>ZMQ (Over TCP)<a class="headerlink" href="#zmq-over-tcp" title="Permalink to this headline"></a></h3>
+<span id="arch-zmq"></span><h3>ZMQ (Over TCP)<a class="headerlink" href="#zmq-over-tcp" title="Permalink to this heading"></a></h3>
 <p>Cylc uses <a class="reference external" href="https://zeromq.org/">ZMQ</a> over TCP for most server side interaction.</p>
 <p>All <a class="reference external" href="https://zeromq.org/">ZMQ</a> connections are secured by <a class="reference external" href="http://curvezmq.org/page:read-the-docs">CurveZMQ</a> which uses security keys
 which are stored on the filesystem with appropriate permissions.</p>
@@ -136,32 +137,32 @@ to the appropriate platforms.</p>
 <p>For more information on the key files see <a class="reference internal" href="../../user-guide/running-workflows/authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a>.</p>
 </section>
 <section id="ssh">
-<span id="arch-ssh"></span><h3>SSH<a class="headerlink" href="#ssh" title="Permalink to this headline"></a></h3>
+<span id="arch-ssh"></span><h3>SSH<a class="headerlink" href="#ssh" title="Permalink to this heading"></a></h3>
 <p>SSH connections are used for some purposes such as installing the key files
 required for <a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a> transport.</p>
 </section>
 <section id="https-hypertext-transfer-protocol-secure">
-<span id="arch-https"></span><h3>HTTPS (Hypertext Transfer Protocol Secure)<a class="headerlink" href="#https-hypertext-transfer-protocol-secure" title="Permalink to this headline"></a></h3>
+<span id="arch-https"></span><h3>HTTPS (Hypertext Transfer Protocol Secure)<a class="headerlink" href="#https-hypertext-transfer-protocol-secure" title="Permalink to this heading"></a></h3>
 <p>HTTPS connections are used in the browser-based <a class="reference external" href="https://github.com/cylc/cylc-ui">Cylc UI</a>. The certificate
 used must be configured with the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> / <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a>.</p>
 </section>
 <section id="wss-websocket-secure">
-<span id="arch-wss"></span><h3>WSS (WebSocket Secure)<a class="headerlink" href="#wss-websocket-secure" title="Permalink to this headline"></a></h3>
+<span id="arch-wss"></span><h3>WSS (WebSocket Secure)<a class="headerlink" href="#wss-websocket-secure" title="Permalink to this heading"></a></h3>
 <p>Websocket connections are used in the browser-based <a class="reference external" href="https://github.com/cylc/cylc-ui">Cylc UI</a>. These
 connections are upgraded from HTTPS connections and share the same security.</p>
 </section>
 </section>
 <section id="formats">
-<span id="arch-formats"></span><h2>Formats<a class="headerlink" href="#formats" title="Permalink to this headline"></a></h2>
+<span id="arch-formats"></span><h2>Formats<a class="headerlink" href="#formats" title="Permalink to this heading"></a></h2>
 <p>Cylc uses the following transports to communicate over these protocols.</p>
 <section id="protobuf">
-<span id="arch-protobuf"></span><h3>Protobuf<a class="headerlink" href="#protobuf" title="Permalink to this headline"></a></h3>
+<span id="arch-protobuf"></span><h3>Protobuf<a class="headerlink" href="#protobuf" title="Permalink to this heading"></a></h3>
 <p>Protobuf is both a storage utility and transport.</p>
 <p>Protobuf is used for internal data stores and the synchronisation of those data
 stores.</p>
 </section>
 <section id="graphql">
-<span id="arch-graphql"></span><h3>GraphQL<a class="headerlink" href="#graphql" title="Permalink to this headline"></a></h3>
+<span id="arch-graphql"></span><h3>GraphQL<a class="headerlink" href="#graphql" title="Permalink to this heading"></a></h3>
 <p><a class="reference internal" href="#graphql">GraphQL</a> is a query language which is intended to be the user-facing
 data and control interface for Cylc workflows.</p>
 <p>It contains both data and mutations (actions) defined by a self-documenting
@@ -170,10 +171,10 @@ schema.</p>
 </section>
 </section>
 <section id="component-interactions">
-<h2>Component Interactions<a class="headerlink" href="#component-interactions" title="Permalink to this headline"></a></h2>
+<h2>Component Interactions<a class="headerlink" href="#component-interactions" title="Permalink to this heading"></a></h2>
 <p>Here are some additional details on how the components interact.</p>
 <section id="job-scheduler">
-<h3>Job -&gt; Scheduler<a class="headerlink" href="#job-scheduler" title="Permalink to this headline"></a></h3>
+<h3>Job -&gt; Scheduler<a class="headerlink" href="#job-scheduler" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Default :Protocol</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></p>
@@ -187,7 +188,7 @@ methods. The method used is configured on a per-platform basis by the
 <a class="reference internal" href="../config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]communication</span> <span class="pre">method</span></code></a>.</p>
 </section>
 <section id="client-scheduler">
-<h3>Client -&gt; Scheduler<a class="headerlink" href="#client-scheduler" title="Permalink to this headline"></a></h3>
+<h3>Client -&gt; Scheduler<a class="headerlink" href="#client-scheduler" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Protocol</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></p>
@@ -201,7 +202,7 @@ mutations.</p>
 <p>Mutations are issued through <a class="reference external" href="https://zeromq.org/">ZMQ</a> connections.</p>
 </section>
 <section id="scheduler-ui-server">
-<h3>Scheduler -&gt; UI Server<a class="headerlink" href="#scheduler-ui-server" title="Permalink to this headline"></a></h3>
+<h3>Scheduler -&gt; UI Server<a class="headerlink" href="#scheduler-ui-server" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Protocol</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></p>
@@ -223,7 +224,7 @@ subscriptions the <a class="reference external" href="https://github.com/cylc/cy
 connections.</p>
 </section>
 <section id="ui-server-ui">
-<h3>UI Server -&gt; UI<a class="headerlink" href="#ui-server-ui" title="Permalink to this headline"></a></h3>
+<h3>UI Server -&gt; UI<a class="headerlink" href="#ui-server-ui" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Protocols</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#arch-wss"><span class="std std-ref">WSS (WebSocket Secure)</span></a>, <a class="reference internal" href="#arch-https"><span class="std std-ref">HTTPS (Hypertext Transfer Protocol Secure)</span></a></p>
@@ -286,7 +287,7 @@ subscription is now cancelled.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

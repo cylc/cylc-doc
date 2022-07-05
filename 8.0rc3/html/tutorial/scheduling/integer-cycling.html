@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -108,7 +109,7 @@
            <div itemprop="articleBody">
              
   <section id="basic-cycling">
-<span id="tutorial-integer-cycling"></span><h1>Basic Cycling<a class="headerlink" href="#basic-cycling" title="Permalink to this headline"></a></h1>
+<span id="tutorial-integer-cycling"></span><h1>Basic Cycling<a class="headerlink" href="#basic-cycling" title="Permalink to this heading"></a></h1>
 <div class="aims admonition">
 <p class="admonition-title">Aims</p>
 <div class="line-block">
@@ -117,7 +118,7 @@
 </div>
 </div>
 <section id="repeating-workflows">
-<h2>Repeating Workflows<a class="headerlink" href="#repeating-workflows" title="Permalink to this headline"></a></h2>
+<h2>Repeating Workflows<a class="headerlink" href="#repeating-workflows" title="Permalink to this heading"></a></h2>
 <p>You may want to repeat the same workflow multiple times. In Cylc this
 is called <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling</span></a>, and each repetition is called a <a class="reference internal" href="../../glossary.html#term-cycle"><span class="xref std std-term">cycle</span></a>.</p>
 <p>Each <a class="reference internal" href="../../glossary.html#term-cycle"><span class="xref std std-term">cycle</span></a> is given a unique label, called a
@@ -204,7 +205,7 @@ subgraph cluster_3 {
 <p>The number under each task shows which <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a> it belongs to.</p>
 </section>
 <section id="intercycle-dependencies">
-<h2>Intercycle Dependencies<a class="headerlink" href="#intercycle-dependencies" title="Permalink to this headline"></a></h2>
+<h2>Intercycle Dependencies<a class="headerlink" href="#intercycle-dependencies" title="Permalink to this heading"></a></h2>
 <p>We’ve just seen how to write a workflow that repeats every <a class="reference internal" href="../../glossary.html#term-cycle"><span class="xref std std-term">cycle</span></a>.</p>
 <p>Cylc runs tasks as soon as their dependencies are met, regardless of cycle
 point, so cycles will not necessarily run in order. This can be efficient,
@@ -376,7 +377,7 @@ subgraph cluster_4 {
 </div>
 </section>
 <section id="recurrence-sections">
-<h2>Recurrence Sections<a class="headerlink" href="#recurrence-sections" title="Permalink to this headline"></a></h2>
+<h2>Recurrence Sections<a class="headerlink" href="#recurrence-sections" title="Permalink to this heading"></a></h2>
 <p>In the previous examples we used a
 <code class="docutils literal notranslate"><span class="pre">P1</span></code><a class="reference internal" href="../../glossary.html#term-recurrence"><span class="xref std std-term">recurrence</span></a> to make the workflow repeat at successive integer
 cycle points. Similarly <code class="docutils literal notranslate"><span class="pre">P2</span></code> means repeat every <em>other</em> cycle, and so
@@ -600,7 +601,7 @@ make your workflow match the diagram below.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

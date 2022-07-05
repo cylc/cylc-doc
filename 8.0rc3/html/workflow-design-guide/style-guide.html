@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -116,12 +117,12 @@
            <div itemprop="articleBody">
              
   <section id="style-guidelines">
-<h1>Style Guidelines<a class="headerlink" href="#style-guidelines" title="Permalink to this headline"></a></h1>
+<h1>Style Guidelines<a class="headerlink" href="#style-guidelines" title="Permalink to this heading"></a></h1>
 <p>Coding style is largely subjective, but for collaborative development of
 complex systems it is important to settle on a clear and consistent style to
 avoid getting into a mess. The following style rules are recommended.</p>
 <section id="tab-characters">
-<h2>Tab Characters<a class="headerlink" href="#tab-characters" title="Permalink to this headline"></a></h2>
+<h2>Tab Characters<a class="headerlink" href="#tab-characters" title="Permalink to this heading"></a></h2>
 <p>Do not use tab characters. Tab width depends on editor settings, so a mixture
 of tabs and spaces in the same file can render to a mess.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-InPr</span> <span class="pre">&quot;\t&quot;</span> <span class="pre">*</span></code> to find tabs recursively in files in
@@ -132,7 +133,7 @@ and set <code class="docutils literal notranslate"><span class="pre">expandtab</
 <p>In <em>gedit</em>, use the <em>Draw Spaces</em> plugin to display tabs and spaces.</p>
 </section>
 <section id="trailing-whitespace">
-<h2>Trailing Whitespace<a class="headerlink" href="#trailing-whitespace" title="Permalink to this headline"></a></h2>
+<h2>Trailing Whitespace<a class="headerlink" href="#trailing-whitespace" title="Permalink to this heading"></a></h2>
 <p>Trailing whitespace is untidy, it makes quick reformatting of paragraphs
 difficult, and it can result in hard-to-find bugs (space after intended
 line continuation markers).</p>
@@ -148,12 +149,12 @@ line continuation markers).</p>
 remove trailing whitespace on the fly.</p>
 </section>
 <section id="indentation">
-<h2>Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline"></a></h2>
+<h2>Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading"></a></h2>
 <p>Consistent indentation makes a workflow definition more readable, it shows section
 nesting clearly, and it makes block re-indentation operations easier in text
 editors. Indent <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> syntax four spaces per nesting level:</p>
 <section id="settings-config-items">
-<h3>Settings (Config Items)<a class="headerlink" href="#settings-config-items" title="Permalink to this headline"></a></h3>
+<h3>Settings (Config Items)<a class="headerlink" href="#settings-config-items" title="Permalink to this heading"></a></h3>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[SECTION]</span>
     <span class="c1"># A comment.</span>
     <span class="nv">title </span><span class="o">=</span><span class="s"> the quick brown fox</span>
@@ -182,7 +183,7 @@ pollute your revision history with spurious changes.</p>
 to, and trailing comments should be preceded by two spaces, as shown above.</p>
 </section>
 <section id="script-string-lines">
-<h3>Script String Lines<a class="headerlink" href="#script-string-lines" title="Permalink to this headline"></a></h3>
+<h3>Script String Lines<a class="headerlink" href="#script-string-lines" title="Permalink to this heading"></a></h3>
 <p>Script strings are written verbatim to task job scripts.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[foo]]</span>
@@ -241,7 +242,7 @@ common leading whitespace.</p>
 </div>
 </section>
 <section id="graph-string-lines">
-<h3>Graph String Lines<a class="headerlink" href="#graph-string-lines" title="Permalink to this headline"></a></h3>
+<h3>Graph String Lines<a class="headerlink" href="#graph-string-lines" title="Permalink to this heading"></a></h3>
 <p>Whitespace is ignored in graph string parsing so internal graph lines
 should be indented as if part of the <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> syntax:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
@@ -257,7 +258,7 @@ should be indented as if part of the <a class="reference internal" href="../refe
 </div>
 </section>
 <section id="jinja2-code">
-<h3>Jinja2 Code<a class="headerlink" href="#jinja2-code" title="Permalink to this headline"></a></h3>
+<h3>Jinja2 Code<a class="headerlink" href="#jinja2-code" title="Permalink to this heading"></a></h3>
 <p>A <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file with embedded Jinja2 code is essentially a Jinja2 program to
 generate a Cylc workflow definition. It is not possible to consistently indent the
 Jinja2 as if it were part of the <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> syntax (which to the Jinja2 processor
@@ -276,7 +277,7 @@ its own terms:</p>
 </section>
 </section>
 <section id="comments">
-<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline"></a></h2>
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this heading"></a></h2>
 <p>Comments should be minimal, but not too minimal. If context and clear
 task and variable names will do, leave it at that. Extremely verbose comments
 tend to get out of sync with the code they describe, which can be worse
@@ -288,14 +289,14 @@ strictly limited to the standard line length (see <a class="reference internal" 
 <p>Indent comments to the same level as the config items they describe.</p>
 </section>
 <section id="titles-descriptions-and-urls">
-<h2>Titles, Descriptions, And URLs<a class="headerlink" href="#titles-descriptions-and-urls" title="Permalink to this headline"></a></h2>
+<h2>Titles, Descriptions, And URLs<a class="headerlink" href="#titles-descriptions-and-urls" title="Permalink to this heading"></a></h2>
 <p>Document the workflow and its tasks with <code class="docutils literal notranslate"><span class="pre">title</span></code>,
 <code class="docutils literal notranslate"><span class="pre">description</span></code>, and <code class="docutils literal notranslate"><span class="pre">url</span></code> items instead of comments.
 See the <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[meta]" title="flow.cylc[meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[meta]</span></code></a> and
 <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][meta]" title="flow.cylc[runtime][&lt;namespace&gt;][meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][meta]</span></code></a> sections.</p>
 </section>
 <section id="line-length-and-continuation">
-<span id="line-length"></span><h2>Line Length And Continuation<a class="headerlink" href="#line-length-and-continuation" title="Permalink to this headline"></a></h2>
+<span id="line-length"></span><h2>Line Length And Continuation<a class="headerlink" href="#line-length-and-continuation" title="Permalink to this heading"></a></h2>
 <p>Keep to the standard maximum line length of 79 characters where possible. Very
 long lines affect readability and make side-by-side diffs hard to view.</p>
 <p>Backslash line continuation markers can be used anywhere in the <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
@@ -323,7 +324,7 @@ trigger arrows and boolean operators imply line continuation:</p>
 </div>
 </section>
 <section id="task-naming-conventions">
-<h2>Task Naming Conventions<a class="headerlink" href="#task-naming-conventions" title="Permalink to this headline"></a></h2>
+<h2>Task Naming Conventions<a class="headerlink" href="#task-naming-conventions" title="Permalink to this heading"></a></h2>
 <p>Use <code class="docutils literal notranslate"><span class="pre">UPPERCASE</span></code> for family names and <code class="docutils literal notranslate"><span class="pre">lowercase</span></code>
 for tasks, so you can distinguish them at a glance.</p>
 <p>Choose a convention for multi-component names and use it consistently. Put the
@@ -331,7 +332,7 @@ most general name components first for natural grouping, e.g.
 <code class="docutils literal notranslate"><span class="pre">obs_sonde</span></code>, <code class="docutils literal notranslate"><span class="pre">obs_radar</span></code> (not <code class="docutils literal notranslate"><span class="pre">sonde_obs</span></code> etc.)</p>
 <p>Within your convention keep names as short as possible.</p>
 <section id="um-system-task-names">
-<h3>UM System Task Names<a class="headerlink" href="#um-system-task-names" title="Permalink to this headline"></a></h3>
+<h3>UM System Task Names<a class="headerlink" href="#um-system-task-names" title="Permalink to this heading"></a></h3>
 <p>For UM System workflows we recommend the following full task naming convention:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model_system_function[_member]
 </pre></div>
@@ -349,7 +350,7 @@ domains without causing confusion.</p>
 </section>
 </section>
 <section id="rose-config-files">
-<h2>Rose Config Files<a class="headerlink" href="#rose-config-files" title="Permalink to this headline"></a></h2>
+<h2>Rose Config Files<a class="headerlink" href="#rose-config-files" title="Permalink to this heading"></a></h2>
 <p>Use <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">config-dump</span></code> to load and re-save new <code class="docutils literal notranslate"><span class="pre">rose.conf</span></code> files. This
 puts the files in a standard format (ordering of lines etc.) to ensure that
 spurious changes aren’t generated when you next use <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code>.</p>
@@ -369,7 +370,7 @@ spurious changes aren’t generated when you next use <code class="docutils lite
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

@@ -22,6 +22,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/js/diff_selector.js"></script>
         <script src="_static/js/minicylc.js"></script>
@@ -110,7 +111,7 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
 <p>Cylc 8 and its core software dependencies can be installed quickly from Conda
 Forge, into a conda environment; or from PyPI, into a Python 3 virtual environment.</p>
 <div class="admonition note">
@@ -122,10 +123,10 @@ if needed for production systems.</p>
 <p>Please report migration issues to the <a class="reference external" href="https://cylc.discourse.group/c/cylc/7-to-8/13">Cylc Discourse Forum (7-to-8 topic)</a>.</p>
 </div>
 <section id="quick-installation">
-<h2>Quick Installation<a class="headerlink" href="#quick-installation" title="Permalink to this headline"></a></h2>
+<h2>Quick Installation<a class="headerlink" href="#quick-installation" title="Permalink to this heading"></a></h2>
 <p>Cylc runs on Unix-like systems including Linux and Mac OS.</p>
 <section id="via-conda-recommended">
-<h3>Via Conda (recommended)<a class="headerlink" href="#via-conda-recommended" title="Permalink to this headline"></a></h3>
+<h3>Via Conda (recommended)<a class="headerlink" href="#via-conda-recommended" title="Permalink to this heading"></a></h3>
 <div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge cylc-flow
 
 <span class="c"># Install the browser-GUI (optional)</span>
@@ -137,7 +138,7 @@ $ conda install -c conda-forge cylc-rose metomi-rose
 </div>
 </section>
 <section id="via-pip-npm">
-<h3>Via Pip (+npm)<a class="headerlink" href="#via-pip-npm" title="Permalink to this headline"></a></h3>
+<h3>Via Pip (+npm)<a class="headerlink" href="#via-pip-npm" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Requires Python 3.7+</p>
@@ -177,7 +178,7 @@ $ npm install configurable-http-proxy
 </section>
 </section>
 <section id="non-python-requirements">
-<span id="id2"></span><h2>Non-Python Requirements<a class="headerlink" href="#non-python-requirements" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Non-Python Requirements<a class="headerlink" href="#non-python-requirements" title="Permalink to this heading"></a></h2>
 <p>These dependencies are not installed by Conda or pip:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">bash</span></code></p></li>
@@ -197,7 +198,7 @@ installed using npm)</p></li>
 </div>
 </section>
 <section id="installing-on-mac-os">
-<h2>Installing On Mac OS<a class="headerlink" href="#installing-on-mac-os" title="Permalink to this headline"></a></h2>
+<h2>Installing On Mac OS<a class="headerlink" href="#installing-on-mac-os" title="Permalink to this heading"></a></h2>
 <p>Cylc requires some extra packages to function on Mac OS. We recommend
 installing them using the <a class="reference external" href="https://formulae.brew.sh/">Homebrew</a> package manager:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew install bash coreutils gnu-sed
@@ -226,7 +227,7 @@ for instructions on enabling SSH.</p>
 </div>
 </section>
 <section id="advanced-installation">
-<h2>Advanced Installation<a class="headerlink" href="#advanced-installation" title="Permalink to this headline"></a></h2>
+<h2>Advanced Installation<a class="headerlink" href="#advanced-installation" title="Permalink to this heading"></a></h2>
 <p>For distributed and multi-user installation we recommend using Conda and
 installing Cylc components only where required.</p>
 <div class="admonition tip">
@@ -235,7 +236,7 @@ installing Cylc components only where required.</p>
 <a class="reference internal" href="reference/environments/conda.html#conda-environments"><span class="std std-ref">Conda Environments</span></a> for examples and details.</p>
 </div>
 <section id="the-cylc-components">
-<h3>The Cylc Components<a class="headerlink" href="#the-cylc-components" title="Permalink to this headline"></a></h3>
+<h3>The Cylc Components<a class="headerlink" href="#the-cylc-components" title="Permalink to this heading"></a></h3>
 <p>Cylc is split into a number of components providing different functionality:</p>
 <dl class="simple">
 <dt><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></dt><dd><p>Provides the scheduler “kernel” of Cylc along with the command line interface.</p>
@@ -247,7 +248,7 @@ installing Cylc components only where required.</p>
 </dl>
 </section>
 <section id="installation-types">
-<h3>Installation Types<a class="headerlink" href="#installation-types" title="Permalink to this headline"></a></h3>
+<h3>Installation Types<a class="headerlink" href="#installation-types" title="Permalink to this heading"></a></h3>
 <p>Cylc install locations may fall into the following “roles”:</p>
 <dl class="simple">
 <dt>User Machines</dt><dd><p>Where users write workflows and interact with the command line.</p>
@@ -263,7 +264,7 @@ installing Cylc components only where required.</p>
 </div>
 </section>
 <section id="recommended-installation">
-<h3>Recommended Installation<a class="headerlink" href="#recommended-installation" title="Permalink to this headline"></a></h3>
+<h3>Recommended Installation<a class="headerlink" href="#recommended-installation" title="Permalink to this heading"></a></h3>
 <dl class="simple">
 <dt>User Machines</dt><dd><ul class="simple">
 <li><p><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></p></li>
@@ -284,7 +285,7 @@ installing Cylc components only where required.</p>
 </dl>
 </section>
 <section id="managing-environments">
-<span id="id3"></span><h3>Managing Environments<a class="headerlink" href="#managing-environments" title="Permalink to this headline"></a></h3>
+<span id="id3"></span><h3>Managing Environments<a class="headerlink" href="#managing-environments" title="Permalink to this heading"></a></h3>
 <p>For Cylc to run, the correct environment must be activated. Cylc can
 not do this automatically. You may need to have multiple Cylc versions
 available too.</p>
@@ -321,7 +322,7 @@ ln -s cylc isodatetime
 </section>
 </section>
 <section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h2>
 <p>Cylc uses “sane and safe” defaults and is suitable for use “out of the box”.
 However, many things may need to be configured, e.g:</p>
 <ul class="simple">
@@ -330,7 +331,7 @@ However, many things may need to be configured, e.g:</p>
 <li><p>User/Site preferences</p></li>
 </ul>
 <section id="cylc-flow">
-<h3>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this headline"></a></h3>
+<h3>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this heading"></a></h3>
 <p><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> is configured by the <a class="reference internal" href="reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a> file which supports
 configuration of the system on both a site and user basis.</p>
 <div class="admonition note">
@@ -340,7 +341,7 @@ no longer supported.</p>
 </div>
 </section>
 <section id="bash-profile">
-<h3>Bash Profile<a class="headerlink" href="#bash-profile" title="Permalink to this headline"></a></h3>
+<h3>Bash Profile<a class="headerlink" href="#bash-profile" title="Permalink to this heading"></a></h3>
 <p>Cylc task job scripts are bash scripts, which is good for manipulating files
 and processes, They invoke <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-l</span></code> to allow environment configuration in
 login scripts.</p>
@@ -365,7 +366,7 @@ environment correctly for Cylc and <em>do not write anything to stdout</em>.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

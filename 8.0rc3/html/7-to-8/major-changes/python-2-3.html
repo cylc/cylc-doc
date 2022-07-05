@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -119,7 +120,7 @@
            <div itemprop="articleBody">
              
   <section id="python-2-3">
-<h1>Python 2 =&gt; 3<a class="headerlink" href="#python-2-3" title="Permalink to this headline"></a></h1>
+<h1>Python 2 =&gt; 3<a class="headerlink" href="#python-2-3" title="Permalink to this heading"></a></h1>
 <div class="tip admonition">
 <p class="admonition-title">Does This Change Affect Me?</p>
 <p>This change will affect you if your workflows extend Cylc or Jinja2 with
@@ -128,7 +129,7 @@ custom Python scripts.</p>
 tasks if desired.</p>
 </div>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>Cylc 7 ran under Python 2, Cylc 8 runs under Python 3.</p>
 <p>Cylc can be extended with custom Python scripts. These scripts are run under
 the same version of Python used by Cylc.</p>
@@ -138,7 +139,7 @@ scripts from Python 2 to Python 3 in the process.</p>
 There are tools to help you do this. E.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
 </section>
 <section id="impacted-scripts">
-<h2>Impacted Scripts<a class="headerlink" href="#impacted-scripts" title="Permalink to this headline"></a></h2>
+<h2>Impacted Scripts<a class="headerlink" href="#impacted-scripts" title="Permalink to this heading"></a></h2>
 <p>The following scripts must be upgraded if used:</p>
 <dl>
 <dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a></dt><dd><p>These allow you to extend Jinja2 with Python code.</p>
@@ -159,7 +160,7 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 </dl>
 </section>
 <section id="package-name-changes">
-<h2>Package Name Changes<a class="headerlink" href="#package-name-changes" title="Permalink to this headline"></a></h2>
+<h2>Package Name Changes<a class="headerlink" href="#package-name-changes" title="Permalink to this heading"></a></h2>
 <p>Three Python packages have been renamed between Cylc 7 and Cylc 8:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cylc</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">cylc.flow</span></code></p></li>
@@ -206,7 +207,7 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 </div>
 </section>
 <section id="rose">
-<h2>Rose<a class="headerlink" href="#rose" title="Permalink to this headline"></a></h2>
+<h2>Rose<a class="headerlink" href="#rose" title="Permalink to this heading"></a></h2>
 <p>The same changes also impact Rose extensions:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://metomi.github.io/rose/2.0rc3/html/api/rose-macro.html#api-rose-macro" title="(in Rose Documentation v2.0rc3)"><span class="xref std std-ref">Rose Macros</span></a></p></li>
@@ -227,7 +228,7 @@ There are tools to help you do this. E.g. <a class="reference external" href="ht
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

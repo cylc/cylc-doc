@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -100,9 +101,9 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<span id="cylc-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
+<span id="cylc-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
 <section id="what-is-a-workflow">
-<span id="cylc-what-is-a-workflow"></span><h2>What Is A Workflow?<a class="headerlink" href="#what-is-a-workflow" title="Permalink to this headline"></a></h2>
+<span id="cylc-what-is-a-workflow"></span><h2>What Is A Workflow?<a class="headerlink" href="#what-is-a-workflow" title="Permalink to this heading"></a></h2>
 <blockquote class="epigraph">
 <div><p>A workflow consists of an orchestrated and repeatable pattern of business
 activity enabled by the systematic organization of resources into processes
@@ -123,21 +124,21 @@ order with arrows between them.</p>
 </div>
 </section>
 <section id="what-is-cylc">
-<span id="cylc-what-is-cylc"></span><h2>What Is Cylc?<a class="headerlink" href="#what-is-cylc" title="Permalink to this headline"></a></h2>
+<span id="cylc-what-is-cylc"></span><h2>What Is Cylc?<a class="headerlink" href="#what-is-cylc" title="Permalink to this heading"></a></h2>
 <p>Cylc (pronounced silk) is a workflow engine, a system that automatically
 executes tasks according to schedules and dependencies.</p>
 <p>In a Cylc workflow each step is a computational task that runs a script or
 application of some kind. Cylc runs each task as soon as it is appropriate
 to do so.</p>
-<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-bcaa060fec0997676b909c89f84e39f71f00477a.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-2a784c08aeca67fc177be4c4a2f8ca86dcdbc629.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
+d -&gt; f
 b -&gt; c
 b -&gt; d
-e -&gt; f
-f
 c
+f
 a -&gt; b
-d -&gt; f
+e -&gt; f
 }</p></object></div>
 </div>
 </div><p>Cylc can automatically:</p>
@@ -171,7 +172,7 @@ User Interface), web GUI, and <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

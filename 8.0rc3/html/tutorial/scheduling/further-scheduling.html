@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -108,7 +109,7 @@
            <div itemprop="articleBody">
              
   <section id="further-scheduling">
-<span id="tutorial-cylc-further-scheduling"></span><h1>Further Scheduling<a class="headerlink" href="#further-scheduling" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-further-scheduling"></span><h1>Further Scheduling<a class="headerlink" href="#further-scheduling" title="Permalink to this heading"></a></h1>
 <div class="aims admonition">
 <p class="admonition-title">Aims</p>
 <div class="line-block">
@@ -119,7 +120,7 @@
 </div>
 </div>
 <section id="qualifiers">
-<span id="tutorial-qualifiers"></span><h2>Qualifiers<a class="headerlink" href="#qualifiers" title="Permalink to this headline"></a></h2>
+<span id="tutorial-qualifiers"></span><h2>Qualifiers<a class="headerlink" href="#qualifiers" title="Permalink to this heading"></a></h2>
 <p>So far we have written dependencies like <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">=&gt;</span> <span class="pre">bar</span></code>. This is, in fact,
 shorthand for <code class="docutils literal notranslate"><span class="pre">foo:succeed</span> <span class="pre">=&gt;</span> <span class="pre">bar</span></code>. It means that the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> will run
 once <code class="docutils literal notranslate"><span class="pre">foo</span></code> has finished successfully. If <code class="docutils literal notranslate"><span class="pre">foo</span></code> were to fail then <code class="docutils literal notranslate"><span class="pre">bar</span></code>
@@ -140,7 +141,7 @@ to handle events within your code (custom outputs).</p>
 <p><em>For more information see the</em> <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
 </section>
 <section id="clock-triggers">
-<span id="tutorial-clock-triggers"></span><h2>Clock Triggers<a class="headerlink" href="#clock-triggers" title="Permalink to this headline"></a></h2>
+<span id="tutorial-clock-triggers"></span><h2>Clock Triggers<a class="headerlink" href="#clock-triggers" title="Permalink to this heading"></a></h2>
 <p>In Cylc, <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a> are just task labels. Tasks are
 triggered when their dependencies are met, regardless of cycle point.
 But <em>clock triggers</em> can be used to force tasks to wait for a particular
@@ -164,7 +165,7 @@ until 11:00 on the 1st of January 2000 before running:</p>
 </div>
 </section>
 <section id="alternative-calendars">
-<h2>Alternative Calendars<a class="headerlink" href="#alternative-calendars" title="Permalink to this headline"></a></h2>
+<h2>Alternative Calendars<a class="headerlink" href="#alternative-calendars" title="Permalink to this heading"></a></h2>
 <p>By default Cylc uses the Gregorian calendar for <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a>,
 but it also supports:</p>
 <ul class="simple">
@@ -196,7 +197,7 @@ but it also supports:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -104,7 +105,7 @@
            <div itemprop="articleBody">
              
   <section id="removing-workflows">
-<span id="id1"></span><h1>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this heading"></a></h1>
 <p>To delete an installed workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>, we recommend using
 the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> command. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> takes care of deleting workflows
 on the local filesystem and any remote install targets.
@@ -133,7 +134,7 @@ it will be lost.</p>
 </pre></div>
 </div>
 <section id="cleaning-on-remote-install-targets">
-<h2>Cleaning on remote install targets<a class="headerlink" href="#cleaning-on-remote-install-targets" title="Permalink to this headline"></a></h2>
+<h2>Cleaning on remote install targets<a class="headerlink" href="#cleaning-on-remote-install-targets" title="Permalink to this heading"></a></h2>
 <p>If any jobs in your workflow ran on a remote <a class="reference internal" href="../glossary.html#term-platform"><span class="xref std std-term">platform</span></a>, Cylc will
 automatically remove the workflow files on there in addition to the local
 filesystem.</p>
@@ -155,7 +156,7 @@ have to manually remove the files on remote install targets.</p>
 or just the remote install target using the <code class="docutils literal notranslate"><span class="pre">--remote</span></code> option.</p>
 </section>
 <section id="cleaning-specific-subdirectories-or-files">
-<span id="targetedclean"></span><h2>Cleaning specific subdirectories or files<a class="headerlink" href="#cleaning-specific-subdirectories-or-files" title="Permalink to this headline"></a></h2>
+<span id="targetedclean"></span><h2>Cleaning specific subdirectories or files<a class="headerlink" href="#cleaning-specific-subdirectories-or-files" title="Permalink to this heading"></a></h2>
 <p>You can clean specific subdirectories or files inside a run directory using
 the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option (we refer to this as a targeted clean).
 For example, to remove the <code class="docutils literal notranslate"><span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">work</span></code> directories:</p>
@@ -178,7 +179,7 @@ beginning with <code class="docutils literal notranslate"><span class="pre">2020
 </div>
 </section>
 <section id="a-note-on-symlink-directories">
-<span id="cleansymlinkdirsnote"></span><h2>A note on symlink directories<a class="headerlink" href="#a-note-on-symlink-directories" title="Permalink to this headline"></a></h2>
+<span id="cleansymlinkdirsnote"></span><h2>A note on symlink directories<a class="headerlink" href="#a-note-on-symlink-directories" title="Permalink to this heading"></a></h2>
 <div class="tip admonition">
 <p class="admonition-title">Does this affect me?</p>
 <p>If you use symlink directories specified in
@@ -212,7 +213,7 @@ it simply detects what symlinks are present out of the possible ones.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

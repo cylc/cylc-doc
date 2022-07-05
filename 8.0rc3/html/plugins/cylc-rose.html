@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -106,9 +107,9 @@
            <div itemprop="articleBody">
              
   <section id="cylc-rose">
-<span id="id1"></span><h1>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this heading"></a></h1>
 <span class="target" id="module-cylc.rose"></span><section id="rose-suite-configurations">
-<h2>Rose Suite Configurations<a class="headerlink" href="#rose-suite-configurations" title="Permalink to this headline"></a></h2>
+<h2>Rose Suite Configurations<a class="headerlink" href="#rose-suite-configurations" title="Permalink to this heading"></a></h2>
 <p>This plugin is activated by the existence of a Rose Suite Configuration file
 (called <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>) in the workflow definition directory which allows
 you to:</p>
@@ -131,7 +132,7 @@ you to:</p>
 command (present in Rose versions 2019.01 and earlier).</p>
 </div>
 <section id="configuration-file">
-<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this headline"></a></h3>
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this heading"></a></h3>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>Although we now refer to Cylc <strong>workflows</strong> (rather than <strong>suites</strong>) we
@@ -176,7 +177,7 @@ for ease of porting Cylc 7 workflows.</p>
 </div>
 </section>
 <section id="special-variables">
-<h3>Special Variables<a class="headerlink" href="#special-variables" title="Permalink to this headline"></a></h3>
+<h3>Special Variables<a class="headerlink" href="#special-variables" title="Permalink to this heading"></a></h3>
 <p>The Cylc Rose plugin provides two environment/template variables
 to the Cylc scheduler:</p>
 <dl>
@@ -210,19 +211,19 @@ Cylc-Rose plugin, as it is now set by Cylc.</p>
 </dl>
 </section>
 <section id="additional-cli-options">
-<h3>Additional CLI options<a class="headerlink" href="#additional-cli-options" title="Permalink to this headline"></a></h3>
+<h3>Additional CLI options<a class="headerlink" href="#additional-cli-options" title="Permalink to this heading"></a></h3>
 <p>You can use command line options to set or override
 any setting you could put in a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file: If you
 have Cylc Rose installed see <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--help</span></code>.</p>
 </section>
 <section id="cylc-install-optional-config">
-<h3>Cylc Install Optional Config<a class="headerlink" href="#cylc-install-optional-config" title="Permalink to this headline"></a></h3>
+<h3>Cylc Install Optional Config<a class="headerlink" href="#cylc-install-optional-config" title="Permalink to this heading"></a></h3>
 <p>If Cylc-Rose is installed, using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> with a workflow containing a
 Rose Suite Configuration will write a record of command line options set in
 <code class="docutils literal notranslate"><span class="pre">$CYLC_RUN_DIR/workflow_name/opt/rose-suite-cylc-install.conf</span></code>.</p>
 </section>
 <section id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
 <p>For a workflow with the following definitions in the <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>:</p>
 <p>rose-suite.conf</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[template variables]</span><span class="w"></span>
@@ -259,7 +260,7 @@ Rose Suite Configuration will write a record of command line options set in
 </section>
 </section>
 <section id="rose-stem">
-<span id="id2"></span><h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://metomi.github.io/rose/2019.01.2/html/tutorial/rose/furthertopics/rose-stem.html">Rose Stem documentation</a></p>
@@ -293,7 +294,7 @@ of your rose stem suite.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

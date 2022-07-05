@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -127,7 +128,7 @@
            <div itemprop="articleBody">
              
   <section id="start-restart-reload">
-<span id="workflowstartup"></span><h1>Start, Restart, Reload<a class="headerlink" href="#start-restart-reload" title="Permalink to this headline"></a></h1>
+<span id="workflowstartup"></span><h1>Start, Restart, Reload<a class="headerlink" href="#start-restart-reload" title="Permalink to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command starts a new instance of the Cylc scheduler program
 to manage a workflow, for the duration of the run. It also resumes paused
 workflows.</p>
@@ -185,7 +186,7 @@ scratch again, install a new copy of the workflow to a new run directory.</p>
 </ul>
 </div>
 <section id="start-and-stop-vs-initial-and-final-cycle-points">
-<span id="start-stop-cycle-point"></span><h2>Start and Stop vs Initial and Final Cycle Points<a class="headerlink" href="#start-and-stop-vs-initial-and-final-cycle-points" title="Permalink to this headline"></a></h2>
+<span id="start-stop-cycle-point"></span><h2>Start and Stop vs Initial and Final Cycle Points<a class="headerlink" href="#start-and-stop-vs-initial-and-final-cycle-points" title="Permalink to this heading"></a></h2>
 <p>All workflows have an <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> and some may have a
 <a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>. These define extent of the graph of tasks that Cylc
 can schedule to run.</p>
@@ -207,7 +208,7 @@ the scheduler actually does run. For example:</p>
 would only run at cycle <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
 <img alt="../../_images/initial-start-stop-final-cp.svg" class="align-center" src="../../_images/initial-start-stop-final-cp.svg" /></section>
 <section id="restarts-and-the-initial-final-start-and-stop-cycle-points">
-<h2>Restarts and the Initial, Final, Start and Stop Cycle Points<a class="headerlink" href="#restarts-and-the-initial-final-start-and-stop-cycle-points" title="Permalink to this headline"></a></h2>
+<h2>Restarts and the Initial, Final, Start and Stop Cycle Points<a class="headerlink" href="#restarts-and-the-initial-final-start-and-stop-cycle-points" title="Permalink to this heading"></a></h2>
 <p>When a workflow is restarted or reloaded, any changes to
 <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]final cycle point" title="flow.cylc[scheduling]final cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]final</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a> or
 <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]stop after cycle point" title="flow.cylc[scheduling]stop after cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]stop</span> <span class="pre">after</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a> are normally picked up by Cylc.</p>
@@ -232,7 +233,7 @@ in a restart; workflows always start from the cycle point where they
 previously stopped.</p>
 </section>
 <section id="reloading-the-workflow-configuration-at-runtime">
-<span id="id1"></span><h2>Reloading the Workflow Configuration at Runtime<a class="headerlink" href="#reloading-the-workflow-configuration-at-runtime" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2>Reloading the Workflow Configuration at Runtime<a class="headerlink" href="#reloading-the-workflow-configuration-at-runtime" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code> command tells the target <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to reload its
 workflow configuration at run time. This is an alternative to shutting a
 workflow down and restarting it after making changes.</p>
@@ -248,7 +249,7 @@ log will report an error and the reload will have no effect.</p>
 job is submitted there after a reload.</p>
 </section>
 <section id="restarting-or-reloading-after-graph-changes">
-<h2>Restarting or Reloading after Graph Changes<a class="headerlink" href="#restarting-or-reloading-after-graph-changes" title="Permalink to this headline"></a></h2>
+<h2>Restarting or Reloading after Graph Changes<a class="headerlink" href="#restarting-or-reloading-after-graph-changes" title="Permalink to this heading"></a></h2>
 <p>If dependencies have changed, tasks that were already active will spawn
 children according to their original outputs. Subsequent instances will have
 the new settings.</p>
@@ -260,7 +261,7 @@ as upstream tasks complete the outputs that they depend on. If they have no
 parents to do that, you can trigger the first ones manually with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code>.</p>
 </section>
 <section id="remote-initialization">
-<span id="remoteinit"></span><h2>Remote Initialization<a class="headerlink" href="#remote-initialization" title="Permalink to this headline"></a></h2>
+<span id="remoteinit"></span><h2>Remote Initialization<a class="headerlink" href="#remote-initialization" title="Permalink to this heading"></a></h2>
 <p>For workflows that run on remote platforms, i.e. using a host other than
 <code class="docutils literal notranslate"><span class="pre">localhost</span></code>, Cylc performs an initialization process. This involves transferring
 files and directories required to run jobs, including authentication keys
@@ -280,7 +281,7 @@ platform, if these are configured using
 <a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. Using this functionality is an
 efficient way to manage disk space.</p>
 <section id="installing-custom-files-at-start-up">
-<h3>Installing Custom Files At Start-up<a class="headerlink" href="#installing-custom-files-at-start-up" title="Permalink to this headline"></a></h3>
+<h3>Installing Custom Files At Start-up<a class="headerlink" href="#installing-custom-files-at-start-up" title="Permalink to this heading"></a></h3>
 <p>Cylc supports adding custom directories and files to the file installation.</p>
 <p>If, for example, you wished to install directories <code class="docutils literal notranslate"><span class="pre">dir1</span></code>, <code class="docutils literal notranslate"><span class="pre">dir2</span></code>, and
 files <code class="docutils literal notranslate"><span class="pre">file1</span></code>, <code class="docutils literal notranslate"><span class="pre">file2</span></code>, add the following configuration to your
@@ -306,18 +307,18 @@ restarting the workflow.</p>
 </div>
 </section>
 <section id="troubleshooting">
-<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline"></a></h3>
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h3>
 <p>There are certain scenarios where remote initialization may fail. Cylc will return
 a <code class="docutils literal notranslate"><span class="pre">REMOTE</span> <span class="pre">INIT</span> <span class="pre">FAILED</span></code> message.</p>
 <section id="timeout">
-<h4>Timeout<a class="headerlink" href="#timeout" title="Permalink to this headline"></a></h4>
+<h4>Timeout<a class="headerlink" href="#timeout" title="Permalink to this heading"></a></h4>
 <p>Remote initialization has a timeout set at 10 minutes, after which remote
 initialization will fail. If you have particularly large files files to
 transfer, which you expect to exceed the 10 minute timeout, consider using an
 install task in your workflow.</p>
 </section>
 <section id="misconfiguration">
-<h4>Misconfiguration<a class="headerlink" href="#misconfiguration" title="Permalink to this headline"></a></h4>
+<h4>Misconfiguration<a class="headerlink" href="#misconfiguration" title="Permalink to this heading"></a></h4>
 <p>Platforms must be correctly configured to ensure authentication keys, which are
 responsible for secure communication between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> and the
 platform, are correctly in place.
@@ -328,9 +329,9 @@ share the same file system. For more information, see <a class="reference intern
 </section>
 </section>
 <section id="files-created-at-workflow-start">
-<h2>Files created at workflow start<a class="headerlink" href="#files-created-at-workflow-start" title="Permalink to this headline"></a></h2>
+<h2>Files created at workflow start<a class="headerlink" href="#files-created-at-workflow-start" title="Permalink to this heading"></a></h2>
 <section id="configuration-logs">
-<h3>Configuration Logs<a class="headerlink" href="#configuration-logs" title="Permalink to this headline"></a></h3>
+<h3>Configuration Logs<a class="headerlink" href="#configuration-logs" title="Permalink to this heading"></a></h3>
 <p>A folder <code class="docutils literal notranslate"><span class="pre">log/flow-config</span></code> is created where the workflow configuration
 is recorded, with all templating expanded:</p>
 <ul class="simple">
@@ -349,7 +350,7 @@ filled in.</p>
 </div>
 </section>
 <section id="the-workflow-contact-file">
-<span id="id2"></span><h3>The Workflow Contact File<a class="headerlink" href="#the-workflow-contact-file" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3>The Workflow Contact File<a class="headerlink" href="#the-workflow-contact-file" title="Permalink to this heading"></a></h3>
 <p>The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> writes a <a class="reference internal" href="../../glossary.html#term-contact-file"><span class="xref std std-term">contact file</span></a> at
 <code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-name&gt;/.service/contact</span></code> that records workflow host,
 user, port number, process ID, Cylc version, and other information. Client
@@ -358,7 +359,7 @@ commands read this file to find the <a class="reference internal" href="../../gl
 scheduler shuts down cleanly).</p>
 </section>
 <section id="authentication-files">
-<h3>Authentication Files<a class="headerlink" href="#authentication-files" title="Permalink to this headline"></a></h3>
+<h3>Authentication Files<a class="headerlink" href="#authentication-files" title="Permalink to this heading"></a></h3>
 <p>See <a class="reference internal" href="authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a>.</p>
 </section>
 </section>
@@ -376,7 +377,7 @@ scheduler shuts down cleanly).</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

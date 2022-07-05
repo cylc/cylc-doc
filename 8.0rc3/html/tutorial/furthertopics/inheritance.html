@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -112,13 +113,13 @@
            <div itemprop="articleBody">
              
   <section id="inheritance">
-<span id="tutorial-inheritance"></span><h1>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline"></a></h1>
+<span id="tutorial-inheritance"></span><h1>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this heading"></a></h1>
 <p>We have seen in the <a class="reference internal" href="../runtime/configuration-consolidation/families.html#tutorial-cylc-families"><span class="std std-ref">runtime tutorial</span></a> how
 tasks can be grouped into families.</p>
 <p>In this tutorial we will look at nested families, inheritance order and
 multiple inheritance.</p>
 <section id="inheritance-hierarchy">
-<h2>Inheritance Hierarchy<a class="headerlink" href="#inheritance-hierarchy" title="Permalink to this headline"></a></h2>
+<h2>Inheritance Hierarchy<a class="headerlink" href="#inheritance-hierarchy" title="Permalink to this heading"></a></h2>
 <p>Within your <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code> directory create a new directory called
 <code class="docutils literal notranslate"><span class="pre">inheritance-tutorial</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">inheritance</span><span class="o">-</span><span class="n">tutorial</span>
@@ -251,7 +252,7 @@ inheritance tree applying each section in turn.</p>
 family but is overwritten by the value specified in the <code class="docutils literal notranslate"><span class="pre">AIRPLANE</span></code> family.</p>
 </section>
 <section id="multiple-inheritance">
-<h2>Multiple Inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this headline"></a></h2>
+<h2>Multiple Inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this heading"></a></h2>
 <p>Next we want to add a vehicle called the V-22 Osprey to the workflow. The V-22
 is a cross between a plane and a helicopter - it has wings but can take-off and
 land vertically.</p>
@@ -353,10 +354,10 @@ v22
 confirm this.</p>
 </section>
 <section id="more-inheritance">
-<h2>More Inheritance<a class="headerlink" href="#more-inheritance" title="Permalink to this headline"></a></h2>
+<h2>More Inheritance<a class="headerlink" href="#more-inheritance" title="Permalink to this heading"></a></h2>
 <p>We will now add some more families and tasks to the workflow.</p>
 <section id="engine-type">
-<h3>Engine Type<a class="headerlink" href="#engine-type" title="Permalink to this headline"></a></h3>
+<h3>Engine Type<a class="headerlink" href="#engine-type" title="Permalink to this heading"></a></h3>
 <p>Next we will define four families to represent three different types of engine.</p>
 <div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-0b0909ede98c7ce9e0a52dfc78d5a8fb69f0abb9.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Example {
@@ -429,7 +430,7 @@ The aircraft use the following types of engine:</p>
 </div>
 </section>
 <section id="penny-farthing">
-<h3>Penny Farthing<a class="headerlink" href="#penny-farthing" title="Permalink to this headline"></a></h3>
+<h3>Penny Farthing<a class="headerlink" href="#penny-farthing" title="Permalink to this heading"></a></h3>
 <p>Next we want to add a new type of vehicle, an old-fashioned bicycle called a
 penny farthing.</p>
 <a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/a/a7/Ordinary_bicycle01.jpg"><img alt="Penny Farthing Bicycle" class="align-center" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Ordinary_bicycle01.jpg" style="width: 300px;" /></a>
@@ -496,7 +497,7 @@ task we can see that it inherits settings from the <code class="docutils literal
 </div>
 </section>
 <section id="hovercraft">
-<h3>Hovercraft<a class="headerlink" href="#hovercraft" title="Permalink to this headline"></a></h3>
+<h3>Hovercraft<a class="headerlink" href="#hovercraft" title="Permalink to this heading"></a></h3>
 <p>We will now add a hovercraft called the Hoverwork BHT130, better known to some
 as the Isle Of Wight Ferry.</p>
 <a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/e/e7/Hovercraft_leaving_Ryde.JPG"><img alt="Hoverwork BHT130 Hovercraft" class="align-center" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Hovercraft_leaving_Ryde.JPG" style="width: 300px;" /></a>
@@ -549,7 +550,7 @@ ENGINE -&gt; INTERNAL_COMBUSTION_ENGINE -&gt; bht130
 </section>
 </section>
 <section id="finished-workflow">
-<h2>Finished Workflow<a class="headerlink" href="#finished-workflow" title="Permalink to this headline"></a></h2>
+<h2>Finished Workflow<a class="headerlink" href="#finished-workflow" title="Permalink to this heading"></a></h2>
 <p>You should now have a workflow with an inheritance hierarchy which looks like
 this:</p>
 <div class="graphviz"><object data="../../_images/graphviz-65d4dbac5a6d4914d2c419d6ab0e28a1fdf0a091.svg" type="image/svg+xml" class="graphviz">
@@ -673,7 +674,7 @@ BICYCLE -&gt; penny_farthing   [color=royalblue];
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

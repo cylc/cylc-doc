@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -111,12 +112,12 @@
            <div itemprop="articleBody">
              
   <section id="broadcast">
-<h1>Broadcast<a class="headerlink" href="#broadcast" title="Permalink to this headline"></a></h1>
+<h1>Broadcast<a class="headerlink" href="#broadcast" title="Permalink to this heading"></a></h1>
 <p>This tutorial walks you through using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> which can be used
 to change <a class="reference internal" href="../runtime/index.html#tutorial-runtime"><span class="std std-ref">task runtime configuration</span></a> in a
 running workflow, on-the-fly.</p>
 <section id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h2>
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> can be used to change any <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> setting whilst the
 workflow is running.</p>
 <p>The standard use of <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> is to update the workflow to an
@@ -124,7 +125,7 @@ unexpected change in configuration, for example modifying the host a task
 runs on.</p>
 </section>
 <section id="standalone-example">
-<h2>Standalone Example<a class="headerlink" href="#standalone-example" title="Permalink to this headline"></a></h2>
+<h2>Standalone Example<a class="headerlink" href="#standalone-example" title="Permalink to this heading"></a></h2>
 <p>Create a new workflow in the <code class="docutils literal notranslate"><span class="pre">cylc-src</span></code> directory called
 <code class="docutils literal notranslate"><span class="pre">tutorial-broadcast</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">tutorial</span><span class="o">-</span><span class="n">broadcast</span>
@@ -186,7 +187,7 @@ certain points.</p>
 </div>
 </section>
 <section id="in-situ-example">
-<h2>In-Situ Example<a class="headerlink" href="#in-situ-example" title="Permalink to this headline"></a></h2>
+<h2>In-Situ Example<a class="headerlink" href="#in-situ-example" title="Permalink to this heading"></a></h2>
 <p>We can call <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> from within a task’s script. This effectively
 provides the ability for tasks to communicate between themselves.</p>
 <p>It is almost always better for tasks to communicate using files but there are
@@ -242,7 +243,7 @@ e.g:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

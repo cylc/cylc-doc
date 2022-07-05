@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -115,9 +116,9 @@
            <div itemprop="articleBody">
              
   <section id="summary-of-major-changes">
-<span id="overview"></span><h1>Summary Of Major Changes<a class="headerlink" href="#summary-of-major-changes" title="Permalink to this headline"></a></h1>
+<span id="overview"></span><h1>Summary Of Major Changes<a class="headerlink" href="#summary-of-major-changes" title="Permalink to this heading"></a></h1>
 <section id="terminology">
-<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline"></a></h2>
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading"></a></h2>
 <p>Cylc now uses more widely understood terms for several core concepts.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -147,7 +148,7 @@
 <p>Note the configuration filename is now <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, not <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>.</p>
 </section>
 <section id="cylc-7-compatibility-mode">
-<h2>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this headline"></a></h2>
+<h2>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this heading"></a></h2>
 <p>Continuing to use the old <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a <a class="reference internal" href="major-changes/compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">backward
 compatibility mode</span></a> in Cylc 8 which supports Cylc 7
 workflow configurations out of the box, with
@@ -155,7 +156,7 @@ workflow configurations out of the box, with
 your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.</p>
 </section>
 <section id="upgrading-to-cylc-8">
-<h2>Upgrading To Cylc 8<a class="headerlink" href="#upgrading-to-cylc-8" title="Permalink to this headline"></a></h2>
+<h2>Upgrading To Cylc 8<a class="headerlink" href="#upgrading-to-cylc-8" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -170,7 +171,7 @@ from <code class="docutils literal notranslate"><span class="pre">suite.rc</span
 take action on any warnings.</p>
 </section>
 <section id="new-web-and-terminal-uis">
-<h2>New Web and Terminal UIs<a class="headerlink" href="#new-web-and-terminal-uis" title="Permalink to this headline"></a></h2>
+<h2>New Web and Terminal UIs<a class="headerlink" href="#new-web-and-terminal-uis" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -196,7 +197,7 @@ take action on any warnings.</p>
 </ul>
 </section>
 <section id="command-changes">
-<h2>Command Changes<a class="headerlink" href="#command-changes" title="Permalink to this headline"></a></h2>
+<h2>Command Changes<a class="headerlink" href="#command-changes" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span> <span class="pre">&lt;suite_name&gt;</span></code> at Cylc 7 has become <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">&lt;workflow_id&gt;</span></code>.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -213,7 +214,7 @@ directory.</p>
 <p>(Note that <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> pause and release individual tasks.)</p>
 </section>
 <section id="task-job-states">
-<h2>Task/Job States<a class="headerlink" href="#task-job-states" title="Permalink to this headline"></a></h2>
+<h2>Task/Job States<a class="headerlink" href="#task-job-states" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="../glossary.html#term-task"><span class="xref std std-term">Tasks</span></a> are nodes in the abstract workflow graph, representing
 applications to run at the appropriate point in the workflow. A <a class="reference internal" href="../glossary.html#term-job"><span class="xref std std-term">job</span></a>
 (or a <em>task job</em>) is the script (and subsequent process) submitted by Cylc to
@@ -225,7 +226,7 @@ separated and states of both can be viewed in the GUI.</p>
 <p>For more information, see <a class="reference internal" href="major-changes/task-job-states.html#task-job-states"><span class="std std-ref">Task/Job States</span></a>.</p>
 </section>
 <section id="optional-and-expected-task-outputs">
-<h2>Optional and Expected Task Outputs<a class="headerlink" href="#optional-and-expected-task-outputs" title="Permalink to this headline"></a></h2>
+<h2>Optional and Expected Task Outputs<a class="headerlink" href="#optional-and-expected-task-outputs" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -244,11 +245,11 @@ This supports <a class="reference internal" href="../glossary.html#term-graph-br
 correctly diagnose <a class="reference internal" href="../glossary.html#term-workflow-completion"><span class="xref std std-term">workflow completion</span></a>.</p>
 </section>
 <section id="workflow-installation">
-<h2>Workflow Installation<a class="headerlink" href="#workflow-installation" title="Permalink to this headline"></a></h2>
+<h2>Workflow Installation<a class="headerlink" href="#workflow-installation" title="Permalink to this heading"></a></h2>
 <p>Cylc 8 supports workflow installation.</p>
 <p>For users of <a class="reference external" href="https://github.com/metomi/rose">Rose</a>, this replaces the functionality of <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>.</p>
 <section id="cylc-install">
-<h3>Cylc Install<a class="headerlink" href="#cylc-install" title="Permalink to this headline"></a></h3>
+<h3>Cylc Install<a class="headerlink" href="#cylc-install" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -274,12 +275,12 @@ correctly diagnose <a class="reference internal" href="../glossary.html#term-wor
 <p>By default, run numbers increment with each install.</p>
 </section>
 <section id="file-installation">
-<h3>File Installation<a class="headerlink" href="#file-installation" title="Permalink to this headline"></a></h3>
+<h3>File Installation<a class="headerlink" href="#file-installation" title="Permalink to this heading"></a></h3>
 <p>When the first job runs on a remote platform (after start-up, or after a <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code>), a
 remote initialization process is triggered to install workflow files there.</p>
 </section>
 <section id="symlink-dirs">
-<h3>Symlink Dirs<a class="headerlink" href="#symlink-dirs" title="Permalink to this headline"></a></h3>
+<h3>Symlink Dirs<a class="headerlink" href="#symlink-dirs" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <ul class="simple">
@@ -297,22 +298,22 @@ for Cylc 7 (however, note it does not allow per-workflow configuration).</p>
 </section>
 </section>
 <section id="removing-workflows">
-<h2>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this headline"></a></h2>
+<h2>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this heading"></a></h2>
 <p>Workflows can be deleted with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> - see <a class="reference internal" href="../user-guide/removing-workflows.html#removing-workflows"><span class="std std-ref">Removing Workflows</span></a>. This
 replaces the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-clean</span></code> functionality.</p>
 </section>
 <section id="architecture">
-<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline"></a></h2>
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading"></a></h2>
 <p>There have been fundamental changes to the architecture of Cylc. You can read
 about the new system design here <a class="reference internal" href="../reference/architecture/index.html#architecture-reference"><span class="std std-ref">Architecture</span></a>.</p>
 </section>
 <section id="scheduling-algorithm">
-<h2>Scheduling Algorithm<a class="headerlink" href="#scheduling-algorithm" title="Permalink to this headline"></a></h2>
+<h2>Scheduling Algorithm<a class="headerlink" href="#scheduling-algorithm" title="Permalink to this heading"></a></h2>
 <p>The scheduling algorithm has been changed, more information is available:
 <a class="reference internal" href="major-changes/scheduling.html#scheduling-algorithm"><span class="std std-ref">Scheduling Algorithm</span></a>.</p>
 </section>
 <section id="other-changes">
-<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this headline"></a></h2>
+<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this heading"></a></h2>
 <p>There are an assortment of other features implemented at Cylc 8. Some noteworthy
 minor changes include:</p>
 <dl class="simple">
@@ -352,7 +353,7 @@ See <a class="reference internal" href="major-changes/remote-owner.html#remote-o
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

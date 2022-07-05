@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -110,7 +111,7 @@
            <div itemprop="articleBody">
              
   <section id="portable-workflows">
-<span id="portable-workflows-label"></span><h1>Portable Workflows<a class="headerlink" href="#portable-workflows" title="Permalink to this headline"></a></h1>
+<span id="portable-workflows-label"></span><h1>Portable Workflows<a class="headerlink" href="#portable-workflows" title="Permalink to this heading"></a></h1>
 <p>A <em>portable</em> or <em>interoperable</em> workflow can run “out of the box” at
 different sites, or in different environments such as research and operations
 within a site. For convenience we just use the term <em>site portability</em>.</p>
@@ -137,7 +138,7 @@ use an install task to link external files in.</p></li>
 the messy platform-specific resource directives etc., will be hidden away in
 the site include-files.</p>
 <section id="the-jinja2-site-variable">
-<h2>The Jinja2 SITE Variable<a class="headerlink" href="#the-jinja2-site-variable" title="Permalink to this headline"></a></h2>
+<h2>The Jinja2 SITE Variable<a class="headerlink" href="#the-jinja2-site-variable" title="Permalink to this heading"></a></h2>
 <p>First a workflow Jinja2 variable called <code class="docutils literal notranslate"><span class="pre">SITE</span></code> should be set to the site
 name, either in <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>, or in the workflow definition itself
 (perhaps automatically, by querying the local environment in some way).</p>
@@ -149,7 +150,7 @@ name, either in <code class="docutils literal notranslate"><span class="pre">ros
 <p>This will be used to select site-specific configuration, as described below.</p>
 </section>
 <section id="site-include-files">
-<h2>Site Include-Files<a class="headerlink" href="#site-include-files" title="Permalink to this headline"></a></h2>
+<h2>Site Include-Files<a class="headerlink" href="#site-include-files" title="Permalink to this heading"></a></h2>
 <p>If a section heading in a <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is repeated the items
 under it simply add to or override those defined under the same section earlier
 in the file (but note <a class="reference internal" href="roadmap.html#list-item-override-in-site-include-files"><span class="std std-ref">List Item Override In Site Include-Files</span></a>).
@@ -202,7 +203,7 @@ out into an include-file (file inclusion is essentially just literal inlining):<
 </div>
 </section>
 <section id="site-specific-graphs">
-<h2>Site-Specific Graphs<a class="headerlink" href="#site-specific-graphs" title="Permalink to this headline"></a></h2>
+<h2>Site-Specific Graphs<a class="headerlink" href="#site-specific-graphs" title="Permalink to this heading"></a></h2>
 <p>Repeated <code class="docutils literal notranslate"><span class="pre">graph</span></code> strings under the same graph section headings are
 always additive (graph strings are the only exception to the normal repeat item
 override semantics). So, for instance, this graph:</p>
@@ -249,7 +250,7 @@ workflow - which is why the core task <code class="docutils literal notranslate"
 this site, they would also be in the site-file).</p>
 </section>
 <section id="inlined-site-switching">
-<span id="id1"></span><h2>Inlined Site-Switching<a class="headerlink" href="#inlined-site-switching" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2>Inlined Site-Switching<a class="headerlink" href="#inlined-site-switching" title="Permalink to this heading"></a></h2>
 <p>It may be tempting to use inlined switch blocks throughout the workflow instead of
 site include-files, but <em>this is not recommended</em> - it is verbose and
 untidy (the greater the number of supported sites, the bigger the
@@ -296,7 +297,7 @@ need to update all site include-files before getting agreement from the workflow
 owner and collaborators.</p>
 </section>
 <section id="site-specific-workflow-variables">
-<h2>Site-Specific Workflow Variables<a class="headerlink" href="#site-specific-workflow-variables" title="Permalink to this headline"></a></h2>
+<h2>Site-Specific Workflow Variables<a class="headerlink" href="#site-specific-workflow-variables" title="Permalink to this heading"></a></h2>
 <p>It can sometimes be useful to set site-specific values of workflow variables that
 aren’t exposed to users via <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>. For example, consider
 a workflow that can run a special post-processing workflow of some kind at sites
@@ -322,7 +323,7 @@ case) than sites, otherwise the IDL workflow should just go in the site
 include-files of the sites that need it.</p>
 </section>
 <section id="site-specific-optional-workflow-configs">
-<h2>Site-Specific Optional Workflow Configs<a class="headerlink" href="#site-specific-optional-workflow-configs" title="Permalink to this headline"></a></h2>
+<h2>Site-Specific Optional Workflow Configs<a class="headerlink" href="#site-specific-optional-workflow-configs" title="Permalink to this heading"></a></h2>
 <p>During development and testing of a portable workflow you can use an optional Rose
 workflow config file to automatically set site-specific workflow inputs and thereby
 avoid the need to make manual changes every time you check out and run a new
@@ -332,7 +333,7 @@ put these settings in <code class="docutils literal notranslate"><span class="pr
 and run the workflow with <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span> <span class="pre">-O</span> <span class="pre">niwa</span></code>.</p>
 </section>
 <section id="site-agnostic-file-paths-in-app-configs">
-<h2>Site-Agnostic File Paths in App Configs<a class="headerlink" href="#site-agnostic-file-paths-in-app-configs" title="Permalink to this headline"></a></h2>
+<h2>Site-Agnostic File Paths in App Configs<a class="headerlink" href="#site-agnostic-file-paths-in-app-configs" title="Permalink to this heading"></a></h2>
 <p>Where possible apps should be configured to reference files within the workflow
 structure itself rather than outside of it. This makes the apps themselves
 portable and it becomes the job of the install task to ensure all required
@@ -342,7 +343,7 @@ files into the workflow to an install task you gain the added benefit of knowing
 if a file is missing at the start of a workflow rather than part way into a run.</p>
 </section>
 <section id="site-specific-optional-app-configs">
-<h2>Site-Specific Optional App Configs<a class="headerlink" href="#site-specific-optional-app-configs" title="Permalink to this headline"></a></h2>
+<h2>Site-Specific Optional App Configs<a class="headerlink" href="#site-specific-optional-app-configs" title="Permalink to this heading"></a></h2>
 <p>Typically a few but not all apps will need some site customization, e.g. for
 local archive configuration, local science options, or whatever. To avoid
 explicit site-customization of individual task-run command lines use Rose’s
@@ -359,7 +360,7 @@ use it if it exists, otherwise ignore.</p>
 any app that needs customization at <code class="docutils literal notranslate"><span class="pre">SITE</span> <span class="pre">=</span> <span class="pre">niwa</span></code>.</p>
 </section>
 <section id="an-example">
-<h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this headline"></a></h2>
+<h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this heading"></a></h2>
 <p>The following small workflow is not portable because all of its tasks are
 submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they
 respectively install files from a local database and upload products to a local
@@ -479,7 +480,7 @@ families that are (<code class="docutils literal notranslate"><span class="pre">
 </ul>
 </section>
 <section id="collaborative-development-model">
-<span id="id2"></span><h2>Collaborative Development Model<a class="headerlink" href="#collaborative-development-model" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Collaborative Development Model<a class="headerlink" href="#collaborative-development-model" title="Permalink to this heading"></a></h2>
 <p>Official releases of a portable workflow should be made from the workflow trunk.</p>
 <p>Changes should be developed on feature branches so as not to affect other users
 of the workflow.</p>
@@ -509,7 +510,7 @@ new feature to the trunk once satisfied.</p>
 MOSRS Trac tickets associated with the workflow.</p>
 </section>
 <section id="research-to-operations-transition">
-<h2>Research-To-Operations Transition<a class="headerlink" href="#research-to-operations-transition" title="Permalink to this headline"></a></h2>
+<h2>Research-To-Operations Transition<a class="headerlink" href="#research-to-operations-transition" title="Permalink to this heading"></a></h2>
 <p>Under this collaborative development model it is <em>possible</em> to use the
 same workflow in research and operations, largely eliminating the difficult
 translation between the two environments. Where appropriate, this can save
@@ -543,7 +544,7 @@ perspective.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

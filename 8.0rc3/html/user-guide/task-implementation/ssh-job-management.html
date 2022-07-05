@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -110,12 +111,12 @@
            <div itemprop="articleBody">
              
   <section id="remote-job-management">
-<h1>Remote Job Management<a class="headerlink" href="#remote-job-management" title="Permalink to this headline"></a></h1>
+<h1>Remote Job Management<a class="headerlink" href="#remote-job-management" title="Permalink to this heading"></a></h1>
 <p>Managing tasks in a workflow requires more than just job execution: Cylc
 performs additional actions with <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and
 direct execution of <code class="docutils literal notranslate"><span class="pre">cylc</span></code> sub-commands over non-interactive SSH.</p>
 <section id="ssh-free-job-management">
-<h2>SSH-free Job Management?<a class="headerlink" href="#ssh-free-job-management" title="Permalink to this headline"></a></h2>
+<h2>SSH-free Job Management?<a class="headerlink" href="#ssh-free-job-management" title="Permalink to this heading"></a></h2>
 <p>Some sites may want to restrict access to job hosts by whitelisting SSH
 connections to allow only <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and allowing job
 execution only via a local <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> that sees the job hosts <a class="footnote-reference brackets" href="#id4" id="id1">1</a> .
@@ -125,7 +126,7 @@ and job hosts also share a filesystem, which allows Cylc to treat jobs as
 entirely local <a class="footnote-reference brackets" href="#id5" id="id2">2</a> .</p>
 </section>
 <section id="ssh-based-job-management">
-<h2>SSH-based Job Management<a class="headerlink" href="#ssh-based-job-management" title="Permalink to this headline"></a></h2>
+<h2>SSH-based Job Management<a class="headerlink" href="#ssh-based-job-management" title="Permalink to this heading"></a></h2>
 <p>Cylc does not have persistent agent processes running on job hosts to act on
 instructions received over the network <a class="footnote-reference brackets" href="#id6" id="id3">3</a> so instead we execute job
 management commands directly on job hosts over SSH. Reasons for this include:</p>
@@ -152,7 +153,7 @@ written by the job submit command, and read by job poll and kill commands</p></l
 </ul>
 </section>
 <section id="other-cases-where-cylc-uses-ssh-directly">
-<h2>Other Cases Where Cylc Uses SSH Directly<a class="headerlink" href="#other-cases-where-cylc-uses-ssh-directly" title="Permalink to this headline"></a></h2>
+<h2>Other Cases Where Cylc Uses SSH Directly<a class="headerlink" href="#other-cases-where-cylc-uses-ssh-directly" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>To see if a workflow is running on another host with a shared
 filesystem - see <code class="docutils literal notranslate"><span class="pre">cylc/flow/workflow_files:detect_old_contact_file</span></code>.</p></li>
@@ -188,7 +189,7 @@ administration, and security.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

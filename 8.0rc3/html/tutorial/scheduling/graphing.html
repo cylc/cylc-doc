@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -110,7 +111,7 @@
            <div itemprop="articleBody">
              
   <section id="the-flow-cylc-file-format">
-<span id="cylc-file-format"></span><h1>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> File Format<a class="headerlink" href="#the-flow-cylc-file-format" title="Permalink to this headline"></a></h1>
+<span id="cylc-file-format"></span><h1>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> File Format<a class="headerlink" href="#the-flow-cylc-file-format" title="Permalink to this heading"></a></h1>
 <div class="aims admonition">
 <p class="admonition-title">Aims</p>
 <div class="line-block">
@@ -138,7 +139,7 @@ but that name is now deprecated.</p>
 existing Cylc 7 <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> files.</p>
 </div>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comment</span>
 <span class="nt">[section]</span>
     <span class="nv">key </span><span class="o">=</span><span class="s"> value</span>
@@ -153,7 +154,7 @@ existing Cylc 7 <code class="docutils literal notranslate"><span class="pre">sui
 </div>
 </section>
 <section id="shorthand">
-<h2>Shorthand<a class="headerlink" href="#shorthand" title="Permalink to this headline"></a></h2>
+<h2>Shorthand<a class="headerlink" href="#shorthand" title="Permalink to this heading"></a></h2>
 <p>Throughout this tutorial we will refer to configuration settings in the following ways:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">[section]</span></code></dt><dd><p>An entire section.</p>
@@ -169,7 +170,7 @@ gets another set of square brackets.</p>
 </dl>
 </section>
 <section id="duplicate-items">
-<h2>Duplicate Items<a class="headerlink" href="#duplicate-items" title="Permalink to this headline"></a></h2>
+<h2>Duplicate Items<a class="headerlink" href="#duplicate-items" title="Permalink to this heading"></a></h2>
 <p>Duplicate sections get merged:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -255,7 +256,7 @@ gets another set of square brackets.</p>
 </table>
 </section>
 <section id="indentation">
-<h2>Indentation<a class="headerlink" href="#indentation" title="Permalink to this headline"></a></h2>
+<h2>Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading"></a></h2>
 <p>It is a good idea to indent <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files for readability.</p>
 <p>However, Cylc ignores indentation, so the following examples are equivalent:</p>
 <table class="grid-table docutils align-default">
@@ -292,9 +293,9 @@ gets another set of square brackets.</p>
 </table>
 </section>
 <section id="the-dependency-graph">
-<span id="tutorial-cylc-graphing"></span><h2>The Dependency Graph<a class="headerlink" href="#the-dependency-graph" title="Permalink to this headline"></a></h2>
+<span id="tutorial-cylc-graphing"></span><h2>The Dependency Graph<a class="headerlink" href="#the-dependency-graph" title="Permalink to this heading"></a></h2>
 <section id="graph-strings">
-<h3>Graph Strings<a class="headerlink" href="#graph-strings" title="Permalink to this headline"></a></h3>
+<h3>Graph Strings<a class="headerlink" href="#graph-strings" title="Permalink to this heading"></a></h3>
 <p>Cylc workflows are defined in terms of <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> and
 <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a>.</p>
 <p>Task have names, and dependencies are represented by arrows
@@ -303,10 +304,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-ef2dddb2d1e236bd5f1ad509bb4a2ff37c434c50.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-buy_ingredients -&gt; make_dough
 make_dough
+buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -314,12 +315,12 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e7592365f69b0c9ee84d141dc6fc25f40cc2c1ce.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-b1d4d8b672efdcdcd0fd770ea5f7fb9180957059.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
-make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
+sell_bread
+make_dough -&gt; bake_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -328,16 +329,16 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-92a1ed22613241f7b94803cff5baae87253ffee5.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9c081db2d47a09a70c735d66dab98e2910cfcedc.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
 pre_heat_oven -&gt; bake_bread
-bake_bread
 bake_bread -&gt; clean_oven
+buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
+sell_bread
 bake_bread -&gt; sell_bread
 clean_oven
-buy_ingredients -&gt; make_dough
+bake_bread
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -373,7 +374,7 @@ the following examples are equivalent:</p>
 </div>
 </section>
 <section id="cylc-graphs">
-<h3>Cylc Graphs<a class="headerlink" href="#cylc-graphs" title="Permalink to this headline"></a></h3>
+<h3>Cylc Graphs<a class="headerlink" href="#cylc-graphs" title="Permalink to this heading"></a></h3>
 <p>A <em>non-cycling</em> <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> can be defined with <code class="docutils literal notranslate"><span class="pre">[scheduling][graph]R1</span></code>,
 where <code class="docutils literal notranslate"><span class="pre">R1</span></code> means <em>run once</em>:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
@@ -514,7 +515,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

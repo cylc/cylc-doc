@@ -22,6 +22,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/js/diff_selector.js"></script>
         <script src="../../../_static/js/minicylc.js"></script>
@@ -111,11 +112,11 @@
            <div itemprop="articleBody">
              
   <section id="parameterised-tasks">
-<span id="tutorial-cylc-parameterisation"></span><h1>Parameterised Tasks<a class="headerlink" href="#parameterised-tasks" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-parameterisation"></span><h1>Parameterised Tasks<a class="headerlink" href="#parameterised-tasks" title="Permalink to this heading"></a></h1>
 <p>Parameterised tasks (see <a class="reference internal" href="../../../glossary.html#term-parameterisation"><span class="xref std std-term">parameterisation</span></a>) provide a way of implicitly
 looping over tasks without the need for Jinja2.</p>
 <section id="cylc-parameters">
-<h2>Cylc Parameters<a class="headerlink" href="#cylc-parameters" title="Permalink to this headline"></a></h2>
+<h2>Cylc Parameters<a class="headerlink" href="#cylc-parameters" title="Permalink to this heading"></a></h2>
 <p>Parameters are defined in their own section, e.g:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
     <span class="nv">world </span><span class="o">=</span><span class="s"> Mercury, Venus, Earth</span>
@@ -157,7 +158,7 @@ For example the code above is equivalent to:</p>
 </div>
 </section>
 <section id="environment-variables">
-<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline"></a></h2>
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h2>
 <p>The name of the parameter is provided to the job as an environment variable
 called <code class="docutils literal notranslate"><span class="pre">CYLC_TASK_PARAM_&lt;parameter&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;parameter&gt;</span></code> is the name of
 the parameter (in the present case <code class="docutils literal notranslate"><span class="pre">world</span></code>):</p>
@@ -168,7 +169,7 @@ the parameter (in the present case <code class="docutils literal notranslate"><s
 </div>
 </section>
 <section id="parameter-types">
-<h2>Parameter Types<a class="headerlink" href="#parameter-types" title="Permalink to this headline"></a></h2>
+<h2>Parameter Types<a class="headerlink" href="#parameter-types" title="Permalink to this heading"></a></h2>
 <p>Parameters can be either strings or integers:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
     <span class="nv">foo </span><span class="o">=</span><span class="s"> 1..5</span>
@@ -377,7 +378,7 @@ avoid having to write out this section twice.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

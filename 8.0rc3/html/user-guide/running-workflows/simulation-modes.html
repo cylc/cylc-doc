@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -123,7 +124,7 @@
            <div itemprop="articleBody">
              
   <section id="simulation-modes">
-<span id="simulationmode"></span><h1>Simulation Modes<a class="headerlink" href="#simulation-modes" title="Permalink to this headline"></a></h1>
+<span id="simulationmode"></span><h1>Simulation Modes<a class="headerlink" href="#simulation-modes" title="Permalink to this heading"></a></h1>
 <p>Cylc can run a workflow without running the real jobs, which may be
 long-running and resource-hungry.</p>
 <p><strong>Dummy mode</strong> replaces real task jobs with background <code class="docutils literal notranslate"><span class="pre">sleep</span></code> jobs on the
@@ -145,7 +146,7 @@ log files.</p>
 </pre></div>
 </div>
 <section id="simulated-run-length">
-<h2>Simulated Run Length<a class="headerlink" href="#simulated-run-length" title="Permalink to this headline"></a></h2>
+<h2>Simulated Run Length<a class="headerlink" href="#simulated-run-length" title="Permalink to this heading"></a></h2>
 <p>The default dummy or simulated task job run length is 10 seconds. It can be
 changed with <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][simulation]default run length" title="flow.cylc[runtime][&lt;namespace&gt;][simulation]default run length"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][simulation]default</span> <span class="pre">run</span> <span class="pre">length</span></code></a>.</p>
 <p>If <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> and
@@ -153,7 +154,7 @@ changed with <a class="reference internal" href="../../reference/config/workflow
 run length is computed by dividing the time limit by the speedup factor.</p>
 </section>
 <section id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline"></a></h2>
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading"></a></h2>
 <p>Dummy tasks run locally, so dummy mode does not test communication with remote
 job platforms. However, it is easy to write a live-mode test workflow with
 simple <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">10</span></code> tasks that submit to a remote platform.</p>
@@ -183,7 +184,7 @@ install a new instance of the workflow and run it from scratch in the new mode.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -121,7 +122,7 @@
            <div itemprop="articleBody">
              
   <section id="authorizing-others-to-access-your-workflows">
-<span id="authorization"></span><h1>Authorizing Others to Access Your Workflows<a class="headerlink" href="#authorizing-others-to-access-your-workflows" title="Permalink to this headline"></a></h1>
+<span id="authorization"></span><h1>Authorizing Others to Access Your Workflows<a class="headerlink" href="#authorizing-others-to-access-your-workflows" title="Permalink to this heading"></a></h1>
 <p>The Cylc UI Server supports multi user access. You can grant control of your
 workflows to other users, by adding or removing privileges on a Cylc operation
 basis. This requires site level configuration, with individual users being able
@@ -133,7 +134,7 @@ only the workflow owner will be able to interact with it.</p>
 <p>If you grant access to another user, this access will apply to all of your
 workflows.</p>
 <section id="granting-access">
-<h2>Granting Access<a class="headerlink" href="#granting-access" title="Permalink to this headline"></a></h2>
+<h2>Granting Access<a class="headerlink" href="#granting-access" title="Permalink to this heading"></a></h2>
 <p>There are three methods of identifying a user to grant access to:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">*</span></code> character, to indicate any authenticated user,</p></li>
@@ -152,7 +153,7 @@ greatest possible.</p>
 <code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code>.</p>
 </section>
 <section id="methods-of-assigning-permissions">
-<h2>Methods of Assigning Permissions<a class="headerlink" href="#methods-of-assigning-permissions" title="Permalink to this headline"></a></h2>
+<h2>Methods of Assigning Permissions<a class="headerlink" href="#methods-of-assigning-permissions" title="Permalink to this heading"></a></h2>
 <p>Assigning permissions can be done in two ways:</p>
 <blockquote>
 <div><ul class="simple">
@@ -162,7 +163,7 @@ greatest possible.</p>
 </div></blockquote>
 <p>Using both methods is supported, e.g [“READ”, “stop”, “pause”]</p>
 <section id="individual-operations">
-<h3>Individual Operations<a class="headerlink" href="#individual-operations" title="Permalink to this headline"></a></h3>
+<h3>Individual Operations<a class="headerlink" href="#individual-operations" title="Permalink to this heading"></a></h3>
 <p>To assign users permissions, you can list the operations you wish to grant</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;user1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;pause&quot;</span><span class="p">,</span> <span class="s2">&quot;play&quot;</span><span class="p">]</span>
@@ -186,7 +187,7 @@ would result in them having <code class="docutils literal notranslate"><span cla
 workflows has been removed so this action will be forbidden.</p>
 </section>
 <section id="access-groups">
-<h3>Access Groups<a class="headerlink" href="#access-groups" title="Permalink to this headline"></a></h3>
+<h3>Access Groups<a class="headerlink" href="#access-groups" title="Permalink to this heading"></a></h3>
 <p>For convenience, cylc operations available in the UI have been bundled into
 access groups. These should be capitalized to distinguish from cylc operations.</p>
 <p>We currently support <code class="docutils literal notranslate"><span class="pre">READ</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> and <code class="docutils literal notranslate"><span class="pre">ALL</span></code> and to remove permissions
@@ -323,7 +324,7 @@ the <code class="docutils literal notranslate"><span class="pre">READ</span></co
 </section>
 </section>
 <section id="user-authorization-configuration">
-<span id="user-configuration"></span><h2>User Authorization Configuration<a class="headerlink" href="#user-authorization-configuration" title="Permalink to this headline"></a></h2>
+<span id="user-configuration"></span><h2>User Authorization Configuration<a class="headerlink" href="#user-authorization-configuration" title="Permalink to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code>, which is loaded from
 <code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/jupyter_config.py</span></code>, contains your preferences for granting access
 to other users. This configuration should be entered as a Python
@@ -331,7 +332,7 @@ dictionary. If a user does not appear in your user config, the default site
 access will apply.
 You are only permitted to grant access, within the bounds set at site level.</p>
 <section id="example-user-configuration">
-<h3>Example User Configuration<a class="headerlink" href="#example-user-configuration" title="Permalink to this headline"></a></h3>
+<h3>Example User Configuration<a class="headerlink" href="#example-user-configuration" title="Permalink to this heading"></a></h3>
 <p>An example user configuration:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;READ&quot;</span><span class="p">],</span>
@@ -357,7 +358,7 @@ to negations taking precedence over additions.</p></li>
 </section>
 </section>
 <section id="site-authorization-configuration">
-<span id="site-configuration"></span><h2>Site Authorization Configuration<a class="headerlink" href="#site-authorization-configuration" title="Permalink to this headline"></a></h2>
+<span id="site-configuration"></span><h2>Site Authorization Configuration<a class="headerlink" href="#site-authorization-configuration" title="Permalink to this heading"></a></h2>
 <p>The site_authorization configuration allows sites to configure sensible defaults
 and limits for the permissions users can delegate.</p>
 <p>Note that as the UI Server runs as the workflow owner, they have full control
@@ -371,7 +372,7 @@ workflows by configuring their own UI Server.</p>
 <code class="docutils literal notranslate"><span class="pre">CYLC_SITE_CONF_PATH</span></code>, contains these site default and limit settings for
 users. This configuration should be entered as a Python dictionary.</p>
 <section id="defaults-and-limits">
-<h3>Defaults and Limits<a class="headerlink" href="#defaults-and-limits" title="Permalink to this headline"></a></h3>
+<h3>Defaults and Limits<a class="headerlink" href="#defaults-and-limits" title="Permalink to this heading"></a></h3>
 <p>Sites set both limits and defaults for users.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code> determines the maximum access users can grant to their workflows.</p></li>
@@ -380,7 +381,7 @@ not appear in the user-authorization configuration (via explicit user name or gr
 </ul>
 </section>
 <section id="missing-configurations-in-site-authorization">
-<h3>Missing Configurations in Site Authorization<a class="headerlink" href="#missing-configurations-in-site-authorization" title="Permalink to this headline"></a></h3>
+<h3>Missing Configurations in Site Authorization<a class="headerlink" href="#missing-configurations-in-site-authorization" title="Permalink to this heading"></a></h3>
 <p>For site configuration:</p>
 <ul class="simple">
 <li><p>if a limit is not set but a default is, then the limit is the default.</p></li>
@@ -388,7 +389,7 @@ not appear in the user-authorization configuration (via explicit user name or gr
 </ul>
 </section>
 <section id="example-site-authorization-configuration">
-<h3>Example Site Authorization Configuration<a class="headerlink" href="#example-site-authorization-configuration" title="Permalink to this headline"></a></h3>
+<h3>Example Site Authorization Configuration<a class="headerlink" href="#example-site-authorization-configuration" title="Permalink to this heading"></a></h3>
 <p>Whilst most site configurations will be simpler than the example below, this
 example provides an indication of the combinations available.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">site_authorization</span> <span class="o">=</span> <span class="p">{</span>
@@ -436,7 +437,7 @@ example provides an indication of the combinations available.</p>
 </div>
 </section>
 <section id="group-support">
-<span id="id1"></span><h3>Group Support<a class="headerlink" href="#group-support" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3>Group Support<a class="headerlink" href="#group-support" title="Permalink to this heading"></a></h3>
 <p>Unix-like systems support grouping users. Cylc authorization supports granting
 access by membership of these system groups. You can indicate a system group
 by using the <code class="docutils literal notranslate"><span class="pre">group:</span></code> indicator.</p>
@@ -461,13 +462,13 @@ names.</p>
 </dl>
 </section>
 <section id="changing-access-rights">
-<h3>Changing Access Rights<a class="headerlink" href="#changing-access-rights" title="Permalink to this headline"></a></h3>
+<h3>Changing Access Rights<a class="headerlink" href="#changing-access-rights" title="Permalink to this heading"></a></h3>
 <p>Changing authorization permissions in your <code class="docutils literal notranslate"><span class="pre">jupyter_config.py</span></code> will require the
 UI Server to be restarted before any changes are applied.</p>
 </section>
 </section>
 <section id="interacting-with-others-workflows">
-<h2>Interacting with Others’ Workflows<a class="headerlink" href="#interacting-with-others-workflows" title="Permalink to this headline"></a></h2>
+<h2>Interacting with Others’ Workflows<a class="headerlink" href="#interacting-with-others-workflows" title="Permalink to this heading"></a></h2>
 <p>The authorization system in Cylc 8 is complete, although expect access to other
 users’ workflows via the UI to be further developed in future.</p>
 <p>If you have been granted access to another user’s workflows, you can view and
@@ -482,7 +483,7 @@ have the correct permissions, you will see userB’s workflows for interaction.<
 </div>
 </section>
 <section id="troubleshooting-authorization">
-<h2>Troubleshooting Authorization<a class="headerlink" href="#troubleshooting-authorization" title="Permalink to this headline"></a></h2>
+<h2>Troubleshooting Authorization<a class="headerlink" href="#troubleshooting-authorization" title="Permalink to this heading"></a></h2>
 <p>If authorization is not performing as expected, check</p>
 <ul class="simple">
 <li><p>you are permitted by the site configuration to give away access.</p></li>
@@ -508,7 +509,7 @@ access. Users currently can only spawn their own UI Servers.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

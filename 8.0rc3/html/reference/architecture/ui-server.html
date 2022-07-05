@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -111,7 +112,7 @@
            <div itemprop="articleBody">
              
   <section id="cylc-ui-server">
-<span id="cylcuiserver-architecture"></span><h1>Cylc UI Server<a class="headerlink" href="#cylc-ui-server" title="Permalink to this headline"></a></h1>
+<span id="cylcuiserver-architecture"></span><h1>Cylc UI Server<a class="headerlink" href="#cylc-ui-server" title="Permalink to this heading"></a></h1>
 <dl class="simple">
 <dt><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></dt><dd><p>Provides a command line utility for monitoring and controlling
 Cylc workflows called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code>.</p>
@@ -122,7 +123,7 @@ Cylc workflows called <code class="docutils literal notranslate"><span class="pr
 <p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> connects to running workflows to provide “live” data
 and accesses workflow databases and the filesystem to provide “offline” data.</p>
 <section id="jupyter-server">
-<h2>Jupyter Server<a class="headerlink" href="#jupyter-server" title="Permalink to this headline"></a></h2>
+<h2>Jupyter Server<a class="headerlink" href="#jupyter-server" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is a <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extension like <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html">Jupyter Lab</a>.</p>
 <p><a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> provides the web server infrastructure which is shared by
 its extensions which can used to run multiple extensions simultaneously.</p>
@@ -134,7 +135,7 @@ extensions are run by <a class="reference external" href="https://jupyter-server
 and multi-user (hub authenticated).</p>
 </section>
 <section id="single-user-mode">
-<span id="id1"></span><h2>Single-User Mode<a class="headerlink" href="#single-user-mode" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2>Single-User Mode<a class="headerlink" href="#single-user-mode" title="Permalink to this heading"></a></h2>
 <p>In single-user mode users must start their own UI Servers from the command line.</p>
 <p><a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> will provide them with a URL to access their server including
 a secure token which provides authentication.</p>
@@ -146,7 +147,7 @@ a secure token which provides authentication.</p>
 <a class="reference internal image-reference" href="../../_images/gui-arch-single-user.svg"><img alt="../../_images/gui-arch-single-user.svg" class="align-center" src="../../_images/gui-arch-single-user.svg" width="70%" /></a>
 </section>
 <section id="multi-user-mode">
-<span id="id2"></span><h2>Multi-User Mode<a class="headerlink" href="#multi-user-mode" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Multi-User Mode<a class="headerlink" href="#multi-user-mode" title="Permalink to this heading"></a></h2>
 <p>Multi-user mode requires <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> to be installed.</p>
 <p>An administrator must start <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> under a user account with
 the required privileges to spawn UI Servers on behalf of the user.</p>
@@ -166,7 +167,7 @@ permission.</p>
 <a class="reference internal image-reference" href="../../_images/gui-arch-multi-user.svg"><img alt="../../_images/gui-arch-multi-user.svg" src="../../_images/gui-arch-multi-user.svg" width="100%" /></a>
 </section>
 <section id="authorization">
-<span id="cylc-authorization"></span><h2>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline"></a></h2>
+<span id="cylc-authorization"></span><h2>Authorization<a class="headerlink" href="#authorization" title="Permalink to this heading"></a></h2>
 <p><em>Authentication</em> is provided by either <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> or <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
 <p><em>Authorization</em> in the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is provided by Cylc. In
 multi-user mode this allows users to connect to each others UI Servers for
@@ -194,7 +195,7 @@ do not share this authorization and will not be accessible to other users
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

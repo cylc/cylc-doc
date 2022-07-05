@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -120,14 +121,14 @@
            <div itemprop="articleBody">
              
   <section id="cylc-7-compatibility-mode">
-<span id="cylc-7-compat-mode"></span><h1>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this headline"></a></h1>
+<span id="cylc-7-compat-mode"></span><h1>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this heading"></a></h1>
 <div class="tip admonition">
 <p class="admonition-title">Does This Change Affect Me?</p>
 <p>This will affect you if you want to run run Cylc 7 workflows (using the
 <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename) using Cylc 8.0</p>
 </div>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
 <p>The old <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a backward compatibility mode in which:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../../glossary.html#term-implicit-task"><span class="xref std std-term">implicit tasks</span></a> are allowed by default</p>
@@ -161,7 +162,7 @@ meaning the scheduler will retain tasks that do not succeed as incomplete</p>
 </ul>
 </section>
 <section id="required-changes">
-<h2>Required Changes<a class="headerlink" href="#required-changes" title="Permalink to this headline"></a></h2>
+<h2>Required Changes<a class="headerlink" href="#required-changes" title="Permalink to this heading"></a></h2>
 <p>Providing your Cylc 7 workflow does not use syntax that was deprecated at Cylc 7,
 you may be able to run it with Cylc 8 without any modifications to begin with.</p>
 <p>To see if your workflow is compatible with Cylc 8, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>
@@ -171,7 +172,7 @@ modify them to be compatible with command line interface changes
 (unfortunately, this is not possible to detect at validation).</p>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <p>Consider this configuration:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
@@ -212,7 +213,7 @@ workflow will fail validation.</p>
 </div>
 </div>
 <section id="fixing-the-validation-failure">
-<h3>Fixing the validation failure<a class="headerlink" href="#fixing-the-validation-failure" title="Permalink to this headline"></a></h3>
+<h3>Fixing the validation failure<a class="headerlink" href="#fixing-the-validation-failure" title="Permalink to this heading"></a></h3>
 <p>You must change the configuration yourself. In this case:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-     pre-command scripting = echo &quot;Hello World&quot;</span><span class="w"></span>
 <span class="gi">+     pre-script = echo &quot;Hello World&quot;</span><span class="w"></span>
@@ -222,7 +223,7 @@ workflow will fail validation.</p>
 <p>The workflow is now ready for renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code></p>
 </section>
 <section id="fixing-deprecation-warnings-after-renaming-suite-rc-to-flow-cylc">
-<h3>Fixing deprecation warnings after renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code><a class="headerlink" href="#fixing-deprecation-warnings-after-renaming-suite-rc-to-flow-cylc" title="Permalink to this headline"></a></h3>
+<h3>Fixing deprecation warnings after renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code><a class="headerlink" href="#fixing-deprecation-warnings-after-renaming-suite-rc-to-flow-cylc" title="Permalink to this heading"></a></h3>
 <p>After renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, backwards compatibility mode will
 be turned off and validation in Cylc 8 will show warnings (and may fail if
 <a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-optional-outputs"><span class="std std-ref">Optional Outputs</span></a> and <a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-expected-outputs"><span class="std std-ref">Expected Outputs</span></a>
@@ -258,7 +259,7 @@ maintenance to avoid problems when a major Cylc version is released.</p>
 </section>
 </section>
 <section id="host-to-platform-upgrade-logic">
-<h2>Host to platform upgrade logic<a class="headerlink" href="#host-to-platform-upgrade-logic" title="Permalink to this headline"></a></h2>
+<h2>Host to platform upgrade logic<a class="headerlink" href="#host-to-platform-upgrade-logic" title="Permalink to this heading"></a></h2>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="platforms.html#majorchangesplatforms"><span class="std std-ref">Details of how platforms work.</span></a></p>
@@ -271,7 +272,7 @@ Cylc 8 will attempt to find a platform which matches the task specification.</p>
 available in <a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a>.</p>
 </div>
 <section id="id1">
-<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the following example <code class="docutils literal notranslate"><span class="pre">job</span> <span class="pre">runner</span></code> in <strong>Cylc 8</strong> configurations
@@ -321,7 +322,7 @@ here. In reality, <strong>Cylc 8 compares the whole of</strong>
 </section>
 </section>
 <section id="caveats">
-<span id="major-changes-compatibility-caveats"></span><h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline"></a></h2>
+<span id="major-changes-compatibility-caveats"></span><h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this heading"></a></h2>
 <p>The following are some caveats to be aware of when using Cylc 8
 Compatibility Mode.</p>
 <div class="admonition warning">
@@ -370,7 +371,7 @@ manually copied over from the original run directory.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

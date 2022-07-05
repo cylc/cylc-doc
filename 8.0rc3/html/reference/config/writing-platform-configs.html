@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -111,9 +112,9 @@
            <div itemprop="articleBody">
              
   <section id="platform-configuration">
-<span id="adminguide-platformconfigs"></span><h1>Platform Configuration<a class="headerlink" href="#platform-configuration" title="Permalink to this headline"></a></h1>
+<span id="adminguide-platformconfigs"></span><h1>Platform Configuration<a class="headerlink" href="#platform-configuration" title="Permalink to this heading"></a></h1>
 <section id="writing-platform-configurations">
-<h2>Writing Platform Configurations<a class="headerlink" href="#writing-platform-configurations" title="Permalink to this headline"></a></h2>
+<h2>Writing Platform Configurations<a class="headerlink" href="#writing-platform-configurations" title="Permalink to this heading"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 8.0.0.</span></p>
 </div>
@@ -127,7 +128,7 @@
 </ul>
 </div>
 <section id="listing-available-platforms">
-<span id="listingavailableplatforms"></span><h3>Listing available platforms<a class="headerlink" href="#listing-available-platforms" title="Permalink to this headline"></a></h3>
+<span id="listingavailableplatforms"></span><h3>Listing available platforms<a class="headerlink" href="#listing-available-platforms" title="Permalink to this heading"></a></h3>
 <p>If you are working on an institutional network platforms may already
 have been configured for you.</p>
 <p>To see a list of available platforms:</p>
@@ -141,7 +142,7 @@ have been configured for you.</p>
 <p>This is equivalent to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span> <span class="pre">-i</span> <span class="pre">'platforms'</span> <span class="pre">-i</span> <span class="pre">'platform</span> <span class="pre">groups'</span></code></p>
 </section>
 <section id="what-are-platforms">
-<h3>What Are Platforms?<a class="headerlink" href="#what-are-platforms" title="Permalink to this headline"></a></h3>
+<h3>What Are Platforms?<a class="headerlink" href="#what-are-platforms" title="Permalink to this heading"></a></h3>
 <p>Platforms define settings, most importantly:</p>
 <blockquote>
 <div><ul class="simple">
@@ -153,7 +154,7 @@ task job.</p></li>
 </div></blockquote>
 </section>
 <section id="why-were-platforms-introduced">
-<h3>Why Were Platforms Introduced?<a class="headerlink" href="#why-were-platforms-introduced" title="Permalink to this headline"></a></h3>
+<h3>Why Were Platforms Introduced?<a class="headerlink" href="#why-were-platforms-introduced" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Allow a compute cluster with multiple login nodes to be treated as a single
 unit.</p></li>
@@ -164,7 +165,7 @@ separate platforms to submit jobs to a batch system and to background on
 </ul>
 </section>
 <section id="what-are-install-targets">
-<span id="install-targets"></span><h3>What Are Install Targets?<a class="headerlink" href="#what-are-install-targets" title="Permalink to this headline"></a></h3>
+<span id="install-targets"></span><h3>What Are Install Targets?<a class="headerlink" href="#what-are-install-targets" title="Permalink to this heading"></a></h3>
 <p>Install targets represent file systems. More than one platform can use the
 same file system. It defaults to the name of the platform.</p>
 <p>For example, your Cylc scheduler hosts might share a file system with a
@@ -176,9 +177,9 @@ Each cluster would be both a platform, and have its own install target.</p>
 </section>
 </section>
 <section id="example-platforms">
-<h2>Example Platforms<a class="headerlink" href="#example-platforms" title="Permalink to this headline"></a></h2>
+<h2>Example Platforms<a class="headerlink" href="#example-platforms" title="Permalink to this heading"></a></h2>
 <section id="on-the-scheduler-host-cylc-server">
-<h3>On the Scheduler Host (Cylc Server)<a class="headerlink" href="#on-the-scheduler-host-cylc-server" title="Permalink to this headline"></a></h3>
+<h3>On the Scheduler Host (Cylc Server)<a class="headerlink" href="#on-the-scheduler-host-cylc-server" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>There is a built in localhost platform</strong></p></li>
 </ul>
@@ -190,7 +191,7 @@ Each cluster would be both a platform, and have its own install target.</p>
 using a default <code class="docutils literal notranslate"><span class="pre">localhost</span></code> platform.</p>
 </section>
 <section id="simple-remote-platform">
-<h3>Simple Remote Platform<a class="headerlink" href="#simple-remote-platform" title="Permalink to this headline"></a></h3>
+<h3>Simple Remote Platform<a class="headerlink" href="#simple-remote-platform" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platforms don’t need to be complicated</strong></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">install</span> <span class="pre">target</span></code> <strong>specifies a file system for the task using that platform</strong></p></li>
@@ -211,7 +212,7 @@ which doesn’t share a file system with the workflow host.</p>
 </div>
 </section>
 <section id="cluster-with-multiple-login-nodes">
-<h3>Cluster with Multiple Login Nodes<a class="headerlink" href="#cluster-with-multiple-login-nodes" title="Permalink to this headline"></a></h3>
+<h3>Cluster with Multiple Login Nodes<a class="headerlink" href="#cluster-with-multiple-login-nodes" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platforms can group multiple hosts together.</strong></p></li>
 </ul>
@@ -237,7 +238,7 @@ jobs via the other login node.</p>
 host we need to ask Cylc to retrieve job logs.</p>
 </section>
 <section id="background-jobs-on-cluster-with-other-options">
-<h3>Background Jobs on Cluster with Other Options<a class="headerlink" href="#background-jobs-on-cluster-with-other-options" title="Permalink to this headline"></a></h3>
+<h3>Background Jobs on Cluster with Other Options<a class="headerlink" href="#background-jobs-on-cluster-with-other-options" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platforms are the unique combination of all settings.</strong></p></li>
 </ul>
@@ -271,7 +272,7 @@ or an alternative ssh command.</p></li>
 </div>
 </section>
 <section id="submit-pbs-jobs-from-localhost">
-<h3>Submit PBS Jobs from Localhost<a class="headerlink" href="#submit-pbs-jobs-from-localhost" title="Permalink to this headline"></a></h3>
+<h3>Submit PBS Jobs from Localhost<a class="headerlink" href="#submit-pbs-jobs-from-localhost" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platforms can share hosts and not share batch systems.</strong></p></li>
 </ul>
@@ -303,7 +304,7 @@ the <code class="docutils literal notranslate"><span class="pre">[[pbs_cluster]]
 </div>
 </section>
 <section id="two-similar-clusters">
-<h3>Two Similar Clusters<a class="headerlink" href="#two-similar-clusters" title="Permalink to this headline"></a></h3>
+<h3>Two Similar Clusters<a class="headerlink" href="#two-similar-clusters" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platform groups allow users to ask for jobs to be run on any
 suitable computer.</strong></p></li>
@@ -342,7 +343,7 @@ platform in the group.</p>
 </div>
 </section>
 <section id="preferred-and-backup-hosts-and-platforms">
-<h3>Preferred and Backup Hosts and Platforms<a class="headerlink" href="#preferred-and-backup-hosts-and-platforms" title="Permalink to this headline"></a></h3>
+<h3>Preferred and Backup Hosts and Platforms<a class="headerlink" href="#preferred-and-backup-hosts-and-platforms" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>You can set how hosts are selected from platforms.</strong></p></li>
 <li><p><strong>You can set how platforms are selected from groups.</strong></p></li>
@@ -381,7 +382,7 @@ jobs on the research cluster.</p>
 </div>
 </section>
 <section id="lots-of-desktop-computers">
-<h3>Lots of desktop computers<a class="headerlink" href="#lots-of-desktop-computers" title="Permalink to this headline"></a></h3>
+<h3>Lots of desktop computers<a class="headerlink" href="#lots-of-desktop-computers" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Platform names are regular expressions.</strong></p></li>
 </ul>
@@ -417,7 +418,7 @@ used for both.</p>
 </div>
 </section>
 <section id="platform-with-no-home-directory">
-<h3>Platform with no <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory<a class="headerlink" href="#platform-with-no-home-directory" title="Permalink to this headline"></a></h3>
+<h3>Platform with no <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory<a class="headerlink" href="#platform-with-no-home-directory" title="Permalink to this heading"></a></h3>
 <div class="admonition-scenario admonition">
 <p class="admonition-title">Scenario</p>
 <p>You are trying to run jobs on a platform where the compute nodes don’t
@@ -472,7 +473,7 @@ be <code class="docutils literal notranslate"><span class="pre">localhost</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

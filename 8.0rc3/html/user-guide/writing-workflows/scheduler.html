@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -116,14 +117,14 @@
            <div itemprop="articleBody">
              
   <section id="scheduler-configuration">
-<h1>Scheduler Configuration<a class="headerlink" href="#scheduler-configuration" title="Permalink to this headline"></a></h1>
+<h1>Scheduler Configuration<a class="headerlink" href="#scheduler-configuration" title="Permalink to this heading"></a></h1>
 <p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]" title="flow.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]</span></code></a> section configures certain aspects of
 <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> behaviour at the workflow level.</p>
 <p>Many of these configurations can also be defined at the site or user level in
 the <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler]" title="global.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]</span></code></a> section where it applies to all
 workflows.</p>
 <section id="event-handlers">
-<h2>Event handlers<a class="headerlink" href="#event-handlers" title="Permalink to this headline"></a></h2>
+<h2>Event handlers<a class="headerlink" href="#event-handlers" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Workflow event handlers are configured by:</p>
@@ -135,7 +136,7 @@ workflows.</p>
 <p>Workflow event handlers allow configurable actions to be performed when
 workflow events occur.</p>
 <section id="workflow-events">
-<h3>Workflow Events<a class="headerlink" href="#workflow-events" title="Permalink to this headline"></a></h3>
+<h3>Workflow Events<a class="headerlink" href="#workflow-events" title="Permalink to this heading"></a></h3>
 <p>The list of events is:</p>
 <dl class="simple">
 <dt>startup</dt><dd><p>The scheduler started running the workflow.</p>
@@ -162,7 +163,7 @@ with the following settings:</p>
 </ul>
 </section>
 <section id="mail-events">
-<h3>Mail Events<a class="headerlink" href="#mail-events" title="Permalink to this headline"></a></h3>
+<h3>Mail Events<a class="headerlink" href="#mail-events" title="Permalink to this heading"></a></h3>
 <p>Cylc can send emails for workflow events, these are configured by
 <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]mail events" title="flow.cylc[scheduler][events]mail events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][events]mail</span> <span class="pre">events</span></code></a>.</p>
 <p>For example with the following configuration, emails will be sent if a
@@ -186,7 +187,7 @@ footer could be configured with a URL:</p>
 </div>
 </section>
 <section id="custom-event-handlers">
-<h3>Custom Event Handlers<a class="headerlink" href="#custom-event-handlers" title="Permalink to this headline"></a></h3>
+<h3>Custom Event Handlers<a class="headerlink" href="#custom-event-handlers" title="Permalink to this heading"></a></h3>
 <p>Cylc can also be configured to invoke scripts on workflow events.</p>
 <p>Event handler scripts can be stored in the workflow <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory, or
 anywhere in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> environment.</p>
@@ -214,7 +215,7 @@ when a workflow is started:</p>
 </div>
 </section>
 <section id="workflow-event-template-variables">
-<span id="id1"></span><h3>Workflow Event Template Variables<a class="headerlink" href="#workflow-event-template-variables" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3>Workflow Event Template Variables<a class="headerlink" href="#workflow-event-template-variables" title="Permalink to this heading"></a></h3>
 <dl>
 <p>The following variables are available to workflow event handlers.</p>
 <p>They can be templated into event handlers with Python percent style string
@@ -311,7 +312,7 @@ from the database on restart.</p>
 </section>
 </section>
 <section id="external-command-execution">
-<span id="managing-external-command-execution"></span><h2>External Command Execution<a class="headerlink" href="#external-command-execution" title="Permalink to this headline"></a></h2>
+<span id="managing-external-command-execution"></span><h2>External Command Execution<a class="headerlink" href="#external-command-execution" title="Permalink to this heading"></a></h2>
 <p>Job submission commands, event handlers, and job poll and kill commands, are
 executed by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> in a subprocess pool. The pool is size can
 be configured with <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler]process pool size" title="global.cylc[scheduler]process pool size"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]process</span> <span class="pre">pool</span> <span class="pre">size</span></code></a>.</p>
@@ -324,7 +325,7 @@ logged by the <a class="reference internal" href="../../glossary.html#term-sched
 associated task goes to the <code class="docutils literal notranslate"><span class="pre">submit-failed</span></code> state.</p>
 </section>
 <section id="submitting-workflows-to-a-pool-of-hosts">
-<span id="id2"></span><h2>Submitting Workflows To a Pool Of Hosts<a class="headerlink" href="#submitting-workflows-to-a-pool-of-hosts" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Submitting Workflows To a Pool Of Hosts<a class="headerlink" href="#submitting-workflows-to-a-pool-of-hosts" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Configured by</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]" title="global.cylc[scheduler][run hosts]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]</span></code></a>.</p>
@@ -335,7 +336,7 @@ was invoked.</p>
 <p>Cylc supports configuring a pool of hosts for workflows to run on,
 <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> will automatically pick a host and submit the workflow to it.</p>
 <section id="host-pool">
-<h3>Host Pool<a class="headerlink" href="#host-pool" title="Permalink to this headline"></a></h3>
+<h3>Host Pool<a class="headerlink" href="#host-pool" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Configured by</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]available</span></code></a>.</p>
@@ -355,7 +356,7 @@ was invoked.</p>
 </div>
 </section>
 <section id="load-balancing">
-<h3>Load Balancing<a class="headerlink" href="#load-balancing" title="Permalink to this headline"></a></h3>
+<h3>Load Balancing<a class="headerlink" href="#load-balancing" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Configured by</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]ranking" title="global.cylc[scheduler][run hosts]ranking"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]ranking</span></code></a>.</p>
@@ -380,7 +381,7 @@ criterion.</p>
 <p>For more information see <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]ranking" title="global.cylc[scheduler][run hosts]ranking"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]ranking</span></code></a>.</p>
 </section>
 <section id="workflow-migration">
-<span id="auto-stop-restart"></span><h3>Workflow Migration<a class="headerlink" href="#workflow-migration" title="Permalink to this headline"></a></h3>
+<span id="auto-stop-restart"></span><h3>Workflow Migration<a class="headerlink" href="#workflow-migration" title="Permalink to this heading"></a></h3>
 <dl class="field-list simple">
 <dt class="field-odd">Configured by</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>.</p>
@@ -414,7 +415,7 @@ host needs to be taken off-line, e.g. for scheduled maintenance.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

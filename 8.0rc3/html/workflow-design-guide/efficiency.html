@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -112,13 +113,13 @@
            <div itemprop="articleBody">
              
   <section id="efficiency-and-maintainability">
-<span id="id1"></span><h1>Efficiency And Maintainability<a class="headerlink" href="#efficiency-and-maintainability" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Efficiency And Maintainability<a class="headerlink" href="#efficiency-and-maintainability" title="Permalink to this heading"></a></h1>
 <p>Efficiency (in the sense of <em>economy of workflow definition</em>) and
 maintainability go hand in hand. This section describes techniques for clean
 and efficient construction of complex workflows that are easy to understand,
 maintain, and modify.</p>
 <section id="the-task-family-hierarchy">
-<span id="id2"></span><h2>The Task Family Hierarchy<a class="headerlink" href="#the-task-family-hierarchy" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>The Task Family Hierarchy<a class="headerlink" href="#the-task-family-hierarchy" title="Permalink to this heading"></a></h2>
 <p>A properly designed family hierarchy fulfils three purposes in Cylc:</p>
 <ul class="simple">
 <li><p>efficient sharing of configuration common to groups of related tasks</p></li>
@@ -126,7 +127,7 @@ maintain, and modify.</p>
 <li><p>collapsible families in workflow visualization and UI views</p></li>
 </ul>
 <section id="sharing-by-inheritance">
-<span id="id3"></span><h3>Sharing By Inheritance<a class="headerlink" href="#sharing-by-inheritance" title="Permalink to this headline"></a></h3>
+<span id="id3"></span><h3>Sharing By Inheritance<a class="headerlink" href="#sharing-by-inheritance" title="Permalink to this heading"></a></h3>
 <p>Duplication is a maintenance risk because changes have to be repeated in
 multiple places without mistakes. On the other hand, unnecessary sharing of
 items via global variables is also bad because it is hard to be sure which
@@ -182,7 +183,7 @@ precedence order for each runtime namespace</p></li>
 </ul>
 </section>
 <section id="family-triggering">
-<h3>Family Triggering<a class="headerlink" href="#family-triggering" title="Permalink to this headline"></a></h3>
+<h3>Family Triggering<a class="headerlink" href="#family-triggering" title="Permalink to this heading"></a></h3>
 <p>Task families can be used to simplify the scheduling graph wherever many
 tasks need to trigger at once:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
@@ -215,7 +216,7 @@ to allow chaining of dependencies:</p>
 </div>
 </section>
 <section id="family-to-family-triggering">
-<h3>Family-to-Family Triggering<a class="headerlink" href="#family-to-family-triggering" title="Permalink to this headline"></a></h3>
+<h3>Family-to-Family Triggering<a class="headerlink" href="#family-to-family-triggering" title="Permalink to this heading"></a></h3>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
     <span class="nt">[[graph]]</span>
         <span class="nv">R1 = BIG_FAM_1:succeed-all </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">BIG_FAM_2</span>
@@ -238,7 +239,7 @@ without affecting the scheduling.</p>
 <img alt="../_images/fam-to-fam-2.png" src="../_images/fam-to-fam-2.png" />
 </section>
 <section id="task-families-and-visualization">
-<span id="id4"></span><h3>Task Families And Visualization<a class="headerlink" href="#task-families-and-visualization" title="Permalink to this headline"></a></h3>
+<span id="id4"></span><h3>Task Families And Visualization<a class="headerlink" href="#task-families-and-visualization" title="Permalink to this heading"></a></h3>
 <p><em>First parents</em> in the inheritance hierarchy double as collapsible summary
 groups for visualization and monitoring. Tasks should generally be grouped into
 visualization families that reflect their logical purpose in the workflow rather
@@ -268,7 +269,7 @@ a null parent like this:</p>
 </section>
 </section>
 <section id="generating-tasks-automatically">
-<span id="generating-tasks"></span><h2>Generating Tasks Automatically<a class="headerlink" href="#generating-tasks-automatically" title="Permalink to this headline"></a></h2>
+<span id="generating-tasks"></span><h2>Generating Tasks Automatically<a class="headerlink" href="#generating-tasks-automatically" title="Permalink to this heading"></a></h2>
 <p>Groups of tasks that are closely related such as an ensemble of model runs or
 a family of obs processing tasks, or sections of workflow that are repeated
 with minor variations, can be generated automatically by iterating over
@@ -276,7 +277,7 @@ some integer range (e.g. <code class="docutils literal notranslate"><span class=
 list of strings (e.g. <code class="docutils literal notranslate"><span class="pre">obs&lt;type&gt;</span></code> for
 <code class="docutils literal notranslate"><span class="pre">type</span> <span class="pre">=</span> <span class="pre">ship,</span> <span class="pre">buoy,</span> <span class="pre">radiosonde,</span> <span class="pre">...</span></code>).</p>
 <section id="jinja2-loops">
-<h3>Jinja2 Loops<a class="headerlink" href="#jinja2-loops" title="Permalink to this headline"></a></h3>
+<h3>Jinja2 Loops<a class="headerlink" href="#jinja2-loops" title="Permalink to this heading"></a></h3>
 <p>Task generation was traditionally done in Cylc with explicit Jinja2 loops,
 like this:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Task generation the old way: Jinja2 loops (NO LONGER RECOMMENDED!)</span>
@@ -305,7 +306,7 @@ scheduling graph, and it gets worse with nested loops over multiple parameters.<
 <img alt="../_images/param-1.png" src="../_images/param-1.png" />
 </section>
 <section id="parameterized-tasks">
-<span id="sdg-parameterized-tasks"></span><h3>Parameterized Tasks<a class="headerlink" href="#parameterized-tasks" title="Permalink to this headline"></a></h3>
+<span id="sdg-parameterized-tasks"></span><h3>Parameterized Tasks<a class="headerlink" href="#parameterized-tasks" title="Permalink to this heading"></a></h3>
 <p>Cylc-6.11 introduced built-in <em>workflow parameters</em> for generating tasks
 without destroying the clarity of the base workflow definition. Here’s the same
 example using workflow parameters instead of Jinja2 loops:</p>
@@ -381,7 +382,7 @@ efficient for very large families).</p>
 </section>
 </section>
 <section id="optional-app-config-files">
-<span id="id5"></span><h2>Optional App Config Files<a class="headerlink" href="#optional-app-config-files" title="Permalink to this headline"></a></h2>
+<span id="id5"></span><h2>Optional App Config Files<a class="headerlink" href="#optional-app-config-files" title="Permalink to this heading"></a></h2>
 <p>Closely related tasks with few configuration differences between them - such as
 multiple UM forecast and reconfiguration apps in the same workflow - should use
 the same Rose app configuration with the differences supplied by optional
@@ -427,7 +428,7 @@ have to repeat and override the root-level script configuration:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

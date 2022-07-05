@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -121,7 +122,7 @@
            <div itemprop="articleBody">
              
   <section id="jinja2">
-<span id="user-guide-jinja2"></span><span id="jinja"></span><h1>Jinja2<a class="headerlink" href="#jinja2" title="Permalink to this headline"></a></h1>
+<span id="user-guide-jinja2"></span><span id="jinja"></span><h1>Jinja2<a class="headerlink" href="#jinja2" title="Permalink to this heading"></a></h1>
 <div class="tip tutorial-ref admonition">
 <p class="admonition-title">Related Tutorial</p>
 <p><a class="reference internal" href="../../tutorial/runtime/configuration-consolidation/index.html#tutorial-cylc-consolidating-configuration"><span class="std std-ref">Configuration Consolidation Tutorial</span></a></p>
@@ -290,7 +291,7 @@ New York City task family expanded.</span><a class="headerlink" href="#id3" titl
 </figcaption>
 </figure>
 <section id="accessing-environment-variables">
-<h2>Accessing Environment Variables<a class="headerlink" href="#accessing-environment-variables" title="Permalink to this headline"></a></h2>
+<h2>Accessing Environment Variables<a class="headerlink" href="#accessing-environment-variables" title="Permalink to this heading"></a></h2>
 <p>Cylc automatically imports the environment to the template’s global namespace
 (see <a class="reference internal" href="#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a>) in a dictionary called <em>environ</em>:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
@@ -328,7 +329,7 @@ parsed. It is not read at run time by task jobs on the job platform.</p>
 </div>
 </section>
 <section id="custom-jinja2-filters-tests-and-globals">
-<span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this headline"></a></h2>
+<span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this heading"></a></h2>
 <p>Jinja2 has three namespaces that separate “globals”, “filters” and “tests”.
 Globals are template-wide variables and functions. Cylc extends this namespace
 with the <code class="docutils literal notranslate"><span class="pre">environ</span></code> dictionary above, and
@@ -541,7 +542,7 @@ duration as a floating-point number.</p>
 
 </section>
 <section id="associative-arrays-in-jinja2">
-<h2>Associative Arrays In Jinja2<a class="headerlink" href="#associative-arrays-in-jinja2" title="Permalink to this headline"></a></h2>
+<h2>Associative Arrays In Jinja2<a class="headerlink" href="#associative-arrays-in-jinja2" title="Permalink to this heading"></a></h2>
 <p>Associative arrays (or <strong>dictionaries</strong>) are very useful. For example:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
 <span class="cp">{% set obs_types = [&#39;airs&#39;, &#39;iasi&#39;] %}</span>
@@ -568,7 +569,7 @@ duration as a floating-point number.</p>
 </div>
 </section>
 <section id="default-values-and-template-variables">
-<span id="jinja2-template-variables"></span><h2>Default Values and Template Variables<a class="headerlink" href="#default-values-and-template-variables" title="Permalink to this headline"></a></h2>
+<span id="jinja2-template-variables"></span><h2>Default Values and Template Variables<a class="headerlink" href="#default-values-and-template-variables" title="Permalink to this heading"></a></h2>
 <p>You can provide template variables to Cylc in 3 ways:</p>
 <ul class="simple">
 <li><p>Using the <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> option.</p></li>
@@ -581,7 +582,7 @@ duration as a floating-point number.</p>
 above list is used.</p>
 </div>
 <section id="the-s-and-set-file-options">
-<h3>The <code class="docutils literal notranslate"><span class="pre">-s</span></code> and <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> Options<a class="headerlink" href="#the-s-and-set-file-options" title="Permalink to this headline"></a></h3>
+<h3>The <code class="docutils literal notranslate"><span class="pre">-s</span></code> and <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> Options<a class="headerlink" href="#the-s-and-set-file-options" title="Permalink to this heading"></a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># set the Jinja2 variable &quot;answer&quot; to 42</span>
 <span class="gp">$ </span>cylc play &lt;workflow-id&gt; -s <span class="nv">answer</span><span class="o">=</span><span class="m">42</span>
 </pre></div>
@@ -697,7 +698,7 @@ be overridden.</p>
 </div>
 </section>
 <section id="using-a-plugin">
-<h3>Using a plugin<a class="headerlink" href="#using-a-plugin" title="Permalink to this headline"></a></h3>
+<h3>Using a plugin<a class="headerlink" href="#using-a-plugin" title="Permalink to this heading"></a></h3>
 <p>Template plugins such as <a class="reference internal" href="../../plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a> should provide a set of template
 variables which can be provided to Cylc. For example, using Cylc Rose you
 add a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file containing a <code class="docutils literal notranslate"><span class="pre">[template</span> <span class="pre">variables]</span></code>
@@ -728,7 +729,7 @@ section which the plugin makes available to Cylc:</p>
 </section>
 </section>
 <section id="jinja2-variable-scope">
-<h2>Jinja2 Variable Scope<a class="headerlink" href="#jinja2-variable-scope" title="Permalink to this headline"></a></h2>
+<h2>Jinja2 Variable Scope<a class="headerlink" href="#jinja2-variable-scope" title="Permalink to this heading"></a></h2>
 <p>Jinja2 variable scoping rules may be surprising. For instance, variables set
 inside a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop can’t be accessed outside of the block,
 so the following will not print <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">FOO</span> <span class="pre">is</span> <span class="pre">True</span></code>:</p>
@@ -757,7 +758,7 @@ handled using <code class="docutils literal notranslate"><span class="pre">names
 <a class="reference external" href="https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments">Jinja2 Template Designer Documentation - Assignments</a></p>
 </section>
 <section id="raising-exceptions">
-<span id="jinja2raisingexceptions"></span><h2>Raising Exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this headline"></a></h2>
+<span id="jinja2raisingexceptions"></span><h2>Raising Exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this heading"></a></h2>
 <p>Cylc provides two functions for raising exceptions in Jinja2 code. These
 exceptions are raised when the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is loaded and will
 prevent a workflow from running.</p>
@@ -767,7 +768,7 @@ prevent a workflow from running.</p>
 <code class="docutils literal notranslate"><span class="pre">{%</span></code> code blocks.</p>
 </div>
 <section id="raise">
-<span id="jinja2-raise"></span><h3>Raise<a class="headerlink" href="#raise" title="Permalink to this headline"></a></h3>
+<span id="jinja2-raise"></span><h3>Raise<a class="headerlink" href="#raise" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">raise</span></code> function will result in an error containing the provided text.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% if not VARIABLE is defined %}</span>
     <span class="cp">{{ raise(&#39;VARIABLE must be defined for this workflow.&#39;) }}</span>
@@ -776,7 +777,7 @@ prevent a workflow from running.</p>
 </div>
 </section>
 <section id="assert">
-<span id="jinja2-assert"></span><h3>Assert<a class="headerlink" href="#assert" title="Permalink to this headline"></a></h3>
+<span id="jinja2-assert"></span><h3>Assert<a class="headerlink" href="#assert" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">assert</span></code> function will raise an exception containing the text provided in
 the second argument providing that the first argument evaluates as False. The
 following example is equivalent to the “raise” example above.</p>
@@ -786,7 +787,7 @@ following example is equivalent to the “raise” example above.</p>
 </section>
 </section>
 <section id="importing-python-modules">
-<span id="jinja2-importing-python-modules"></span><h2>Importing Python modules<a class="headerlink" href="#importing-python-modules" title="Permalink to this headline"></a></h2>
+<span id="jinja2-importing-python-modules"></span><h2>Importing Python modules<a class="headerlink" href="#importing-python-modules" title="Permalink to this heading"></a></h2>
 <p>Jinja2 allows to gather variable and macro definitions in a separate template
 that can be imported into (and thus shared among) other templates.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% import &quot;flow-utils.cylc&quot; as utils %}</span>
@@ -809,7 +810,7 @@ that can be imported into (and thus shared among) other templates.</p>
 </div>
 </section>
 <section id="logging">
-<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline"></a></h2>
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h2>
 <p>It is possible to output messages to the Cylc log from within Jinja2, these
 messages will appear on the console when validating or starting a workflow.
 This can be useful for development or debugging.</p>
@@ -847,7 +848,7 @@ advisable to use the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

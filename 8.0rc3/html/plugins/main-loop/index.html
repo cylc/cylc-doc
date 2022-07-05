@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -114,10 +115,10 @@
            <div itemprop="articleBody">
              
   <section id="module-cylc.flow.main_loop">
-<span id="main-loop-plugins"></span><h1>Main Loop Plugins<a class="headerlink" href="#module-cylc.flow.main_loop" title="Permalink to this headline"></a></h1>
+<span id="main-loop-plugins"></span><h1>Main Loop Plugins<a class="headerlink" href="#module-cylc.flow.main_loop" title="Permalink to this heading"></a></h1>
 <p>Plugins for running Python code inside of the Cylc scheduler.</p>
 <section id="built-in-plugins">
-<span id="builtinplugins"></span><h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Permalink to this headline"></a></h2>
+<span id="builtinplugins"></span><h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Permalink to this heading"></a></h2>
 <p>Cylc Flow provides the following plugins:</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -147,7 +148,7 @@
 </table>
 </section>
 <section id="configuring">
-<h2>Configuring<a class="headerlink" href="#configuring" title="Permalink to this headline"></a></h2>
+<h2>Configuring<a class="headerlink" href="#configuring" title="Permalink to this heading"></a></h2>
 <p>Main loop plugins can be activated either by:</p>
 <ul>
 <li><p>Using the <code class="docutils literal notranslate"><span class="pre">--main-loop</span></code> option with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> e.g:</p>
@@ -175,12 +176,12 @@
 </div>
 </section>
 <section id="developing-main-loop-plugins">
-<h2>Developing Main Loop Plugins<a class="headerlink" href="#developing-main-loop-plugins" title="Permalink to this headline"></a></h2>
+<h2>Developing Main Loop Plugins<a class="headerlink" href="#developing-main-loop-plugins" title="Permalink to this heading"></a></h2>
 <p>Main loop plugins are Python modules containing asynchronous function(s)
 (sometimes referred to as coroutines) which Cylc Flow executes within the
 scheduler.</p>
 <section id="hello-world">
-<h3>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline"></a></h3>
+<h3>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this heading"></a></h3>
 <p>Here is the “hello world” of main loop plugins:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">my_plugin.py</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
@@ -220,12 +221,12 @@ entry point:</p>
 </div>
 </section>
 <section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
 <p>For examples see the built-in plugins in the <a class="reference internal" href="#module-cylc.flow.main_loop" title="cylc.flow.main_loop"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cylc.flow.main_loop</span></code></a>
 module which are registered in the Cylc Flow <code class="docutils literal notranslate"><span class="pre">setup.cfg</span></code> file.</p>
 </section>
 <section id="coroutines">
-<h3>Coroutines<a class="headerlink" href="#coroutines" title="Permalink to this headline"></a></h3>
+<h3>Coroutines<a class="headerlink" href="#coroutines" title="Permalink to this heading"></a></h3>
 <p>Plugins provide asynchronous functions (<a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#coroutines">coroutines</a>) which Cylc will
 then run inside the scheduler.</p>
 <p>Coroutines should be fast running (read as gentle on the scheduler)
@@ -234,7 +235,7 @@ and perform IO asynchronously e.g. by using <a class="reference external" href="
 parallel-safe with other plugins.</p>
 </section>
 <section id="event-types">
-<h3>Event Types<a class="headerlink" href="#event-types" title="Permalink to this headline"></a></h3>
+<h3>Event Types<a class="headerlink" href="#event-types" title="Permalink to this heading"></a></h3>
 <p>Coroutines must be decorated using one of the main loop decorators. The
 choice of decorator effects when the coroutine is called and what
 arguments are provided to it.</p>
@@ -317,7 +318,7 @@ MainLoopPluginException</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

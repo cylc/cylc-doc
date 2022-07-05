@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -109,11 +110,11 @@
            <div itemprop="articleBody">
              
   <section id="runtime-configuration">
-<span id="tutorial-cylc-runtime-configuration"></span><h1>Runtime Configuration<a class="headerlink" href="#runtime-configuration" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-runtime-configuration"></span><h1>Runtime Configuration<a class="headerlink" href="#runtime-configuration" title="Permalink to this heading"></a></h1>
 <p>In the last section we associated tasks with scripts and ran a simple workflow. In
 this section we will look at how to configure these tasks.</p>
 <section id="environment-variables">
-<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline"></a></h2>
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading"></a></h2>
 <p>We can define environment variables in task <code class="docutils literal notranslate"><span class="pre">[environment]</span></code> sections,
 to be provided to task <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a> at runtime.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
@@ -142,7 +143,7 @@ to be provided to task <a class="reference internal" href="../../glossary.html#t
 </div>
 </section>
 <section id="job-submission">
-<span id="tutorial-job-runner"></span><h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this headline"></a></h2>
+<span id="tutorial-job-runner"></span><h2>Job Submission<a class="headerlink" href="#job-submission" title="Permalink to this heading"></a></h2>
 <p>By default Cylc runs <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">task jobs</span></a> on the same machine as
 the scheduler. It can run them on other machines too if we set the
 <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> like this:</p>
@@ -184,7 +185,7 @@ example:</p>
 </div>
 </section>
 <section id="time-limits">
-<h2>Time Limits<a class="headerlink" href="#time-limits" title="Permalink to this headline"></a></h2>
+<h2>Time Limits<a class="headerlink" href="#time-limits" title="Permalink to this heading"></a></h2>
 <p>We can specify an execution time limit, as an <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 duration</span></a>, after
 which a task job will be terminated. Cylc automatically translates this to
 the correct <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> directives.</p>
@@ -196,7 +197,7 @@ the correct <a class="reference internal" href="../../glossary.html#term-job-run
 </div>
 </section>
 <section id="retries">
-<h2>Retries<a class="headerlink" href="#retries" title="Permalink to this headline"></a></h2>
+<h2>Retries<a class="headerlink" href="#retries" title="Permalink to this heading"></a></h2>
 <p>Task jobs can fail for several reasons:</p>
 <ul class="simple">
 <li><p>Something went wrong with job submission, e.g:</p>
@@ -237,7 +238,7 @@ will cause the job to retry every 10 minutes on execution failure.</p>
 </div>
 </section>
 <section id="start-stop-restart">
-<span id="tutorial-start-stop-restart"></span><h2>Start, Stop, Restart<a class="headerlink" href="#start-stop-restart" title="Permalink to this headline"></a></h2>
+<span id="tutorial-start-stop-restart"></span><h2>Start, Stop, Restart<a class="headerlink" href="#start-stop-restart" title="Permalink to this heading"></a></h2>
 <p>We have seen how to start and stop Cylc workflows with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> and
 <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code>. By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code> causes the scheduler to wait
 for running jobs to finish before it shuts down. There are several
@@ -491,7 +492,7 @@ i.e. the final cycle point.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

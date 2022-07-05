@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -114,13 +115,13 @@
            <div itemprop="articleBody">
              
   <section id="task-implementation">
-<span id="taskimplementation"></span><h1>Task Implementation<a class="headerlink" href="#task-implementation" title="Permalink to this headline"></a></h1>
+<span id="taskimplementation"></span><h1>Task Implementation<a class="headerlink" href="#task-implementation" title="Permalink to this heading"></a></h1>
 <p>Existing scripts and executables can be used as Cylc tasks without
 modification so long as they return standard exit status - zero on success,
 non-zero for failure - and do not spawn detaching processes internally (see
 <a class="reference internal" href="#detachingjobs"><span class="std std-ref">Avoid Detaching Processes</span></a>).</p>
 <section id="task-job-scripts">
-<span id="jobscripts"></span><h2>Task Job Scripts<a class="headerlink" href="#task-job-scripts" title="Permalink to this headline"></a></h2>
+<span id="jobscripts"></span><h2>Task Job Scripts<a class="headerlink" href="#task-job-scripts" title="Permalink to this heading"></a></h2>
 <p>When the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> determines that a task is ready to run it
 generates a <em>job script</em> for the task, and submits it to run (see
 <a class="reference internal" href="job-submission.html#taskjobsubmission"><span class="std std-ref">Task Job Submission and Management</span></a>).</p>
@@ -196,7 +197,7 @@ subgraph cluster_diagram {
 printed with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code>.</p>
 </section>
 <section id="inlined-tasks">
-<h2>Inlined Tasks<a class="headerlink" href="#inlined-tasks" title="Permalink to this headline"></a></h2>
+<h2>Inlined Tasks<a class="headerlink" href="#inlined-tasks" title="Permalink to this heading"></a></h2>
 <p>Task <em>script</em> items can be multi-line strings of <code class="docutils literal notranslate"><span class="pre">bash</span></code>  code, so many tasks
 can be entirely inlined in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
 <p>For anything more than a few lines of code, however, we recommend using
@@ -204,7 +205,7 @@ external shell scripts to allow independent testing, re-use, and shell mode
 editing.</p>
 </section>
 <section id="interpreter">
-<h2>Interpreter<a class="headerlink" href="#interpreter" title="Permalink to this headline"></a></h2>
+<h2>Interpreter<a class="headerlink" href="#interpreter" title="Permalink to this heading"></a></h2>
 <p>The job script (which incorporates the <code class="docutils literal notranslate"><span class="pre">*-script</span></code> items) runs in the
 <code class="docutils literal notranslate"><span class="pre">bash</span></code> interpreter.</p>
 <p>Cylc searches for <code class="docutils literal notranslate"><span class="pre">bash</span></code> in the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> by first running a login bash
@@ -212,7 +213,7 @@ shell which means you can choose the bash interpreter used by modifying
 the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in your bash configuration files (e.g. <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>).</p>
 </section>
 <section id="task-messages">
-<h2>Task Messages<a class="headerlink" href="#task-messages" title="Permalink to this headline"></a></h2>
+<h2>Task Messages<a class="headerlink" href="#task-messages" title="Permalink to this heading"></a></h2>
 <p>Task jobs send status messages back to the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to report that
 execution has started, succeeded, or failed. Custom messages can also be sent
 by the same mechanism, with various severity levels. These can be used to
@@ -269,7 +270,7 @@ configured).</p>
 
 </section>
 <section id="aborting-job-scripts-on-error">
-<h2>Aborting Job Scripts on Error<a class="headerlink" href="#aborting-job-scripts-on-error" title="Permalink to this headline"></a></h2>
+<h2>Aborting Job Scripts on Error<a class="headerlink" href="#aborting-job-scripts-on-error" title="Permalink to this heading"></a></h2>
 <p>Task job scripts use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-x</span></code> to abort on any error, and trap ERR, EXIT, and
 SIGTERM to send task failed messages back to the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> before
 aborting. Other scripts called from job scripts should therefore abort with
@@ -288,7 +289,7 @@ undefined variable (useful for picking up typos); and <code class="docutils lite
 to abort if any part of a pipe fails (by default the shell only returns the
 exit status of the final command in a pipeline).</p>
 <section id="custom-failure-messages">
-<h3>Custom Failure Messages<a class="headerlink" href="#custom-failure-messages" title="Permalink to this headline"></a></h3>
+<h3>Custom Failure Messages<a class="headerlink" href="#custom-failure-messages" title="Permalink to this heading"></a></h3>
 <p>Critical events normally warrant aborting a job script rather than just
 sending a message. As described just above, <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">1</span></code> or any failing command
 not protected by the surrounding scripting will cause a job script to abort
@@ -314,7 +315,7 @@ function:</p>
 </section>
 </section>
 <section id="avoid-detaching-processes">
-<span id="detachingjobs"></span><h2>Avoid Detaching Processes<a class="headerlink" href="#avoid-detaching-processes" title="Permalink to this headline"></a></h2>
+<span id="detachingjobs"></span><h2>Avoid Detaching Processes<a class="headerlink" href="#avoid-detaching-processes" title="Permalink to this heading"></a></h2>
 <p>If a task script starts background sub-processes and does not wait on them, or
 internally submits jobs to a <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> and then exits immediately, the
 detached processes will not be visible to Cylc and the task will appear to
@@ -344,7 +345,7 @@ task to repeatedly poll for the results of the detached processes:</p>
 </div>
 </section>
 <section id="use-of-pipes-in-job-scripts">
-<span id="pipeinjobscripts"></span><h2>Use of Pipes in Job Scripts<a class="headerlink" href="#use-of-pipes-in-job-scripts" title="Permalink to this headline"></a></h2>
+<span id="pipeinjobscripts"></span><h2>Use of Pipes in Job Scripts<a class="headerlink" href="#use-of-pipes-in-job-scripts" title="Permalink to this heading"></a></h2>
 <p>In bash, the return status of a pipeline is normally the exit status of the
 last command. This is unsafe, because if any command in the pipeline fails, the
 script will continue nevertheless.</p>
@@ -372,7 +373,7 @@ ignored. (You should probably still investigate the failure, however!)</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

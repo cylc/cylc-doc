@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -114,14 +115,14 @@
            <div itemprop="articleBody">
              
   <section id="family-triggers">
-<span id="tutorial-cylc-family-triggers"></span><h1>Family Triggers<a class="headerlink" href="#family-triggers" title="Permalink to this headline"></a></h1>
+<span id="tutorial-cylc-family-triggers"></span><h1>Family Triggers<a class="headerlink" href="#family-triggers" title="Permalink to this heading"></a></h1>
 <p>To reduce duplication in the <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> is is possible to write
 <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> using collections of tasks called
 <a class="reference internal" href="../../glossary.html#term-family"><span class="xref std std-term">families</span></a>).</p>
 <p>This tutorial walks you through writing such dependencies using family
 <a class="reference internal" href="../../glossary.html#term-task-trigger"><span class="xref std std-term">triggers</span></a>.</p>
 <section id="explanation">
-<h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this headline"></a></h2>
+<h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this heading"></a></h2>
 <p>Dependencies between tasks can be written using a <a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifier</span></a> to describe
 the <a class="reference internal" href="../../glossary.html#term-task-state"><span class="xref std std-term">task state</span></a> that the dependency refers to (e.g. <code class="docutils literal notranslate"><span class="pre">succeed</span></code>
 <code class="docutils literal notranslate"><span class="pre">fail</span></code>, etc). If a dependency does not use a qualifier then it is assumed
@@ -152,7 +153,7 @@ in that family reaching the desired <a class="reference internal" href="../../gl
 <a class="reference internal" href="../../glossary.html#term-family-trigger"><span class="xref std std-term">family triggers</span></a></p>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <p>Create a new workflow called <code class="docutils literal notranslate"><span class="pre">tutorial-family-triggers</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">tutorial</span><span class="o">-</span><span class="n">family</span><span class="o">-</span><span class="n">triggers</span>
 <span class="n">cd</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">tutorial</span><span class="o">-</span><span class="n">family</span><span class="o">-</span><span class="n">triggers</span>
@@ -203,7 +204,7 @@ will need to stop your workflow using the “stop” button in the UI, or:</p>
 </div>
 </section>
 <section id="family-triggering-success">
-<h2>Family Triggering: Success<a class="headerlink" href="#family-triggering-success" title="Permalink to this headline"></a></h2>
+<h2>Family Triggering: Success<a class="headerlink" href="#family-triggering-success" title="Permalink to this heading"></a></h2>
 <p>As you will have noticed by watching the workflow run, some of the tasks in the
 <code class="docutils literal notranslate"><span class="pre">MINERS</span></code> family succeed and some fail.</p>
 <p>We would like to add a task to sell any diamonds we find, but wait for all
@@ -238,7 +239,7 @@ least one of them has succeeded. Stop your workflow as described above.</p>
 </div>
 </section>
 <section id="family-triggering-failure">
-<h2>Family Triggering: Failure<a class="headerlink" href="#family-triggering-failure" title="Permalink to this headline"></a></h2>
+<h2>Family Triggering: Failure<a class="headerlink" href="#family-triggering-failure" title="Permalink to this heading"></a></h2>
 <p>Cylc also allows us to trigger off failure of tasks in a particular family.</p>
 <p>We would like to add another task to close down unproductive mineshafts once
 all the miners have reported back and had time to discuss their findings.</p>
@@ -265,7 +266,7 @@ this:</p>
 state once they have all finished.</p>
 </section>
 <section id="different-triggers">
-<h2>Different Triggers<a class="headerlink" href="#different-triggers" title="Permalink to this headline"></a></h2>
+<h2>Different Triggers<a class="headerlink" href="#different-triggers" title="Permalink to this heading"></a></h2>
 <p>Other family <a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifiers</span></a> beyond those covered in the
 example are also available.</p>
 <p>The following types of “all” qualifier are available:</p>
@@ -284,7 +285,7 @@ example are also available.</p>
 </ul>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Family triggers allow you to write dependencies for collections of tasks.</p></li>
 <li><p>Like <a class="reference internal" href="../../glossary.html#term-task-trigger"><span class="xref std std-term">task triggers</span></a>, family triggers can be based on
@@ -307,7 +308,7 @@ family.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

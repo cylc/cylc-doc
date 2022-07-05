@@ -22,6 +22,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
@@ -109,10 +110,10 @@
            <div itemprop="articleBody">
              
   <section id="cheat-sheet">
-<span id="id1"></span><h1>Cheat Sheet<a class="headerlink" href="#cheat-sheet" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Cheat Sheet<a class="headerlink" href="#cheat-sheet" title="Permalink to this heading"></a></h1>
 <p>Quick summary of the command line changes between Cylc 7 / Rose 2019 and Cylc 8.</p>
 <section id="validating">
-<h2>Validating<a class="headerlink" href="#validating" title="Permalink to this headline"></a></h2>
+<h2>Validating<a class="headerlink" href="#validating" title="Permalink to this heading"></a></h2>
 <p>Check the workflow configuration for errors:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -143,7 +144,7 @@ rose suite-run --validate
 </table>
 </section>
 <section id="installing-running">
-<h2>Installing &amp; Running<a class="headerlink" href="#installing-running" title="Permalink to this headline"></a></h2>
+<h2>Installing &amp; Running<a class="headerlink" href="#installing-running" title="Permalink to this heading"></a></h2>
 <p>Install a workflow from source and run it:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -181,7 +182,7 @@ cylc play <span class="s">&lt;name&gt;</span>
 </table>
 </section>
 <section id="pausing-unpausing">
-<h2>Pausing &amp; Unpausing<a class="headerlink" href="#pausing-unpausing" title="Permalink to this headline"></a></h2>
+<h2>Pausing &amp; Unpausing<a class="headerlink" href="#pausing-unpausing" title="Permalink to this heading"></a></h2>
 <p>Tell a workflow not to submit any new jobs:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -209,14 +210,14 @@ cylc play <span class="s">&lt;name&gt;</span>
 </table>
 </section>
 <section id="stopping">
-<h2>Stopping<a class="headerlink" href="#stopping" title="Permalink to this headline"></a></h2>
+<h2>Stopping<a class="headerlink" href="#stopping" title="Permalink to this heading"></a></h2>
 <p>Stop a running workflow:</p>
 <div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc stop <span class="s">&lt;name&gt;</span>
 </pre></div>
 </div>
 </section>
 <section id="restarting">
-<h2>Restarting<a class="headerlink" href="#restarting" title="Permalink to this headline"></a></h2>
+<h2>Restarting<a class="headerlink" href="#restarting" title="Permalink to this heading"></a></h2>
 <p>Restart a stopped workflow and pick up where it left off:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -258,7 +259,7 @@ cylc play <span class="s">&lt;name&gt;</span>
 </table>
 </section>
 <section id="deleting">
-<h2>Deleting<a class="headerlink" href="#deleting" title="Permalink to this headline"></a></h2>
+<h2>Deleting<a class="headerlink" href="#deleting" title="Permalink to this heading"></a></h2>
 <p>Delete the workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> (leave source files untouched):</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -288,14 +289,14 @@ cylc play <span class="s">&lt;name&gt;</span>
 </table>
 </section>
 <section id="scanning">
-<h2>Scanning<a class="headerlink" href="#scanning" title="Permalink to this headline"></a></h2>
+<h2>Scanning<a class="headerlink" href="#scanning" title="Permalink to this heading"></a></h2>
 <p>List all running workflows:</p>
 <div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc scan
 </pre></div>
 </div>
 </section>
 <section id="view-a-workflow-s-configuration">
-<h2>View A Workflow’s Configuration<a class="headerlink" href="#view-a-workflow-s-configuration" title="Permalink to this headline"></a></h2>
+<h2>View A Workflow’s Configuration<a class="headerlink" href="#view-a-workflow-s-configuration" title="Permalink to this heading"></a></h2>
 <p>View the parsed workflow configuration:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -331,7 +332,7 @@ cylc get-config --sparse \
 </table>
 </section>
 <section id="opening-user-interfaces">
-<h2>Opening User Interfaces<a class="headerlink" href="#opening-user-interfaces" title="Permalink to this headline"></a></h2>
+<h2>Opening User Interfaces<a class="headerlink" href="#opening-user-interfaces" title="Permalink to this heading"></a></h2>
 <p>Opening the graphical user interface (GUI) or terminal user interface (TUI)
 for monitoring / controlling running workflows:</p>
 <table class="grid-table docutils align-default">
@@ -381,7 +382,7 @@ for monitoring / controlling running workflows:</p>
 </table>
 </section>
 <section id="static-graph-visualisation">
-<h2>Static Graph Visualisation<a class="headerlink" href="#static-graph-visualisation" title="Permalink to this headline"></a></h2>
+<h2>Static Graph Visualisation<a class="headerlink" href="#static-graph-visualisation" title="Permalink to this heading"></a></h2>
 <p>Generate a visualisation for a workflow without running it:</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -407,7 +408,7 @@ for monitoring / controlling running workflows:</p>
 </table>
 </section>
 <section id="rose-stem">
-<h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this headline"></a></h2>
+<h2>Rose Stem<a class="headerlink" href="#rose-stem" title="Permalink to this heading"></a></h2>
 <p>Run a <a class="reference external" href="http://metomi.github.io/rose/2.0rc3/html/tutorial/rose/furthertopics/rose-stem.html#rose-stem" title="(in Rose Documentation v2.0rc3)"><span>Rose Stem</span></a> test suite.</p>
 <table class="grid-table docutils align-default">
 <colgroup>
@@ -449,7 +450,7 @@ cylc play <span class="s">&lt;name&gt;</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

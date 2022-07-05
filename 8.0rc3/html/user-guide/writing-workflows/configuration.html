@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -115,9 +116,9 @@
            <div itemprop="articleBody">
              
   <section id="workflow-configuration">
-<span id="user-guide-configuration"></span><h1>Workflow Configuration<a class="headerlink" href="#workflow-configuration" title="Permalink to this headline"></a></h1>
+<span id="user-guide-configuration"></span><h1>Workflow Configuration<a class="headerlink" href="#workflow-configuration" title="Permalink to this heading"></a></h1>
 <section id="the-flow-cylc-file">
-<span id="flowconfigfile"></span><h2>The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File<a class="headerlink" href="#the-flow-cylc-file" title="Permalink to this headline"></a></h2>
+<span id="flowconfigfile"></span><h2>The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File<a class="headerlink" href="#the-flow-cylc-file" title="Permalink to this heading"></a></h2>
 <p>Cylc workflows are defined in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files that specify the
 tasks to be managed by the Cylc scheduler, the dependencies between them,
 and the schedules to run time on.</p>
@@ -130,7 +131,7 @@ and the schedules to run time on.</p>
 </ul>
 </section>
 <section id="workflow-configuration-directories">
-<span id="workflowdefinitiondirectories"></span><h2>Workflow Configuration Directories<a class="headerlink" href="#workflow-configuration-directories" title="Permalink to this headline"></a></h2>
+<span id="workflowdefinitiondirectories"></span><h2>Workflow Configuration Directories<a class="headerlink" href="#workflow-configuration-directories" title="Permalink to this heading"></a></h2>
 <p>A Cylc <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> contains:</p>
 <dl>
 <dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a></dt><dd><p>The file which configures the workflow.</p>
@@ -153,7 +154,7 @@ the scheduler and task job execution environments. It can be used by:</p>
 <p>Other files and folders may be placed in the <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> too:
 documentation, configuration files, etc. When the workflow is <a class="reference internal" href="../installing-workflows.html#installing-workflows"><span class="std std-ref">installed</span></a> these will be copied over to the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
 <section id="syntax-highlighting-for-workflow-configuration">
-<span id="syntaxhighlighting"></span><h3>Syntax Highlighting For Workflow Configuration<a class="headerlink" href="#syntax-highlighting-for-workflow-configuration" title="Permalink to this headline"></a></h3>
+<span id="syntaxhighlighting"></span><h3>Syntax Highlighting For Workflow Configuration<a class="headerlink" href="#syntax-highlighting-for-workflow-configuration" title="Permalink to this heading"></a></h3>
 <p>Cylc provides syntax plugins for the following editors:</p>
 <dl class="simple">
 <dt>Atom</dt><dd><p>install the <a class="reference external" href="https://atom.io/packages/language-cylc">language-cylc</a> extension.</p>
@@ -191,7 +192,7 @@ installation instructions are at the top of the file.</p>
 </dl>
 </section>
 <section id="gross-file-structure">
-<h3>Gross File Structure<a class="headerlink" href="#gross-file-structure" title="Permalink to this headline"></a></h3>
+<h3>Gross File Structure<a class="headerlink" href="#gross-file-structure" title="Permalink to this heading"></a></h3>
 <p>Cylc <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files consist of configuration items grouped under
 several top level section headings:</p>
 <dl class="simple">
@@ -218,7 +219,7 @@ inherited by related tasks</p></li>
 </dl>
 </section>
 <section id="validation">
-<span id="id1"></span><h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3>Validation<a class="headerlink" href="#validation" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> command evaluates the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
 against a specification that defines all legal entries, values and options.
 It also performs some integrity checks designed to catch certain configuration
@@ -243,7 +244,7 @@ show an inlined copy of the workflow with correct line numbers.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

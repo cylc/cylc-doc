@@ -22,6 +22,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/js/diff_selector.js"></script>
         <script src="../../../_static/js/minicylc.js"></script>
@@ -109,7 +110,7 @@
            <div itemprop="articleBody">
              
   <section id="module-cylc.flow.main_loop.auto_restart">
-<span id="cylc-flow-main-loop-auto-restart"></span><h1>cylc.flow.main_loop.auto_restart<a class="headerlink" href="#module-cylc.flow.main_loop.auto_restart" title="Permalink to this headline"></a></h1>
+<span id="cylc-flow-main-loop-auto-restart"></span><h1>cylc.flow.main_loop.auto_restart<a class="headerlink" href="#module-cylc.flow.main_loop.auto_restart" title="Permalink to this heading"></a></h1>
 <p>Automatically restart workflows if they are running on bad servers.</p>
 <p>Loads in the global configuration to check if the server a workflow is running
 on is listed in <a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>.</p>
@@ -167,7 +168,7 @@ Therefore, a workflow in no-detach mode running on a condemned host will abort
 with a non-zero return code. The parent process should manually handle the
 restart of the workflow if desired.</p>
 <section id="python-api">
-<h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline"></a></h2>
+<h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this heading"></a></h2>
 <p class="rubric">Coroutines</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -201,7 +202,7 @@ restart of the workflow if desired.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 

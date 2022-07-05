@@ -22,6 +22,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
@@ -110,12 +111,12 @@
            <div itemprop="articleBody">
              
   <section id="architecture">
-<span id="architecture-reference"></span><h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline"></a></h1>
+<span id="architecture-reference"></span><h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading"></a></h1>
 <p>This section provides an in-depth explanation of the architecture of the
 Cylc components intended for developers and system administrators.</p>
 <p>The main Cylc 8 system components are:</p>
 <section id="cylc-scheduler">
-<h2>Cylc Scheduler<a class="headerlink" href="#cylc-scheduler" title="Permalink to this headline"></a></h2>
+<h2>Cylc Scheduler<a class="headerlink" href="#cylc-scheduler" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>The workflow engine core, Python 3 based</p></li>
 <li><p>Includes the <strong>CLI</strong> (Command Line Interface)</p></li>
@@ -123,7 +124,7 @@ Cylc components intended for developers and system administrators.</p>
 </ul>
 </section>
 <section id="cylc-ui">
-<h2>Cylc UI<a class="headerlink" href="#cylc-ui" title="Permalink to this headline"></a></h2>
+<h2>Cylc UI<a class="headerlink" href="#cylc-ui" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>In-browser web UI, includes:</p></li>
 <li><p>A dashboard with summary information and documentation links</p></li>
@@ -134,7 +135,7 @@ Cylc components intended for developers and system administrators.</p>
 </ul>
 </section>
 <section id="cylc-ui-server">
-<h2>Cylc UI Server<a class="headerlink" href="#cylc-ui-server" title="Permalink to this headline"></a></h2>
+<h2>Cylc UI Server<a class="headerlink" href="#cylc-ui-server" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Interacts with Schedulers and the filesystem</p></li>
 <li><p>Serves the UI to users</p></li>
@@ -144,7 +145,7 @@ Cylc components intended for developers and system administrators.</p>
 </ul>
 </section>
 <section id="cylc-hub">
-<h2>Cylc Hub<a class="headerlink" href="#cylc-hub" title="Permalink to this headline"></a></h2>
+<h2>Cylc Hub<a class="headerlink" href="#cylc-hub" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>For proving the UI in multi-user setups.</p></li>
 <li><p>Authenticates users, spawns and proxies Cylc UI Servers</p></li>
@@ -153,13 +154,13 @@ Cylc components intended for developers and system administrators.</p>
 </ul>
 </section>
 <section id="network-layers">
-<h2>Network layers<a class="headerlink" href="#network-layers" title="Permalink to this headline"></a></h2>
+<h2>Network layers<a class="headerlink" href="#network-layers" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Incremental push updates (c.f. polled full-state updates in Cylc 7)</p></li>
 </ul>
 </section>
 <section id="further-reading">
-<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline"></a></h2>
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ui-server.html">Cylc UI Server</a><ul>
@@ -192,7 +193,7 @@ Cylc components intended for developers and system administrators.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on May 26, 2022.
+      <span class="lastupdated">Last updated on Jul 05, 2022.
       </span></p>
   </div>
 
