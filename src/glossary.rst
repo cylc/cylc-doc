@@ -747,8 +747,8 @@ Glossary
    workflow log directory
       At runtime the scheduler logs timestamped events and other information to
       files under the workflow :term:`run directory`. These logs take the format
-      <timestamp>-<start/restart>.log, with the latest log being automatically
-      symlinked to ``<run-directory>/log/scheduler/log``
+      <log-number>-<start/restart>-<start-number>.log, with the latest log being
+      automatically symlinked to ``<run-directory>/log/scheduler/log``
 
       .. code-block:: sub
 
