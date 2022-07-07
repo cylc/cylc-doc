@@ -746,14 +746,13 @@ Glossary
    scheduler log
    workflow log directory
       At runtime the scheduler logs timestamped events and other information to
-      files under the workflow :term:`run directory`;
-
-      * ``log`` - workflow events and user interaction
-      * ``file-installation-log`` - log of file installation on remote platforms
+      files under the workflow :term:`run directory`. These logs take the format
+      <log-number>-<start/restart>-<start-number>.log, with the latest log being
+      automatically symlinked to ``<run-directory>/log/scheduler/log``
 
       .. code-block:: sub
 
-         <run-directory>/log/workflow/
+         <run-directory>/log/scheduler/
 
       You can print the scheduler log at the terminal with ``cylc cat-log
       <workflow-name>``.

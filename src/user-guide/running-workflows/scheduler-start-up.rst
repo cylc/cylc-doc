@@ -184,6 +184,10 @@ platform, if these are configured using
 efficient way to manage disk space.
 
 
+A log file is created on the scheduler to report information relating to the
+remote file installation process. There will be a separate log created per install
+target. These can be found in ``$HOME/cylc-run/<workflow-id>/log/remote-install/``.
+
 Installing Custom Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -246,8 +250,8 @@ Files created at workflow start
 Configuration Logs
 ^^^^^^^^^^^^^^^^^^
 
-A folder ``log/flow-config`` is created where the workflow configuration
-is recorded, with all templating expanded:
+A folder ``log/config`` is created where the workflow configuration is
+recorded, with all templating expanded:
 
 - ``flow-processed.cylc`` - A record of the current workflow configuration
   with templating expanded, but without being fully parsed: Duplicate sections
