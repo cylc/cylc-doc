@@ -88,7 +88,8 @@ renamed or removed.
 ``cylc run``
   - Replaced by ``cylc play``.
 ``cylc spawn``
-  - Spawning is now performed automatically, use ``cylc trigger`` to run a task.
+  - Spawning is now performed automatically, on demand. Use ``cylc trigger`` to run
+    a task, or ``cylc set-outputs`` to spawn tasks that depend on specified outputs.
 ``cylc suite-state``
   - Renamed as ``cylc workflow-state``.
 
@@ -98,7 +99,7 @@ renamed or removed.
   - Now used on tasks only; use ``cylc pause`` to pause an entire workflow
     (i.e. to halt all job submissions).
 ``cylc release``
-  - Now used on tasks only; use ``cylc play`` to resume a paused workflow.
+  - Now used only to release held tasks; use ``cylc play`` to resume a paused workflow.
 
 .. rubric:: Graphical User Interfaces (GUIs):
 
