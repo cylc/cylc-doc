@@ -1,5 +1,5 @@
 name: Install dependencies
-description: apt-get dependencies plus pygraphviz
+description: apt-get dependencies
 
 runs:
   using: composite
@@ -23,8 +23,3 @@ runs:
           libfontconfig1-dev
       # Explanation of some of these dependencies:
       # https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
-
-    - shell: bash
-      run: |
-        echo "[command]pip install pygraphviz"
-        pip install "pygraphviz>1.0,!=1.8.0"
