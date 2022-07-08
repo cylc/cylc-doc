@@ -47,7 +47,7 @@ on:
         default: true
         required: false
       skip_conda_environment_check:
-        description: "Don't fail if the conda environments fail to build."
+        description: "Skip creation of conda environments"
         type: boolean
         default: false
         required: false
@@ -79,7 +79,7 @@ jobs:
 
       - name: create conda envs
         uses: ./docs/.github/actions/create-conda-envs
-        continue-on-error: ${{ github.event.inputs.skip_conda_environment_check == 'true' }}
+        if: ${{ ! inputs.skip_conda_environment_check }}
         with:
           python_version: '3.7'
           working_directory: ./docs

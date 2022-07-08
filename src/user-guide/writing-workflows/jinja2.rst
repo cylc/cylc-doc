@@ -20,11 +20,11 @@ To use Jinja2, put a hash-bang comment in the first line of :cylc:conf:`flow.cyl
    #!jinja2
 
 Template processing is the first thing done on parsing a workflow configuration
-so Jinja2 can appear anywhere in the file. 
+so Jinja2 can appear anywhere in the file.
 
 Embedded Jinja2 code should be reasonably easy to understand for those with
 coding experience; but if not, Jinja2 is well documented `here
-<https://jinja.palletsprojects.com/>`_. 
+<https://jinja.palletsprojects.com/>`_.
 
 Uses of Jinja2 in Cylc include:
 
@@ -35,7 +35,7 @@ Uses of Jinja2 in Cylc include:
  - Loop over parameters to generate groups of similar tasks and associated
    dependencies - but see :ref:`Parameterized Tasks <User Guide Param>` for a
    simpler alternative to this use case
-  
+
 .. _fig-jinja2-ensemble:
 
 .. figure:: ../../img/jinja2-ensemble-graph.png
@@ -67,7 +67,7 @@ the surrounding text.
     Jinja2 Syntax     Description
     ================= ======================
     ``{# comment #}`` Comment
-    ``{% if true %}`` Expression 
+    ``{% if true %}`` Expression
     ``{{ var }}``     Print statement
     ================= ======================
 
@@ -163,6 +163,7 @@ prior to configuration parsing to provide workflow context:
    The environment is read on the workflow host when the configuration is
    parsed. It is not read at run time by task jobs on the job platform.
 
+
 .. _CustomJinja2Filters:
 
 Custom Jinja2 Filters, Tests and Globals
@@ -189,7 +190,9 @@ documentation for available built-in globals, filters and tests.
 
 Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
 filter or test is a single Python function in a source file with the same name
-as the function (plus ``.py`` extension).
+as the function (plus ``.py`` extension). These must be located in a
+subdirectory of the :term:`run directory` called
+``Jinja2Filters``, ``Jinja2Globals`` or ``Jinja2Tests`` respectively.
 
 In the argument list of a filter or test function, the first argument is
 the variable value to be filtered or tested, and subsequent arguments can be
