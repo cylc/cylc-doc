@@ -16,15 +16,25 @@ A single task can have multiple jobs, by automatic retry or manual triggering.
 
 .. table::
 
-    =======================================================     ===========
-    Task & Job States                                           Description
-    =======================================================     ===========
-    |task-waiting|       |job-blank|          waiting           waiting on prerequisites
-    |task-expired|       |job-blank|          expired           will not submit job (too far behind)
-    |task-preparing|     |job-blank|          preparing         job being prepared
-    |task-submitted|     |job-submitted|      submitted         job submitted
-    |task-submit-failed| |job-submit-failed|  submit-failed     job submission failed
-    |task-running|       |job-running|        running           job running
-    |task-succeeded|     |job-succeeded|      succeeded         job succeeded
-    |task-failed|        |job-failed|         failed            job failed
-    =======================================================     ===========
+   ============== ==================== =================== ====================================
+   State          Task Icon            Job Icon            Description
+   ============== ==================== =================== ====================================
+   waiting        |task-waiting|                           waiting on prerequisites
+   preparing      |task-preparing|                         job being prepared for submission
+   submitted      |task-submitted|     |job-submitted|     job submitted
+   running        |task-running|       |job-running|       job running
+   succeeded      |task-succeeded|     |job-succeeded|     job succeeded
+   failed         |task-failed|        |job-failed|        job failed
+   submit-failed  |task-submit-failed| |job-submit-failed| job submission failed
+   expired        |task-expired|                           will not submit job (too far behind)
+   ============== ==================== =================== ====================================
+
+.. note::
+
+   The running task icon contains a clock face which shows the time elapsed
+   as a proportion of the average runtime. For example this task has been running
+   for about one third of its average runtime:
+
+   .. image:: ../../img/task-job-icons/task-running.png
+      :width: 60px
+      :align: center
