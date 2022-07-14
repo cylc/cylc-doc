@@ -39,54 +39,54 @@
 .. _UI Server: https://github.com/cylc/cylc-uiserver
 
 .. |task-waiting| image:: /img/task-job-icons/task-waiting.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-expired| image:: /img/task-job-icons/task-expired.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-preparing| image:: /img/task-job-icons/task-preparing.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-submitted| image:: /img/task-job-icons/task-submitted.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-submit-failed| image:: /img/task-job-icons/task-submit-failed.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-running| image:: /img/task-job-icons/task-running.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-succeeded| image:: /img/task-job-icons/task-succeeded.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |task-failed| image:: /img/task-job-icons/task-failed.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 
 .. |job-submitted| image:: /img/task-job-icons/job-submitted.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |job-submit-failed| image:: /img/task-job-icons/job-submit-failed.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |job-running| image:: /img/task-job-icons/job-running.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |job-succeeded| image:: /img/task-job-icons/job-succeeded.png
-   :scale: 100%
+   :height: 18px
    :align: middle
 
 .. |job-failed| image:: /img/task-job-icons/job-failed.png
-   :scale: 100%
+   :height: 18px
    :align: middle
