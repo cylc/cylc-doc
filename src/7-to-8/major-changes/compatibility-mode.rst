@@ -88,24 +88,12 @@ See :ref:`py23` for more information and examples of how to implement
 interoperability if your workflows extend Cylc or Jinja2 with custom Python scripts.
 
 
-Restarting a Cylc 7 workflow
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. Instead, :ref:`install
-<Installing-workflows>` the workflow to a new run directory and start it
-from scratch at the right cycle point or task(s):
-
-- ``cylc play --start-cycle-point=<cycle>`` (c.f. Cylc 7 *warm start*), or
-- ``cylc play --start-task=<cycle/task>``   (Cylc 8 can start anywhere in the graph)
-
-.. note::
-
-   Any previous-cycle workflow data needed by the new run will need to be
-   manually copied over from the original run directory.
-
-
 Other caveats
 ^^^^^^^^^^^^^
+
+- Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. If you need to run an
+  already-started Cylc 7 workflow to completion, we recommend still using
+  Cylc 7 to do so.
 
 - Cylc 8 only transfers certain files and directories by default during
   remote installation. See :ref:`728.remote-install` for more information.
