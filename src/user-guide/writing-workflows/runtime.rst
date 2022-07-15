@@ -574,6 +574,11 @@ Event-specific handlers are configured by ``<event> handlers``
 under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>``
 can be:
 
+.. |br| raw:: html
+
+     <br>
+
+
 .. table::
 
    =========================================  ================================
@@ -588,12 +593,11 @@ can be:
    succeeded                                  job succeeded
    submission timeout                         job timed out in the ``submitted`` state
    execution timeout                          job timed out in the ``running`` state
-   warning                                    scheduler received a WARNING message from job
-   critical                                   scheduler received a CRITICAL message from job
-   custom                                     scheduler received a custom message from job
+   warning                                    scheduler received a message of severity WARNING from job
+   critical                                   scheduler received a message of severity CRITICAL from job
+   custom                                     scheduler received a message of severity CUSTOM from job |br| (note: Literally of severity ``CUSTOM``, not any user defined severity level.)
    expired                                    task expired and will not submit (too far behind)
    late                                       task running later than expected
-   OUTPUT                                     scheduler received OUTPUT message from job
    =========================================  ================================
 
 Values should be a list of commands, command lines, or command line templates
