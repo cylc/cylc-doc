@@ -136,7 +136,7 @@ Cylc 7 was aware of individual job hosts - one selected a host using:
 ``[runtime][<namespace>][remote]host``.
 
 Cylc 8 is aware of sets of host settings called
-:term:`[job] platforms <platform>`. To set a platform use
+:term:`[job] platforms <platform>`. To choose a platform for a task use
 ``[runtime][<namespace>]platform``
 
 Hosts of a platform must share a file system and :term:`job runner`:
@@ -144,13 +144,13 @@ If one host is unavailable Cylc 8 can use other hosts
 on the same platform to interact with task jobs.
 
 The same hosts can belong to multiple platforms, for example
-you might be able to use the same host to launch both background and slurm
+you might be able to use the same host to launch both background and Slurm
 jobs.
 
 .. note::
 
    Cylc 8 will pick a sensible platform for your Cylc 7 settings,
-   These deprecated settings will be removed in future.
+   These deprecated settings will be removed in a future release.
 
 
 Workflow Installation

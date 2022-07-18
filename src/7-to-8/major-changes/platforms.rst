@@ -181,11 +181,11 @@ And the platform settings for these examples might be:
            hosts = localhost
 
        [[slurm_supercomputer]]
-           # This computer with slurm requires you to use a login node.
+           # This computer with Slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
    [platform groups]
        [[just_run_it]]
-          # You want it run, but not worried about where.
+          # You want to run it, but do not care where.
           platforms = pbs_local, slurm_supercomputer
