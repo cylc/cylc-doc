@@ -91,9 +91,9 @@ interoperability if your workflows extend Cylc or Jinja2 with custom Python scri
 Other caveats
 ^^^^^^^^^^^^^
 
-- Cylc 8 cannot *restart* a Cylc 7 workflow mid-run. If you need to run an
-  already-started Cylc 7 workflow to completion, we recommend still using
-  Cylc 7 to do so.
+- Cylc 8 cannot *restart* a partially completed Cylc 7 workflow in-place. If
+  possible, complete the run with Cylc 7. Otherwise, see
+  :ref:`compat_continuing_c7_with_c8`.
 
 - Cylc 8 only transfers certain files and directories by default during
   remote installation. See :ref:`728.remote-install` for more information.
