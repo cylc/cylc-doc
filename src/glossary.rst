@@ -65,7 +65,7 @@ Glossary
       the job environment as ``$CYLC_TASK_SUBMIT_NUMBER``.
 
       Submit number also appears in the job log path so that job log files
-      don't get overwritten. 
+      don't get overwritten.
 
 
    window
@@ -169,6 +169,7 @@ Glossary
 
 
    external trigger
+   xtrigger
       External triggers allow :term:`tasks <task>` in the :term:`graph` to
       depend on external events, such as a file being delivered to some
       location, or a database being updated in some way.
@@ -746,14 +747,13 @@ Glossary
    scheduler log
    workflow log directory
       At runtime the scheduler logs timestamped events and other information to
-      files under the workflow :term:`run directory`;
-
-      * ``log`` - workflow events and user interaction
-      * ``file-installation-log`` - log of file installation on remote platforms
+      files under the workflow :term:`run directory`. These logs take the format
+      <log-number>-<start/restart>-<start-number>.log, with the latest log being
+      automatically symlinked to ``<run-directory>/log/scheduler/log``
 
       .. code-block:: sub
 
-         <run-directory>/log/workflow/
+         <run-directory>/log/scheduler/
 
       You can print the scheduler log at the terminal with ``cylc cat-log
       <workflow-name>``.

@@ -402,13 +402,16 @@ Files Generated at Runtime
          The directory where all :term:`job log files <job log>` live,
          primarily the job script itself (``job``) and the job output logs
          (``job.out`` and ``job.err``);
-      ``workflow``
-         The directory where :term:`scheduler log files <workflow log>` live.
+      ``scheduler``
+         The directory where :term:`scheduler log files <scheduler log>` live.
          These are written as the workflow runs and are useful when troubleshooting.
-      ``flow-config/flow.cylc.processed``
+      ``config/flow.cylc.processed``
          A copy of the :cylc:conf:`flow.cylc` file made after any `Jinja2`_ has been
          processed - we will cover this in the
          :ref:`tutorial-cylc-consolidating-configuration` section.
+      ``remote-install``
+         Information related to :ref:`RemoteInit` file installation can be found
+         here. A separate file is created per install target.
 
    ``share/``
       The :term:`share directory` is where :term:`tasks <task>` can
@@ -436,8 +439,8 @@ Files Generated at Runtime
    * ``log/``
       * ``db``
       * ``job``
-      * ``workflow``
-      * ``flow-config/flow.cylc.processed``
+      * ``scheduler``
+      * ``config/flow.cylc.processed``
    * ``share/``
    * ``work/``
 

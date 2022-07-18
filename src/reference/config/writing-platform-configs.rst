@@ -68,7 +68,7 @@ cluster and scheduler hosts are different platforms, but share an install
 target.
 
 But you might also have mirrored clusters, each with their own file system.
-Each cluster would be both a platform, and have its own install target.
+Each cluster would be a platform with its own install target.
 
 
 Example Platforms
@@ -145,20 +145,25 @@ Background Jobs on Cluster with Other Options
    - Allow some background jobs to use an alternative shell,
      or an alternative ssh command.
 
+.. note::
+
+   The "background" and "at" job runners require single-host platforms,
+   because the job ID is only valid on the submission host.
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
        [[spice_cluster_background]]
-           hosts = login_node_1, login_node_2
+           hosts = login_node_1
            job runner = background
        [[spice_cluster_background_fish]]
-           hosts = login_node_1, login_node_1
+           hosts = login_node_2
            job runner = background
            # Use fish shell
            shell = /bin/fish
        [[spice_cluster_long_ssh]]
-           hosts = login_node_1, login_node_1
+           hosts = login_node_1
            job runner = background
            # extend the default ssh timeout from 10 to 30 seconds.
            ssh command = myPeculiarSSHImplementation --someoption=yes
@@ -167,7 +172,7 @@ Background Jobs on Cluster with Other Options
 Submit PBS Jobs from Localhost
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- **Platforms can share hosts and not share batch systems.**
+- **Platforms can share hosts without sharing job runners.**
 
 .. admonition:: Scenario
 

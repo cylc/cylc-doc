@@ -14,7 +14,7 @@ Overview
 
 * Some commands have been renamed e.g. ``cylc run`` -> ``cylc play``.
 * Some tools have been added or removed.
-* The task ID format has changed.
+* A new task ID format has been introduced.
 
 For a quick side by side comparison see the :ref:`728.cheat_sheet`.
 
@@ -27,7 +27,7 @@ renamed or removed.
 
 .. _license: https://github.com/cylc/cylc-flow/blob/master/COPYING
 
-.. rubric:: Commands which have been removed or changed:
+.. rubric:: Commands that have been removed entirely:
 
 ``cylc checkpoint``
   - Database checkpoints are no longer needed.
@@ -35,52 +35,71 @@ renamed or removed.
   - Remaining use cases can be handled by starting a new :term:`flow`
     which allow a new execution of the graph to be started from an
     arbitrary point in the graph.
-``cylc conditions``
-  - See the `license`_ file for conditions of usage
-  - The Cylc license remains unchanged from Cylc 7.
 ``cylc documentation``
   - We no longer include a command for locating this documentation.
 ``cylc edit``
   - Use a text editor to edit the workflow configuration file.
-``cylc insert``
-  - Task insertion is now automatic, use ``cylc trigger``.
 ``cylc jobscript``
   - It is no longer possible generate a jobscript from outside of a workflow.
-``cylc monitor``
-  - There is now a new more powerful terminal user interface (TUI).
-  - Try ``cylc tui``.
 ``cylc nudge``
   - No longer required.
-``cylc print``
-  - Equivalent to ``cylc scan --states=all``.
 ``cylc register``
   - Registration is no longer required, all workflows in the ``~/cylc-run``
     directory are "registered" automatically.
   - To install a workflow from a working copy use ``cylc install``.
-``cylc reset``
-  - It is no longer possible to manually change a task's state.
-  - You can, however, override the outputs the task generated which has a
-    similar effect with ``cylc set-outputs``.
-``cylc restart``
-  - ``cylc run``, ``cylc pause`` and ``cylc release`` have been combined into
-    ``cylc play``.
 ``cylc review``
   - The read-only ``cylc review`` web GUI has been removed.
   - The latest Cylc 7 version of ``cylc review`` is Cylc 8 compatible
     so can still be used to monitor both Cylc 7 and Cylc 8 workflows
     side by side.
-``cylc run``
-  - ``cylc run``, ``cylc pause`` and ``cylc release`` have been combined into
-    ``cylc play``.
 ``cylc search``
   - Use ``grep`` or a text editor to search the workflow configuration or
     source directory.
-``cylc spawn``
-  - Spawning is now performed automatically, use ``cylc trigger`` to run a task.
 ``cylc submit``
   - It is no longer possible to submit a job from outside of a workflow.
 ``cylc warranty``
   - The Cylc license remains unchanged from Cylc 7.
+
+.. rubric:: Commands that have been replaced:
+
+``cylc conditions``
+  - See the `license`_ file for conditions of usage, or ``cylc help license``
+  - The Cylc license remains unchanged from Cylc 7.
+``cylc get-config``,
+  - Replaced by ``cylc config``.
+``cylc get-*-config``
+  - (Where ``*`` is ``site``, ``suite`` or ``global``)
+  - Replaced by ``cylc config``.
+``cylc graph-diff``
+  - Replaced by ``cylc graph <flow1> --diff <flow2>``
+``cylc insert``
+  - Task insertion is now automatic, use ``cylc trigger``.
+``cylc monitor``
+  - There is now a new more powerful terminal user interface (TUI).
+  - Try ``cylc tui``.
+``cylc print``
+  - Equivalent to ``cylc scan --states=all``.
+``cylc reset``
+  - It is no longer possible to manually change a task's state.
+  - You can, however, override the outputs the task generated which has a
+    similar effect with ``cylc set-outputs``.
+``cylc restart``
+  - Replaced by ``cylc play``.
+``cylc run``
+  - Replaced by ``cylc play``.
+``cylc spawn``
+  - Spawning is now performed automatically, on demand. Use ``cylc trigger`` to run
+    a task, or ``cylc set-outputs`` to spawn tasks that depend on specified outputs.
+``cylc suite-state``
+  - Renamed as ``cylc workflow-state``.
+
+.. rubric:: Commands that have changed:
+
+``cylc hold``
+  - Now used on tasks only; use ``cylc pause`` to pause an entire workflow
+    (i.e. to halt all job submissions).
+``cylc release``
+  - Now used only to release held tasks; use ``cylc play`` to resume a paused workflow.
 
 .. rubric:: Graphical User Interfaces (GUIs):
 
@@ -105,9 +124,9 @@ In Cylc 7 there were two ways to specify a task:
    task.cycle
    cycle/task
 
-At Cylc 8 we have removed the former and extended the latter to provide a
-unique identifier for all workflows, cycles, tasks and jobs using a
-standardised format:
+In Cylc 8 the former is now deprecated, and the latter has been extended to
+provide a unique identifier for all workflows, cycles, tasks and jobs using a
+standard format:
 
 .. code-block:: none
 
@@ -140,17 +159,17 @@ functionality e.g:
 
    # stop all running workflows
    cylc stop '*'
-   
+
    # pause all running workflows
    cylc pause '*'
-   
+
    # (re-)trigger all failed tasks in all running workflows
    cylc trigger '*//*:failed'
-   
+
    # hold all tasks in the cycle "2000" in workflows with IDs
     # beginning with "model"
    cylc hold 'model*//2000'
-   
+
    # delete the run directories for all workflows with IDs
    # beginning with "model_a/"
    cylc clean 'model_a/*'

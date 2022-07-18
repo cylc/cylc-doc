@@ -167,22 +167,27 @@ For workflows that run on remote platforms, i.e. using a host other than
 files and directories required to run jobs, including authentication keys
 (see :ref:`Authentication Files` for more information).
 
-Directories included, as standard, in the remote install are:
+The default directories included in the remote install are:
 
-* ``app``
-* ``bin``
-* ``etc``
-* ``lib``
+* ``app/``
+* ``bin/``
+* ``etc/``
+* ``lib/``
 
-These will be transferred from the workflow run directory on the :term:`scheduler`.
-In addition, file and directories configured in :cylc:conf:`[scheduler]install`
-of the ``flow.cylc`` will be included in the transfer.
+These will be transferred from the workflow run directory on the
+:term:`scheduler` host to the remote host.
+In addition, custom file and directories configured in
+:cylc:conf:`flow.cylc[scheduler]install` will be included in the transfer.
 
 This remote initialization process also creates symlinks on the remote
 platform, if these are configured using
-:cylc:conf:`global.cylc[install][symlink dirs]`. Using this functionality is an
-efficient way to manage disk space.
+:cylc:conf:`global.cylc[install][symlink dirs]`. This provides a
+way to manage disk space.
 
+
+A log file is created on the scheduler to report information relating to the
+remote file installation process. There will be a separate log created per install
+target. These can be found in ``$HOME/cylc-run/<workflow-id>/log/remote-install/``.
 
 Installing Custom Files At Start-up
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -246,8 +251,8 @@ Files created at workflow start
 Configuration Logs
 ^^^^^^^^^^^^^^^^^^
 
-A folder ``log/flow-config`` is created where the workflow configuration
-is recorded, with all templating expanded:
+A folder ``log/config`` is created where the workflow configuration is
+recorded, with all templating expanded:
 
 - ``flow-processed.cylc`` - A record of the current workflow configuration
   with templating expanded, but without being fully parsed: Duplicate sections

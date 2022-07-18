@@ -113,7 +113,7 @@ intersphinx_mapping = {
         'http://metomi.github.io/rose/2.0rc3/html', None
     ),
     'python': (
-        'https://docs.python.org/', None
+        'https://docs.python.org/3/', None
     ),
     'jupyter_server': (
         'https://jupyter-server.readthedocs.io/en/latest/', None
