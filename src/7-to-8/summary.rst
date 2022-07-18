@@ -106,17 +106,17 @@ separated and states of both can be viewed in the GUI.
 For more information, see :ref:`728.task_job_states`.
 
 
-Optional and Expected Task Outputs
+Optional and Required Task Outputs
 ----------------------------------
 
 .. seealso::
 
    * Major Changes::ref:`728.optional_outputs`
-   * User Guide::ref:`User Guide Expected Outputs`
+   * User Guide::ref:`User Guide Required Outputs`
    * User Guide::ref:`User Guide Optional Outputs`
 
-By default, all Cylc 8 tasks are expected to succeed - i.e., success is
-an :term:`expected output <expected output>`. Otherwise they will be marked
+By default, all Cylc 8 tasks are required to succeed - i.e., success is
+a :term:`required output`. Otherwise they will be marked
 as :term:`incomplete tasks<incomplete task>` requiring user intervention.
 In a workflow with incomplete tasks, if there is nothing left to do, the
 scheduler will :term:`stall` rather than shut down.

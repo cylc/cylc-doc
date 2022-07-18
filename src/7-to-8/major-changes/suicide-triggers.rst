@@ -70,7 +70,7 @@ Validating this with Cylc 8 will give an error:
    $ cylc validate .
    GraphParseError: Opposite outputs foo:succeeded and foo:failed must both be optional if both are used
 
-In Cylc 8, all task outputs are :term:`expected <expected output>` to complete
+In Cylc 8, all task outputs are :term:`required <required output>` to complete
 unless otherwise indicated. However, it is impossible for both ``:succeed``
 and ``:fail`` to occur when a task runs.
 

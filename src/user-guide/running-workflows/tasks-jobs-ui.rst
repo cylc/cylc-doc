@@ -26,8 +26,8 @@ The ``n = 0`` or *active task* window includes:
 
   - ``submit-failed`` tasks, if successful submission was not :term:`optional
     <optional output>`
-  - ``succeeded`` or ``failed`` tasks that did not complete :term:`expected
-    outputs <expected output>`
+  - ``succeeded`` or ``failed`` tasks that did not complete :term:`required
+    outputs <required output>`
 
 The default window extent is ``n = 1``, i.e. tasks out to one graph edge from
 current active tasks.

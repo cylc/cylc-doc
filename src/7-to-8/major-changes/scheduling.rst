@@ -11,7 +11,7 @@ Scheduling Algorithm
 
    User Guide:
 
-   * :ref:`User Guide Expected Outputs`
+   * :ref:`User Guide Required Outputs`
    * :ref:`User Guide Optional Outputs`
    * :ref:`user-guide-reflow`
    * :ref:`n-window`
@@ -29,7 +29,7 @@ Cylc 8 has a new scheduling algorithm that:
   - succeeded tasks are not kept across the active task window
   - no costly indiscriminate dependency matching is done
 - Distinguishes between :term:`optional <optional output>` and
-  :term:`expected <expected output>` task outputs, to support:
+  :term:`required <required output>` task outputs, to support:
 
   - :term:`graph branching` without :term:`suicide triggers <suicide trigger>`
   - correct diagnosis of :term:`workflow completion`
