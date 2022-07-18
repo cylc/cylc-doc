@@ -176,7 +176,7 @@ And the platform settings for these examples might be:
            # Without a hosts, platform name is used as a single host.
 
        [[pbs_local]]
-           # Some computer with PBS, that takes local job submissions
+           # A computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
 
