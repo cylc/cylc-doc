@@ -167,21 +167,22 @@ For workflows that run on remote platforms, i.e. using a host other than
 files and directories required to run jobs, including authentication keys
 (see :ref:`Authentication Files` for more information).
 
-Directories included, as standard, in the remote install are:
+The default directories included in the remote install are:
 
-* ``app``
-* ``bin``
-* ``etc``
-* ``lib``
+* ``app/``
+* ``bin/``
+* ``etc/``
+* ``lib/``
 
-These will be transferred from the workflow run directory on the :term:`scheduler`.
-In addition, file and directories configured in :cylc:conf:`[scheduler]install`
-of the ``flow.cylc`` will be included in the transfer.
+These will be transferred from the workflow run directory on the
+:term:`scheduler` host to the remote host.
+In addition, custom file and directories configured in
+:cylc:conf:`flow.cylc[scheduler]install` will be included in the transfer.
 
 This remote initialization process also creates symlinks on the remote
 platform, if these are configured using
-:cylc:conf:`global.cylc[install][symlink dirs]`. Using this functionality is an
-efficient way to manage disk space.
+:cylc:conf:`global.cylc[install][symlink dirs]`. This provides a
+way to manage disk space.
 
 
 A log file is created on the scheduler to report information relating to the
