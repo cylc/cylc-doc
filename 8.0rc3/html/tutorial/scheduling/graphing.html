@@ -315,11 +315,11 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-1232748f25931c03ee016ecaa2effa9f64987d01.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-65f0f4255ef47973b2c84eefcaa61ff36e850589.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread -&gt; sell_bread
-sell_bread
 make_dough -&gt; bake_bread
+sell_bread
+bake_bread -&gt; sell_bread
 buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
@@ -329,16 +329,16 @@ buy_ingredients -&gt; make_dough
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-0be65f50d92bdd526cd494cb1cba20c6e497645e.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-54dbd859bf00990cfb816a4836e968e40b251fb9.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread
-bake_bread -&gt; clean_oven
 pre_heat_oven -&gt; bake_bread
+sell_bread
+bake_bread
 buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
 clean_oven
 make_dough -&gt; bake_bread
-sell_bread
+bake_bread -&gt; clean_oven
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -515,7 +515,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jul 05, 2022.
+      <span class="lastupdated">Last updated on Jul 19, 2022.
       </span></p>
   </div>
 
