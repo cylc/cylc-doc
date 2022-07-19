@@ -477,7 +477,7 @@ Files Generated at Runtime
 
       .. code-block:: bash
 
-         cylc get-resources tutorial
+         cylc get-resources tutorial/runtime-introduction
          cd ~/cylc-src/tutorial/runtime-introduction
 
       This includes the :cylc:conf:`flow.cylc` file from the
