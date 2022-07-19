@@ -595,7 +595,7 @@ can be:
    execution timeout                          job timed out in the ``running`` state
    warning                                    scheduler received a message of severity WARNING from job
    critical                                   scheduler received a message of severity CRITICAL from job
-   custom                                     scheduler received a message of severity CUSTOM from job |br| (note: Literally of severity ``CUSTOM``, not any user defined severity level.)
+   custom                                     scheduler received a message of severity CUSTOM from job |br| (note: literally, the word ``CUSTOM``)
    expired                                    task expired and will not submit (too far behind)
    late                                       task running later than expected
    =========================================  ================================
