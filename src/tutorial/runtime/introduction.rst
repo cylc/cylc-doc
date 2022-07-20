@@ -477,8 +477,8 @@ Files Generated at Runtime
 
       .. code-block:: bash
 
-         cylc get-resources tutorial
-         cd ~/cylc-src/tutorial/runtime-introduction
+         cylc get-resources tutorial/runtime-introduction
+         cd ~/cylc-src/runtime-introduction
 
       This includes the :cylc:conf:`flow.cylc` file from the
       :ref:`weather forecasting workflow <tutorial-datetime-cycling-practical>`
