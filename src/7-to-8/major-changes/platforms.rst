@@ -164,6 +164,7 @@ Here are some example Cylc 7 task definitions:
 
       [[mytask_login_to_hpc_and_submit]]
          [[[remote]]]
+            # e.g. rose host-select
             host = $(supercomputer_login_node_selector_script)
          [[[job]]]
             batch system = slurm
@@ -192,8 +193,10 @@ At Cylc 8 the equivalent might be:
            platform = pbs_local
 
        [[mytask_login_to_hpc_and_submit]]
-           # This is still legal, but you could also use host selection.
-           platform = $(supercomputer_login_node_selector_script)
+           # Recommended:
+           platform = just_run_it
+           # ...but This is still legal:
+           #platform = $(selector-script)
 
 And the platform settings for these examples might be:
 
@@ -204,10 +207,12 @@ And the platform settings for these examples might be:
            # Without a hosts, platform name is used as a single host.
 
        [[pbs_local]]
+           # A computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
 
        [[slurm_supercomputer]]
+           # This computer with Slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
