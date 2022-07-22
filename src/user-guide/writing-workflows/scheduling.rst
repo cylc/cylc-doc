@@ -1533,7 +1533,7 @@ Required Outputs
 :term:`required <required output>` (the default) or  :term:`optional <optional
 output>`.
 
-The scheduler expects all task outputs to be completed at runtime, unless they
+The scheduler requires all task outputs to be completed at runtime, unless they
 are marked with ``?`` as optional. This allows it to correctly diagnose
 :term:`workflow completion`. [2]_
 
