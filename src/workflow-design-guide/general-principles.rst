@@ -451,7 +451,7 @@ of usage worth addressing here.
 
 Primarily, for self-containment (see :ref:`Self-Contained Workflows`) shared IO
 paths should be under the *workflow share directory*, the location of which is
-passed to all tasks as ``$CYLC_WORKFLOW_SHARE_PATH``.
+passed to all tasks as ``$CYLC_WORKFLOW_SHARE_DIR``.
 
 The ``rose task-env`` utility can provide additional environment
 variables that refer to static and cyclepoint-specific locations under the
@@ -468,10 +468,10 @@ variables available to tasks:
 
 .. code-block:: bash
 
-   ROSE_DATA=$CYLC_WORKFLOW_SHARE_PATH/data
-   ROSE_DATAC=$CYLC_WORKFLOW_SHARE_PATH/cycle/20170105
-   ROSE_DATACP1D=$CYLC_WORKFLOW_SHARE_PATH/cycle/20170104
-   ROSE_DATACP2D=$CYLC_WORKFLOW_SHARE_PATH/cycle/20170103
+   ROSE_DATA=$CYLC_WORKFLOW_SHARE_DIR/data
+   ROSE_DATAC=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170105
+   ROSE_DATACP1D=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170104
+   ROSE_DATACP2D=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170103
 
 Subdirectories of ``$ROSE_DATAC`` etc. should be agreed between
 different sub-systems of the workflow; typically they are named for the
