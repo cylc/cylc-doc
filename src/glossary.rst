@@ -1335,7 +1335,7 @@ Glossary
       determined by the :term:`graph`.
 
       Outputs are written as ``task-name:output`` in the :term:`graph`, and can
-      be :term:`expected <expected output>` or :term:`optional <optional output>`.
+      be :term:`required <required output>` or :term:`optional <optional output>`.
 
       Tasks may have :term:`custom outputs <custom output>` as well as
       :term:`standard outputs <standard output>`.
@@ -1476,25 +1476,26 @@ Glossary
 
       .. seealso::
 
-         * :term:`expected output`
+         * :term:`required output`
          * :ref:`Cylc User Guide <User Guide Optional Outputs>`
 
 
+   required output
    expected output
       Task outputs that are not marked as :term:`optional <optional output>`
-      in the :term:`graph` are expected to be completed at runtime. If not, the
+      in the :term:`graph` are required to be completed at runtime. If not, the
       :term:`scheduler` retains the task as :term:`incomplete` pending user
       intervention.
 
       .. seealso::
 
-         * :ref:`Cylc User Guide <expected outputs>`
+         * :ref:`Cylc User Guide <required outputs>`
 
 
    incomplete
    incomplete task
       Incomplete tasks are :term:`tasks <task>` that finish (succeed or fail)
-      without completing all :term:`expected outputs <expected output>`. They
+      without completing all :term:`required outputs <required output>`. They
       are retained by the :term:`scheduler` in the :term:`n=0 window
       <n-window>` pending user intervention, and will cause a :term:`stall`
       if there are no more tasks to run.

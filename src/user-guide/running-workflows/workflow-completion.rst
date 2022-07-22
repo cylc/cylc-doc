@@ -19,8 +19,8 @@ If there is nothing more to run (according to the graph) but there are
 to allow the workflow to continue.
 
 The presence of incomplete tasks means that the workflow did not run to
-completion as expected, because some :term:`expected task outputs
-<expected output>` were not completed at runtime.
+completion as expected, because some :term:`required task outputs
+<required output>` were not completed at runtime.
 
 Restarting a stalled workflow triggers a new stall timer.
 

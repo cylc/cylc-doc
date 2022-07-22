@@ -137,13 +137,13 @@ Merging with Incomplete tasks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :term:`Incomplete<incomplete>` tasks are retained in the active window in
-expectation of retriggering to complete :term:`expected outputs<expected
+expectation of retriggering to complete :term:`required outputs<required
 output>` and continue their flow.
 
 If another flow encounters an incomplete task (i.e. if another instance of the
 same task collides with it in the ``n=0`` :term:`active window`) the task will
 run again and carry both flow numbers forward if it successfully completes its
-expected outputs.
+required outputs.
 
 
 Stopping Flows

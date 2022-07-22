@@ -33,10 +33,10 @@ The ``suite.rc`` filename triggers a backward compatibility mode in which:
   - (Cylc 8 spawns tasks on demand, and suicide triggers are not needed for
     branching)
 
-- only ``succeeded`` task outputs are :ref:`*expected* <User Guide Expected Outputs>`,
+- only ``succeeded`` task outputs are :ref:`*required* <User Guide Required Outputs>`,
   meaning the scheduler will retain tasks that do not succeed as incomplete
 
-  - (in Cylc 8, **all** outputs are *expected* unless marked as
+  - (in Cylc 8, **all** outputs are *required* unless marked as
     :ref:`*optional* <User Guide Optional Outputs>` by the new ``?`` syntax)
 
 

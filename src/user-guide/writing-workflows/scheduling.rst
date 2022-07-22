@@ -1520,24 +1520,24 @@ in :ref:`Section External Triggers`.
 
 
 
-.. _User Guide Expected Outputs:
-.. _expected outputs:
+.. _User Guide Required Outputs:
+.. _required outputs:
 .. _incomplete tasks:
 
-Expected Outputs
+Required Outputs
 ----------------
 
 .. versionadded:: 8.0.0
 
 :term:`Task outputs <task output>` in the :term:`graph` are either
-:term:`expected <expected output>` (the default) or  :term:`optional <optional
+:term:`required <required output>` (the default) or  :term:`optional <optional
 output>`.
 
-The scheduler expects all task outputs to be completed at runtime, unless they
+The scheduler requires all task outputs to be completed at runtime, unless they
 are marked with ``?`` as optional. This allows it to correctly diagnose
 :term:`workflow completion`. [2]_
 
-Tasks that finish without completing expected outputs  [3]_ are retained as
+Tasks that finish without completing required outputs  [3]_ are retained as
 :ref:`incomplete <incomplete tasks>` pending user intervention, e.g. to be
 retriggered after a bug fix.
 
@@ -1552,11 +1552,11 @@ This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
    foo => bar  # short for "foo:succeed => bar"
 
-Additionally, ``foo`` is expected to succeed, because its success is not marked
+Additionally, ``foo`` is required to succeed, because its success is not marked
 as optional. If ``foo`` does not succeeded, the scheduler will not run ``bar``,
 and ``foo`` will be retained as an incomplete task.
 
-Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
+Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all required outputs:
 
 .. code-block:: cylc-graph
 
@@ -1564,17 +1564,17 @@ Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all expected outputs:
    bar:x
    baz:fail
 
-Tasks that appear with only custom outputs in the graph are also expected to succeed.
-Here, ``foo:succeed`` is an expected output, as well as ``foo:x``, unless it is
+Tasks that appear with only custom outputs in the graph are also required to succeed.
+Here, ``foo:succeed`` is a required output, as well as ``foo:x``, unless it is
 marked as optional elsewhere in the graph:
 
 .. code-block:: cylc-graph
 
    foo:x => bar
 
-If a task generates multiple custom outputs, they should be "expected" if you
+If a task generates multiple custom outputs, they should be "required" if you
 expect them all to be completed every time the task runs. Here,
-``model:file1``, ``model:file2``, and ``model:file3`` are all expected outputs:
+``model:file1``, ``model:file2``, and ``model:file3`` are all required outputs:
 
 .. code-block:: cylc-graph
 
@@ -1643,7 +1643,7 @@ particular branch is taken or not depends on which optional outputs are
 completed at runtime. For more information see :ref:`Graph Branching`.
 
 Leaf tasks (with nothing downstream of them) can have optional outputs. In the
-following graph, ``foo`` is expected to succeed, but it doesn't matter whether
+following graph, ``foo`` is required to succeed, but it doesn't matter whether
 ``bar`` succeeds or fails:
 
 .. code-block:: cylc-graph
@@ -1678,7 +1678,7 @@ Finish Triggers
 
 ``foo:finish`` is a pseudo output that is short for ``foo:succeed? |
 foo:fail?``. This automatically labels the real outputs as optional, because
-success and failure can't both be expected.
+success and failure can't both be required.
 
 ``foo:finish?`` is illegal because it incorrectly suggests that "finishing
 is optional" and that a non-optional version of the trigger makes sense.
@@ -1709,7 +1709,7 @@ and ``FAM:fail-any`` that are short for logical expressions involving the
 corresponding member task outputs.
 
 If the member outputs are not singled out explicitly elsewhere in the graph,
-then they default to being expected outputs.
+then they default to being required outputs.
 
 For example, if ``f1`` and ``f2`` are members of ``FAM``, then this:
 
@@ -1722,7 +1722,7 @@ means:
 
 .. code-block:: cylc-graph
 
-   f1:fail & f2:fail => a  # f1:fail and f2:fail are expected
+   f1:fail & f2:fail => a  # f1:fail and f2:fail are required
 
 
 and this:
@@ -1736,7 +1736,7 @@ means:
 
 .. code-block:: cylc-graph
 
-   f1 | f2 => a  # f1:succeed and f2:succeed are expected
+   f1 | f2 => a  # f1:succeed and f2:succeed are required
 
 
 However, the family default can be changed to optional by using ``?`` on the
@@ -1755,11 +1755,11 @@ means this:
 
 
 If particular member tasks are singled out elsewhere in the graph, that
-overrides the family default for expected/optional outputs:
+overrides the family default for required/optional outputs:
 
 .. code-block:: cylc-graph
 
-   # f1:fail is expected, and f2:fail is optional:
+   # f1:fail is required, and f2:fail is optional:
    FAM:fail-all => a
    f2:fail? => b
 
