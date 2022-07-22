@@ -32,7 +32,8 @@ startup
 shutdown
    The workflow finished and the scheduler will shut down.
 abort
-   The scheduler will shut down even though the workflow didn't finish.
+   The scheduler shut down early with error status, due to a fatal error
+   condition or a configured timeout.
 workflow timeout
    The workflow run timed out.
 stall
@@ -42,8 +43,8 @@ stall timeout
 inactivity timeout
    The workflow timed out with no activity.
 
-You can also tell the scheduler to abort the run on certain workflow events,
-with the following settings:
+You can tell the scheduler to abort (i.e., shut down immediately with error
+status) on certain workflow events, with the following settings:
 
 - abort on stall timeout
 - abort on inactivity timeout
