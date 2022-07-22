@@ -104,7 +104,7 @@ likely unnecessary.)
 
 .. seealso::
 
-   - :ref:`Expected <User Guide Expected Outputs>` and
-     :ref:`optional <User Guide Optional outputs>` outputs in the user guide.
+   - :ref:`Required <User Guide Required Outputs>` and
+     :ref:`optional <User Guide Optional Outputs>` outputs in the User Guide.
 
    - :ref:`Graph Branching` in the user guide.
