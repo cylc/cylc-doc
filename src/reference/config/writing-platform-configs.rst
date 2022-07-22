@@ -210,7 +210,7 @@ Two Similar Clusters
 
 .. admonition:: Scenario
 
-   Your site has two mirrored clusters with seperate PBS queues and
+   Your site has two mirrored clusters with separate PBS queues and
    file systems. Users don't mind which cluster is used and just
    want to set ``flow.cylc[runtime][mytask]platform = supercomputer``:
 

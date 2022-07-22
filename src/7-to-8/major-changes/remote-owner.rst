@@ -32,7 +32,7 @@ configuring your remote username using the `SSH configuration file`_ e.g:
 SSH will then automatically use the configured username when connecting to the
 remote machine.
 
-Since Cylc uses SSH and RSync to manage job hosts, the SSH config also configures
+Since Cylc uses SSH and Rsync to manage job hosts, the SSH config also configures
 Cylc.
 
 .. note::
