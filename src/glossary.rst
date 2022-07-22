@@ -1481,6 +1481,7 @@ Glossary
 
 
    required output
+   expected output
       Task outputs that are not marked as :term:`optional <optional output>`
       in the :term:`graph` are required to be completed at runtime. If not, the
       :term:`scheduler` retains the task as :term:`incomplete` pending user
