@@ -2086,7 +2086,7 @@ they might be ``2060, 2061, 2062, 2063, 2064``.
 
 .. note::
 
-   The runahead limit may be raised automatically to accommodate
+   The scheduler may automatically raise the runahead limit to accommodate
    :term:`future triggered<future trigger>` tasks without stalling
    the workflow.
 
