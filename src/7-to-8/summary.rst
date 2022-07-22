@@ -117,7 +117,7 @@ Optional and Required Task Outputs
 
 By default, all Cylc 8 tasks are required to succeed - i.e., success is
 a :term:`required output`. Otherwise they will be marked
-as :term:`incomplete tasks<incomplete task>` requiring user intervention.
+as :term:`incomplete tasks<incomplete task>` needing user intervention.
 In a workflow with incomplete tasks, if there is nothing left to do, the
 scheduler will :term:`stall` rather than shut down.
 
