@@ -10,8 +10,13 @@ ISODATETIMECALENDAR                # Calendar mode for the `isodatetime` command
 CYLC_WORKFLOW_FINAL_CYCLE_POINT    # Final cycle point
 CYLC_WORKFLOW_INITIAL_CYCLE_POINT  # Initial cycle point
 CYLC_WORKFLOW_ID                   # Workflow ID
-CYLC_WORKFLOW_NAME                 # Workflow name
-                                   # (the workflow ID without the run name)
+                                   # e.g. "a/b/c/run1"
+CYLC_WORKFLOW_NAME                 # Workflow ID with the run name removed
+                                   # (use CYLC_WORKFLOW_ID for most purposes)
+                                   # e.g. "a/b/c"
+CYLC_WORKFLOW_NAME_BASE            # The basename of the workflow name
+                                   # (use CYLC_WORKFLOW_ID for most purposes)
+                                   # e.g. "c"
 CYLC_UTC                           # UTC mode, True or False
 TZ                                 # Set to "UTC" in UTC mode or not defined
 
