@@ -1,7 +1,7 @@
 Cylc |version| Caveats
 ======================
 
-There are a few Cylc 7 features which do not yes have direct replacements in
+There are a few Cylc 7 features which do not yet have direct replacements in
 Cylc 8. These features will be re-implemented in future releases.
 
 

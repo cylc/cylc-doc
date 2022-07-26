@@ -73,7 +73,7 @@ snippets of workflow configuration. Most of these can be turned into a complete
 workflow that you can actually run, with a few easy steps:
 
 - Add scheduling section headings, if missing, above the graph
-- Use ``allow implicit tasks = True`` to automatically create dummy definitions
+- Use ``[scheduler]allow implicit tasks = True`` to automatically create dummy definitions
   for each task
 - Configure the ``root`` task family to make the dummy jobs take a little time
   to run, so the workflow doesn't evolve too quickly
