@@ -5,7 +5,6 @@ Writing Workflows
    :maxdepth: 2
 
    configuration
-   scheduler
    scheduling
    runtime
    parameterized-tasks
@@ -13,3 +12,4 @@ Writing Workflows
    empy
    external-triggers
    suicide-triggers
+   scheduler

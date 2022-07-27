@@ -7,7 +7,7 @@ Cylc 7 Compatibility Mode
    :class: tip
 
    This will affect you if you want to run Cylc 7 (``suite.rc``) workflows
-   using Cylc 8
+   using Cylc 8.
 
 Overview
 --------

@@ -229,19 +229,18 @@ for monitoring / controlling running workflows:
      - ::
 
          cylc gui <name>
-     - * Run your own Cylc UI Server::
+     - ::
 
-           cylc gui
+         cylc gui
 
-         then open the printed URL in a web browser
+   * - Web Server
+     - ::
 
-       * Or open your site's Cylc Hub URL in a web browser
+         cylc review start
 
-       * Or run your own Hub::
+     - ::
 
-           cylc hub
-
-         then open the URL ``0.0.0.0:8000`` in a web browser
+         cylc hub
 
 Static Graph Visualisation
 --------------------------

@@ -5,7 +5,7 @@ User Guide
 .. toctree::
    :maxdepth: 2
 
-   introduction/index
+   introduction
    writing-workflows/index
    installing-workflows
    running-workflows/index

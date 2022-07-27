@@ -1,8 +1,8 @@
 Cylc |version| Caveats
 ======================
 
-This is a Cylc pre-release. There are some features which
-have not yet been implemented.
+There are a few Cylc 7 features which do not yet have direct replacements in
+Cylc 8. These features will be re-implemented in future releases.
 
 
 Cylc Flow
