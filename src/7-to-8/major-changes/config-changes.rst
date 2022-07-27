@@ -9,7 +9,7 @@ The old configurations are now deprecated, but still supported.
 These will be highlighted upon ``cylc validate`` after renaming ``suite.rc``
 to ``flow.cylc``.
 
-Because some workflows use ``if...else`` branches which may not be switched on at
+Because some workflows use Jinja2 or EmPy branches which may not be switched on at
 the time of the initial ``cylc validate`` we have also provided
 a script, :ref:`cylc lint -r 728 <cylc_lint_script>` to check for Cylc 7
 syntax which may be deprecated.
