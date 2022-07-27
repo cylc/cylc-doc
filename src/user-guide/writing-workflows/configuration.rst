@@ -141,3 +141,11 @@ All legal entries are documented in the :cylc:conf:`flow.cylc` reference.
 
 If a :cylc:conf:`flow.cylc` file uses include-files ``cylc view`` will
 show an inlined copy of the workflow with correct line numbers.
+
+.. _cylc_lint_script:
+
+``cylc lint``
+^^^^^^^^^^^^^
+
+.. automodule:: cylc.flow.scripts.lint
+

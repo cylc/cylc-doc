@@ -5,6 +5,10 @@ Coding style is largely subjective, but for collaborative development of
 complex systems it is important to settle on a clear and consistent style to
 avoid getting into a mess. The following style rules are recommended.
 
+.. seealso::
+
+   :ref:`cylc lint -r style <cylc_lint_script>` is a tool designed to help
+   you check your code style.
 
 Tab Characters
 --------------
