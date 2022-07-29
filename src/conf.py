@@ -16,6 +16,7 @@
 
 from distutils.spawn import find_executable as which
 import os
+from pathlib import Path
 import sys
 
 from cylc.flow import __version__ as CYLC_VERSION
@@ -36,6 +37,7 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
+    'sphinxcontrib.spelling',
     # sphinx user community extensions
     'hieroglyph',
     'sphinx_rtd_theme',
@@ -245,3 +247,30 @@ literal_sub_include_subs = {
     'version': version,
     'release': release,
 }
+
+# Settings for spelling
+spelling_lang = 'en_NZ'
+# for x in $(cat src/dictionaries/words);do echo ${x^};
+# done > src/dictionaries/sentence_case
+spelling_word_list_filename = [
+    'dictionaries/words',
+    'dictionaries/proper_nouns',
+    'dictionaries/sentence_case'
+]
+spelling_warning = True
+spelling_verbose = True
+
+dictionaries = Path.cwd() / 'dictionaries'
+wordsfile = dictionaries / 'words'
+sentence_case_file = dictionaries / 'sentence_case'
+
+# Sort wordlist:
+words = wordsfile.read_text().split('\n')
+words = sorted(words)
+wordsfile.write_text('\n'.join(words) + '\n')
+
+# Create sentence case versions of wordlist:
+sentence_case = []
+for word in words:
+    sentence_case.append(word.capitalize())
+sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
