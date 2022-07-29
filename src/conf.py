@@ -110,7 +110,7 @@ autosummary_imported_members = False
 # Mapping to other Sphinx projects we want to import references from.
 intersphinx_mapping = {
     'rose': (
-        'http://metomi.github.io/rose/2.0rc3/html', None
+        'http://metomi.github.io/rose/2.0.0/html', None
     ),
     'python': (
         'https://docs.python.org/3/', None
