@@ -39,8 +39,12 @@
         "html",
         "slides"
     ],
+    "8.0.0": [
+        "slides",
+        "html"
+    ],
     "stable": [
-        "singlehtml",
+        "slides",
         "html"
     ],
     "latest": [

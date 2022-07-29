@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Suicide Triggers &mdash; Cylc 8.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Writing Workflows" href="index.html" />
+    <link rel="next" title="Scheduler Configuration" href="scheduler.html" />
+    <link rel="prev" title="External Triggers" href="external-triggers.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="suicide-triggers">
+
+<h1>Suicide Triggers<a class="headerlink" href="../../../html/user-guide/writing-workflows/suicide-triggers.html#suicide-triggers" title="View HTML">§</a></h1>
+
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Suicided triggers were needed in Cylc 7 and earlier to remove pre-spawned
+waiting tasks from graph branches not taken at runtime, which would stall
+the workflow.</p>
+<p>However, <strong>Cylc 8 does not need suicide triggers for</strong> <a class="reference internal" href="../../glossary.html#term-branching"><span class="xref std std-term">graph
+branching</span></a>.</p>
+<p class="last">They remain supported, and documented, for backward compatibility and for
+a rare <a class="reference internal" href="#remaining-use-cases"><span class="std std-ref">edge case</span></a>.</p>
+</div>
+<p>Suicide triggers remove waiting <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> from the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler’s</span></a> active <a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a> at runtime.</p>
+<p>They are activated just like normal <a class="reference internal" href="../../glossary.html#term-task-trigger"><span class="xref std std-term">task triggers</span></a> but
+they remove the downstream task (prefixed with <code class="docutils literal notranslate"><span class="pre">!</span></code>) instead of triggering it
+to run.</p>
+<p>Here, the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> will be removed if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="x">!bar</span>
+</pre></div>
+</div>
+<p>Suicide triggers combine in the same way as normal triggers, so this graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+<span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<p>i.e. both <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> must succeed for <code class="docutils literal notranslate"><span class="pre">baz</span></code> to be removed.</p>
+<p>To remove a task after any one of several events, use an OR operator:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">|</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>There’s no point removing tasks that are not in the <code class="docutils literal notranslate"><span class="pre">waiting</span></code> state</li>
+<li>In Cylc 8 all waiting tasks in front of the active window are virtual and
+don’t need to be “removed”</li>
+<li>The only non-virtual waiting tasks in Cylc 8 are those <a class="reference internal" href="../../glossary.html#term-active-waiting"><span class="xref std std-term">actively
+waiting</span></a> on an external trigger; these might need to
+be removed if they will never run</li>
+</ul>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="remaining-use-case">
+
+<h2>Remaining Use Case<a class="headerlink" href="../../../html/user-guide/writing-workflows/suicide-triggers.html#remaining-use-case" title="View HTML">§</a></h2>
+
+<p>Suicide triggers may be needed to remove an <a class="reference internal" href="../../glossary.html#term-active-waiting-task"><span class="xref std std-term">active-waiting task</span></a> when it
+can be inferred from the status of another task that the external trigger will
+never be satisfied.</p>
+<p>In the following example imagine that the two xtriggers watch two locations for
+the same file to appear. The file will be delivered to one location or the
+other but not to both, so if one xtrigger is satisfied the other will never be.
+The stuck waiting task can be removed with a suicide trigger, so that it
+doesn’t stall the workflow:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="cp">@xtrigger1</span> <span class="o">=&gt;</span> <span class="kd">A</span>
+<span class="cp">@xtrigger2</span> <span class="o">=&gt;</span> <span class="kd">B</span>
+
+<span class="kd">A</span> <span class="o">=&gt;</span> <span class="x">!B</span>  <span class="c1"># If A succeeds, remove B</span>
+<span class="kd">B</span> <span class="o">=&gt;</span> <span class="x">!A</span>  <span class="c1"># If B succeeds, remove A</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

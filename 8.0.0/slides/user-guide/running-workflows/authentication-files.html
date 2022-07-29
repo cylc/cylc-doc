@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Client-Server Interaction &mdash; Cylc 8.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Workflow Run Databases" href="workflow-databases.html" />
+    <link rel="prev" title="Cylc Broadcast" href="dynamic-behaviour.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="client-server-interaction">
+
+<h1>Client-Server Interaction<a class="headerlink" href="../../../html/user-guide/running-workflows/authentication-files.html#client-server-interaction" title="View HTML">§</a></h1>
+
+<p><a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Schedulers</span></a> listen on dedicated network ports for
+TCP communications from Cylc clients (task jobs and user-invoked commands).</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span></code> to see which workflows are listening on which ports on
+scanned hosts.</p>
+<p>Cylc generates public-private key pairs on the workflow server and job hosts
+which are used for authentication.</p>
+
+
+
+
+</article>
+<article class="slide level-1" id="authentication-files">
+
+<h1>Authentication Files<a class="headerlink" href="../../../html/user-guide/running-workflows/authentication-files.html#authentication-files" title="View HTML">§</a></h1>
+
+<p>Cylc uses <a class="reference external" href="http://curvezmq.org/page:read-the-docs">CurveZMQ</a> to ensure that
+any data, sent between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> and the client,
+remains protected during transmission. Public keys are used to encrypt the
+data, private keys for decryption.</p>
+<p>Authentication files will be created in your
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/.service/</span></code> directory at start-up. You can
+expect to find one client public key per file system for remote jobs.</p>
+<p>On the workflow host, the directory structure should contain:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/cylc-run/workflow_x
+`-- .service
+    |-- client_public_keys
+    |   |-- client_localhost.key
+    |   `-- &lt;any further client keys&gt;
+    |-- client.key_secret
+    |-- server.key
+    `-- server.key_secret
+</pre></div>
+</div>
+<p>On the remote job host, the directory structure should contain:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/cylc-run/workflow_x
+`-- .service
+    |-- client.key
+    |-- client.key_secret
+    `-- server.key
+</pre></div>
+</div>
+<p>Keys are removed as soon as they are no longer required.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

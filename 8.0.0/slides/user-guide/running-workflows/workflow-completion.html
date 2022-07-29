@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflow Completion &mdash; Cylc 8.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Concurrent Flows" href="reflow.html" />
+    <link rel="prev" title="Task Job Polling" href="tracking-task-state.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="workflow-completion">
+
+<h1>Workflow Completion<a class="headerlink" href="../../../html/user-guide/running-workflows/workflow-completion.html#workflow-completion" title="View HTML">§</a></h1>
+
+<p>If there is nothing more to run (according to the graph) and there are no
+<a class="reference internal" href="../../glossary.html#term-incomplete-task"><span class="xref std std-term">incomplete tasks</span></a> present, the scheduler will report
+workflow completion and shut down when current active tasks finish.</p>
+
+
+
+
+</article>
+<article class="slide level-1" id="scheduler-stall">
+
+<h1>Scheduler Stall<a class="headerlink" href="../../../html/user-guide/running-workflows/workflow-completion.html#scheduler-stall" title="View HTML">§</a></h1>
+
+<p>If there is nothing more to run (according to the graph) but there are
+<a class="reference internal" href="../../glossary.html#term-incomplete-task"><span class="xref std std-term">incomplete tasks</span></a> present, the scheduler will
+<a class="reference internal" href="../../glossary.html#term-stall"><span class="xref std std-term">stall</span></a> and stay alive for 1 hour (by default) awaiting user intervention
+to allow the workflow to continue.</p>
+<p>The presence of incomplete tasks means that the workflow did not run to
+completion as expected, because some <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required task outputs</span></a> were not completed at runtime.</p>
+<p>Restarting a stalled workflow triggers a new stall timer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Partially satisfied prerequisites can also cause a stall. If <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&amp;</span> <span class="pre">b</span> <span class="pre">=&gt;</span> <span class="pre">c</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">a</span></code> succeeds but <code class="docutils literal notranslate"><span class="pre">b</span></code> never even runs, the scheduler will take
+partial completion of <code class="docutils literal notranslate"><span class="pre">c</span></code>’s prerequisites as a sign that the workflow did
+not run to completion as expected.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">At present you have to consult the <a class="reference internal" href="../../glossary.html#term-scheduler-log"><span class="xref std std-term">scheduler log</span></a> to see the reason
+for a stall.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]stall timeout" title="flow.cylc[scheduler][events]stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][events]stall</span> <span class="pre">timeout</span></code></a></li>
+<li><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]abort on stall timeout" title="flow.cylc[scheduler][events]abort on stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][events]abort</span> <span class="pre">on</span> <span class="pre">stall</span> <span class="pre">timeout</span></code></a></li>
+<li><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]stall handlers" title="flow.cylc[scheduler][events]stall handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][events]stall</span> <span class="pre">handlers</span></code></a></li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

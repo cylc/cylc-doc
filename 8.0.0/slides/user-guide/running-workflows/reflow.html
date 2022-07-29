@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Concurrent Flows &mdash; Cylc 8.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Simulation Modes" href="simulation-modes.html" />
+    <link rel="prev" title="Workflow Completion" href="workflow-completion.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="concurrent-flows">
+
+<h1>Concurrent Flows<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#concurrent-flows" title="View HTML">§</a></h1>
+
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.0.</span></p>
+</div>
+<p>In Cylc, a <em>flow</em> is a self-propagating run through the workflow <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>
+from some initial task(s).</p>
+<p>At start-up the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> automatically launches a flow from the start
+of the graph. But you can use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--flow=new</span> <span class="pre">ID</span></code> to start additional
+flows anywhere in the graph, while the original (and any other) flow still
+runs. New flows continue on from triggered tasks as dictated by the graph.</p>
+<p>When a flow advances to a new task in the <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>, the task will only run
+if it did not already run in the same flow.</p>
+<p>See <a class="reference internal" href="#flow-trigger-use-cases"><span class="std std-ref">below</span></a> for suggested use cases, and an
+<a class="reference internal" href="#new-flow-example"><span class="std std-ref">example</span></a>, of this capability.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Flows <a class="reference internal" href="#flow-merging"><span class="std std-ref">merge</span></a> where (and if) tasks collide in the <code class="docutils literal notranslate"><span class="pre">n=0</span></code>
+<a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a>. Downstream of a merge, tasks are considered to belong
+to all constituent flows.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="flow-numbers">
+
+<h2>Flow Numbers<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#flow-numbers" title="View HTML">§</a></h2>
+
+<p>Flows are identified by numbers passed down from parent task to child task in
+the graph.</p>
+<p>Flow number <code class="docutils literal notranslate"><span class="pre">1</span></code> is triggered automatically by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> at <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>
+start-up. The next flow started by <a class="reference internal" href="#triggering-flows"><span class="std std-ref">manual triggering</span></a>
+gets the number <code class="docutils literal notranslate"><span class="pre">2</span></code>, then <code class="docutils literal notranslate"><span class="pre">3</span></code>, and so on.</p>
+<p>Tasks can carry multiple flow numbers as a result of <a class="reference internal" href="#flow-merging"><span class="std std-ref">flow
+merging</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Flow numbers are not yet exposed in the UI, but they are logged with task
+events in the <a class="reference internal" href="../../glossary.html#term-scheduler-log"><span class="xref std std-term">scheduler log</span></a>.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="triggering-flows">
+
+<h2>Triggering &amp; Flows<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#triggering-flows" title="View HTML">§</a></h2>
+
+<p>By default, manual triggering (with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> or the UI) starts a new
+<a class="reference internal" href="../../glossary.html#term-flow-front"><span class="xref std std-term">front of activity</span></a> in current flows.
+But it can also start new flows and trigger flow-independent single tasks.</p>
+<p>In the diagrams below, the grey tasks run in the original flow (<code class="docutils literal notranslate"><span class="pre">1</span></code>), and the
+blue ones run as a result of a manual triggering event. They may be triggered
+as part of flow <code class="docutils literal notranslate"><span class="pre">1</span></code>, or as a new flow <code class="docutils literal notranslate"><span class="pre">2</span></code>, or with no flow number.</p>
+<dl class="docutils">
+<dt>Triggering in Current Flows</dt><dd><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">[--wait]</span> <span class="pre">ID</span></code></p>
+<p>This is the default action. The triggered task gets all current active flow
+numbers. Subsequently, each of those flows will consider the task to have
+run already.</p>
+<p><strong>Ahead of active flows</strong> this starts a new front of activity for the
+existing flows, which by default can continue on without waiting for them to
+catch up:</p>
+<img alt="../../_images/same-flow-n.png" src="../../_images/same-flow-n.png" />
+<p>With <code class="docutils literal notranslate"><span class="pre">--wait</span></code>, action downstream of the triggered task is delayed until
+the first flow catches up:</p>
+<img alt="../../_images/same-flow-wait-n.png" src="../../_images/same-flow-wait-n.png" />
+<p><strong>Behind active flows</strong> the triggered task will run, but nothing more will
+happen if any of the original flows already passed by there:</p>
+<img alt="../../_images/same-flow-behind.png" src="../../_images/same-flow-behind.png" />
+</dd>
+<dt>Triggering in Specific Flows</dt><dd><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--flow=1,2</span> <span class="pre">ID</span></code></p>
+<p>This triggers the task with flow numbers <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+<p>The result is like the default above, except that tasks in the new front
+belong only to the specified flow(s), regardless of which flows are
+<a class="reference internal" href="../../glossary.html#term-active"><span class="xref std std-term">active</span></a> at triggering time.</p>
+</dd>
+<dt>Triggering a New Flow</dt><dd><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--flow=new</span> <span class="pre">ID</span></code></p>
+<p>This triggers the task with a new, incremented flow number.</p>
+<p>The new flow will re-run tasks that already ran in previous flows:</p>
+<img alt="../../_images/new-flow-n.png" src="../../_images/new-flow-n.png" />
+</dd>
+<dt>Triggering a Flow-Independent Single Task</dt><dd><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span> <span class="pre">--flow=none</span> <span class="pre">ID</span></code></p>
+<p>This triggers a task with no flow numbers.</p>
+<p>It will not spawn children, and other flows that come by will re-run it.</p>
+<img alt="../../_images/no-flow-n.png" src="../../_images/no-flow-n.png" />
+</dd>
+<dt>Special Case: Triggering <code class="docutils literal notranslate"><span class="pre">n=0</span></code> Tasks</dt><dd><p>Tasks in the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> window are <a class="reference internal" href="../../glossary.html#term-active"><span class="xref std std-term">active</span></a>, <a class="reference internal" href="../../glossary.html#term-active-waiting"><span class="xref std std-term">active-waiting</span></a>, or
+<a class="reference internal" href="../../glossary.html#term-incomplete"><span class="xref std std-term">incomplete</span></a>. Their flow membership is already determined - that of
+the parent tasks that spawned them.</p>
+<ul class="simple">
+<li>Triggering an <a class="reference internal" href="../../glossary.html#term-active-task"><span class="xref std std-term">active task</span></a> has no effect (it is already triggered).</li>
+<li>Triggering an <a class="reference internal" href="../../glossary.html#term-active-waiting-task"><span class="xref std std-term">active-waiting task</span></a> queues it to run in the same flow.</li>
+<li>Triggering an <a class="reference internal" href="../../glossary.html#term-incomplete-task"><span class="xref std std-term">incomplete task</span></a> queues it to re-run in the same flow.</li>
+</ul>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="flow-merging-in-n-0">
+
+<h2>Flow Merging in <code class="docutils literal notranslate"><span class="pre">n=0</span></code><a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#flow-merging-in-n-0" title="View HTML">§</a></h2>
+
+<p>If a task spawning into the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> <a class="reference internal" href="../../glossary.html#term-window"><span class="xref std std-term">window</span></a> finds another instance
+of itself already there (i.e., same name and cycle point, different flow
+number) a single instance will carry both (sets of) flow numbers forward from
+that point. Downstream tasks belong to both flows.</p>
+<p>Flow merging in <code class="docutils literal notranslate"><span class="pre">n=0</span></code> means flows are not completely independent. One flow
+might not be able to entirely overtake another because one or more of its tasks
+might merge in <code class="docutils literal notranslate"><span class="pre">n=0</span></code>. Merging is necessary while task IDs - and associated
+log directory paths etc. - do not incorporate flow numbers, because task IDs
+must be unique in the <a class="reference internal" href="../../glossary.html#term-active-task-pool"><span class="xref std std-term">active task pool</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="merging-with-incomplete-tasks">
+
+<h3>Merging with Incomplete tasks<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#merging-with-incomplete-tasks" title="View HTML">§</a></h3>
+
+<p><a class="reference internal" href="../../glossary.html#term-incomplete"><span class="xref std std-term">Incomplete</span></a> tasks are retained in the active window in
+expectation of retriggering to complete <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a> and continue their flow.</p>
+<p>If another flow encounters an incomplete task (i.e. if another instance of the
+same task collides with it in the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> <a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a>) the task will
+run again and carry both flow numbers forward if it successfully completes its
+required outputs.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="stopping-flows">
+
+<h2>Stopping Flows<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#stopping-flows" title="View HTML">§</a></h2>
+
+<p>By default, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code> halts the workflow and shuts the scheduler down.</p>
+<p>It can also stop specific flows: <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span> <span class="pre">--flow=N</span></code> removes the flow number
+<code class="docutils literal notranslate"><span class="pre">N</span></code> from tasks in the <a class="reference internal" href="../../glossary.html#term-active-task-pool"><span class="xref std std-term">active task pool</span></a>. Tasks that have no flow
+numbers left as a result do not spawn children at all. If there are no active
+flows left, the scheduler shuts down.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="some-use-cases">
+
+<h2>Some Use Cases<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#some-use-cases" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt>Running Tasks Ahead of Time</dt><dd>To run a task within the existing flow(s) even though its prerequisites are
+not yet satisfied, just trigger it. Use <code class="docutils literal notranslate"><span class="pre">--wait</span></code> if you don’t want the new
+flow front to continue immediately. Triggered task(s) will not re-run when
+the main front catches up.</dd>
+<dt>Regenerating Outputs Behind a Flow</dt><dd><p>To re-run a sub-graph (e.g. because the original run was affected by a
+corrupt file), just trigger the task(s) at the top of the sub-graph with
+<code class="docutils literal notranslate"><span class="pre">--flow=new</span></code>.</p>
+<p>You may need to manually stop the new flow if it leads into the main trunk
+of the graph, and you do not want it to carry on indefinitely.</p>
+</dd>
+<dt>Rewinding a Workflow</dt><dd>To rewind the workflow to an earlier point, perhaps to regenerate data and/or
+allow the workflow to evolve a new path into the future, trigger a new
+flow at the right place and then stop the original flow.</dd>
+<dt>Test-running Tasks in a Live Workflow</dt><dd>You can trigger individual tasks as many times as you like with
+<code class="docutils literal notranslate"><span class="pre">--flow=none</span></code>, without affecting the workflow. The task <a class="reference internal" href="../../glossary.html#term-submit-number"><span class="xref std std-term">submit
+number</span></a> will increment each time.</dd>
+<dt>Processing Flow-Specific Data?</dt><dd><a class="reference internal" href="../../glossary.html#term-flow-number"><span class="xref std std-term">Flow numbers</span></a> are passed to job environments, so it is
+possible for tasks to process flow-specific data. Every task would have to
+be capable of processing multiple datasets at once, however, in case of
+<a class="reference internal" href="../../glossary.html#term-flow-merge"><span class="xref std std-term">flow merging</span></a>. Generally, you should use <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling</span></a>
+for this kind of use case.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="example-rerun-a-sub-graph">
+
+<h2>Example: Rerun a Sub-Graph<a class="headerlink" href="../../../html/user-guide/running-workflows/reflow.html#example-rerun-a-sub-graph" title="View HTML">§</a></h2>
+
+<p>The following <a class="reference internal" href="../../glossary.html#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a> runs a <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> called <code class="docutils literal notranslate"><span class="pre">model</span></code> in
+every cycle, followed by a postprocessing task, two product-generating tasks,
+and finally a task that publishes results for the cycle point:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 = model[-P1] =&gt; model =&gt; post =&gt; prod1 &amp; prod2 </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">publish</span>
+</pre></div>
+</div>
+<p>Let’s say the workflow has run to cycle 8, but we have just noticed that
+a corrupted ancillary file resulted in bad products at cycle 5.</p>
+<p>To rectify this we could fix the corrupted file and trigger a new flow at
+<code class="docutils literal notranslate"><span class="pre">5/post</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">cylc trigger --flow</span><span class="o">=</span><span class="s">new &lt;workflow_id&gt;//5/post</span>
+</pre></div>
+</div>
+<p>The new flow will regenerate and republish cycle 5 products before naturally
+coming to a halt, because the triggered tasks do not feed into the next cycle.</p>
+<p>Meanwhile, the original flow will carry on unaffected, from cycle point 8.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
