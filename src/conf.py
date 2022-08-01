@@ -266,7 +266,7 @@ sentence_case_file = dictionaries / 'sentence_case'
 
 # Sort wordlist:
 words = wordsfile.read_text().split('\n')
-words = sorted(words)
+words = [w for w in sorted(words) if w]
 wordsfile.write_text('\n'.join(words) + '\n')
 
 # Create sentence case versions of wordlist:
