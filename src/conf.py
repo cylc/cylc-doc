@@ -248,7 +248,10 @@ literal_sub_include_subs = {
     'release': release,
 }
 
-# Settings for spelling
+# Settings for spelling checks
+# Proper nouns are words where we want to explicitly set the case, so
+# include acronyms and proper names where we might want to explicitly set
+# case lower, for example if we use it in scripts (e.g. "conda").
 spelling_lang = 'en_NZ'
 # for x in $(cat src/dictionaries/words);do echo ${x^};
 # done > src/dictionaries/sentence_case
