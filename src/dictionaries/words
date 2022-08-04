@@ -18,7 +18,6 @@ configs
 coroutine
 coroutines
 cyclepoint
-cylc
 dataset
 datasets
 datetime
