@@ -273,7 +273,5 @@ words = [w for w in sorted(words) if w]
 wordsfile.write_text('\n'.join(words) + '\n')
 
 # Create sentence case versions of wordlist:
-sentence_case = []
-for word in words:
-    sentence_case.append(word.capitalize())
+sentence_case = [word.capitalize() for word in words]
 sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
