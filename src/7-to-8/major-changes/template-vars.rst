@@ -7,9 +7,11 @@ Template Variables
    Read this section if you set Cylc template variables on the command line
    using the ``-s``, ``--set`` or ``-set-file`` options.
 
-   This does *not* affect the Rose ``jinja2:suite.rc`` and
-   ``empy:suite.rc`` variables set using the ``-S`` option to the
-   ``rose suite-run`` command.
+   Rose template variables already follow these rules: You will *not* notice
+   changes if you set variables
+   using the Rose command line options ``-S`` and ``-D`` and the
+   ``rose-suite.conf`` template variables sections (``[template variables]``,
+   ``[jinja2:suite.rc]`` and ``[empy:suite.rc]``).
 
 
 Overview
