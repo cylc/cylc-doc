@@ -455,6 +455,10 @@ Start, Stop, Restart
 
           work/<cycle-point>/<task-name>
 
+      .. spelling::
+
+         exeter
+
       .. spoiler:: Hint hint
 
          * ``cycle-point`` - this will be the last cycle of the workflow,

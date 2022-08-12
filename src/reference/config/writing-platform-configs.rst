@@ -217,6 +217,11 @@ Two Similar Clusters
    Remember, because the install target defaults to the platform name
    clusterA and clusterB have different install targets.
 
+.. spelling::
+
+   clusterA
+   clusterB
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 

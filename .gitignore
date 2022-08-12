@@ -25,3 +25,4 @@ src/appendices/command-ref.rst
 src/plugins/main-loop/built-in
 src/plugins/install/built-in
 src/user-guide/task-implementation/job-runner-handlers
+src/dictionaries/sentence_case
