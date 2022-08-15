@@ -28,6 +28,7 @@ watch: clean
 		--ignore='**plugins/main-loop/built-in/*.rst' \
 		--ignore='**plugins/install/built-in/*.rst' \
 		--ignore='**/job-runner-handlers/*.rst' \
+		--ignore='**/dictionaries/**' \
 		--open-browser
 
 watch-cylc:
@@ -39,6 +40,7 @@ watch-cylc:
 		--ignore='**plugins/main-loop/built-in/*.rst' \
 		--ignore='**plugins/install/built-in/*.rst' \
 		--ignore='**/job-runner-handlers/*.rst' \
+		--ignore='**/dictionaries/**' \
 		--watch="$(shell bin/c-locate cylc.flow)" \
 		--watch="$(shell bin/c-locate cylc.uiserver)" \
 		--watch="$(shell bin/c-locate cylc.rose)" \
