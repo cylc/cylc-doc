@@ -100,7 +100,7 @@ Here are some additional details on how the components interact.
 Job -> Scheduler
 ^^^^^^^^^^^^^^^^
 
-:Default :Protocol: :ref:`arch zmq`
+:Default Protocol: :ref:`arch zmq`
 :Format: :ref:`arch graphql`
 
 Jobs can communicate status updates back to the Scheduler using different

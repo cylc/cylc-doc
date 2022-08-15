@@ -53,6 +53,27 @@ Users can only monitor and control their own workflows.
    :align: center
 
 
+Jupyter Hub
+-----------
+
+.. _Cylc Hub configuration file: https://github.com/cylc/cylc-uiserver/blob/master/cylc/uiserver/jupyter_config.py
+
+`Jupyter Hub`_ is a multi-user server which spawns and manages a configured
+service for authenticated users.
+
+The "Cylc Hub" is a Jupyter Hub instance which is pre-configured to spawn
+Cylc UI Servers, launched by the ``cylc hub`` command.
+It is also possible to configure Jupyter Hub yourself, see the Cylc Hub
+configuration file for more information.
+
+Jupyter Hub supports a variety of different implementations and plugin interfaces
+for:
+
+* `Authenticating users <https://jupyterhub.readthedocs.io/en/stable/reference/authenticators.html>`_
+* `Spawning user's servers <https://jupyterhub.readthedocs.io/en/stable/reference/spawners.html>`_
+* `Proxying user's servers <https://jupyterhub.readthedocs.io/en/stable/reference/proxy.html>`_
+
+
 .. _multi-user mode:
 
 Multi-User Mode
@@ -65,7 +86,8 @@ the required privileges to spawn UI Servers on behalf of the user.
 
 Users then visit `Jupyter Hub`_ where they authenticate. `Jupyter Hub`_
 spawns UI Servers on behalf of users and provides each with a fixed URL
-(derived from the user name) using a `Configurable HTTP Proxy`_.
+(derived from the user name) using the configured proxy
+(usually `Configurable HTTP Proxy`_).
 
 Users can access each other's UI Servers providing they have been granted
 permission.
