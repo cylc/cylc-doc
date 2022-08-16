@@ -52,6 +52,9 @@ on:
         default: false
         required: false
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   deploy:
     runs-on: ubuntu-18.04
@@ -60,7 +63,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7'
+          python-version: '3.9'
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2
@@ -81,7 +84,7 @@ jobs:
         uses: ./docs/.github/actions/create-conda-envs
         if: ${{ ! inputs.skip_conda_environment_check }}
         with:
-          python_version: '3.7'
+          python_version: '3.9'
           working_directory: ./docs
 
       - name: checkout gh-pages

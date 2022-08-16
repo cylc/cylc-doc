@@ -19,6 +19,10 @@ on:
         description: 'metomi-rose ref (for cylc-rose install)'
         required: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-18.04
@@ -27,7 +31,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7'
+          python-version: '3.9'
 
       - name: configure node
         uses: actions/setup-node@v2

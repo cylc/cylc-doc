@@ -28,6 +28,9 @@ on:
         description: 'Tag present on both cylc-flow and cylc-docs.'
         required: true
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   undeploy:
     runs-on: ubuntu-18.04
@@ -38,7 +41,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7'
+          python-version: '3.9'
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2
