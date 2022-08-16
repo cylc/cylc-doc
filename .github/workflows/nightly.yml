@@ -26,6 +26,9 @@ on:
   schedule:
     - cron: '35 0 * * *'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   deploy:
     runs-on: ubuntu-18.04

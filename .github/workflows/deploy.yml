@@ -52,6 +52,9 @@ on:
         default: false
         required: false
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   deploy:
     runs-on: ubuntu-18.04
