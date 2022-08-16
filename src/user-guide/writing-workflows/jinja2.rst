@@ -549,3 +549,32 @@ Example output:
 Log messages will appear whenever the workflow configuration is loaded so it is
 advisable to use the ``DEBUG`` logging level which is suppressed unless the
 ``--debug`` option is provided.
+
+
+Debugging
+---------
+
+It is possible to run Python debuggers from within Jinja2 via the
+:ref:`import mechanism <jinja2.importing_python_modules>`.
+
+.. _PDB: https://docs.python.org/3/library/pdb.html
+
+For example to use a `PDB`_ breakpoint you could do the following:
+
+.. code-block:: cylc
+
+   #!Jinja2
+
+   {% set ANSWER = 42 %}
+
+   {% from "pdb" import set_trace %}
+   {% do set_trace() %}
+
+The debugger will open within the Jinja2 code, local variables can be accessed
+via the ``_Context__self`` variable e.g:
+
+.. code-block:: console
+
+   $ cylc validate <id>
+   (Pdb) _Context__self['ANSWER']
+   42
