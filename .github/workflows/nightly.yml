@@ -34,7 +34,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7'
+          python-version: '3.9'
 
       - name: checkout cylc-doc
         uses: actions/checkout@v2

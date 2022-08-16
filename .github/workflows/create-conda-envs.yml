@@ -26,9 +26,9 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7'
+          python-version: '3.9'
 
-      - name: install
+      - name: install setuptools
         run: |
           # pick up deps for version processing
           pip install 'setuptools>=50'
