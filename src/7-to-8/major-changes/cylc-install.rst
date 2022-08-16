@@ -5,7 +5,7 @@ Cylc Install
 
 .. seealso::
 
-   :ref:`Installing-workflows`
+   :ref:`User Guide: Installing Workflows <Installing-workflows>`
 
 .. admonition:: Does This Change Affect Me?
    :class: tip
@@ -14,10 +14,11 @@ Cylc Install
 
    This change will affect you:
 
-   - If you usually develop Cylc workflows in the ``~/cylc-run`` directory.
-   - If you develop Cylc workflows outside of the ``~/cylc-run`` directory and manually
-     copy the files to ``~/cylc-run``.
    - If you use ``rose suite-run`` to install and run Cylc workflows.
+   - If you usually develop Cylc workflows in the ``~/cylc-run`` directory.
+   - If you develop Cylc workflows outside of the ``~/cylc-run`` directory and
+     manually copy the files to ``~/cylc-run``.
+
 
 Overview
 --------
@@ -26,7 +27,7 @@ Cylc 7 ran workflows in ``~/cylc-run/``. You could develop your
 workflow in ``~/cylc-run`` or copy it after developing it elsewhere.
 If you developed in the ``~/cylc-run`` directory there was a risk that
 Cylc might alter your files. If you developed elsewhere you needed to
-install your workflows manually or with another tool.
+install your workflows manually with another tool.
 
 We designed Cylc 8 to help you keep your development and
 running copies separate. By default you can now develop workflows in the
@@ -112,40 +113,64 @@ use :cylc:conf:`flow.cylc[scheduler]install`.
 
 See :ref:`the user guide <RemoteInit>` for more details.
 
-Rose Integration
-----------------
 
-The :ref:`Cylc Rose` plugin provides full support for
-:ref:`Rose suite configurations <Rose Suites>`.
+Migrating From ``rose suite-run``
+---------------------------------
 
-.. seealso::
+The ``rose suite-run`` command has been replaced by ``cylc install``.
 
-   * :ref:`Cylc Rose` plugin documentation.
-   * :ref:`installation` instructions.
+.. code-block:: bash
 
+   # rose 2019 / Cylc 7
+   $ rose suite-run
 
-The Cylc Rose plugin runs automatically making ``cylc install`` a direct
-substitute for ``rose suite-run``.
+   # rose 2 / Cylc 8
+   $ cylc install
+   $ cylc play <id>
 
-To find out if you have Cylc-Rose installed:
+Support for the ``rose-suite.conf`` file is provided by the :ref:`Cylc Rose`
+plugin which must be installed for Rose integration.
 
-.. code-block:: console
+.. spoiler:: Installation
+   :class: hint
 
-   $ cylc version --long
-   8.0 (/path/to/cylc-8)
+   See the :ref:`installation` section for instructions.
 
-   Plugins:
-       cylc-rose       0.1.1   /path/to/cylc-rose
+   If Cylc Rose is installed it should appear in the list of installed
+   Cylc plugins:
 
-Unlike ``rose suite-run``, the ``cylc install`` command remembers any options
-specified on the command line and preserves them for future re-installations.
+   .. code-block:: console
 
-You may want to add ``~/roses`` to the list of
-:cylc:conf:`global.cylc[install]source dirs`.
+      $ cylc version --long
+      8.0 (/path/to/cylc-8)
 
-Cylc Rose also provides the ``rose stem`` command which installs
-:ref:`rose-stem` suites. Once installed you can use ``cylc play`` to run them.
+      Plugins:
+          cylc-rose       0.1.1   /path/to/cylc-rose
 
-.. seealso::
+Notable differences to ``rose suite-run``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   :ref:`Rose Stem` documentation.
+Command line options:
+   The ``cylc install`` command remembers any options specified on the command
+   line including Rose optional configurations and template variables and
+   automatically applies them with future re-installations.
+Rose Stem:
+   The ``rose stem`` command is provided by Cylc Rose. Like ``rose suite-run``,
+   ``rose stem`` used to install and run workflows. It now only
+   installs the workflow which can then be run with ``cylc play``.
+
+   See the :ref:`Rose Stem` documentation for more information.
+Roses directory:
+   By default ``cylc install`` looks for workflows in ``~/cylc-src``, you
+   you may want to add ``~/roses`` to the list of
+   :cylc:conf:`global.cylc[install]source dirs`.
+Remote Installation:
+   With Rose 2019 / ``rose suite-run``, files were installed on remote platforms
+   before the *workflow* started running.
+
+   With Rose 2 / ``cylc install``, files are installed on remote platforms just
+   before the *first task* runs on that platform.
+
+   Rose used to install the entire workflow :term:`run directory` to remote
+   platforms. It now only installs configured directories for efficiency.
+   See `Remote Installation`_ above for details.
