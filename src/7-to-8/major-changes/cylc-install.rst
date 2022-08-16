@@ -156,7 +156,7 @@ Command line options:
    automatically applies them with future re-installations.
 Rose Stem:
    The ``rose stem`` command is provided by Cylc Rose. Like ``rose suite-run``,
-   the ``rose stem`` command used to install and run workflows. It now only
+   ``rose stem`` used to install and run workflows. It now only
    installs the workflow which can then be run with ``cylc play``.
 
    See the :ref:`Rose Stem` documentation for more information.
@@ -166,11 +166,11 @@ Roses directory:
    :cylc:conf:`global.cylc[install]source dirs`.
 Remote Installation:
    With Rose 2019 / ``rose suite-run``, files were installed on remote platforms
-   *before the workflow started* running.
+   before the *workflow* started running.
 
    With Rose 2 / ``cylc install``, files are installed on remote platforms just
-   *before the first task* runs on that platform.
+   before the *first task* runs on that platform.
 
    Rose used to install the entire workflow :term:`run directory` to remote
    platforms. It now only installs configured directories for efficiency.
-   See `Remote Installation` above for details.
+   See `Remote Installation`_ above for details.
