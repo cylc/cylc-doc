@@ -52,6 +52,7 @@ requests_).
  - Douglas Lowe
  - Alex Pletzer
  - Yinjing Lin
+ - David Sutherland
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
