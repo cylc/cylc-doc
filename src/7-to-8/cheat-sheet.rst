@@ -33,6 +33,10 @@ Check the workflow configuration for errors:
 Installing & Running
 --------------------
 
+.. warning::
+
+  ``cylc install`` does **not** validate the workflow.
+
 Install a workflow from source and run it:
 
 .. list-table::
@@ -79,7 +83,7 @@ To update a running workflow with changes from the source directory:
      - ::
 
          # re-install from source
-         # and do ``cylc reload`` 
+         # and do ``cylc reload``
          rose suite-run --reload
      - ::
 
