@@ -6,7 +6,7 @@ Simulation Modes
 Cylc can run a workflow without running the real jobs, which may be
 long-running and resource-hungry.
 
-**Dummy mode** replaces real task jobs with background ``sleep`` jobs on the
+**Dummy mode** replaces real jobs with background ``sleep`` jobs on the
 scheduler host. This avoids :term:`job runner` directives that request compute
 resources for real workflow tasks, and it allows any workflow configuration to
 be run locally in dummy mode.
@@ -33,7 +33,7 @@ log files.
 Simulated Run Length
 ^^^^^^^^^^^^^^^^^^^^
 
-The default dummy or simulated task job run length is 10 seconds. It can be
+The default dummy or simulated job run length is 10 seconds. It can be
 changed with :cylc:conf:`[runtime][<namespace>][simulation]default run length`.
 
 If :cylc:conf:`[runtime][<namespace>]execution time limit` and

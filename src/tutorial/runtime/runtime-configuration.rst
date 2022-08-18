@@ -56,7 +56,7 @@ Job Submission
 
 .. ifnotslides::
 
-   By default Cylc runs :term:`task jobs <job>` on the same machine as
+   By default Cylc runs :term:`jobs <job>` on the same machine as
    the scheduler. It can run them on other machines too if we set the
    :term:`platform` like this:
 
@@ -117,7 +117,7 @@ Time Limits
 .. ifnotslides::
 
    We can specify an execution time limit, as an :term:`ISO8601 duration`, after
-   which a task job will be terminated. Cylc automatically translates this to
+   which a job will be terminated. Cylc automatically translates this to
    the correct :term:`job runner` directives.
 
 .. code-block:: cylc
@@ -131,7 +131,7 @@ Time Limits
 Retries
 -------
 
-Task jobs can fail for several reasons:
+Jobs can fail for several reasons:
 
 .. nextslide::
 

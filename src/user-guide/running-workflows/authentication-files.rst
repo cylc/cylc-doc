@@ -5,7 +5,7 @@ Client-Server Interaction
 -------------------------
 
 :term:`Schedulers <scheduler>` listen on dedicated network ports for
-TCP communications from Cylc clients (task jobs and user-invoked commands).
+TCP communications from Cylc clients (jobs and user-invoked commands).
 
 Use ``cylc scan`` to see which workflows are listening on which ports on
 scanned hosts.

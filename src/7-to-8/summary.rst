@@ -97,7 +97,7 @@ Task/Job States
 
 :term:`Tasks <task>` are nodes in the abstract workflow graph, representing
 applications to run at the appropriate point in the workflow. A :term:`job <job>`
-(or a *task job*) is the script (and subsequent process) submitted by Cylc to
+is the script (and subsequent process) submitted by Cylc to
 actually run the application. A task can have multiple jobs as the result of
 automatic retries or manual re-triggering.
 
@@ -146,7 +146,7 @@ Cylc 8 is aware of sets of host settings called
 
 Hosts of a platform must share a file system and :term:`job runner`:
 If one host is unavailable Cylc 8 can use other hosts
-on the same platform to interact with task jobs.
+on the same platform to interact with jobs.
 
 The same hosts can belong to multiple platforms, for example
 you might be able to use the same host to launch both background and Slurm
@@ -250,7 +250,7 @@ Queues
 Time Zones
    :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
    are working in :ref:`cylc_7_compat_mode`.
-Task Job Scripts
+Job Scripts
    All user-defined task scripting now runs in a subshell, so you can safely
    switch Python environments inside tasks without affecting Cylc.
    Further information is available in the User Guide: :ref:`JobScripts`.

@@ -85,7 +85,7 @@ We can also call other scripts or executables in this way, e.g:
 
    To help with this, Cylc automatically adds a ``bin/`` sub-directory of the
    workflow :term:`source directory` to the executable search path (``$PATH``)
-   in task job environments.
+   in task environments.
 
 .. code-block:: bash
    :caption: bin/hello_world
@@ -131,7 +131,7 @@ Tasks And Jobs
    When a :term:`task` is ready to run Cylc creates a :term:`job script` for
    it: a bash file containing the scripting defined for the task along with
    other configuration and error trapping code. This is what actually executes
-   as the task job.
+   as the job.
 
    :term:`Tasks<task>` typically go through the following states as a workflow
    runs:
@@ -141,11 +141,11 @@ Tasks And Jobs
    Preparing
       Dependencies met; preparing the task :term:`job script` for submission.
    Submitted
-      Task job script submitted to the :term:`job runner`; waiting on execution.
+      Job script submitted to the :term:`job runner`; waiting on execution.
    Running
-      Task job script executing.
+      Job script executing.
    Succeeded
-      Task job completed successfully (i.e. exited with 0 return status).
+      Job completed successfully (i.e. exited with 0 return status).
 
    There are several other task states as well, such as **failed**.
 
@@ -418,14 +418,14 @@ Files Generated at Runtime
       read or write files shared with other tasks.
    ``work/``
       Contains task :term:`work directories <work directory>`, i.e. the
-      *current working directories* of running task jobs. These are
+      *current working directories* of running tasks. These are
       removed automatically if empty when a task finishes.
 
     The job log directory path ends in ``<cycle-point>/<task-name>/<job-submission-num>/``,
     where the :term:`job submission number` starts at 1 and increments each time a
     task re-runs.
 
-    You can use the command line to view scheduler or task job logs without
+    You can use the command line to view scheduler or job logs without
     having to find them yourself on the filesystem:
 
     .. code-block:: bash
@@ -540,7 +540,7 @@ Files Generated at Runtime
       .. code-block:: none
 
          Workflow    : runtime-introduction
-         Task Job : 20000101T0000Z/get_observations_heathrow/01 (try 1)
+         Job : 20000101T0000Z/get_observations_heathrow/01 (try 1)
          User@Host: username@hostname
 
          Guessing Weather Conditions
