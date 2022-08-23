@@ -110,7 +110,7 @@ $ make clean html
 ### Automatic Build
 
 You can also get Sphinx to rebuild automatically when documentation files are
-modified. Fist install the optional dependency `watch`:
+modified. First install the optional dependency `watch`:
 
 ```console
 $ pip install -e .[watch]
