@@ -217,7 +217,7 @@ Two Similar Clusters
    Remember, because the install target defaults to the platform name
    clusterA and clusterB have different install targets.
 
-.. spelling::
+.. spelling:word-list::
 
    clusterA
    clusterB

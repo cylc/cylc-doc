@@ -455,7 +455,7 @@ Start, Stop, Restart
 
           work/<cycle-point>/<task-name>
 
-      .. spelling::
+      .. spelling:word-list::
 
          exeter
 
