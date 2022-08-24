@@ -278,7 +278,7 @@ Interacting with Others' Workflows
 The authorization system in Cylc 8 is complete, although expect access to other
 users' workflows via the UI to be further developed in future.
 
-.. spelling::
+.. spelling:word-list::
 
    userA
    userB
