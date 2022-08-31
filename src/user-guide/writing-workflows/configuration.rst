@@ -149,3 +149,49 @@ show an inlined copy of the workflow with correct line numbers.
 
 .. automodule:: cylc.flow.scripts.lint
 
+Configure ``cylc lint`` at project level
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can configure ``cylc lint`` for each workflow using a
+``pyproject.toml`` file.
+
+To define settings for ``cylc lint`` use a ``[cylc-lint]`` section.
+Within the ``[cylc-lint]`` section you may define the following:
+
+rulesets
+   A list of rulesets to use. If you run cylc lint without setting rulesets
+   on the command line this value will override
+   the dafualt (['728', 'style']).
+
+   Allowed Values: '728', 'style'
+
+ignore
+   Individual rules to ignore: A list of rule codes, such as ``S007``.
+
+exclude
+   A list of files or glob patterns for files which will not be checked.
+
+max-line-length
+   Set longest line length to permit in Cylc Configs for this project.
+   If unset line length is not checked.
+
+
+An example ``pyproject.toml`` might look like this:
+
+.. code-block:: toml
+
+   [cylc-lint]
+   # Enforce a line limit of 99 chars
+   max-line-length = 99
+
+   # Ignore style [S] rule 007 (It's good practice comment with a reason)
+   ignore = ['S007']   # Family names start F_ in this workflow
+
+   # Don't check files matching this glob
+   exclude = ['history/*.old.cylc', 'someother.cylc']
+
+   # By default check for style
+   rulesets = ['style']
+
+   [some-other-section]
+   # Cylc lint won't pay any attention to this.
