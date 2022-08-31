@@ -161,7 +161,7 @@ Within the ``[cylc-lint]`` section you may define the following:
 rulesets
    A list of rulesets to use. If you run cylc lint without setting rulesets
    on the command line this value will override
-   the dafualt (['728', 'style']).
+   the default (``['728', 'style']``).
 
    Allowed Values: '728', 'style'
 
@@ -173,7 +173,7 @@ exclude
 
 max-line-length
    Set longest line length to permit in Cylc Configs for this project.
-   If unset line length is not checked.
+   If unset, line length is not checked.
 
 
 An example ``pyproject.toml`` might look like this:
@@ -185,9 +185,9 @@ An example ``pyproject.toml`` might look like this:
    max-line-length = 99
 
    # Ignore style [S] rule 007 (It's good practice comment with a reason)
-   ignore = ['S007']   # Family names start F_ in this workflow
+   ignore = ['S007']   # Family names start with lowercase in this workflow
 
-   # Don't check files matching this glob
+   # Don't check files matching these globs
    exclude = ['history/*.old.cylc', 'someother.cylc']
 
    # By default check for style
