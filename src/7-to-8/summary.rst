@@ -46,6 +46,11 @@ take action on any warnings.
 .. TODO Add ref to breaking changes section within Major changes, once created,
    including optional ouputs.
 
+.. note::
+
+   Validation warnings use a :ref:`shorthand notation<config_item_shorthand>`
+   to refer to nested configuration settings on a single line, like this:
+   ``[section][sub-section]item``.
 
 
 New Web and Terminal UIs
