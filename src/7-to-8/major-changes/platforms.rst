@@ -72,7 +72,7 @@ Platforms also define how hosts are selected from each platform:
 
 There may be cases where sets of platforms (for example a group of
 standalone compute servers, or a pair of mirrored HPC's) might be equally
-suitable for a task, but not share files systems to allow them to constitute
+suitable for a task, but not share file systems to allow them to constitute
 a single platform. Such platforms can be set up to be ``platform groups``
 
 .. seealso::
@@ -210,12 +210,19 @@ And the platform settings for these examples might be:
            # A computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
+           install target = localhost
 
        [[slurm_supercomputer]]
            # This computer with Slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
+
+Note that in these examples, it is assumed that ``linuxboxNN``, ``pbs_local`` and
+``slurm_supercomputer`` have distinct file systems.
+If platforms share a file system they must have their :term:`install target`
+configured, this should be done at site level. For more information see
+:ref:`Install Targets`.
 
 .. _host-to-platform-logic:
 
@@ -243,6 +250,7 @@ platforms section:
        [[supercomputer_A]]
            hosts = localhost
            job runner = slurm
+           install target = localhost
        [[supercomputer_B]]
            hosts = tigger, wol, eeyore
            job runner = pbs
@@ -257,7 +265,7 @@ And you have a workflow runtime configuration:
                batch system = slurm
        [[task2]]
            [[[remote]]]
-               hosts = eeyore
+               host = eeyore
            [[[job]]]
                batch system = pbs
 

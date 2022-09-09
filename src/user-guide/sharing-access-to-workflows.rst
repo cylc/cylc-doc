@@ -216,7 +216,7 @@ example provides an indication of the combinations available.
                "default": "READ",  # Will have default read-only access
            },
            "user1": {  # for all ui-server owners, user1
-               "default": ["!ALL"],  # has no privilidges by default
+               "default": ["!ALL"],  # has no privileges by default
            },  # No limit set, so all ui-server owners are unable to permit user1
        },
        "server_owner_1": {  # For specific UI Server owner, server_owner_1

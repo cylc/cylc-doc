@@ -89,7 +89,7 @@ Remote Installation
 
 Remote file installation does not occur until running the workflow.
 When the first task runs on a remote platform, Cylc will transfer files from
-the :term:`run directory` to the install target.
+the :term:`run directory` to the :term:`install target <install target>`.
 
 If you have used Rose 2019, you may be used to all files and directories in
 the run directory being included.

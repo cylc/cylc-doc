@@ -21,7 +21,7 @@ Writing Platform Configurations
 Listing available platforms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are working on an institutional network platforms may already
+If you are working on an institutional network, platforms may already
 have been configured for you.
 
 To see a list of available platforms::
@@ -49,7 +49,7 @@ Why Were Platforms Introduced?
 
 - Allow a compute cluster with multiple login nodes to be treated as a single
   unit.
-- Allow Cylc to elegantly handle failure of to communicate with login nodes.
+- Allow Cylc to elegantly handle failure to communicate with login nodes.
 - Configure multiple platforms with the same hosts; for example you can use
   separate platforms to submit jobs to a batch system and to background on
   ``localhost``.
@@ -60,37 +60,94 @@ What Are Install Targets?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install targets represent file systems. More than one platform can use the
-same file system. It defaults to the name of the platform.
+same file system. Cylc relies on the site setup file ``global.cylc`` to determine
+which platforms share install targets. Cylc will then use this information to
+make the correct installations on remote platforms, including installation of
+files, creation of :cylc:conf:`global.cylc[install][symlink dirs]` and
+authentication keys to enable secure communication between platforms.
 
-For example, your Cylc scheduler hosts might share a file system with a
-compute cluster. Cylc does not need to install files on this cluster. The
-cluster and scheduler hosts are different platforms, but share an install
-target.
+Note, if missing from configuration, the install target will default to the
+platform name. If incorrectly configured, this will cause errors in
+:ref:`RemoteInit`.
 
-But you might also have mirrored clusters, each with their own file system.
-Each cluster would be a platform with its own install target.
+To check if two platforms share a file system:
 
+Create a test file on the first platform:
 
-Example Platforms
------------------
+   .. code-block:: console
 
-On the Scheduler Host (Cylc Server)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      $ ssh platform-A
+      $ echo "test file" > cylc-test-file
+      $ exit
 
-- **There is a built in localhost platform**
+Check the second platform for the file:
+
+   .. code-block:: console
+
+      $ ssh platform-B
+      $ cat cylc-test-file
+      $ exit
+
+If the test file exists, then these two platforms share a file system and will
+require the same install target in ``global.cylc`` config file.
+
+Example Platform Configurations
+-------------------------------
 
 .. admonition:: Scenario
 
-   You want to allow users to submit small jobs to the scheduler host:
+   Cylc scheduler hosts share a file system with a compute cluster.
 
-If a job doesn't set a platform it will run on the Cylc scheduler host
-using a default ``localhost`` platform.
+- **The Scheduler Host (Cylc Server) provides a built in localhost platform**
 
-Simple Remote Platform
-^^^^^^^^^^^^^^^^^^^^^^
+Cylc does not need to install files on this cluster, since
+required files which are on the scheduler host will be accessible on this
+cluster. From Cylc's point of view, the cluster and scheduler hosts are
+considered different platforms, but should share an :term:`install target`.
+Cylc needs to be told that these platforms share an install target and so we
+configure this using the designated configuration item:
+:cylc:conf:`global.cylc[platforms][<platform name>]install target`.
 
-- **Platforms don't need to be complicated**
-- ``install target`` **specifies a file system for the task using that platform**
+.. code-block:: cylc
+   :caption: the ``global.cylc`` config file for this scenario could look like:
+
+   [platforms]
+       [[localhost]] # cylc-scheduler platform
+           hosts = host1, host2
+           # unset install target defaults to platform name: localhost
+       [[cluster]]
+           hosts = host3, host4
+           install target = localhost
+
+Cylc is now aware that these two platforms do not require remote installations.
+
+If ``flow.cylc[runtime][mytask]platform`` is unset, the job will run on the Cylc
+Scheduler host using this default ``localhost`` platform. It may be appropriate
+to allow users to run small jobs on the Cylc Server however more intensive jobs
+could be run on the ``cluster``, by setting
+``flow.cylc[runtime][mytask]platform = cluster``.
+
+.. admonition:: Scenario
+
+   Mirrored clusters, each with their own file system.
+
+In this case, each cluster would be a platform with its own install target.
+
+.. code-block:: cylc
+   :caption: the ``global.cylc`` config file for this scenario could look like:
+
+   [platforms]
+       [[cluster_1]] # cylc-scheduler platform
+           hosts = host_1, host_2
+           # unset install target defaults to platform name: cluster_1
+       [[cluster_2]]
+           hosts = host_3, host_4
+           # unset install target defaults to platform name: cluster_2
+
+Cylc will initiate a remote installation, to transfer required files to both
+``cluster_1`` and ``cluster_2``. This installation will commence before job
+submission for the first job on that platform.
+
 
 .. admonition:: Scenario
 
@@ -103,7 +160,7 @@ Simple Remote Platform
    [platforms]
        [[myhost]]
            hosts = myhost
-           install target = myhost
+           # unset install target defaults to myhost
 
 
 Cluster with Multiple Login Nodes
@@ -123,8 +180,8 @@ Cluster with Multiple Login Nodes
        [[spice_cluster]]
            hosts = login_node_1, login_node_2
            job runner = slurm
-           install target = spice_cluster
            retrieve job logs = True
+           # install target defaults to spice_cluster
 
 If either host is unavailable Cylc will attempt to start and communicate with
 jobs via the other login node.
@@ -141,7 +198,6 @@ Background Jobs on Cluster with Other Options
 
    - Allow users to carry out occasional background jobs on a
      cluster with a batch submission system.
-
    - Allow some background jobs to use an alternative shell,
      or an alternative ssh command.
 
@@ -154,19 +210,18 @@ Background Jobs on Cluster with Other Options
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
-       [[spice_cluster_background]]
+       [[spice_cluster_background, spice_cluster_long_ssh]]
            hosts = login_node_1
            job runner = background
+           install target = spice_cluster_background
+       # bespoke ssh command to extend timeout for one platform
+       [[spice_cluster_long_ssh]]
+           ssh command = ssh -oBatchMode=yes -oConnectTimeout=30
        [[spice_cluster_background_fish]]
            hosts = login_node_2
            job runner = background
            # Use fish shell
            shell = /bin/fish
-       [[spice_cluster_long_ssh]]
-           hosts = login_node_1
-           job runner = background
-           # extend the default ssh timeout from 10 to 30 seconds.
-           ssh command = myPeculiarSSHImplementation --someoption=yes
 
 
 Submit PBS Jobs from Localhost
@@ -188,8 +243,8 @@ Submit PBS Jobs from Localhost
            job runner = pbs
            install target = localhost
 
-But ``host`` defaults to ``localhost`` so you can simplify
-the ``[[pbs_cluster]]`` definition.
+But ``host`` defaults to ``localhost`` so you can simplify the
+``[[pbs_cluster]]`` definition.
 
 As a result the above configuration can be simplified to:
 
@@ -199,7 +254,11 @@ As a result the above configuration can be simplified to:
    [platforms]
        [[pbs_cluster]]
            job runner = pbs
+           install target = localhost
 
+Since the install target defaults to the platform name, we must keep the
+definition - without this the install target would be set to ``pbs_cluster`` and
+Cylc would perform a remote installation, resulting in an error.
 
 
 Two Similar Clusters
@@ -270,7 +329,7 @@ Preferred and Backup Hosts and Platforms
            [[selection]]
                method = random  # the default anyway
        [[research]]
-           hosts = primary, seconday, emergency
+           hosts = primary, secondary, emergency
            batch system = pbs
            [[selection]]
                method = definition order
