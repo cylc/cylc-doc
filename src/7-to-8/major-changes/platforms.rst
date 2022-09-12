@@ -220,9 +220,14 @@ And the platform settings for these examples might be:
 
 Note that in these examples, it is assumed that ``linuxboxNN``, ``pbs_local`` and
 ``slurm_supercomputer`` have distinct file systems.
-If platforms share a file system they must have their :term:`install target`
-configured, this should be done at site level. For more information see
-:ref:`Install Targets`.
+Sets of platforms which share a file system must specify
+a single :ref:`install target <Install Targets>`.
+
+.. note::
+   If an install target is not set, a platform will use its own platform name
+   as the install target name. If multiple platforms share a file system
+   but have separate :ref:`install targets <Install Targets>` task initialization
+   will fail.
 
 .. _host-to-platform-logic:
 
