@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cylc UI Server &mdash; Cylc 8.1.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.0.dev documentation" href="../../index.html" />
+    <link rel="up" title="Architecture" href="index.html" />
+    <link rel="next" title="Data Flow" href="data-flow.html" />
+    <link rel="prev" title="Architecture" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="cylc-ui-server">
+
+<h1>Cylc UI Server<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#cylc-ui-server" title="View HTML">§</a></h1>
+
+<dl class="docutils">
+<dt><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></dt><dd>Provides a command line utility for monitoring and controlling
+Cylc workflows called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code>.</dd>
+<dt><a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a></dt><dd>Provides a graphical utility for use in a web browser.</dd>
+</dl>
+<p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> connects to running workflows to provide “live” data
+and accesses workflow databases and the filesystem to provide “offline” data.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="jupyter-server">
+
+<h2>Jupyter Server<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#jupyter-server" title="View HTML">§</a></h2>
+
+<p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is a <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extension like <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html">Jupyter Lab</a>.</p>
+<p><a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> provides the web server infrastructure which is shared by
+its extensions which can used to run multiple extensions simultaneously.</p>
+<p>If desired other extensions (e.g. <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html">Jupyter Lab</a>) can be installed and
+configured to run in the same server as the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a>.</p>
+<p>See <a class="reference external" href="https://jupyter-server.readthedocs.io/en/latest/operators/multiple-extensions.html#managing-multiple-extensions" title="(in Jupyter Server v2.1)"><span>Managing multiple extensions</span></a> for details on managing which
+extensions are run by <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a>.</p>
+<p><a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> can be run in two ways, single-user (token authenticated)
+and multi-user (hub authenticated).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="single-user-mode">
+
+<h2>Single-User Mode<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#single-user-mode" title="View HTML">§</a></h2>
+
+<p>In single-user mode users must start their own UI Servers from the command line.</p>
+<p><a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> will provide them with a URL to access their server including
+a secure token which provides authentication.</p>
+<div class="hint admonition">
+<p class="first admonition-title">Authentication Overview</p>
+<p class="last">See <a class="reference external" href="https://jupyter-server.readthedocs.io/en/latest/operators/security.html#server-security" title="(in Jupyter Server v2.1)"><span>Security in the Jupyter Server</span></a>:</p>
+</div>
+<p>Users can only monitor and control their own workflows.</p>
+<a class="reference internal image-reference" href="../../_images/gui-arch-single-user.svg"><img alt="../../_images/gui-arch-single-user.svg" class="align-center" src="../../_images/gui-arch-single-user.svg" width="70%" /></a>
+
+
+
+
+</article>
+<article class="slide level-2" id="jupyter-hub">
+
+<h2>Jupyter Hub<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#jupyter-hub" title="View HTML">§</a></h2>
+
+<p><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> is a multi-user server which spawns and manages a configured
+service for authenticated users.</p>
+<p>The “Cylc Hub” is a Jupyter Hub instance which is pre-configured to spawn
+Cylc UI Servers, launched by the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hub</span></code> command.
+It is also possible to configure Jupyter Hub yourself, see the Cylc Hub
+configuration file for more information.</p>
+<p>Jupyter Hub supports a variety of different implementations and plugin interfaces
+for:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/authenticators.html">Authenticating users</a></li>
+<li><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/spawners.html">Spawning user’s servers</a></li>
+<li><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/proxy.html">Proxying user’s servers</a></li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="multi-user-mode">
+
+<h2>Multi-User Mode<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#multi-user-mode" title="View HTML">§</a></h2>
+
+<p>Multi-user mode requires <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> to be installed.</p>
+<p>An administrator must start <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> under a user account with
+the required privileges to spawn UI Servers on behalf of the user.</p>
+<p>Users then visit <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> where they authenticate. <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>
+spawns UI Servers on behalf of users and provides each with a fixed URL
+(derived from the user name) using the configured proxy
+(usually <a class="reference external" href="https://github.com/AbdealiJK/configurable-http-proxy">Configurable HTTP Proxy</a>).</p>
+<p>Users can access each other’s UI Servers providing they have been granted
+permission.</p>
+<p>Authorization is performed by Cylc within the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a>, see
+<a class="reference internal" href="#cylc-authorization"><span class="std std-ref">Authorization</span></a>.</p>
+<p>For information on the architecture of <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> and the
+<a class="reference external" href="https://github.com/AbdealiJK/configurable-http-proxy">Configurable HTTP Proxy</a> see the <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/technical-overview.html">Jupyter Hub technical overview</a>.</p>
+<div class="hint admonition">
+<p class="first admonition-title">Authentication Overview</p>
+<p class="last">See <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/websecurity.html">Security In Jupyter Hub</a>.</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/gui-arch-multi-user.svg"><img alt="../../_images/gui-arch-multi-user.svg" src="../../_images/gui-arch-multi-user.svg" width="100%" /></a>
+
+
+
+
+</article>
+<article class="slide level-2" id="authorization">
+
+<h2>Authorization<a class="headerlink" href="../../../html/reference/architecture/ui-server.html#authorization" title="View HTML">§</a></h2>
+
+<p><em>Authentication</em> is provided by either <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> or <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
+<p><em>Authorization</em> in the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is provided by Cylc. In
+multi-user mode this allows users to connect to each others UI Servers for
+monitoring or control purposes.</p>
+<p>See also <a class="reference internal" href="../../user-guide/sharing-access-to-workflows.html#authorization"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This authorization only applies to the <code class="docutils literal notranslate"><span class="pre">/cylc</span></code> endpoints managed by the
+Cylc extension.  Other <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extensions such as <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html">Jupyter Lab</a>
+do not share this authorization and will not be accessible to other users
+(unless they can be configured to allow this).</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

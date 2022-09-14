@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing Workflows &mdash; Cylc 8.1.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.0.dev documentation" href="../../index.html" />
+    <link rel="up" title="User Guide" href="../index.html" />
+    <link rel="next" title="Workflow Configuration" href="configuration.html" />
+    <link rel="prev" title="Introduction" href="../introduction.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="writing-workflows">
+
+<h1>Writing Workflows<a class="headerlink" href="../../../html/user-guide/writing-workflows/index.html#writing-workflows" title="View HTML">§</a></h1>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Workflow Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#the-flow-cylc-file">The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#workflow-configuration-directories">Workflow Configuration Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scheduling.html">Scheduling Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#the-graph">The Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-types">Graph Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#cycling-syntax-rules">Cycling Syntax Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#task-triggering">Task Triggering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#incomplete-tasks">Required Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#user-guide-optional-outputs">Optional Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#graph-branching">Graph Branching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#limiting-workflow-activity">Limiting Workflow Activity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#valid-task-cycle-points">Valid Task Cycle Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html#omitting-tasks">Omitting Tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="runtime.html">Task Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#task-and-family-names">Task and Family Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#the-root-family">The Root Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#defining-multiple-tasks-or-families-at-once">Defining Multiple Tasks or Families at Once</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#families-of-families">Families of Families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#inheriting-from-multiple-parents">Inheriting from Multiple Parents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#task-job-environment">Task Job Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#remote-task-hosting">Remote Task Hosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#implicit-tasks">Implicit Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#task-retry-on-failure">Task Retry On Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runtime.html#event-handling">Event Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#parameter-expansion">Parameter Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#passing-values-to-tasks">Passing Values To Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#selecting-specific-values">Selecting Specific Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#selecting-partial-ranges">Selecting Partial Ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#offsets-in-the-graph">Offsets in the Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#task-families-and-parameters">Task Families and Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterized-tasks.html#parameterized-cycling">Parameterized Cycling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jinja2.html">Jinja2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#accessing-environment-variables">Accessing Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#custom-jinja2-filters-tests-and-globals">Custom Jinja2 Filters, Tests and Globals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#associative-arrays-in-jinja2">Associative Arrays In Jinja2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#default-values-and-template-variables">Default Values and Template Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#jinja2-variable-scope">Jinja2 Variable Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#raising-exceptions">Raising Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#importing-python-modules">Importing Python modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jinja2.html#debugging">Debugging</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external-triggers.html">External Triggers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#built-in-clock-triggers">Built-in Clock Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#built-in-workflow-state-triggers">Built-in Workflow State Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#custom-trigger-functions">Custom Trigger Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#current-limitations">Current Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#filesystem-events">Filesystem Events?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#continuous-event-watchers">Continuous Event Watchers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#push-external-triggers">Push External Triggers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-triggers.html#triggering-off-of-tasks-in-other-workflows">Triggering Off Of Tasks In Other Workflows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suicide-triggers.html#remaining-use-case">Remaining Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scheduler.html">Scheduler Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scheduler.html#event-handlers">Event handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduler.html#external-command-execution">External Command Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduler.html#submitting-workflows-to-a-pool-of-hosts">Submitting Workflows To a Pool Of Hosts</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

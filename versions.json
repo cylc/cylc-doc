@@ -1,43 +1,43 @@
 {
-    "8.0rc2": [
-        "html",
-        "slides"
+    "8.0b0": [
+        "slides",
+        "html"
     ],
     "8.0a2": [
-        "html",
-        "slides"
+        "slides",
+        "html"
     ],
-    "8.0rc3": [
-        "html",
-        "slides"
-    ],
-    "8.0b2": [
-        "html",
-        "slides"
+    "8.0rc2": [
+        "slides",
+        "html"
     ],
     "7.8.8": [
         "singlehtml",
         "html"
     ],
-    "8.0b1": [
-        "html",
-        "slides"
-    ],
-    "8.0b3": [
-        "html",
-        "slides"
-    ],
     "7.9.3": [
         "singlehtml",
         "html"
     ],
-    "8.0rc1": [
-        "html",
-        "slides"
+    "8.0b3": [
+        "slides",
+        "html"
     ],
-    "8.0b0": [
-        "html",
-        "slides"
+    "8.0b1": [
+        "slides",
+        "html"
+    ],
+    "8.0rc3": [
+        "slides",
+        "html"
+    ],
+    "8.0rc1": [
+        "slides",
+        "html"
+    ],
+    "8.0b2": [
+        "slides",
+        "html"
     ],
     "8.0.0": [
         "slides",
@@ -48,7 +48,11 @@
         "html"
     ],
     "latest": [
-        "html",
-        "slides"
+        "slides",
+        "html"
+    ],
+    "nightly": [
+        "slides",
+        "html"
     ]
 }

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflow Run Databases &mdash; Cylc 8.1.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.0.dev documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Handling Job Preemption" href="handling-job-preemption.html" />
+    <link rel="prev" title="Client-Server Interaction" href="authentication-files.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="workflow-run-databases">
+
+<h1>Workflow Run Databases<a class="headerlink" href="../../../html/user-guide/running-workflows/workflow-databases.html#workflow-run-databases" title="View HTML">§</a></h1>
+
+<p>Schedulers maintain two <code class="docutils literal notranslate"><span class="pre">sqlite</span></code> databases to record
+information on run history:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>HOME/cylc-run/&lt;workflow-id&gt;/log/db  <span class="c1"># public workflow DB</span>
+<span class="gp">$</span>HOME/cylc-run/&lt;workflow-id&gt;/.service/db  <span class="c1"># private workflow DB</span>
+</pre></div>
+</div>
+<p>The private DB is for use only by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>. The identical
+public DB is provided for use by external commands such as
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">workflow-state</span></code>, and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">report-timings</span></code>.
+If the public DB gets locked for too long by
+an external reader, the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> will eventually delete it and
+replace it with a new copy of the private DB, to ensure that both correctly
+reflect the workflow state.</p>
+<p>You can interrogate the public DB with the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> command line tool,
+the <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> module in the Python standard library, or any other
+sqlite interface.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sqlite3 ~/cylc-run/foo/log/db <span class="s">&lt;&lt; _END_</span>
+<span class="go">&gt; .headers on</span>
+<span class="go">&gt; select * from task_events where name is &quot;foo&quot;;</span>
+<span class="go">&gt; _END_</span>
+<span class="go">name|cycle|time|submit_num|event|message</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|submitted|</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|output completed|started</span>
+<span class="go">foo|1|2017-03-12T11:06:09Z|1|started|</span>
+<span class="go">foo|1|2017-03-12T11:06:19Z|1|output completed|succeeded</span>
+<span class="go">foo|1|2017-03-12T11:06:19Z|1|succeeded|</span>
+</pre></div>
+</div>
+<p>The diagram shown below contains the database tables, their columns,
+and how the tables are related to each other. For more details on how
+to interpret the diagram, refer to the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model">Entity–relationship model Wikipedia article</a>.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-72a64ad2add9d747d5699a6e1fc9c7494a3bd686.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">graph {
+node [label = &quot;\N&quot;, shape = plaintext];
+edge [color = gray50, minlen = 2, style = dashed];
+rankdir = &quot;LR&quot;;
+&quot;absolute_outputs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;absolute_outputs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;output&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;broadcast_events&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;broadcast_events&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;change&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;point&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;broadcast_states&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;broadcast_states&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;point&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;inheritance&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;inheritance&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;namespace&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;inheritance&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_action_timers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_action_timers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;ctx_key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;ctx&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;delays&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;delay&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;timeout&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_events&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_events&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;event&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;message&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_jobs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_jobs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;is_manual_submit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;try_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_submit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_submit_exit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_run&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_run_exit&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;run_signal&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;run_status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;platform_name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;job_runner_name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;job_id&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_late_flags&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_late_flags&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_outputs&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_outputs&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_nums&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;outputs&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_pool&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_nums&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;is_held&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_prerequisites&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_prerequisites&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_nums&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;prereq_output&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;satisfied&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_states&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_nums&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_created&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;time_updated&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;submit_num&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;status&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;flow_wait&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_timeout_timers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;task_timeout_timers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;timeout&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;tasks_to_hold&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;tasks_to_hold&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;name&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;cycle&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;workflow_flows&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;workflow_flows&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;flow_num&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;start_time&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;description&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;workflow_params&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;workflow_params&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;workflow_template_vars&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;workflow_template_vars&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;key&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;value&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;xtriggers&quot; [label=&lt;&lt;FONT FACE=&quot;Helvetica&quot;&gt;&lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;1&quot; CELLPADDING=&quot;4&quot; CELLSPACING=&quot;0&quot;&gt;&lt;TR&gt;&lt;TD&gt;&lt;B&gt;&lt;FONT POINT-SIZE=&quot;16&quot;&gt;xtriggers&lt;/FONT&gt;&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;u&gt;&lt;FONT&gt;signature&lt;/FONT&gt;&lt;/u&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;results&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;absolute_outputs&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;broadcast_events&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;broadcast_states&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;inheritance&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;tasks_to_hold&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;workflow_flows&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;workflow_params&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;workflow_template_vars&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;&lt;FONT&gt;xtriggers&lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; -- &quot;task_events&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_states&quot; -- &quot;task_jobs&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_action_timers&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_late_flags&quot; [taillabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_outputs&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_prerequisites&quot; [taillabel=&lt;&lt;FONT&gt;0..N&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+&quot;task_pool&quot; -- &quot;task_timeout_timers&quot; [taillabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;,headlabel=&lt;&lt;FONT&gt;{0,1}&lt;/FONT&gt;&gt;];
+subgraph {
+rank=same
+rankdir=LR
+&quot;absolute_outputs&quot;
+&quot;broadcast_events&quot;
+&quot;broadcast_states&quot;
+&quot;inheritance&quot;
+&quot;tasks_to_hold&quot;
+&quot;workflow_flows&quot;
+&quot;workflow_params&quot;
+&quot;workflow_template_vars&quot;
+&quot;xtriggers&quot;
+}
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cylc.flow.main_loop.log_main_loop &mdash; Cylc 8.1.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '8.1.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Cylc 8.1.0.dev documentation" href="../../../index.html" />
+    <link rel="up" title="Main Loop Plugins" href="../index.html" />
+    <link rel="next" title="cylc.flow.main_loop.log_memory" href="cylc.flow.main_loop.log_memory.html" />
+    <link rel="prev" title="cylc.flow.main_loop.log_data_store" href="cylc.flow.main_loop.log_data_store.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.main_loop.log_main_loop">
+
+<h1>cylc.flow.main_loop.log_main_loop<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.log_main_loop.html#module-cylc.flow.main_loop.log_main_loop" title="View HTML">§</a></h1>
+
+<p>Main loop plugin for monitoring main loop plugins.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This plugin is for Cylc developers debugging main loop operations.</p>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> is installed this plugin will plot results as a PDF in
+the run directory when the workflow is shut down (cleanly).</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="python-api">
+
+<h2>Python API<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.log_main_loop.html#python-api" title="View HTML">§</a></h2>
+
+<p class="rubric">Coroutines</p>
+<table border="1" class="autosummary longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#cylc.flow.main_loop.log_main_loop.init" title="cylc.flow.main_loop.log_main_loop.init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code></a></td>
+<td>Override default queue length of 1.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#cylc.flow.main_loop.log_main_loop.report" title="cylc.flow.main_loop.log_main_loop.report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">report</span></code></a></td>
+<td>Extract plugin function timings.</td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.log_main_loop.init">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.log_main_loop.</span></code><code class="sig-name descname"><span class="pre">init</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">scheduler</span></span></em>, <em><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Override default queue length of 1.</p>
+<p>This allows timings to accumulate, normally only the most recent is kept.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.log_main_loop.report">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.log_main_loop.</span></code><code class="sig-name descname"><span class="pre">report</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">scheduler</span></span></em>, <em><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Extract plugin function timings.</p>
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
