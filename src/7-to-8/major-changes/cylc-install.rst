@@ -93,8 +93,9 @@ the :term:`run directory` to the install target.
 
 If you have used Rose 2019, you may be used to all files and directories in
 the run directory being included.
-However, Cylc 8 will only copy the ``app``, ``bin``, ``etc`` and ``lib``
-directories by default (in addition to authentication files in ``.service``).
+However, Cylc 8 will only copy the ``ana``, ``app``, ``bin``, ``etc`` and
+``lib`` directories by default (in addition to authentication files in
+``.service``).
 If you want to include custom files and directories in remote installation,
 use :cylc:conf:`flow.cylc[scheduler]install`.
 
