@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summary Of Major Changes &mdash; Cylc 8.0.2 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cheat Sheet" href="cheat-sheet.html" />
+    <link rel="prev" title="Cylc 8 Migration Guide" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html">
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Summary Of Major Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#terminology">Terminology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-7-compatibility-mode">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrading-to-cylc-8">Upgrading To Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#new-web-and-terminal-uis">New Web and Terminal UIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-changes">Command Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#task-job-states">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-and-required-task-outputs">Optional and Required Task Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-awareness">Platform Awareness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workflow-installation">Workflow Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-install">Cylc Install</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-installation">File Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#symlink-dirs">Symlink Dirs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#removing-workflows">Removing Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scheduling-algorithm">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-changes">Other Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="major-changes/index.html">Detailed Description of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caveats.html">Cylc 8.0 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Cylc 8 Migration Guide</a> &raquo;</li>
+      <li>Summary Of Major Changes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/7-to-8/summary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="summary-of-major-changes">
+<span id="overview"></span><h1>Summary Of Major Changes<a class="headerlink" href="#summary-of-major-changes" title="Permalink to this heading"></a></h1>
+<section id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading"></a></h2>
+<p>Cylc now uses more widely understood terms for several core concepts.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Cylc 7 Term</p></th>
+<th class="head"><p>Cylc 8 Term</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>suite</p></td>
+<td><p><em>workflow</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>batch system</p></td>
+<td><p><em>job runner</em></p></td>
+</tr>
+<tr class="row-even"><td><p>suite daemon</p></td>
+<td><p><em>scheduler</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Note the configuration filename is now <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, not <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>.</p>
+</section>
+<section id="cylc-7-compatibility-mode">
+<h2>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Permalink to this heading"></a></h2>
+<p>Continuing to use the old <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a <a class="reference internal" href="major-changes/compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">backward
+compatibility mode</span></a> in Cylc 8 which supports Cylc 7
+workflow configurations out of the box, with
+<a class="reference internal" href="major-changes/compatibility-mode.html#compat-required-changes"><span class="std std-ref">some caveats</span></a>. However, to future-proof
+your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.</p>
+</section>
+<section id="upgrading-to-cylc-8">
+<h2>Upgrading To Cylc 8<a class="headerlink" href="#upgrading-to-cylc-8" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Major Changes: <a class="reference internal" href="major-changes/config-changes.html#configuration-changes"><span class="std std-ref">Configuration Changes at Cylc 8</span></a></p></li>
+<li><p>Major Changes: <a class="reference internal" href="major-changes/compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">Cylc 7 Compatibility Mode</span></a></p></li>
+</ul>
+</div>
+<p>There have been some configuration changes at Cylc 8.
+To upgrade your Cylc 7 suite to a Cylc 8 workflow, first make sure it validates
+in Cylc 7 without any warnings, then rename the workflow configuration file
+from <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to  <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, then run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> in Cylc 8 and
+take action on any warnings.</p>
+</section>
+<section id="new-web-and-terminal-uis">
+<h2>New Web and Terminal UIs<a class="headerlink" href="#new-web-and-terminal-uis" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Major Changes: <a class="reference internal" href="major-changes/ui.html#ui"><span class="std std-ref">Cylc 8 UIs</span></a></p></li>
+</ul>
+</div>
+<p>At Cylc 8, there are two UIs available to monitor and control your workflows:</p>
+<ul>
+<li><p>a terminal UI application</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc tui &lt;workflow_id&gt;
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>a web based UI application (requires <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a>)</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc gui
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="command-changes">
+<h2>Command Changes<a class="headerlink" href="#command-changes" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">run</span> <span class="pre">&lt;suite_name&gt;</span></code> at Cylc 7 has become <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">&lt;workflow_id&gt;</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>User Guide: <a class="reference internal" href="../user-guide/running-workflows/scheduler-start-up.html#workflowstartup"><span class="std std-ref">Start, Restart, Reload</span></a></p></li>
+<li><p>Major Changes: <a class="reference internal" href="major-changes/play-pause-stop.html#play-pause-stop"><span class="std std-ref">Play Pause Stop</span></a></p></li>
+<li><p>Major Changes: <a class="reference internal" href="major-changes/cli.html#majorchangescli"><span class="std std-ref">Command Line Interface</span></a></p></li>
+</ul>
+</div>
+<p>At Cylc 8, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span> <span class="pre">&lt;workflow_id&gt;</span></code> to pause a workflow, halting all job
+submission. To restart the workflow, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">&lt;workflow_id&gt;</span></code>.</p>
+<p>To start a fresh run, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> and play it safely in the new run
+directory.</p>
+<p>(Note that <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> pause and release individual tasks.)</p>
+</section>
+<section id="task-job-states">
+<h2>Task/Job States<a class="headerlink" href="#task-job-states" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../glossary.html#term-task"><span class="xref std std-term">Tasks</span></a> are nodes in the abstract workflow graph, representing
+applications to run at the appropriate point in the workflow. A <a class="reference internal" href="../glossary.html#term-job"><span class="xref std std-term">job</span></a>
+(or a <em>task job</em>) is the script (and subsequent process) submitted by Cylc to
+actually run the application. A task can have multiple jobs as the result of
+automatic retries or manual re-triggering.</p>
+<p>The 13 task/job states in Cylc 7 have been simplified to 8. Tasks and jobs have been
+separated and states of both can be viewed in the GUI.</p>
+<img alt="../_images/task-job.png" class="align-center" src="../_images/task-job.png" />
+<p>For more information, see <a class="reference internal" href="major-changes/task-job-states.html#task-job-states"><span class="std std-ref">Task/Job States</span></a>.</p>
+</section>
+<section id="optional-and-required-task-outputs">
+<h2>Optional and Required Task Outputs<a class="headerlink" href="#optional-and-required-task-outputs" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Major Changes:<a class="reference internal" href="major-changes/suicide-triggers.html#optional-outputs"><span class="std std-ref">Graph branching, optional outputs and suicide triggers</span></a></p></li>
+<li><p>User Guide:<a class="reference internal" href="../user-guide/writing-workflows/scheduling.html#user-guide-required-outputs"><span class="std std-ref">Required Outputs</span></a></p></li>
+<li><p>User Guide:<a class="reference internal" href="../user-guide/writing-workflows/scheduling.html#user-guide-optional-outputs"><span class="std std-ref">Optional Outputs</span></a></p></li>
+</ul>
+</div>
+<p>By default, all Cylc 8 tasks are required to succeed - i.e., success is
+a <a class="reference internal" href="../glossary.html#term-required-output"><span class="xref std std-term">required output</span></a>. Otherwise they will be marked
+as <a class="reference internal" href="../glossary.html#term-incomplete-task"><span class="xref std std-term">incomplete tasks</span></a> needing user intervention.
+In a workflow with incomplete tasks, if there is nothing left to do, the
+scheduler will <a class="reference internal" href="../glossary.html#term-stall"><span class="xref std std-term">stall</span></a> rather than shut down.</p>
+<p>Alternatively, task outputs can be marked as <a class="reference internal" href="../glossary.html#term-optional-output"><span class="xref std std-term">optional</span></a>.
+This supports <a class="reference internal" href="../glossary.html#term-graph-branching"><span class="xref std std-term">graph branching</span></a> and it allows the scheduler to
+correctly diagnose <a class="reference internal" href="../glossary.html#term-workflow-completion"><span class="xref std std-term">workflow completion</span></a>.</p>
+</section>
+<section id="platform-awareness">
+<h2>Platform Awareness<a class="headerlink" href="#platform-awareness" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="major-changes/platforms.html#majorchangesplatforms"><span class="std std-ref">Platforms at Cylc 8.</span></a></p>
+</div>
+<p>Cylc 7 was aware of individual job hosts - one selected a host using:
+<code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][remote]host</span></code>.</p>
+<p>Cylc 8 is aware of sets of host settings called
+<a class="reference internal" href="../glossary.html#term-platform"><span class="xref std std-term">[job] platforms</span></a>. To choose a platform for a task use
+<code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]platform</span></code></p>
+<p>Hosts of a platform must share a file system and <a class="reference internal" href="../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>:
+If one host is unavailable Cylc 8 can use other hosts
+on the same platform to interact with task jobs.</p>
+<p>The same hosts can belong to multiple platforms, for example
+you might be able to use the same host to launch both background and Slurm
+jobs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cylc 8 will pick a sensible platform for your Cylc 7 settings,
+These deprecated settings will be removed in a future release.</p>
+</div>
+</section>
+<section id="workflow-installation">
+<h2>Workflow Installation<a class="headerlink" href="#workflow-installation" title="Permalink to this heading"></a></h2>
+<p>Cylc 8 supports workflow installation.</p>
+<p>For users of <a class="reference external" href="https://github.com/metomi/rose">Rose</a>, this replaces the functionality of <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>.</p>
+<section id="cylc-install">
+<h3>Cylc Install<a class="headerlink" href="#cylc-install" title="Permalink to this heading"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Major Changes: <a class="reference internal" href="major-changes/cylc-install.html#majorchangesinstall"><span class="std std-ref">Moving to Cylc Install</span></a></p></li>
+</ul>
+</div>
+<p>Cylc install cleanly separates workflow <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> from
+<a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>. It installs workflow files ready for <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">~/cylc-src/demo</span>
+
+<span class="gp">$ </span>ls
+<span class="go">flow.cylc</span>
+
+<span class="gp">$ </span>cylc install
+<span class="go">INSTALLED demo/run1 from /home/oliverh/cylc-src/demo</span>
+
+<span class="gp">$ </span>cylc play demo
+<span class="go">...</span>
+<span class="go">demo/run1: oliver.niwa.local PID=6702</span>
+</pre></div>
+</div>
+<p>By default, run numbers increment with each install.</p>
+</section>
+<section id="file-installation">
+<h3>File Installation<a class="headerlink" href="#file-installation" title="Permalink to this heading"></a></h3>
+<p>When the first job runs on a remote platform (after start-up, or after a <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code>), a
+remote initialization process is triggered to install workflow files there.</p>
+</section>
+<section id="symlink-dirs">
+<h3>Symlink Dirs<a class="headerlink" href="#symlink-dirs" title="Permalink to this heading"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>User Guide: <a class="reference internal" href="../user-guide/installing-workflows.html#symlinkdirs"><span class="std std-ref">Symlink Directories</span></a></p></li>
+<li><p>User Guide: <a class="reference internal" href="../user-guide/running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">Remote Initialization</span></a></p></li>
+</ul>
+</div>
+<p>Symlinking the workflow directories used by Cylc provides a useful way of
+managing disk space.</p>
+<p>These symlinks are created on a per install target basis, as configured in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. Install targets are managed on
+a site level, for more information see <a class="reference internal" href="../reference/config/writing-platform-configs.html#install-targets"><span class="std std-ref">What Are Install Targets?</span></a></p>
+<p>This functionality replaces the Rose <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">dir</span></code> configuration
+for Cylc 7 (however, note it does not allow per-workflow configuration).</p>
+</section>
+</section>
+<section id="removing-workflows">
+<h2>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this heading"></a></h2>
+<p>Workflows can be deleted with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> - see <a class="reference internal" href="../user-guide/removing-workflows.html#removing-workflows"><span class="std std-ref">Removing Workflows</span></a>. This
+replaces the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-clean</span></code> functionality.</p>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this heading"></a></h2>
+<p>There have been fundamental changes to the architecture of Cylc. You can read
+about the new system design here <a class="reference internal" href="../reference/architecture/index.html#architecture-reference"><span class="std std-ref">Architecture</span></a>.</p>
+</section>
+<section id="scheduling-algorithm">
+<h2>Scheduling Algorithm<a class="headerlink" href="#scheduling-algorithm" title="Permalink to this heading"></a></h2>
+<p>The scheduling algorithm has been changed, more information is available:
+<a class="reference internal" href="major-changes/scheduling.html#scheduling-algorithm"><span class="std std-ref">Scheduling Algorithm</span></a>.</p>
+</section>
+<section id="other-changes">
+<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this heading"></a></h2>
+<p>There are an assortment of other features implemented at Cylc 8. Some noteworthy
+minor changes include:</p>
+<dl class="simple">
+<dt>Runahead Limit</dt><dd><p>The default runahead limit has been increased from three cycles to five.</p>
+</dd>
+<dt>Queues</dt><dd><p><a class="reference internal" href="../user-guide/writing-workflows/scheduling.html#internalqueues"><span class="std std-ref">Internal Queues</span></a> are now more efficient (for the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>),
+we now recommend using queues to restrict the number of running tasks in
+situations where graphing may have been used previously.</p>
+</dd>
+<dt>Time Zones</dt><dd><p><a class="reference internal" href="../reference/config/workflow.html#flow.cylc[scheduler]cycle point time zone" title="flow.cylc[scheduler]cycle point time zone"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]cycle</span> <span class="pre">point</span> <span class="pre">time</span> <span class="pre">zone</span></code></a> now defaults to UTC, unless you
+are working in <a class="reference internal" href="major-changes/compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">Cylc 7 Compatibility Mode</span></a>.</p>
+</dd>
+<dt>Task Job Scripts</dt><dd><p>All user-defined task scripting now runs in a subshell, so you can safely
+switch Python environments inside tasks without affecting Cylc.
+Further information is available in the User Guide: <a class="reference internal" href="../user-guide/task-implementation/job-scripts.html#jobscripts"><span class="std std-ref">Task Job Scripts</span></a>.</p>
+</dd>
+<dt>Packaging</dt><dd><p>Cylc 8 (and its package dependencies) is now available from Conda Forge and PyPI
+for installations into a Python 3 virtual environment.</p>
+</dd>
+<dt>Remote usernames</dt><dd><p>If usernames differ on remote job hosts they must now be configured using
+an SSH config file rather than the via Cylc 7 <code class="docutils literal notranslate"><span class="pre">[remote]owner</span></code> configuration.
+See <a class="reference internal" href="major-changes/remote-owner.html#remote-owner"><span class="std std-ref">Remote Usernames</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Cylc 8 Migration Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cheat-sheet.html" class="btn btn-neutral float-right" title="Cheat Sheet" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 15, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/summary";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

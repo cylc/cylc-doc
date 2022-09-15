@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>sge &mdash; Cylc 8.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '8.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Cylc 8.0.2 documentation" href="../../../index.html" />
+    <link rel="up" title="Task Job Submission and Management" href="../job-submission.html" />
+    <link rel="next" title="slurm" href="cylc.flow.job_runner_handlers.slurm.html" />
+    <link rel="prev" title="pbs" href="cylc.flow.job_runner_handlers.pbs.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.job_runner_handlers.sge">
+
+<h1>sge<a class="headerlink" href="../../../../html/user-guide/task-implementation/job-runner-handlers/cylc.flow.job_runner_handlers.sge.html#module-cylc.flow.job_runner_handlers.sge" title="View HTML">§</a></h1>
+
+<p>Submits task job scripts to Sun/Oracle Grid Engine with <code class="docutils literal notranslate"><span class="pre">qsub</span></code>.</p>
+<p>SGE directives can be provided in the flow.cylc file:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">global.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[sge_platform]]</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> sge</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my_task]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> sge_platform</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> P1D</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">-cwd </span><span class="o">=</span>
+            <span class="nv">-q </span><span class="o">=</span><span class="s"> foo</span>
+            <span class="nv">-l h_data </span><span class="o">=</span><span class="s"> 1024M</span>
+            <span class="nv">-l h_rt </span><span class="o">=</span><span class="s"> 24:00:00</span>
+</pre></div>
+</div>
+</div>
+<p>These are written to the top of the task job script like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># DIRECTIVES</span>
+<span class="c1">#$ -cwd</span>
+<span class="c1">#$ -q foo</span>
+<span class="c1">#$ -l h_data=1024M</span>
+<span class="c1">#$ -l h_rt=24:00:00</span>
+</pre></div>
+</div>
+<p>If <a class="reference internal" href="../../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is specified, it is used to generate the
+<code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">h_rt</span></code> directive. Do not specify the <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">h_rt</span></code> directive explicitly if
+<a class="reference internal" href="../../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> is specified.  Otherwise, the execution time
+limit known by the workflow may be out of sync with what is submitted to the
+job runner.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

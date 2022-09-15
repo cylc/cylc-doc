@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cylc Rose &mdash; Cylc 8.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.0.2 documentation" href="../index.html" />
+    <link rel="up" title="Plugins" href="index.html" />
+    <link rel="next" title="Main Loop Plugins" href="main-loop/index.html" />
+    <link rel="prev" title="Plugins" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="cylc-rose">
+
+<h1>Cylc Rose<a class="headerlink" href="../../html/plugins/cylc-rose.html#cylc-rose" title="View HTML">§</a></h1>
+
+<span class="target" id="module-cylc.rose"></span>
+
+
+
+</article>
+<article class="slide level-2" id="rose-suite-configurations">
+
+<h2>Rose Suite Configurations<a class="headerlink" href="../../html/plugins/cylc-rose.html#rose-suite-configurations" title="View HTML">§</a></h2>
+
+<p>This plugin is activated by the existence of a Rose Suite Configuration file
+(called <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>) in the workflow definition directory which allows
+you to:</p>
+<ul class="simple">
+<li>Set template variables used in the workflow definition.</li>
+<li>Configure files to be installed via <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</li>
+<li>Define environment variables for the Cylc scheduler.</li>
+</ul>
+<p>The following Cylc commands will read Rose Suite Configurations:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">list</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cylc Rose allows <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> to replace the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>
+command (present in Rose versions 2019.01 and earlier).</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="configuration-file">
+
+<h3>Configuration File<a class="headerlink" href="../../html/plugins/cylc-rose.html#configuration-file" title="View HTML">§</a></h3>
+
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Although we now refer to Cylc <strong>workflows</strong> (rather than <strong>suites</strong>) we
+continue to refer to the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file as a Rose Suite
+Configuration.</p>
+</div>
+<p>A fuller description of
+<a class="reference external" href="http://metomi.github.io/rose/2.0.0/html/api/configuration/suite.html#rose-suites" title="(in Rose Documentation v2.0.0)"><span class="xref std std-ref">Rose Suite Configuration is available here</span></a>.</p>
+<p>The following sections are permitted in the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> files:</p>
+<table border="1" class="docutils align-default">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">config item</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">opts=A</span> <span class="pre">B</span> <span class="pre">C</span></code></td>
+<td>A space limited list of optional configs.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">[env]</span></code></td>
+<td>Variables which the cylc-rose plugin will export to the
+environment.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">[template</span> <span class="pre">variables]</span></code></td>
+<td>Variables which can be used by Jinja2 or Empy
+in the workflow definition.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">[file:destination]</span></code></td>
+<td>A file from one or more sources to be installed.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For compatibility with Cylc 7, sections <code class="docutils literal notranslate"><span class="pre">[suite.rc:empy]</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[suite.rc:jinja2]</span></code> will be processed, but are deprecated and provided
+for ease of porting Cylc 7 workflows.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="special-variables">
+
+<h3>Special Variables<a class="headerlink" href="../../html/plugins/cylc-rose.html#special-variables" title="View HTML">§</a></h3>
+
+<p>The Cylc Rose plugin provides two environment/template variables
+to the Cylc scheduler:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">ROSE_ORIG_HOST</span></code></dt><dd><p>Cylc commands (such as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>)
+will provide the name of the host on which the command is run.</p>
+<p>If the workflow is installed the value of <code class="docutils literal notranslate"><span class="pre">ROSE_ORIG_HOST</span></code> will be
+set in <code class="docutils literal notranslate"><span class="pre">opt/rose-suite-cylc-install.conf</span></code> and used by future commands
+e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> should produce a more consistent value
+for <code class="docutils literal notranslate"><span class="pre">ROSE_ORIG_HOST</span></code>; running Cylc commands on non-installed
+workflows may produce inconsistent values because the host
+is identified each time you run a command.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ROSE_VERSION</span></code></dt><dd><p>When running Cylc commands such as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>
+the plugin provides the version number of your installed Rose Version in
+workflow scheduler’s environment.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Setting <code class="docutils literal notranslate"><span class="pre">[env]ROSE_VERSION</span></code> in <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>.
+With Cylc 7 / Rose2019 users could set <code class="docutils literal notranslate"><span class="pre">ROSE_VERSION</span></code> for their
+suites. This is no longer possible, and if set in your
+<code class="docutils literal notranslate"><span class="pre">ROSE_VERSION</span></code> in your suite configuration it will be ignored.</p>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></dt><dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span><code class="docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code> will be removed from your configuration by the
+Cylc-Rose plugin, as it is now set by Cylc.</p>
+</div>
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="additional-cli-options">
+
+<h3>Additional CLI options<a class="headerlink" href="../../html/plugins/cylc-rose.html#additional-cli-options" title="View HTML">§</a></h3>
+
+<p>You can use command line options to set or override
+any setting you could put in a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file: If you
+have Cylc Rose installed see <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--help</span></code>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="cylc-install-optional-config">
+
+<h3>Cylc Install Optional Config<a class="headerlink" href="../../html/plugins/cylc-rose.html#cylc-install-optional-config" title="View HTML">§</a></h3>
+
+<p>If Cylc-Rose is installed, using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> with a workflow containing a
+Rose Suite Configuration will write a record of command line options set in
+<code class="docutils literal notranslate"><span class="pre">$CYLC_RUN_DIR/workflow_name/opt/rose-suite-cylc-install.conf</span></code>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="example">
+
+<h3>Example<a class="headerlink" href="../../html/plugins/cylc-rose.html#example" title="View HTML">§</a></h3>
+
+<p>For a workflow with the following definitions in the <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>:</p>
+<p>rose-suite.conf</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[template variables]</span><span class="w"></span>
+<span class="na">NAME</span><span class="o">=</span><span class="s">&#39;Mars&#39;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>flow.cylc</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2020</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="kd">Hello_</span><span class="cp">{{ NAME }}</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[Hello_</span><span class="cp">{{ NAME }}</span><span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+<p>If you then ran</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc install
+</pre></div>
+</div>
+<p>Your final workflow would have the variable <code class="docutils literal notranslate"><span class="pre">NAME</span></code> inserted:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- Before processing</span><span class="w"></span>
+<span class="gi">+ After processing</span><span class="w"></span>
+
+<span class="gd">-           R1 = Hello_{{ NAME }}</span><span class="w"></span>
+<span class="gi">+           R1 = Hello_Mars</span><span class="w"></span>
+
+<span class="gd">-       [[Hello_{{ NAME }}]]</span><span class="w"></span>
+<span class="gi">+       [[Hello_Mars]]</span><span class="w"></span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="rose-stem">
+
+<h2>Rose Stem<a class="headerlink" href="../../html/plugins/cylc-rose.html#rose-stem" title="View HTML">§</a></h2>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="https://metomi.github.io/rose/2019.01.2/html/tutorial/rose/furthertopics/rose-stem.html">Rose Stem documentation</a></p>
+</div>
+<p>Cylc Rose provides a Rose Stem command, if FCM is installed on your system.
+At Cylc 8 Rose Stem is a wrapper to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> rather than
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>.</p>
+<p>Rose Stem is a wrapper around the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command which
+provides some additional Jinja2 variables.</p>
+<p>Cylc 8 stores variables set by rose and rose-stem in the optional
+configuration file <code class="docutils literal notranslate"><span class="pre">~/cylc-run/my_workflow/opt/rose-suite-cylc-install.conf</span></code>.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">To reinstall a rose stem suite use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code>.  Cylc can get any
+options you do not change from the <code class="docutils literal notranslate"><span class="pre">rose-suite-cylc-install.conf`</span></code> file.
+Using <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">stem</span></code> a second time will attempt install a new copy
+of your rose stem suite.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

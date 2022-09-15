@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Continuing a Cylc 7 Workflow with Cylc 8 &mdash; Cylc 8.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.2 documentation" href="../../index.html" />
+    <link rel="up" title="Detailed Description of Major Changes" href="index.html" />
+    <link rel="next" title="Cylc Install" href="cylc-install.html" />
+    <link rel="prev" title="Configuration Changes at Cylc 8" href="config-changes.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="continuing-a-cylc-7-workflow-with-cylc-8">
+
+<h1>Continuing a Cylc 7 Workflow with Cylc 8<a class="headerlink" href="../../../html/7-to-8/major-changes/continuing-c7-c8.html#continuing-a-cylc-7-workflow-with-cylc-8" title="View HTML">§</a></h1>
+
+<div class="tip admonition">
+<p class="first admonition-title">Does This Change Affect Me?</p>
+<p class="last">Read this if you have a partially complete Cylc 7 workflow that you want to
+continue, rather than start from scratch, with Cylc 8. Some cycling
+workflows, for example, may need to run expensive “cold start” tasks and
+incur a multi-cycle spin-up if started from scratch.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Cylc 8 cannot restart a Cylc 7 workflow in-place, and continuing in a new
+run directory involves some careful set up (below). So, <strong>if possible you
+should complete the run with Cylc 7</strong>.</p>
+</div>
+<p>To continue a Cylc 7 workflow with Cylc 8:</p>
+<ol class="arabic simple">
+<li>Stop the Cylc 7 workflow at an convenient place<ul>
+<li>Typically the end of a cycle point, to simplify the continuation</li>
+</ul>
+</li>
+<li><a class="reference internal" href="cylc-install.html#majorchangesinstall"><span class="std std-ref">Install</span></a> a new instance of the workflow from
+source, with Cylc 8<ul>
+<li>Adapt file paths to the new run directory structure, in workflow and task
+configurations</li>
+<li>Note Cylc 8 does <a class="reference internal" href="cylc-install.html#remote-install"><span class="std std-ref">remote file installation</span></a>
+when a job is first submitted to a platform</li>
+</ul>
+</li>
+<li>Copy runtime files needed by upcoming tasks from the old to the new run
+directory<ul>
+<li>This could include external files installed by initial tasks at runtime</li>
+<li>Note different files could be present on different job platforms</li>
+</ul>
+</li>
+<li>Start the new Cylc 8 run at the appropriate cycle point or task(s) in the
+graph<ul>
+<li>Don’t reset the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> (in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> or on
+the command line) to the <a class="reference internal" href="../../glossary.html#term-start-cycle-point"><span class="xref std std-term">start point</span></a> of the
+Cylc 8 run. That would result in the “cold start” that this continuation
+procedure is designed to avoid. Instead use the <code class="docutils literal notranslate"><span class="pre">--start-cycle-point</span></code>
+option (or <code class="docutils literal notranslate"><span class="pre">--start-task</span></code>) with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>, to start at the right
+place within the graph.</li>
+</ul>
+</li>
+</ol>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
