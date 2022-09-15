@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Job Management &mdash; Cylc 8.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Removing Workflows" href="../removing-workflows.html" />
+    <link rel="prev" title="slurm_packjob" href="job-runner-handlers/cylc.flow.job_runner_handlers.slurm_packjob.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Task Implementation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="job-scripts.html">Task Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="job-submission.html">Task Job Submission and Management</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Remote Job Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ssh-free-job-management">SSH-free Job Management?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ssh-based-job-management">SSH-based Job Management</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#other-cases-where-cylc-uses-ssh-directly">Other Cases Where Cylc Uses SSH Directly</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">User Guide</a> &raquo;</li>
+          <li><a href="index.html">Task Implementation</a> &raquo;</li>
+      <li>Remote Job Management</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/task-implementation/ssh-job-management.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="remote-job-management">
+<h1>Remote Job Management<a class="headerlink" href="#remote-job-management" title="Permalink to this heading"></a></h1>
+<p>Managing tasks in a workflow requires more than just job execution: Cylc
+performs additional actions with <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and
+direct execution of <code class="docutils literal notranslate"><span class="pre">cylc</span></code> sub-commands over non-interactive SSH.</p>
+<section id="ssh-free-job-management">
+<h2>SSH-free Job Management?<a class="headerlink" href="#ssh-free-job-management" title="Permalink to this heading"></a></h2>
+<p>Some sites may want to restrict access to job hosts by whitelisting SSH
+connections to allow only <code class="docutils literal notranslate"><span class="pre">rsync</span></code> for file transfer, and allowing job
+execution only via a local <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> that sees the job hosts <a class="footnote-reference brackets" href="#id4" id="id1">1</a> .
+We are investigating the feasibility of SSH-free job management when a local
+job runner is available, but this is not yet possible unless your workflow
+and job hosts also share a filesystem, which allows Cylc to treat jobs as
+entirely local <a class="footnote-reference brackets" href="#id5" id="id2">2</a> .</p>
+</section>
+<section id="ssh-based-job-management">
+<h2>SSH-based Job Management<a class="headerlink" href="#ssh-based-job-management" title="Permalink to this heading"></a></h2>
+<p>Cylc does not have persistent agent processes running on job hosts to act on
+instructions received over the network <a class="footnote-reference brackets" href="#id6" id="id3">3</a> so instead we execute job
+management commands directly on job hosts over SSH. Reasons for this include:</p>
+<ul class="simple">
+<li><p>It works equally for <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> and background jobs.</p></li>
+<li><p>SSH is <em>required</em> for background jobs, and for jobs in other job runners if the
+job runner is not available on the workflow host.</p></li>
+<li><p>Querying the job runner alone is not sufficient for full job
+polling functionality.</p>
+<ul>
+<li><p>This is because jobs can complete (and then be forgotten by
+the job runner) while the network, workflow host, or <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> is
+down (e.g. between workflow shutdown and restart).</p></li>
+<li><p>To handle this we get the automatic job wrapper code to write
+job messages and exit status to <em>job status files</em> that are
+interrogated by <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> during job polling
+operations.</p></li>
+<li><p>Job status files reside on the job host, so the interrogation
+is done over SSH.</p></li>
+</ul>
+</li>
+<li><p>Job status files also hold job runner name and job ID; this is
+written by the job submit command, and read by job poll and kill commands</p></li>
+</ul>
+</section>
+<section id="other-cases-where-cylc-uses-ssh-directly">
+<h2>Other Cases Where Cylc Uses SSH Directly<a class="headerlink" href="#other-cases-where-cylc-uses-ssh-directly" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>To see if a workflow is running on another host with a shared
+filesystem - see <code class="docutils literal notranslate"><span class="pre">cylc/flow/workflow_files:detect_old_contact_file</span></code>.</p></li>
+</ul>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>A malicious script could be <code class="docutils literal notranslate"><span class="pre">rsync</span></code>’d and run from a batch
+job, but jobs in job runners are considered easier to audit.</p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>The job ID must also be valid to query and kill the job via the local
+<a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>. This is not the case for Slurm, unless the
+<code class="docutils literal notranslate"><span class="pre">--cluster</span></code> option is explicitly used in job query and kill commands,
+otherwise the job ID is not recognized by the local Slurm instance.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>This would be a more complex solution, in terms of implementation,
+administration, and security.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="job-runner-handlers/cylc.flow.job_runner_handlers.slurm_packjob.html" class="btn btn-neutral float-left" title="slurm_packjob" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../removing-workflows.html" class="btn btn-neutral float-right" title="Removing Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 15, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/task-implementation/ssh-job-management";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

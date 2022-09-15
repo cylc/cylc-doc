@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datetime Cycling &mdash; Cylc 8.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Further Scheduling" href="further-scheduling.html" />
+    <link rel="prev" title="Basic Cycling" href="integer-cycling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Scheduling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="graphing.html">The <code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code> File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer-cycling.html">Basic Cycling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Datetime Cycling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#iso8601">ISO8601</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#datetime-recurrences">Datetime Recurrences</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utc-mode">UTC Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#putting-it-all-together">Putting It All Together</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="further-scheduling.html">Further Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../runtime/index.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furthertopics/index.html">Further Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Tutorial</a> &raquo;</li>
+          <li><a href="index.html">Scheduling</a> &raquo;</li>
+      <li>Datetime Cycling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorial/scheduling/datetime-cycling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datetime-cycling">
+<span id="tutorial-datetime-cycling"></span><h1>Datetime Cycling<a class="headerlink" href="#datetime-cycling" title="Permalink to this heading"></a></h1>
+<div class="aims admonition">
+<p class="admonition-title">Aims</p>
+<div class="line-block">
+<div class="line">You should be able to:</div>
+<div class="line">✅ Write workflows  with datetime cycle points.</div>
+</div>
+</div>
+<p>In the last section we created an <a class="reference internal" href="../../glossary.html#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a> workflow
+with numbered <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a>.</p>
+<p>Workflows may need to be repeated at a regular time intervals, say every day
+or every few hours. To support this Cylc can generate datetime sequences
+as <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a> instead of integers.</p>
+<div class="tip admonition">
+<p class="admonition-title">Reminder</p>
+<p>In Cylc, <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a> are task labels that anchor the
+dependencies between individual tasks: this task depends on that task in
+that cycle. Tasks can run as soon as their individual dependencies are met,
+so cycles do not necessarily run in order, or at the real world time
+corresponding to the cycle point value (to do that, see
+<a class="reference internal" href="further-scheduling.html#tutorial-clock-triggers"><span class="std std-ref">Clock Triggers</span></a>).</p>
+</div>
+<section id="iso8601">
+<span id="tutorial-iso8601"></span><h2>ISO8601<a class="headerlink" href="#iso8601" title="Permalink to this heading"></a></h2>
+<p>Cylc uses the <a class="reference internal" href="../../glossary.html#term-ISO8601"><span class="xref std std-term">ISO8601</span></a> datetime standard to represent datetimes and durations.</p>
+<section id="iso8601-datetimes">
+<span id="tutorial-iso8601-datetimes"></span><h3>ISO8601 Datetimes<a class="headerlink" href="#iso8601-datetimes" title="Permalink to this heading"></a></h3>
+<p>ISO8601 datetimes are written from the largest unit to the smallest
+(year, month, day, hour, minute, second) with a <code class="docutils literal notranslate"><span class="pre">T</span></code> separating the date
+and time components. For example, midnight on the 1st of January 2000 is
+written <code class="docutils literal notranslate"><span class="pre">20000101T000000</span></code>.</p>
+<p>For brevity we can omit seconds (or minutes) from the time:
+<code class="docutils literal notranslate"><span class="pre">20000101T0000</span></code> (or <code class="docutils literal notranslate"><span class="pre">20000101T00</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The smallest interval for a datetime cycling sequence in Cylc is 1 minute.</p>
+</div>
+<p>For readability we can add hyphens (<code class="docutils literal notranslate"><span class="pre">-</span></code>) between the date components
+and colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>) between the time components.
+This is optional, but if you do it you must use both hyphens <em>and</em> colons.</p>
+<p>Time-zone information can be added onto the end. UTC is written <code class="docutils literal notranslate"><span class="pre">Z</span></code>,
+UTC+1 is written <code class="docutils literal notranslate"><span class="pre">+01</span></code>, etc. E.G: <code class="docutils literal notranslate"><span class="pre">2000-01-01T00:00Z</span></code>.</p>
+<a class="reference internal image-reference" href="../../_images/iso8601-dates.svg"><img alt="../../_images/iso8601-dates.svg" class="align-center" src="../../_images/iso8601-dates.svg" width="75%" /></a>
+</section>
+<section id="iso8601-durations">
+<span id="tutorial-iso8601-durations"></span><h3>ISO8601 Durations<a class="headerlink" href="#iso8601-durations" title="Permalink to this heading"></a></h3>
+<p>ISO8601 durations are prefixed with a <code class="docutils literal notranslate"><span class="pre">P</span></code> (for “period”) and
+special characters following each unit:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Y</span></code> for year.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M</span></code> for month.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">D</span></code> for day.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">W</span></code> for week.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">H</span></code> for hour.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M</span></code> for minute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code> for second.</p></li>
+</ul>
+<p>As for datetimes, duration components are written in order from largest to
+smallest, and the date and time components are separated by a <code class="docutils literal notranslate"><span class="pre">T</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">P1D</span></code>: one day.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PT1H</span></code>: one hour.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">P1DT1H</span></code>: one day and one hour.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PT1H30M</span></code>: one and a half hours.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">P1Y1M1DT1H1M1S</span></code>: a year and a month and a day and an hour and a
+minute and a second.</p></li>
+</ul>
+</section>
+</section>
+<section id="datetime-recurrences">
+<h2>Datetime Recurrences<a class="headerlink" href="#datetime-recurrences" title="Permalink to this heading"></a></h2>
+<p>In <a class="reference internal" href="../../glossary.html#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a>, workflows, recurrences are written <code class="docutils literal notranslate"><span class="pre">P1</span></code>, <code class="docutils literal notranslate"><span class="pre">P2</span></code>,
+etc.</p>
+<p>In <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflows, there are two ways to
+write recurrences:</p>
+<ol class="arabic simple">
+<li><p>Using ISO8601 durations (e.g. <code class="docutils literal notranslate"><span class="pre">P1D</span></code>, <code class="docutils literal notranslate"><span class="pre">PT1H</span></code>).</p></li>
+<li><p>Using ISO8601 datetimes with inferred recurrence.</p></li>
+</ol>
+<section id="inferred-recurrence">
+<span id="tutorial-inferred-recurrence"></span><h3>Inferred Recurrence<a class="headerlink" href="#inferred-recurrence" title="Permalink to this heading"></a></h3>
+<p>Recurrence can be inferred from a datetime by omitting  components from the
+front. For example, if the year is omitted then the recurrence can be
+inferred to be annual. E.g.:</p>
+<table class="colwidths-given docutils align-left">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Recurrence</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2000-01-01T00</span></code></p></td>
+<td><p>Midnight on the 1st of January 2000</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">01-01T00</span></code></p></td>
+<td><p>Every year on the 1st of January</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">01T00</span></code></p></td>
+<td><p>Every month on the first of the month</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">T00</span></code></p></td>
+<td><p>Every day at midnight</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">T-00</span></code></p></td>
+<td><p>Every hour at zero minutes past (i.e. every hour on the hour)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To omit hours from a date time, place a <code class="docutils literal notranslate"><span class="pre">-</span></code> after the <code class="docutils literal notranslate"><span class="pre">T</span></code> character.</p>
+</div>
+</section>
+<section id="recurrence-formats">
+<h3>Recurrence Formats<a class="headerlink" href="#recurrence-formats" title="Permalink to this heading"></a></h3>
+<p>As with integer cycling, recurrences start at the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle
+point</span></a> by default. We can override this in two ways:</p>
+<p>By giving an arbitrary start cycle point (<code class="docutils literal notranslate"><span class="pre">datetime/recurrence</span></code>):</p>
+<table class="colwidths-given docutils align-left">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2000/P4Y</span></code></p></td>
+<td><p>Every fourth year, starting with the year 2000</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">2000-01-01T00/T00</span></code></p></td>
+<td><p>Every day at midnight, starting on the 1st of January 2000</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2000-01-01T12/T00</span></code></p></td>
+<td><p>Every day at midnight, starting on the first midnight
+after the 1st of January at 12:00 (i.e. <code class="docutils literal notranslate"><span class="pre">2000-01-02T00</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+<p id="tutorial-cylc-datetime-offset-icp">By offset, relative to the initial cycle point (<code class="docutils literal notranslate"><span class="pre">offset/recurrence</span></code>).
+The offset must be an ISO8601 duration preceded by a plus character:</p>
+<table class="colwidths-given docutils align-left">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">+P1Y/P1Y</span></code></p></td>
+<td><p>every year starting one year after the initial cycle point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">+PT1H/T00</span></code></p></td>
+<td><p>every day starting on the first midnight after the point one
+hour after the initial cycle point.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="durations-and-the-initial-cycle-point">
+<h3>Durations and the Initial Cycle Point<a class="headerlink" href="#durations-and-the-initial-cycle-point" title="Permalink to this heading"></a></h3>
+<p>When using durations, beware that a change in the initial cycle point
+might produce different results for the recurrences.</p>
+<table class="grid-table docutils align-default" style="width: 50%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> \</span>
+<span class="hll"><span class="s">        2000-01-01T00</span>
+</span>    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D = foo[-P1D] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> \</span>
+<span class="hll"><span class="s">        2000-01-01T12</span>
+</span>    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D = foo[-P1D] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-a02e167fd91d9a135d2030f0136dc13a230eb00f.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+size = &quot;3,3&quot;
+
+&quot;1/foo&quot; [label=&quot;foo\n2000-01-01T00&quot;]
+&quot;2/foo&quot; [label=&quot;foo\n2000-01-02T00&quot;]
+&quot;3/foo&quot; [label=&quot;foo\n2000-01-03T00&quot;]
+
+&quot;1/foo&quot; -&gt; &quot;2/foo&quot; -&gt; &quot;3/foo&quot;
+}</p></object></div>
+</div>
+</td>
+<td><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-6437cd2c62395d4695c4220027574b1021f6efbb.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+size = &quot;3,3&quot;
+
+&quot;1/foo&quot; [label=&quot;foo\n2000-01-01T12&quot;]
+&quot;2/foo&quot; [label=&quot;foo\n2000-01-02T12&quot;]
+&quot;3/foo&quot; [label=&quot;foo\n2000-01-03T12&quot;]
+
+&quot;1/foo&quot; -&gt; &quot;2/foo&quot; -&gt; &quot;3/foo&quot;
+}</p></object></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>We could write the recurrence “every midnight” independent of the initial
+cycle point by:</p>
+<ul class="simple">
+<li><p>Using an <a class="reference internal" href="#inferred-recurrence">inferred recurrence</a> instead (i.e. <code class="docutils literal notranslate"><span class="pre">T00</span></code>).</p></li>
+<li><p>Overriding the recurrence start point (i.e. <code class="docutils literal notranslate"><span class="pre">T00/P1D</span></code>)</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">[scheduling]initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">constraints</span></code> to
+constrain the initial cycle point (e.g. to a particular time of day). See
+the <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a> for details.</p></li>
+</ul>
+</section>
+<section id="the-initial-and-final-cycle-points">
+<h3>The Initial and Final Cycle Points<a class="headerlink" href="#the-initial-and-final-cycle-points" title="Permalink to this heading"></a></h3>
+<p>There are two special recurrences for the initial and final cycle points:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R1</span></code>: run once at the initial cycle point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R1/P0Y</span></code>: run once at the final cycle point.</p></li>
+</ul>
+</section>
+<section id="intercycle-dependencies">
+<h3>Intercycle Dependencies<a class="headerlink" href="#intercycle-dependencies" title="Permalink to this heading"></a></h3>
+<p>Intercycle dependencies are written as ISO8601 durations, e.g:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">foo[-P1D]</span></code>: the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> from the cycle one day before.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bar[-PT1H30M]</span></code>: the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> from the cycle 1 hour 30 minutes before.</p></li>
+</ul>
+<p>The initial cycle point can be referenced using a caret character <code class="docutils literal notranslate"><span class="pre">^</span></code>, e.g:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">baz[^]</span></code>: the task <code class="docutils literal notranslate"><span class="pre">baz</span></code> from the initial cycle point.</p></li>
+</ul>
+</section>
+</section>
+<section id="utc-mode">
+<span id="tutorial-cylc-datetime-utc"></span><h2>UTC Mode<a class="headerlink" href="#utc-mode" title="Permalink to this heading"></a></h2>
+<p>Cylc can generate datetime cycle points in any time zone, but “daylight saving”
+boundaries can cause problems so we typically use UTC, i.e. the <code class="docutils literal notranslate"><span class="pre">+00</span></code> time
+zone:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>UTC is sometimes also labelled <code class="docutils literal notranslate"><span class="pre">Z</span></code> (“Zulu” from the NATO phonetic alphabet)
+according to the
+<a class="reference external" href="https://en.wikipedia.org/wiki/List_of_military_time_zones">military time zone convention</a>.</p>
+</div>
+</section>
+<section id="putting-it-all-together">
+<span id="tutorial-datetime-cycling-practical"></span><h2>Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this heading"></a></h2>
+<p>Cylc was originally developed for running operational weather forecasting. In
+this section we will outline how to implement a basic weather-forecasting workflow.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Technically this example is a <a class="reference external" href="https://en.wikipedia.org/wiki/Nowcasting_(meteorology)">nowcasting</a> workflow,
+but the distinction doesn’t matter here.</p>
+</div>
+<p>A basic weather forecasting workflow has three main steps:</p>
+<section id="gathering-observations">
+<h3>1. Gathering Observations<a class="headerlink" href="#gathering-observations" title="Permalink to this heading"></a></h3>
+<p>We gather observations from different weather stations to build a picture of
+the current weather. Our dummy weather forecast will get wind observations
+from four weather stations:</p>
+<ul class="simple">
+<li><p>Aldergrove (Near Belfast in NW of the UK)</p></li>
+<li><p>Camborne (In Cornwall, the far SW of England)</p></li>
+<li><p>Heathrow (Near London in the SE)</p></li>
+<li><p>Shetland (The northernmost part of the UK)</p></li>
+</ul>
+<p>The tasks that retrieve observation data will be called
+<code class="docutils literal notranslate"><span class="pre">get_observations_&lt;site&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">site</span></code> is the name of the weather
+station.</p>
+<p>Next we need to consolidate the observations so that our forecasting
+system can work with them. To do this we have a
+<code class="docutils literal notranslate"><span class="pre">consolidate_observations</span></code> task.</p>
+<p>We will fetch wind observations <strong>every three hours, starting from the
+initial cycle point</strong>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">consolidate_observations</span></code> task must run after the
+<code class="docutils literal notranslate"><span class="pre">get_observations&lt;site&gt;</span></code> tasks.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-5bcc0ec6c89032b0219d6542b92a01a9ebb98158.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;7,4&quot;
+
+get_observations_aldergrove -&gt; consolidate_observations
+get_observations_camborne -&gt; consolidate_observations
+get_observations_heathrow -&gt; consolidate_observations
+get_observations_shetland -&gt; consolidate_observations
+
+hidden [style=&quot;invis&quot;]
+get_observations_aldergrove -&gt; hidden [style=&quot;invis&quot;]
+get_observations_camborne -&gt; hidden [style=&quot;invis&quot;]
+hidden -&gt; consolidate_observations [style=&quot;invis&quot;]
+}</p></object></div>
+</div>
+<p>We will also use the UK radar network to get rainfall data with a task
+called <code class="docutils literal notranslate"><span class="pre">get_rainfall</span></code>.</p>
+<p>We will fetch rainfall data <em>every six hours, from six hours after the
+initial cycle point</em>.</p>
+</section>
+<section id="running-computer-models-to-generate-forecast-data">
+<h3>2. Running Computer Models to Generate Forecast Data<a class="headerlink" href="#running-computer-models-to-generate-forecast-data" title="Permalink to this heading"></a></h3>
+<p>We will do this with a task called <code class="docutils literal notranslate"><span class="pre">forecast</span></code> that runs
+<em>every six hours, from six hours after the initial cycle point</em>.
+The <code class="docutils literal notranslate"><span class="pre">forecast</span></code> task will depend on:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">consolidate_observations</span></code> task from the previous two cycles and
+the present cycle.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">get_rainfall</span></code> task from the present cycle.</p></li>
+</ul>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-fd21ff6d92366e729e6e7bc9abd416eee88993a1.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;7,4&quot;
+
+subgraph cluster_T00 {
+    label=&quot;+PT0H&quot;
+    style=&quot;dashed&quot;
+    &quot;observations.t00&quot; [label=&quot;consolidate observations\n+PT0H&quot;]
+}
+
+subgraph cluster_T03 {
+    label=&quot;+PT3H&quot;
+    style=&quot;dashed&quot;
+    &quot;observations.t03&quot; [label=&quot;consolidate observations\n+PT3H&quot;]
+}
+
+subgraph cluster_T06 {
+    label=&quot;+PT6H&quot;
+    style=&quot;dashed&quot;
+    &quot;forecast.t06&quot; [label=&quot;forecast\n+PT6H&quot;]
+    &quot;get_rainfall.t06&quot; [label=&quot;get_rainfall\n+PT6H&quot;]
+    &quot;observations.t06&quot; [label=&quot;consolidate observations\n+PT6H&quot;]
+}
+
+&quot;observations.t00&quot; -&gt; &quot;forecast.t06&quot;
+&quot;observations.t03&quot; -&gt; &quot;forecast.t06&quot;
+&quot;observations.t06&quot; -&gt; &quot;forecast.t06&quot;
+&quot;get_rainfall.t06&quot; -&gt; &quot;forecast.t06&quot;
+}</p></object></div>
+</div>
+</section>
+<section id="processing-the-data-output-to-produce-user-friendly-forecasts">
+<h3>3. Processing the data output to produce user-friendly forecasts<a class="headerlink" href="#processing-the-data-output-to-produce-user-friendly-forecasts" title="Permalink to this heading"></a></h3>
+<p>This will be done with a task called <code class="docutils literal notranslate"><span class="pre">post_process_&lt;location&gt;</span></code> where
+<code class="docutils literal notranslate"><span class="pre">location</span></code> is the place we want to generate the forecast for. For
+the moment we will use Exeter.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">post_process_exeter</span></code> task will run <em>every six hours starting six
+hours after the initial cycle point</em> and will be dependent on the
+<code class="docutils literal notranslate"><span class="pre">forecast</span></code> task.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f6aacb832331612a9543a5f40d8dc8da04c9400d.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;2.5,2&quot;
+
+&quot;forecast&quot; -&gt; &quot;post_process_exeter&quot;
+}</p></object></div>
+</div>
+<div class="note admonition" id="datetime-cycling-practical">
+<p class="admonition-title">Practical</p>
+<p class="rubric">In this practical we will create a dummy forecasting workflow
+using datetime cycling.</p>
+<ol class="arabic">
+<li><p><strong>Create A New Workflow.</strong></p>
+<p>Create a new source directory <code class="docutils literal notranslate"><span class="pre">datetime-cycling</span></code> under <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code>,
+and move into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/cylc-src/datetime-cycling
+<span class="nb">cd</span> ~/cylc-src/datetime-cycling
+</pre></div>
+</div>
+<p>Create a <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file and paste the following code into it:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20000101T00Z</span>
+    <span class="nt">[[graph]]</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add The Recurrences.</strong></p>
+<p>The weather-forecasting workflow will require two
+recurrences. Add these under the <code class="docutils literal notranslate"><span class="pre">graph</span></code> section
+based on the information given above.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>See <a class="reference internal" href="#tutorial-cylc-datetime-offset-icp"><span class="std std-ref">Datetime Recurrences</span></a>.</p>
+</div>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<p>The two recurrences you need are</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PT3H</span></code>: repeat every three hours starting from the initial cycle
+point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+PT6H/PT6H</span></code>: repeat every six hours starting six hours after the
+initial cycle point.</p></li>
+</ul>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduler]<span class="w"></span>
+<span class="w"> </span>    UTC mode = True<span class="w"></span>
+<span class="w"> </span>    allow implicit tasks = True<span class="w"></span>
+<span class="w"> </span>[scheduling]<span class="w"></span>
+<span class="w"> </span>    initial cycle point = 20000101T00Z<span class="w"></span>
+<span class="w"> </span>    [[graph]]<span class="w"></span>
+<span class="gi">+        PT3H =</span><span class="w"></span>
+<span class="gi">+        +PT6H/PT6H =</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>Write The Graph.</strong></p>
+<p>With the help of the the information above add the tasks and dependencies to
+to implement the weather-forecasting workflow.</p>
+<p>You will need to consider the intercycle dependencies between tasks as well.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> to inspect your work.</p>
+<div class="spoiler hint admonition">
+<p class="admonition-title">Hint</p>
+<p>The dependencies you will need to formulate are as follows:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">consolidate_observations</span></code> task depends on <code class="docutils literal notranslate"><span class="pre">get_observations_&lt;site&gt;</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">forecast</span></code> task depends on:</p>
+<ul>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">get_rainfall</span></code> task;</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">consolidate_observations</span></code> tasks from:</p>
+<ul>
+<li><p>the same cycle;</p></li>
+<li><p>the cycle 3 hours before (<code class="docutils literal notranslate"><span class="pre">-PT3H</span></code>);</p></li>
+<li><p>the cycle 6 hours before (<code class="docutils literal notranslate"><span class="pre">-PT6H</span></code>).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">post_process_exeter</span></code> task depends on the <code class="docutils literal notranslate"><span class="pre">forecast</span></code>
+task.</p></li>
+</ul>
+<p>To visualise your workflow run the command:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc graph <span class="s">&lt;path/to/flow.cylc&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20000101T00Z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">PT3H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">get_observations_aldergrove</span> <span class="o">=&gt;</span> <span class="kd">consolidate_observations</span>
+            <span class="kd">get_observations_camborne</span> <span class="o">=&gt;</span> <span class="kd">consolidate_observations</span>
+            <span class="kd">get_observations_heathrow</span> <span class="o">=&gt;</span> <span class="kd">consolidate_observations</span>
+            <span class="kd">get_observations_shetland</span> <span class="o">=&gt;</span> <span class="kd">consolidate_observations</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+        <span class="nv">+PT6H/PT6H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">consolidate_observations</span> <span class="o">=&gt;</span> <span class="kd">forecast</span>
+            <span class="kd">consolidate_observations</span>[<span class="nb">-PT3H</span>] <span class="o">=&gt;</span> <span class="kd">forecast</span>
+            <span class="kd">consolidate_observations</span>[<span class="nb">-PT6H</span>] <span class="o">=&gt;</span> <span class="kd">forecast</span>
+            <span class="kd">get_rainfall</span> <span class="o">=&gt;</span> <span class="kd">forecast</span> <span class="o">=&gt;</span> <span class="kd">post_process_exeter</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>Intercycle Offsets.</strong></p>
+<p>To ensure the <code class="docutils literal notranslate"><span class="pre">forecast</span></code> tasks run in the right order (one cycle
+after another) they each need to depend on their own previous run:</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9726db191ee25dce5b92484f57f89135b5e17b75.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;4,1.5&quot;
+rankdir=LR
+
+subgraph cluster_T06 {
+    label=&quot;T06&quot;
+    style=&quot;dashed&quot;
+    &quot;forecast.t06&quot; [label=&quot;forecast\nT06&quot;]
+}
+
+subgraph cluster_T12 {
+    label=&quot;T12&quot;
+    style=&quot;dashed&quot;
+    &quot;forecast.t12&quot; [label=&quot;forecast\nT12&quot;]
+}
+
+subgraph cluster_T18 {
+    label=&quot;T18&quot;
+    style=&quot;dashed&quot;
+    &quot;forecast.t18&quot; [label=&quot;forecast\nT18&quot;]
+}
+
+&quot;forecast.t06&quot; -&gt; &quot;forecast.t12&quot; -&gt; &quot;forecast.t18&quot;
+}</p></object></div>
+</div>
+<p>We can express this dependency as <code class="docutils literal notranslate"><span class="pre">forecast[-PT6H]</span> <span class="pre">=&gt;</span> <span class="pre">forecast</span></code>.</p>
+<p>However, the forecast task runs every six hours
+<em>starting 6 hours after the initial cycle point</em>, so the
+dependency is only valid from 12:00 onwards. To fix the problem we
+must add a new dependency section which repeats every six hours
+<em>starting 12 hours after the initial cycle point</em>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>          +PT6H/PT6H = &quot;&quot;&quot;<span class="w"></span>
+<span class="w"> </span>              ...<span class="w"></span>
+<span class="gd">-              forecast[-PT6H] =&gt; forecast</span><span class="w"></span>
+<span class="w"> </span>          &quot;&quot;&quot;<span class="w"></span>
+<span class="gi">+          +PT12H/PT6H = &quot;&quot;&quot;</span><span class="w"></span>
+<span class="gi">+              forecast[-PT6H] =&gt; forecast</span><span class="w"></span>
+<span class="gi">+          &quot;&quot;&quot;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="integer-cycling.html" class="btn btn-neutral float-left" title="Basic Cycling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="further-scheduling.html" class="btn btn-neutral float-right" title="Further Scheduling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2022 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 15, 2022.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.0.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/scheduling/datetime-cycling";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
