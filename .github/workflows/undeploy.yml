@@ -36,15 +36,20 @@ jobs:
     runs-on: ubuntu-18.04
     timeout-minutes: 10
     env:
-      TAG: ${{ github.event.inputs.tag }}
+      TAG: ${{ inputs.tag }}
     steps:
       - name: configure python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
+      - name: configure git
+        uses: cylc/release-actions/configure-git@v1
+
       - name: checkout cylc-doc
         uses: actions/checkout@v3
+        with:
+          path: docs
 
       - name: checkout gh-pages
         uses: actions/checkout@v3
@@ -67,8 +72,11 @@ jobs:
             fi
           done
 
-      - name: configure git
-        uses: cylc/release-actions/configure-git@v1
+      - name: install gh-pages
+        working-directory: docs
+        run: |
+          rm -r doc
+          ln -s ../gh-pages doc
 
       - name: remove version
         working-directory: gh-pages
@@ -76,8 +84,9 @@ jobs:
           git rm -r "$TAG"
 
       - name: update version file
+        working-directory: docs
         run: |
-          bin/version write
+          bin/version write > doc/versions.json
 
       - name: push changes
         working-directory: gh-pages
