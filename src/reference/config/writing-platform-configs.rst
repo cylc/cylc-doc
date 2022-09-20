@@ -94,16 +94,24 @@ require the same install target in ``global.cylc`` config file.
 Example Platform Configurations
 -------------------------------
 
-.. admonition:: Scenario
+Detailed below are some examples of common platform configurations.
 
-   Cylc scheduler hosts share a file system with a compute cluster.
+Multiple Platforms Sharing File System with Cylc Scheduler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - **The Scheduler Host (Cylc Server) provides a built in localhost platform**
+- **Platform names can be defined as regular expressions.**
 
-Cylc does not need to install files on this cluster, since
-required files which are on the scheduler host will be accessible on this
-cluster. From Cylc's point of view, the cluster and scheduler hosts are
-considered different platforms, but should share an :term:`install target`.
+.. admonition:: Scenario
+
+   Everyone in your organization has a computer called ``desktopNNN``,
+   all with a file system shared with the scheduler host. Many users
+   will want their desktop set up as a platform to run small jobs.
+
+In this scenario, Cylc does not need to install files on the desktop, since
+required files which are on the scheduler host will be accessible on the
+desktop. From Cylc's point of view, the desktop and scheduler hosts are
+considered different platforms but must share an :term:`install target`.
 Cylc needs to be told that these platforms share an install target and so we
 configure this using the designated configuration item:
 :cylc:conf:`global.cylc[platforms][<platform name>]install target`.
@@ -112,99 +120,116 @@ configure this using the designated configuration item:
    :caption: the ``global.cylc`` config file for this scenario could look like:
 
    [platforms]
-       [[localhost]] # cylc-scheduler platform
-           hosts = host1, host2
-           # unset install target defaults to platform name: localhost
-       [[cluster]]
-           hosts = host3, host4
+       [[localhost]]
+           hosts = localhost
+           install target = localhost
+       [[desktop\d\d\d]]
            install target = localhost
 
-Cylc is now aware that these two platforms do not require remote installations.
+The ``localhost`` platform is the Cylc Scheduler host, as configured in
+:cylc:conf:`global.cylc[scheduler][run hosts]available`. This is the host that
+the workflow will start on.
+The ``desktop\d\d\d`` platform will set up 1000 platforms, all with the same
+specification and one host per platform.
 
+.. note::
+
+   Cylc carries out a "fullmatch" regular expression comparison with the
+   the platform name so ``desktop\d\d\d`` is effectively the same as
+   ``^desktop\d\d\d$``.
+
+With this config setup, Cylc is aware that these two platforms do not require
+remote installations. Since the job runner is not set this will default to
+background.
+Cylc has optional configuration ``[[[meta]]]`` to add a description of the
+platform, this may be helpful to use, we will add a platform description to our
+desktop platform.
+In addition, we can take advantage of inbuilt defaults for install target and
+hosts,  resulting in a simplified configuration.
+
+.. code-block:: diff
+
+   [platforms]
+       [[localhost]]
+   -        hosts = localhost
+   -        install target = localhost
+       [[desktop\d\d\d]]
+           install target = localhost
+   +       [[[meta]]]
+   +           description = "Background job on a desktop system"
+
+If a user wants to run a job on their local desktop, eg. `desktop123`, they should
+set  ``flow.cylc[runtime][mytask]platform`` = desktop123 in their workflow
+configuration.
 If ``flow.cylc[runtime][mytask]platform`` is unset, the job will run on the Cylc
 Scheduler host using this default ``localhost`` platform. It may be appropriate
 to allow users to run small jobs on the Cylc Server however more intensive jobs
-could be run on the ``cluster``, by setting
-``flow.cylc[runtime][mytask]platform = cluster``.
-
-.. admonition:: Scenario
-
-   Mirrored clusters, each with their own file system.
-
-In this case, each cluster would be a platform with its own install target.
-
-.. code-block:: cylc
-   :caption: the ``global.cylc`` config file for this scenario could look like:
-
-   [platforms]
-       [[cluster_1]] # cylc-scheduler platform
-           hosts = host_1, host_2
-           # unset install target defaults to platform name: cluster_1
-       [[cluster_2]]
-           hosts = host_3, host_4
-           # unset install target defaults to platform name: cluster_2
-
-Cylc will initiate a remote installation, to transfer required files to both
-``cluster_1`` and ``cluster_2``. This installation will commence before job
-submission for the first job on that platform.
-
-
-.. admonition:: Scenario
-
-   Users want to run background jobs on a single server,
-   which doesn't share a file system with the workflow host.
-
-.. code-block:: cylc
-   :caption: part of a ``global.cylc`` config file
-
-   [platforms]
-       [[myhost]]
-           hosts = myhost
-           # unset install target defaults to myhost
-
+should run on a more appropriate platform, as the next scenario will detail.
 
 Cluster with Multiple Login Nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+- **Platforms with multiple hosts require job runner to be set**
 - **Platforms can group multiple hosts together.**
 
 .. admonition:: Scenario
 
    You have a cluster where users submit to a single Slurm job queue from
-   either of a pair of identical login nodes which share a file system:
+   either of a pair of identical login nodes which share a file system.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
+       [[localhost]]  # Cylc Scheduler
        [[spice_cluster]]
            hosts = login_node_1, login_node_2
            job runner = slurm
            retrieve job logs = True
-           # install target defaults to spice_cluster
 
-If either host is unavailable Cylc will attempt to start and communicate with
-jobs via the other login node.
+The ``spice_cluster`` hosts do not share a file system with the scheduler,
+therefore ``spice_cluster`` is a remote platform.
+As the ``install target`` setting for each platform has been omitted, this will
+default to the platform name.
+Cylc will initiate a remote installation, to transfer required files to
+``spice_cluster`` which will commence before job submission for the first job
+on that platform.
 
-Since the platform hosts do not share a file system with the scheduler
-host we need to ask Cylc to retrieve job logs.
+Cylc will attempt to communicate with jobs via the other login node if either
+of the login_nodes becomes unavailable.
+
+With multiple hosts defined under ``spice_cluster``, a job runner is required.
+
+.. note::
+
+   The "background" and "at" job runners require single-host platforms,
+   because the job ID is only valid on the submission host.
+
+We have set ``retrieve job logs = True``. This will ensure our job logs are
+fetched from the ``spice_cluster`` platform. This setting is recommended for
+any remote platform (i.e. where install target is not localhost).
+
 
 Background Jobs on Cluster with Other Options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+- **Platforms can share hosts without sharing job runners.**
 - **Platforms are the unique combination of all settings.**
 
 .. admonition:: Scenarios
 
    - Allow users to carry out occasional background jobs on a
      cluster with a batch submission system.
-   - Allow some background jobs to use an alternative shell,
-     or an alternative ssh command.
+   - Allow some background jobs to use a different config item, e.g. an
+     alternative ssh command.
 
-.. note::
-
-   The "background" and "at" job runners require single-host platforms,
-   because the job ID is only valid on the submission host.
+Extending the above example, we will configure ``login_node_1`` for use with
+background jobs, in addition to the slurm example above.
+``spice_cluster_long_ssh`` is also configured for use with background jobs but
+has a particular setting, an ssh command with a long timeout. This demonstrates
+the cumulative nature of platform configuration in Cylc.
+The install target for each of the new platforms will match the install target
+from the example above - the host is the same, so the install target must match.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
@@ -212,17 +237,9 @@ Background Jobs on Cluster with Other Options
    [platforms]
        [[spice_cluster_background, spice_cluster_long_ssh]]
            hosts = login_node_1
-           job runner = background
-           install target = spice_cluster_background
-       # bespoke ssh command to extend timeout for one platform
+           install target = spice_cluster
        [[spice_cluster_long_ssh]]
            ssh command = ssh -oBatchMode=yes -oConnectTimeout=30
-       [[spice_cluster_background_fish]]
-           hosts = login_node_2
-           job runner = background
-           # Use fish shell
-           shell = /bin/fish
-
 
 Submit PBS Jobs from Localhost
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -234,6 +251,9 @@ Submit PBS Jobs from Localhost
    You have a cluster where you can submit jobs from the Cylc scheduler host
    using PBS.
 
+In this similar setup, ``cluster`` has a job runner set to pbs, localhost
+``job runner`` will default to background.
+
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
@@ -243,10 +263,8 @@ Submit PBS Jobs from Localhost
            job runner = pbs
            install target = localhost
 
-But ``host`` defaults to ``localhost`` so you can simplify the
+But ``host`` defaults to ``localhost`` so we can simplify the
 ``[[pbs_cluster]]`` definition.
-
-As a result the above configuration can be simplified to:
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
@@ -261,22 +279,19 @@ definition - without this the install target would be set to ``pbs_cluster`` and
 Cylc would perform a remote installation, resulting in an error.
 
 
-Two Similar Clusters
-^^^^^^^^^^^^^^^^^^^^
+Grouping Platforms
+^^^^^^^^^^^^^^^^^^
 
 - **Platform groups allow users to ask for jobs to be run on any
   suitable computer.**
 
 .. admonition:: Scenario
 
-   Your site has two mirrored clusters with separate PBS queues and
-   file systems. Users don't mind which cluster is used and just
-   want to set ``flow.cylc[runtime][mytask]platform = supercomputer``:
+   Your site has two separate clusters with separate PBS queues. They share
+   a file system. Users don't mind which cluster is used and just
+   want to set ``flow.cylc[runtime][mytask]platform = supercomputer``.
 
-   Remember, because the install target defaults to the platform name
-   clusterA and clusterB have different install targets.
-
-.. spelling:word-list::
+   .. spelling:word-list::
 
    clusterA
    clusterB
@@ -285,15 +300,17 @@ Two Similar Clusters
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
+       [[clusterA, clusterB]]  # settings that apply to both:
+           batch system = pbs
+           install target = cluster
+           retrieve job logs = True
        [[clusterA]]
            hosts = login_node_A1, login_node_A2
-           batch system = pbs
        [[clusterB]]
            hosts = login_node_B1, login_node_B2
-           batch system = pbs
        [platform groups]
            [[supercomputer]]
-           platforms = clusterA, clusterB
+               platforms = clusterA, clusterB
 
 .. note::
 
@@ -305,6 +322,13 @@ Two Similar Clusters
    be able to communicate with that job via hosts on another
    platform in the group.
 
+Group platforms together using the configuration item
+:cylc:conf:`global.cylc[platform groups]`. In the above example, the platforms
+``clusterA`` and ``clusterB`` both share a file system (
+install target = ``cluster``). We advise caution when grouping platforms with
+different install targets as users could encounter a scenario whereby files (
+installed by Cylc during the remote initialization process) are
+not available to them.
 
 Preferred and Backup Hosts and Platforms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -314,7 +338,7 @@ Preferred and Backup Hosts and Platforms
 
 .. admonition:: Scenario
 
-   You have operational cluster and a research cluster.
+   You have operational cluster and a research cluster, with shared file systems.
    You want your operational workflow to run on one of the operational
    platforms. If it becomes unavailable you want Cylc to start running
    jobs on the research cluster.
@@ -326,51 +350,24 @@ Preferred and Backup Hosts and Platforms
        [[operational]]
            hosts = login_node_A1, login_node_A2
            batch system = pbs
+           install target = operational_work
            [[selection]]
                method = random  # the default anyway
        [[research]]
            hosts = primary, secondary, emergency
            batch system = pbs
+           install target = operational_work
            [[selection]]
                method = definition order
-       [platform groups]
-           [[operational_work]]
-               platforms = operational, research
+   [platform groups]
+       [[operational_work]]
+           platforms = operational, research
            [[[selection]]]
                method = definition order
 
 .. note::
 
    Random is the default selection method.
-
-Lots of desktop computers
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-- **Platform names are regular expressions.**
-
-.. admonition:: Scenario
-
-   Everyone in your organization has a computer called ``desktopNNN``,
-   all with a file system shared with the scheduler host. Many users
-   will want a platform to run small jobs on their computer:
-
-Cylc treats platform names as regular expressions, so in this case:
-
-.. code-block:: cylc
-   :caption: part of a ``global.cylc`` config file
-
-   [platforms]
-       [[desktop\d\d\d]]
-
-will set up 1000 platforms, all with the same specification and one host per
-platform. Job files can be installed on the workflow host.
-
-.. note::
-
-   Cylc carries out a "fullmatch" regular expression comparison with the
-   the platform name so ``desktop\d\d\d`` is effectively the same as
-   ``^desktop\d\d\d$``.
-
 
 .. warning::
 
@@ -379,6 +376,52 @@ platform. Job files can be installed on the workflow host.
    Therefore a platform group cannot be given the same name as a platform.
    The :cylc:conf:`global.cylc` file will fail validation if the same name is
    used for both.
+
+
+.. _SymlinkDirsSetup:
+
+Symlink Dir Setup to Preserve Disk Space Usage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To minimize the disk space used by ``~/cylc-run``, set
+:cylc:conf:`global.cylc[install][symlink dirs]`.
+The entire workflow directory can be symlinked, using the config item ``run`` 
+The following sub-directories  are also available for configuration:
+   * log
+   * share
+   * share/cycle
+   * work
+
+These should be configured per install target.
+
+For example, to configure workflow ``log`` directories (on the
+:term:`scheduler` host) so that they symlink to a different location,
+you could write the following in ``global.cylc``:
+
+.. code-block:: cylc
+
+   [install]
+       [[symlink dirs]]
+           [[[localhost]]]
+               log = /somewhere/else
+
+This would result in the following file structure:
+
+.. code-block:: none
+
+   ~/cylc-run
+   └── myflow
+       ├── flow.cylc
+       ├── log -> /somewhere/else/cylc-run/myflow/log
+       ...
+
+   /somewhere
+   └── else
+       └── cylc-run
+           └── myflow
+               └── log
+                   ├── flow-config
+                   ├── install
+                   ...
 
 Platform with no ``$HOME`` directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

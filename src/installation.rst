@@ -255,6 +255,9 @@ configuration of the system on both a site and user basis.
    Prior to Cylc 8, ``global.cylc`` was named ``global.rc``, but that name is
    no longer supported.
 
+Cylc UI Server
+
+
 Bash Profile
 ^^^^^^^^^^^^
 
