@@ -116,7 +116,7 @@ Re-install and run the workflow::
    cylc play retries-tutorial
 
 What you should see is Cylc retrying the ``roll_doubles`` task. Hopefully,
-it will succeed (there is only about a about a 1 in 3 chance of every task
+it will succeed (there is only about a 1 in 3 chance of every task
 failing) and the workflow will continue.
 
 
