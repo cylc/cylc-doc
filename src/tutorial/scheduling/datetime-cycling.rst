@@ -156,11 +156,8 @@ Recurrence Formats
 
 ``2000/P4Y``
    Every fourth year, starting with the year 2000.
-``2000-01-01T00/T00``
+``2000-01-01T00/P1D``
    Every day at midnight, starting on the 1st of January 2000.
-``2000-01-01T12/T00``
-   Every day at midnight, starting on the first midnight
-   after the 1st of January at 12:00 (i.e. ``2000-01-02T00``).
 
 .. nextslide::
 
