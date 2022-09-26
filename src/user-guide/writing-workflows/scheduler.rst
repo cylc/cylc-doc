@@ -242,7 +242,7 @@ The ``localhost`` platform is configured by
 
 It configures:
 
-* Jobs that run on the ``localhost`` platform. I.E. any jobs which have
+* Jobs that run on the ``localhost`` platform, i.e. any jobs which have
   :cylc:conf:`[runtime][<namespace>]platform=localhost` or which don't have a
   platform configured.
 * Connections to the scheduler hosts (e.g. the
