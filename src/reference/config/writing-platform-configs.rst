@@ -139,7 +139,7 @@ specification and one host per platform.
    ``^desktop\d\d\d$``.
 
 With this config setup, Cylc is aware that these two platforms do not require
-remote installations. Since the job runner is not set this will default to
+remote installations. Since the job runner is not set, this will default to
 background.
 Cylc has optional configuration ``[[[meta]]]`` to add a description of the
 platform, this may be helpful to use, we will add a platform description to our
@@ -158,9 +158,16 @@ hosts,  resulting in a simplified configuration.
    +       [[[meta]]]
    +           description = "Background job on a desktop system"
 
-If a user wants to run a job on their local desktop, eg. `desktop123`, they should
-set  ``flow.cylc[runtime][mytask]platform`` = desktop123 in their workflow
-configuration.
+If a user wants to run a job on their local desktop, eg. "desktop123", they should
+set:
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[mytask]]
+              platform = desktop123
+
+in their workflow configuration.
 If ``flow.cylc[runtime][mytask]platform`` is unset, the job will run on the Cylc
 Scheduler host using this default ``localhost`` platform. It may be appropriate
 to allow users to run small jobs on the Cylc Server however more intensive jobs
@@ -386,6 +393,7 @@ To minimize the disk space used by ``~/cylc-run``, set
 :cylc:conf:`global.cylc[install][symlink dirs]`.
 The entire workflow directory can be symlinked, using the config item ``run`` 
 The following sub-directories  are also available for configuration:
+
    * log
    * share
    * share/cycle
