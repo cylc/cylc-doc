@@ -7,9 +7,8 @@ Cylc also supports the EmPy template processor in workflow configurations.
 Like :ref:`User Guide Jinja2`, EmPy provides variables, mathematical
 expressions, loop control structures, conditional logic, etc., that gets
 expanded to generate the final workflow configuration seen - which must must be
-valid Cylc syntax. See `EmPy documentation
-<http://www.alcyone.com/software/empy>`_ for details of its templating features
-and how to use them.
+valid Cylc syntax. See `EmPy`_ documentation
+for details of its templating features and how to use them.
 
 .. note::
 
