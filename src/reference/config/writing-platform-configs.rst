@@ -158,7 +158,9 @@ hosts,  resulting in a simplified configuration.
    +       [[[meta]]]
    +           description = "Background job on a desktop system"
 
-If a user wants to run a job on their local desktop, eg. "desktop123", they should
+
+
+If a user wants to run a job on their local desktop, e.g. "desktop123", they should
 set:
 
    .. code-block:: cylc
@@ -300,8 +302,8 @@ Grouping Platforms
 
    .. spelling:word-list::
 
-   clusterA
-   clusterB
+      clusterA
+      clusterB
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
@@ -387,8 +389,8 @@ Preferred and Backup Hosts and Platforms
 
 .. _SymlinkDirsSetup:
 
-Symlink Dir Setup to Preserve Disk Space Usage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Symlinking Directories
+^^^^^^^^^^^^^^^^^^^^^^
 To minimize the disk space used by ``~/cylc-run``, set
 :cylc:conf:`global.cylc[install][symlink dirs]`.
 The entire workflow directory can be symlinked, using the config item ``run`` 
