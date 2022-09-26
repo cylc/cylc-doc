@@ -63,12 +63,12 @@ Syntax Highlighting For Workflow Configuration
 
 Cylc provides syntax plugins for the following editors:
 
+.. _language-cylc: https://github.com/cylc/language-cylc
 .. _Cylc.tmbundle: https://github.com/cylc/Cylc.tmbundle
 .. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
-.. _language-cylc: https://atom.io/packages/language-cylc
 
 Atom
-   install the `language-cylc`_ extension.
+   install the `language-cylc` extension.
 Emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
