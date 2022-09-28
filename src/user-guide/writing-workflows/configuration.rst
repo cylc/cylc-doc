@@ -68,7 +68,7 @@ Cylc provides syntax plugins for the following editors:
 .. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
 
 Atom
-   install the `language-cylc` extension.
+   install the `language-cylc`_ extension.
 Emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
