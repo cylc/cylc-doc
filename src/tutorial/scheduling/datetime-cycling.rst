@@ -151,33 +151,27 @@ Recurrence Formats
    As with integer cycling, recurrences start at the :term:`initial cycle
    point` by default. We can override this in two ways:
 
-By giving an arbitrary start cycle point (``datetime/recurrence``):
+.. rubric::
+   By giving an arbitrary start cycle point (``datetime/recurrence``):
 
-.. csv-table::
-   :header: Example, Description
-   :align: left
-   :widths: 30, 70
-
-   ``2000/P4Y``, "Every fourth year, starting with the year 2000"
-   ``2000-01-01T00/T00``, "Every day at midnight, starting on the 1st of January 2000"
-   ``2000-01-01T12/T00``, "Every day at midnight, starting on the first midnight
-   after the 1st of January at 12:00 (i.e. ``2000-01-02T00``)."
+``2000/P4Y``
+   Every fourth year, starting with the year 2000.
+``2000-01-01T00/P1D``
+   Every day at midnight, starting on the 1st of January 2000.
 
 .. nextslide::
 
 .. _tutorial-cylc-datetime-offset-icp:
 
-By offset, relative to the initial cycle point (``offset/recurrence``).
+.. rubric::
+   By offset, relative to the initial cycle point (``offset/recurrence``).
+
 The offset must be an ISO8601 duration preceded by a plus character:
 
-.. csv-table::
-   :header: Example, Description
-   :align: left
-   :widths: 30, 70
-
-   ``+P1Y/P1Y``, every year starting one year after the initial cycle point.
-   ``+PT1H/T00``, "every day starting on the first midnight after the point one
-   hour after the initial cycle point."
+``+PT1H/PT1H``
+   Every hour starting one hour after the initial cycle point.
+``+P1Y/P1Y``
+   Every year starting one year after the initial cycle point.
 
 Durations and the Initial Cycle Point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
