@@ -169,10 +169,16 @@ files and directories required to run jobs, including authentication keys
 
 The default directories included in the remote install are:
 
-* ``app/``
-* ``bin/``
-* ``etc/``
-* ``lib/``
+``ana/``
+   For workflow-level :ref:`builtin.rose_ana` analysis modules.
+``app/``
+   For :ref:`Rose Applications`.
+``bin/``
+   For scripts and executables to be run by tasks.
+``etc/``
+   For miscellaneous resources.
+``lib/``
+   For shared libraries e.g. :ref:`CustomJinja2Filters`.
 
 These will be transferred from the workflow run directory on the
 :term:`scheduler` host to the remote host.
