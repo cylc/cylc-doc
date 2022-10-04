@@ -194,7 +194,7 @@ At Cylc 8 the equivalent might be:
 
        [[mytask_login_to_hpc_and_submit]]
            # Recommended:
-           platform = just_run_it
+           platform = slurm_supercomputer
            # ...but This is still legal:
            #platform = $(selector-script)
 
