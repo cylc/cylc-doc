@@ -79,7 +79,7 @@ Detailed below are some examples of common platform configurations.
 Submit PBS Jobs from Localhost
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- **The :term:`scheduler` runs on the ``localhost`` platform.**
+- **The** :term:`scheduler` **runs on the** ``localhost`` **platform.**
 - **Platforms can share hosts without sharing job runners.**
 
 .. admonition:: Scenario
@@ -90,9 +90,9 @@ Submit PBS Jobs from Localhost
 The ``localhost`` platform is the Cylc Scheduler host, as configured in
 :cylc:conf:`global.cylc[scheduler][run hosts]available`. This is the host that
 the workflow will start on.
-Our platform `pbs_cluster` shares this ``localhost`` host and setting the install
-target to ``localhost`` ensures that Cylc knows this platform does not require
-remote initialization.
+Our platform ``pbs_cluster`` shares this ``localhost`` host and setting the
+install target to ``localhost`` ensures that Cylc knows this platform does not
+require remote initialization.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
@@ -106,9 +106,9 @@ remote initialization.
            job runner = pbs
            install target = localhost
 
-Our Cylc scheduler does not have a job runner defined. Any jobs submitted to
-this ``localhost`` platform will run as background jobs. Users can now set 
-``flow.cylc[runtime][mytask]platform``= pbs_cluster to run pbs jobs.
+Our Cylc scheduler does not have a job runner defined. Any job submitted to
+this ``localhost`` platform will run as a background job. Users can now set 
+:cylc:conf:`flow.cylc[runtime][<namespace>]platform` = pbs_cluster to run pbs jobs.
 
 .. note::
 
@@ -169,7 +169,7 @@ set:
               platform = desktop123
 
 in their workflow configuration.
-If ``flow.cylc[runtime][mytask]platform`` is unset, the job will run on the Cylc
+If ``[runtime][mytask]platform`` is unset, the job will run on the Cylc
 Scheduler host using this default ``localhost`` platform.
 
 Neither platforms will require remote initialization as the ``install target``
@@ -226,50 +226,34 @@ Grouping Platforms
 
 .. admonition:: Scenario
 
-   Your site has two separate clusters with separate PBS queues. They share
-   a file system. Users don't mind which cluster is used and just
-   want to set ``flow.cylc[runtime][mytask]platform = supercomputer``.
-
-   .. spelling:word-list::
-
-      clusterA
-      clusterB
+   Extending the example from above, we now wish to set the ``slurm_cluster``
+   up such that one host from ``slurm_cluster`` can accept background jobs.
+   We would like to group these platforms together so users can set
+   :cylc:conf:`flow.cylc[runtime][<namespace>]platform` = supercomputer.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
-       [[clusterA, clusterB]]  # settings that apply to both:
-           batch system = pbs
-           install target = cluster
+       [[slurm_cluster, slurm_cluster_bg]]  # settings that apply to both:
+           install target = slurm_cluster
            retrieve job logs = True
-       [[clusterA]]
-           hosts = login_node_A1, login_node_A2
-       [[clusterB]]
-           hosts = login_node_B1, login_node_B2
+       [[slurm_cluster]]
+           batch system = slurm
+           hosts = login_node_1, login_node_2
+       [[slurm_cluster_bg]]
+           hosts = login_node_1
        [platform groups]
            [[supercomputer]]
-               platforms = clusterA, clusterB
-
-.. note::
-
-   Why not just have one platform with all 4 login nodes?
-
-   Having hosts in a platform means that Cylc can communicate with
-   jobs via any host at any time. Platform groups allow Cylc to
-   pick a platform when the job is started, but Cylc will not then
-   be able to communicate with that job via hosts on another
-   platform in the group.
+               platforms = slurm_cluster, slurm_cluster_bg
 
 Group platforms together using the configuration item
 :cylc:conf:`global.cylc[platform groups]`. In the above example, the platforms
-``clusterA`` and ``clusterB`` both share a file system (
-install target = ``cluster``). We advise caution when grouping platforms with
-different install targets as users could encounter a scenario whereby files (
-installed by Cylc during the remote initialization process) are
+``slurm_cluster`` and ``slurm_cluster_bg`` both share a file system (
+install target = ``slurm_cluster``). We advise caution when grouping platforms
+with different install targets as users could encounter a scenario whereby
+files (installed by Cylc during the remote initialization process) are
 not available to them.
-
-
 
 .. warning::
 
@@ -283,7 +267,7 @@ not available to them.
 .. _SymlinkDirsSetup:
 
 Symlinking Directories
-^^^^^^^^^^^^^^^^^^^^^^
+----------------------
 To minimize the disk space used by ``~/cylc-run``, set
 :cylc:conf:`global.cylc[install][symlink dirs]`.
 The entire workflow directory can be symlinked, using the config item ``run`` 
@@ -294,7 +278,7 @@ The following sub-directories  are also available for configuration:
    * share/cycle
    * work
 
-These should be configured per install target.
+These should be configured per :term:`install target`.
 
 For example, to configure workflow ``log`` directories (on the
 :term:`scheduler` host) so that they symlink to a different location,
@@ -307,7 +291,7 @@ you could write the following in ``global.cylc``:
            [[[localhost]]]
                log = /somewhere/else
 
-This would result in the following file structure:
+This would result in the following file structure on the Cylc Scheduler:
 
 .. code-block:: none
 
@@ -325,6 +309,16 @@ This would result in the following file structure:
                    ├── flow-config
                    ├── install
                    ...
+
+These ``localhost`` symlinks are created during the cylc install process.
+Symlinks for remote install targets are created during :ref:`RemoteInit` following
+``cylc play``.
+
+Symlinks 
+
+
+Advanced Platform Example
+-------------------------
 
 Platform with no ``$HOME`` directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
