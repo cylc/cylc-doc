@@ -241,9 +241,9 @@ Cylc uses "sane and safe" defaults and is suitable for use "out of the box",
 if all you need to do is run jobs locally in the background.
 However, many things may need to be configured, e.g:
 
-* Job hosts, see :ref:`AdminGuide.PlatformConfigs`
-* Communication methods
-* User/Site preferences
+* :ref:`AdminGuide.PlatformConfigs` (jobs hosts, runners, etc)
+* :ref:`Scheduler Hosts<Submitting Workflows To a Pool Of Hosts>`
+* :ref:`Default Event Handlers<EventHandlers>`
 
 Cylc Flow
 ^^^^^^^^^

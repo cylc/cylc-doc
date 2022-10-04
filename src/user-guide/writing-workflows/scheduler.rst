@@ -8,6 +8,7 @@ Many of these configurations can also be defined at the site or user level in
 the :cylc:conf:`global.cylc[scheduler]` section where it applies to all
 workflows.
 
+.. _EventHandlers:
 
 Event handlers
 --------------
