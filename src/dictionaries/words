@@ -31,6 +31,7 @@ dirs
 duration
 durations
 env
+etc
 executables
 facade
 filename
@@ -146,7 +147,7 @@ runnable
 runtime
 schd
 screenshot
-setups
+setup
 setups
 shebang
 shutdown

@@ -58,18 +58,7 @@ Example
 Shorthand
 ^^^^^^^^^
 
-Throughout this tutorial we will refer to configuration settings in the following ways:
-
-``[section]``
-   An entire section.
-``[section]key``
-   A specific config item, within a section.
-``[section]key=value``
-   The value of a specific config item, within a section.
-``[section][sub-section]another-key``
-   Note we only use one set of square brackets per section heading when
-   writing on one line like this. In the config file each nested level
-   gets another set of square brackets.
+.. include:: ../../reference/config/shorthand.rst
 
 Duplicate Items
 ^^^^^^^^^^^^^^^
