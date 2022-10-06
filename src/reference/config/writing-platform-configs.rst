@@ -58,7 +58,7 @@ What Are Install Targets?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install targets represent file systems. More than one platform can use the
-same file system. Cylc relies on the site setup file ``global.cylc`` to determine
+same file system. Cylc relies on the site configuration file ``global.cylc`` to determine
 which platforms share install targets. Cylc will then use this information to
 make the correct installations on remote platforms, including installation of
 files, creation of :cylc:conf:`global.cylc[install][symlink dirs]` and
