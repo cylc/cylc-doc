@@ -218,7 +218,7 @@ With multiple hosts defined under ``slurm_cluster``, a job runner is required.
 
 We have set ``retrieve job logs = True``. This will ensure our job logs are
 fetched from the ``slurm_cluster`` platform. This setting is recommended for
-any remote platform (i.e. where install target is not localhost).
+all remote platforms (i.e. where install target is not localhost).
 
 
 Grouping Platforms
