@@ -47,7 +47,18 @@ jobs:
       - name: install cylc-doc
         run: pip install .[all]
 
-      - name: install libs to document
+      - name: install libs to document (8.0.x)
+        if: github.base_ref == '8.0.x'
+        uses: ./.github/actions/install-libs
+        with:
+          # NOTE: these need to be manually updated as necessary:
+          cylc-flow-tag: '8.0.x'
+          cylc-rose-tag: '1.1.x'
+          cylc-uis-tag: '1.1.x'
+          metomi-rose-tag: '2.0.x'
+
+      - name: install libs to document (other branches)
+        if: github.base_ref != '8.0.x'
         uses: ./.github/actions/install-libs
 
       - name: install eslint
