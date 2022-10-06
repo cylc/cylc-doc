@@ -1,5 +1,5 @@
 name: Install dependencies
-description: apt-get dependencies
+description: Install dependencies and setup + activate conda env
 
 runs:
   using: composite
@@ -15,7 +15,6 @@ runs:
         sudo apt-get install -y \
           librsvg2-bin \
           ghostscript \
-          graphviz \
           pkg-config \
           libgraphviz-dev \
           gsfonts \
@@ -23,3 +22,15 @@ runs:
           libfontconfig1-dev
       # Explanation of some of these dependencies:
       # https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
+
+    - uses: conda-incubator/setup-miniconda@35d1405e78aa3f784fe3ce9a2eb378d5eeb62169 # v2.1.1
+      with:
+        channels: conda-forge
+        python-version: ${{ matrix.python-version || '' }}
+        miniforge-version: latest
+
+    # use login shell for conda activation
+    - shell: bash -leo pipefail {0}
+      run: |
+        echo "CONDA_PREFIX: ${CONDA_PREFIX}"
+        conda install -y graphviz
