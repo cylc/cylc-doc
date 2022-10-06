@@ -30,12 +30,14 @@ Posix
 Protobuf
 Pympler
 Pyro
+pyproject
 rsync
 sge
 slurm
 Slurm
 sqlite
 svn
+toml
 Trac
 Tui
 Vuex
