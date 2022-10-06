@@ -58,11 +58,14 @@ What Are Install Targets?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install targets represent file systems. More than one platform can use the
-same file system. Cylc relies on the site setup file ``global.cylc`` to determine
-which platforms share install targets. Cylc will then use this information to
-make the correct installations on remote platforms, including installation of
-files, creation of :cylc:conf:`global.cylc[install][symlink dirs]` and
-authentication keys to enable secure communication between platforms.
+same file system. Cylc relies on the site configuration file ``global.cylc`` to determine
+which platforms share install targets.
+
+Cylc will setup each remote install target once. During setup it will:
+
+  - Install workflow files
+  - Symlink directories
+  - Copy authentication keys (to allow secure communication)
 
 Note, if missing from configuration, the install target will default to the
 platform name. If incorrectly configured, this will cause errors in
@@ -136,9 +139,11 @@ considered different platforms but must share an :term:`install target`.
 Cylc needs to be told that these platforms share an install target and so we
 configure this using the designated configuration item:
 :cylc:conf:`global.cylc[platforms][<platform name>]install target`.
-Cylc has optional configuration ``[[[meta]]]`` to add a description of the
-platform, this may be helpful to use, we will add a platform description to our
-desktop platform.
+
+:cylc:conf:`global.cylc[platforms][<platform name>]` has optional configuration
+``[[[meta]]]`` which users can view with ``cylc config --platforms``. We will add
+a description designed to help users in this example.
+
 The following platform definition is simplified, taking advantage of defaults
 for ``hosts`` and ``install targets``.
 
@@ -218,7 +223,7 @@ With multiple hosts defined under ``slurm_cluster``, a job runner is required.
 
 We have set ``retrieve job logs = True``. This will ensure our job logs are
 fetched from the ``slurm_cluster`` platform. This setting is recommended for
-any remote platform (i.e. where install target is not localhost).
+all remote platforms (i.e. where install target is not localhost).
 
 
 Grouping Platforms

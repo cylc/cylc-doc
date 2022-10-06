@@ -237,7 +237,7 @@ To do so create a symbolic link to the wrapper, for each of these commands:
 Configuration
 -------------
 
-Cylc uses "sane and safe" defaults and is suitable for use "out of the box",
+Cylc uses sane and safe defaults and is suitable for use "out of the box",
 if all you need to do is run jobs locally in the background.
 However, many things may need to be configured, e.g:
 
