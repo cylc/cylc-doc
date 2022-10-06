@@ -35,7 +35,7 @@ In this example a pre-configure plugin which logs a "Hello World" message
 and, after installation, logs some info about the installation:
 
 .. code-block:: python
-   :caption: my_plugin.py
+   :caption: ``my_plugin.py``
 
    from cylc.flow import LOG
 
@@ -54,7 +54,7 @@ Plugins are registered by registering them with the ``cylc.pre_configure``
 and ``cylc.post_install`` entry points:
 
 .. code-block:: python
-   :caption: setup.py
+   :caption: ``setup.py``
 
    # plugins must be properly installed, in-place PYTHONPATH meddling will
    # not work.

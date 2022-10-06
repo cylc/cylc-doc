@@ -180,7 +180,7 @@ another person, and that cannot be prevented by technical means. However, a
 workflow owner cannot unilaterally gain access to any other user's account or
 workflows by configuring their own UI Server.
 
-``c.CylcUIServer.site-authorization``, which is loaded from
+``c.CylcUIServer.site_authorization``, which is loaded from
 ``/etc/cylc/uiserver/jupyter_config.py``, or, alternatively, the environment variable
 ``CYLC_SITE_CONF_PATH``, contains these site default and limit settings for
 users. This configuration should be entered as a Python dictionary.
@@ -193,7 +193,7 @@ Sites set both limits and defaults for users.
 - ``limit`` determines the maximum access users can grant to their workflows.
 
 - ``default`` sets a default access level, which applies if the user does
-  not appear in the user-authorization configuration (via explicit user name or group).
+  not appear in the user_authorization configuration (via explicit user name or group).
 
 Missing Configurations in Site Authorization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

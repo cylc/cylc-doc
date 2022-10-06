@@ -158,23 +158,19 @@ Include-files
    :ref:`Jinja2's <Jinja>` template inclusion mechanism can be used with Cylc
    too.
 
+.. _config_item_shorthand:
 
 Shorthand
 ---------
 
-Throughout the documentation we refer to configuration settings in the
-following way:
+.. include:: shorthand.rst
 
-``[section]``
-   An entire section.
-``[section]setting``
-   A setting within a section.
-``[section]setting=value``
-   The value of a setting within a section.
-``[section][sub-section]another-setting``
-   A setting within a sub-section.
+.. code-block:: cylc
 
-.. warning::
-   We only use one set of square brackets at each level when writing nested
-   sections on one line like this. But in the file, each sub-section
-   gets additional square brackets as shown above.
+   # This:
+   #   [runtime][task-a][environment]FOO = foo
+   # Means:
+   [runtime]
+       [[task-a]]
+           [[[environment]]]
+               FOO = foo

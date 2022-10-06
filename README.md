@@ -84,7 +84,20 @@ We use a few custom Sphinx extensions, for details see
 
 ### Installation
 
-Note: you may need to install `graphviz` first (e.g. `conda install graphviz`).
+### Non Python Dependencies
+
+There are two non-Python dependencies which must be installed:
+
+* `graphviz`
+* `enchant`
+
+E.G. with Conda/Mamba:
+
+```console
+$ mamba install -c conda-forge graphviz enchant
+```
+
+### Checkout & Install
 
 ```console
 $ git clone git@github.com:cylc/cylc-doc.git cylc-doc
