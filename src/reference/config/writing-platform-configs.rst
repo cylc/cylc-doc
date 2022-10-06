@@ -111,7 +111,8 @@ require remote initialization.
 
 Our Cylc scheduler does not have a job runner defined. Any job submitted to
 this ``localhost`` platform will run as a background job. Users can now set 
-:cylc:conf:`flow.cylc[runtime][<namespace>]platform` = pbs_cluster to run pbs jobs.
+:cylc:conf:`flow.cylc[runtime][<namespace>]platform` = ``pbs_cluster`` to run
+pbs jobs.
 
 .. note::
 
@@ -229,33 +230,38 @@ Grouping Platforms
 .. admonition:: Scenario
 
    Extending the example from above, we now wish to set the ``slurm_cluster``
-   up such that one host from ``slurm_cluster`` can accept background jobs.
-   We would like to group these platforms together so users can set
-   :cylc:conf:`flow.cylc[runtime][<namespace>]platform` = supercomputer.
+   up such that ``slurm_cluster`` nodes can accept background jobs.
+   We would like to group these background platforms together so users can set
+   :cylc:conf:`flow.cylc[runtime][<namespace>]platform` = ``slurm_cluster_bg``.
 
 .. code-block:: cylc
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
-       [[slurm_cluster, slurm_cluster_bg]]  # settings that apply to both:
+       [[slurm_cluster, slurm_cluster_bg1, slurm_cluster_bg2]]  # settings that apply to all:
            install target = slurm_cluster
            retrieve job logs = True
        [[slurm_cluster]]
            batch system = slurm
            hosts = login_node_1, login_node_2
-       [[slurm_cluster_bg]]
+       [[slurm_cluster_bg1]]
            hosts = login_node_1
+       [[slurm_cluster_bg2]]
+           hosts = login_node_2
        [platform groups]
-           [[supercomputer]]
-               platforms = slurm_cluster, slurm_cluster_bg
+           [[slurm_cluster_bg]]
+               platforms = slurm_cluster_bg1, slurm_cluster_bg2
 
 Group platforms together using the configuration item
-:cylc:conf:`global.cylc[platform groups]`. In the above example, the platforms
-``slurm_cluster`` and ``slurm_cluster_bg`` both share a file system (
-install target = ``slurm_cluster``). We advise caution when grouping platforms
+:cylc:conf:`global.cylc[platform groups]`. In the above example, the
+``slurm_cluster_bg`` platforms all share a file system
+(install target = ``slurm_cluster``). We advise caution when grouping platforms
 with different install targets as users could encounter a scenario whereby
-files (installed by Cylc during the remote initialization process) are
+files (created by a previous task using the same platform group) are
 not available to them.
+
+With the above configuration, users can now run background jobs on either of
+the login nodes, without the concern of selecting a specific platform.
 
 .. warning::
 
