@@ -72,8 +72,7 @@ Platforms also define how hosts are selected from each platform:
 
 There may be cases where sets of platforms (for example a group of
 standalone compute servers, or a pair of mirrored HPC's) might be equally
-suitable for a task, but not share file systems to allow them to constitute
-a single platform. Such platforms can be set up to be ``platform groups``
+suitable for a task. Such platforms can be set up to be ``platform groups``
 
 .. seealso::
 

@@ -89,7 +89,9 @@ Submit PBS Jobs from Localhost
 
 The ``localhost`` platform is the Cylc Scheduler host, as configured in
 :cylc:conf:`global.cylc[scheduler][run hosts]available`. This is the host that
-the workflow will start on.
+the workflow will start on. For more information, see
+:ref:`Platform Configuration<PlatformConfig>`.
+
 Our platform ``pbs_cluster`` shares this ``localhost`` host and setting the
 install target to ``localhost`` ensures that Cylc knows this platform does not
 require remote initialization.
@@ -98,9 +100,10 @@ require remote initialization.
    :caption: part of a ``global.cylc`` config file
 
    [platforms]
-       [[localhost]]
-           hosts = localhost
-           install target = localhost
+       # The localhost platform is available by default
+       # [[localhost]]
+       #     hosts = localhost
+       #     install target = localhost
        [[pbs_cluster]]
            hosts = localhost
            job runner = pbs
@@ -142,13 +145,12 @@ for ``hosts`` and ``install targets``.
    :caption: the ``global.cylc`` config file for this scenario could look like:
 
    [platforms]
-       [[localhost]]
        [[desktop\d\d\d]]
            install target = localhost
            [[[meta]]]
                description = "Background job on a desktop system"
 
-As before, the ``localhost`` platform is the Cylc Scheduler host.
+As before, a ``localhost`` platform is available by default.
 ``desktop\d\d\d`` is a pattern which defines multiple platforms.
 When using a pattern the "hosts" setting must be left unset so that it defaults
 to the platform name. This ensures each of the matching platforms is unique.
