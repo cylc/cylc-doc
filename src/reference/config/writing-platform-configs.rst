@@ -322,8 +322,6 @@ These ``localhost`` symlinks are created during the cylc install process.
 Symlinks for remote install targets are created during :ref:`RemoteInit` following
 ``cylc play``.
 
-Symlinks 
-
 
 Advanced Platform Example
 -------------------------
