@@ -1052,8 +1052,8 @@ Glossary
          * :term:`reinstall`
 
    install target
-      Cylc uses install targets to determine which hosts share file systems,
-      these are expected to be managed at site level and configured in
+      Cylc uses install targets to determine which platforms share file systems.
+      Install targets should normally be managed at site level. They are configured in
       :cylc:conf:`global.cylc[platforms][<platform name>]install target`.
 
       .. seealso::
