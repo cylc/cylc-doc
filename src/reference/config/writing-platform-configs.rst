@@ -136,9 +136,11 @@ considered different platforms but must share an :term:`install target`.
 Cylc needs to be told that these platforms share an install target and so we
 configure this using the designated configuration item:
 :cylc:conf:`global.cylc[platforms][<platform name>]install target`.
-Cylc has optional configuration ``[[[meta]]]`` to add a description of the
-platform, this may be helpful to use, we will add a platform description to our
-desktop platform.
+
+:cylc:conf:`global.cylc[platforms][<platform name>] has optional configuration 
+``[[[meta]]]`` which users can view with ``cylc config --platforms``. We will add
+a description designed to help users in this example.
+
 The following platform definition is simplified, taking advantage of defaults
 for ``hosts`` and ``install targets``.
 
