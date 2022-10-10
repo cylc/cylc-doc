@@ -59,10 +59,13 @@ What Are Install Targets?
 
 Install targets represent file systems. More than one platform can use the
 same file system. Cylc relies on the site configuration file ``global.cylc`` to determine
-which platforms share install targets. Cylc will then use this information to
-make the correct installations on remote platforms, including installation of
-files, creation of :cylc:conf:`global.cylc[install][symlink dirs]` and
-authentication keys to enable secure communication between platforms.
+which platforms share install targets.
+
+Cylc will setup each remote install target once. During setup it will:
+
+  - Install workflow files
+  - Symlink directories
+  - Copy authentication keys (to allow secure communication)
 
 Note, if missing from configuration, the install target will default to the
 platform name. If incorrectly configured, this will cause errors in
