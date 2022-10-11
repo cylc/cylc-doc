@@ -96,7 +96,7 @@ to, and trailing comments should be preceded by two spaces, as shown above.
 Script String Lines
 ^^^^^^^^^^^^^^^^^^^
 
-Script strings are written verbatim to task job scripts.
+Script strings are written verbatim to :term:`job scripts <job script>`.
 
 .. code-block:: cylc
 

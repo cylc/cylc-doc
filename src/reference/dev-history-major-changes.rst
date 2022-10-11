@@ -30,7 +30,7 @@ Cylc Development History - Major Changes
   - multi-threading for continuous network request handling and job submission
   - more task states to distinguish job submission from execution
   - dependence between suites via new run databases
-  - polling and killing of real task jobs
+  - polling and killing of real jobs
   - polling as task communications option
 
 - **cylc-6**

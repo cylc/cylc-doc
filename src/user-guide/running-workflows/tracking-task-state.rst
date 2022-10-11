@@ -1,17 +1,17 @@
 
 .. _Task Job Polling:
 
-Task Job Polling
-----------------
+Job Polling
+-----------
 
-At any point after job submission, task jobs can be *polled* to check that
+At any point after job submission, jobs can be *polled* to check that
 their true state matches what scheduler expects based on received job status
 messages or previous polls.
 
-Polling may be necessary if, for example, a task job gets killed by the
+Polling may be necessary if, for example, a job gets killed by the
 untrappable SIGKILL signal (e.g. ``kill -9 PID``), or after a network
 outage that prevents job status messages getting back to the scheduler, or if
-the :term:`scheduler` itself was down when active task jobs finished.
+the :term:`scheduler` itself was down when active jobs finished.
 
 To poll a job the :term:`scheduler` interrogates the :term:`job runner`, and
 the ``job.status`` file of the task, on the job host. This information is
@@ -25,7 +25,7 @@ enough to determine correct task status even if the job finished while the
 Routine Polling
 ^^^^^^^^^^^^^^^
 
-Task jobs are automatically polled at certain times: once on job submission
+Jobs are automatically polled at certain times: once on job submission
 timeout; several times on exceeding the job execution time limit; and at
 workflow restart any tasks recorded as active are polled to find out what
 happened to them while the workflow was down.
@@ -72,9 +72,9 @@ security reasons.
 TCP Task Messaging
 ^^^^^^^^^^^^^^^^^^
 
-Task job wrappers automatically invoke ``cylc message`` to report
-progress back to the :term:`scheduler` when they begin executing,
-at normal exit (success) and abnormal exit (failure).
+Cylc :term:`job scripts <job script>` automatically invoke ``cylc message`` to
+report progress back to the :term:`scheduler` when they begin executing, at
+normal exit (success) and abnormal exit (failure).
 
 By default job status messaging goes by an authenticated TCP connection to the
 :term:`scheduler`, using the ZMQ protocol.  This is the preferred task
@@ -113,7 +113,7 @@ sites where the ZMQ ports are blocked but non-interactive SSH is allowed.
 Polling to Track Job Status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Schedulers can actively poll task jobs at configured intervals, via
+Schedulers can actively poll jobs at configured intervals, via
 non-interactive SSH to the job platform.
 
 This is the least efficient communication method because task status updates
