@@ -3,7 +3,7 @@
 Compound Commands
 =================
 
-Cylc Provides compound commands which carry out more than one
+Cylc provides compound commands which carry out more than one
 workflow action. For example Cylc provides a command to validate,
 install and play a workflow.
 
