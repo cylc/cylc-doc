@@ -109,10 +109,11 @@ jobs:
             html \
             slides \
             linkcheck \
-            SPHINXOPTS="-Wn -A sidebar_version_name=${version}" \
+            SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
             LATEST=false \
-            BUILDDIR='doc/nightly'
+            BUILDDIR='doc/nightly' \
+            FORCE_COLOR=true
           git -C gh-pages add 'nightly' 'versions.json'
 
       - name: push changes

@@ -74,11 +74,21 @@ jobs:
           flake8
           eslint .
 
-      - name: build
+      - name: (debug only) list language dictionaries
+        if: runner.debug
+        shell: python
+        env:
+          PYENCHANT_VERBOSE_FIND: true
         run: |
-          make html slides spelling linkcheck doctest SPHINXOPTS='-Wn'
+          import enchant
+          print(enchant.list_dicts())
 
-      - name: debug
+      - name: build & test
+        run: |
+          make html slides spelling linkcheck doctest \
+            SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
+
+      - name: debug sphinx failure
         if: failure()
         run: |
           cat /tmp/sphinx-err* || true  # sphinx traceback
