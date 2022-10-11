@@ -237,12 +237,13 @@ To do so create a symbolic link to the wrapper, for each of these commands:
 Configuration
 -------------
 
-Cylc uses "sane and safe" defaults and is suitable for use "out of the box".
+Cylc uses sane and safe defaults and is suitable for use "out of the box",
+if all you need to do is run jobs locally in the background.
 However, many things may need to be configured, e.g:
 
-* Job hosts
-* Communication methods
-* User/Site preferences
+* :ref:`AdminGuide.PlatformConfigs` (jobs hosts, runners, etc)
+* :ref:`Scheduler Hosts<Submitting Workflows To a Pool Of Hosts>`
+* :ref:`Default Event Handlers<EventHandlers>`
 
 Cylc Flow
 ^^^^^^^^^
@@ -254,6 +255,20 @@ configuration of the system on both a site and user basis.
 
    Prior to Cylc 8, ``global.cylc`` was named ``global.rc``, but that name is
    no longer supported.
+
+The global.cylc file should be available on user machines (where users interact
+with Cylc on the command line) and on cylc servers (where Cylc schedulers run).
+It is not required to be available on job hosts.
+
+More information about supported configuration items and defaults can be found:
+:ref:`global-configuration`.
+
+Cylc UI Server
+^^^^^^^^^^^^^^
+The `Cylc UI Server`_ can be configured on a site and user basis.
+Guidance for configuration file storage, configuration variables and defaults
+can be found: :ref:`UI_Server_config`.
+
 
 Bash Profile
 ^^^^^^^^^^^^

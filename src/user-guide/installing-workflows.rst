@@ -166,37 +166,8 @@ Directories that can be individually symlinked are:
 * the :term:`run directory` itself
 
 The symlink targets are configured per install target in
-:cylc:conf:`global.cylc[install][symlink dirs]`.
-
-For example, to configure workflow ``log`` directories (on the
-:term:`scheduler` host) so that they symlink to a different location,
-you could write the following in ``global.cylc``:
-
-.. code-block:: cylc
-
-   [install]
-       [[symlink dirs]]
-           [[[localhost]]]
-               log = /somewhere/else
-
-This would result in the following file structure:
-
-.. code-block:: none
-
-   ~/cylc-run
-   └── myflow
-       ├── flow.cylc
-       ├── log -> /somewhere/else/cylc-run/myflow/log
-       ...
-
-   /somewhere
-   └── else
-       └── cylc-run
-           └── myflow
-               └── log
-                   ├── flow-config
-                   ├── install
-                   ...
+:cylc:conf:`global.cylc[install][symlink dirs]`. For more information see
+:ref:`SymlinkDirsSetup`
 
 
 The Cylc Install Process

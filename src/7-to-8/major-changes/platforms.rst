@@ -31,8 +31,9 @@ In Cylc 8 "platforms" can be defined in the global configuration
 (:cylc:conf:`global.cylc`) so that this configuration doesn't have to be
 repeated for each task in each workflow.
 
-Cylc "platforms" may configure hostnames, job runners and more. Only the
-platform name needs to be specified in the task configuration.
+There may be cases where sets of platforms (for example a group of
+standalone compute servers, or a pair of mirrored HPC's) might be equally
+suitable for a task. Such platforms can be set up to be ``platform groups``
 
 .. seealso::
 
@@ -167,7 +168,7 @@ At Cylc 8 the equivalent might be:
 
        [[mytask_login_to_hpc_and_submit]]
            # Recommended:
-           platform = just_run_it
+           platform = slurm_supercomputer
            # ...but This is still legal:
            #platform = $(selector-script)
 
@@ -183,12 +184,24 @@ And the platform settings for these examples might be:
            # A computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
+           install target = localhost
 
        [[slurm_supercomputer]]
            # This computer with Slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
+
+Note that in these examples, it is assumed that ``linuxboxNN``, ``pbs_local`` and
+``slurm_supercomputer`` have distinct file systems.
+Sets of platforms which share a file system must specify
+a single :ref:`install target <Install Targets>`.
+
+.. note::
+   If an install target is not set, a platform will use its own platform name
+   as the install target name. If multiple platforms share a file system
+   but have separate :ref:`install targets <Install Targets>` task initialization
+   will fail.
 
 .. _host-to-platform-logic:
 
@@ -216,6 +229,7 @@ platforms section:
        [[supercomputer_A]]
            hosts = localhost
            job runner = slurm
+           install target = localhost
        [[supercomputer_B]]
            hosts = tigger, wol, eeyore
            job runner = pbs
@@ -230,7 +244,7 @@ And you have a workflow runtime configuration:
                batch system = slurm
        [[task2]]
            [[[remote]]]
-               hosts = eeyore
+               host = eeyore
            [[[job]]]
                batch system = pbs
 
