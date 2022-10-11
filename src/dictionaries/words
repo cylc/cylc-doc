@@ -5,12 +5,8 @@ auth
 authenticator
 bar
 baz
-behavior
-behaviour
 boolean
 booleans
-colored
-coloured
 conf
 config
 configargs
@@ -28,7 +24,6 @@ diff
 diffs
 dir
 dirs
-duration
 durations
 env
 etc
@@ -139,7 +134,6 @@ retrigger
 retriggered
 retriggering
 roadmap
-routines
 runahead
 runnable
 runtime
