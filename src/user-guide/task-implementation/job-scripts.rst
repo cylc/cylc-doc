@@ -11,8 +11,8 @@ non-zero for failure - and do not spawn detaching processes internally (see
 
 .. _JobScripts:
 
-Task Job Scripts
-----------------
+Job Scripts
+-----------
 
 When the :term:`scheduler` determines that a task is ready to run it
 generates a *job script* for the task, and submits it to run (see
@@ -91,7 +91,7 @@ The two "Cylc defined scripts" are:
 ``user-env``
    Which is the contents of the :cylc:conf:`[environment]` section.
 
-Task job scripts are written to the workflow's job log directory. They can be
+Job scripts are written to the workflow's job log directory. They can be
 printed with ``cylc cat-log``.
 
 .. cylc-scope::
@@ -122,7 +122,7 @@ the ``$PATH`` in your bash configuration files (e.g. ``.bashrc``).
 Task Messages
 -------------
 
-Task jobs send status messages back to the :term:`scheduler` to report that
+Jobs send status messages back to the :term:`scheduler` to report that
 execution has started, succeeded, or failed. Custom messages can also be sent
 by the same mechanism, with various severity levels. These can be used to
 trigger other tasks off specific task outputs (see :ref:`MessageTriggers`), or
@@ -173,7 +173,7 @@ file (a "data availability" event).
    cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" \
      "CRITICAL:ERROR occurred in process X!"
 
-Task jobs no longer (since Cylc 8) attempt to resend messages if the server
+Jobs no longer (since Cylc 8) attempt to resend messages if the server
 cannot be reached. Send failures normally imply a network or Cylc
 configuration problem that will not recover by itself, in which case a series
 of messaging retries just holds up job completion unnecessarily. If a job
@@ -189,7 +189,7 @@ Task messages are validated by
 Aborting Job Scripts on Error
 -----------------------------
 
-Task job scripts use ``set -x`` to abort on any error, and trap ERR, EXIT, and
+Job scripts use ``set -x`` to abort on any error, and trap ERR, EXIT, and
 SIGTERM to send task failed messages back to the :term:`scheduler` before
 aborting. Other scripts called from job scripts should therefore abort with
 standard non-zero exit status on error, to trigger the job script error trap.
@@ -205,7 +205,7 @@ triggering the exit trap, protect it with a control statement such as:
        :  # failure: do other stuff
    fi
 
-Task job scripts also use ``set -u`` to abort on referencing any
+Job scripts also use ``set -u`` to abort on referencing any
 undefined variable (useful for picking up typos); and ``set -o pipefail``
 to abort if any part of a pipe fails (by default the shell only returns the
 exit status of the final command in a pipeline).
@@ -287,11 +287,11 @@ In bash, the return status of a pipeline is normally the exit status of the
 last command. This is unsafe, because if any command in the pipeline fails, the
 script will continue nevertheless.
 
-For safety, a Cylc task job script running in bash will have the
+For safety, a Cylc job script running in bash will have the
 ``set -o pipefail`` option turned on automatically. If a pipeline
 exists in a task's ``script``, etc section, the failure of any part of
 a pipeline will cause the command to return a non-zero code at the end, which
-will be reported as a task job failure. Due to the unique nature of a pipeline,
+will be reported as a job failure. Due to the unique nature of a pipeline,
 the job file will trap the failure of the individual commands, as well as the
 whole pipeline, and will attempt to report a failure back to the workflow twice.
 The second message is ignored by the workflow, and so the behaviour can be safely

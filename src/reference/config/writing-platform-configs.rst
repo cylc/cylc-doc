@@ -40,9 +40,8 @@ What Are Platforms?
 Platforms define settings, most importantly:
 
  - A set of ``hosts``.
- - A ``job runner`` (formerly a ``batch system``) where Cylc can submit a
-   task job.
- - An ``install target`` for Cylc to install task job files on.
+ - A ``job runner`` (formerly a ``batch system``) where Cylc can submit a job.
+ - An ``install target`` for Cylc to install job files on.
 
 Why Were Platforms Introduced?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

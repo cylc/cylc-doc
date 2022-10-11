@@ -120,7 +120,7 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 
    Newer version of Mac OS set ``zsh`` as the default shell (as opposed to
    ``bash``). You do not need to change this but be aware that Cylc uses
-   ``bash`` (for task job scripts) which has a subtly different syntax.
+   ``bash`` (for job scripts) which has a subtly different syntax.
 
 .. warning::
 
@@ -166,7 +166,7 @@ User Machines
 Cylc Servers
    Where Cylc schedulers run to manage workflows.
 Job Hosts
-   Where task jobs run, e.g. supercomputers or clusters
+   Where jobs run, e.g. supercomputers or clusters
 
 .. note::
 
@@ -258,9 +258,9 @@ configuration of the system on both a site and user basis.
 Bash Profile
 ^^^^^^^^^^^^
 
-Cylc task job scripts are bash scripts, which is good for manipulating files
-and processes, They invoke ``bash -l`` to allow environment configuration in
-login scripts.
+Cylc :term:`job scripts <job script>` are bash scripts, which is good for
+manipulating files and processes, They invoke ``bash -l`` to allow environment
+configuration in login scripts.
 
 .. warning::
 

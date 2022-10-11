@@ -37,17 +37,17 @@ A Cylc :term:`source directory` contains:
 
 ``bin/`` (optional)
    A directory for scripts and executables used by workflow tasks. It is
-   added to ``$PATH`` in task job environments.
+   added to ``$PATH`` in job environments.
 
-   Task jobs can also run scripting defined in the ``flow.cylc`` file,
+   Jobs can also run scripting defined in the :cylc:conf:`flow.cylc` file,
    executables installed to user-defined locations of the workflow run
    directory, and external executables.
 
 ``lib/python/`` (optional)
    A directory for Python modules. It is added to ``$PYTHONPATH`` in
-   the scheduler and task job execution environments. It can be used by:
+   the scheduler and job execution environments. It can be used by:
 
-   - Task jobs
+   - Tasks
    - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`
 
