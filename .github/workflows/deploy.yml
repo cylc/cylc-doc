@@ -69,17 +69,21 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: configure git
+        uses: cylc/release-actions/configure-git@v1
+
       - name: checkout cylc-doc
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.inputs.cylc-flow-tag }}
+          ref: ${{ inputs.cylc-flow-tag }}
           path: docs
 
       - name: install dependencies
         uses: cylc/cylc-doc/.github/actions/install-dependencies@master
 
       - name: install cylc-doc
-        run: pip install "${{ github.workspace }}/docs[all]"
+        working-directory: docs
+        run: pip install ".[all]"
 
       - name: install libs to document
         uses: cylc/cylc-doc/.github/actions/install-libs@master
@@ -98,21 +102,18 @@ jobs:
           path: gh-pages
 
       - name: sync static files
-        if: ${{ github.event.inputs.set_stable == 'true' }}
+        if: ${{ inputs.set_stable }}
+        env:
+          DOCS: '${{ github.workspace }}/docs'
+          PAGE: '${{ github.workspace }}/gh-pages'
         run: |
-          DOCS="${{ github.workspace }}/docs" \
-          PAGE="${{ github.workspace }}/gh-pages"  \
-
           rsync -r "$DOCS/doc/" "$PAGE/"
 
       - name: install gh-pages
+        working-directory: docs
         run: |
-          DOCS="${{ github.workspace }}/docs" \
-          PAGE="${{ github.workspace }}/gh-pages"  \
-
-          cd "$DOCS"
           rm -r doc
-          ln -s "$PAGE" doc
+          ln -s ../gh-pages doc
 
       - name: build docs
         run: |
@@ -125,20 +126,17 @@ jobs:
             linkcheck \
             SPHINXOPTS='-Wn --keep-going' \
             FORCE_COLOR=true \
-            STABLE=${{ github.event.inputs.set_stable }} \
-            LATEST=${{ github.event.inputs.set_latest }}
-
-      - name: configure git
-        uses: cylc/release-actions/configure-git@v1
+            STABLE=${{ inputs.set_stable }} \
+            LATEST=${{ inputs.set_latest }}
 
       - name: tidy old versions
+        working-directory: docs
         run: |
-          cd docs
-          git rm -r $("${{ github.workspace }}/docs/bin/version" tidy) || true
+          git rm -r $("./bin/version" tidy) || true
 
       - name: push changes
+        working-directory: gh-pages
         run: |
-          cd gh-pages
           git add *
-          git commit -m "add: ${{ github.event.inputs.cylc-flow-tag }}"
+          git commit -m "add: ${{ inputs.cylc-flow-tag }}"
           git push origin HEAD

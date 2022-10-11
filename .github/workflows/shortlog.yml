@@ -9,7 +9,7 @@ on:
       - '.github/workflows/shortlog.yml'
 
 jobs:
-  test:
+  shortlog:
     runs-on: 'ubuntu-latest'
     timeout-minutes: 10
     steps:
