@@ -29,7 +29,7 @@ CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory (see b
 CYLC_WORKFLOW_UUID                 # Workflow UUID string
 CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
-CYLC_TASK_JOB                      # Task job identifier expressed as
+CYLC_TASK_JOB                      # Job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER
                                    #   e.g. 20110511T1800Z/t1/01
 
@@ -50,7 +50,7 @@ CYLC_TASK_FLOW_NUMBERS             # Flows this task belongs to, e.g. 1,2
 
 CYLC_TASK_LOG_DIR                  # Location of the job log directory
                                    #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/
-CYLC_TASK_LOG_ROOT                 # The task job file path
+CYLC_TASK_LOG_ROOT                 # The job script path
                                    #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
 CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
                                    #   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1

@@ -157,7 +157,7 @@ In addition, the following variables are exported to this environment
 .. warning::
 
    The environment is read on the workflow host when the configuration is
-   parsed. It is not read at run time by task jobs on the job platform.
+   parsed. It is not read at run time by jobs on the job platform.
 
 The following Jinja2 variables are also available (i.e. standalone,
 not in the ``environ`` dict):

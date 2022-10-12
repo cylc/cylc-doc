@@ -57,8 +57,12 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 20
+    defaults:
+      run:
+        # use login shell for conda activation
+        shell: bash -leo pipefail {0}
     steps:
       - name: configure python
         uses: actions/setup-python@v4
@@ -120,7 +124,8 @@ jobs:
             html \
             slides \
             linkcheck \
-            SPHINXOPTS='-Wn' \
+            SPHINXOPTS='-Wn --keep-going' \
+            FORCE_COLOR=true \
             STABLE=${{ inputs.set_stable }} \
             LATEST=${{ inputs.set_latest }}
 

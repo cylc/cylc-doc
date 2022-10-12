@@ -323,7 +323,7 @@ inferred from context (rules below).
 .. important::
 
    Cycle points in Cylc are just task labels that anchor dependence on
-   other tasks, and which task jobs can use to determine their current cycle
+   other tasks, and which tasks can use to determine their current cycle
    point. **Datetime cycle points have no relation to wallclock (real) time**
    except where specific tasks, if any, depend on :term:`clock triggers <clock
    trigger>`.
@@ -594,7 +594,7 @@ point will be done from midnight of the current day.
 The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-At start up the initial cycle point is passed to task job environments
+At start up the initial cycle point is passed to job environments
 as ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` and stored in the workflow
 database to persist across restarts. However it gets wiped out (set to
 ``None``) by a :term:`warm start` (``cylc play --start-cycle-point`` or ``cylc

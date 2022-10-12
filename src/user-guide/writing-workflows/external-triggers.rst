@@ -192,7 +192,7 @@ on whether or not the trigger condition was found to be satisfied). The
 ``results`` dictionary contains the names and values of all of the
 target workflow state parameters. Each item in it gets qualified with the
 unique trigger label ("upstream" here) and passed to the environment of
-dependent task jobs (the members of the ``FAM`` family in this case).
+dependent tasks (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
 
 .. code-block:: console

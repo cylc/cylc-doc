@@ -115,7 +115,7 @@ Non-trivial task scripting should be held in separate script files rather than
 inlined in :cylc:conf:`flow.cylc`. This keeps the workflow definition tidy, and it
 allows proper shell-mode text editing and independent testing of task scripts.
 
-For automatic access by task jobs, task-specific scripts should be kept in
+For automatic access by jobs, task-specific scripts should be kept in
 Rose app bin directories, and shared scripts kept in (or installed to) the
 workflow bin directory.
 
@@ -531,7 +531,7 @@ be shared via Jinja variables:
 
 For completeness we note that it is also possible to configure multiple tasks
 to use the same work directory so they can all share files in ``$PWD``.
-(Cylc executes task jobs in special work directories that by default are unique
+(Cylc executes tasks in special work directories that by default are unique
 to each task). This may simplify the workflow slightly, and it may be useful if
 you are unfortunate enough to have executables that are designed for IO in
 ``$PWD``, *but it is not recommended*. There is a higher risk

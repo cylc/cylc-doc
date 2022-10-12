@@ -6,46 +6,11 @@ Platforms
 .. admonition:: Does This Change Affect Me?
    :class: tip
 
-   .. cylc-scope:: flow.cylc
+   Cylc platforms are a new feature which replace the task ``job`` and
+   ``remote`` configuration sections:
 
-   Platforms replace the deprecated :cylc:conf:`[runtime][<namespace>][job]`
-   and :cylc:conf:`[runtime][<namespace>][remote]`
-   sections:
-
-   .. code-block:: cylc
-
-      [runtime]
-          [[foo]]
-              [[[job]]]
-                  batch system = slurm
-              [[[remote]]]
-                  host = my_supercomputer
-
-   .. cylc-scope::
-
-   Read this section if your workflow's jobs run on a remote computer or if
-   you see the following warning on running ``cylc validate``:
-
-   .. code-block:: console
-
-      WARNING - deprecated settings found (please replace with [runtime][foo]platform):
-          [runtime][foo][remote]host
-          [runtime][foo][job]batch system
-
-   If you currently use the ``rose host-select`` utility or a similar host
-   selection or load balancing utility the intelligent host selection
-   functionality of Cylc 8 may be used instead:
-
-   .. code-block:: cylc
-
-      [runtime]
-          [[task1]]
-              [[[remote]]]
-                  host = $(rose host-select my-computer)
-          [[task2]]
-              # An example of a home-rolled host selector
-              [[[remote]]]
-                  host = $(test $((RANDOM%2)) -eq 0 && echo "host_a" || echo "host_b")
+   * :cylc:conf:`[runtime][<namespace>][job]`
+   * :cylc:conf:`[runtime][<namespace>][remote]`
 
 
 Overview
@@ -57,23 +22,18 @@ Overview
    - The terms :term:`job runner` (in Cylc 8 configurations) and batch system
      (in Cylc 7 configurations) are equivalent.
 
-Cylc 7 defines settings for remote :term:`jobs <job>` in each
-:term:`task's <task>` definition.
+Submitting a job to a :term:`job runner` may require configuration.
 
-Cylc 8 allows site administrators (and users) to configure
-:term:`platforms <platform>` in ``global.cylc``. A platform can have
-multiple hosts with associated platform-specific settings. Users only need to
-select the platform for their task jobs.
+In Cylc 7 this configuration must be provided for each task in the workflow
+configuration (``suite.rc``).
 
-Platforms also define how hosts are selected from each platform:
-
-- Randomly (default)
-- By definition order
+In Cylc 8 "platforms" can be defined in the global configuration
+(:cylc:conf:`global.cylc`) so that this configuration doesn't have to be
+repeated for each task in each workflow.
 
 There may be cases where sets of platforms (for example a group of
 standalone compute servers, or a pair of mirrored HPC's) might be equally
-suitable for a task, but not share files systems to allow them to constitute
-a single platform. Such platforms can be set up to be ``platform groups``
+suitable for a task. Such platforms can be set up to be ``platform groups``
 
 .. seealso::
 
@@ -90,6 +50,20 @@ a single platform. Such platforms can be set up to be ``platform groups``
    Unless you are in :ref:`backward compatibility mode <cylc_7_compat_mode>`,
    you should upgrade to using platforms instead.
    Deprecated settings will be removed in a later release of Cylc.
+
+
+What is a Platform?
+-------------------
+
+A "platform" represents one or more hosts from which jobs can be submitted to or
+polled from a common job submission system.
+
+If a platform has multiple hosts Cylc will automatically select a host when
+needed and will fallback to other hosts if it is not contactable.
+
+A "platform group" represents a collection of independent platforms. Cylc will
+automatically select a platform and will fallback to other platforms in the
+group (for appropriate operations) if the platform is not contactable.
 
 
 Examples
@@ -194,7 +168,7 @@ At Cylc 8 the equivalent might be:
 
        [[mytask_login_to_hpc_and_submit]]
            # Recommended:
-           platform = just_run_it
+           platform = slurm_supercomputer
            # ...but This is still legal:
            #platform = $(selector-script)
 
@@ -210,12 +184,24 @@ And the platform settings for these examples might be:
            # A computer with PBS, that takes local job submissions
            job runner = pbs
            hosts = localhost
+           install target = localhost
 
        [[slurm_supercomputer]]
            # This computer with Slurm requires you to use a login node.
            hosts = login_node01, login_node02  # Cylc will pick a host.
            job runner = slurm
 
+
+Note that in these examples, it is assumed that ``linuxboxNN``, ``pbs_local`` and
+``slurm_supercomputer`` have distinct file systems.
+Sets of platforms which share a file system must specify
+a single :ref:`install target <Install Targets>`.
+
+.. note::
+   If an install target is not set, a platform will use its own platform name
+   as the install target name. If multiple platforms share a file system
+   but have separate :ref:`install targets <Install Targets>` task initialization
+   will fail.
 
 .. _host-to-platform-logic:
 
@@ -243,6 +229,7 @@ platforms section:
        [[supercomputer_A]]
            hosts = localhost
            job runner = slurm
+           install target = localhost
        [[supercomputer_B]]
            hosts = tigger, wol, eeyore
            job runner = pbs
@@ -257,7 +244,7 @@ And you have a workflow runtime configuration:
                batch system = slurm
        [[task2]]
            [[[remote]]]
-               hosts = eeyore
+               host = eeyore
            [[[job]]]
                batch system = pbs
 

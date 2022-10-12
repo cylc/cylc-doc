@@ -136,7 +136,7 @@ Glossary
       The workflow name is a path relative to the cylc-run directory which
       contains one or more workflow :term:`run directories <run directory>`.
 
-      Task jobs can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
+      Tasks can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
       runtime environment.
 
       Unlike :term:`workflow id` the name is not always a unique identifier. In
@@ -712,7 +712,7 @@ Glossary
 
          <run-directory>/work/<cycle-point>/<task-name>
 
-      Task jobs can get their own work directory path at runtime from
+      Tasks can get their own work directory path at runtime from
       the ``CYLC_TASK_WORK_DIR`` environment variable or the Posix ``pwd``
       command.
 
@@ -731,7 +731,7 @@ Glossary
 
          <run-directory>/share
 
-      Task jobs can get their own share directory path at runtime from
+      Tasks can get their own share directory path at runtime from
       the ``CYLC_WORKFLOW_SHARE_DIR`` environment variable.
 
       In cycling workflows files are typically stored in cycle point
@@ -784,7 +784,7 @@ Glossary
          <run-directory>/log/job/<cycle-point>/<task-name>/<job-submit-num>
 
 
-      You can print task job logs at the terminal with ``cylc cat-log
+      You can print job logs at the terminal with ``cylc cat-log
       <workflow-name> <task-id>``. By default this prints ``job.out``.
       There are command options to select the other logs.
 
@@ -1051,6 +1051,14 @@ Glossary
 
          * :term:`reinstall`
 
+   install target
+      Cylc uses install targets to determine which platforms share file systems.
+      Install targets should normally be managed at site level. They are configured in
+      :cylc:conf:`global.cylc[platforms][<platform name>]install target`.
+
+      .. seealso::
+
+         * :ref:`Install Targets`
 
    reinstall
    reinstallation

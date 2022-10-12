@@ -31,8 +31,12 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        # use login shell for conda activation
+        shell: bash -leo pipefail {0}
     steps:
       - name: configure python
         uses: actions/setup-python@v4
@@ -105,10 +109,11 @@ jobs:
             html \
             slides \
             linkcheck \
-            SPHINXOPTS="-Wn -A sidebar_version_name=${version}" \
+            SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
             LATEST=false \
-            BUILDDIR='doc/nightly'
+            BUILDDIR='doc/nightly' \
+            FORCE_COLOR=true
           git -C gh-pages add 'nightly' 'versions.json'
 
       - name: push changes

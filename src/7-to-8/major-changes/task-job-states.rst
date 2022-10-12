@@ -14,7 +14,7 @@ the submission stage, real job scripts). A task can have multiple jobs, by
 automatic retries and manual re-triggering.
 
 Cylc 7 had 13 task/job states. The GUI only showed tasks, with job data
-from the latest task job.
+from the latest job.
 
 Cylc 8 has only 8 task/job states. The Cylc 8 UI shows both task and jobs.
 Task icons are monochrome circles; job icons are coloured squares. The running

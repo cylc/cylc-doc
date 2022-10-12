@@ -27,7 +27,7 @@ applications wrapped by the tasks.
 
 .. note::
 
-   At runtime, task jobs can access their own workflow task name as
+   At runtime, tasks can access their own workflow task name as
    ``$CYLC_TASK_NAME`` in the job environment :ref:`job environment
    <TaskExecutionEnvironment>` if needed.
 
@@ -62,7 +62,7 @@ All tasks inherit implicitly from a family called ``root`` that can provide
 default settings for all tasks in the workflow (non-root families require an
 explicit ``inherit`` statement).
 
-For example, if all task jobs are to run on the same job platform, that could
+For example, if all tasks are to run on the same platform, that could
 can be specified once for all tasks under ``root``:
 
 .. code-block:: cylc
@@ -200,11 +200,11 @@ be used to disable the visualization usage without affecting inheritance:
 
 .. _TaskExecutionEnvironment:
 
-Task Job Environment
---------------------
+Job Environment
+---------------
 
-Task job scripts export various environment variables before running ``script``
-blocks (see :ref:`TaskJobSubmission`).
+:term:`Job scripts <job script>` export various environment variables before
+running ``script`` blocks (see :ref:`TaskJobSubmission`).
 
 Scheduler-defined variables appear first to identify the workflow, the task,
 and log directory locations. These are followed by user-defined variables from
@@ -213,7 +213,7 @@ is preserved so that new variable assignments can reference previous ones.
 
 .. note::
 
-   Task environment variables are evaluated at runtime, by task jobs, on the
+   Task environment variables are evaluated at runtime, by jobs, on the
    job platform. So ``$HOME`` in a task environment, for instance, evaluates at
    runtime to the home directory on the job platform, not on the scheduler
    platform.
@@ -234,7 +234,7 @@ and ``TEXTURE=rough`` in its environment:
                COLOR = blue  # root override
                TEXTURE = rough # new variable
 
-Task job access to Cylc itself is configured first so that variable
+Job access to Cylc itself is configured first so that variable
 assignment expressions (as well as scripting) can use Cylc commands:
 
 .. code-block:: cylc
@@ -252,8 +252,8 @@ Overriding Inherited Environment Variables
 
    If you override an inherited task environment variable the parent config
    item gets *replaced* before it is ever used to define the shell variable in
-   the task job script. Consequently the job cannot see the parent value as well
-   as the task value:
+   the :term:`job script`. Consequently the job cannot see the parent value as
+   well as the task value:
 
 .. code-block:: cylc
 
@@ -285,15 +285,16 @@ parent variable:
 
 .. _Task Job Script Variables:
 
-Task Job Script Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Job Script Variables
+^^^^^^^^^^^^^^^^^^^^
 
-These variables provided by the :term:`scheduler` are available to task job scripts:
+These variables provided by the :term:`scheduler` are available to
+:term:`job scripts <job script>`:
 
 .. literalinclude:: ../../reference/job-script-vars/var-list.txt
    :language: sub
 
-Some global shell variables are also defined in the task job script, but not
+Some global shell variables are also defined in the job script, but not
 exported to subshells:
 
 .. code-block:: sub
@@ -320,7 +321,7 @@ area, by global config settings under :cylc:conf:`global.cylc[install][symlink d
 Task Work Directories
 ^^^^^^^^^^^^^^^^^^^^^
 
-Task job scripts are executed from within :term:`work directories <work
+Job scripts are executed from within :term:`work directories <work
 directory>` created automatically under the workflow run directory. A task can
 access its own work directory via ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD``
 if it does not change to another location at runtime). By default the location
@@ -431,10 +432,10 @@ platform group.
    running your platform selection script in the same was is it would for
    any other submission failure.
 
-Remote Task Job Log Directories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Remote Job Log Directories
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Task job stdout and stderr streams are written to :term:`log files <job log>`
+Job stdout and stderr streams are written to :term:`log files <job log>`
 under the workflow :term:`run directory` (see :ref:`WhitherStdoutAndStderr`).
 For remote tasks the same directory is used, on the job host.
 
@@ -556,7 +557,7 @@ workflow.
 .. note::
 
    Task event handlers are called by the :term:`scheduler`, not by the task
-   jobs that generate the events - so they do not see the task job environment.
+   jobs that generate the events - so they do not see the job environment.
 
 Event handlers can be stored in the workflow ``bin`` directory, or anywhere in
 ``$PATH`` in the :term:`scheduler` environment.

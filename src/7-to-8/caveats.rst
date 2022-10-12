@@ -58,7 +58,7 @@ Multiple Selection
    * https://github.com/cylc/cylc-ui/issues/434
 Installing Workflows
    At present there is no way to view or install
-   :term:`source workflows <source directory>`) in the UI.
+   :term:`source workflows <source directory>` in the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation in the UI.
 Trigger Edit

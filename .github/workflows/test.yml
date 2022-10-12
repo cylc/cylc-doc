@@ -25,8 +25,12 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        # use login shell for conda activation
+        shell: bash -leo pipefail {0}
     steps:
       - name: configure python
         uses: actions/setup-python@v4
@@ -47,7 +51,18 @@ jobs:
       - name: install cylc-doc
         run: pip install .[all]
 
-      - name: install libs to document
+      - name: install libs to document (8.0.x)
+        if: github.base_ref == '8.0.x'
+        uses: ./.github/actions/install-libs
+        with:
+          # NOTE: these need to be manually updated as necessary:
+          cylc-flow-tag: '8.0.x'
+          cylc-rose-tag: '1.1.x'
+          cylc-uis-tag: '1.1.x'
+          metomi-rose-tag: '2.0.x'
+
+      - name: install libs to document (other branches)
+        if: github.base_ref != '8.0.x'
         uses: ./.github/actions/install-libs
 
       - name: install eslint
@@ -59,11 +74,21 @@ jobs:
           flake8
           eslint .
 
-      - name: build
+      - name: (debug only) list language dictionaries
+        if: runner.debug
+        shell: python
+        env:
+          PYENCHANT_VERBOSE_FIND: true
         run: |
-          make html slides spelling linkcheck doctest SPHINXOPTS='-Wn'
+          import enchant
+          print(enchant.list_dicts())
 
-      - name: debug
+      - name: build & test
+        run: |
+          make html slides spelling linkcheck doctest \
+            SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
+
+      - name: debug sphinx failure
         if: failure()
         run: |
           cat /tmp/sphinx-err* || true  # sphinx traceback

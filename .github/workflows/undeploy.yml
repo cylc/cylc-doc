@@ -25,7 +25,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag present on both cylc-flow and cylc-docs.'
+        description: 'Tag present on both cylc-flow and cylc-doc'
         required: true
 
 concurrency:
@@ -33,7 +33,7 @@ concurrency:
 
 jobs:
   undeploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       TAG: ${{ inputs.tag }}
