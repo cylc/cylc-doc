@@ -1,40 +1,3 @@
-
-.. _Task Job Polling:
-
-Job Polling
------------
-
-At any point after job submission, jobs can be *polled* to check that
-their true state matches what scheduler expects based on received job status
-messages or previous polls.
-
-Polling may be necessary if, for example, a job gets killed by the
-untrappable SIGKILL signal (e.g. ``kill -9 PID``), or after a network
-outage that prevents job status messages getting back to the scheduler, or if
-the :term:`scheduler` itself was down when active jobs finished.
-
-To poll a job the :term:`scheduler` interrogates the :term:`job runner`, and
-the ``job.status`` file of the task, on the job host. This information is
-enough to determine correct task status even if the job finished while the
-:term:`scheduler` was down or unreachable on the network.
-
-.. seealso::
-   - ``cylc poll --help``
-
-
-Routine Polling
-^^^^^^^^^^^^^^^
-
-Jobs are automatically polled at certain times: once on job submission
-timeout; several times on exceeding the job execution time limit; and at
-workflow restart any tasks recorded as active are polled to find out what
-happened to them while the workflow was down.
-
-Routine polling can also be configured as a way to track job status on platforms
-that do not allow routing back to the workflow host for task messaging by TCP
-or SSH. See :ref:`Polling To Track Job Status`.
-
-
 .. _TaskComms:
 
 Tracking Job Status
@@ -157,16 +120,3 @@ the last value, which is used repeatedly until the job is finished:
    [runtime]
       [[task]]
          platform = my_platform
-
-
-A list of intervals with optional multipliers can be used for both submission
-and execution polling, although a single value is probably sufficient for
-submission. If these items are not configured, default values from
-site and user global config will be used for
-:cylc:conf:
-`global.cylc[platforms][<platform name>]communication method = poll`.
-
-Polling is not done by default under the other task communications methods, but
-it can be configured as well if you like.
-
-
