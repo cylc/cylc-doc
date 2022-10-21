@@ -117,7 +117,7 @@ web GUI (providing the `Cylc UI Server`_ is installed).
 
    :ref:`CompoundCommands` - For your convenience we have
     provided commands which represent common working practices. For
-    example ``cylc vip``(Validate-Install-Play) which runs
+    example ``cylc vip`` (Validate-Install-Play) which runs
     ``cylc validate``, ``cylc install`` and ``cylc play``.
 
 
