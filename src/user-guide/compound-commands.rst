@@ -18,7 +18,7 @@ Compound commands make common ways of working easier.
 ``cylc vip`` (Validate, Install and Play)
 -----------------------------------------
 
-Cylc VIP is the same as running:
+``cylc vip /home/me/cylc-src/my-workflow`` is the same as running:
 
 .. code-block:: bash
 
