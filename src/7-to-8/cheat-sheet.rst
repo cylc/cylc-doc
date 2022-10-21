@@ -60,7 +60,8 @@ Install a workflow from source and run it:
          cylc play <name>
 
          # alternatively:
-         cylc vip .
+         # validate, install & play
+         cylc vip <name>
 
 
 Reloading
