@@ -59,10 +59,10 @@ A "platform" represents one or more hosts from which jobs can be submitted to or
 polled from a common job submission system.
 
 If a platform has multiple hosts Cylc will automatically select a host when
-needed and will fallback to other hosts if it is not contactable.
+needed and will fall back to other hosts if it is not contactable.
 
 A "platform group" represents a collection of independent platforms. Cylc will
-automatically select a platform and will fallback to other platforms in the
+automatically select a platform and will fall back to other platforms in the
 group (for appropriate operations) if the platform is not contactable.
 
 

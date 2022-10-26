@@ -881,6 +881,52 @@ In this example the initial cycle point is ``20100101T03``, so the
 the first cycle points after the initial cycle point in the respective
 ``min( )`` entries.
 
+.. _IsolatedInitialAndFinalGraphs:
+
+Isolated Initial and Final Graphs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 8.1.0
+
+If your entire workflow depends on setup tasks, or you want to run teardown
+tasks once everything else has finished, you can use isolated initial and final
+graphs rather than configure universal dependence on tasks in the main graph.
+
+An isolated initial graph has the special cycle point ``alpha``; and an
+isolated final graph ``omega``. In the following example, the main graph will
+run once the ``alpha`` graph has finished; and the ``omega`` graph will run
+once the main graph has finished:
+
+.. code-block:: cylc
+
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       [[graph]]
+           alpha = "get-code => build-code => deploy-code"  # initial graph
+           P1 = "get-data => run-model => make-products"  # main graph
+           P2 = "run-model => check-products"  # main graph
+           omega = "cleanup"  # final graph
+
+.. note::
+
+   The ``alpha`` and ``omega`` cycle points can appear in task IDs just like
+   normal cycle points. For example, ``test/run2//alpha/get-code`` represents
+   the ``get-code`` task in the ``alpha`` cycle of the ``test/run2`` workflow.
+
+.. note::
+
+   Tasks from any of the graphs can be manually triggered at any time.
+   You may want to pause the main graph if re-triggering an ``alpha`` task
+   mid-run, e.g. to redeploy code.
+
+.. warning::
+
+   Cylc naturally interleaves cycles as dependencies allow, for efficient
+   scheduling. Use isolated ``alpha`` and ``omega`` graphs only if there
+   should be no overlap between them and the main graph.
+
+
 .. _IntegerCycling:
 
 Integer Cycling
@@ -2017,7 +2063,7 @@ lowest-valued point with :term:`active` or :term:`incomplete` tasks present.
 
 The runahead limit can be set with :cylc:conf:`[scheduling]runahead limit`,
 to an integer interval (for datetime or integer cycling workflows) or to
-a datetime interval (datetime cycling only). 
+a datetime interval (datetime cycling only).
 
 The integer format ``Pn`` is an interval that spans ``n+1`` consecutive cycle
 points, regardless of how the cycle point values increment from one point to
@@ -2041,8 +2087,8 @@ finishes and allows the runahead limit to move on:
         [[graph]]
             P2 = foo  # cycle points 1, 3, 5, 7, 9, ...
 
-The active cycle points in this workflow, at some point during the run, 
-might be ``29, 31, 33, 35``, for example. 
+The active cycle points in this workflow, at some point during the run,
+might be ``29, 31, 33, 35``, for example.
 
 .. code-block:: cylc
 
@@ -2074,7 +2120,7 @@ they might be ``2060, 2061, 2062, 2063, 2064``.
 .. note::
 
    To restrict activity to a single cycle point at a time (just the base point)
-   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``. 
+   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``.
 
 
 .. note::
