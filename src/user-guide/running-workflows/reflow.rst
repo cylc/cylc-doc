@@ -5,24 +5,30 @@ Concurrent Flows
 
 .. versionadded:: 8.0.0
 
-In Cylc, a *flow* is a self-propagating run through the workflow :term:`graph`
-from some initial task(s).
+In Cylc, a *flow* is a single self-consistent run through the workflow
+:term:`graph` from some initial task(s).
 
-At start-up the :term:`scheduler` automatically launches a flow from the start
-of the graph. But you can use ``cylc trigger --flow=new ID`` to start additional 
-flows anywhere in the graph, while the original (and any other) flow still
-runs. New flows continue on from triggered tasks as dictated by the graph.
+As a flow advances, upcoming tasks run only if they have not already run in
+the same flow.
 
-When a flow advances to a new task in the :term:`graph`, the task will only run
-if it did not already run in the same flow.
+At start-up the :term:`scheduler` automatically triggers the first flow from
+the start of the graph. 
 
-See :ref:`below<flow-trigger-use-cases>` for suggested use cases, and an
-:ref:`example<new-flow-example>`, of this capability.
+By default, manually triggered tasks "belong to" the existing flow(s), but you
+can also choose to start new flows by triggering tasks anywhere in the graph.
+
+.. note::
+   A flow does not have to be contiguous in the graph because different graph
+   branches can evolve at different rates, and tasks can be manually triggered
+   anywhere in the graph.
+
+See :ref:`below<flow-trigger-use-cases>` for uses, and an
+:ref:`example<new-flow-example>`, of concurrent flows.
 
 .. note::
    Flows :ref:`merge<flow-merging>` where (and if) tasks collide in the ``n=0``
    :term:`active window`. Downstream of a merge, tasks are considered to belong
-   to all constituent flows.
+   to all of their constituent flows.
 
 
 Flow Numbers
@@ -106,6 +112,14 @@ Triggering a Flow-Independent Single Task
    It will not spawn children, and other flows that come by will re-run it.
 
    .. image:: ../../img/no-flow-n.png
+
+Triggering with No Active Flows
+   ``cylc trigger [--wait] ID``
+
+   By default, triggered tasks will be given the flow numbers of the most
+   recent active task. This can happen, for instance, if you restart a
+   completed workflow and then trigger a task in it. The result will be the
+   same as if you had triggered the task just before the workflow completed.
 
 Special Case: Triggering ``n=0`` Tasks
    Tasks in the ``n=0`` window are :term:`active`, :term:`active-waiting`, or
