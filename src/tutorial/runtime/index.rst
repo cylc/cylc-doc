@@ -17,3 +17,4 @@ This section covers:
    introduction
    runtime-configuration
    configuration-consolidation/index
+   reinstalling
