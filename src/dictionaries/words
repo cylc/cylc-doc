@@ -29,6 +29,7 @@ env
 etc
 executables
 facade
+fallback
 filename
 filenames
 filesystem
@@ -82,10 +83,8 @@ obs
 offline
 onwards
 packjob
-parameterisation
-parameterise
-parameterised
 parameterization
+parameterize
 parameterized
 passX
 passphrase

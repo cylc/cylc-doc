@@ -100,7 +100,7 @@ The ``cylc config`` Command
 
       A primary use of ``cylc config`` is inspecting the
       ``[runtime]`` section of a workflow. However, the command does not
-      expand :term:`parameterisations <parameterisation>` and
+      expand :term:`parameterizations <parameterization>` and
       :term:`families <family>` in the workflow :term:`graph`. To see the
       expanded graph use the ``cylc graph`` command.
 
@@ -129,7 +129,7 @@ The ``cylc config`` Command
 
 .. ifslides::
 
-   Note that ``cylc config`` doesn't expand families or parameterisations
+   Note that ``cylc config`` doesn't expand families or parameterizations
    in the :term:`graph`. Use ``cylc graph`` to visualise these.
 
    .. TODO - Raise and issue for this, note cylc config and cylc view.
@@ -146,7 +146,7 @@ The Three Approaches
 
 * :ref:`families <tutorial-cylc-families>`
 * :ref:`jinja2 <tutorial-cylc-jinja2>`
-* :ref:`parameters <tutorial-cylc-parameterisation>`
+* :ref:`parameters <tutorial-cylc-parameterization>`
 
 
 .. _cylc-tutorial-consolidation-conclusion:
@@ -165,7 +165,7 @@ Which Approach To Use
    * `Jinja2`_ is good at configuring settings which apply to the entire workflow
      rather than just a single task, as we can define variables then use them
      throughout the workflow.
-   * :term:`Parameterisation <parameterisation>` works best for describing tasks
+   * :term:`Parameterization <parameterization>` works best for describing tasks
      which are very similar but which have subtly different configurations
      (e.g. different arguments or environment variables).
 
@@ -177,7 +177,7 @@ Which Approach To Use
       Collecting tasks into broad groups.
    Jinja2
       Configuration settings which apply to the entire workflow.
-   Parameterisation
+   Parameterization
       Tasks which are similar.
 
 .. nextslide::

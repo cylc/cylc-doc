@@ -1219,8 +1219,8 @@ Glossary
 
 
    task parameters
-   parameterisation
-      Task parameterisation is one way of consolidating configuration in the
+   parameterization
+      Task parameterization is one way of consolidating configuration in the
       :cylc:conf:`flow.cylc` file. Cylc implicitly loops over ranges or lists
       of pre-defined parameters to automatically generate sets of similar
       tasks.
@@ -1247,7 +1247,7 @@ Glossary
       .. seealso::
 
          * :ref:`Cylc User Guide <User Guide Param>`
-         * :ref:`Cylc tutorial <tutorial-cylc-parameterisation>`
+         * :ref:`Cylc tutorial <tutorial-cylc-parameterization>`
 
 
    family
