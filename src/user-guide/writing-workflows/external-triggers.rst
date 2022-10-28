@@ -254,7 +254,11 @@ properties:
    because each call is executed in an independent process in the process
    pool. If necessary the filesystem can be used for this purpose.
 
-.. autoenumvalues:: cylc.flow.task_events_mgr.EventData
+.. spelling:word-list::
+
+   vv
+
+.. autoenumvalues:: cylc.flow.xtrigger_mgr.TemplateVariables
 
 Function return values should be as follows:
 
