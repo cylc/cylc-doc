@@ -578,21 +578,20 @@ Note that day-of-week should always be specified when using weeks. If a time
 is not included, the calculation of the next or previous corresponding
 point will be done from midnight of the current day.
 
-.. table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
+.. csv-table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
+      using ISO8601 truncated dates.
+   :widths: auto
 
-   ====================================  ==================
-   Syntax                                Interpretation
-   ====================================  ==================
-   ``next(-00)``                         2100-01-01T00:00Z
-   ``previous(--01)``                    2018-01-01T00:00Z
-   ``next(---01)``                       2018-04-01T00:00Z
-   ``previous(--1225)``                  2017-12-25T00:00Z
-   ``next(-2006)``                       2020-06-01T00:00Z
-   ``previous(-W101)``                   2018-03-05T00:00Z
-   ``next(-W-1; -W-3; -W-5)``            2018-03-14T00:00Z
-   ``next(-001; -091; -181; -271)``      2018-04-01T00:00Z
-   ``previous(-365T12Z)``                2017-12-31T12:00Z
-   ====================================  ==================
+   Syntax, Description, Interpretation
+   ``next(-00)``,                     Any century; next year 00,                  2100-01-01
+   ``previous(--01)``,                Any year; next month 01,                    2018-01-01
+   ``next(---01)``,                   Any year; any month; next 1st of month,     2018-04-01
+   ``previous(--1225)``,              Any year; previous Dec 25,                  2017-12-25
+   ``next(-2006)``,                   Any century; next June in a year ending 20, 2020-06-01
+   ``previous(-W101)``,               Any century; previous week 10 day 1,        2018-03-05
+   ``next(-W-1; -W-3; -W-5)``,        "Any year; any week; next day 1, 3 or 5",   2018-03-14
+   ``next(-001; -091; -181; -271)``,  "Any year; day 1, 91, 181 or 271",          2018-04-01
+   ``previous(-365T12Z)``,            Any year; previous day 356 at 12Z,          2017-12-31T12:00Z
 
 
 The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
