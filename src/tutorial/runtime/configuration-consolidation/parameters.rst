@@ -1,11 +1,11 @@
-.. _tutorial-cylc-parameterisation:
+.. _tutorial-cylc-parameterization:
 
 
-Parameterised Tasks
+Parameterized Tasks
 ===================
 
 
-Parameterised tasks (see :term:`parameterisation`) provide a way of implicitly
+Parameterized tasks (see :term:`parameterization`) provide a way of implicitly
 looping over tasks without the need for Jinja2.
 
 
@@ -197,10 +197,10 @@ Parameters can be either strings or integers:
    .. rubric:: This practical continues on from the
       :ref:`Jinja2 practical <cylc-tutorial-jinja2-practical>`.
 
-   4. **Use Parameterisation To Consolidate The** ``get_observations``
+   4. **Use Parameterization To Consolidate The** ``get_observations``
       **Tasks**.
 
-      Next we will parameterise the ``get_observations`` tasks.
+      Next we will parameterize the ``get_observations`` tasks.
 
       Add a parameter called ``station``:
 
@@ -273,7 +273,7 @@ Parameters can be either strings or integers:
 
          cylc config . -i "[runtime]"
 
-      Finally we can use this parameterisation to simplify the workflow's
+      Finally we can use this parameterization to simplify the workflow's
       graphing. Replace the ``get_observations`` lines in the graph with
       ``get_observations<station>``:
 
@@ -294,14 +294,14 @@ Parameters can be either strings or integers:
          in the graph so you must use ``cylc graph`` to inspect changes to the
          graphing.
 
-   #. **Use Parameterisation To Consolidate The** ``post_process`` **Tasks**.
+   #. **Use Parameterization To Consolidate The** ``post_process`` **Tasks**.
 
       At the moment we only have one ``post_process`` task
       (``post_process_exeter``), but suppose we wanted to add a second task for
       Edinburgh.
 
       Create a new parameter called ``site`` and set it to contain ``exeter``
-      and ``edinburgh``. Parameterise the ``post_process`` task using this
+      and ``edinburgh``. Parameterize the ``post_process`` task using this
       parameter.
 
       .. hint::
@@ -325,7 +325,7 @@ Parameters can be either strings or integers:
                  station = aldergrove, camborne, heathrow, shetland
             +        site = exeter, edinburgh
 
-         Next we parameterise the task in the graph:
+         Next we parameterize the task in the graph:
 
          .. code-block:: diff
 

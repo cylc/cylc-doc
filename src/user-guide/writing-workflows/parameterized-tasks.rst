@@ -4,7 +4,7 @@ Task Parameters
 ===============
 
 Cylc can automatically generate related tasks and dependencies by expanding
-:term:`parameterized <parameterisation>` names over lists or ranges of
+:term:`parameterized <parameterization>` names over lists or ranges of
 values. Uses for this include:
 
 - Generating an ensemble of similar model runs
