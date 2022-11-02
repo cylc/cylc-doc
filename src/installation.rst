@@ -298,7 +298,7 @@ Cylc provides auto-completion for the Bash shell which can save you typing:
 * Cycle points
 * Task names
 
-To extract the auto-completion file run the folling command:
+To extract the auto-completion file run the following command:
 
 .. code-block:: sub
 
