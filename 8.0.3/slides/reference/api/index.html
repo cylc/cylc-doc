@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cylc API &mdash; Cylc 8.0.3 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.0.3 documentation" href="../../index.html" />
+    <link rel="up" title="Reference" href="../index.html" />
+    <link rel="next" title="Scan API" href="scan.html" />
+    <link rel="prev" title="Data Flow" href="../architecture/data-flow.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="cylc-api">
+
+<h1>Cylc API<a class="headerlink" href="../../../html/reference/api/index.html#cylc-api" title="View HTML">§</a></h1>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="scan.html">Scan API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.scan"><code class="docutils literal notranslate"><span class="pre">scan()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.filter_name"><code class="docutils literal notranslate"><span class="pre">filter_name()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.is_active"><code class="docutils literal notranslate"><span class="pre">is_active()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.contact_info"><code class="docutils literal notranslate"><span class="pre">contact_info()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.cylc_version"><code class="docutils literal notranslate"><span class="pre">cylc_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.api_version"><code class="docutils literal notranslate"><span class="pre">api_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.graphql_query"><code class="docutils literal notranslate"><span class="pre">graphql_query()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.title"><code class="docutils literal notranslate"><span class="pre">title()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="scan.html#cylc.flow.network.scan.workflow_params"><code class="docutils literal notranslate"><span class="pre">workflow_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zmq.html">Workflow Runtime Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zmq.html#client">Client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zmq.html#cylc.flow.network.client.WorkflowRuntimeClient"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.client.WorkflowRuntimeClient.serial_request"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeClient.serial_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.client.WorkflowRuntimeClient.async_request"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeClient.async_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zmq.html#server">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.api"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.api()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.graphql"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.graphql()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.operate"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.operate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.pb_data_elements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.pb_entire_workflow()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.publish_queued_items"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.publish_queued_items()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.receiver"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.receiver()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.register_endpoints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.start"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.stop"><code class="docutils literal notranslate"><span class="pre">WorkflowRuntimeServer.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
