@@ -113,6 +113,13 @@ GUI. Consequently the following commands have also been removed:
 The ``cylc gui`` command remains, it launches a standalone version of the
 web GUI (providing the `Cylc UI Server`_ is installed).
 
+.. seealso::
+
+   :ref:`CompoundCommands` - For your convenience we have
+    provided commands which represent common working practices. For
+    example ``cylc vip`` (Validate-Install-Play) which runs
+    ``cylc validate``, ``cylc install`` and ``cylc play``.
+
 
 Cylc 8 Standardised IDs
 -----------------------
