@@ -8,11 +8,10 @@ Changes
 .. _metomi-rose-changelog: https://github.com/metomi/rose/blob/master/CHANGES.md
 .. _metomi-isodatetime-changelog: https://github.com/metomi/isodatetime/blob/master/CHANGES.md
 
-This page contains a summary of changes across all Cylc components for each
+This page contains a summary of significant changes across all Cylc components for each
 release.
 
-Full list of changes for each component can be found in their respective
-changelogs:
+For more detail see the component changelogs:
 
 * `cylc-flow-changelog`_
 * `cylc-uiserver-changelog`_
