@@ -20,6 +20,61 @@ For more detail see the component changelogs:
 * `metomi-rose-changelog`_
 * `metomi-isodatetime-changelog`_
 
+----------
+
+Cylc 8.1.0
+----------
+
+.. TODO: updade me before release:
+
+   .. admonition:: Cylc Components
+      :class: hint
+
+      TODO: fill in component versions
+
+Cylc Graph
+^^^^^^^^^^
+
+The web UI now has a graph view which displays a visualisation of a workflow's graph:
+
+.. image:: changes/cylc-graph.gif
+   :width: 80%
+
+Family & cycle grouping as well as the ability to view graphs for stopped workflows
+will be added in later releases.
+
+Combined Commands
+^^^^^^^^^^^^^^^^^
+
+A new command called ``cylc vip`` which validates, installs, then plays a workflow
+as a convenient alternative to typing:
+
+.. code-block:: bash
+
+   cylc validate <path>
+   cylc install <path>
+   cylc play <id>
+
+.. image:: changes/cylc-vip.gif
+   :width: 80%
+
+Bash Completion
+^^^^^^^^^^^^^^^
+
+Cylc now provides a high performance Bash completion script which saves you typing:
+
+* Cylc commands & options
+* Workflow IDs
+* Cycle points
+* Task names
+* Job numbers
+
+.. image:: changes/cylc-completion.bash.gif
+   :width: 80%
+
+:ref:`Installation instructions <installation.shell_auto_completion>`.
+
+----------
 
 Cylc 8.0.0
 ----------
