@@ -539,7 +539,7 @@ or minutes) should be of the same type.
 
 .. note::
 
-   In this context ``T-00`` "-" is a placeholder for the hours column.
+   ``T-00`` means every hour, on the hour. The ``-`` is a placeholder for the hours column.
 
 If an offset from the specified datetime is required, this should be
 of the form ``previous(Thh:mm) +/- PxTy`` as is used
