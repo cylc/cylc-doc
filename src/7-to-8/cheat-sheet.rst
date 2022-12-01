@@ -59,6 +59,10 @@ Install a workflow from source and run it:
          # run the installed workflow
          cylc play <name>
 
+         # alternatively:
+         # validate, install & play
+         cylc vip <name>
+
 
 Reloading
 ---------
@@ -79,7 +83,7 @@ To update a running workflow with changes from the source directory:
      - ::
 
          # re-install from source
-         # and do ``cylc reload`` 
+         # and do ``cylc reload``
          rose suite-run --reload
      - ::
 

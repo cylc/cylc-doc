@@ -7,9 +7,9 @@ Task & Job States
 well as current active jobs. In the Cylc UI, task states have monochromatic
 icons like this: |task-running|.
 
-**Jobs** are less abstract; they represent real job scripts submitted to run
-on a :term:`job platform`, or the final status of those real jobs. In the Cylc
-UI, job states have coloured icons like this: |job-running|.
+**Jobs** represent real job scripts submitted to run
+on a :term:`job platform`. In the Cylc UI, job states have colored icons like
+this: |job-running|.
 
 A single task can have multiple jobs, by automatic retry or manual triggering.
 
@@ -29,12 +29,63 @@ A single task can have multiple jobs, by automatic retry or manual triggering.
    expired        |task-expired|                           will not submit job (too far behind)
    ============== ==================== =================== ====================================
 
-.. note::
+The running task icon contains a clock face which shows the time elapsed
+as a proportion of the average runtime.
 
-   The running task icon contains a clock face which shows the time elapsed
-   as a proportion of the average runtime. For example this task has been running
-   for about one third of its average runtime:
+.. image:: ../../img/task-job-icons/task-running-0.png
+   :width: 50px
+   :height: 50px
+   :align: left
 
-   .. image:: ../../img/task-job-icons/task-running.png
-      :width: 60px
-      :align: center
+.. image:: ../../img/task-job-icons/task-running-25.png
+   :width: 50px
+   :height: 50px
+   :align: left
+
+.. image:: ../../img/task-job-icons/task-running-50.png
+   :width: 50px
+   :height: 50px
+   :align: left
+
+.. image:: ../../img/task-job-icons/task-running-75.png
+   :width: 50px
+   :height: 50px
+   :align: left
+
+.. image:: ../../img/task-job-icons/task-running-100.png
+   :width: 50px
+   :height: 50px
+   :align: left
+
+.. NOTE: these pipe characters are functional! They create a line break.
+
+|
+
+|
+
+
+Task Modifiers
+--------------
+
+Tasks are run as soon as their dependencies are satisfied, however, there are
+some other conditional which can prevent tasks from being run. These are
+given "modifier" icons which appear to the top-left of the task icon:
+
+.. list-table::
+   :class: grid-table
+   :align: left
+   :widths: 20, 80
+
+   * - .. image:: ../../img/task-job-icons/task-isHeld.png
+          :width: 60px
+          :height: 60px
+     - **Held:** Task has been manually :term:`held <held task>` back from
+       running.
+   * - .. image:: ../../img/task-job-icons/task-isRunahead.png
+          :width: 60px
+          :height: 60px
+     - **Runahead:** Task is held back by the :term:`runahead limit`.
+   * - .. image:: ../../img/task-job-icons/task-isQueued.png
+          :width: 60px
+          :height: 60px
+     - **Queued:** Task has been held back by an :term:`internal queue`.
