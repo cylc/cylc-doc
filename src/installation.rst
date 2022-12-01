@@ -68,6 +68,11 @@ install:
    $ pip install 'cylc-uiserver[hub]'
    $ npm install configurable-http-proxy
 
+You might also want to configure:
+
+* :ref:`Shell auto-completion <installation.shell_auto_completion>`
+* :ref:`Text editor support <SyntaxHighlighting>`
+
 
 .. _non-python-requirements:
 
@@ -269,7 +274,6 @@ The `Cylc UI Server`_ can be configured on a site and user basis.
 Guidance for configuration file storage, configuration variables and defaults
 can be found: :ref:`UI_Server_config`.
 
-
 Bash Profile
 ^^^^^^^^^^^^
 
@@ -281,3 +285,30 @@ configuration in login scripts.
 
    Sites and users should ensure their bash login scripts configure the
    environment correctly for Cylc and *do not write anything to stdout*.
+
+.. _installation.shell_auto_completion:
+
+Shell Auto-Completion
+^^^^^^^^^^^^^^^^^^^^^
+
+Cylc provides auto-completion for the Bash shell which can save you typing:
+
+* Cylc commands
+* Workflow IDs
+* Cycle points
+* Task names
+
+To extract the auto-completion file run the following command:
+
+.. code-block:: sub
+
+   cylc get-resources cylc-completion.bash <path-to-copy-file>
+
+Then follow the comments in the file to install it.
+
+Text Editors
+^^^^^^^^^^^^
+
+There is support for the ``.cylc`` file format in various text editors.
+
+See :ref:`SyntaxHighlighting` for more details.
