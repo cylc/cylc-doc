@@ -169,7 +169,7 @@ This would result in:
    .. rubric:: This practical continues on from the
       :ref:`families practical <cylc-tutorial-families-practical>`.
 
-   Next section: :ref:`tutorial-cylc-parameterisation`
+   Next section: :ref:`tutorial-cylc-parameterization`
 
 
 .. _cylc-tutorial-jinja2-practical:
