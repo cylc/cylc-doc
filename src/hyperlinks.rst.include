@@ -58,7 +58,7 @@
    :height: 18px
    :align: middle
 
-.. |task-running| image:: /img/task-job-icons/task-running.png
+.. |task-running| image:: /img/task-job-icons/task-running-25.png
    :height: 18px
    :align: middle
 
@@ -67,6 +67,19 @@
    :align: middle
 
 .. |task-failed| image:: /img/task-job-icons/task-failed.png
+   :height: 18px
+   :align: middle
+
+
+.. |task-held| image:: /img/task-job-icons/task-isHeld.png
+   :height: 18px
+   :align: middle
+
+.. |task-runahead| image:: /img/task-job-icons/task-isRunahead.png
+   :height: 18px
+   :align: middle
+
+.. |task-queued| image:: /img/task-job-icons/task-isQueued.png
    :height: 18px
    :align: middle
 
