@@ -11,6 +11,14 @@ state, with a new clock trigger to handle the configured retry delay.
    A task that is waiting on a retry will already have one or more failed jobs
    associated with it.
 
+
+.. note::
+
+   Tasks only enter the ``failed`` state if their jobs fail with no retries
+   left. Otherwise they return to the waiting state, to wait on the next try.
+
+
+
 Aborting a Retry Sequence
 -------------------------
 

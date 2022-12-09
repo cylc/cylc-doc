@@ -8,14 +8,21 @@ failure in submission or execution.
 Purpose
 -------
 
-Retries can be useful for tasks that may occasionally fail due to external
-events, and are routinely fixable when they do - an example would be a task
-that is dependent on a system that experiences temporary outages.
+Retries can be useful for tasks that occasionally fail for known, fixable
+reasons. Cylc can rerun a failing job multiple times, with user-defined delays
+between tries.
 
-If a task fails, the Cylc retry mechanism can resubmit it after a
-pre-determined delay. An environment variable, ``$CYLC_TASK_TRY_NUMBER``
-is incremented and passed into the task - this means you can write your
-task script so that it changes behaviour accordingly.
+Tasks that fail because of temporary hardware or network outages may succeed if
+simply resubmitted after a delay. Others might succeed if configured differently
+on the retry.
+
+A job environment variable ``$CYLC_TASK_TRY_NUMBER`` increments with each try,
+to allow try-dependent behaviour in the task script.
+
+.. note::
+
+   Tasks only enter the ``failed`` state if their jobs fail with no retries
+   left. Otherwise they return to the waiting state, to wait on the next try.
 
 
 Example
