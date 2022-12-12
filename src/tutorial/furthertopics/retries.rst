@@ -21,7 +21,11 @@ to allow try-dependent behaviour in the task script.
 
 .. note::
 
-   Tasks only enter the ``failed`` state if their jobs fail with no retries
+   Tasks only enter the ``submit-failed`` state if job submission fails with no
+   retries left. Otherwise they return to the waiting state, to wait on the
+   next try.
+
+   Tasks only enter the ``failed`` state if job execution fails with no retries
    left. Otherwise they return to the waiting state, to wait on the next try.
 
 
