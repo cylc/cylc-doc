@@ -160,7 +160,7 @@ Jobs can fail for several reasons:
    For example, setting ``execution retry delays = PT10M``
    will cause the job to retry every 10 minutes on execution failure.
 
-   Use a multiplier to limit retries to a specific number:
+   Use a multiplier to limit the number of retries:
 
 .. code-block:: cylc
 
@@ -175,6 +175,16 @@ Jobs can fail for several reasons:
          #   retry up to 2 times every 10 min,
          #   then every 30 mins thereafter.
          submission retry delays = 2*PT10M, PT30M
+
+.. note::
+
+   Tasks only enter the ``submit-failed`` state if job submission fails with no
+   retries left. Otherwise they return to the waiting state, to wait on the
+   next try.
+
+   Tasks only enter the ``failed`` state if job execution fails with no retries
+   left. Otherwise they return to the waiting state, to wait on the next try.
+
 
 
 .. _tutorial.start_stop_restart:
