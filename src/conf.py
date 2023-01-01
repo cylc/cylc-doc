@@ -94,7 +94,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-__copyright_year = 2022  # NOTE: this is automatically set by GH Actions
+__copyright_year = 2023  # NOTE: this is automatically set by GH Actions
 copyright = (
     f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
 )
