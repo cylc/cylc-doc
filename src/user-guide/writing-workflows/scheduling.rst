@@ -1457,9 +1457,10 @@ Clock Triggers
 
 .. warning::
 
-   This section describes deprecated old-style clock triggers that are part of
-   the task definition. Please consider using :ref:`Built-in Clock Triggers`
-   (external triggers) instead.
+   This describes a deprecated syntax for defining clock triggers in task
+   configuration. If used, it will be converted automatically to define
+   new-style :ref:`clock triggers <Built-in Clock Triggers>`.
+   Support for the old syntax will be removed in an upcoming release.
 
 By default, datetime cycle points are not connected to the :term:`wallclock time`.
 In real time cycling systems, however, some tasks may need to trigger at
@@ -2017,7 +2018,7 @@ lowest-valued point with :term:`active` or :term:`incomplete` tasks present.
 
 The runahead limit can be set with :cylc:conf:`[scheduling]runahead limit`,
 to an integer interval (for datetime or integer cycling workflows) or to
-a datetime interval (datetime cycling only). 
+a datetime interval (datetime cycling only).
 
 The integer format ``Pn`` is an interval that spans ``n+1`` consecutive cycle
 points, regardless of how the cycle point values increment from one point to
@@ -2041,8 +2042,8 @@ finishes and allows the runahead limit to move on:
         [[graph]]
             P2 = foo  # cycle points 1, 3, 5, 7, 9, ...
 
-The active cycle points in this workflow, at some point during the run, 
-might be ``29, 31, 33, 35``, for example. 
+The active cycle points in this workflow, at some point during the run,
+might be ``29, 31, 33, 35``, for example.
 
 .. code-block:: cylc
 
@@ -2074,7 +2075,7 @@ they might be ``2060, 2061, 2062, 2063, 2064``.
 .. note::
 
    To restrict activity to a single cycle point at a time (just the base point)
-   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``. 
+   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``.
 
 
 .. note::
