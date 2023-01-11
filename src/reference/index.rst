@@ -5,6 +5,7 @@ Reference
 .. toctree::
    :maxdepth: 2
 
+   changes
    config/index
    job-script-vars/index
    architecture/index
