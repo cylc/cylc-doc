@@ -537,6 +537,10 @@ A list of times, separated by semicolons, can be provided, e.g.
 brackets, and if more than one is given, the major time unit in each (hours
 or minutes) should be of the same type.
 
+.. note::
+
+   ``T-00`` means every hour, on the hour. The ``-`` is a placeholder for the hours column.
+
 If an offset from the specified datetime is required, this should be
 of the form ``previous(Thh:mm) +/- PxTy`` as is used
 for determining cycle periods, e.g.
@@ -574,21 +578,20 @@ Note that day-of-week should always be specified when using weeks. If a time
 is not included, the calculation of the next or previous corresponding
 point will be done from midnight of the current day.
 
-.. table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
+.. csv-table:: Relative initial cycle point examples for ``now = 2018-03-14T15:12Z``
+      using ISO8601 truncated dates.
+   :widths: auto
 
-   ====================================  ==================
-   Syntax                                Interpretation
-   ====================================  ==================
-   ``next(-00)``                         2100-01-01T00:00Z
-   ``previous(--01)``                    2018-01-01T00:00Z
-   ``next(---01)``                       2018-04-01T00:00Z
-   ``previous(--1225)``                  2017-12-25T00:00Z
-   ``next(-2006)``                       2020-06-01T00:00Z
-   ``previous(-W101)``                   2018-03-05T00:00Z
-   ``next(-W-1; -W-3; -W-5)``            2018-03-14T00:00Z
-   ``next(-001; -091; -181; -271)``      2018-04-01T00:00Z
-   ``previous(-365T12Z)``                2017-12-31T12:00Z
-   ====================================  ==================
+   Syntax, Description, Interpretation
+   ``next(-00)``,                     Any century; next year 00,                  2100-01-01
+   ``previous(--01)``,                Any year; next month 01,                    2018-01-01
+   ``next(---01)``,                   Any year; any month; next 1st of month,     2018-04-01
+   ``previous(--1225)``,              Any year; previous Dec 25,                  2017-12-25
+   ``next(-2006)``,                   Any century; next June in a year ending 20, 2020-06-01
+   ``previous(-W101)``,               Any century; previous week 10 day 1,        2018-03-05
+   ``next(-W-1; -W-3; -W-5)``,        "Any year; any week; next day 1, 3 or 5",   2018-03-14
+   ``next(-001; -091; -181; -271)``,  "Any year; day 1, 91, 181 or 271",          2018-04-01
+   ``previous(-365T12Z)``,            Any year; previous day 356 at 12Z,          2017-12-31T12:00Z
 
 
 The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
@@ -2017,7 +2020,7 @@ lowest-valued point with :term:`active` or :term:`incomplete` tasks present.
 
 The runahead limit can be set with :cylc:conf:`[scheduling]runahead limit`,
 to an integer interval (for datetime or integer cycling workflows) or to
-a datetime interval (datetime cycling only). 
+a datetime interval (datetime cycling only).
 
 The integer format ``Pn`` is an interval that spans ``n+1`` consecutive cycle
 points, regardless of how the cycle point values increment from one point to
@@ -2041,8 +2044,8 @@ finishes and allows the runahead limit to move on:
         [[graph]]
             P2 = foo  # cycle points 1, 3, 5, 7, 9, ...
 
-The active cycle points in this workflow, at some point during the run, 
-might be ``29, 31, 33, 35``, for example. 
+The active cycle points in this workflow, at some point during the run,
+might be ``29, 31, 33, 35``, for example.
 
 .. code-block:: cylc
 
@@ -2074,7 +2077,7 @@ they might be ``2060, 2061, 2062, 2063, 2064``.
 .. note::
 
    To restrict activity to a single cycle point at a time (just the base point)
-   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``. 
+   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``.
 
 
 .. note::
