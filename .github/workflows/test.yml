@@ -64,6 +64,8 @@ jobs:
       - name: install libs to document (other branches)
         if: github.base_ref != '8.0.x'
         uses: ./.github/actions/install-libs
+        with:
+          metomi-rose-tag: '2.0.x'
 
       - name: install eslint
         run: |
