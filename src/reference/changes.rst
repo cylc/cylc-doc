@@ -61,7 +61,7 @@ Combined Commands
 
 Two new commands have been added as short-cuts for common working patterns:
 
-``cylc vip`` validates, installs, and plays a workflow, and is eqivelent to:
+``cylc vip`` validates, installs, and plays a workflow, and is equivalent to:
 
 .. code-block:: bash
 
