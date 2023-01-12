@@ -87,6 +87,8 @@ jobs:
 
       - name: install libs to document
         uses: cylc/cylc-doc/.github/actions/install-libs@master
+        with:
+          metomi-rose-tag: '2.0.x'
 
       - name: create conda envs
         uses: ./docs/.github/actions/create-conda-envs
