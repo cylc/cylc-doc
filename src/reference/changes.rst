@@ -32,6 +32,12 @@ Cylc 8.1.0
 
       TODO: fill in component versions
 
+.. warning::
+
+   Workflows started with Cylc 8.0 which contain multiple :term:`flows <flow>`
+   **cannot** be restarted with Cylc 8.1 due to database changes.
+
+
 Graph View
 ^^^^^^^^^^
 
