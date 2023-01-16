@@ -8,7 +8,7 @@ well as current active jobs. In the Cylc UI, task states have monochromatic
 icons like this: |task-running|.
 
 **Jobs** represent real job scripts submitted to run
-on a :term:`job platform`. In the Cylc UI, job states have colored icons like
+on a :term:`job platform`. In the Cylc UI, job states have coloured icons like
 this: |job-running|.
 
 A single task can have multiple jobs, by automatic retry or manual triggering.
