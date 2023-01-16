@@ -165,7 +165,9 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
 **To document a new version of Cylc:**
 
 * Create a tag with a name matching a released cylc-flow tag.
+  `git tag <tag> <commit>` e.g. `git tag 8.1.2 HEAD`.
 * Push it to `cylc/cylc-doc`.
+  `git push --tags upstream <tag>`
 * Trigger the `deploy` workflow against that tag.
 
 **To update documentation for an existing version (post release):**
