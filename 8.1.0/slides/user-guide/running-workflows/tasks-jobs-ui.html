@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tasks in the UI &mdash; Cylc 8.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Retrying Tasks" href="retrying-tasks.html" />
+    <link rel="prev" title="Task &amp; Job States" href="task-job-states.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="tasks-in-the-ui">
+
+<h1>Tasks in the UI<a class="headerlink" href="../../../html/user-guide/running-workflows/tasks-jobs-ui.html#tasks-in-the-ui" title="View HTML">§</a></h1>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0.</span></p>
+</div>
+<p>Cylc workflow <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a> can be very large, even infinite for
+<a class="reference internal" href="../../glossary.html#term-cycling-workflow"><span class="xref std std-term">cycling workflows</span></a> with no <a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>.
+Consequently the UI often can’t display “all of the tasks” at once. Instead, it
+displays tasks that belong to a graph-based <a class="reference internal" href="../../glossary.html#term-window"><span class="xref std std-term">window</span></a> extending a
+configured number of graph edges out from active tasks.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">0</span></code> or <em>active task</em> window includes:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">preparing</span></code> tasks</li>
+<li><code class="docutils literal notranslate"><span class="pre">submitted</span></code> and <code class="docutils literal notranslate"><span class="pre">running</span></code> tasks - i.e. those with active jobs</li>
+<li><code class="docutils literal notranslate"><span class="pre">waiting</span></code> tasks, that are <a class="reference internal" href="../../glossary.html#term-active-waiting"><span class="xref std std-term">actively waiting</span></a> on:<ul>
+<li><a class="reference internal" href="../writing-workflows/external-triggers.html#built-in-clock-triggers"><span class="std std-ref">clock triggers</span></a></li>
+<li><a class="reference internal" href="../writing-workflows/external-triggers.html#section-external-triggers"><span class="std std-ref">external triggers</span></a></li>
+<li><a class="reference internal" href="../writing-workflows/scheduling.html#internalqueues"><span class="std std-ref">internal queues</span></a></li>
+<li><a class="reference internal" href="../writing-workflows/scheduling.html#runaheadlimit"><span class="std std-ref">runahead limit</span></a></li>
+</ul>
+</li>
+<li>finished tasks retained as <em>incomplete</em>, in expectation of user intervention:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">submit-failed</span></code> tasks, if successful submission was not <a class="reference internal" href="../../glossary.html#term-optional-output"><span class="xref std std-term">optional</span></a></li>
+<li><code class="docutils literal notranslate"><span class="pre">succeeded</span></code> or <code class="docutils literal notranslate"><span class="pre">failed</span></code> tasks that did not complete <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required
+outputs</span></a></li>
+</ul>
+</li>
+</ul>
+<p>The default window extent is <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">1</span></code>, i.e. tasks out to one graph edge from
+current active tasks.</p>
+<p>Tasks ahead of the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> window are displayed by the UI as <code class="docutils literal notranslate"><span class="pre">waiting</span></code> but
+the scheduler is not actively managing them yet.</p>
+<img alt="../../_images/n-window.png" class="align-center" src="../../_images/n-window.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The graph-based active task window is intended to display the essential
+information without overwhelming the UI. Even very large workflows
+typically do not have a massive number of tasks active at once.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cylc.flow.main_loop.reset_bad_hosts &mdash; Cylc 8.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '8.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="top" title="Cylc 8.1.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Main Loop Plugins" href="../index.html" />
+    <link rel="next" title="Pre-Configure And Post-Install Plugins" href="../../install/index.html" />
+    <link rel="prev" title="cylc.flow.main_loop.log_memory" href="cylc.flow.main_loop.log_memory.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="module-cylc.flow.main_loop.reset_bad_hosts">
+
+<h1>cylc.flow.main_loop.reset_bad_hosts<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html#module-cylc.flow.main_loop.reset_bad_hosts" title="View HTML">§</a></h1>
+
+<p>Resets the list of bad hosts.</p>
+<p>The scheduler stores a set of hosts which it has been unable to contact to
+save contacting these hosts again.</p>
+<p>This list is cleared if a task cannot be submitted because all of the hosts it
+might use cannot be reached.</p>
+<p>If a task succeeds in submitting a job on the second host it tries, then the
+first host remains in the set of unreachable (bad) hosts, even though the
+failure might have been transitory. For this reason, this plugin periodically
+clears the set.</p>
+<p>Suggested interval - an hour.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="python-api">
+
+<h2>Python API<a class="headerlink" href="../../../../html/plugins/main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html#python-api" title="View HTML">§</a></h2>
+
+<p class="rubric">Coroutines</p>
+<table border="1" class="autosummary longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#cylc.flow.main_loop.reset_bad_hosts.reset_bad_hosts" title="cylc.flow.main_loop.reset_bad_hosts.reset_bad_hosts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_bad_hosts</span></code></a></td>
+<td>Empty bad_hosts.</td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.reset_bad_hosts.reset_bad_hosts">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.reset_bad_hosts.</span></code><code class="sig-name descname"><span class="pre">reset_bad_hosts</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">scheduler</span></span></em>, <em><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Empty bad_hosts.</p>
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
