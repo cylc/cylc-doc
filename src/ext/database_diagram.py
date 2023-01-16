@@ -121,7 +121,7 @@ def group_nodes(nodes):
         'rank=same',
         'rankdir=LR'
     ]
-    lines.extend([f'"{x}"' for x in nodes])
+    lines.extend([f'"{x}"' for x in nodes])  # noqa: B028
     return lines + ['}']
 
 
