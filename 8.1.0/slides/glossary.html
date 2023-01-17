@@ -36,6 +36,9 @@
       };
     </script>
     <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
     <script type="text/javascript" src="_static/js/diff_selector.js"></script>
@@ -50,6 +53,7 @@
     <script type="text/javascript" src="_static/init.js"></script>
     
     
+    <link rel="shortcut icon" href="_static/cylc-favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Cylc 8.1.0 documentation" href="index.html" />
@@ -1306,14 +1310,14 @@ inheritance</span></a> and templating with <a class="reference internal" href="u
         <span class="nv">R1 = bar&lt;m&gt; </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span>&lt;<span class="nb">m</span>&gt;
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-7fb235e4a9b3cccab29805b959a68e4025795ec3.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-1deb6da7957e27a0b4ff4cb1d1cba014e3c1a3d4.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bar_m2 -&gt; baz_m2
-bar_m3 -&gt; baz_m3
-baz_m2
-bar_m1 -&gt; baz_m1
-baz_m1
 baz_m3
+bar_m3 -&gt; baz_m3
+bar_m2 -&gt; baz_m2
+bar_m1 -&gt; baz_m1
+baz_m2
+baz_m1
 }</p></object></div>
 </div><div class="admonition seealso">
 <p class="first admonition-title">See also</p>

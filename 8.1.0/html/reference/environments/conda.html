@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Conda Environments &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Cylc Development History - Major Changes" href="../dev-history-major-changes.html" />
     <link rel="prev" title="Workflow Runtime Interface" href="../api/zmq.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -129,75 +82,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Reference</a> &raquo;</li>
-        
-      <li>Conda Environments</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">Conda Environments</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/reference/environments/conda.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="conda-environments">
-<span id="id1"></span><h1>Conda Environments<a class="headerlink" href="#conda-environments" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Conda Environments<a class="headerlink" href="#conda-environments" title="Permalink to this heading"></a></h1>
 <p>Cylc consists of multiple components.</p>
 <p>This Conda environment will provide you with the “recommended” installation of
 all components:</p>
@@ -213,7 +124,7 @@ all components:</p>
 </div>
 <p>The following sections outline alternatives for finer control over installation.</p>
 <section id="cylc-flow">
-<h2>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this heading">¶</a></h2>
+<h2>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Permalink to this heading"></a></h2>
 <p>The simplest Cylc installation consists only of <a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a>:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-flow</span>
 <span class="nt">channels</span><span class="p">:</span>
@@ -253,7 +164,7 @@ features are not of interest:</p>
 </div>
 </section>
 <section id="cylc-uiserver">
-<h2>Cylc UIServer<a class="headerlink" href="#cylc-uiserver" title="Permalink to this heading">¶</a></h2>
+<h2>Cylc UIServer<a class="headerlink" href="#cylc-uiserver" title="Permalink to this heading"></a></h2>
 <p>The default <a class="reference internal" href="#cylc-uiserver">Cylc UIServer</a> package comes with <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> and the
 <a class="reference external" href="https://github.com/AbdealiJK/configurable-http-proxy">Configurable HTTP Proxy</a> (required by <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>) bundled:</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-uiserver</span>
@@ -297,7 +208,7 @@ can be run as a standalone application.</p>
 </div>
 </section>
 <section id="cylc-rose">
-<h2>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this heading">¶</a></h2>
+<h2>Cylc Rose<a class="headerlink" href="#cylc-rose" title="Permalink to this heading"></a></h2>
 <p>For working with Rose add <code class="docutils literal notranslate"><span class="pre">metomi-rose</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc-rose</span></code> (the bridge
 between Cylc &amp; Rose):</p>
 <div class="highlight-YAML notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylc-rose</span>
@@ -313,13 +224,13 @@ between Cylc &amp; Rose):</p>
 future.</p>
 </section>
 <section id="adding-cylc-to-your-conda-package">
-<h2>Adding Cylc To Your Conda Package<a class="headerlink" href="#adding-cylc-to-your-conda-package" title="Permalink to this heading">¶</a></h2>
+<h2>Adding Cylc To Your Conda Package<a class="headerlink" href="#adding-cylc-to-your-conda-package" title="Permalink to this heading"></a></h2>
 <p>If you want to publish a package (e.g. to Conda Forge) that depends on Cylc,
 consider using the minimal package (e.g. <code class="docutils literal notranslate"><span class="pre">cylc-flow-base</span></code>) as a dependency
 to allow the installer to maintain flexibility over the installation.</p>
 </section>
 <section id="working-with-other-conda-channels">
-<h2>Working With Other Conda Channels<a class="headerlink" href="#working-with-other-conda-channels" title="Permalink to this heading">¶</a></h2>
+<h2>Working With Other Conda Channels<a class="headerlink" href="#working-with-other-conda-channels" title="Permalink to this heading"></a></h2>
 <p>Cylc projects are published to Conda Forge and the above environments install
 all dependencies from Conda Forge.</p>
 <p>If you want to install other dependencies (e.g. Python), from other channels
@@ -339,32 +250,26 @@ the Conda Forge channel.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../dev-history-major-changes.html" class="btn btn-neutral float-right" title="Cylc Development History - Major Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../api/zmq.html" class="btn btn-neutral float-left" title="Workflow Runtime Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../dev-history-major-changes.html" class="btn btn-neutral float-right" title="Cylc Development History - Major Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -391,18 +296,11 @@ the Conda Forge channel.</p>
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

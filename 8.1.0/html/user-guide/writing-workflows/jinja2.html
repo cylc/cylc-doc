@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Jinja2 &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="EmPy" href="empy.html" />
     <link rel="prev" title="Task Parameters" href="parameterized-tasks.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -145,77 +98,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">User Guide</a> &raquo;</li>
-        
-          <li><a href="index.html">Writing Workflows</a> &raquo;</li>
-        
-      <li>Jinja2</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Jinja2</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/user-guide/writing-workflows/jinja2.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="jinja2">
-<span id="user-guide-jinja2"></span><span id="jinja"></span><h1>Jinja2<a class="headerlink" href="#jinja2" title="Permalink to this heading">¶</a></h1>
+<span id="user-guide-jinja2"></span><span id="jinja"></span><h1>Jinja2<a class="headerlink" href="#jinja2" title="Permalink to this heading"></a></h1>
 <div class="tip tutorial-ref admonition">
 <p class="admonition-title">Related Tutorial</p>
 <p><a class="reference internal" href="../../tutorial/runtime/configuration-consolidation/index.html#tutorial-cylc-consolidating-configuration"><span class="std std-ref">Configuration Consolidation Tutorial</span></a></p>
@@ -248,7 +158,7 @@ simpler alternative to this use case</p></li>
 <figure class="align-center" id="id2">
 <span id="fig-jinja2-ensemble"></span><img alt="../../_images/jinja2-ensemble-graph.png" src="../../_images/jinja2-ensemble-graph.png" />
 <figcaption>
-<p><span class="caption-text">The Jinja2 ensemble example workflow graph.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">The Jinja2 ensemble example workflow graph.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>The graph above shows an ensemble of similar tasks generated with a Jinja2 loop:</p>
@@ -268,6 +178,10 @@ simpler alternative to this use case</p></li>
 the surrounding text.</p>
 <blockquote>
 <div><table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Jinja2 Syntax</p></th>
 <th class="head"><p>Description</p></th>
@@ -376,11 +290,11 @@ variables, loops, math, and logical flags to include or exclude tasks.</p>
 <span id="fig-jinja2-cities"></span><img alt="../../_images/jinja2-workflow-graph.png" src="../../_images/jinja2-workflow-graph.png" />
 <figcaption>
 <p><span class="caption-text">Jinja2 cities example workflow graph, with the
-New York City task family expanded.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+New York City task family expanded.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <section id="accessing-environment-variables">
-<h2>Accessing Environment Variables<a class="headerlink" href="#accessing-environment-variables" title="Permalink to this heading">¶</a></h2>
+<h2>Accessing Environment Variables<a class="headerlink" href="#accessing-environment-variables" title="Permalink to this heading"></a></h2>
 <p>Cylc automatically imports the environment to the template’s global namespace
 (see <a class="reference internal" href="#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a>) in a dictionary called <code class="docutils literal notranslate"><span class="pre">environ</span></code>:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
@@ -423,7 +337,7 @@ not in the <code class="docutils literal notranslate"><span class="pre">environ<
 </dl>
 </section>
 <section id="custom-jinja2-filters-tests-and-globals">
-<span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this heading">¶</a></h2>
+<span id="customjinja2filters"></span><h2>Custom Jinja2 Filters, Tests and Globals<a class="headerlink" href="#custom-jinja2-filters-tests-and-globals" title="Permalink to this heading"></a></h2>
 <p>Jinja2 has three namespaces that separate “globals”, “filters” and “tests”.
 Globals are template-wide variables and functions. Cylc extends this namespace
 with the <code class="docutils literal notranslate"><span class="pre">environ</span></code> dictionary above, and
@@ -448,6 +362,10 @@ subdirectory of the <a class="reference internal" href="../../glossary.html#term
 the variable value to be filtered or tested, and subsequent arguments can be
 whatever is needed. Currently three custom filters are supplied:</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#cylc.flow.jinja.filters.pad.pad" title="cylc.flow.jinja.filters.pad.pad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.jinja.filters.pad.pad</span></code></a></p></td>
 <td><p>Pads a string to some length with a fill character</p></td>
@@ -462,7 +380,7 @@ whatever is needed. Currently three custom filters are supplied:</p>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="cylc.flow.jinja.filters.pad.pad">
-<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.pad.</span></span><span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.pad.pad" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.pad.</span></span><span class="sig-name descname"><span class="pre">pad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.pad.pad" title="Permalink to this definition"></a></dt>
 <dd><p>Pads a string to some length with a fill character</p>
 <p>Useful for generating task names and related values in ensemble workflows.</p>
 <dl>
@@ -498,7 +416,7 @@ whatever is needed. Currently three custom filters are supplied:</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cylc.flow.jinja.filters.strftime.strftime">
-<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.strftime.</span></span><span class="sig-name descname"><span class="pre">strftime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strftime_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strptime_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.strftime.strftime" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.strftime.</span></span><span class="sig-name descname"><span class="pre">strftime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strftime_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strptime_str</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.strftime.strftime" title="Permalink to this definition"></a></dt>
 <dd><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-datetime"><span class="xref std std-term">ISO8601 datetime</span></a> string using an strftime string.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{{ &#39;10661004T08+01&#39; | strftime(&#39;%H&#39;) }}</span>  <span class="c1"># 00</span>
 </pre></div>
@@ -572,7 +490,7 @@ metomi.isodatetime.exceptions.StrftimeSyntaxError: Invalid         strftime/strp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="cylc.flow.jinja.filters.duration_as.duration_as">
-<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.duration_as.</span></span><span class="sig-name descname"><span class="pre">duration_as</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.duration_as.duration_as" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cylc.flow.jinja.filters.duration_as.</span></span><span class="sig-name descname"><span class="pre">duration_as</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iso8601_duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.jinja.filters.duration_as.duration_as" title="Permalink to this definition"></a></dt>
 <dd><p>Format an <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 duration</span></a> string as the specified units.</p>
 <p>Units for the conversion can be specified in a case-insensitive short or
 long form:</p>
@@ -634,7 +552,7 @@ duration as a floating-point number.</p>
 
 </section>
 <section id="associative-arrays-in-jinja2">
-<h2>Associative Arrays In Jinja2<a class="headerlink" href="#associative-arrays-in-jinja2" title="Permalink to this heading">¶</a></h2>
+<h2>Associative Arrays In Jinja2<a class="headerlink" href="#associative-arrays-in-jinja2" title="Permalink to this heading"></a></h2>
 <p>Associative arrays (or <strong>dictionaries</strong>) are very useful. For example:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
 <span class="cp">{% set obs_types = [&#39;airs&#39;, &#39;iasi&#39;] %}</span>
@@ -661,7 +579,7 @@ duration as a floating-point number.</p>
 </div>
 </section>
 <section id="default-values-and-template-variables">
-<span id="jinja2-template-variables"></span><h2>Default Values and Template Variables<a class="headerlink" href="#default-values-and-template-variables" title="Permalink to this heading">¶</a></h2>
+<span id="jinja2-template-variables"></span><h2>Default Values and Template Variables<a class="headerlink" href="#default-values-and-template-variables" title="Permalink to this heading"></a></h2>
 <p>You can provide template variables to Cylc in 3 ways:</p>
 <ul class="simple">
 <li><p>Using the <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> option.</p></li>
@@ -674,7 +592,7 @@ duration as a floating-point number.</p>
 above list is used.</p>
 </div>
 <section id="the-s-and-set-file-options">
-<h3>The <code class="docutils literal notranslate"><span class="pre">-s</span></code> and <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> Options<a class="headerlink" href="#the-s-and-set-file-options" title="Permalink to this heading">¶</a></h3>
+<h3>The <code class="docutils literal notranslate"><span class="pre">-s</span></code> and <code class="docutils literal notranslate"><span class="pre">--set-file</span></code> Options<a class="headerlink" href="#the-s-and-set-file-options" title="Permalink to this heading"></a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="c1"># set the Jinja2 variable &quot;answer&quot; to 42</span>
 <span class="gp">$ </span>cylc<span class="w"> </span>play<span class="w"> </span>&lt;workflow-id&gt;<span class="w"> </span>-s<span class="w"> </span><span class="nv">answer</span><span class="o">=</span><span class="m">42</span>
 </pre></div>
@@ -790,20 +708,20 @@ be overridden.</p>
 </div>
 </section>
 <section id="using-a-plugin">
-<h3>Using a plugin<a class="headerlink" href="#using-a-plugin" title="Permalink to this heading">¶</a></h3>
+<h3>Using a plugin<a class="headerlink" href="#using-a-plugin" title="Permalink to this heading"></a></h3>
 <p>Template plugins such as <a class="reference internal" href="../../plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a> should provide a set of template
 variables which can be provided to Cylc. For example, using Cylc Rose you
 add a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file containing a <code class="docutils literal notranslate"><span class="pre">[template</span> <span class="pre">variables]</span></code>
 section which the plugin makes available to Cylc:</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">rose-suite.conf</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">rose-suite.conf</span><a class="headerlink" href="#id4" title="Permalink to this code"></a></div>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[template variables]</span>
 <span class="na">ICP</span><span class="o">=</span><span class="s">1068</span>
 </pre></div>
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">flow.cylc</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!jinja2</span>
 <span class="nt">[scheduler]</span>
    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
@@ -821,7 +739,7 @@ section which the plugin makes available to Cylc:</p>
 </section>
 </section>
 <section id="jinja2-variable-scope">
-<h2>Jinja2 Variable Scope<a class="headerlink" href="#jinja2-variable-scope" title="Permalink to this heading">¶</a></h2>
+<h2>Jinja2 Variable Scope<a class="headerlink" href="#jinja2-variable-scope" title="Permalink to this heading"></a></h2>
 <p>Jinja2 variable scoping rules may be surprising. For instance, variables set
 inside a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop can’t be accessed outside of the block,
 so the following will not print <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">FOO</span> <span class="pre">is</span> <span class="pre">True</span></code>:</p>
@@ -850,7 +768,7 @@ handled using <code class="docutils literal notranslate"><span class="pre">names
 <a class="reference external" href="https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments">Jinja2 Template Designer Documentation - Assignments</a></p>
 </section>
 <section id="raising-exceptions">
-<span id="jinja2raisingexceptions"></span><h2>Raising Exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this heading">¶</a></h2>
+<span id="jinja2raisingexceptions"></span><h2>Raising Exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this heading"></a></h2>
 <p>Cylc provides two functions for raising exceptions in Jinja2 code. These
 exceptions are raised when the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is loaded and will
 prevent a workflow from running.</p>
@@ -860,7 +778,7 @@ prevent a workflow from running.</p>
 <code class="docutils literal notranslate"><span class="pre">{%</span></code> code blocks.</p>
 </div>
 <section id="raise">
-<span id="jinja2-raise"></span><h3>Raise<a class="headerlink" href="#raise" title="Permalink to this heading">¶</a></h3>
+<span id="jinja2-raise"></span><h3>Raise<a class="headerlink" href="#raise" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">raise</span></code> function will result in an error containing the provided text.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% if not VARIABLE is defined %}</span>
     <span class="cp">{{ raise(&#39;VARIABLE must be defined for this workflow.&#39;) }}</span>
@@ -869,7 +787,7 @@ prevent a workflow from running.</p>
 </div>
 </section>
 <section id="assert">
-<span id="jinja2-assert"></span><h3>Assert<a class="headerlink" href="#assert" title="Permalink to this heading">¶</a></h3>
+<span id="jinja2-assert"></span><h3>Assert<a class="headerlink" href="#assert" title="Permalink to this heading"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">assert</span></code> function will raise an exception containing the text provided in
 the second argument providing that the first argument evaluates as False. The
 following example is equivalent to the “raise” example above.</p>
@@ -879,7 +797,7 @@ following example is equivalent to the “raise” example above.</p>
 </section>
 </section>
 <section id="importing-python-modules">
-<span id="jinja2-importing-python-modules"></span><h2>Importing Python modules<a class="headerlink" href="#importing-python-modules" title="Permalink to this heading">¶</a></h2>
+<span id="jinja2-importing-python-modules"></span><h2>Importing Python modules<a class="headerlink" href="#importing-python-modules" title="Permalink to this heading"></a></h2>
 <p>Jinja2 allows to gather variable and macro definitions in a separate template
 that can be imported into (and thus shared among) other templates.</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% import &quot;flow-utils.cylc&quot; as utils %}</span>
@@ -902,7 +820,7 @@ that can be imported into (and thus shared among) other templates.</p>
 </div>
 </section>
 <section id="logging">
-<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading">¶</a></h2>
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this heading"></a></h2>
 <p>It is possible to output messages to the Cylc log from within Jinja2, these
 messages will appear on the console when validating or starting a workflow.
 This can be useful for development or debugging.</p>
@@ -927,7 +845,7 @@ advisable to use the <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option is provided.</p>
 </section>
 <section id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">¶</a></h2>
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading"></a></h2>
 <p>It is possible to run Python debuggers from within Jinja2 via the
 <a class="reference internal" href="#jinja2-importing-python-modules"><span class="std std-ref">import mechanism</span></a>.</p>
 <p>For example to use a <a class="reference external" href="https://docs.python.org/3/library/pdb.html">PDB</a> breakpoint you could do the following:</p>
@@ -951,32 +869,26 @@ via the <code class="docutils literal notranslate"><span class="pre">_Context__s
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="empy.html" class="btn btn-neutral float-right" title="EmPy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="parameterized-tasks.html" class="btn btn-neutral float-left" title="Task Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="empy.html" class="btn btn-neutral float-right" title="EmPy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -1003,18 +915,11 @@ via the <code class="docutils literal notranslate"><span class="pre">_Context__s
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

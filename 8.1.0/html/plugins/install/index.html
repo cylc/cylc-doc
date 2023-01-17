@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Pre-Configure And Post-Install Plugins &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="cylc.flow.install_plugins.log_vc_info" href="built-in/cylc.flow.install_plugins.log_vc_info.html" />
     <link rel="prev" title="cylc.flow.main_loop.reset_bad_hosts" href="../main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -130,83 +83,45 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Plugins</a> &raquo;</li>
-        
-      <li>Pre-Configure And Post-Install Plugins</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Plugins</a></li>
+      <li class="breadcrumb-item active">Pre-Configure And Post-Install Plugins</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/plugins/install/index.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="pre-configure-and-post-install-plugins">
-<h1>Pre-Configure And Post-Install Plugins<a class="headerlink" href="#pre-configure-and-post-install-plugins" title="Permalink to this heading">¶</a></h1>
+<h1>Pre-Configure And Post-Install Plugins<a class="headerlink" href="#pre-configure-and-post-install-plugins" title="Permalink to this heading"></a></h1>
 <p>Pre-configure plugins allow Cylc to take additional actions before running
 Cylc utilities such as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code>.</p>
 <p>Post-install plugins allow Cylc to take additional actions after
 running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</p>
 <section id="built-in-plugins">
-<h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Permalink to this heading">¶</a></h2>
+<h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Permalink to this heading"></a></h2>
 <p>Cylc Flow provides the following pre-configure and post-install plugins:</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="built-in/cylc.flow.install_plugins.log_vc_info.html#module-cylc.flow.install_plugins.log_vc_info" title="cylc.flow.install_plugins.log_vc_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.install_plugins.log_vc_info</span></code></a></p></td>
 <td><p>Record version control information to the workflow log directory on installation.</p></td>
@@ -215,15 +130,15 @@ running <code class="docutils literal notranslate"><span class="pre">cylc</span>
 </table>
 </section>
 <section id="developing-pre-configure-and-post-install-plugins">
-<h2>Developing <code class="docutils literal notranslate"><span class="pre">pre_configure</span></code> and <code class="docutils literal notranslate"><span class="pre">post_install</span></code> plugins<a class="headerlink" href="#developing-pre-configure-and-post-install-plugins" title="Permalink to this heading">¶</a></h2>
+<h2>Developing <code class="docutils literal notranslate"><span class="pre">pre_configure</span></code> and <code class="docutils literal notranslate"><span class="pre">post_install</span></code> plugins<a class="headerlink" href="#developing-pre-configure-and-post-install-plugins" title="Permalink to this heading"></a></h2>
 <p>Cylc uses entry points registered by setuptools to search for pre-configure
 and post-install plugins.</p>
 <section id="hello-world">
-<h3>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this heading">¶</a></h3>
+<h3>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this heading"></a></h3>
 <p>In this example a pre-configure plugin which logs a “Hello World” message
 and, after installation, logs some info about the installation:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">my_plugin.py</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">my_plugin.py</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cylc.flow</span> <span class="kn">import</span> <span class="n">LOG</span>
 
 <span class="k">def</span> <span class="nf">pre_configure</span><span class="p">(</span><span class="n">srcdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rundir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -242,7 +157,7 @@ and, after installation, logs some info about the installation:</p>
 <p>Plugins are registered by registering them with the <code class="docutils literal notranslate"><span class="pre">cylc.pre_configure</span></code>
 and <code class="docutils literal notranslate"><span class="pre">cylc.post_install</span></code> entry points:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">setup.py</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">setup.py</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plugins must be properly installed, in-place PYTHONPATH meddling will</span>
 <span class="c1"># not work.</span>
 
@@ -269,7 +184,7 @@ and <code class="docutils literal notranslate"><span class="pre">cylc.post_insta
 </div>
 </section>
 <section id="api-reference">
-<h3>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading">¶</a></h3>
+<h3>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h3>
 <p>Cylc will pass following arguments to pre-configure and post-install plugins:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">srcdir</span></code> (Path or string)</dt><dd><p>The directory from which <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> is installing a workflow,
@@ -298,7 +213,7 @@ the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span
 <p>The post-install entry point does not return any data used by Cylc.</p>
 </section>
 <section id="more-advanced-example">
-<h3>More advanced example<a class="headerlink" href="#more-advanced-example" title="Permalink to this heading">¶</a></h3>
+<h3>More advanced example<a class="headerlink" href="#more-advanced-example" title="Permalink to this heading"></a></h3>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>For the implementation of a more fully featured “real-world” example see
@@ -311,7 +226,7 @@ file and provided to Cylc as both template and environment variables.</p>
 <p>At <code class="docutils literal notranslate"><span class="pre">post_install</span></code> an additional log file is provided recording the version
 of this plugin used.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">An example json reading plugin</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">An example json reading plugin</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
@@ -353,32 +268,26 @@ of this plugin used.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="built-in/cylc.flow.install_plugins.log_vc_info.html" class="btn btn-neutral float-right" title="cylc.flow.install_plugins.log_vc_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html" class="btn btn-neutral float-left" title="cylc.flow.main_loop.reset_bad_hosts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="built-in/cylc.flow.install_plugins.log_vc_info.html" class="btn btn-neutral float-right" title="cylc.flow.install_plugins.log_vc_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -405,18 +314,11 @@ of this plugin used.</p>
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

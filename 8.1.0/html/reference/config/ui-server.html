@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>UI Server Configuration &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Cylc Configuration Data Types" href="types.html" />
     <link rel="prev" title="Global Configuration" href="global.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -133,77 +86,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Reference</a> &raquo;</li>
-        
-          <li><a href="index.html">Configuration</a> &raquo;</li>
-        
-      <li>UI Server Configuration</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Configuration</a></li>
+      <li class="breadcrumb-item active">UI Server Configuration</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/reference/config/ui-server.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="ui-server-configuration">
-<span id="ui-server-config"></span><h1>UI Server Configuration<a class="headerlink" href="#ui-server-configuration" title="Permalink to this heading">¶</a></h1>
+<span id="ui-server-config"></span><h1>UI Server Configuration<a class="headerlink" href="#ui-server-configuration" title="Permalink to this heading"></a></h1>
 <p>Cylc UI Server can be configured using a <code class="docutils literal notranslate"><span class="pre">jupyter_config.py</span></code>.</p>
 <p>Site level configuration, such as <code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.site_authorization</span></code> should
 be defined in <code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/jupyter_config.py</span></code>, or, alternatively, the
@@ -244,16 +154,16 @@ the environment variable <code class="docutils literal notranslate"><span class=
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.uiserver.app.</span></span><span class="sig-name descname"><span class="pre">CylcUIServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.uiserver.app.</span></span><span class="sig-name descname"><span class="pre">CylcUIServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer" title="Permalink to this definition"></a></dt>
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.max_workers">
-<span class="sig-name descname"><span class="pre">max_workers</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.max_workers</span> <span class="pre">=</span> <span class="pre">Int(1)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.max_workers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">max_workers</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.max_workers</span> <span class="pre">=</span> <span class="pre">Int(1)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.max_workers" title="Permalink to this definition"></a></dt>
 <dd><p>Set the maximum number of workers for process pools.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.scan_interval">
-<span class="sig-name descname"><span class="pre">scan_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.scan_interval</span> <span class="pre">=</span> <span class="pre">Float(5.0)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.scan_interval" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">scan_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.scan_interval</span> <span class="pre">=</span> <span class="pre">Float(5.0)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.scan_interval" title="Permalink to this definition"></a></dt>
 <dd><p>Set the interval between workflow scans in seconds.</p>
 <p>Workflow scans allow a UI server to detect workflows which have
 been started from the CLI since the last update.</p>
@@ -263,7 +173,7 @@ system load set a higher value.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.site_authorization">
-<span class="sig-name descname"><span class="pre">site_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.site_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.site_authorization" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">site_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.site_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.site_authorization" title="Permalink to this definition"></a></dt>
 <dd><p>Dictionary containing site limits and defaults for authorization.</p>
 <p>This configuration should be placed only in the site set
 configuration file and not the user configuration file (use
@@ -323,7 +233,7 @@ applied to all workflows.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.ui_build_dir">
-<span class="sig-name descname"><span class="pre">ui_build_dir</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_build_dir</span> <span class="pre">=</span> <span class="pre">PathType()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_build_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ui_build_dir</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_build_dir</span> <span class="pre">=</span> <span class="pre">PathType()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_build_dir" title="Permalink to this definition"></a></dt>
 <dd><p>The directory containing the UI build.</p>
 <p>This can be a directory containing a single UI build e.g:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="o">/</span>
@@ -346,7 +256,7 @@ build e.g. for development or evaluation purposes.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.ui_version">
-<span class="sig-name descname"><span class="pre">ui_version</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_version</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ui_version</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_version</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_version" title="Permalink to this definition"></a></dt>
 <dd><p>Hardcodes the UI version to serve.</p>
 <p>If the <code class="docutils literal notranslate"><span class="pre">ui_build_dir</span></code> is a tree of builds, this config can be
 used to determine which UI build is used.</p>
@@ -357,7 +267,7 @@ version sorting rules.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.user_authorization">
-<span class="sig-name descname"><span class="pre">user_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.user_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.user_authorization" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">user_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.user_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.user_authorization" title="Permalink to this definition"></a></dt>
 <dd><p>Dictionary containing authorized users and permission levels for
 authorization.</p>
 <p>Use this setting to share control of your workflows
@@ -401,32 +311,26 @@ applied to all workflows.</p>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="types.html" class="btn btn-neutral float-right" title="Cylc Configuration Data Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="global.html" class="btn btn-neutral float-left" title="Global Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="types.html" class="btn btn-neutral float-right" title="Cylc Configuration Data Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -453,18 +357,11 @@ applied to all workflows.</p>
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

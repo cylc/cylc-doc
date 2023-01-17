@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Introduction &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/js/diff_selector.js"></script>
         <script src="../_static/js/minicylc.js"></script>
         <script src="../_static/js/spoiler.js"></script>
         <script src="../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Writing Workflows" href="writing-workflows/index.html" />
     <link rel="prev" title="User Guide" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../index.html">
+            <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -129,77 +82,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="index.html">User Guide</a> &raquo;</li>
-        
-      <li>Introduction</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Introduction</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/user-guide/introduction.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
 <section id="what-is-a-workflow">
-<h2>What is a Workflow?<a class="headerlink" href="#what-is-a-workflow" title="Permalink to this heading">¶</a></h2>
+<h2>What is a Workflow?<a class="headerlink" href="#what-is-a-workflow" title="Permalink to this heading"></a></h2>
 <blockquote class="epigraph">
 <div><p>A workflow consists of an orchestrated and repeatable pattern of business
 activity enabled by the systematic organization of resources into processes
@@ -212,7 +123,7 @@ that transform materials, provide services, or process information.</p>
 </div>
 </section>
 <section id="what-is-cylc">
-<h2>What is Cylc?<a class="headerlink" href="#what-is-cylc" title="Permalink to this heading">¶</a></h2>
+<h2>What is Cylc?<a class="headerlink" href="#what-is-cylc" title="Permalink to this heading"></a></h2>
 <p>Cylc (pronounced silk) is a workflow engine, a system that automatically
 executes tasks according to schedules and dependencies.</p>
 <p>In a Cylc workflow each step is an application: an executable command, script,
@@ -223,7 +134,7 @@ or program. Cylc runs each task as soon as it is appropriate to do so.</p>
 </div>
 </section>
 <section id="cylc-and-cycling-workflows">
-<h2>Cylc and Cycling Workflows<a class="headerlink" href="#cylc-and-cycling-workflows" title="Permalink to this heading">¶</a></h2>
+<h2>Cylc and Cycling Workflows<a class="headerlink" href="#cylc-and-cycling-workflows" title="Permalink to this heading"></a></h2>
 <p>A <em>cycling workflow</em> is a repetitive process involving many interdependent
 tasks. Cylc tasks wrap arbitrary applications: executable commands,
 scripts, or programs. Example use cases include:</p>
@@ -253,7 +164,7 @@ across as well as within cycles. This allows fast catch-up from delays in
 real time systems, and sustained high throughput off the clock.</p>
 </section>
 <section id="how-to-run-user-guide-examples">
-<h2>How to Run User Guide Examples<a class="headerlink" href="#how-to-run-user-guide-examples" title="Permalink to this heading">¶</a></h2>
+<h2>How to Run User Guide Examples<a class="headerlink" href="#how-to-run-user-guide-examples" title="Permalink to this heading"></a></h2>
 <p>Many Cylc concepts and features in this document are illustrated with minimal
 snippets of workflow configuration. Most of these can be turned into a complete
 workflow that you can actually run, with a few easy steps:</p>
@@ -288,32 +199,26 @@ to run, so the workflow doesn’t evolve too quickly</p></li>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="writing-workflows/index.html" class="btn btn-neutral float-right" title="Writing Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="writing-workflows/index.html" class="btn btn-neutral float-right" title="Writing Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -340,18 +245,11 @@ to run, so the workflow doesn’t evolve too quickly</p></li>
 <script
   type="text/javascript"
   src="../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

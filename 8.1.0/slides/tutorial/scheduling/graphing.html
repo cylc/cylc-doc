@@ -36,6 +36,9 @@
       };
     </script>
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
     <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
@@ -50,6 +53,7 @@
     <script type="text/javascript" src="../../_static/init.js"></script>
     
     
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="Cylc 8.1.0 documentation" href="../../index.html" />
@@ -304,10 +308,10 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-3cc3f7768a5affdc79804c3e458386e1426a9483.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-35e572a0edbf09d95a9f67ce81ec0d4bbf618c6e.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
+buy_ingredients -&gt; make_dough
 sell_bread
 bake_bread -&gt; sell_bread
 }</p></object></div>
@@ -326,15 +330,15 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-dd7272591b2c69984668dca6e444f058fb12d8f3.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f1a0875add9b1d3dbe18af90935872050e30507d.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-pre_heat_oven -&gt; bake_bread
 make_dough -&gt; bake_bread
-clean_oven
-bake_bread
 buy_ingredients -&gt; make_dough
 bake_bread -&gt; clean_oven
+pre_heat_oven -&gt; bake_bread
 bake_bread -&gt; sell_bread
+clean_oven
+bake_bread
 sell_bread
 }</p></object></div>
 </div>

@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Retries &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Message Triggers" href="message-triggers.html" />
     <link rel="prev" title="Queues" href="queues.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -137,81 +90,38 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Tutorial</a> &raquo;</li>
-        
-          <li><a href="index.html">Further Topics</a> &raquo;</li>
-        
-      <li>Retries</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Tutorial</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Further Topics</a></li>
+      <li class="breadcrumb-item active">Retries</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/tutorial/furthertopics/retries.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="retries">
-<h1>Retries<a class="headerlink" href="#retries" title="Permalink to this heading">¶</a></h1>
+<h1>Retries<a class="headerlink" href="#retries" title="Permalink to this heading"></a></h1>
 <p>Retries allow us to automatically re-submit tasks which have failed due to
 failure in submission or execution.</p>
 <section id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading">¶</a></h2>
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this heading"></a></h2>
 <p>Retries can be useful for tasks that occasionally fail for known, fixable
 reasons. Cylc can rerun a failing job multiple times, with user-defined delays
 between tries.</p>
@@ -230,7 +140,7 @@ left. Otherwise they return to the waiting state, to wait on the next try.</p>
 </div>
 </section>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h2>
 <a class="reference internal image-reference" href="https://upload.wikimedia.org/wikipedia/commons/7/73/Double-six-dice.jpg"><img alt="Two dice both showing the number six" class="align-right" src="https://upload.wikimedia.org/wikipedia/commons/7/73/Double-six-dice.jpg" style="width: 200px;" /></a>
 <p>Create a new workflow by running the following commands:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">~/</span><span class="n">cylc</span><span class="o">-</span><span class="n">src</span><span class="o">/</span><span class="n">retries</span><span class="o">-</span><span class="n">tutorial</span>
@@ -266,7 +176,7 @@ left. Otherwise they return to the waiting state, to wait on the next try.</p>
 </div>
 </section>
 <section id="running-without-retries">
-<h2>Running Without Retries<a class="headerlink" href="#running-without-retries" title="Permalink to this heading">¶</a></h2>
+<h2>Running Without Retries<a class="headerlink" href="#running-without-retries" title="Permalink to this heading"></a></h2>
 <p>Let’s see what happens when we run the workflow as it is.
 Look at the workflow with <a class="reference internal" href="../runtime/introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a> or <a class="reference internal" href="../runtime/introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a></p>
 <p>Then validate install and run the workflow:</p>
@@ -282,7 +192,7 @@ Look at the workflow with <a class="reference internal" href="../runtime/introdu
 </div>
 </section>
 <section id="configuring-retries">
-<h2>Configuring Retries<a class="headerlink" href="#configuring-retries" title="Permalink to this heading">¶</a></h2>
+<h2>Configuring Retries<a class="headerlink" href="#configuring-retries" title="Permalink to this heading"></a></h2>
 <p>We need to tell Cylc to retry it a few times. To do this, add the following
 to the end of the <code class="docutils literal notranslate"><span class="pre">[[roll_doubles]]</span></code> task section in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 5*PT6S</span>
@@ -300,7 +210,7 @@ then once after one hour then once after three hours.</p>
 </div>
 </section>
 <section id="running-with-retries">
-<h2>Running With Retries<a class="headerlink" href="#running-with-retries" title="Permalink to this heading">¶</a></h2>
+<h2>Running With Retries<a class="headerlink" href="#running-with-retries" title="Permalink to this heading"></a></h2>
 <p>Look at the workflow with <a class="reference internal" href="../runtime/introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a> or <a class="reference internal" href="../runtime/introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a></p>
 <p>Re-install and run the workflow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">validate</span> <span class="o">.</span>
@@ -313,7 +223,7 @@ it will succeed (there is only about a 1 in 3 chance of every task
 failing) and the workflow will continue.</p>
 </section>
 <section id="altering-behaviour">
-<h2>Altering Behaviour<a class="headerlink" href="#altering-behaviour" title="Permalink to this heading">¶</a></h2>
+<h2>Altering Behaviour<a class="headerlink" href="#altering-behaviour" title="Permalink to this heading"></a></h2>
 <p>We can alter the behaviour of the task based on the number of retries, using
 <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_TRY_NUMBER</span></code>.</p>
 <p>Change the <code class="docutils literal notranslate"><span class="pre">script</span></code> setting for the <code class="docutils literal notranslate"><span class="pre">roll_doubles</span></code> task to this:</p>
@@ -336,39 +246,33 @@ fi
 <p>This time, the task should definitely succeed before the third retry.</p>
 </section>
 <section id="further-reading">
-<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">¶</a></h2>
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this heading"></a></h2>
 <p>For more information see the <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
 </section>
 </section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="message-triggers.html" class="btn btn-neutral float-right" title="Message Triggers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="queues.html" class="btn btn-neutral float-left" title="Queues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="message-triggers.html" class="btn btn-neutral float-right" title="Message Triggers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -395,18 +299,11 @@ fi
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

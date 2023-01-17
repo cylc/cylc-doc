@@ -1,88 +1,52 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Task Parameters &mdash; Cylc 8.1.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
         <script src="../../_static/js/diff_selector.js"></script>
         <script src="../../_static/js/minicylc.js"></script>
         <script src="../../_static/js/spoiler.js"></script>
         <script src="../../_static/js/addons.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Jinja2" href="jinja2.html" />
     <link rel="prev" title="Task Configuration" href="runtime.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html" class="icon icon-home"> Cylc
-          
-
-          
+            <a href="../../index.html">
+            <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
                 8.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -90,18 +54,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -143,77 +96,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Cylc</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">User Guide</a> &raquo;</li>
-        
-          <li><a href="index.html">Writing Workflows</a> &raquo;</li>
-        
-      <li>Task Parameters</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Task Parameters</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/user-guide/writing-workflows/parameterized-tasks.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="task-parameters">
-<span id="user-guide-param"></span><h1>Task Parameters<a class="headerlink" href="#task-parameters" title="Permalink to this heading">¶</a></h1>
+<span id="user-guide-param"></span><h1>Task Parameters<a class="headerlink" href="#task-parameters" title="Permalink to this heading"></a></h1>
 <p>Cylc can automatically generate related tasks and dependencies by expanding
 <a class="reference internal" href="../../glossary.html#term-parameterization"><span class="xref std std-term">parameterized</span></a> names over lists or ranges of
 values. Uses for this include:</p>
@@ -233,7 +143,7 @@ over a range of parameters</em>, but unlike general templating it can only be
 used for that specific purpose.</p>
 </div>
 <section id="parameter-expansion">
-<h2>Parameter Expansion<a class="headerlink" href="#parameter-expansion" title="Permalink to this heading">¶</a></h2>
+<h2>Parameter Expansion<a class="headerlink" href="#parameter-expansion" title="Permalink to this heading"></a></h2>
 <p>Parameter values can be lists of strings, or lists of integers and
 integer ranges (with inclusive bounds). Numeric values in a list of strings are
 considered strings. It is not possible to mix strings with integer ranges.</p>
@@ -346,11 +256,11 @@ omitted):</p>
 <figure class="align-center" id="id4">
 <span id="fig-params-1"></span><img alt="../../_images/params1.png" src="../../_images/params1.png" />
 <figcaption>
-<p><span class="caption-text">Parameter expansion example.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Parameter expansion example.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <section id="zero-padded-integer-values">
-<h3>Zero-Padded Integer Values<a class="headerlink" href="#zero-padded-integer-values" title="Permalink to this heading">¶</a></h3>
+<h3>Zero-Padded Integer Values<a class="headerlink" href="#zero-padded-integer-values" title="Permalink to this heading"></a></h3>
 <p>Integer parameter values are given a default template for generating task
 suffixes that are zero-padded according to the longest size of their values.
 For example, the default template for <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">9..10</span></code> would be
@@ -372,7 +282,7 @@ For example, the default template for <code class="docutils literal notranslate"
 </div>
 </section>
 <section id="parameters-as-full-task-names">
-<h3>Parameters as Full Task Names<a class="headerlink" href="#parameters-as-full-task-names" title="Permalink to this heading">¶</a></h3>
+<h3>Parameters as Full Task Names<a class="headerlink" href="#parameters-as-full-task-names" title="Permalink to this heading"></a></h3>
 <p>Parameter values can be used as full task names, but the default template
 should be overridden to remove the initial underscore. For example:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
@@ -392,7 +302,7 @@ should be overridden to remove the initial underscore. For example:</p>
 </section>
 </section>
 <section id="passing-values-to-tasks">
-<h2>Passing Values To Tasks<a class="headerlink" href="#passing-values-to-tasks" title="Permalink to this heading">¶</a></h2>
+<h2>Passing Values To Tasks<a class="headerlink" href="#passing-values-to-tasks" title="Permalink to this heading"></a></h2>
 <p>Parameter values are passed as environment variables to tasks generated by
 parameter expansion. For example, if we have:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
@@ -430,7 +340,7 @@ environment variables:</p>
 </div>
 </section>
 <section id="selecting-specific-values">
-<h2>Selecting Specific Values<a class="headerlink" href="#selecting-specific-values" title="Permalink to this heading">¶</a></h2>
+<h2>Selecting Specific Values<a class="headerlink" href="#selecting-specific-values" title="Permalink to this heading"></a></h2>
 <p>Specific parameter values can be singled out in the graph and under
 <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> with the notation <code class="docutils literal notranslate"><span class="pre">&lt;p=5&gt;</span></code> (for example).
 Here’s how to make a special task trigger off just the first of a
@@ -453,7 +363,7 @@ set of model runs:</p>
 </div>
 </section>
 <section id="selecting-partial-ranges">
-<h2>Selecting Partial Ranges<a class="headerlink" href="#selecting-partial-ranges" title="Permalink to this heading">¶</a></h2>
+<h2>Selecting Partial Ranges<a class="headerlink" href="#selecting-partial-ranges" title="Permalink to this heading"></a></h2>
 <p>The parameter notation does not currently support partial range selection such
 as <code class="docutils literal notranslate"><span class="pre">foo&lt;p=5..10&gt;</span></code>, but you can achieve the same result by defining a
 second parameter that covers the partial range and giving it the same expansion
@@ -476,7 +386,7 @@ template as the full-range parameter. For example:</p>
 </div>
 </section>
 <section id="offsets-in-the-graph">
-<h2>Offsets in the Graph<a class="headerlink" href="#offsets-in-the-graph" title="Permalink to this heading">¶</a></h2>
+<h2>Offsets in the Graph<a class="headerlink" href="#offsets-in-the-graph" title="Permalink to this heading"></a></h2>
 <p>A negative offset notation <code class="docutils literal notranslate"><span class="pre">&lt;NAME-1&gt;</span></code> is interpreted as the previous
 value in the ordered list of parameter values, while a positive offset is
 interpreted as the next value. For example, to split a model run into multiple
@@ -509,7 +419,7 @@ steps with each step depending on the previous one, either of these graph lines:
 </div>
 </section>
 <section id="task-families-and-parameters">
-<h2>Task Families and Parameters<a class="headerlink" href="#task-families-and-parameters" title="Permalink to this heading">¶</a></h2>
+<h2>Task Families and Parameters<a class="headerlink" href="#task-families-and-parameters" title="Permalink to this heading"></a></h2>
 <p>Task family members can be generated by parameter expansion:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[FAM]]</span>
@@ -573,7 +483,7 @@ family <code class="docutils literal notranslate"><span class="pre">OBS_PROC</sp
 </div>
 </section>
 <section id="parameterized-cycling">
-<span id="id1"></span><h2>Parameterized Cycling<a class="headerlink" href="#parameterized-cycling" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>Parameterized Cycling<a class="headerlink" href="#parameterized-cycling" title="Permalink to this heading"></a></h2>
 <p>For smaller workflows of finite duration, parameter expansion can be used to
 generate a sequence of pre-defined tasks as a proxy for cycling.</p>
 <p>Here’s a cycling workflow of two-monthly model runs for one year, with
@@ -625,7 +535,7 @@ behaviour at the start, end, or anywhere in between.</p>
 <p><span class="caption-text">Parameterized (top) and cycling (bottom) versions of the same
 workflow. The first three cycle points are shown in the
 cycling case. The parameterized case does not have cycle points (technically
-all of its tasks have the cycle point 1).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+all of its tasks have the cycle point 1).</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>The parameterized version has several disadvantages, however:</p>
@@ -647,7 +557,7 @@ integer cycling is straightforward.)</p></li>
 </ul>
 </div></blockquote>
 <section id="parameterized-sub-cycles">
-<h3>Parameterized Sub-Cycles<a class="headerlink" href="#parameterized-sub-cycles" title="Permalink to this heading">¶</a></h3>
+<h3>Parameterized Sub-Cycles<a class="headerlink" href="#parameterized-sub-cycles" title="Permalink to this heading"></a></h3>
 <p>A workflow can have multiple main cycling sequences, but sub-cycles within each
 main cycle point have to be parameterized. A typical use case for this is
 incremental processing of files generated sequentially during a long model run.</p>
@@ -694,9 +604,9 @@ for the second file; and so on.</p>
 </div>
 </section>
 <section id="offsets-at-sequence-start">
-<h3>Offsets at Sequence Start<a class="headerlink" href="#offsets-at-sequence-start" title="Permalink to this heading">¶</a></h3>
+<h3>Offsets at Sequence Start<a class="headerlink" href="#offsets-at-sequence-start" title="Permalink to this heading"></a></h3>
 <p>In cycling workflows, dependence on tasks prior to the start cycle point is
-ignored <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. So this graph:</p>
+ignored <a class="footnote-reference brackets" href="#id3" id="id2">1</a>. So this graph:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">P1D </span><span class="o">=</span><span class="s"> &quot;model[-P1D] =&gt; model&quot;</span>
 </pre></div>
 </div>
@@ -715,49 +625,42 @@ behaviour at the start point can be configured explicitly if desired).</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;model_chunk0&quot;</span>
 </pre></div>
 </div>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id3" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
-<p>Currently this only applies to the unique workflow start cycle point, so
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>Currently this only applies to the unique workflow start cycle point, so
 it may be easier to use parameterized cycling if you have multiple
 (finite) sequences starting at different points. We plan to extend this
 convenience to all sequences regardless of start point, but use will be
 optional because delayed-start cycling tasks may need to trigger off of
 earlier cycles.</p>
-</aside>
-</aside>
+</dd>
+</dl>
 </section>
 </section>
 </section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="jinja2.html" class="btn btn-neutral float-right" title="Jinja2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="runtime.html" class="btn btn-neutral float-left" title="Task Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jinja2.html" class="btn btn-neutral float-right" title="Jinja2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">
-        Last updated on Jan 16, 2023.
-      </span>
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 17, 2023.
+      </span></p>
+  </div>
 
-    </p>
-  </div> 
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   <!--
   element which gets populated with the list of available versions and
@@ -784,18 +687,11 @@ earlier cycles.</p>
 <script
   type="text/javascript"
   src="../../../../versions.js"
-></script>
-
-  <script type="text/javascript">
+></script><script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
