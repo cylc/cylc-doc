@@ -167,13 +167,15 @@ $ make html linkcheck doctest SPHINXOPTS='-W'
 * Create a tag with a name matching a released cylc-flow tag.
   `git tag <tag> <commit>` e.g. `git tag 8.1.2 HEAD`.
 * Push it to `cylc/cylc-doc`.
-  `git push --tags upstream <tag>`
+  `git push upstream refs/tags/<tag>`
 * Trigger the `deploy` workflow against that tag.
 
 **To update documentation for an existing version (post release):**
 
 * Update the existing tag.
+  `git tag -d <tag>; git tag <tag> <commit>`
 * Push it to `cylc/cylc-doc`.
+  `git push upstream refs/tags/<tag> -f`
 * Trigger the `deploy` workflow against that tag.
 
 **To remove old documentation:**
