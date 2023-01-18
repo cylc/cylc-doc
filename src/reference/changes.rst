@@ -53,7 +53,7 @@ will be added in later releases.
 Log View
 ^^^^^^^^
 
-The web UI also now has a log view which displays workflow and job log files:
+The web UI now has a log view which displays workflow and job log files:
 
 .. image:: changes/log-view-screenshot.png
    :width: 80%
@@ -61,6 +61,16 @@ The web UI also now has a log view which displays workflow and job log files:
 Support for viewing more log files, syntax highlighting, searching and line
 numbers are planned for future releases.
 
+Edit Runtime
+^^^^^^^^^^^^
+
+The web UI now has a command for editing the :cylc:conf:`[runtime]` section
+of a task or family.
+
+.. image:: changes/edit-runtime-screenshot.png
+   :width: 80%
+
+Any changes made are :ref:`broadcast <cylc-broadcast>` to the running workflow.
 
 Combined Commands
 ^^^^^^^^^^^^^^^^^
