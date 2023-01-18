@@ -53,15 +53,9 @@ Install a workflow from source and run it:
          rose suite-run
      - ::
 
-         # install from $PWD
-         cylc install
-
-         # run the installed workflow
-         cylc play <name>
-
-         # alternatively:
          # validate, install & play
          cylc vip <name>
+         cylc vip # use $PWD
 
 
 Reloading
@@ -87,22 +81,10 @@ To update a running workflow with changes from the source directory:
          rose suite-run --reload
      - ::
 
-         # re-install from source
-         cylc reinstall <name>
-
-         # reload the worklow
-         cylc reload <name>
-
          # Validate against source;
-         # reinstall
-         cylc vr
-
-.. note::
-
-  ``cylc vr`` is Validate, Reinstall, (Reload or Play). It will:
-
-  * Reload a playing or paused workflow (but not pause/unpause it).
-  * Play a stopped workflow.
+         # Reinstall;
+         # Reload or Play
+         cylc vr <name>
 
 
 Pausing & Unpausing
