@@ -1,5 +1,7 @@
-Broadcast
-=========
+.. _broadcast-tutorial:
+
+Broadcast Tutorial
+==================
 
 This tutorial walks you through using ``cylc broadcast`` which can be used
 to change :ref:`task runtime configuration <tutorial-runtime>` in a

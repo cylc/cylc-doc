@@ -14,4 +14,8 @@ Broadcast settings targeting a specific cycle point expire as the workflow
 moves on. Otherwise they persist for lifetime of the run, and across restarts,
 unless cleared with another invocation of the command.
 
+.. seealso::
+
+   :ref:`broadcast-tutorial`
+
 .. TODO: document sub-workflows
