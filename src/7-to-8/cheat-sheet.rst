@@ -93,6 +93,17 @@ To update a running workflow with changes from the source directory:
          # reload the worklow
          cylc reload <name>
 
+         # Validate against source;
+         # reinstall
+         cylc vr
+
+.. note::
+
+  ``cylc vr`` is Validate, Reinstall, (Reload or Play). It will:
+
+  * Reload a playing or paused workflow (but not pause/unpause it).
+  * Play a stopped workflow.
+
 
 Pausing & Unpausing
 -------------------
