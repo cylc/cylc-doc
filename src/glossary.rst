@@ -997,7 +997,11 @@ Glossary
 
          * :term:`cold start`
          * :term:`start task`
-         * :term:`restart`v
+         * :term:`restart`
+         * :term:`shutdown`
+
+
+   start task
       A start task is :term:`task` in the :term:`graph` from which the
       :term:`scheduler` :term:`starts <start>` running a :term:`workflow` from
       scratch.
