@@ -315,12 +315,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e26f8ce6dee3a7dc0406bd6d3398fca124d5a8b9.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-25b2c8f89e2d9ce87f7b979ec728730bcd827a8e.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
+bake_bread -&gt; sell_bread
+make_dough -&gt; bake_bread
 sell_bread
 buy_ingredients -&gt; make_dough
-make_dough -&gt; bake_bread
-bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -329,16 +329,16 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7db09f07927bacb078e2a183b2f1752536728253.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e689ffbed44f14a41a2ac2811fd39eaa94f90cf7.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough -&gt; bake_bread
-bake_bread
-sell_bread
-bake_bread -&gt; sell_bread
-bake_bread -&gt; clean_oven
-pre_heat_oven -&gt; bake_bread
-buy_ingredients -&gt; make_dough
 clean_oven
+sell_bread
+bake_bread -&gt; clean_oven
+bake_bread -&gt; sell_bread
+pre_heat_oven -&gt; bake_bread
+bake_bread
+make_dough -&gt; bake_bread
+buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -515,7 +515,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 17, 2023.
+      <span class="lastupdated">Last updated on Jan 19, 2023.
       </span></p>
   </div>
 

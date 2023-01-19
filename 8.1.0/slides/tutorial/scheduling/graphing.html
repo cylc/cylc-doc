@@ -308,11 +308,11 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-35e572a0edbf09d95a9f67ce81ec0d4bbf618c6e.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-332bf30dd2cc29606af50d672fc7cc6cfd261b6c.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
 sell_bread
+make_dough -&gt; bake_bread
 bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
@@ -330,16 +330,16 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f1a0875add9b1d3dbe18af90935872050e30507d.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-dc11ee92da142ea9140b90f3e3878e8d4d58386b.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
-bake_bread -&gt; clean_oven
-pre_heat_oven -&gt; bake_bread
-bake_bread -&gt; sell_bread
-clean_oven
-bake_bread
 sell_bread
+make_dough -&gt; bake_bread
+bake_bread -&gt; sell_bread
+bake_bread -&gt; clean_oven
+bake_bread
+clean_oven
+pre_heat_oven -&gt; bake_bread
 }</p></object></div>
 </div>
 </div>

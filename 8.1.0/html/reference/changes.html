@@ -67,6 +67,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#cylc-8-1-0">Cylc 8.1.0</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#graph-view">Graph View</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#log-view">Log View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#edit-runtime">Edit Runtime</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#combined-commands">Combined Commands</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#bash-completion">Bash Completion</a></li>
 </ul>
@@ -140,28 +141,35 @@ will be added in later releases.</p>
 </section>
 <section id="log-view">
 <h3>Log View<a class="headerlink" href="#log-view" title="Permalink to this heading"></a></h3>
-<p>The web UI also now has a log view which displays workflow and job log files:</p>
+<p>The web UI now has a log view which displays workflow and job log files:</p>
 <a class="reference internal image-reference" href="../_images/log-view-screenshot.png"><img alt="../_images/log-view-screenshot.png" src="../_images/log-view-screenshot.png" style="width: 80%;" /></a>
 <p>Support for viewing more log files, syntax highlighting, searching and line
 numbers are planned for future releases.</p>
 </section>
+<section id="edit-runtime">
+<h3>Edit Runtime<a class="headerlink" href="#edit-runtime" title="Permalink to this heading"></a></h3>
+<p>The web UI now has a command for editing the <a class="reference internal" href="config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> section
+of a task or family.</p>
+<a class="reference internal image-reference" href="../_images/edit-runtime-screenshot.png"><img alt="../_images/edit-runtime-screenshot.png" src="../_images/edit-runtime-screenshot.png" style="width: 80%;" /></a>
+<p>Any changes made are <a class="reference internal" href="../user-guide/running-workflows/dynamic-behaviour.html#cylc-broadcast"><span class="std std-ref">broadcast</span></a> to the running workflow.</p>
+</section>
 <section id="combined-commands">
 <h3>Combined Commands<a class="headerlink" href="#combined-commands" title="Permalink to this heading"></a></h3>
 <p>Two new commands have been added as short-cuts for common working patterns:</p>
-<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> validates, installs, and plays a workflow, and is equivalent to:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code></dt><dd><p>Validate, install and plays a workflow, equivalent to:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>&lt;path&gt;
 cylc<span class="w"> </span>install<span class="w"> </span>&lt;path&gt;
 cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/cylc-vip.gif"><img alt="../_images/cylc-vip.gif" src="../_images/cylc-vip.gif" style="width: 80%;" /></a>
-<dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> which validates and reinstalls a workflow, then either:</dt><dd><ul class="simple">
-<li><p>reloads the workflow if it is running.</p></li>
-<li><p>restarts the workflow if it is stopped.</p></li>
-</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code></dt><dd><p>Validate and reinstall a workflow, then either:
+- reload the workflow if it is running.
+- restart the workflow if it is stopped.</p>
 </dd>
 </dl>
+<a class="reference internal image-reference" href="../_images/vip-vr.gif"><img alt="../_images/vip-vr.gif" src="../_images/vip-vr.gif" style="width: 100%;" /></a>
 <p>For more information see the command line help:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>vip<span class="w"> </span>--help
 cylc<span class="w"> </span>vr<span class="w"> </span>--help
@@ -216,7 +224,7 @@ cylc<span class="w"> </span>vr<span class="w"> </span>--help
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 17, 2023.
+      <span class="lastupdated">Last updated on Jan 19, 2023.
       </span></p>
   </div>
 

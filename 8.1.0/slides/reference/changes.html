@@ -121,10 +121,23 @@ will be added in later releases.</p>
 
 <h3>Log View<a class="headerlink" href="../../html/reference/changes.html#log-view" title="View HTML">§</a></h3>
 
-<p>The web UI also now has a log view which displays workflow and job log files:</p>
+<p>The web UI now has a log view which displays workflow and job log files:</p>
 <a class="reference internal image-reference" href="../_images/log-view-screenshot.png"><img alt="../_images/log-view-screenshot.png" src="../_images/log-view-screenshot.png" style="width: 80%;" /></a>
 <p>Support for viewing more log files, syntax highlighting, searching and line
 numbers are planned for future releases.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="edit-runtime">
+
+<h3>Edit Runtime<a class="headerlink" href="../../html/reference/changes.html#edit-runtime" title="View HTML">§</a></h3>
+
+<p>The web UI now has a command for editing the <a class="reference internal" href="config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> section
+of a task or family.</p>
+<a class="reference internal image-reference" href="../_images/edit-runtime-screenshot.png"><img alt="../_images/edit-runtime-screenshot.png" src="../_images/edit-runtime-screenshot.png" style="width: 80%;" /></a>
+<p>Any changes made are <a class="reference internal" href="../user-guide/running-workflows/dynamic-behaviour.html#cylc-broadcast"><span class="std std-ref">broadcast</span></a> to the running workflow.</p>
 
 
 
@@ -135,20 +148,19 @@ numbers are planned for future releases.</p>
 <h3>Combined Commands<a class="headerlink" href="../../html/reference/changes.html#combined-commands" title="View HTML">§</a></h3>
 
 <p>Two new commands have been added as short-cuts for common working patterns:</p>
-<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> validates, installs, and plays a workflow, and is equivalent to:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code></dt><dd><p>Validate, install and plays a workflow, equivalent to:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>&lt;path&gt;
 cylc<span class="w"> </span>install<span class="w"> </span>&lt;path&gt;
 cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/cylc-vip.gif"><img alt="../_images/cylc-vip.gif" src="../_images/cylc-vip.gif" style="width: 80%;" /></a>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> which validates and reinstalls a workflow, then either:</dt><dd><ul class="simple">
-<li>reloads the workflow if it is running.</li>
-<li>restarts the workflow if it is stopped.</li>
-</ul>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code></dt><dd>Validate and reinstall a workflow, then either:
+- reload the workflow if it is running.
+- restart the workflow if it is stopped.</dd>
 </dl>
+<a class="reference internal image-reference" href="../_images/vip-vr.gif"><img alt="../_images/vip-vr.gif" src="../_images/vip-vr.gif" style="width: 100%;" /></a>
 <p>For more information see the command line help:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>vip<span class="w"> </span>--help
 cylc<span class="w"> </span>vr<span class="w"> </span>--help

@@ -171,15 +171,9 @@ rose suite-run
 </pre></div>
 </div>
 </td>
-<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install from $PWD</span>
-cylc install
-
-<span class="c"># run the installed workflow</span>
-cylc play <span class="s">&lt;name&gt;</span>
-
-<span class="c"># alternatively:</span>
-<span class="c"># validate, install &amp; play</span>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># validate, install &amp; play</span>
 cylc vip <span class="s">&lt;name&gt;</span>
+cylc vip <span class="c"># use $PWD</span>
 </pre></div>
 </div>
 </td>
@@ -213,11 +207,10 @@ rose suite-run --reload
 </pre></div>
 </div>
 </td>
-<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># re-install from source</span>
-cylc reinstall <span class="s">&lt;name&gt;</span>
-
-<span class="c"># reload the worklow</span>
-cylc reload <span class="s">&lt;name&gt;</span>
+<td><div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># Validate against source;</span>
+<span class="c"># Reinstall;</span>
+<span class="c"># Reload or Play</span>
+cylc vr <span class="s">&lt;name&gt;</span>
 </pre></div>
 </div>
 </td>
@@ -492,7 +485,7 @@ cylc play <span class="s">&lt;name&gt;</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 17, 2023.
+      <span class="lastupdated">Last updated on Jan 19, 2023.
       </span></p>
   </div>
 
