@@ -77,20 +77,22 @@ Combined Commands
 
 Two new commands have been added as short-cuts for common working patterns:
 
-``cylc vip`` validates, installs, and plays a workflow, and is equivalent to:
+``cylc vip`` 
+   Validate, install and plays a workflow, equivalent to:
 
-.. code-block:: bash
+   .. code-block:: bash
+   
+      cylc validate <path>
+      cylc install <path>
+      cylc play <id>
 
-   cylc validate <path>
-   cylc install <path>
-   cylc play <id>
+``cylc vr``
+   Validate and reinstall a workflow, then either:
+   - reload the workflow if it is running.
+   - restart the workflow if it is stopped.
 
-.. image:: changes/cylc-vip.gif
-   :width: 80%
-
-``cylc vr`` which validates and reinstalls a workflow, then either:
-   - reloads the workflow if it is running.
-   - restarts the workflow if it is stopped.
+.. image:: changes/vip-vr.gif
+   :width: 100%
 
 For more information see the command line help:
 
