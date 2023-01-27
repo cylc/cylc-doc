@@ -366,8 +366,6 @@ directive format, and PBS does not accept ``#QSUB`` directives in
 reality.
 
 
-.. TODO - update with rose suite-run migration
-
 .. _Where To Put Job Runner Handler Modules:
 
 Where To Put Job Runner Handler Modules
@@ -379,8 +377,3 @@ hosts in one of these locations:
 - under ``WORKFLOW-RUN-DIR/lib/python/``
 - under ``CYLC-PATH/cylc/flow/job_runner_handlers/``
 - or anywhere in ``$PYTHONPATH``
-
-.. note::
-
-   For Rose users: ``rose suite-run`` automatically installs
-   ``WORKFLOW-RUN-DIR/lib/python/`` to job hosts).
