@@ -57,6 +57,10 @@ jobs:
       - name: install libs to document
         uses: ./docs/.github/actions/install-libs
         with:
+          # NOTE: these need to be manually updated as necessary:
+          cylc-flow-tag: '8.1.x'
+          # cylc-rose-tag:
+          # cylc-uis-tag:
           metomi-rose-tag: '2.0.x'
 
       - name: checkout gh-pages branch
