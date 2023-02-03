@@ -263,8 +263,7 @@ workflow config file to automatically set site-specific workflow inputs and ther
 avoid the need to make manual changes every time you check out and run a new
 version. The site switch itself has to be set of course, but there may be other
 settings too such as model parameters for a standard local test domain. Just
-put these settings in ``opt/rose-suite-niwa.conf`` (for site ``niwa``)
-and run the workflow with ``rose suite-run -O niwa``.
+put these settings in ``opt/rose-suite-niwa.conf`` (for site ``niwa``).
 
 
 Site-Agnostic File Paths in App Configs
