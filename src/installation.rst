@@ -15,22 +15,26 @@ Cylc runs on Unix-like systems including Linux and Mac OS.
 Via Conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. warning::
+.. note::
 
-   The ``conda`` environment solver can be very slow and memory-intensive for
-   complex packages. We recommend installing the much faster ``mamba`` solver
-   first, and then installing Cylc with that.
+   We recommend using the fast Mamba environment solver to install Cylc.
+   Mamba can be used as `a drop-in replacement for the conda command
+   <https://mamba.readthedocs.io/en/latest/index.html>`_,
+   or as `a conda command plugin
+   <https://conda.github.io/conda-libmamba-solver/getting-started/>`_.
+   The classic conda environment solver may be too slow for a complex package
+   like Cylc.
+
 
 .. code-block:: sub
 
-   $ conda install -c conda-forge mamba
-   $ mamba install -c conda-forge cylc-flow
+   $ conda install -c conda-forge cylc-flow
 
    # Install the browser-GUI (optional)
-   $ mamba install -c conda-forge cylc-uiserver
+   $ conda install -c conda-forge cylc-uiserver
 
    # Install Rose support (optional)
-   $ mamba install -c conda-forge cylc-rose metomi-rose
+   $ conda install -c conda-forge cylc-rose metomi-rose
 
 Via Pip (+npm)
 ^^^^^^^^^^^^^^
