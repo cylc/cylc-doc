@@ -136,7 +136,7 @@ class CylcRunDBDirective(Graphviz):
         # get markdown
         with tempfile.NamedTemporaryFile() as tf_db:
             # is_public=False triggers the creation of tables
-            CylcWorkflowDAO(db_file_name=tf_db.name, is_public=False)
+            CylcWorkflowDAO(db_file_name=tf_db.name, create_tables=True)
             schema, orphans = schema_to_markdown(db_name=tf_db.name)
 
         # graph prefix
