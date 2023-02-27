@@ -3,7 +3,7 @@ apps
 args
 auth
 authenticator
-bar
+backticks
 baz
 boolean
 booleans

@@ -54,7 +54,7 @@ Site Include-Files
 
 If a section heading in a :cylc:conf:`flow.cylc` file is repeated the items
 under it simply add to or override those defined under the same section earlier
-in the file (but note :ref:`List Item Override In Site Include-Files`).
+in the file.
 For example, this task definition:
 
 .. code-block:: cylc
