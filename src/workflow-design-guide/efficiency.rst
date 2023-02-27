@@ -346,11 +346,6 @@ Optional app configs should be valid on top of the main app config and not
 dependent on the use of other optional app configs. This ensures they will
 work correctly with macros and can therefore be upgraded automatically.
 
-.. note::
-
-   Currently optional configs don't work very well with UM STASH
-   configuration - see :ref:`UM STASH in Optional App Configs`.
-
 Optional app configs can be loaded by command line switch:
 
 .. code-block:: bash
