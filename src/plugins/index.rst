@@ -11,6 +11,7 @@ The following are "core" plugins maintained by the Cylc team:
    cylc-rose
    main-loop/index
    install/index
+   job-runners/index
 
 .. warning::
 
