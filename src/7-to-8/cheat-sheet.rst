@@ -21,14 +21,14 @@ Check the workflow configuration for errors:
      - **Cylc 8** (Rose 2)
    * - ::
 
-         cylc validate <name/path>
+         cylc validate <id/path>
      - ::
 
          # validate from $PWD
          rose suite-run --validate
      - ::
 
-         cylc validate <name/path>
+         cylc validate <id/path>
 
 Installing & Running
 --------------------
@@ -45,7 +45,7 @@ Install a workflow from source and run it:
 
          # no installation capability
          # run from source
-         cylc run <name>
+         cylc run <id>
      - ::
 
          # install from $PWD
@@ -54,7 +54,7 @@ Install a workflow from source and run it:
      - ::
 
          # validate, install & play
-         cylc vip <name>
+         cylc vip <id>
          cylc vip # use $PWD
 
 
@@ -73,7 +73,7 @@ To update a running workflow with changes from the source directory:
 
          # update the live source
          # directly, then
-         cylc reload <name>
+         cylc reload <id>
      - ::
 
          # re-install from source
@@ -84,7 +84,7 @@ To update a running workflow with changes from the source directory:
          # Validate against source;
          # Reinstall;
          # Reload or Play
-         cylc vr <name>
+         cylc vr <id>
 
 
 Pausing & Unpausing
@@ -99,21 +99,21 @@ Tell a workflow not to submit any new jobs:
      - **Cylc 8** (Rose 2)
    * - ::
 
-         cylc hold <name>
+         cylc hold <id>
 
-         cylc unhold <name>
+         cylc unhold <id>
      - ::
 
-         cylc pause <name>
+         cylc pause <id>
 
-         cylc play <name>
+         cylc play <id>
 
 Stopping
 --------
 
 Stop a running workflow::
 
-   cylc stop <name>
+   cylc stop <id>
 
 Restarting
 ----------
@@ -130,7 +130,7 @@ Restart a stopped workflow and pick up where it left off:
 
          # no installation capability
          # restart from source
-         cylc restart <name>
+         cylc restart <id>
      - ::
 
          # regular restart
@@ -143,10 +143,10 @@ Restart a stopped workflow and pick up where it left off:
      - ::
 
          # optionally reinstall
-         cylc reinstall <name>
+         cylc reinstall <id>
 
          # restart
-         cylc play <name>
+         cylc play <id>
 
 Deleting
 --------
@@ -161,13 +161,13 @@ Delete the workflow :term:`run directory` (leave source files untouched):
      - **Cylc 8** (Rose 2)
    * - ::
 
-         rm -rf ~/cylc-run/<name>
+         rm -rf ~/cylc-run/<id>
      - ::
 
-         rose suite-clean <name>
+         rose suite-clean <id>
      - ::
 
-         cylc clean <name>
+         cylc clean <id>
 
 Scanning
 --------
@@ -190,7 +190,7 @@ View the parsed workflow configuration:
    * - ::
 
          cylc get-config --sparse \
-             <name/path>
+             <id/path>
      - ::
 
          # install workflow
@@ -198,10 +198,10 @@ View the parsed workflow configuration:
 
          # view installed config
          cylc get-config --sparse \
-             <name/path>
+             <id/path>
      - ::
 
-         cylc config <name/path>
+         cylc config <id/path>
 
 Opening User Interfaces
 -----------------------
@@ -218,14 +218,14 @@ for monitoring / controlling running workflows:
    * - Terminal
      - ::
 
-         cylc monitor <name>
+         cylc monitor <id>
      - ::
 
-         cylc tui <name>
+         cylc tui <id>
    * - Graphical
      - ::
 
-         cylc gui <name>
+         cylc gui <id>
      - ::
 
          cylc gui
@@ -251,10 +251,10 @@ Generate a visualisation for a workflow without running it:
      - **Cylc 8** (Rose 2)
    * - ::
 
-         cylc graph <name>
+         cylc graph <id>
      - ::
 
-         cylc graph <name>
+         cylc graph <id>
 
        This generates a basic image file if Graphviz is installed.
 
@@ -280,4 +280,21 @@ Run a :ref:`rose:Rose Stem` test suite.
          rose stem
 
          # start
-         cylc play <name>
+         cylc play <workflow id>
+
+Run a :ref:`rose:Rose Stem` test suite again, without a new installation.
+
+.. list-table::
+   :class: grid-table
+
+   * - **Rose 2019**
+     - **Rose 2** (Cylc 8)
+   * - ::
+
+         # install and start
+         rose stem
+     - ::
+
+         # validate, Reinstall
+         # _and_ restart:
+         cylc vr <workflow id>
