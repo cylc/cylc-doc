@@ -1491,16 +1491,25 @@ to the task cycle point.
 Clock-Expire Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Tasks can be configured to *expire* and skip job submission if they are too far
-behind the wallclock when they become ready to run (and other tasks can trigger
-off of this).
+Tasks can be configured to expire without running if their cycle points are too
+far behind the wall clock time. The expiration time is expressed as an offset
+from cycle point.
 
-For example, if a clock-triggered task always copies the latest of a set of
-files to overwrite the previous set, in every cycle, there would be no point in
-running it late because the files it copied would be immediately overwritten by
-the next task instance as the workflow catches back up to real time operation.
+Expired tasks are not flagged as incomplete by the scheduler.
 
-Clock-expire tasks are configured with
+The scheduler provides a special ``:expire`` output when a task expires, and
+corresponding family triggers, which can be used to trigger other tasks.
+The ``:expire`` output must always be marked as optional.
+
+.. code-block:: cylc-graph
+
+   R1 = """
+      foo:expire? => bar
+      FAM:expire-all? => baz
+      FAM:expire-any? => qux
+   """
+
+Task expiration is configured with
 :cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
 :cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
 with a datetime offset relative to cycle point.
@@ -1699,6 +1708,7 @@ is optional" and that a non-optional version of the trigger makes sense.
       foo:finish => bar
       foo => baz  # ERROR : foo:succeed must be optional here!
    """
+
 
 .. _optional outputs.family triggers:
 
