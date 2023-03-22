@@ -1,7 +1,5 @@
-Popen
 app
 apps
-arg
 args
 auth
 authenticator
@@ -133,7 +131,6 @@ requeued
 resends
 resolvers
 resubmission
-ret
 retrigger
 retriggered
 retriggering
@@ -155,7 +152,6 @@ ssh
 st
 startup
 stderr
-stdin
 stdout
 str
 strftime
