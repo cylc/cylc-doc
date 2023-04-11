@@ -30,13 +30,33 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
+  set-meta-releases:
+    # read the meta-release versions from the branches.json file
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      meta-releases: ${{ steps.set-meta-releases.outputs.meta-releases }}
+    steps:
+      - name: install libs
+        id: set-meta-releases
+        uses: cylc/release-actions/set-meta-releases@v1
+
   deploy:
+    needs: set-meta-releases
     runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
       run:
         # use login shell for conda activation
         shell: bash -leo pipefail {0}
+    strategy:
+      # run one job per meta-release
+      matrix:
+        meta_release: ${{ fromJson(needs.set-meta-releases.outputs.meta-releases) }}
+      # don't stop if one job fails
+      fail-fast: false
+      # only run one job at a time
+      max-parallel: 1
     steps:
       - name: configure python
         uses: actions/setup-python@v4
@@ -55,13 +75,17 @@ jobs:
         run: pip install "${{ github.workspace }}/docs[all]"
 
       - name: install libs to document
-        uses: ./docs/.github/actions/install-libs
+        uses: cylc/release-actions/install-cylc-components@v1
         with:
-          # NOTE: these need to be manually updated as necessary:
-          cylc-flow-tag: '8.1.x'
-          # cylc-rose-tag:
-          # cylc-uis-tag:
-          metomi-rose-tag: '2.0.x'
+          meta_release: ${{ matrix.meta_release }}
+          cylc_flow: true
+          cylc_flow_opts: 'main_loop-log_data_store,main_loop-log_db,main_loop-log_main_loop,main_loop-log_memory'
+          cylc_uiserver: true
+          cylc_uiserver_opts: ''
+          cylc_rose: true
+          cylc_rose_opts: ''
+          metomi_rose: true
+          metomi_rose_opts: ''
 
       - name: checkout gh-pages branch
         uses: actions/checkout@v3
@@ -91,7 +115,8 @@ jobs:
           git log --oneline --graph --no-abbrev-commit gh-pages
           echo "::endgroup::"
           echo "[command]git rebase -i --root"
-          EDITOR='sed -i "s/pick \([0-9a-z]* -nightly build-\)/drop \1/"' \
+          # drop all "-nightly build-" commits which didn't come from this workflow run
+          EDITOR="sed -i '/-nightly build ${GITHUB_RUN_ID}-/! s/pick \(.* -nightly build\)/drop \1/'" \
             git rebase -i --root
 
       # if versions have been added/removed since the last build, we will
@@ -110,7 +135,8 @@ jobs:
 
       - name: build docs
         run: |
-          version="nightly.$(isodatetime --utc -f %Y-%m-%d)"
+          version="nightly:${{ matrix.meta_release}}.$(isodatetime --utc -f %Y-%m-%d)"
+          builddir="nightly_${{ matrix.meta_release }}"
           make -C docs \
             html \
             slides \
@@ -118,13 +144,13 @@ jobs:
             SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
             LATEST=false \
-            BUILDDIR='doc/nightly' \
+            BUILDDIR="doc/$builddir" \
             FORCE_COLOR=true
-          git -C gh-pages add 'nightly' 'versions.json'
+          git -C gh-pages add "$builddir" 'versions.json'
 
       - name: push changes
         working-directory: gh-pages
         run: |
           git status
-          git commit -m '-nightly build-'
+          git commit -m "-nightly build ${GITHUB_RUN_ID}-"
           git push --force-with-lease origin gh-pages
