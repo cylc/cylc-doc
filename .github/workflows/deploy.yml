@@ -85,10 +85,21 @@ jobs:
         working-directory: docs
         run: pip install ".[all]"
 
-      - name: install libs to document
-        uses: cylc/cylc-doc/.github/actions/install-libs@master
+      - name: install libs
+        uses: cylc/release-actions/install-cylc-components@v1
         with:
-          metomi-rose-tag: '2.0.x'
+          cylc_flow: true
+          cylc_flow_opts: 'main_loop-log_data_store,main_loop-log_db,main_loop-log_main_loop,main_loop-log_memory'
+          cylc_flow_tag: ${{ inputs.cylc-flow-tag }}
+          cylc_uiserver: true
+          cylc_uiserver_opts: ''
+          cylc_uiserver_tag: ${{ inputs.cylc-uis-tag }}
+          cylc_rose: true
+          cylc_rose_opts: ''
+          cylc_rose_tag: ${{ inputs.cylc-rose-tag }}
+          metomi_rose: true
+          metomi_rose_opts: ''
+          metomi_rose_tag: ${{ inputs.metomi-rose-tag }}
 
       - name: create conda envs
         uses: ./docs/.github/actions/create-conda-envs
