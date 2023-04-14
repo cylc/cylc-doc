@@ -51,6 +51,13 @@ In order to get our workflow to trigger messages, we need to:
 
 * Refer to these messages in the ``[dependencies]`` section of our workflow.
 
+.. note::
+
+   Messages are recorded in the Workflow's scheduler log. Make sure that
+   they convey useful information for users reading the log file. See
+   :ref:`scheduler logs.cylc message` for details of how messages appear in
+   the log file.
+
 These outputs are then triggered during the running of the task.
 We can use these to manage tasks dependent on partially completed tasks.
 
