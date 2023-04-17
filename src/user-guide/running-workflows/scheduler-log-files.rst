@@ -39,7 +39,7 @@ The information logged here includes:
 Cylc Message
 ^^^^^^^^^^^^
 
-The Scheduler Log also records messages sent by ``cylc message`` allowing users
+The Scheduler Log also records messages sent by ``cylc message`` allowing you
 to add custom messages to this log.
 
 For example, if your task contained the following code:
