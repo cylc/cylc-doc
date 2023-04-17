@@ -1,8 +1,4 @@
 {
-    "8.0rc3": [
-        "html",
-        "slides"
-    ],
     "8.1.0": [
         "html",
         "slides"
@@ -32,6 +28,14 @@
         "slides"
     ],
     "latest": [
+        "html",
+        "slides"
+    ],
+    "nightly_8.2": [
+        "html",
+        "slides"
+    ],
+    "nightly_8.1": [
         "html",
         "slides"
     ]
