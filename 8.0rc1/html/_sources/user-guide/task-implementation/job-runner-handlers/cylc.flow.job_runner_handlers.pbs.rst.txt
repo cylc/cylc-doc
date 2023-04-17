@@ -1,4 +1,0 @@
-﻿pbs
-===
-
-.. automodule:: cylc.flow.job_runner_handlers.pbs
