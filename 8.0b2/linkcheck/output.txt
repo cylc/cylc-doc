@@ -1,2 +1,0 @@
-glossary.rst:299: [redirected with Found] http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html to https://www.cl.cam.ac.uk/~mgk25/iso-time.html
-tutorial/runtime/configuration-consolidation/index.rst:164: [redirected with Found] https://jinja.palletsprojects.com/ to https://jinja.palletsprojects.com/en/3.0.x/
