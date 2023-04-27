@@ -25,12 +25,12 @@ For more detail see the component changelogs:
 Cylc 8.1.0
 ----------
 
-.. TODO: updade me before release:
+.. admonition:: Cylc Components
+   :class: hint
 
-   .. admonition:: Cylc Components
-      :class: hint
-
-      TODO: fill in component versions
+   :cylc-flow: `8.1 <https://github.com/cylc/cylc-flow/blob/8.1.x/CHANGES.md>`__
+   :cylc-uiserver: `1.2 <https://github.com/cylc/cylc-uiserver/blob/1.2.x/CHANGES.md>`__
+   :cylc-rose: `1.1 <https://github.com/cylc/cylc-rose/blob/1.1.0/CHANGES.md#user-content-cylc-rose-110-released-2022-07-28>`__
 
 .. warning::
 
@@ -71,6 +71,16 @@ of a task or family.
    :width: 80%
 
 Any changes made are :ref:`broadcast <cylc-broadcast>` to the running workflow.
+
+Analysis View
+^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.2.2
+
+The web UI also has a new view for displaying task queue & run time statistics.
+
+.. image:: changes/analysis_view.gif
+   :width: 80%
 
 Combined Commands
 ^^^^^^^^^^^^^^^^^
