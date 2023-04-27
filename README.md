@@ -2,7 +2,6 @@
 
 [![stable](https://img.shields.io/website?label=stable&up_message=live&url=https%3A%2F%2Fcylc.github.io%2Fcylc-doc%2Fstable%2Fhtml%2Findex.html)](https://cylc.github.io/cylc-doc/stable/html/index.html)
 [![latest](https://img.shields.io/website?label=latest&up_message=live&url=https%3A%2F%2Fcylc.github.io%2Fcylc-doc%2Flatest%2Fhtml%2Findex.html)](https://cylc.github.io/cylc-doc/latest/html/index.html)
-[![nightly](https://img.shields.io/website?label=nightly&labelColor=&up_message=live&url=https%3A%2F%2Fcylc.github.io%2Fcylc-doc%2Fnightly%2Fhtml%2Findex.html)](https://cylc.github.io/cylc-doc/nightly/html/index.html)
 
 Documentation for the Cylc Workflow Engine and its software ecosystem.
 
