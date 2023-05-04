@@ -42,7 +42,7 @@ partial evaluation of that line:
    a_x1 => b_x2 => c_x2  # x=2
    a_x2 => b_x3 => c_x3  # x=3
 
-Whereas Cylc 8 will remove the entire line:
+Whereas Cylc 8 will remove everything after the first out-of-range parameter - `<x-1>` (so the entire line for this example):
 
 .. code-block:: cylc-graph
 
