@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scheduling Configuration &mdash; Cylc 8.1.4 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Configuration" href="runtime.html" />
+    <link rel="prev" title="Workflow Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Scheduling Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-graph">The Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graph-types">Graph Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cycling-syntax-rules">Cycling Syntax Rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#task-triggering">Task Triggering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#incomplete-tasks">Required Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#user-guide-optional-outputs">Optional Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graph-branching">Graph Branching</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limiting-workflow-activity">Limiting Workflow Activity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#valid-task-cycle-points">Valid Task Cycle Points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omitting-tasks">Omitting Tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduler.html">Scheduler Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compound-commands.html">Compound Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Scheduling Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/writing-workflows/scheduling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scheduling-configuration">
+<span id="user-guide-scheduling"></span><h1>Scheduling Configuration<a class="headerlink" href="#scheduling-configuration" title="Permalink to this heading"></a></h1>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/scheduling/index.html#tutorial-scheduling"><span class="std std-ref">Scheduling Tutorial</span></a></p>
+</div>
+<p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]" title="flow.cylc[scheduling]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]</span></code></a> section of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+defines what tasks exist in the workflow, in a <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">dependency graph</span></a>,
+and when they should run, relative to each other and to constraints such as
+<a class="reference internal" href="../../glossary.html#term-clock-trigger"><span class="xref std std-term">clock triggers</span></a>, <a class="reference internal" href="../../glossary.html#term-external-trigger"><span class="xref std std-term">external triggers</span></a>, and <a class="reference internal" href="../../glossary.html#term-internal-queue"><span class="xref std std-term">internal queues</span></a></p>
+<section id="the-graph">
+<h2>The Graph<a class="headerlink" href="#the-graph" title="Permalink to this heading"></a></h2>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/scheduling/graphing.html#tutorial-cylc-graphing"><span class="std std-ref">Graph Tutorial</span></a></p>
+</div>
+<p>The <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> defines a workflow in terms of its <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> and
+the <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> between them.</p>
+<p>A Cylc <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> is composed of one or more <a class="reference internal" href="../../glossary.html#term-graph-string"><span class="xref std std-term">graph strings</span></a> which use a special syntax to define the dependencies between tasks:</p>
+<ul class="simple">
+<li><p>arrow symbols <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code> declare dependencies</p></li>
+<li><p>logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (AND) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (OR) can be used to write
+<a class="reference internal" href="../../glossary.html#term-conditional-dependency"><span class="xref std std-term">conditional dependencies</span></a>.</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># baz will not be run until both foo and bar have succeeded</span>
+<span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<p>Graph strings are configured under the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling][graph]" title="flow.cylc[scheduling][graph]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][graph]</span></code></a> section
+of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>In this example <code class="docutils literal notranslate"><span class="pre">R1</span></code> is a <a class="reference internal" href="../../glossary.html#term-recurrence"><span class="xref std std-term">recurrence expression</span></a> that
+defines how often, and on what cycle interval, to run this part of the graph.
+For example, <code class="docutils literal notranslate"><span class="pre">R1</span></code> means run once, and <code class="docutils literal notranslate"><span class="pre">P1D</span></code> means run repeatedly on a 1-day
+cycle.</p>
+<p>Graph strings may contain blank lines, arbitrary white space and comments e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>  <span class="c1"># baz depends on foo and bar</span>
+
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Graphs can be broken down into pairs of <a class="reference internal" href="../../glossary.html#term-trigger"><span class="xref std std-term">triggers</span></a>, where the
+left side is a single task output, or a logical expression involving several of
+them, and the right side is the task or family that triggers when the output
+(or expression) is completed.</p>
+<p>In the case of cycling tasks, triggers are valid for cycle points matching the
+recurrence expression for the graph string. For example this graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T12 = &quot;A </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">B</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>implies that <code class="docutils literal notranslate"><span class="pre">B</span></code> triggers off of <code class="docutils literal notranslate"><span class="pre">A</span></code> (i.e. off of the <code class="docutils literal notranslate"><span class="pre">A:succeeded</span></code> output)
+for cycle points where the hour matches <code class="docutils literal notranslate"><span class="pre">00</span></code> or <code class="docutils literal notranslate"><span class="pre">12</span></code>. To define intercycle
+dependencies, attach an offset indicator to the left side of a pair:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T12 = &quot;A[-PT12H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">B</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>This means task <code class="docutils literal notranslate"><span class="pre">B</span></code> triggers off of task <code class="docutils literal notranslate"><span class="pre">A[-PT12H]</span></code> (12 hours before, with
+respect to cycle point) at every point with hours matching <code class="docutils literal notranslate"><span class="pre">00</span></code> and <code class="docutils literal notranslate"><span class="pre">12</span></code> in
+a sequence starting at the initial cycle point.
+Note: current cycle point is implicit - only offsets need to be specified -
+because most tasks depend only on others with the same cycle point.</p>
+<p>Cycle point offsets can only appear on the left side of an arrow. However,
+<code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=&gt;</span> <span class="pre">B[-PT6H]</span></code>, which is illegal, can be reformulated as a <a class="reference internal" href="../../glossary.html#term-future-trigger"><span class="xref std std-term">future
+trigger</span></a> <code class="docutils literal notranslate"><span class="pre">A[+PT6H]</span> <span class="pre">=&gt;</span> <span class="pre">B</span></code> (see <a class="reference internal" href="#intercyclepointtriggers"><span class="std std-ref">Intercycle Triggers</span></a>). It is also
+possible to combine multiple offsets within a cycle point offset e.g.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T12 = &quot;A[-P1D-PT12H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">B</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>This means that <code class="docutils literal notranslate"><span class="pre">B</span></code> triggers off <code class="docutils literal notranslate"><span class="pre">A[-P1D-PT12H]</span></code> (1 day and 12 hours before)
+at each cycle point.</p>
+<p>Triggers can be chained together. This graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">T00, T12 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B</span>  <span class="c1"># B triggers off A</span>
+<span class="s2">    B =&gt; C</span>  <span class="c1"># C triggers off B</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">T00, T12 </span><span class="o">=</span><span class="s"> &quot;A =&gt; B =&gt; C&quot;</span>
+</pre></div>
+</div>
+<p>All triggers defined for the same task combine, so this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">T00, T12 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; X</span>  <span class="c1"># X triggers off A</span>
+<span class="s2">    B =&gt; X</span>  <span class="c1"># X also triggers off B</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">T00, T12 </span><span class="o">=</span><span class="s"> &quot;A &amp; B =&gt; X&quot;</span>  <span class="c1"># X triggers off A AND B</span>
+</pre></div>
+</div>
+<p>In summary, the branching tree structure of a dependency graph can
+be partitioned into lines (in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> graph string) of
+dependency pairs or chains, in any way you like. Use white space and comments
+to make the graph as clear as possible.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A succeeds, then C and D trigger if B succeeds:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A =&gt; B =&gt; C &amp; D&quot;</span>
+
+<span class="c1"># which is equivalent to this:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B =&gt; C</span>
+<span class="s2">    B =&gt; D</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># and to this:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B =&gt; D</span>
+<span class="s2">    B =&gt; C</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># and to this:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B</span>
+<span class="s2">    B =&gt; C</span>
+<span class="s2">    B =&gt; D</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># and it can even be written like this:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B</span> <span class="c1"># blank line follows:</span>
+
+<span class="s2">    B =&gt; C</span> <span class="c1"># comment ...</span>
+<span class="s2">    B =&gt; D</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<section id="splitting-up-long-graph-lines">
+<h3>Splitting Up Long Graph Lines<a class="headerlink" href="#splitting-up-long-graph-lines" title="Permalink to this heading"></a></h3>
+<p>It is not necessary to use the fragile line continuation marker <code class="docutils literal notranslate"><span class="pre">\</span></code> to split
+long graph lines. You can break at dependency arrows (<code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>) and operators
+(<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, <code class="docutils literal notranslate"><span class="pre">|</span></code>), or split long chains into smaller ones. This graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A &amp; B =&gt; C&quot;</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A &amp; B =&gt;</span>
+<span class="s2">    C</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>and also to this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A &amp;</span>
+<span class="s2">    B =&gt; C</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Multiple graph strings add together to make the complete workflow graph.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>Graph strings can be broken on <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> and <code class="docutils literal notranslate"><span class="pre">|</span></code> as well as <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="graph-types">
+<span id="graphtypes"></span><h2>Graph Types<a class="headerlink" href="#graph-types" title="Permalink to this heading"></a></h2>
+<section id="non-cycling">
+<h3>Non-Cycling<a class="headerlink" href="#non-cycling" title="Permalink to this heading"></a></h3>
+<p>The following is a small workflow of non-cycling tasks; these all have a
+single cycle point (<code class="docutils literal notranslate"><span class="pre">1</span></code>), and once they’re all finished the scheduler
+shuts down.</p>
+<div class="twocol docutils container">
+<div class="caption docutils container">
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;foo =&gt; bar &amp; baz </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="image docutils container">
+<figure class="align-center" id="fig-test1">
+<img alt="../../_images/test1.png" src="../../_images/test1.png" />
+</figure>
+</div>
+</div>
+</section>
+<section id="cycling-graphs">
+<h3>Cycling Graphs<a class="headerlink" href="#cycling-graphs" title="Permalink to this heading"></a></h3>
+<p>For cycling tasks we give a <em>recurrence expression</em> that defines a sequence of
+cycle points for which the graph string is valid, as demonstrated here for a
+small workflow of cycling tasks:</p>
+<div class="twocol docutils container">
+<div class="caption docutils container">
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+       <span class="c1"># (note no dependence between cycle points)</span>
+        <span class="nv">T00,T12 = &quot;foo =&gt; bar &amp; baz </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="image docutils container">
+<figure class="align-center" id="fig-test2">
+<img alt="../../_images/test2.png" src="../../_images/test2.png" />
+</figure>
+</div>
+</div>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/scheduling/datetime-cycling.html#tutorial-datetime-cycling"><span class="std std-ref">Datetime Tutorial</span></a></p>
+</div>
+<p>For example in the following scenario:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T06 = foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">T06</span></code> means “Run every day starting at 06:00 after the
+initial cycle point”. Cylc allows you to start (or end) at any particular
+time, repeat at whatever frequency you like, and even optionally limit the
+number of repetitions.</p>
+</section>
+</section>
+<section id="cycling-syntax-rules">
+<span id="writing-flows-scheduling-syntax-rules"></span><h2>Cycling Syntax Rules<a class="headerlink" href="#cycling-syntax-rules" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">Datetime cycling</span></a> information is made up of:</p>
+<ul class="simple">
+<li><p>a <a class="reference internal" href="../../glossary.html#term-ISO-8601-datetime"><span class="xref std std-term">datetime</span></a> that typically specifies the start
+point of the sequence</p></li>
+<li><p>an interval between points in the sequence</p></li>
+<li><p>and an optional limit on the number of points in the sequence</p></li>
+</ul>
+<p>The time is assumed to be in UTC unless you set
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]cycle point time zone" title="flow.cylc[scheduler]cycle point time zone"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]cycle</span> <span class="pre">point</span> <span class="pre">time</span> <span class="pre">zone</span></code></a>.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0.</span></p>
+</div>
+<p>At Cylc 7 the time zone was assumed to be local time unless
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]cycle point time zone" title="flow.cylc[scheduler]cycle point time zone"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]cycle</span> <span class="pre">point</span> <span class="pre">time</span> <span class="pre">zone</span></code></a> or <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]UTC mode" title="flow.cylc[scheduler]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]UTC</span> <span class="pre">mode</span></code></a>
+was set. If your workflow is running in
+<a class="reference internal" href="../../7-to-8/major-changes/compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">Cylc 7 compatibility mode</span></a>
+this remains the case.</p>
+</div>
+<p>The calendar is assumed to be the proleptic Gregorian calendar unless
+you set <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]cycling mode" title="flow.cylc[scheduling]cycling mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]cycling</span> <span class="pre">mode</span></code></a>.</p>
+<p>The syntax is based on the <a class="reference internal" href="../../glossary.html#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a> datetime standard, which includes
+the representation of datetimes and intervals. Cylc (optionally) allows these
+representations to be heavily condensed by omitting information that can be
+inferred from context (rules below).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Cycle points in Cylc are just task labels that anchor dependence on
+other tasks, and which tasks can use to determine their current cycle
+point. <strong>Datetime cycle points have no relation to wallclock (real) time</strong>
+except where specific tasks, if any, depend on <a class="reference internal" href="../../glossary.html#term-clock-trigger"><span class="xref std std-term">clock triggers</span></a>.</p>
+</div>
+<p>There are three ISO 8601 recurrence formats supported by Cylc, detailed below
+in order from most commonly used to least commonly used.</p>
+<section id="format-3-r-limit-datetime-interval">
+<h3>Format 3: <code class="docutils literal notranslate"><span class="pre">R[limit?]/[datetime]/[interval]</span></code><a class="headerlink" href="#format-3-r-limit-datetime-interval" title="Permalink to this heading"></a></h3>
+<p>The most common full form for recurrences is
+<code class="docutils literal notranslate"><span class="pre">R[limit?]/[datetime]/[interval]</span></code>. This is format number 3 in the ISO 8601
+standard. The datetime specifies the start of the cycling sequence.
+For example, <code class="docutils literal notranslate"><span class="pre">R3/2000-01-01T00Z/P2D</span></code> means “run 3 times, every 2 days,
+starting at 2000-01-01T00Z (midnight, Jan 1st 2000)”; the list of points
+on this sequence is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2000-01-01T00Z
+2000-01-03T00Z
+2000-01-05T00Z
+</pre></div>
+</div>
+<p>In Cylc, this form can be condensed to:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R[limit?]/[datetime]
+R[limit?]//[interval]
+[datetime]/[interval]
+R[limit?] <span class="c"># Special limit of 1 case</span>
+[datetime]
+[interval]
+</pre></div>
+</div>
+<p>Here are some examples for each form:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R5/T00            <span class="c"># Run 5 times at 00:00 every day</span>
+R//PT1H           <span class="c"># Run every hour (Note the R// is optional)</span>
+20000101T06Z/P1D  <span class="c"># Run every day starting at 06:00 1st Jan 2000</span>
+R1                <span class="c"># Run once at the initial cycle point</span>
+R1/20000101T00Z   <span class="c"># Run once at 00:00 1st Jan 2000</span>
+P1Y               <span class="c"># Run every year</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">T00</span></code> is an example of <code class="docutils literal notranslate"><span class="pre">[datetime]</span></code>, with an
+inferred 1 day period and no limit (it is short for <code class="docutils literal notranslate"><span class="pre">R/T00</span></code>).</p>
+</div>
+<p>Where some or all datetime information is omitted, it is inferred to
+be relative to the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>. For example, <code class="docutils literal notranslate"><span class="pre">T00</span></code>
+by itself would mean the next occurrence of midnight that follows, or is, the
+initial cycle point. <code class="docutils literal notranslate"><span class="pre">+PT6H</span></code> means 6 hours after the initial cycle point.
+<code class="docutils literal notranslate"><span class="pre">-P1D</span></code> means 1 day before the initial cycle point. The default is the initial
+cycle point itself.</p>
+<p>If the interval is omitted and some (but not all) datetime information is
+omitted, it is inferred to be a single unit above the largest given specific
+datetime unit. For example, the largest given specific unit in <code class="docutils literal notranslate"><span class="pre">T00</span></code> is
+hours, so the inferred interval is 1 day (daily), <code class="docutils literal notranslate"><span class="pre">P1D</span></code>.</p>
+<p>If the limit is omitted, unlimited cycling is assumed. This will be
+bounded by the workflow’s final cycle point if given.</p>
+</section>
+<section id="format-4-r-limit-interval-datetime">
+<h3>Format 4: <code class="docutils literal notranslate"><span class="pre">R[limit?]/[interval]/[datetime]</span></code><a class="headerlink" href="#format-4-r-limit-interval-datetime" title="Permalink to this heading"></a></h3>
+<p>Another supported recurrence form is:
+<code class="docutils literal notranslate"><span class="pre">R[limit?]/[interval]/[datetime]</span></code> (format number 4 in the ISO 8601 standard).
+This uses the datetime as the end of the cycling sequence rather than the start.
+For example, <code class="docutils literal notranslate"><span class="pre">R3/P5D/2014-04-30T06</span></code> means “run 3 times, every 5 days, ending
+at 2014-04-30T06 (06:00, April 30th 2014)”; the list of points on this
+sequence is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2014-04-20T06
+2014-04-25T06
+2014-04-30T06
+</pre></div>
+</div>
+<p>This form can be used to get special behaviour relative to
+the final cycle point.</p>
+<p>We can also represent this in Cylc with a collapsed form:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>R[limit?]/[interval]
+R[limit?]//[datetime]
+[interval]/[datetime]
+</pre></div>
+</div>
+<p>So, for example, you can write:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1//+P0D  <span class="c"># Run once at the final cycle point</span>
+R5/P2D    <span class="c"># Run 5 times, every 2 days, ending at the final cycle point</span>
+P2W/T00   <span class="c"># Run every 2 weeks ending at 00:00 before/at the final cycle point</span>
+R//T00    <span class="c"># Run every day ending at 00:00 before/at the final cycle point</span>
+</pre></div>
+</div>
+</section>
+<section id="format-1-r-limit-datetime-datetime">
+<h3>Format 1: <code class="docutils literal notranslate"><span class="pre">R[limit?]/[datetime]/[datetime]</span></code><a class="headerlink" href="#format-1-r-limit-datetime-datetime" title="Permalink to this heading"></a></h3>
+<p>A less common recurrence form is <code class="docutils literal notranslate"><span class="pre">R[limit?]/[datetime]/[datetime]</span></code>
+(format number 1 in the ISO 8601 standard). This uses the difference between
+the first datetime and the second datetime to set the recurrence interval.
+The first datetime is the start point. For example,
+<code class="docutils literal notranslate"><span class="pre">R3/2020-07-10/2020-07-15</span></code> means “run 3 times, every 5 days, starting at
+2020-07-10 (midnight, July 10th 2020)”; the list of points on this sequence is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2020-07-10
+2020-07-15
+2020-07-20
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Cylc will always calculate the interval in
+<a class="reference internal" href="../../glossary.html#term-exact-datetime-unit"><span class="xref std std-term">exact datetime units</span></a>. So for the example
+of <code class="docutils literal notranslate"><span class="pre">R/2004/2005</span></code>, the interval will be <code class="docutils literal notranslate"><span class="pre">P366D</span></code> (2004 is a leap year)
+rather then <code class="docutils literal notranslate"><span class="pre">P1Y</span></code>, because year is an
+<a class="reference internal" href="../../glossary.html#term-inexact-datetime-unit"><span class="xref std std-term">inexact unit</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In versions of Cylc prior to 8.0.0, this syntax was undocumented and
+behaved differently, in a way which was not in accordance with the
+<a class="reference internal" href="../../glossary.html#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a> standard.</p>
+</div>
+</section>
+<section id="referencing-the-initial-and-final-cycle-points">
+<span id="id1"></span><h3>Referencing The Initial And Final Cycle Points<a class="headerlink" href="#referencing-the-initial-and-final-cycle-points" title="Permalink to this heading"></a></h3>
+<p>The caret and dollar symbols are shorthand for the initial and final cycle
+points:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1/^+PT12H  <span class="c"># Repeat once 12 hours after the initial cycle point</span>
+            <span class="c"># R[limit]/[datetime]</span>
+            <span class="c"># Equivalent to R1/+PT12H</span>
+R1/$        <span class="c"># Repeat once at the final cycle point</span>
+            <span class="c"># R[limit]/[datetime]</span>
+            <span class="c"># Equivalent to R1//+P0D</span>
+$-P2D/PT3H  <span class="c"># Repeat 3 hourly starting two days before the</span>
+            <span class="c"># [datetime]/[interval]</span>
+            <span class="c"># final cycle point</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are multiple ways to write the same recurrences, for instance
+the following all run once at the final cycle point:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1/P0Y       <span class="c"># R[limit]/[interval]</span>
+R1/P0Y/$     <span class="c"># R[limit]/[interval]/[datetime]</span>
+R1/$         <span class="c"># R[limit]/[datetime]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="the-initial-cycle-point">
+<span id="excluding-dates"></span><h3>The Initial Cycle Point<a class="headerlink" href="#the-initial-cycle-point" title="Permalink to this heading"></a></h3>
+<p>A workflow normally begins running at the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>, which defines
+the start of the workflow graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20100808T06Z</span>
+</pre></div>
+</div>
+<p>This can be overridden on the command line:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>play<span class="w"> </span>foo<span class="w"> </span>--initial-cycle-point<span class="o">=</span>20120808T06Z
+</pre></div>
+</div>
+<section id="setting-the-initial-cycle-point-relative-to-the-current-time">
+<span id="setting-the-icp-relative-to-now"></span><h4>Setting The Initial Cycle Point Relative To The Current Time<a class="headerlink" href="#setting-the-initial-cycle-point-relative-to-the-current-time" title="Permalink to this heading"></a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting the initial cycle point relative to the current time only works
+for <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflows using the Gregorian calendar.
+It does not work for alternative calendars like the 360, 365 or 366 day
+calendars, or integer cycling.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">next</span></code> and <code class="docutils literal notranslate"><span class="pre">previous</span></code> syntax can be used with truncated ISO 8601
+representations, to set the initial cycle point:
+<code class="docutils literal notranslate"><span class="pre">next(Thh:mmZ)</span></code>, <code class="docutils literal notranslate"><span class="pre">previous(T-mm)</span></code>; e.g.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T15:00Z)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T09:00)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T12)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T-20)</span></code></p></li>
+</ul>
+<p>A list of times, separated by semicolons, can be provided, e.g.
+<code class="docutils literal notranslate"><span class="pre">next(T-00;T-15;T-30;T-45)</span></code>. At least one time is required within the
+brackets, and if more than one is given, the major time unit in each (hours
+or minutes) should be of the same type.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">T-00</span></code> means every hour, on the hour. The <code class="docutils literal notranslate"><span class="pre">-</span></code> is a placeholder for the hours column.</p>
+</div>
+<p>If an offset from the specified datetime is required, this should be
+of the form <code class="docutils literal notranslate"><span class="pre">previous(Thh:mm)</span> <span class="pre">+/-</span> <span class="pre">PxTy</span></code> as is used
+for determining cycle periods, e.g.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">previous(T06)</span> <span class="pre">+P1D</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span> <span class="pre">=</span> <span class="pre">next(T-30)</span> <span class="pre">-PT1H</span></code></p></li>
+</ul>
+<p>The next/previous syntax is interpreted first, then the offset is applied.</p>
+<p>Offsets used without <code class="docutils literal notranslate"><span class="pre">next</span></code> or <code class="docutils literal notranslate"><span class="pre">previous</span></code> are interpreted as offsets from “now”.</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-text">Relative initial cycle point examples for <code class="docutils literal notranslate"><span class="pre">now</span> <span class="pre">=</span> <span class="pre">2018-03-14T15:12Z</span></code></span><a class="headerlink" href="#id14" title="Permalink to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Syntax</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T-00)</span></code></p></td>
+<td><p>2018-03-14T16:00Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(T-00)</span></code></p></td>
+<td><p>2018-03-14T15:00Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T-00;</span> <span class="pre">T-15;</span> <span class="pre">T-30;</span> <span class="pre">T-45)</span></code></p></td>
+<td><p>2018-03-14T15:15Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(T-00;</span> <span class="pre">T-15;</span> <span class="pre">T-30;</span> <span class="pre">T-45)</span></code></p></td>
+<td><p>2018-03-14T15:00Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T00)</span></code></p></td>
+<td><p>2018-03-15T00:00Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(T00)</span></code></p></td>
+<td><p>2018-03-14T00:00Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T06:30Z)</span></code></p></td>
+<td><p>2018-03-15T06:30Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(T06:30)</span> <span class="pre">-P1D</span></code></p></td>
+<td><p>2018-03-13T06:30Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span></code></p></td>
+<td><p>2018-03-14T18:00Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span></code></p></td>
+<td><p>2018-03-14T12:00Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(T00;</span> <span class="pre">T06;</span> <span class="pre">T12;</span> <span class="pre">T18)</span> <span class="pre">+P1W</span></code></p></td>
+<td><p>2018-03-21T18:00Z</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PT1H</span></code></p></td>
+<td><p>2018-03-14T16:12Z</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-P1M</span></code></p></td>
+<td><p>2018-02-14T15:12Z</p></td>
+</tr>
+</tbody>
+</table>
+<p>Relative initial cycle points also work with truncated dates, including
+weeks and ordinal date, using ISO 8601 truncated date representations.
+Note that day-of-week should always be specified when using weeks. If a time
+is not included, the calculation of the next or previous corresponding
+point will be done from midnight of the current day.</p>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-text">Relative initial cycle point examples for <code class="docutils literal notranslate"><span class="pre">now</span> <span class="pre">=</span> <span class="pre">2018-03-14T15:12Z</span></code>
+   using ISO8601 truncated dates.</span><a class="headerlink" href="#id15" title="Permalink to this table"></a></caption>
+<tbody>
+<tr class="row-odd"><td><p>Syntax</p></td>
+<td><p>Description</p></td>
+<td><p>Interpretation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(-00)</span></code></p></td>
+<td><p>Any century; next year 00</p></td>
+<td><p>2100-01-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(--01)</span></code></p></td>
+<td><p>Any year; next month 01</p></td>
+<td><p>2018-01-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(---01)</span></code></p></td>
+<td><p>Any year; any month; next 1st of month</p></td>
+<td><p>2018-04-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(--1225)</span></code></p></td>
+<td><p>Any year; previous Dec 25</p></td>
+<td><p>2017-12-25</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(-2006)</span></code></p></td>
+<td><p>Any century; next June in a year ending 20</p></td>
+<td><p>2020-06-01</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">previous(-W101)</span></code></p></td>
+<td><p>Any century; previous week 10 day 1</p></td>
+<td><p>2018-03-05</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">next(-W-1;</span> <span class="pre">-W-3;</span> <span class="pre">-W-5)</span></code></p></td>
+<td><p>Any year; any week; next day 1, 3 or 5</p></td>
+<td><p>2018-03-14</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">next(-001;</span> <span class="pre">-091;</span> <span class="pre">-181;</span> <span class="pre">-271)</span></code></p></td>
+<td><p>Any year; day 1, 91, 181 or 271</p></td>
+<td><p>2018-04-01</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">previous(-365T12Z)</span></code></p></td>
+<td><p>Any year; previous day 356 at 12Z</p></td>
+<td><p>2017-12-31T12:00Z</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-environment-variable-cylc-workflow-initial-cycle-point">
+<h4>The Environment Variable CYLC_WORKFLOW_INITIAL_CYCLE_POINT<a class="headerlink" href="#the-environment-variable-cylc-workflow-initial-cycle-point" title="Permalink to this heading"></a></h4>
+<p>At start up the initial cycle point is passed to job environments
+as <code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_INITIAL_CYCLE_POINT</span></code> and stored in the workflow
+database to persist across restarts. However it gets wiped out (set to
+<code class="docutils literal notranslate"><span class="pre">None</span></code>) by a <a class="reference internal" href="../../glossary.html#term-warm-start"><span class="xref std std-term">warm start</span></a> (<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--start-cycle-point</span></code> or <code class="docutils literal notranslate"><span class="pre">cylc</span>
+<span class="pre">play</span> <span class="pre">--start-task</span></code>) - which is essentially a restart that ignores prior state
+information.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_INITIAL_CYCLE_POINT</span></code> variable allows tasks to
+check if they are running in the initial cycle point, when different behaviour
+may be required. Note however that an initial <code class="docutils literal notranslate"><span class="pre">R1</span></code> graph section is the
+preferred way to get different behaviour at workflow start-up.</p>
+</section>
+</section>
+<section id="how-multiple-graph-strings-combine">
+<span id="howmultiplegraphstringscombine"></span><h3>How Multiple Graph Strings Combine<a class="headerlink" href="#how-multiple-graph-strings-combine" title="Permalink to this heading"></a></h3>
+<p>Multiple graph strings add together to make the complete workflow graph.
+Recurrences can overlap, and tasks can appear in multiple graph strings. It is
+OK (but unnecessary) to define duplicate dependencies.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T06,T12,T18 = &quot;A =&gt; B </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">C</span><span class="c">&quot;</span>
+<span class="nv">        T06,T18 = &quot;B =&gt; C </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">X</span><span class="c">&quot;</span>
+<span class="nv">        # duplicate prerequisite: B </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">C</span> <span class="kd">already</span> <span class="kd">defined</span> <span class="kd">at</span> <span class="kd">T06</span><span class="c">,</span> <span class="kd">T18</span>
+</pre></div>
+</div>
+<p>This graph can be written more concisely, with the same result, like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T06,T12,T18 = &quot;A =&gt; B </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">C</span><span class="c">&quot;</span>
+        <span class="c1"># X triggers off C only at 6 and 18 hours</span>
+        <span class="nv">T06,T18 = &quot;C </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">X</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Excluding Dates<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="../../glossary.html#term-ISO-8601-datetime"><span class="xref std std-term">datetimes</span></a> can be excluded from a <a class="reference internal" href="../../glossary.html#term-recurrence"><span class="xref std std-term">recurrence</span></a>
+by an exclamation mark for example <code class="docutils literal notranslate"><span class="pre">PT1D!20000101</span></code> means run daily except on
+the first of January 2000.</p>
+<p>This syntax can be used to exclude multiple datetimes from a recurrence, using
+the syntax <code class="docutils literal notranslate"><span class="pre">PT1D!(20000101,20000102,...)</span></code>. All datetimes listed within
+the parentheses will be excluded.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">^</span></code> and <code class="docutils literal notranslate"><span class="pre">$</span></code> symbols (shorthand for the initial
+and final cycle points) are both datetimes so <code class="docutils literal notranslate"><span class="pre">T12!$-PT1D</span></code>
+is valid.</p>
+</div>
+<p>If using a run limit in combination with an exclusion, the recurrence might not
+run the expected number of times. For example, in the following
+workflow <code class="docutils literal notranslate"><span class="pre">foo</span></code> will only run once as its second run is excluded.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20000101T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20000105T00Z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R2/P1D!20000102 </span><span class="o">=</span> <span class="kd">foo</span>
+</pre></div>
+</div>
+</section>
+<section id="excluding-recurrences">
+<h3>Excluding Recurrences<a class="headerlink" href="#excluding-recurrences" title="Permalink to this heading"></a></h3>
+<p>Exclusions may themselves be datetime recurrence sequences. Any partial
+datetime or sequence after the exclamation mark will be excluded from the main
+sequence.</p>
+<p>For example, partial datetimes can be excluded like this:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>PT1H ! T12                   <span class="c"># Run hourly but not at 12:00 from the initial</span>
+                             <span class="c"># cycle point.</span>
+T-00 ! (T00, T06, T12, T18)  <span class="c"># Run hourly but not at 00:00, 06:00,</span>
+                             <span class="c"># 12:00, 18:00.</span>
+PT5M ! T-15                  <span class="c"># Run 5-minutely but not at 15 minutes past the</span>
+                             <span class="c"># hour from the initial cycle point.</span>
+T00 ! W-1T00                 <span class="c"># Run daily at 00:00 except on Mondays.</span>
+</pre></div>
+</div>
+<p>And sequences can be excluded like this:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>PT1H ! PT6H         <span class="c"># Run hourly from the initial cycle point but</span>
+                    <span class="c"># not 6-hourly from the initial cycle point.</span>
+T-00 ! PT6H         <span class="c"># Run hourly on the hour but not 6-hourly on the hour.</span>
+<span class="c"># Same as T-00 ! T-00/PT6H (T-00 context is implied)</span>
+<span class="c"># Same as T-00 ! (T00, T06, T12, T18)</span>
+<span class="c"># Same as PT1H ! (T00, T06, T12, T18) Initial cycle point dependent</span>
+
+T12 ! T12/P15D      <span class="c"># Run daily at 12:00 except every 15th day.</span>
+
+R/^/P1H ! R5/20000101T00/P1D    <span class="c"># Any valid recurrence may be used to</span>
+                                <span class="c"># determine exclusions. This example</span>
+                                <span class="c"># means: Repeat every hour from</span>
+                                <span class="c"># the initial cycle point, but exclude</span>
+                                <span class="c"># 00:00 for 5 days from 1 January 2000.</span>
+</pre></div>
+</div>
+<p>You can combine exclusion sequences and single point exclusions like this:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>T-00 ! (20000101T07, PT2H)  <span class="c"># Run hourly on the hour but not at 07:00</span>
+                            <span class="c"># on the 1st Jan, 2000 and not 2-hourly</span>
+                            <span class="c"># on the hour.</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-examples">
+<span id="advancedcycling"></span><h3>Advanced Examples<a class="headerlink" href="#advanced-examples" title="Permalink to this heading"></a></h3>
+<p>Here are several examples of Cylc graph recurrence expressions:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1         <span class="c"># Run once at the initial cycle point</span>
+P1D        <span class="c"># Run every day starting at the initial cycle point</span>
+PT5M       <span class="c"># Run every 5 minutes starting at the initial cycle point</span>
+T00/P2W    <span class="c"># Run every 2 weeks starting at 00:00 after the</span>
+           <span class="c"># initial cycle point</span>
++P5D/P1M   <span class="c"># Run every month, starting 5 days after the initial cycle point</span>
+R1/T06     <span class="c"># Run once at 06:00 after the initial cycle point</span>
+R1/P0Y     <span class="c"># Run once at the final cycle point</span>
+R1/$       <span class="c"># Run once at the final cycle point (alternative form)</span>
+R1/$-P3D   <span class="c"># Run once three days before the final cycle point</span>
+R3/T0830   <span class="c"># Run 3 times, every day at 08:30 after the initial cycle point</span>
+R3/01T00   <span class="c"># Run 3 times, every month at 00:00 on the first</span>
+           <span class="c"># of the month after the initial cycle point</span>
+R5/W-1/P1M <span class="c"># Run 5 times, every month starting on Monday</span>
+           <span class="c"># following the initial cycle point</span>
+T00!^      <span class="c"># Run at the first occurrence of T00 that isn&#39;t the</span>
+           <span class="c"># initial cycle point</span>
+PT1D!20000101  <span class="c"># Run every day days excluding 1st Jan 2000</span>
+20140201T06/P1D    <span class="c"># Run every day starting at 20140201T06</span>
+R1/min(T00,T06,T12,T18)  <span class="c"># Run once at the first instance</span>
+                         <span class="c"># of either T00, T06, T12 or T18</span>
+                         <span class="c"># starting at the initial cycle point</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-starting-up">
+<span id="advancedstartingup"></span><h3>Advanced Starting Up<a class="headerlink" href="#advanced-starting-up" title="Permalink to this heading"></a></h3>
+<p>Dependencies that are only valid at the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> can be
+written using an <code class="docutils literal notranslate"><span class="pre">R1</span></code> recurrence. For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20130808T00</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20130812T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T00 = &quot;foo[-P1D] =&gt; foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>In the example above, <code class="docutils literal notranslate"><span class="pre">R1</span></code> implies <code class="docutils literal notranslate"><span class="pre">R1/20130808T00</span></code>, so
+<code class="docutils literal notranslate"><span class="pre">prep</span></code> only runs once at that cycle point (the initial cycle point).
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> will depend on <code class="docutils literal notranslate"><span class="pre">prep</span></code> there, but not at subsequent cycle points.</p>
+<p>However, it is possible to have a workflow that has multiple effective initial
+cycles - for example, one starting at <code class="docutils literal notranslate"><span class="pre">T00</span></code> and another starting
+at <code class="docutils literal notranslate"><span class="pre">T12</span></code>. What if they need to share an initial task?</p>
+<p>Let’s suppose that we add the following section to the workflow example above:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20130808T00</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20130812T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T00 = &quot;foo[-P1D] =&gt; foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+<span class="nv">        T12 = &quot;baz[-P1D] =&gt; baz </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>We’ll also say that there should be a starting dependence between
+<code class="docutils literal notranslate"><span class="pre">prep</span></code> and our new task <code class="docutils literal notranslate"><span class="pre">baz</span></code> - but we still want to have
+a single <code class="docutils literal notranslate"><span class="pre">prep</span></code> task, at a single cycle.</p>
+<p>We can write this using a special case of the <code class="docutils literal notranslate"><span class="pre">task[-interval]</span></code> syntax -
+if the interval is null, this implies the task at the initial cycle point.</p>
+<p>For example, we can write our workflow like so, to produce the graph as shown:</p>
+<div class="twocol docutils container">
+<div class="caption docutils container">
+<p><em>Staggered Start Workflow</em></p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20130808T00</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20130812T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="c">&quot;</span><span class="kd">prep</span><span class="c">&quot;</span>
+        <span class="c1"># ^ implies the initial cycle point:</span>
+        <span class="nv">R1/T00 = &quot;prep[^] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+        <span class="c1"># ^ is initial cycle point, as above:</span>
+        <span class="nv">R1/T12 = &quot;prep[^] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+<span class="nv">        T00 = &quot;foo[-P1D] =&gt; foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+<span class="nv">        T12 = &quot;baz[-P1D] =&gt; baz </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="image docutils container">
+<figure class="align-center" id="fig-test4">
+<img alt="../../_images/test4.png" src="../../_images/test4.png" />
+</figure>
+</div>
+</div>
+<p>Usually, we want to specify additional tasks and dependencies at the initial
+cycle point. But what if we want our first cycle point to be entirely special,
+with some tasks missing compared to subsequent cycle points?</p>
+<p>In the workflow below, <code class="docutils literal notranslate"><span class="pre">bar</span></code> will not run at the initial cycle point, but
+will still run at subsequent cycle points. <code class="docutils literal notranslate"><span class="pre">+PT6H/PT6H</span></code> means start at
+<code class="docutils literal notranslate"><span class="pre">+PT6H</span></code> (6 hours after the initial cycle point) and then repeat every
+<code class="docutils literal notranslate"><span class="pre">PT6H</span></code> (6 hours):</p>
+<div class="twocol docutils container">
+<div class="caption docutils container">
+<p><em>Restricted First Cycle Point Workflow</em></p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20130808T00</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20130808T18</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;setup_foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        +PT6H/PT6H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span>[<span class="nb">-PT6H</span>] <span class="o">=&gt;</span> <span class="kd">foo</span>
+            <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="image docutils container">
+<figure class="align-center" id="fig-test5">
+<img alt="../../_images/test5.png" src="../../_images/test5.png" />
+</figure>
+</div>
+</div>
+<p>Some workflows may have staggered start-up sequences where different tasks need
+to run once but only at specific cycle points, e.g. because of differing
+data sources at different cycle points, with different possible initial cycle
+points. To allow this Cylc provides a <code class="docutils literal notranslate"><span class="pre">min(</span> <span class="pre">)</span></code> function that can be
+used as follows:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20100101T03</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1/min(T00,T12) = &quot;prep1 </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        R1/min(T06,T18) = &quot;prep2 </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T00,T06,T12,T18 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>In this example the initial cycle point is <code class="docutils literal notranslate"><span class="pre">20100101T03</span></code>, so the
+<code class="docutils literal notranslate"><span class="pre">prep1</span></code> task will run once at <code class="docutils literal notranslate"><span class="pre">20100101T12</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">prep2</span></code> task will run once at <code class="docutils literal notranslate"><span class="pre">20100101T06</span></code> as these are
+the first cycle points after the initial cycle point in the respective
+<code class="docutils literal notranslate"><span class="pre">min(</span> <span class="pre">)</span></code> entries.</p>
+</section>
+<section id="integer-cycling">
+<span id="integercycling"></span><h3>Integer Cycling<a class="headerlink" href="#integer-cycling" title="Permalink to this heading"></a></h3>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/scheduling/integer-cycling.html#tutorial-integer-cycling"><span class="std std-ref">Integer Cycling Tutorial</span></a></p>
+</div>
+<p>In addition to non-cycling and <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflows, Cylc can do
+<a class="reference internal" href="../../glossary.html#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a> for cycling workflows that are not datetime based.</p>
+<p>To construct an integer cycling workflow, set
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]cycling mode" title="flow.cylc[scheduling]cycling mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]cycling</span> <span class="pre">mode=integer</span></code></a>, and specify integer values
+for the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a> and optionally the
+<a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>. The syntax for intervals,
+offsets, and <a class="reference internal" href="../../glossary.html#term-recurrence"><span class="xref std std-term">recurrences</span></a> (sequences) is similar to the
+datetime cycling syntax, except for the simple integer values.</p>
+<p>The full integer recurrence expressions supported are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Rn/start-point/interval</span> <span class="pre">#</span> <span class="pre">e.g.</span> <span class="pre">R3/1/P2</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Rn/interval/end-point</span> <span class="pre">#</span> <span class="pre">e.g.</span> <span class="pre">R3/P2/9</span></code></p></li>
+</ul>
+<p>But, as for datetime cycling, sequence start and end points can be omitted
+where workflow initial and final cycle points can be assumed. Some examples:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1        <span class="c"># Run once at the initial cycle point</span>
+          <span class="c"># (short for R1/initial-point/?)</span>
+P1        <span class="c"># Repeat with step 1 from the initial cycle point</span>
+          <span class="c"># (short for R/initial-point/P1)</span>
+P5        <span class="c"># Repeat with step 5 from the initial cycle point</span>
+          <span class="c"># (short for R/initial-point/P5)</span>
+R2//P2    <span class="c"># Run twice with step 3 from the initial cycle point</span>
+          <span class="c"># (short for R2/initial-point/P2)</span>
+R/+P1/P2  <span class="c"># Repeat with step 2, from 1 after the initial cycle point</span>
+R2/P2     <span class="c"># Run twice with step 2, to the final cycle point</span>
+          <span class="c"># (short for R2/P2/final-point)</span>
+R1/P0     <span class="c"># Run once at the final cycle point</span>
+          <span class="c"># (short for R1/P0/final-point)</span>
+</pre></div>
+</div>
+<section id="advanced-integer-cycling-syntax">
+<h4>Advanced Integer Cycling Syntax<a class="headerlink" href="#advanced-integer-cycling-syntax" title="Permalink to this heading"></a></h4>
+<p>The same syntax used to reference the initial and final cycle points
+(introduced in <a class="reference internal" href="#referencing-the-initial-and-final-cycle-points"><span class="std std-ref">Referencing The Initial And Final Cycle Points</span></a>) for
+use with datetime cycling can also be used for integer cycling. For
+example you can write:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R1/^     <span class="c"># Run once at the initial cycle point</span>
+R1/$     <span class="c"># Run once at the final cycle point</span>
+R3/^/P2  <span class="c"># Run three times with step two starting at the</span>
+                 <span class="c"># initial cycle point</span>
+</pre></div>
+</div>
+<p>Likewise the syntax introduced in <a class="reference internal" href="#excluding-dates"><span class="std std-ref">The Initial Cycle Point</span></a> for excluding
+a particular point from a recurrence also works for integer cycling. For
+example:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R/P4!8       <span class="c"># Run with step 4, to the final cycle point but not at point 8</span>
+R3/3/P2!5    <span class="c"># Run with step 2 from point 3 but not at point 5</span>
+R/+P1/P6!14  <span class="c"># Run with step 6 from 1 step after the</span>
+             <span class="c"># initial cycle point but not at point 14</span>
+</pre></div>
+</div>
+<p>Multiple integer exclusions are also valid in the same way as the syntax
+in <a class="reference internal" href="#excluding-dates"><span class="std std-ref">The Initial Cycle Point</span></a>. Integer exclusions may be a list of single
+integer points, an integer sequence, or a combination of both:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>R/P1!(2,3,7)  <span class="c"># Run with step 1 to the final cycle point,</span>
+              <span class="c"># but not at points 2, 3, or 7.</span>
+P1 ! P2       <span class="c"># Run with step 1 from the initial to final</span>
+              <span class="c"># cycle point, skipping every other step from</span>
+              <span class="c"># the initial cycle point.</span>
+P1 ! +P1/P2   <span class="c"># Run with step 1 from the initial cycle point,</span>
+              <span class="c"># excluding every other step beginning one step</span>
+              <span class="c"># after the initial cycle point.</span>
+P1 !(P2,6,8)  <span class="c"># Run with step 1 from the initial cycle point,</span>
+              <span class="c"># excluding every other step, and also excluding</span>
+              <span class="c"># steps 6 and 8.</span>
+</pre></div>
+</div>
+</section>
+<section id="an-integer-cycling-example">
+<h4>An Integer Cycling Example<a class="headerlink" href="#an-integer-cycling-example" title="Permalink to this heading"></a></h4>
+<span class="target" id="fig-integer-pipeline"></span><p>The following workflow definition, as <a class="reference internal" href="#fig-integer-pipeline"><span class="std std-ref">graphed above</span></a>,
+implements a classical linear pipeline using integer cycling. The workflow
+ensures that one instance each of A, B, and C runs concurrently and the
+pipeline is kept full: when 1/A has finished processing the first dataset, 2/A
+can start on the second one at the same time as 1/B begins processing the
+output of 1/A, and so on. The artificial cross-cycle dependence ensures that
+only one instance of A can run at a time; and similarly B and C. If available
+compute resource supports more than three concurrent jobs, remove the
+cross-cycle dependence and Cylc will run many cycles at once. Task runtime
+configuration is omitted, but it would likely involve retrieving datasets by
+cycle point and processing them in cycle point-specific shared workspaces under
+the self-contained run directory.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R/^/P1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">A</span> <span class="o">=&gt;</span> <span class="kd">B</span> <span class="o">=&gt;</span> <span class="kd">C</span>
+            <span class="kd">A</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">A</span>
+            <span class="kd">B</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">B</span>
+            <span class="kd">C</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">C</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="task-triggering">
+<span id="triggertypes"></span><h2>Task Triggering<a class="headerlink" href="#task-triggering" title="Permalink to this heading"></a></h2>
+<p>A task is said to <a class="reference internal" href="../../glossary.html#term-trigger"><span class="xref std std-term">trigger</span></a> when it submits its job to run, as soon as all of
+its dependencies (also known as its separate “triggers”) are met. Tasks can
+be made to trigger off of the state of other tasks (indicated by a
+<code class="docutils literal notranslate"><span class="pre">:state</span></code> <a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifier</span></a> on the upstream task (or family)
+name in the graph) and, and off the clock, and arbitrary external events.</p>
+<p>External triggering is relatively more complicated, and is documented
+separately in <a class="reference internal" href="external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a>.</p>
+<section id="success-triggers">
+<h3>Success Triggers<a class="headerlink" href="#success-triggers" title="Permalink to this heading"></a></h3>
+<p>The default, with no trigger type specified, is to trigger off of the
+upstream task succeeding:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A SUCCEEDS:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A =&gt; B&quot;</span>
+</pre></div>
+</div>
+<p>For consistency and completeness, however, the success trigger can be
+explicit:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A SUCCEEDS:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A =&gt; B&quot;</span>
+
+<span class="c1"># or:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A:succeed =&gt; B&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="failure-triggers">
+<h3>Failure Triggers<a class="headerlink" href="#failure-triggers" title="Permalink to this heading"></a></h3>
+<p>To trigger off of the upstream task failing:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A FAILS:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A:fail =&gt; B&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="start-triggers">
+<h3>Start Triggers<a class="headerlink" href="#start-triggers" title="Permalink to this heading"></a></h3>
+<p>To trigger off of the upstream task starting:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A STARTS EXECUTING:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A:start =&gt; B&quot;</span>
+</pre></div>
+</div>
+<p>This can be used to trigger tasks that monitor the execution of other tasks,
+e.g. to process their output files on the fly as they are generated.
+<a class="reference internal" href="#messagetriggers"><span class="std std-ref">Message Triggers</span></a> can also be useful for this use case.</p>
+</section>
+<section id="finish-triggers">
+<h3>Finish Triggers<a class="headerlink" href="#finish-triggers" title="Permalink to this heading"></a></h3>
+<p>To trigger off of the upstream task either succeeding <strong>or</strong> failing:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A either SUCCEEDS or FAILS:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A | A:fail =&gt; B&quot;</span>
+
+<span class="c1"># or</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A:finish =&gt; B&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="message-triggers">
+<span id="messagetriggers"></span><h3>Message Triggers<a class="headerlink" href="#message-triggers" title="Permalink to this heading"></a></h3>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/furthertopics/message-triggers.html#tutorial-cylc-message-triggers"><span class="std std-ref">Message Trigger Tutorial</span></a></p>
+</div>
+<p>We can also trigger off of custom task output messages. These must be
+registered in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][outputs]" title="flow.cylc[runtime][&lt;namespace&gt;][outputs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][outputs]</span></code></a> section
+of the emitting task, and sent with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> command.
+The graph trigger syntax refers to the item name of the registered
+output message. Here’s an example workflow that uses message triggers:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 20140801T00</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 20141201T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2M </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span><span class="c">:</span><span class="kd">out1</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+            <span class="kd">foo</span>[<span class="nb">-P2M</span>]<span class="c">:</span><span class="kd">out2</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 5</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; &quot;file 1 done&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; &quot;file 2 done&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;file 1 done&quot;</span>
+            <span class="nv">out2 </span><span class="o">=</span><span class="s"> &quot;file 2 done&quot;</span>
+    <span class="nt">[[bar, baz]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 10</span>
+</pre></div>
+</div>
+</section>
+<section id="job-submission-triggers">
+<h3>Job Submission Triggers<a class="headerlink" href="#job-submission-triggers" title="Permalink to this heading"></a></h3>
+<p>To trigger off of a task submitting, or failing to submit:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A submits successfully:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A:submit =&gt; B&quot;</span>
+
+<span class="c1"># D triggers if C fails to submit successfully:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;C:submit-fail =&gt; D&quot;</span>
+</pre></div>
+</div>
+<p>A possible use case for submit-fail triggering: if a task fails to submit,
+possibly after multiple retries, another task that inherits (mostly) the same
+runtime could be triggered to submit the same job to an alternative platform.</p>
+</section>
+<section id="conditional-triggers">
+<h3>Conditional Triggers<a class="headerlink" href="#conditional-triggers" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="../../glossary.html#term-conditional-trigger"><span class="xref std std-term">Conditional triggers</span></a> allow the configuration of
+more advanced task dependencies.</p>
+<p>AND operators (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>) can appear on both sides of an arrow. They
+provide a concise alternative to defining multiple triggers separately:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1/ this:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A &amp; B =&gt; C&quot;</span>
+
+<span class="c1"># is equivalent to:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; C</span>
+<span class="s2">    B =&gt; C</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># 2/ this:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A =&gt; B &amp; C&quot;</span>
+
+<span class="c1"># is equivalent to:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; B</span>
+<span class="s2">    A =&gt; C</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># 3/ and this:</span>
+<span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A &amp; B =&gt; C &amp; D&quot;</span>
+
+<span class="c1"># is equivalent to this:</span>
+<span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    A =&gt; C</span>
+<span class="s2">    B =&gt; C</span>
+<span class="s2">    A =&gt; D</span>
+<span class="s2">    B =&gt; D</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>OR operators (<code class="docutils literal notranslate"><span class="pre">|</span></code>), for conditional triggers, can only appear on the left:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># C triggers when either A or B finishes:</span>
+    <span class="nv">R1 </span><span class="o">=</span><span class="s"> &quot;A | B =&gt; C&quot;</span>
+</pre></div>
+</div>
+<p>Any valid conditional expression can be used.</p>
+<div class="twocol docutils container">
+<div class="caption docutils container">
+<p><em>Conditional trigger example</em></p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># D triggers if A or (B and C) succeed</span>
+<span class="kd">A</span> <span class="o">|</span> <span class="kd">B</span> <span class="o">&amp;</span> <span class="kd">C</span> <span class="o">=&gt;</span> <span class="kd">D</span>
+<span class="c1"># just to align the two graph sections</span>
+<span class="kd">D</span> <span class="o">=&gt;</span> <span class="kd">W</span>
+<span class="c1"># Z triggers if (W or X) and Y succeed</span>
+<span class="p">(</span><span class="kd">W</span><span class="o">|</span><span class="kd">X</span><span class="p">)</span> <span class="o">&amp;</span> <span class="kd">Y</span> <span class="o">=&gt;</span> <span class="kd">Z</span>
+</pre></div>
+</div>
+</div>
+<div class="image docutils container">
+<figure class="align-center" id="fig-conditional">
+<img alt="../../_images/conditional-triggers.png" src="../../_images/conditional-triggers.png" />
+</figure>
+</div>
+</div>
+</section>
+<section id="family-triggers">
+<span id="familytriggers"></span><h3>Family Triggers<a class="headerlink" href="#family-triggers" title="Permalink to this heading"></a></h3>
+<p><a class="reference internal" href="../../glossary.html#term-family"><span class="xref std std-term">Families</span></a> defined by the runtime inheritance hierarchy
+(<a class="reference internal" href="runtime.html#user-guide-runtime"><span class="std std-ref">Task Configuration</span></a>) can be used in the graph to <a class="reference internal" href="../../glossary.html#term-trigger"><span class="xref std std-term">trigger</span></a> whole
+groups of tasks at the same time (e.g. forecast model ensembles and groups of
+tasks for processing different observation types at the same time) and for
+triggering downstream tasks off families as a whole. Higher level families,
+i.e. families of families, can also be used, and are reduced to the lowest
+level member tasks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tasks can also trigger off individual family members if necessary.</p>
+</div>
+<p>To trigger an entire task family at once:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">FAM</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[FAM]]</span>    <span class="c1"># a family (because others inherit from it)</span>
+    <span class="nt">[[m1,m2]]</span>  <span class="c1"># family members (inherit from FAM)</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM</span>
+</pre></div>
+</div>
+<p>This is equivalent to:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">m1</span> <span class="o">&amp;</span> <span class="kd">m2</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[FAM]]</span>
+    <span class="nt">[[m1,m2]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM</span>
+</pre></div>
+</div>
+<p>To trigger off of a task family you must specify whether the trigger condition
+applies to <strong>all</strong> or <strong>any</strong> of the member tasks:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># all-member triggers:</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">start</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">fail</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="c1"># any-member triggers:</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">start</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">fail</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+            <span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">one</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Here’s how to trigger downstream processing after if one or more family
+members succeed, but only after all members have finished (succeeded or
+failed):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+           <span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">all</span> <span class="o">&amp;</span> <span class="kd">FAM</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">foo</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="efficient-inter-family-triggering">
+<span id="efficientinterfamilytriggering"></span><h3>Efficient Inter-Family Triggering<a class="headerlink" href="#efficient-inter-family-triggering" title="Permalink to this heading"></a></h3>
+<p>While Cylc allows writing <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> between two
+<a class="reference internal" href="../../glossary.html#term-family"><span class="xref std std-term">families</span></a> it is important to consider the number of
+dependencies this will generate. In the following example, each member of
+<code class="docutils literal notranslate"><span class="pre">FAM2</span></code> has dependencies pointing at all the members of <code class="docutils literal notranslate"><span class="pre">FAM1</span></code>.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">FAM1</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">FAM2</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Expanding this out, you generate <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">*</span> <span class="pre">M</span></code> dependencies, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the
+number of members of <code class="docutils literal notranslate"><span class="pre">FAM1</span></code> and <code class="docutils literal notranslate"><span class="pre">M</span></code> is the number of members of <code class="docutils literal notranslate"><span class="pre">FAM2</span></code>.
+This can result in high memory use as the number of family members grows.</p>
+<p>You can greatly reduce the number of dependencies generated here by putting
+dummy tasks in the graph to represent the state of the upstream family. For
+example, if <code class="docutils literal notranslate"><span class="pre">FAM2</span></code> should trigger off any member of <code class="docutils literal notranslate"><span class="pre">FAM1</span></code> succeeding you
+can use a dummy task <code class="docutils literal notranslate"><span class="pre">FAM1_done</span></code> like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">FAM1</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">FAM1_done</span> <span class="o">=&gt;</span> <span class="kd">FAM2</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+<span class="c1"># ...</span>
+    <span class="nt">[[FAM1_done]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> true</span>
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>This <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> generates only <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">+</span> <span class="pre">M</span></code> dependencies, which takes
+significantly less memory and CPU to store and evaluate.</p>
+</section>
+<section id="intercycle-triggers">
+<span id="intercyclepointtriggers"></span><h3>Intercycle Triggers<a class="headerlink" href="#intercycle-triggers" title="Permalink to this heading"></a></h3>
+<p>Most tasks in a workflow typically depend on others with the same
+cycle point, but some may depend on other cycle points <a class="footnote-reference brackets" href="#id11" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p><a class="reference internal" href="../../glossary.html#term-intercycle-dependency"><span class="xref std std-term">Intercycle dependence</span></a> is expressed using
+<code class="docutils literal notranslate"><span class="pre">[offset]</span></code> syntax such as <code class="docutils literal notranslate"><span class="pre">foo[-PT12H]</span> <span class="pre">=&gt;</span> <span class="pre">foo</span></code>, which means <code class="docutils literal notranslate"><span class="pre">foo</span></code> at the
+current cycle point depends on a previous instance of <code class="docutils literal notranslate"><span class="pre">foo</span></code> at 12 hours
+before the current cycle point. Unlike for recurrences (e.g. <code class="docutils literal notranslate"><span class="pre">T00,T12</span></code>),
+dependency these offsets are relative to the current cycle point, not the
+initial cycle point.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[graph]]</span>
+    <span class="c1"># B triggers off A in the previous cycle point</span>
+    <span class="nv">PT6H = &quot;A[-PT6H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">B</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>intercycle and trigger type (or message trigger) syntax can be
+combined:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># B triggers if A in the previous cycle point fails:</span>
+<span class="nv">PT6H </span><span class="o">=</span><span class="s"> &quot;A[-PT6H]:fail =&gt; B&quot;</span>
+</pre></div>
+</div>
+<p>For convenience, Cylc automatically ignores intercycle triggers that reach back
+beyond the initial cycle point. If something special has to happen at start-up,
+<code class="docutils literal notranslate"><span class="pre">R1</span></code> tasks are the recommended way to make it happen:</p>
+<blockquote>
+<div><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep1 </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">prep2</span><span class="c">&quot;</span>
+<span class="nv">        R1/T00,R1/T12 = &quot;prep2[^] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T00,T12 = &quot;foo[-PT12H] =&gt; foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Here there is a dependence on the initial <code class="docutils literal notranslate"><span class="pre">R1</span></code> task <code class="docutils literal notranslate"><span class="pre">prep</span></code> for <code class="docutils literal notranslate"><span class="pre">foo</span></code> at
+the first <code class="docutils literal notranslate"><span class="pre">T00</span></code> cycle point, and at the first <code class="docutils literal notranslate"><span class="pre">T12</span></code> cycle point.
+Thereafter, <code class="docutils literal notranslate"><span class="pre">foo</span></code> just depends on its previous (12 hours ago) instance.</p>
+<p>It can also be useful to have specific dependencies on tasks at or near
+the initial cycle point. You can switch the context of the offset to be
+the initial cycle point by using the caret symbol: <code class="docutils literal notranslate"><span class="pre">^</span></code>.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">foo[^]</span></code> means <code class="docutils literal notranslate"><span class="pre">foo</span></code> at the initial cycle point, and
+<code class="docutils literal notranslate"><span class="pre">foo[^+PT6H]</span></code> means <code class="docutils literal notranslate"><span class="pre">foo</span></code> 6 hours after the initial cycle point. Usually,
+this kind of dependency will only apply in a limited number of cycle points
+near the start of the workflow, so you may want to write it in an <code class="docutils literal notranslate"><span class="pre">R1</span></code> graph.</p>
+<p>Finally, dependence on a task at a specific cycle point is also possible:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1/20200202 = &quot;baz[20200101] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>However, in a long running workflow it is best to avoid a repeating cycle
+that depends forever on a specific cycle point (such as the initial point)
+as this can adversely affect the scheduler’s performance.</p>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2010</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># Can cause performance issue!</span>
+        <span class="nv">P1D = &quot;baz[20200101] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">qux</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="special-sequential-tasks">
+<span id="sequentialtasks"></span><h3>Special Sequential Tasks<a class="headerlink" href="#special-sequential-tasks" title="Permalink to this heading"></a></h3>
+<p>Tasks that depend on their own previous-cycle instance can be declared as
+<em>sequential</em>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="c1"># foo depends on its previous instance:</span>
+        <span class="nv">sequential </span><span class="o">=</span><span class="s"> foo</span>  <span class="c1"># deprecated - see below!</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T12 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>However, this feature is deprecated in favour of explicit intercycle triggers
+which expose the associated scheduling behaviour in the graph:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># foo depends on its previous instance:</span>
+        <span class="nv">T00,T12 = &quot;foo[-PT12H] =&gt; foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>The sequential declaration is arguably convenient in one unusual situation
+though: if a task has a non-uniform cycling sequence then multiple explicit
+triggers,</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T03,T11 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+<span class="nv">        T00 = &quot;foo[-PT13H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T03 = &quot;foo[-PT3H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        T11 = &quot;foo[-PT8H] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>can be replaced by a single sequential declaration,</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">sequential </span><span class="o">=</span><span class="s"> foo</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00,T03,T11 = &quot;foo </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="future-triggers">
+<h3>Future Triggers<a class="headerlink" href="#future-triggers" title="Permalink to this heading"></a></h3>
+<p>Cylc also supports <a class="reference internal" href="../../glossary.html#term-intercycle-trigger"><span class="xref std std-term">intercycle triggering</span></a> off
+tasks “in the future” (with respect to cycle point):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[graph]]</span>
+    <span class="nv">T00,T06,T12,T18 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+        <span class="c1"># A runs in this cycle:</span>
+        <span class="kd">A</span>
+        <span class="c1"># B in this cycle triggers off A in the next cycle.</span>
+        <span class="kd">A</span>[<span class="nb">PT6H</span>] <span class="o">=&gt;</span> <span class="kd">B</span>
+    <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Future triggers present a problem at workflow shutdown rather than at start-up.
+Here, <code class="docutils literal notranslate"><span class="pre">B</span></code> at the final cycle point wants to trigger off an instance
+of <code class="docutils literal notranslate"><span class="pre">A</span></code> that will never exist because it is beyond the workflow stop
+point. Consequently Cylc prevents tasks from spawning successors that depend on
+other tasks beyond the final point.</p>
+</section>
+<section id="clock-triggers">
+<span id="clocktriggertasks"></span><h3>Clock Triggers<a class="headerlink" href="#clock-triggers" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section describes deprecated old-style clock triggers that are part of
+the task definition. Please consider using <a class="reference internal" href="external-triggers.html#built-in-clock-triggers"><span class="std std-ref">Built-in Clock Triggers</span></a>
+(external triggers) instead.</p>
+</div>
+<p>By default, datetime cycle points are not connected to the <a class="reference internal" href="../../glossary.html#term-wallclock-time"><span class="xref std std-term">wallclock time</span></a>.
+In real time cycling systems, however, some tasks may need to trigger at
+(or at some offset from) their cycle point in real time.</p>
+<p>Cylc points are full datetimes, not just times of the day, so clock-triggers
+provide no constraint if the workflow gets sufficiently far behind the clock,
+allowing maximum concurrency until the clock-triggered tasks catch up again.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">clock-trigger </span><span class="o">=</span><span class="s"> foo(PT2H)</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 </span><span class="o">=</span> <span class="kd">foo</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">2025-08-23T00/foo</span></code> would trigger (other dependencies allowing)
+when the wallclock time reaches <code class="docutils literal notranslate"><span class="pre">2025-08-23T02</span></code>. Clock-trigger
+offsets are normally positive, to trigger <em>after</em> the wallclock time is equal
+to the task cycle point.</p>
+</section>
+<section id="clock-expire-triggers">
+<span id="clockexpiretasks"></span><h3>Clock-Expire Triggers<a class="headerlink" href="#clock-expire-triggers" title="Permalink to this heading"></a></h3>
+<p>Tasks can be configured to <em>expire</em> and skip job submission if they are too far
+behind the wallclock when they become ready to run (and other tasks can trigger
+off of this).</p>
+<p>For example, if a clock-triggered task always copies the latest of a set of
+files to overwrite the previous set, in every cycle, there would be no point in
+running it late because the files it copied would be immediately overwritten by
+the next task instance as the workflow catches back up to real time operation.</p>
+<p>Clock-expire tasks are configured with
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling][special tasks]clock-expire" title="flow.cylc[scheduling][special tasks]clock-expire"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][special</span> <span class="pre">tasks]clock-expire</span></code></a> using a syntax like
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling][special tasks]clock-trigger" title="flow.cylc[scheduling][special tasks]clock-trigger"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">clock-trigger</span></code></a>
+with a datetime offset relative to cycle point.
+The offset should be positive to make the task expire if the wallclock time
+has gone beyond the cycle point.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The scheduler can only determine that a task has expired once it has
+appeared in the active window of the workflow.</p>
+</div>
+</section>
+<section id="external-triggers">
+<span id="workflowconfigexternaltriggers"></span><h3>External Triggers<a class="headerlink" href="#external-triggers" title="Permalink to this heading"></a></h3>
+<p>This is a substantial topic, documented separately
+in <a class="reference internal" href="external-triggers.html#section-external-triggers"><span class="std std-ref">External Triggers</span></a>.</p>
+</section>
+</section>
+<section id="incomplete-tasks">
+<span id="required-outputs"></span><span id="user-guide-required-outputs"></span><span id="id4"></span><h2>Required Outputs<a class="headerlink" href="#incomplete-tasks" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.0.</span></p>
+</div>
+<p><a class="reference internal" href="../../glossary.html#term-task-output"><span class="xref std std-term">Task outputs</span></a> in the <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graph</span></a> are either
+<a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required</span></a> (the default) or  <a class="reference internal" href="../../glossary.html#term-optional-output"><span class="xref std std-term">optional</span></a>.</p>
+<p>The scheduler requires all task outputs to be completed at runtime, unless they
+are marked with <code class="docutils literal notranslate"><span class="pre">?</span></code> as optional. This allows it to correctly diagnose
+<a class="reference internal" href="../../glossary.html#term-workflow-completion"><span class="xref std std-term">workflow completion</span></a>. <a class="footnote-reference brackets" href="#id12" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<p>Tasks that finish without completing required outputs  <a class="footnote-reference brackets" href="#id13" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> are retained as
+<a class="reference internal" href="#incomplete-tasks"><span class="std std-ref">incomplete</span></a> pending user intervention, e.g. to be
+retriggered after a bug fix.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Incomplete tasks stall the workflow if there is nothing else to do (see
+<a class="reference internal" href="../running-workflows/workflow-completion.html#workflow-completion"><span class="std std-ref">Workflow Completion</span></a>). They also count toward the <a class="reference internal" href="../../glossary.html#term-runahead-limit"><span class="xref std std-term">runahead
+limit</span></a>, because they may run again once dealt with.</p>
+</div>
+<p>This graph says task <code class="docutils literal notranslate"><span class="pre">bar</span></code> should trigger if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>  <span class="c1"># short for &quot;foo:succeed =&gt; bar&quot;</span>
+</pre></div>
+</div>
+<p>Additionally, <code class="docutils literal notranslate"><span class="pre">foo</span></code> is required to succeed, because its success is not marked
+as optional. If <code class="docutils literal notranslate"><span class="pre">foo</span></code> does not succeeded, the scheduler will not run <code class="docutils literal notranslate"><span class="pre">bar</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">foo</span></code> will be retained as an incomplete task.</p>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">foo:succeed</span></code>, <code class="docutils literal notranslate"><span class="pre">bar:x</span></code>, and <code class="docutils literal notranslate"><span class="pre">baz:fail</span></code> are all required outputs:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span>
+<span class="kd">bar</span><span class="c">:</span><span class="kd">x</span>
+<span class="kd">baz</span><span class="c">:</span><span class="kd">fail</span>
+</pre></div>
+</div>
+<p>Tasks that appear with only custom outputs in the graph are also required to succeed.
+Here, <code class="docutils literal notranslate"><span class="pre">foo:succeed</span></code> is a required output, as well as <code class="docutils literal notranslate"><span class="pre">foo:x</span></code>, unless it is
+marked as optional elsewhere in the graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="c">:</span><span class="kd">x</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>If a task generates multiple custom outputs, they should be “required” if you
+expect them all to be completed every time the task runs. Here,
+<code class="docutils literal notranslate"><span class="pre">model:file1</span></code>, <code class="docutils literal notranslate"><span class="pre">model:file2</span></code>, and <code class="docutils literal notranslate"><span class="pre">model:file3</span></code> are all required outputs:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">model</span><span class="c">:</span><span class="kd">file1</span> <span class="o">=&gt;</span> <span class="kd">proc1</span>
+<span class="kd">model</span><span class="c">:</span><span class="kd">file2</span> <span class="o">=&gt;</span> <span class="kd">proc2</span>
+<span class="kd">model</span><span class="c">:</span><span class="kd">file3</span> <span class="o">=&gt;</span> <span class="kd">proc3</span>
+</pre></div>
+</div>
+</section>
+<section id="user-guide-optional-outputs">
+<span id="optional-outputs"></span><span id="id7"></span><h2>Optional Outputs<a class="headerlink" href="#user-guide-optional-outputs" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 8.0.0.</span></p>
+</div>
+<p>Optional outputs are marked with <code class="docutils literal notranslate"><span class="pre">?</span></code>. They may or may not be completed by the
+task at runtime.</p>
+<p>Like the first example above, the following graph says task <code class="docutils literal notranslate"><span class="pre">bar</span></code> should
+trigger if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">bar</span>  <span class="c1"># short for &quot;foo:succeed? =&gt; bar&quot;</span>
+</pre></div>
+</div>
+<p>But now <code class="docutils literal notranslate"><span class="pre">foo:succeed</span></code> is optional, so we might expect it to fail sometimes.
+And if it does fail, it will not be marked as an incomplete task.</p>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">foo:succeed</span></code>, <code class="docutils literal notranslate"><span class="pre">bar:x</span></code>, and <code class="docutils literal notranslate"><span class="pre">baz:fail</span></code> are all optional outputs:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="kt">?</span>
+<span class="kd">bar</span><span class="c">:</span><span class="kd">x</span><span class="kt">?</span>
+<span class="kd">baz</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span>
+</pre></div>
+</div>
+<p>Success and failure (of the same task) are mutually exclusive, so they must
+both be optional if one is optional, or if they both appear in the graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+<span class="kd">foo</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Optional outputs must be marked as optional everywhere they appear in the
+graph, to avoid ambiguity.</p>
+</div>
+<p>If a task generates multiple custom outputs, they should all be declared optional
+if you do not expect them to be completed every time the task runs:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># model:x, :y, and :z are all optional outputs:</span>
+<span class="kd">model</span><span class="c">:</span><span class="kd">x</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">proc</span><span class="c">-</span><span class="kd">x</span>
+<span class="kd">model</span><span class="c">:</span><span class="kd">y</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">proc</span><span class="c">-</span><span class="kd">y</span>
+<span class="kd">model</span><span class="c">:</span><span class="kd">z</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">proc</span><span class="c">-</span><span class="kd">z</span>
+</pre></div>
+</div>
+<p>This is an example of <a class="reference internal" href="../../glossary.html#term-graph-branching"><span class="xref std std-term">graph branching</span></a> from optional outputs. Whether a
+particular branch is taken or not depends on which optional outputs are
+completed at runtime. For more information see <a class="reference internal" href="#graph-branching"><span class="std std-ref">Graph Branching</span></a>.</p>
+<p>Leaf tasks (with nothing downstream of them) can have optional outputs. In the
+following graph, <code class="docutils literal notranslate"><span class="pre">foo</span></code> is required to succeed, but it doesn’t matter whether
+<code class="docutils literal notranslate"><span class="pre">bar</span></code> succeeds or fails:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span><span class="kt">?</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Optional outputs do not affect <em>triggering</em>. They just tell the scheduler
+what to do with the task if it finishes without completing the output.</p>
+<p>This graph triggers <code class="docutils literal notranslate"><span class="pre">bar</span></code> if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds, and does not trigger
+<code class="docutils literal notranslate"><span class="pre">bar</span></code> if <code class="docutils literal notranslate"><span class="pre">foo</span></code> fails:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>And so does this graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>The only difference is whether or not the scheduler regards <code class="docutils literal notranslate"><span class="pre">foo</span></code> as
+incomplete if it fails.</p>
+</div>
+<section id="id8">
+<h3>Finish Triggers<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">foo:finish</span></code> is a pseudo output that is short for <code class="docutils literal notranslate"><span class="pre">foo:succeed?</span> <span class="pre">|</span>
+<span class="pre">foo:fail?</span></code>. This automatically labels the real outputs as optional, because
+success and failure can’t both be required.</p>
+<p><code class="docutils literal notranslate"><span class="pre">foo:finish?</span></code> is illegal because it incorrectly suggests that “finishing
+is optional” and that a non-optional version of the trigger makes sense.</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good:</span>
+<span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+   <span class="kd">foo</span><span class="c">:</span><span class="kd">finish</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+   <span class="kd">foo</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+<span class="c">&quot;&quot;&quot;</span>
+
+<span class="c1"># Error:</span>
+<span class="kd">R1</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+   <span class="kd">foo</span><span class="c">:</span><span class="kd">finish</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+   <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">baz</span>  <span class="c1"># ERROR : foo:succeed must be optional here!</span>
+<span class="c">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="optional-outputs-family-triggers">
+<span id="id9"></span><h3>Family Triggers<a class="headerlink" href="#optional-outputs-family-triggers" title="Permalink to this heading"></a></h3>
+<p>Family triggers are based on family pseudo outputs such as <code class="docutils literal notranslate"><span class="pre">FAM:succeed-all</span></code>
+and <code class="docutils literal notranslate"><span class="pre">FAM:fail-any</span></code> that are short for logical expressions involving the
+corresponding member task outputs.</p>
+<p>If the member outputs are not singled out explicitly elsewhere in the graph,
+then they default to being required outputs.</p>
+<p>For example, if <code class="docutils literal notranslate"><span class="pre">f1</span></code> and <code class="docutils literal notranslate"><span class="pre">f2</span></code> are members of <code class="docutils literal notranslate"><span class="pre">FAM</span></code>, then this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAM</span><span class="c">:</span><span class="kd">fail</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">a</span>
+</pre></div>
+</div>
+<p>means:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">f1</span><span class="c">:</span><span class="kd">fail</span> <span class="o">&amp;</span> <span class="kd">f2</span><span class="c">:</span><span class="kd">fail</span> <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># f1:fail and f2:fail are required</span>
+</pre></div>
+</div>
+<p>and this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAM</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">a</span>
+</pre></div>
+</div>
+<p>means:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">f1</span> <span class="o">|</span> <span class="kd">f2</span> <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># f1:succeed and f2:succeed are required</span>
+</pre></div>
+</div>
+<p>However, the family default can be changed to optional by using <code class="docutils literal notranslate"><span class="pre">?</span></code> on the
+family trigger. So this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAM</span><span class="c">:</span><span class="kd">fail</span><span class="c">-</span><span class="kd">all</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">a</span>
+</pre></div>
+</div>
+<p>means this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">f1</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">&amp;</span> <span class="kd">f2</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># f1:fail and f2:fail are optional</span>
+</pre></div>
+</div>
+<p>If particular member tasks are singled out elsewhere in the graph, that
+overrides the family default for required/optional outputs:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># f1:fail is required, and f2:fail is optional:</span>
+<span class="kd">FAM</span><span class="c">:</span><span class="kd">fail</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">a</span>
+<span class="kd">f2</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">b</span>
+</pre></div>
+</div>
+</section>
+<section id="family-finish-triggers">
+<h3>Family Finish Triggers<a class="headerlink" href="#family-finish-triggers" title="Permalink to this heading"></a></h3>
+<p>Like task <code class="docutils literal notranslate"><span class="pre">:finish</span></code> triggers, family <code class="docutils literal notranslate"><span class="pre">:finish-all/any</span></code> triggers are
+different because <code class="docutils literal notranslate"><span class="pre">:finish</span></code> is a pseudo output involving both <code class="docutils literal notranslate"><span class="pre">:succeed</span></code>
+and <code class="docutils literal notranslate"><span class="pre">:fail</span></code>, which are mutually exclusive outputs that must both be optional
+if both are used.</p>
+<p>Also like task <code class="docutils literal notranslate"><span class="pre">:finish</span></code> triggers, use of <code class="docutils literal notranslate"><span class="pre">?</span></code> is illegal on a family
+finish trigger, because the underlying member outputs must already be optional.</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># f1:succeed/fail and f2:succeed/fail are optional</span>
+<span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">any</span> <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># (ditto)</span>
+
+<span class="kd">FAM</span><span class="c">:</span><span class="kd">finish</span><span class="c">-</span><span class="kd">all</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">b</span>  <span class="c1"># ERROR</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="graph-branching">
+<span id="id10"></span><h2>Graph Branching<a class="headerlink" href="#graph-branching" title="Permalink to this heading"></a></h2>
+<p>Cylc handles workflow <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a> in an event-driven way.  It can
+automatically follow different paths depending on events at runtime. This
+relies on <a class="reference internal" href="../../glossary.html#term-optional-output"><span class="xref std std-term">optional outputs</span></a> and is called <em>branching</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Cylc 7 and earlier, graphs were not event-driven and needed
+<a class="reference internal" href="../../glossary.html#term-suicide-trigger"><span class="xref std std-term">suicide triggers</span></a> to clean up unused
+branches at runtime.</p>
+<p>Cylc 8 does not need suicide triggers for branching.</p>
+</div>
+<section id="basic-example">
+<h3>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this heading"></a></h3>
+<p>Here Cylc will follow one of two “branches” depending on the outcome of task <code class="docutils literal notranslate"><span class="pre">b</span></code>:</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">b</span></code> succeeds then the task <code class="docutils literal notranslate"><span class="pre">c</span></code> will run.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">b</span></code> fails then the task <code class="docutils literal notranslate"><span class="pre">r</span></code> will run.</p></li>
+</ul>
+<p>Task <code class="docutils literal notranslate"><span class="pre">d</span></code> will run after either <code class="docutils literal notranslate"><span class="pre">c</span></code> or <code class="docutils literal notranslate"><span class="pre">r</span></code> succeeds.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-49ba9b997629895dcb4de0b35f149b3287affd13.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+subgraph cluster_success {
+   label = &quot;:succeed&quot;
+   color = &quot;green&quot;
+   fontcolor = &quot;green&quot;
+   style = &quot;dashed&quot;
+
+   c
+}
+
+subgraph cluster_failure {
+   label = &quot;:fail&quot;
+   color = &quot;red&quot;
+   fontcolor = &quot;red&quot;
+   style = &quot;dashed&quot;
+
+   r
+}
+
+a -&gt; b -&gt; c -&gt; d
+b -&gt; r -&gt; d
+}</p></object></div>
+</div>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># the success path</span>
+<span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">c</span>
+<span class="c1"># the fail path</span>
+<span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">r</span>
+<span class="c1"># either way, carry on with the rest of the workflow</span>
+<span class="kd">c</span> <span class="o">|</span> <span class="kd">r</span> <span class="o">=&gt;</span> <span class="kd">d</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">?</span></code> symbol denotes an <a class="reference internal" href="../../glossary.html#term-optional-output"><span class="xref std std-term">optional output</span></a> which allows the graph to
+branch.</p>
+<p>Note the last line of the graph <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">|</span> <span class="pre">r</span> <span class="pre">=&gt;</span> <span class="pre">d</span></code> allows the graph to
+continue on to <code class="docutils literal notranslate"><span class="pre">d</span></code> regardless of the path taken. This is an <a class="reference internal" href="../../glossary.html#term-artificial-dependency"><span class="xref std std-term">artificial
+dependency</span></a>.</p>
+<p>Branching is often used for automatic failure recovery. Here’s a simple
+example:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+<span class="kd">bar</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">recover</span>
+<span class="kd">bar</span><span class="kt">?</span> <span class="o">|</span> <span class="kd">recover</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-96a7dfe8255fbca2ef4621d8e1a50a80c86195c2.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+subgraph cluster_1 {
+   label = &quot;:fail&quot;
+   color = &quot;red&quot;
+   fontcolor = &quot;red&quot;
+   style = &quot;dashed&quot;
+
+   recover
+}
+
+foo -&gt; bar
+bar -&gt; recover
+recover -&gt; baz [arrowhead=&quot;onormal&quot;]
+bar -&gt; baz [arrowhead=&quot;onormal&quot;]
+}</p></object></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">recover</span></code> task would (presumably) analyse the failure of <code class="docutils literal notranslate"><span class="pre">bar</span></code> and, if
+the right failure mode is confirmed, attempt to generate the right outputs
+another way. Then <code class="docutils literal notranslate"><span class="pre">baz</span></code> can trigger off of either branch, to process the
+outputs.</p>
+<p>A more realistic example might have several tasks on each branch. The
+<code class="docutils literal notranslate"><span class="pre">recover</span></code> task could, via inheritance, run the same underlying code as
+<code class="docutils literal notranslate"><span class="pre">bar</span></code>, but configured differently to avoid the failure.</p>
+</section>
+<section id="message-trigger-example">
+<h3>Message Trigger Example<a class="headerlink" href="#message-trigger-example" title="Permalink to this heading"></a></h3>
+<p>Branching is particularly powerful when using <a class="reference internal" href="#messagetriggers"><span class="std std-ref">Message Triggers</span></a> (i.e.
+<a class="reference internal" href="../../glossary.html#term-custom-output"><span class="xref std std-term">custom outputs</span></a>) to define multiple parallel paths in
+the graph.</p>
+<p>In the following graph there is a task called <code class="docutils literal notranslate"><span class="pre">showdown</span></code> which produces one
+of three possible custom outputs, <code class="docutils literal notranslate"><span class="pre">good</span></code>, <code class="docutils literal notranslate"><span class="pre">bad</span></code> or <code class="docutils literal notranslate"><span class="pre">ugly</span></code>. Cylc will follow
+a different path depending on which of these three outputs is produced.</p>
+<p>As with the previous example each path begins with a different <a class="reference internal" href="../../glossary.html#term-optional-output"><span class="xref std std-term">optional
+output</span></a> of a particular task and ends with an “or” dependency to allow the
+workflow to continue regardless of the path taken.</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># branch the graph depending on the outcome of &quot;showdown&quot;</span>
+<span class="kd">showdown</span><span class="c">:</span><span class="kd">good</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">good</span>
+<span class="kd">showdown</span><span class="c">:</span><span class="kd">bad</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">bad</span>
+<span class="kd">showdown</span><span class="c">:</span><span class="kd">ugly</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">ugly</span>
+<span class="c1"># join the graph back together</span>
+<span class="kd">good</span> <span class="o">|</span> <span class="kd">bad</span> <span class="o">|</span> <span class="kd">ugly</span> <span class="o">=&gt;</span> <span class="kd">fin</span>
+</pre></div>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-8e815b3f336404aebf4c3ca5d0d776c2c9baf002.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+subgraph cluster_1 {
+   label = &quot;:good&quot;
+   color = &quot;green&quot;
+   fontcolor = &quot;green&quot;
+   style = &quot;dashed&quot;
+
+   good
+}
+subgraph cluster_2 {
+   label = &quot;:bad&quot;
+   color = &quot;red&quot;
+   fontcolor = &quot;red&quot;
+   style = &quot;dashed&quot;
+
+   bad
+}
+subgraph cluster_3 {
+   label = &quot;:ugly&quot;
+   color = &quot;purple&quot;
+   fontcolor = &quot;purple&quot;
+   style = &quot;dashed&quot;
+
+   ugly
+}
+showdown -&gt; good
+showdown -&gt; bad
+showdown -&gt; ugly
+good -&gt; fin [arrowhead=&quot;onormal&quot;]
+bad -&gt; fin [arrowhead=&quot;onormal&quot;]
+ugly -&gt; fin [arrowhead=&quot;onormal&quot;]
+}</p></object></div>
+</div>
+<p>You can test run this example making <code class="docutils literal notranslate"><span class="pre">showdown</span></code> randomly generate one of the
+three custom outputs:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[showdown]]</span>
+        <span class="c1"># Randomly return one of the three custom outputs.</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            SEED=$RANDOM</span>
+<span class="s2">            if ! (( $SEED % 3 )); then</span>
+<span class="s2">                cylc message &#39;The Good&#39;</span>
+<span class="s2">            elif ! (( ( $SEED + 1 ) % 3 )); then</span>
+<span class="s2">                cylc message &#39;The Bad&#39;</span>
+<span class="s2">            else</span>
+<span class="s2">                cylc message &#39;The Ugly&#39;</span>
+<span class="s2">            fi</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="c1"># Register the three custom outputs.</span>
+            <span class="nv">good </span><span class="o">=</span><span class="s"> &#39;The Good&#39;</span>
+            <span class="nv">bad </span><span class="o">=</span><span class="s"> &#39;The Bad&#39;</span>
+            <span class="nv">ugly </span><span class="o">=</span><span class="s"> &#39;The Ugly&#39;</span>
+</pre></div>
+</div>
+<p>When using message triggers in this way there are two things to be aware of:</p>
+<ol class="arabic">
+<li><p>Message triggers are not exit states.</p>
+<p>Custom output messages are generated <em>before</em> the task has completed, so it
+can be useful to combine them with a regular trigger for safety e.g:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># good will wait for showdown to finish before running</span>
+<span class="kd">showdown</span><span class="c">:</span><span class="kd">finish</span> <span class="o">&amp;</span> <span class="kd">showdown</span><span class="c">:</span><span class="kd">good</span> <span class="o">=&gt;</span> <span class="kd">good</span>
+
+<span class="c1"># if showdown fails then good will not run</span>
+<span class="kd">showdown</span><span class="c">:</span><span class="kd">succeed</span> <span class="o">&amp;</span> <span class="kd">showdown</span><span class="c">:</span><span class="kd">good</span> <span class="o">=&gt;</span> <span class="kd">good</span>
+</pre></div>
+</div>
+</li>
+<li><p>Whether message outputs from a single task are mutually exclusive or not
+depends on the task, and the workflow should be designed accordingly.</p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">showdown</span></code> task above could instead send all three
+messages in succession, after writing out corresponding <em>good</em>, <em>bad</em>, and
+<em>ugly</em> files.</p>
+<p>Check that you understand how your tasks work, if they use custom outputs.</p>
+</li>
+</ol>
+</section>
+</section>
+<section id="limiting-workflow-activity">
+<h2>Limiting Workflow Activity<a class="headerlink" href="#limiting-workflow-activity" title="Permalink to this heading"></a></h2>
+<p>Cylc will usually try to trigger any task with met dependencies. If this
+risks running more tasks than you wish - if it would overwhelm the job
+platform for example - <a class="reference internal" href="#runaheadlimit"><span class="std std-ref">Runahead Limiting</span></a> and <a class="reference internal" href="#internalqueues"><span class="std std-ref">Internal Queues</span></a> provide
+tools to limit workflow activity.</p>
+<section id="runahead-limiting">
+<span id="runaheadlimit"></span><h3>Runahead Limiting<a class="headerlink" href="#runahead-limiting" title="Permalink to this heading"></a></h3>
+<p>The scheduler runahead limit determines how many consecutive cycle points can
+be active at once. The base point of the runahead calculation is the current
+lowest-valued point with <a class="reference internal" href="../../glossary.html#term-active"><span class="xref std std-term">active</span></a> or <a class="reference internal" href="../../glossary.html#term-incomplete"><span class="xref std std-term">incomplete</span></a> tasks present.</p>
+<p>The runahead limit can be set with <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]runahead limit" title="flow.cylc[scheduling]runahead limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]runahead</span> <span class="pre">limit</span></code></a>,
+to an integer interval (for datetime or integer cycling workflows) or to
+a datetime interval (datetime cycling only).</p>
+<p>The integer format <code class="docutils literal notranslate"><span class="pre">Pn</span></code> is an interval that spans <code class="docutils literal notranslate"><span class="pre">n+1</span></code> consecutive cycle
+points, regardless of how the cycle point values increment from one point to
+the next (i.e. regardless of the cycling interval).</p>
+<p>For example, the default runahead limit of <code class="docutils literal notranslate"><span class="pre">P4</span></code> allows 5 active cycle points
+(base point plus the 4 next points) whether the cycling is defined by
+<code class="docutils literal notranslate"><span class="pre">R/^/P1</span></code> or <code class="docutils literal notranslate"><span class="pre">R/^/P3</span></code> etc. (for integer cycling) or <code class="docutils literal notranslate"><span class="pre">R/^/PT6H</span></code> etc. (for
+datetime cycling).</p>
+<p>In the following example, tasks <code class="docutils literal notranslate"><span class="pre">1/foo</span></code> through <code class="docutils literal notranslate"><span class="pre">4/foo</span></code> will submit to
+run immediately at start-up, but <code class="docutils literal notranslate"><span class="pre">5/foo</span></code> will be held back until <code class="docutils literal notranslate"><span class="pre">1/foo</span></code>
+finishes and allows the runahead limit to move on:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">runahead limit </span><span class="o">=</span><span class="s"> P3</span>  <span class="c1"># max 4 active points</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2 </span><span class="o">=</span> <span class="kd">foo</span>  <span class="c1"># cycle points 1, 3, 5, 7, 9, ...</span>
+</pre></div>
+</div>
+<p>The active cycle points in this workflow, at some point during the run,
+might be <code class="docutils literal notranslate"><span class="pre">29,</span> <span class="pre">31,</span> <span class="pre">33,</span> <span class="pre">35</span></code>, for example.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2050</span>
+    <span class="nv">runahead limit </span><span class="o">=</span><span class="s"> P3</span>  <span class="c1"># max 4 active points</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2Y </span><span class="o">=</span> <span class="kd">foo</span>  <span class="c1"># cycle points 2050, 2052, 2054, ...</span>
+</pre></div>
+</div>
+<p>The active points in this workflow, at some point during the run, might be
+<code class="docutils literal notranslate"><span class="pre">2060,</span> <span class="pre">2062,</span> <span class="pre">2064,</span> <span class="pre">2068</span></code>.</p>
+<p>With a datetime interval, on the other hand, the number of active cycle points
+depends on the cycling intervals:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2050</span>
+    <span class="nv">runahead limit </span><span class="o">=</span><span class="s"> P4Y</span>  <span class="c1"># max active point: base point + P4Y</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2Y </span><span class="o">=</span> <span class="kd">foo</span>  <span class="c1"># cycle points 2050, 2052, 2054, ...</span>
+</pre></div>
+</div>
+<p>The active points in this workflow, at some point during the run, might be
+<code class="docutils literal notranslate"><span class="pre">2060,</span> <span class="pre">2062,</span> <span class="pre">2064</span></code>. If the cycling interval was <code class="docutils literal notranslate"><span class="pre">P1Y</span></code> instead of <code class="docutils literal notranslate"><span class="pre">P2Y</span></code>,
+they might be <code class="docutils literal notranslate"><span class="pre">2060,</span> <span class="pre">2061,</span> <span class="pre">2062,</span> <span class="pre">2063,</span> <span class="pre">2064</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To restrict activity to a single cycle point at a time (just the base point)
+use a null runahead interval: <code class="docutils literal notranslate"><span class="pre">P0</span></code> or (e.g.) <code class="docutils literal notranslate"><span class="pre">PT0H</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Runahead limiting does not restrict activity within a cycle point.
+Workflows with a large number of tasks per cycle may need <a class="reference internal" href="#internalqueues"><span class="std std-ref">internal
+queues</span></a> to constrain activity in absolute terms.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The scheduler may automatically raise the runahead limit to accommodate
+<a class="reference internal" href="../../glossary.html#term-future-trigger"><span class="xref std std-term">future triggered</span></a> tasks without stalling
+the workflow.</p>
+</div>
+</section>
+<section id="internal-queues">
+<span id="internalqueues"></span><h3>Internal Queues<a class="headerlink" href="#internal-queues" title="Permalink to this heading"></a></h3>
+<p>Large workflows can potentially overwhelm the system by submitting too many
+jobs at once. Internal queues can prevent this by limiting the number of
+tasks that can be active (submitted or running) at the same time.</p>
+<p>Internal queues are FIFO (first-in-first-out): tasks are released in the same
+order that they were queued. They are configured under
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling][queues]" title="flow.cylc[scheduling][queues]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][queues]</span></code></a> with a <em>name</em>; a list of <em>members</em> assigned
+by task or family name; and a <em>limit</em>, which is the maximum number of active
+members allowed.</p>
+<p>By default every task is assigned to the <code class="docutils literal notranslate"><span class="pre">default</span></code> queue, which by default
+has a zero limit (interpreted by Cylc as no limit). To use a single queue for
+the whole workflow just set the default queue limit:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="c1"># limit the entire workflow to 5 active tasks at once</span>
+        <span class="nt">[[[default]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 5</span>
+</pre></div>
+</div>
+<p>To use additional queues just name them, set limits, and assign members:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="nt">[[[q_foo]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 5</span>
+            <span class="nv">members </span><span class="o">=</span><span class="s"> foo, bar, baz</span>
+</pre></div>
+</div>
+<p>Any tasks not assigned to a particular queue will remain in the default
+queue. The following example illustrates how queues work by running two task
+trees side by side, limited to 2 and 3 tasks respectively:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> demonstrates internal queueing</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Two trees of tasks: the first uses the default queue set to a limit of</span>
+<span class="s2">        two active tasks at once; the second uses another queue limited to three</span>
+<span class="s2">        active tasks at once.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[queues]]</span>
+        <span class="nt">[[[default]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 2</span>
+        <span class="nt">[[[foo]]]</span>
+            <span class="nv">limit </span><span class="o">=</span><span class="s"> 3</span>
+            <span class="nv">members </span><span class="o">=</span><span class="s"> n, o, p, FAM2, u, v, w, x, y, z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">&amp;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">FAM1</span>
+            <span class="kd">n</span> <span class="o">=&gt;</span> <span class="kd">o</span> <span class="o">&amp;</span> <span class="kd">p</span> <span class="o">=&gt;</span> <span class="kd">FAM2</span>
+            <span class="kd">FAM1</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">h</span> <span class="o">&amp;</span> <span class="kd">i</span> <span class="o">&amp;</span> <span class="kd">j</span> <span class="o">&amp;</span> <span class="kd">k</span> <span class="o">&amp;</span> <span class="kd">l</span> <span class="o">&amp;</span> <span class="kd">m</span>
+            <span class="kd">FAM2</span><span class="c">:</span><span class="kd">succeed</span><span class="c">-</span><span class="kd">all</span> <span class="o">=&gt;</span> <span class="kd">u</span> <span class="o">&amp;</span> <span class="kd">v</span> <span class="o">&amp;</span> <span class="kd">w</span> <span class="o">&amp;</span> <span class="kd">x</span> <span class="o">&amp;</span> <span class="kd">y</span> <span class="o">&amp;</span> <span class="kd">z</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[FAM1, FAM2]]</span>
+    <span class="nt">[[d,e,f,g]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM1</span>
+    <span class="nt">[[q,r,s,t]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM2</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="valid-task-cycle-points">
+<h2>Valid Task Cycle Points<a class="headerlink" href="#valid-task-cycle-points" title="Permalink to this heading"></a></h2>
+<p>Graph triggers determine the sequence of valid cycle points (via the
+recurrence value of the associated graph string) and the prerequisites, for
+each downstream task in a dependency. In the absence of a cycle point offset
+(intercycle trigger) they also determine the sequence of cycle points for
+the upstream tasks:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2D = &quot;foo &amp; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>This says <code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> for every point in the
+sequence defined by the recurrence <code class="docutils literal notranslate"><span class="pre">P2D</span></code> (i.e. <code class="docutils literal notranslate"><span class="pre">R/^/P2D</span></code>).</p>
+<p>Cylc does not infer the cyclepoint sequence for upstream tasks in intercycle
+triggers, however. All tasks must be tied to the right sequence by appearing
+somewhere in the graph with no offset. This prevents unintentional creation of
+off-sequence tasks by an offset error in the graph.</p>
+<p>For instance, the following example fails validation with <em>no cycling sequences
+defined for ``foo``</em>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># ERROR!</span>
+        <span class="nv">P2D </span><span class="o">=</span> <span class="c">&quot;</span><span class="kd">foo</span>[<span class="nb">-P1D</span>] <span class="o">&amp;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>To fix this, <code class="docutils literal notranslate"><span class="pre">foo</span></code> should be explicitly tied to the <code class="docutils literal notranslate"><span class="pre">P2D</span></code> cycle, and the
+correct offset used:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span>
+            <span class="kd">foo</span>[<span class="nb">-P2D</span>] <span class="o">&amp;</span> <span class="kd">bar</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Or it should be explicitly tied to the intermediate cycle, if the <code class="docutils literal notranslate"><span class="pre">P1D</span></code> offset
+is actually correct:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R/+P1D/P2D </span><span class="o">=</span> <span class="kd">foo</span>  <span class="c1"># day 2, 4, 6, ...</span>
+<span class="nv">        P2D </span><span class="o">=</span> <span class="c">&quot;</span><span class="kd">foo</span>[<span class="nb">-P1D</span>] <span class="o">&amp;</span> <span class="kd">bar</span><span class="c">&quot;</span>  <span class="c1"># day 1, 3, 5, ...</span>
+</pre></div>
+</div>
+<p>Note that validation does not detect this sort of error if the target task has
+cyclepoint sequences defined but the offset does not land on them. For example,
+the following graph will validate but <code class="docutils literal notranslate"><span class="pre">bar</span></code> will only run once in the first
+cycle point (where its pre-initial dependence is ignored):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span>
+            <span class="kd">foo</span>[<span class="nb">-P1D</span>] <span class="o">=&gt;</span> <span class="kd">bar</span>  <span class="c1"># ERROR: foo doesn&#39;t exist at -P1D</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>To fix this, the offset <code class="docutils literal notranslate"><span class="pre">[-P1D]</span></code> should be changed to <code class="docutils literal notranslate"><span class="pre">[-P2D]</span></code>, or else
+another graph line is needed to generate <code class="docutils literal notranslate"><span class="pre">foo</span></code> instances on the <code class="docutils literal notranslate"><span class="pre">P1D</span></code> sequence:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025-01-01T00</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D </span><span class="o">=</span> <span class="c">&quot;</span><span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        P2D = &quot;foo[-P1D] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="omitting-tasks">
+<h2>Omitting Tasks<a class="headerlink" href="#omitting-tasks" title="Permalink to this heading"></a></h2>
+<p>It can sometimes be useful to temporarily remove tasks by simply commenting
+them out of the graph. Validation warns about tasks defined under
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> but not used in the graph, as a reminder to restore them
+or remove them.</p>
+<p>You can also use logical Jinja2 switches (<a class="reference internal" href="jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a>) to
+include or exclude tasks (or anything else) from workflow.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<p>For example, in weather forecasting workflows (and similar systems) each
+new forecast depends partly on the outcome of the previous forecast.</p>
+</aside>
+<aside class="footnote brackets" id="id12" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">2</a><span class="fn-bracket">]</span></span>
+<p>By distinguishing graph branches that did not run but should have, from
+those that did not run but were optional.</p>
+</aside>
+<aside class="footnote brackets" id="id13" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p>This includes failed job submission, when the <code class="docutils literal notranslate"><span class="pre">:submit</span></code> output is not
+marked as optional.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Workflow Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="runtime.html" class="btn btn-neutral float-right" title="Task Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on May 05, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.1.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-workflows/scheduling";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

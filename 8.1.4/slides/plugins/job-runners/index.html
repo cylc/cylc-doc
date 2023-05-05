@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Custom Job Submission Methods &mdash; Cylc 8.1.4 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.4 documentation" href="../../index.html" />
+    <link rel="up" title="Plugins" href="../index.html" />
+    <link rel="next" title="Workflow Design Guide" href="../../workflow-design-guide/index.html" />
+    <link rel="prev" title="cylc.flow.install_plugins.log_vc_info" href="../install/built-in/cylc.flow.install_plugins.log_vc_info.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="custom-job-submission-methods">
+
+<h1>Custom Job Submission Methods<a class="headerlink" href="../../../html/plugins/job-runners/index.html#custom-job-submission-methods" title="View HTML">§</a></h1>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.job_runner_handlers.documentation.</span></code><code class="sig-name descname"><span class="pre">ExampleHandler</span></code></dt>
+<dd><p>Documentation for writing job runner handlers.</p>
+<p>Cylc can submit jobs to a number of different job runners
+(aka batch systems) e.g. Slurm and PBS. For a list of built-in integrations
+see <a class="reference internal" href="../../user-guide/task-implementation/job-submission.html#availablemethods"><span class="std std-ref">Supported Job Submission Methods</span></a>.</p>
+<p>If the job runner you require is not on this list, Cylc provides a generic
+interface for writing your own integration.</p>
+<p>Defining a new job runner handler requires a little Python programming. Use
+the built-in handlers
+(e.g. <a class="reference internal" href="../../user-guide/task-implementation/job-runner-handlers/cylc.flow.job_runner_handlers.background.html#module-cylc.flow.job_runner_handlers.background" title="cylc.flow.job_runner_handlers.background"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.background</span></code></a>) as examples.</p>
+<p class="rubric" id="where-to-put-job-runner-handler-modules">Installation</p>
+<p>Custom job runner handlers must be installed on workflow and job
+hosts in one of these locations:</p>
+<ul class="simple">
+<li>under <code class="docutils literal notranslate"><span class="pre">WORKFLOW-RUN-DIR/lib/python/</span></code></li>
+<li>under <code class="docutils literal notranslate"><span class="pre">CYLC-PATH/cylc/flow/job_runner_handlers/</span></code></li>
+<li>or anywhere in <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code></li>
+</ul>
+<p>Each module should export the symbol <code class="docutils literal notranslate"><span class="pre">JOB_RUNNER_HANDLER</span></code> for the
+singleton instance that implements the job system handler logic e.g:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">my_handler.py</span></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyHandler</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="n">JOB_RUNNER_HANDLER</span> <span class="o">=</span> <span class="n">MyHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Each job runner handler class should instantiate with no argument.</p>
+<p class="rubric">Usage</p>
+<p>You can then define a Cylc platform using the handler:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">global.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[my_platform]]</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> my_handler</span>  <span class="c1"># note matches Python module name</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
+</pre></div>
+</div>
+</div>
+<p>And configure tasks to submit to it:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;Hello World!&quot;</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> my_platform</span>
+</pre></div>
+</div>
+</div>
+<p class="rubric">Common Arguments</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">job_conf:</span> <span class="pre">dict</span></code></dt><dd><p>The Cylc job configuration as a dictionary with the following fields:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">dependencies</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">directives</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">env-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">environment</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">err-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">execution_time_limit</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">exit-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">flow_nums</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">init-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_d</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_file_path</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_runner_command_template</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_runner_name</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">logfiles</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">namespace_hierarchy</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">param_var</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">platform</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">post-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pre-script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">script</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">submit_num</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">task_id</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">try_num</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">uuid_str</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">work_d</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">workflow_name</span></code></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">submit_opts:</span> <span class="pre">dict</span></code></dt><dd><p>The Cylc job submission options as a dictionary which may contain
+the following fields:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">env</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">execution_time_limit</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">execution_time_limit</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_runner_cmd_tmpl</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">job_runner_cmd_tmpl</span></code></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">An Example</p>
+<p>The following <code class="docutils literal notranslate"><span class="pre">qsub.py</span></code> module overrides the built-in <em>pbs</em>
+job runner handler to change the directive prefix from <code class="docutils literal notranslate"><span class="pre">#PBS</span></code> to
+<code class="docutils literal notranslate"><span class="pre">#QSUB</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">from</span> <span class="nn">cylc.flow.job_runner_handlers.pbs</span> <span class="kn">import</span> <span class="n">PBSHandler</span>
+
+<span class="k">class</span> <span class="nc">QSUBHandler</span><span class="p">(</span><span class="n">PBSHandler</span><span class="p">):</span>
+    <span class="n">DIRECTIVE_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;#QSUB &quot;</span>
+
+<span class="n">JOB_RUNNER_HANDLER</span> <span class="o">=</span> <span class="n">QSUBHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If this is in the Python search path (see
+<a class="reference internal" href="#where-to-put-job-runner-handler-modules"><span class="std std-ref">Installation</span></a> above) you can use it by
+name in your global configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[my_platform]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> myhostA, myhostB</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> qsub</span>  <span class="c1"># &lt;---!</span>
+</pre></div>
+</div>
+<p>Then in your <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file you can use this platform:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note, this workflow will fail at run time because we only changed the</span>
+<span class="c1"># directive format, and PBS does not accept ``#QSUB`` directives in</span>
+<span class="c1"># reality.</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="c">&quot;</span><span class="kd">a</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT1M</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> my_platform</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">-l nodes </span><span class="o">=</span><span class="s"> 1</span>
+            <span class="nv">-q </span><span class="o">=</span><span class="s"> long</span>
+            <span class="nv">-V </span><span class="o">=</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Don’t subclass this class as it provides optional interfaces which
+you may not want to inherit.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.FAIL_SIGNALS">
+<code class="sig-name descname"><span class="pre">FAIL_SIGNALS</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>A tuple containing the names of signals to trap for reporting errors.</p>
+<p>The default is <code class="docutils literal notranslate"><span class="pre">(&quot;EXIT&quot;,</span> <span class="pre">&quot;ERR&quot;,</span> <span class="pre">&quot;TERM&quot;,</span> <span class="pre">&quot;XCPU&quot;)</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ERR</span></code> and <code class="docutils literal notranslate"><span class="pre">EXIT</span></code> are always recommended.
+<code class="docutils literal notranslate"><span class="pre">EXIT</span></code> is used to report premature stopping of the job
+script, and its trap is unset at the end of the script.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.KILL_CMD_TMPL">
+<code class="sig-name descname"><span class="pre">KILL_CMD_TMPL</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em></dt>
+<dd><p>Command template for killing a job submission.</p>
+<p>A Python string template for getting the job runner command to remove
+and terminate a job ID. The command is formed using the logic:
+<code class="docutils literal notranslate"><span class="pre">job_runner.KILL_CMD_TMPL</span> <span class="pre">%</span> <span class="pre">{&quot;job_id&quot;:</span> <span class="pre">job_id}</span></code>.</p>
+<p>For info on Python string template format see:
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.POLL_CANT_CONNECT_ERR">
+<code class="sig-name descname"><span class="pre">POLL_CANT_CONNECT_ERR</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em></dt>
+<dd><p>String for detecting communication errors in poll command output.</p>
+<p>A string containing an error message. If this is defined, when a poll
+command returns a non-zero return code and its STDERR contains this
+string, then the poll result will not be trusted, because it is assumed
+that the job runner is currently unavailable. Jobs submitted to the
+job runner will be assumed OK until we are able to connect to the
+job runner again.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.POLL_CMD">
+<code class="sig-name descname"><span class="pre">POLL_CMD</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em></dt>
+<dd><p>Command for checking job submissions.</p>
+<p>A list of job IDs to poll will be provided as arguments.</p>
+<p>The command should write valid submitted/running job IDs to stdout.</p>
+<ul class="simple">
+<li>To filter out invalid/failed jobs use
+<a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_poll_many_output" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_poll_many_output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ExampleHandler.filter_poll_many_output()</span></code></a>.</li>
+<li>To build a more advanced command than is possible with this configuration
+use <a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_poll_many_cmd" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_poll_many_cmd"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ExampleHandler.get_poll_many_cmd()</span></code></a>.</li>
+</ul>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.REC_ID_FROM_SUBMIT_ERR">
+<code class="sig-name descname"><span class="pre">REC_ID_FROM_SUBMIT_ERR</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Pattern</span></em></dt>
+<dd><p>Regular expression to extract job IDs from submission stderr.</p>
+<p>See <a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.REC_ID_FROM_SUBMIT_OUT" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.REC_ID_FROM_SUBMIT_OUT"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ExampleHandler.REC_ID_FROM_SUBMIT_OUT</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.REC_ID_FROM_SUBMIT_OUT">
+<code class="sig-name descname"><span class="pre">REC_ID_FROM_SUBMIT_OUT</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Pattern</span></em></dt>
+<dd><p>Regular expression to extract job IDs from submission stderr.</p>
+<p>A regular expression (compiled) to extract the job “id” from the standard
+output or standard error of the job submission command.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SHOULD_KILL_PROC_GROUP">
+<code class="sig-name descname"><span class="pre">SHOULD_KILL_PROC_GROUP</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em></dt>
+<dd><p>Kill jobs by killing the process group.</p>
+<p>A boolean to indicate whether it is necessary to kill a job by sending
+a signal to its Unix process group. This boolean also indicates that
+a job submitted via this job runner will physically run on the same
+host it is submitted to.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SHOULD_POLL_PROC_GROUP">
+<code class="sig-name descname"><span class="pre">SHOULD_POLL_PROC_GROUP</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em></dt>
+<dd><p>Poll jobs by PID.</p>
+<p>A boolean to indicate whether it is necessary to poll a job by its PID
+as well as the job ID.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_ENV">
+<code class="sig-name descname"><span class="pre">SUBMIT_CMD_ENV</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.11)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>Extra environment variables for the job runner command.</p>
+<p>A Python dict (or an iterable that can be used to update a dict)
+containing extra environment variables for getting the job runner
+command to submit a job file.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_TMPL">
+<code class="sig-name descname"><span class="pre">SUBMIT_CMD_TMPL</span></code><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em></dt>
+<dd><p>Command template for job submission.</p>
+<p>A Python string template for getting the job runner command to submit a
+job file. The command is formed using the logic:
+<code class="docutils literal notranslate"><span class="pre">job_runner.SUBMIT_CMD_TMPL</span> <span class="pre">%</span> <span class="pre">{&quot;job&quot;:</span> <span class="pre">job_file_path}</span></code></p>
+<p>For info on Python string template format see:
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_poll_many_output">
+<code class="sig-name descname"><span class="pre">filter_poll_many_output</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Filter job ides out of poll output.</p>
+<p>Called after the job runner’s poll command. The method should read
+the output and return a list of job IDs that are still in the
+job runner.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>out: Job poll stdout.</dd>
+<dt>Returns:</dt><dd>List of job IDs</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_submit_output">
+<code class="sig-name descname"><span class="pre">filter_submit_output</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">err</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Filter job submission stdout/err.</p>
+<p>Filter the standard output and standard error of the job submission
+command. This is useful if the job submission command returns
+information that should just be ignored.</p>
+<p>See also <a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_TMPL" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_TMPL"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ExampleHandler.SUBMIT_CMD_TMPL()</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>out: Job submit stdout.
+err: Job submit stderr.</dd>
+<dt>Returns:</dt><dd>(new_out, new_err)</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.format_directives">
+<code class="sig-name descname"><span class="pre">format_directives</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_conf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Returns lines to be appended to the job script.</p>
+<p>This method formats the job directives for a job file, if
+job file directives are relevant for the job runner. The argument
+“job_conf” is a dict containing the job configuration.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_conf: The Cylc configuration.</dd>
+<dt>Returns:</dt><dd>lines</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_poll_many_cmd">
+<code class="sig-name descname"><span class="pre">get_poll_many_cmd</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_id_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Return a command to poll the specified jobs.</p>
+<p>If specified, this will be called instead of
+<a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.POLL_CMD" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.POLL_CMD"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ExampleHandler.POLL_CMD</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_id_list: The list of job IDs to poll.</dd>
+<dt>Returns:</dt><dd>command e.g. [‘foo’, ‘–bar’, ‘baz’]</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_submit_stdin">
+<code class="sig-name descname"><span class="pre">get_submit_stdin</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">submit_opts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a></span></span></dt>
+<dd><p>Return a 2-element tuple <code class="docutils literal notranslate"><span class="pre">(proc_stdin_arg,</span> <span class="pre">proc_stdin_value)</span></code>.</p>
+<ul class="simple">
+<li>Element 1 is suitable for the <code class="docutils literal notranslate"><span class="pre">stdin=...</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">subprocess.Popen</span></code> so it can be a file handle, <code class="docutils literal notranslate"><span class="pre">subprocess.PIPE</span></code>
+or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+<li>Element 2 is the string content to pipe to stdin of the submit
+command (relevant only if <code class="docutils literal notranslate"><span class="pre">proc_stdin_arg</span></code> is <code class="docutils literal notranslate"><span class="pre">subprocess.PIPE</span></code>.</li>
+</ul>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_file_path: The path to the job file for this submission.
+submit_opts: Job submission options.</dd>
+<dt>Returns:</dt><dd>(proc_stdin_arg, proc_stdin_value)</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_vacation_signal">
+<code class="sig-name descname"><span class="pre">get_vacation_signal</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_conf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span></dt>
+<dd><p>Return the vacation signal.</p>
+<p>If relevant, return a string containing the name of the signal that
+indicates the job has been vacated by the job runner.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_conf: The Cylc configuration.</dd>
+<dt>Returns:</dt><dd>signal</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.manip_job_id">
+<code class="sig-name descname"><span class="pre">manip_job_id</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span></dt>
+<dd><p>Modify the job ID that is returned by the job submit command.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_id: The job ID returned by the submit command.</dd>
+<dt>Returns:</dt><dd>job_id</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.job_runner_handlers.documentation.ExampleHandler.submit">
+<code class="sig-name descname"><span class="pre">submit</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">job_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">submit_opts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Submit a job.</p>
+<p>Submit a job and return an instance of the Popen object for the
+submission. This method is useful if the job submission requires logic
+beyond just running a system or shell command.</p>
+<p>See also <a class="reference internal" href="#cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_TMPL" title="cylc.flow.job_runner_handlers.documentation.ExampleHandler.SUBMIT_CMD_TMPL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ExampleHandler.SUBMIT_CMD_TMPL</span></code></a>.</p>
+<p>You must pass “env=submit_opts.get(‘env’)” to Popen - see
+<a class="reference internal" href="../../user-guide/task-implementation/job-runner-handlers/cylc.flow.job_runner_handlers.background.html#module-cylc.flow.job_runner_handlers.background" title="cylc.flow.job_runner_handlers.background"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.background</span></code></a>
+for an example.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>job_file_path: The job file for this submission.
+submit_opts: Job submission options.</dd>
+<dt>Returns:</dt><dd>(ret_code, out, err)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

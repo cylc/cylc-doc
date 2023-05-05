@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scheduler Logs &mdash; Cylc 8.1.4 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.1.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.1.4 documentation" href="../../index.html" />
+    <link rel="up" title="Running Workflows" href="index.html" />
+    <link rel="next" title="Cylc Broadcast" href="dynamic-behaviour.html" />
+    <link rel="prev" title="Simulation Modes" href="simulation-modes.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="scheduler-logs">
+
+<h1>Scheduler Logs<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-log-files.html#scheduler-logs" title="View HTML">§</a></h1>
+
+<p>Each workflow maintains its own log of time-stamped events in the
+<a class="reference internal" href="../../glossary.html#term-workflow-log-directory"><span class="xref std std-term">workflow log directory</span></a> (<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/log/scheduler/</span></code>).</p>
+<p>The information logged here includes:</p>
+<ul class="simple">
+<li>Event timestamps, at the start of each line</li>
+<li>Workflow server host, port and process ID</li>
+<li>Workflow initial and final cycle points</li>
+<li>Workflow start type (i.e. cold start, warn start, restart)</li>
+<li>Task events (task started, succeeded, failed, etc.)</li>
+<li>Workflow stalled warnings.</li>
+<li>Client commands (e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code>)</li>
+<li>Job IDs.</li>
+<li>Information relating to the remote file installation is contained in a
+separate log file, which can be found in
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/log/remote-install/</span></code>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Workflow log files are primarily intended for human eyes. If you need
+to have an external system to monitor workflow events automatically, use:</p>
+<ul class="simple">
+<li>Event hooks (see <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]" title="flow.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][events]</span></code></a> and
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][events]</span></code></a>).</li>
+<li>The GraphQL interface (can be accessed via GraphiQL in the Cylc GUI).</li>
+<li>The sqlite <em>workflow run database</em>
+(see <a class="reference internal" href="workflow-databases.html#workflow-run-databases"><span class="std std-ref">Workflow Run Databases</span></a>)</li>
+</ul>
+<p class="last">Rather than parse the log files.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-message">
+
+<h2>Cylc Message<a class="headerlink" href="../../../html/user-guide/running-workflows/scheduler-log-files.html#cylc-message" title="View HTML">§</a></h2>
+
+<p>The Scheduler Log also records messages sent by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> allowing you
+to add custom messages to this log.</p>
+<p>For example, if your task contained the following code:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;ERROR:some_function failed.&quot;</span>
+</pre></div>
+</div>
+<p>Your log should produce output similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ERROR - [21491012T0410Z/mytask running job:01 flows:1] (received)some_function failed ERROR at 2023-04-14T11:36:35+01:00
+</pre></div>
+</div>
+<p>Severity levels are the same as those used by
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#logging-levels">Python’s logger</a>:</p>
+<ul class="simple">
+<li>CRITICAL</li>
+<li>ERROR</li>
+<li>WARNING</li>
+<li>INFO</li>
+<li>DEBUG</li>
+</ul>
+<p>Messages logged at “DEBUG” will only appear in the scheduler log if the
+workflow is played with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--debug</span></code>.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

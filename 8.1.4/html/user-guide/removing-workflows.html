@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Removing Workflows &mdash; Cylc 8.1.4 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Authorizing Others to Access Your Workflows" href="sharing-access-to-workflows.html" />
+    <link rel="prev" title="Remote Job Management" href="task-implementation/ssh-job-management.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Removing Workflows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cleaning-on-remote-install-targets">Cleaning on remote install targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cleaning-specific-subdirectories-or-files">Cleaning specific subdirectories or files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-on-symlink-directories">A note on symlink directories</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compound-commands.html">Compound Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Removing Workflows</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/removing-workflows.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="removing-workflows">
+<span id="id1"></span><h1>Removing Workflows<a class="headerlink" href="#removing-workflows" title="Permalink to this heading"></a></h1>
+<p>To delete an installed workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>, we recommend using
+the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> command. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> takes care of deleting workflows
+on the local filesystem and any remote install targets.
+It follows any symlink directories specified in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>
+(see <a class="reference internal" href="#cleansymlinkdirsnote"><span class="std std-ref">A note on symlink directories</span></a> below). You can also use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> to
+just delete certain files or subdirectories (see <a class="reference internal" href="#targetedclean"><span class="std std-ref">Cleaning specific subdirectories or files</span></a> below).</p>
+<p>If you’ve used <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-clean</span></code> before, the functionality is similar, but
+not identical.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> only affects workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directories</span></a>
+(located in the <a class="reference internal" href="../glossary.html#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>). It will not affect
+workflow <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directories</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> is intended for use on workflows installed with
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>. If you clean a workflow that was instead written
+directly in the cylc-run directory and not backed up elsewhere,
+it will be lost.</p>
+</div>
+<p>Simple example of using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>clean<span class="w"> </span>myflow/run1
+<span class="go">INFO - Removing directory: ~/cylc-run/myflow/run1</span>
+</pre></div>
+</div>
+<section id="cleaning-on-remote-install-targets">
+<h2>Cleaning on remote install targets<a class="headerlink" href="#cleaning-on-remote-install-targets" title="Permalink to this heading"></a></h2>
+<p>If any jobs in your workflow ran on a remote <a class="reference internal" href="../glossary.html#term-platform"><span class="xref std std-term">platform</span></a>, Cylc will
+automatically remove the workflow files on there in addition to the local
+filesystem.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>clean<span class="w"> </span>remote-example
+<span class="go">INFO - Cleaning on install target: enterprise1701</span>
+<span class="go">INFO - [enterprise1701]</span>
+<span class="go">        INFO - Removing directory: /home/user/cylc-run/remote-example/run1</span>
+<span class="go">INFO - Removing directory: ~/cylc-run/remote-example/run1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This relies on determining which platforms were used from the workflow
+database. If the platforms recorded in the database are out of date with
+the global configuration, or if the database is missing altogether, you will
+have to manually remove the files on remote install targets.</p>
+</div>
+<p>You can also clean on just the local filesystem using the <code class="docutils literal notranslate"><span class="pre">--local</span></code> option,
+or just the remote install target using the <code class="docutils literal notranslate"><span class="pre">--remote</span></code> option.</p>
+</section>
+<section id="cleaning-specific-subdirectories-or-files">
+<span id="targetedclean"></span><h2>Cleaning specific subdirectories or files<a class="headerlink" href="#cleaning-specific-subdirectories-or-files" title="Permalink to this heading"></a></h2>
+<p>You can clean specific subdirectories or files inside a run directory using
+the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option (we refer to this as a targeted clean).
+For example, to remove the <code class="docutils literal notranslate"><span class="pre">log</span></code> and <code class="docutils literal notranslate"><span class="pre">work</span></code> directories:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>clean<span class="w"> </span>myflow<span class="w"> </span>--rm<span class="w"> </span>log<span class="w"> </span>--rm<span class="w"> </span>work
+</pre></div>
+</div>
+<p>Colons can be used to delimit the items to clean, so the following is
+equivalent:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>clean<span class="w"> </span>myflow<span class="w"> </span>--rm<span class="w"> </span>log:work
+</pre></div>
+</div>
+<p>You can also use globs. E.g., to remove all job logs for cycle points
+beginning with <code class="docutils literal notranslate"><span class="pre">2020</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>clean<span class="w"> </span>myflow<span class="w"> </span>--rm<span class="w"> </span><span class="s1">&#39;log/job/2020*&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to place glob patterns in quotes.</p>
+</div>
+</section>
+<section id="a-note-on-symlink-directories">
+<span id="cleansymlinkdirsnote"></span><h2>A note on symlink directories<a class="headerlink" href="#a-note-on-symlink-directories" title="Permalink to this heading"></a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Does this affect me?</p>
+<p>If you use symlink directories specified in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>, you might want to read
+this explanation of how Cylc handles them during cleaning.</p>
+</div>
+<p>If you manually delete a run directory (e.g., using the <code class="docutils literal notranslate"><span class="pre">rm</span></code> command or the
+file manager), only the symlinks themselves will be deleted, not the actual
+targets. In contrast, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> follows the symlinks and deletes the
+targets.</p>
+<ul class="simple">
+<li><p>It only does this for the symlinks that can be set in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>, not any custom
+user-created symlinks.</p></li>
+<li><p>It does not actually look up the global configuration at time of cleaning;
+it simply detects what symlinks are present out of the possible ones.</p></li>
+<li><p>It also does this for targeted clean (using the <code class="docutils literal notranslate"><span class="pre">--rm</span></code> option).</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="task-implementation/ssh-job-management.html" class="btn btn-neutral float-left" title="Remote Job Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sharing-access-to-workflows.html" class="btn btn-neutral float-right" title="Authorizing Others to Access Your Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on May 05, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.1.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/removing-workflows";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

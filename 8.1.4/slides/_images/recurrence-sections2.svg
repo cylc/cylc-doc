@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg118"
+   version="1.1"
+   viewBox="401 270 818 171"
+   height="9cm"
+   width="41cm">
+  <metadata
+     id="metadata124">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs122" />
+  <g
+     id="g46">
+    <line
+       id="line2"
+       y2="351.333"
+       x2="420"
+       y1="347"
+       x1="420"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line4"
+       y2="351.333"
+       x2="535.333"
+       y1="347"
+       x1="535.333"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line6"
+       y2="351.333"
+       x2="650.667"
+       y1="347"
+       x1="650.667"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line8"
+       y2="351.333"
+       x2="766"
+       y1="347"
+       x1="766"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line10"
+       y2="351.333"
+       x2="881.333"
+       y1="347"
+       x1="881.333"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line12"
+       y2="351.333"
+       x2="996.667"
+       y1="347"
+       x1="996.667"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line14"
+       y2="351.333"
+       x2="1112"
+       y1="347"
+       x1="1112"
+       style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" />
+    <line
+       id="line16"
+       y2="360"
+       x2="420"
+       y1="347"
+       x1="420"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text18"
+       y="375"
+       x="420"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">1</text>
+    <line
+       id="line20"
+       y2="360"
+       x2="535.333"
+       y1="347"
+       x1="535.333"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text22"
+       y="375"
+       x="535.333"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">2</text>
+    <line
+       id="line24"
+       y2="360"
+       x2="650.667"
+       y1="347"
+       x1="650.667"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text26"
+       y="375"
+       x="650.667"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">3</text>
+    <line
+       id="line28"
+       y2="360"
+       x2="766"
+       y1="347"
+       x1="766"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text30"
+       y="375"
+       x="766"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">4</text>
+    <line
+       id="line32"
+       y2="360"
+       x2="881.333"
+       y1="347"
+       x1="881.333"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text34"
+       y="375"
+       x="881.333"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">5</text>
+    <line
+       id="line36"
+       y2="360"
+       x2="996.667"
+       y1="347"
+       x1="996.667"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text38"
+       y="375"
+       x="996.667"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">6</text>
+    <line
+       id="line40"
+       y2="360"
+       x2="1112"
+       y1="347"
+       x1="1112"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+    <text
+       id="text42"
+       y="375"
+       x="1112"
+       style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal"
+       font-size="16">7</text>
+    <line
+       id="line44"
+       y2="347"
+       x2="1112"
+       y1="347"
+       x1="420"
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" />
+  </g>
+  <g
+     id="g54">
+    <path
+       id="path48"
+       d="M 645.175,336.375 A 126.876,126.876 0 0 0 420,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+    <polygon
+       id="polygon50"
+       points="641.12,338.176 649.832,345.182 650.21,334.008 "
+       style="fill: #dc0782" />
+    <polygon
+       id="polygon52"
+       points="641.12,338.176 649.832,345.182 650.21,334.008 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+  </g>
+  <g
+     id="g62">
+    <path
+       id="path56"
+       d="M 875.843,336.375 A 126.878,126.878 0 0 0 650.666,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+    <polygon
+       id="polygon58"
+       points="871.788,338.176 880.5,345.182 880.878,334.008 "
+       style="fill: #dc0782" />
+    <polygon
+       id="polygon60"
+       points="871.788,338.176 880.5,345.182 880.878,334.008 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+  </g>
+  <text
+     id="text66"
+     y="284"
+     x="511"
+     style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700"
+     font-size="17.8816">
+    <tspan
+       id="tspan64"
+       y="284"
+       x="511" />
+  </text>
+  <text
+     id="text72"
+     y="414.3"
+     x="504"
+     style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700"
+     font-size="17.8816">
+    <tspan
+       id="tspan68"
+       y="414.3"
+       x="504">P2</tspan>
+    <tspan
+       id="tspan70"
+       y="436.652"
+       x="504">2/P2 or +1/P2</tspan>
+  </text>
+  <line
+     id="line74"
+     y2="428.626"
+     x2="728.616"
+     y1="429.624"
+     x1="666.616"
+     style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+  <line
+     id="line76"
+     y2="405.626"
+     x2="728.616"
+     y1="406.624"
+     x1="666.616"
+     style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+  <text
+     id="text80"
+     y="402"
+     x="517"
+     style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal"
+     font-size="12.8">
+    <tspan
+       id="tspan78"
+       y="402"
+       x="517" />
+  </text>
+  <g
+     id="g88">
+    <path
+       id="path82"
+       d="M 1106.51,336.375 A 126.876,126.876 0 0 0 881.334,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+    <polygon
+       id="polygon84"
+       points="1102.45,338.176 1111.17,345.182 1111.54,334.008 "
+       style="fill: #dc0782" />
+    <polygon
+       id="polygon86"
+       points="1102.45,338.176 1111.17,345.182 1111.54,334.008 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #dc0782" />
+  </g>
+  <g
+     id="g96">
+    <path
+       id="path90"
+       d="M 760.509,336.375 A 126.876,126.876 0 0 0 535.334,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+    <polygon
+       id="polygon92"
+       points="756.454,338.176 765.166,345.182 765.544,334.008 "
+       style="fill: #ffa500" />
+    <polygon
+       id="polygon94"
+       points="756.454,338.176 765.166,345.182 765.544,334.008 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+  </g>
+  <g
+     id="g104">
+    <path
+       id="path98"
+       d="M 991.175,336.375 A 126.876,126.876 0 0 0 766,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+    <polygon
+       id="polygon100"
+       points="987.12,338.176 995.832,345.182 996.21,334.008 "
+       style="fill: #ffa500" />
+    <polygon
+       id="polygon102"
+       points="987.12,338.176 995.832,345.182 996.21,334.008 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+  </g>
+  <g
+     id="g112">
+    <path
+       id="path106"
+       d="M 1210.92,335.178 A 118.264,118.264 0 0 0 996.666,347"
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke-dasharray: 20; stroke: #ffa500" />
+    <polygon
+       id="polygon108"
+       points="1206.83,336.785 1215.24,344.149 1216.09,333 "
+       style="fill: #ffa500" />
+    <polygon
+       id="polygon110"
+       points="1206.83,336.785 1215.24,344.149 1216.09,333 "
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ffa500" />
+  </g>
+  <text
+     id="text116"
+     y="405"
+     x="535"
+     style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal"
+     font-size="12.8">
+    <tspan
+       id="tspan114"
+       y="405"
+       x="535" />
+  </text>
+</svg>
