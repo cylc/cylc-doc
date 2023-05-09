@@ -55,6 +55,10 @@ Other files and folders may be placed in the :term:`source directory` too:
 documentation, configuration files, etc. When the workflow is :ref:`installed
 <Installing-workflows>` these will be copied over to the :term:`run directory`.
 
+If your workflow needs to create or install scripts or executables at runtime
+and you don't want Cylc to delete them on re-installation, you can create
+equivalent directories in the :ref:`WorkflowShareDirectories`.
+
 
 .. _SyntaxHighlighting:
 

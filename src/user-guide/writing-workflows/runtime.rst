@@ -306,6 +306,8 @@ exported to subshells:
                                    #   relative to the workflow work directory
 
 
+.. _WorkflowShareDirectories:
+
 Workflow Share Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -316,6 +318,16 @@ output files are typically held in cycle point sub-directories of this.
 
 The top level share directory location can be changed, e.g. to a large data
 area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.
+
+If your workflow creates or installs executables or python libraries
+as it is running, these can be placed in:
+
+* ``share/bin`` - for executables.
+* ``share/lib/python`` - for Python modules.
+
+These folders will be added to ``PATH`` and ``PYTHONPATH`` so they can be
+used by jobs in the same way as
+:ref:`top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
 
 
 Task Work Directories
