@@ -1460,9 +1460,10 @@ Clock Triggers
 
 .. warning::
 
-   This section describes deprecated old-style clock triggers that are part of
-   the task definition. Please consider using :ref:`Built-in Clock Triggers`
-   (external triggers) instead.
+   This describes a deprecated syntax for defining clock triggers in task
+   configuration. If used, it will be converted automatically to define
+   new-style :ref:`clock triggers <Built-in Clock Triggers>`.
+   Support for the old syntax will be removed in an upcoming release.
 
 By default, datetime cycle points are not connected to the :term:`wallclock time`.
 In real time cycling systems, however, some tasks may need to trigger at
