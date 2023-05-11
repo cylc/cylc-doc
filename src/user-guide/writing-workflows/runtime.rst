@@ -329,6 +329,16 @@ These folders will be added to ``PATH`` and ``PYTHONPATH`` so they can be
 used by jobs in the same way as
 :ref:`top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
 
+.. note::
+
+   Cylc will not create these folders.
+
+.. important::
+
+   Scripts placed in these directories will be called instead of a script
+   of the same name in ``bin`` or ``lib/python`` directories at the top
+   level of the workflow.
+
 
 Task Work Directories
 ^^^^^^^^^^^^^^^^^^^^^
