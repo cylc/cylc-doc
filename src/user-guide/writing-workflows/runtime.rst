@@ -319,7 +319,7 @@ output files are typically held in cycle point sub-directories of this.
 The top level share directory location can be changed, e.g. to a large data
 area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.
 
-If your workflow creates or installs executables or python libraries
+If your workflow creates or installs executables or Python libraries
 as it is running, these can be placed in:
 
 * ``share/bin`` - for executables.
