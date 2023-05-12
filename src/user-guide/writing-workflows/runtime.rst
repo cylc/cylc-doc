@@ -335,9 +335,8 @@ used by jobs in the same way as
 
 .. important::
 
-   Scripts placed in these directories will be called instead of a script
-   of the same name in ``bin`` or ``lib/python`` directories at the top
-   level of the workflow.
+  These locations will be placed first in the executable and Python module
+  search paths, before those in the parent run directory .
 
 
 Task Work Directories
