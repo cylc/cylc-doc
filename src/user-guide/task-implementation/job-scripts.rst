@@ -189,7 +189,7 @@ Task messages are validated by
 Aborting Job Scripts on Error
 -----------------------------
 
-Job scripts use ``set -x`` to abort on any error, and trap ERR, EXIT, and
+Job scripts use ``set -e`` to abort on any error, and trap ERR, EXIT, and
 SIGTERM to send task failed messages back to the :term:`scheduler` before
 aborting. Other scripts called from job scripts should therefore abort with
 standard non-zero exit status on error, to trigger the job script error trap.
