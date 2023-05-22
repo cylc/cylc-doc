@@ -325,8 +325,8 @@ as it is running, these can be placed in:
 * ``share/bin`` - for executables.
 * ``share/lib/python`` - for Python modules.
 
-These folders will be added to ``PATH`` and ``PYTHONPATH`` so they can be
-used by jobs in the same way as
+These folders are automatically added to ``PATH`` and ``PYTHONPATH`` so they can be
+used by jobs in the same way as the
 :ref:`top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
 
 .. note::
