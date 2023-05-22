@@ -335,8 +335,8 @@ used by jobs in the same way as the
 
 .. important::
 
-  These locations will be placed first in the executable and Python module
-  search paths, before those in the parent run directory .
+   These locations take precedence over the top level ``bin/`` and
+   ``lib/python/`` directories in the run dir.
 
 
 Task Work Directories
