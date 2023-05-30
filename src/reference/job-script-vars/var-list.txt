@@ -59,6 +59,9 @@ CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                    #   e.g. root postproc t1
 CYLC_TASK_DEPENDENCIES             # List of met dependencies that triggered the task
                                    #   e.g. 1/foo 1/bar
+                                   #   (note this variable will not be
+                                   #   exported if there are more than 50
+                                   #   dependencies)
 
 CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
 CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
