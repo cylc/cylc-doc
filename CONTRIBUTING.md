@@ -53,6 +53,7 @@ requests_).
  - Alex Pletzer
  - Yinjing Lin
  - David Sutherland
+ - Thomas Coleman
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
