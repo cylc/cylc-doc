@@ -122,7 +122,7 @@ Any number of parameters can be used at once. This parameterization:
 
     Before Cylc 8.2.0 this syntax worked in many cases, but was
     not formally supported, and failed if used in the names of
-    :ref:`task families<taskfamilies.parameters>`.
+    :ref:`families<families_and_parameters>`.
 
 expands to these tasks names:
 
@@ -383,7 +383,7 @@ expands to:
 
    proc_small => proc_big => proc_huge
 
-.. _taskfamilies.parameters:
+.. _families_and_parameters:
 
 Task Families and Parameters
 ----------------------------
