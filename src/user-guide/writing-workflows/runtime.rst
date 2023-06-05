@@ -322,21 +322,18 @@ area, by global config settings under :cylc:conf:`global.cylc[install][symlink d
 If your workflow creates or installs executables or Python libraries
 as it is running, these can be placed in:
 
-* ``share/bin`` - for executables.
-* ``share/lib/python`` - for Python modules.
-
-These folders are automatically added to ``PATH`` and ``PYTHONPATH`` so they can be
-used by jobs in the same way as the
-:ref:`top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
+* ``share/bin/`` - for executables. This location is automatically added to ``PATH``
+  (before the top-level ``bin/`` in the run dir).
+* ``share/lib/python/`` - for Python modules. This location is automatically added
+  to ``PYTHONPATH`` (before the top-level ``lib/python/`` in the run dir).
 
 .. note::
 
    Cylc will not create these folders.
+   
+.. seealso::
 
-.. important::
-
-   These locations take precedence over the top level ``bin/`` and
-   ``lib/python/`` directories in the run dir.
+   :ref:`Top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
 
 
 Task Work Directories
