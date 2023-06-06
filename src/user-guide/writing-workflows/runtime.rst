@@ -306,7 +306,7 @@ exported to subshells:
                                    #   relative to the workflow work directory
 
 
-.. _WorkflowShareDirectories:
+.. _workflow_share_directories:
 
 Workflow Share Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -330,7 +330,7 @@ as it is running, these can be placed in:
 .. note::
 
    Cylc will not create these folders.
-   
+
 .. seealso::
 
    :ref:`Top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
