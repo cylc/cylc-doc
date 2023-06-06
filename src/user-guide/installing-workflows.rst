@@ -398,6 +398,12 @@ The run directory now looks as follows:
    │       └── <time-stamp>-reinstall.log
    └── .service
 
+.. note::
+
+   If your workflow needs to create or install scripts or executables at runtime
+   and you don't want Cylc to delete them on re-installation, you can use
+   ``bin`` and ``lib/python`` directories in the :ref:` workflow share directory <WorkflowShareDirectories>`.
+
 
 Expected Errors
 ---------------

@@ -319,15 +319,21 @@ output files are typically held in cycle point sub-directories of this.
 The top level share directory location can be changed, e.g. to a large data
 area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.
 
-If your workflow creates or installs executables or python libraries
+If your workflow creates or installs executables or Python libraries
 as it is running, these can be placed in:
 
-* ``share/bin`` - for executables.
-* ``share/lib/python`` - for Python modules.
+* ``share/bin/`` - for executables. This location is automatically added to ``PATH``
+  (before the top-level ``bin/`` in the run dir).
+* ``share/lib/python/`` - for Python modules. This location is automatically added
+  to ``PYTHONPATH`` (before the top-level ``lib/python/`` in the run dir).
 
-These folders will be added to ``PATH`` and ``PYTHONPATH`` so they can be
-used by jobs in the same way as
-:ref:`top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
+.. note::
+
+   Cylc will not create these folders.
+   
+.. seealso::
+
+   :ref:`Top level "bin/" and "lib/python/" directories <WorkflowDefinitionDirectories>`.
 
 
 Task Work Directories
