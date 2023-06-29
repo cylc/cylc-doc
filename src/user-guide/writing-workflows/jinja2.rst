@@ -102,7 +102,7 @@ to generate task names automatically with built-in
 The next example, which generates weather forecasts over a number of cities, is
 more complex. To add a new city and associated tasks and dependencies just add
 the new city name to list at the top of the file. It makes use of Jinja2
-variables, loops, math, and logical flags to include or exclude tasks.
+variables, loops, math, and logical flags to include or exclude tasksF.
 
 .. tip::
    This example could also be simplified with built in
@@ -166,7 +166,8 @@ not in the ``environ`` dict):
    Version of Cylc used.
 
 ``CYLC_TEMPLATE_VARS``
-   All variables set by the ``-s`` or ``--set-file`` options, or by a plugin.
+   All variables set by the ``-s``, ``--set-file`` or ``--set-list`` options,
+   or by a plugin.
 
 
 .. _CustomJinja2Filters:
@@ -262,10 +263,11 @@ Here's the result:
 Default Values and Template Variables
 -------------------------------------
 
-You can provide template variables to Cylc in 3 ways:
+You can provide template variables to Cylc in 4 ways:
 
-- Using the ``--set-file`` option.
-- Using the ``-s`` option.
+- Using the ``--set-file`` (``-S``) option.
+- Using the ``--set`` (``-s``) option.
+- Using the ``--set-list`` (``-z``) option.
 - `Using a plugin`_, such as :ref:`Cylc Rose`.
 
 .. note::
@@ -274,15 +276,26 @@ You can provide template variables to Cylc in 3 ways:
    above list is used.
 
 
-The ``-s`` and ``--set-file`` Options
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The ``-s``, ``-z`` and ``--set-file`` Options
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: console
 
    $ # set the Jinja2 variable "answer" to 42
    $ cylc play <workflow-id> -s answer=42
 
-Or for multiple variables defined in a file, use the ``--set-file`` option:
+A Python string-list is a valid value, but a lot to type, so ``--set-list``
+(``-z``) is provided as a convenience:
+
+.. code-block:: console
+
+   # The set syntax
+   $ cylc play <workflow-id> -s "answers=['mice', 'dolphins']"
+   # ... can  be shortened to:
+   $ cylc play <workflow-id> -z answers=mice,dolphins
+
+If you need to define a lot of variables, you can so in a file
+using the ``--set-file`` option:
 
 .. code-block:: console
 
