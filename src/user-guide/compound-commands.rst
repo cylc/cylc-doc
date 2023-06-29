@@ -26,3 +26,22 @@ Compound commands make common ways of working easier.
    $ cylc install /home/me/cylc-src/my-workflow
    INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow
    $ cylc play my-workflow
+
+``cylc vr`` (Validate, Reinstall and Reload or Play)
+----------------------------------------------------
+
+``cylc vr my-workflow`` is the same as running:
+
+.. code-block:: bash
+
+   # Check that the changes you want to
+   # make will be valid after installation:
+   $ cylc validate my-workflow --against-source
+   $ cylc reinstall my-workflow
+
+   # If workflow is running:
+   $ cylc reload my-workflow
+
+   # If workflow is stopped:
+   $ cylc play my-workflow
+

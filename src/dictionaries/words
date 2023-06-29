@@ -22,6 +22,7 @@ dataset
 datasets
 datetime
 datetimes
+deprecations
 dev
 dict
 diff
