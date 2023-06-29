@@ -22,6 +22,50 @@ For more detail see the component changelogs:
 
 ----------
 
+Cylc 8.2.0
+----------
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   TODO
+
+..
+   Uncomment this before 8.2.0 release
+
+   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.2.x/CHANGES.md>`__
+   :cylc-uiserver: `1.3 <https://github.com/cylc/cylc-uiserver/blob/1.3.x/CHANGES.md>`__
+   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.3.x/CHANGES.md>`__
+
+
+Configure The Default View
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can now configure the view which is opened by default when you navigate to
+a new workflow in the GUI. Navigate to the settings page to select your chosen
+view.
+
+.. image:: changes/ui-view-selector.jpg
+   :width: 100%
+
+In the future we plan to support configuring a layout of multiple views and
+configuring certain options on those views.
+
+
+Reload
+^^^^^^
+
+When workflows are
+:ref:`reloaded <Reloading The Workflow Configuration At Runtime>`,
+(e.g. by ``cylc reload``), Cylc will now pause the workflow and wait for any
+preparing tasks to be submitted before proceeding with the reload.
+Once the reload has been completed, the workflow will be resumed.
+
+You can now see more information about the status of the reload in the
+workflow status message which appears at the top of the GUI and Tui interfaces.
+
+----------
+
 Cylc 8.1.0
 ----------
 
