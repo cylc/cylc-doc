@@ -102,7 +102,7 @@ to generate task names automatically with built-in
 The next example, which generates weather forecasts over a number of cities, is
 more complex. To add a new city and associated tasks and dependencies just add
 the new city name to list at the top of the file. It makes use of Jinja2
-variables, loops, math, and logical flags to include or exclude tasksF.
+variables, loops, math, and logical flags to include or exclude tasks.
 
 .. tip::
    This example could also be simplified with built in
