@@ -185,6 +185,7 @@ Task messages are validated by
 :py:class:`cylc.flow.unicode_rules.TaskMessageValidator`.
 
 .. autoclass:: cylc.flow.unicode_rules.TaskMessageValidator
+   :noindex:
 
 Aborting Job Scripts on Error
 -----------------------------
