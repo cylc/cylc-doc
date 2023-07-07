@@ -106,9 +106,23 @@ template syntax.
 
 Any number of parameters can be used at once. This parameterization:
 
+
 .. code-block:: sub
 
    model<run,obs>  # for run = 1..2 and obs = ship, buoy, plane
+   model<run><obs> # Alternatively, from Cylc 8.2.0
+
+.. versionadded:: 8.2.0
+
+   From this version you can also use the equivalent ``model<run><obs>``
+   syntax. This allows more flexibility in templating: You can now construct
+   names like ``beginning<run>middle<obs>end``.
+
+.. note::
+
+    Before Cylc 8.2.0 this syntax worked in many cases, but was
+    not formally supported, and failed if used in the names of
+    :ref:`families<families_and_parameters>`.
 
 expands to these tasks names:
 
@@ -369,6 +383,7 @@ expands to:
 
    proc_small => proc_big => proc_huge
 
+.. _families_and_parameters:
 
 Task Families and Parameters
 ----------------------------
