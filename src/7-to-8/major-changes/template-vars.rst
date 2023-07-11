@@ -80,7 +80,7 @@ See :ref:`jinja2-template-variables` for more information.
 Shorthand for list of strings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: 8.2
+.. versionadded:: 8.2
 
 A new shorthand argument (``-z``/``--set-list``/``--set-template``)
 has been introduced allowing easier definition of template
