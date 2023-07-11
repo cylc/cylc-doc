@@ -126,7 +126,7 @@ Coding Standards
 When writing your own task scripts make consistent use of appropriate coding
 standards such as:
 
-- `PEP8 for Python <https://www.python.org/dev/peps/pep-0008/>`_
+- `PEP8 for Python <https://peps.python.org/pep-0008/>`_
 - `Google Shell Style Guide for
   Bash <https://google.github.io/styleguide/shell.xml>`_
 

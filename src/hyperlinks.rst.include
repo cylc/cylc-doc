@@ -1,7 +1,7 @@
 .. This document contains hyperlink references for use throughout the documentation.
 
 .. _Apollo Client: https://www.apollographql.com/docs/react/
-.. _Configurable HTTP Proxy: https://github.com/AbdealiJK/configurable-http-proxy
+.. _Configurable HTTP Proxy: https://github.com/corridor/configurable-http-proxy
 .. _CurveZMQ: http://curvezmq.org/page:read-the-docs
 .. _Cylc User Guide: https://cylc.github.io/cylc-doc/latest/html/index.html
 .. _Cylc Workflow Design Guide: https://cylc.github.io/cylc-doc/latest/html/workflow-design-guide/index.html
@@ -13,11 +13,11 @@
 .. _FCM User Guide: http://metomi.github.io/fcm/doc/user_guide/
 .. _FCM: https://metomi.github.io/fcm/doc/
 .. _INI: https://en.wikipedia.org/wiki/INI_file
-.. _Jinja2: https://jinja.palletsprojects.com/
+.. _Jinja2: https://jinja.palletsprojects.com/en/3.0.x/
 .. _Jupyter Hub: https://jupyterhub.readthedocs.io/en/stable/
 .. _Jupyter Lab: https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html
 .. _Jupyter Server: https://jupyter-server.readthedocs.io
-.. _Protobuf: https://developers.google.com/protocol-buffers/
+.. _Protobuf: https://protobuf.dev/
 .. _PyGTK: http://www.pygtk.org/
 .. _Python Regular Expressions: https://docs.python.org/2/library/re.html#regular-expression-syntax
 .. _Python: https://www.python.org/
