@@ -141,8 +141,8 @@ graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
 linkcheck_ignore = [
-    # linkcheck has trouble handling RH readme pages
-    r'https://github.com/metomi/isodatetime.*#.*'
+    # linkcheck has trouble handling GH anchors
+    r'https://github.com/.*#.*'
 ]
 
 nitpick_ignore_regex = [

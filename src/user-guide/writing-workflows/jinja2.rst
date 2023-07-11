@@ -24,7 +24,7 @@ so Jinja2 can appear anywhere in the file.
 
 Embedded Jinja2 code should be reasonably easy to understand for those with
 coding experience; but if not, Jinja2 is well documented `here
-<https://jinja.palletsprojects.com/>`_.
+<Jinja2_>`_.
 
 Uses of Jinja2 in Cylc include:
 
@@ -443,7 +443,7 @@ handled using ``namespace`` objects that allow propagating of changes across sco
 
 For detail, see
 `Jinja2 Template Designer Documentation - Assignments
-<https://jinja.palletsprojects.com/en/2.11.x/templates/#assignments>`_
+<https://jinja.palletsprojects.com/en/3.0.x/templates/#assignments>`_
 
 
 .. _Jinja2RaisingExceptions:
