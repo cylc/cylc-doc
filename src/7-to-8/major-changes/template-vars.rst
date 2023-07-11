@@ -58,6 +58,9 @@ Example
 New Features
 ------------
 
+Any valid Python literals
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Template variables can now be any valid Python literals e.g:
 
 .. code-block:: python
@@ -73,3 +76,20 @@ Template variables can now be any valid Python literals e.g:
    {"a": 1, "b": 2, "c": 3}  # dictionary
 
 See :ref:`jinja2-template-variables` for more information.
+
+Shorthand for list of strings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 8.2
+
+A new shorthand argument (``-z``/``--set-list``/``--set-template``)
+has been introduced allowing easier definition of template
+variables containing lists of strings on the command line:
+
+.. code-block:: shell
+
+   # Before (still works)
+   cylc <command> --set "X=['a', 'b', 'c']"
+
+   # After
+   cylc <command> --set-list X=a,b,c
