@@ -110,6 +110,8 @@ autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
 # Mapping to other Sphinx projects we want to import references from.
+# NOTE: To work search available references, use:
+# $ python -m sphinx.ext.intersphinx <url>/objects.inv | less
 intersphinx_mapping = {
     'rose': (
         'http://metomi.github.io/rose/2.1.0/html', None
@@ -119,6 +121,9 @@ intersphinx_mapping = {
     ),
     'jupyter_server': (
         'https://jupyter-server.readthedocs.io/en/latest/', None
+    ),
+    'jupyter_hub': (
+        'https://jupyterhub.readthedocs.io/en/stable/', None
     )
 }
 
