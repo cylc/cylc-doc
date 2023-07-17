@@ -540,6 +540,18 @@ Glossary
          * :term:`exact datetime unit`
 
 
+   clock expire trigger
+   expired task
+      Tasks in :term:`datetime cycling` workflows can be configured to expire
+      without running if the :term:`wallclock time` exceeds some offset from
+      their cycle point. The ``:expire`` output must always be marked as
+      optional, and it can be used to trigger other tasks.
+
+      .. seealso::
+
+         * :ref:`Cylc User Guide <ClockExpireTasks>`
+
+
    clock trigger
       Clock triggers connect cycle points to the :term:`wallclock time`, in
       :term:`datetime cycling` workflows. Tasks that depend on a clock trigger
