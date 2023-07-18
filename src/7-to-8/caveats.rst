@@ -8,11 +8,6 @@ Cylc 8. These features will be re-implemented in future releases.
 Cylc Flow
 ---------
 
-Trigger Edit
-   Functionality removed pending reimplementation.
-
-   * https://github.com/cylc/cylc-flow/issues/3751
-
 Multiple Flows
    The new :term:`scheduler` can manage multiple flows in the workflow graph.
    Commands and options for interacting with flows are still being refined.
@@ -23,27 +18,10 @@ Browser Based UI
 
 The old "GUI" has been replaced by the new browser-based "UI".
 
-Graph View
-   There is no graph view in the new Cylc UI as yet. A new graph view will be
-   developed providing both "live" (AKA ``cylc gui``) and "offline"
-   (AKA ``cylc graph``) functionalities.
-
-   * https://github.com/cylc/cylc-ui/issues/74
-   * https://github.com/cylc/cylc-ui/issues/82
-
 Static Graph Visualization
    Not yet reimplemented for Cylc 8. As an interim measure the
    ``cylc graph`` command can generate a basic PNG image of a workflow
    graph if Graphviz is installed in the Cylc environment.
-
-Log Files
-   The ability to view job logs and other files in the web UI is yet to be
-   implemented. For the moment:
-
-   * use ``cylc cat-log``
-   * look in your ``cylc-run`` directory
-   * use Cylc Review from Cylc 7.9.5/7.8.10 (the latest version is compatible
-     with Cylc 8)
 
 Multiple Selection
    Multiple selection is yet to be implemented, however, it is possible
@@ -61,8 +39,6 @@ Installing Workflows
    :term:`source workflows <source directory>` in the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation in the UI.
-Trigger Edit
-   Functionality removed pending reimplementation.
 Xtrigger Visibility
    Xtriggers are not yet visible in the UI.
 
@@ -101,10 +77,6 @@ GScan
 
 UI Server
 ---------
-
-Authorization
-   A full-featured authorization system has been implemented for Cylc 8, but
-   the UI doesn't yet provide easy access to other users' UI Servers.
 
 CLI via UIS
    The ability to route Cylc commands via the UIS is planned for a future release
