@@ -28,14 +28,9 @@ Cylc 8.2.0
 .. admonition:: Cylc Components
    :class: hint
 
-   TODO
-
-..
-   Uncomment this before 8.2.0 release
-
-   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.2.x/CHANGES.md>`__
-   :cylc-uiserver: `1.3 <https://github.com/cylc/cylc-uiserver/blob/1.3.x/CHANGES.md>`__
-   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.3.x/CHANGES.md>`__
+   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.3 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
 
 
 Configure The Default View
