@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Authorizing Others to Access Your Workflows &mdash; Cylc 8.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.2.0 documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Compound Commands" href="compound-commands.html" />
+    <link rel="prev" title="Removing Workflows" href="removing-workflows.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="authorizing-others-to-access-your-workflows">
+
+<h1>Authorizing Others to Access Your Workflows<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#authorizing-others-to-access-your-workflows" title="View HTML">§</a></h1>
+
+<p>The Cylc UI Server supports multi user access. You can grant control of your
+workflows to other users, by adding or removing privileges on a Cylc operation
+basis. This requires site level configuration, with individual users being able
+to set authorization settings, within the bounds set by the site.</p>
+<p>Sites can set default access rights for users, for more information, see
+<a class="reference internal" href="#site-configuration"><span class="std std-ref">Site Authorization Configuration</span></a>.</p>
+<p>Note, if this feature is not configured, the default is no multi user access,
+only the workflow owner will be able to interact with it.</p>
+<p>If you grant access to another user, this access will apply to all of your
+workflows.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="granting-access">
+
+<h2>Granting Access<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#granting-access" title="View HTML">§</a></h2>
+
+<p>There are three methods of identifying a user to grant access to:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">*</span></code> character, to indicate any authenticated user,</li>
+<li>using the <code class="docutils literal notranslate"><span class="pre">group:</span></code> prefix to indicate a system group. E.g.
+<code class="docutils literal notranslate"><span class="pre">group:groupname</span></code>, will assign permissions to all members of the system
+group named <code class="docutils literal notranslate"><span class="pre">groupname</span></code>. For more information, see <a class="reference internal" href="#group-support"><span class="std std-ref">Group Support</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">username</span></code> to indicate a specific user.</li>
+</ul>
+<p>Using glob (<code class="docutils literal notranslate"><span class="pre">*</span></code>) to pattern match usernames and group names is not currently
+supported.</p>
+<p>Permissions are additive. If the user appears elsewhere in configuration, for
+example as a member of a system group, the permission level is taken as the
+greatest possible.</p>
+<p>However, negations take precedence.</p>
+<p>Note, defaults in site config only apply if a user does not appear in the
+<code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="methods-of-assigning-permissions">
+
+<h2>Methods of Assigning Permissions<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#methods-of-assigning-permissions" title="View HTML">§</a></h2>
+
+<p>Assigning permissions can be done in two ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li>using individual Cylc operations, e.g. <code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">pause</span></code></li>
+<li>using predefined access groups: <code class="docutils literal notranslate"><span class="pre">READ</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code>, <code class="docutils literal notranslate"><span class="pre">ALL</span></code>.</li>
+</ul>
+</div></blockquote>
+<p>Using both methods is supported, e.g [“READ”, “stop”, “pause”]</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="individual-operations">
+
+<h3>Individual Operations<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#individual-operations" title="View HTML">§</a></h3>
+
+<p>To assign users permissions, you can list the operations you wish to grant</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;user1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;pause&quot;</span><span class="p">,</span> <span class="s2">&quot;play&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Provided you have permission (via the site config file) to grant <code class="docutils literal notranslate"><span class="pre">user1</span></code>
+these permissions, this will result in <code class="docutils literal notranslate"><span class="pre">user1</span></code> being able to see your
+workflows (from the <code class="docutils literal notranslate"><span class="pre">read</span></code> operation), and <code class="docutils literal notranslate"><span class="pre">pause</span></code> and <code class="docutils literal notranslate"><span class="pre">play</span></code> your workflows.</p>
+<p>To remove permissions prepend the operation with a <code class="docutils literal notranslate"><span class="pre">!</span></code>.
+For example,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;group:groupA&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;play&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;user2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!stop&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Providing your site configuration permits you to grant this access,
+this configuration, for <code class="docutils literal notranslate"><span class="pre">user2</span></code> (who is a member of system group <code class="docutils literal notranslate"><span class="pre">groupA</span></code>),
+would result in them having <code class="docutils literal notranslate"><span class="pre">read</span></code> and <code class="docutils literal notranslate"><span class="pre">play</span></code> access. Permission to stop your
+workflows has been removed so this action will be forbidden.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="access-groups">
+
+<h3>Access Groups<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#access-groups" title="View HTML">§</a></h3>
+
+<p>For convenience, cylc operations available in the UI have been bundled into
+access groups. These should be capitalized to distinguish from cylc operations.</p>
+<p>We currently support <code class="docutils literal notranslate"><span class="pre">READ</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> and <code class="docutils literal notranslate"><span class="pre">ALL</span></code> and to remove permissions
+to operations in these groups, use <code class="docutils literal notranslate"><span class="pre">!READ</span></code>, <code class="docutils literal notranslate"><span class="pre">!CONTROL</span></code>, <code class="docutils literal notranslate"><span class="pre">!ALL</span></code>.</p>
+<table border="1" class="docutils align-default" id="id2">
+<caption><span class="caption-text">Access Group Mappings<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#id2" title="View HTML">§</a></span></caption>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">READ</th>
+<th class="head">CONTROL</th>
+<th class="head">ALL</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Broadcast</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Ext-trigger</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Hold</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Kill</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Message</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Pause</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Play</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Poll</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Read</td>
+<td>X</td>
+<td>&#160;</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Release</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>ReleaseHoldPoint</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Reload</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Remove</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Resume</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>SetGraphWindowExtent</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>SetHoldPoint</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>SetOutputs</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>SetVerbosity</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>Stop</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="row-odd"><td>Trigger</td>
+<td>&#160;</td>
+<td>X</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">READ</span></code> access group is shorthand for all read-only operations. At present,
+this is solely the <code class="docutils literal notranslate"><span class="pre">read</span></code> operation, which grants access to GraphQL queries and
+subscriptions, and enables users to see the workflows in the UI. In future
+the <code class="docutils literal notranslate"><span class="pre">READ</span></code> access group may be extended.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Granting CONTROL access does not automatically grant READ access.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="user-authorization-configuration">
+
+<h2>User Authorization Configuration<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#user-authorization-configuration" title="View HTML">§</a></h2>
+
+<p><code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code>, which is loaded from
+<code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/jupyter_config.py</span></code>, contains your preferences for granting access
+to other users. This configuration should be entered as a Python
+dictionary. If a user does not appear in your user config, the default site
+access will apply.
+You are only permitted to grant access, within the bounds set at site level.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="example-user-configuration">
+
+<h3>Example User Configuration<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#example-user-configuration" title="View HTML">§</a></h3>
+
+<p>An example user configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;READ&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;group:groupA&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CONTROL&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;user1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;pause&quot;</span><span class="p">,</span> <span class="s2">&quot;!play&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;user2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!ALL&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this scenario:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>  represents any authenticated user. They have permission to view all
+workflows, and view them on the GUI.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;group:groupA&quot;</span></code> applies <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> permissions to any member of system
+<code class="docutils literal notranslate"><span class="pre">groupA</span></code>.
+Note that, since permissions are additive, these users will gain <code class="docutils literal notranslate"><span class="pre">READ</span></code> access
+from the <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;:[&quot;READ&quot;]</span></code> assignment.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;user1&quot;</span></code> will have permission to view workflows, <code class="docutils literal notranslate"><span class="pre">pause</span></code> but not <code class="docutils literal notranslate"><span class="pre">play</span></code>
+workflows, even if <code class="docutils literal notranslate"><span class="pre">user1</span></code> is a member of the system <code class="docutils literal notranslate"><span class="pre">groupA</span></code>. This is due
+to negations taking precedence over additions.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;user2&quot;</span></code> is not permitted to view workflows, or perform any operations.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="site-authorization-configuration">
+
+<h2>Site Authorization Configuration<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#site-authorization-configuration" title="View HTML">§</a></h2>
+
+<p>The site_authorization configuration allows sites to configure sensible defaults
+and limits for the permissions users can delegate.</p>
+<p>Note that as the UI Server runs as the workflow owner, they have full control
+over it and in theory may bypass these restrictions in a variety of ways. As an
+extreme example, a workflow owner could pass their account credentials to
+another person, and that cannot be prevented by technical means. However, a
+workflow owner cannot unilaterally gain access to any other user’s account or
+workflows by configuring their own UI Server.</p>
+<p><code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.site_authorization</span></code>, which is loaded from
+<code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/jupyter_config.py</span></code>, or, alternatively, the environment variable
+<code class="docutils literal notranslate"><span class="pre">CYLC_SITE_CONF_PATH</span></code>, contains these site default and limit settings for
+users. This configuration should be entered as a Python dictionary.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="defaults-and-limits">
+
+<h3>Defaults and Limits<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#defaults-and-limits" title="View HTML">§</a></h3>
+
+<p>Sites set both limits and defaults for users.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">limit</span></code> determines the maximum access users can grant to their workflows.</li>
+<li><code class="docutils literal notranslate"><span class="pre">default</span></code> sets a default access level, which applies if the user does
+not appear in the user_authorization configuration (via explicit user name or group).</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="missing-configurations-in-site-authorization">
+
+<h3>Missing Configurations in Site Authorization<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#missing-configurations-in-site-authorization" title="View HTML">§</a></h3>
+
+<p>For site configuration:</p>
+<ul class="simple">
+<li>if a limit is not set but a default is, then the limit is the default.</li>
+<li>if a default is not set but a limit is, then the default is no access.</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-3" id="example-site-authorization-configuration">
+
+<h3>Example Site Authorization Configuration<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#example-site-authorization-configuration" title="View HTML">§</a></h3>
+
+<p>Whilst most site configurations will be simpler than the example below, this
+example provides an indication of the combinations available.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">site_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># For all ui-server owners,</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Any authenticated user</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># Will have default read-only access</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;user1&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># for all ui-server owners, user1</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!ALL&quot;</span><span class="p">],</span>  <span class="c1"># has no privileges by default</span>
+        <span class="p">},</span>  <span class="c1"># No limit set, so all ui-server owners are unable to permit user1</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;server_owner_1&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># For specific UI Server owner, server_owner_1</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Any authenticated user</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># Will have default read-only access</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;READ&quot;</span><span class="p">,</span> <span class="s2">&quot;CONTROL&quot;</span><span class="p">],</span>  <span class="c1"># server_owner_1 is able to give away</span>
+        <span class="p">},</span>  <span class="c1"># READ and CONTROL privileges.</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;server_owner_2&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># For specific UI Server owner,</span>
+        <span class="s2">&quot;user2&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Specific user2</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;ALL&quot;</span>  <span class="c1"># Can only be granted a maximum of ALL by</span>
+        <span class="p">},</span>  <span class="c1"># server_owner2, default access for user2 falls back to</span>
+        <span class="c1"># standard READ only (if server_owner_2/user2 are</span>
+        <span class="c1"># included in other auth config e.g. the top example),</span>
+        <span class="c1"># or none if not in any other auth config sections.</span>
+        <span class="s2">&quot;group:groupA&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># group denoted with a `group:`</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;READ&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;CONTROL&quot;</span><span class="p">,</span>
+            <span class="p">]</span>  <span class="c1"># groupA has default READ, CONTROL access to server_owner_2&#39;s</span>
+        <span class="p">},</span>  <span class="c1"># workflows</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;group:grp_of_svr_owners&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Group of users who own UI Servers</span>
+        <span class="s2">&quot;group:groupB&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># can grant groupB users up to READ and CONTROL</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="p">[</span>  <span class="c1"># privileges, without stop and kill</span>
+                <span class="s2">&quot;READ&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;CONTROL&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;!stop&quot;</span><span class="p">,</span>  <span class="c1"># operations</span>
+                <span class="s2">&quot;!kill&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-3" id="group-support">
+
+<h3>Group Support<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#group-support" title="View HTML">§</a></h3>
+
+<p>Unix-like systems support grouping users. Cylc authorization supports granting
+access by membership of these system groups. You can indicate a system group
+by using the <code class="docutils literal notranslate"><span class="pre">group:</span></code> indicator.</p>
+<dl class="docutils">
+<dt>System groups are found by</dt><dd><p><a class="reference internal" href="#cylc.uiserver.authorise.get_groups" title="cylc.uiserver.authorise.get_groups"><code class="xref py py-mod docutils literal notranslate"><span class="pre">get_groups</span></code></a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.uiserver.authorise.get_groups">
+<code class="sig-prename descclassname"><span class="pre">cylc.uiserver.authorise.</span></code><code class="sig-name descname"><span class="pre">get_groups</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Return list of system groups for given user.</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">os.getgrouplist</span></code> and <code class="docutils literal notranslate"><span class="pre">os.NGROUPS_MAX</span></code> to get system groups for a
+given user. <code class="docutils literal notranslate"><span class="pre">grp.getgrgid</span></code> then parses these to return a list of group
+names.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>username: username used to check system groups.</dd>
+<dt>Returns:</dt><dd>list: system groups for username given</dd>
+</dl>
+</dd></dl>
+
+</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-3" id="changing-access-rights">
+
+<h3>Changing Access Rights<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#changing-access-rights" title="View HTML">§</a></h3>
+
+<p>Changing authorization permissions in your <code class="docutils literal notranslate"><span class="pre">jupyter_config.py</span></code> will require the
+UI Server to be restarted before any changes are applied.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="interacting-with-others-workflows">
+
+<h2>Interacting with Others’ Workflows<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#interacting-with-others-workflows" title="View HTML">§</a></h2>
+
+<p>The authorization system in Cylc 8 is complete, although expect access to other
+users’ workflows via the UI to be further developed in future.</p>
+<p>If you have been granted access to another user’s workflows, you can view and
+interact with these workflows.
+Say, you, userA, wish to interact with userB’s workflows.
+You can do this by navigating to the URL <code class="docutils literal notranslate"><span class="pre">https://&lt;hub&gt;/user/userB</span></code>, using
+the hub of userB. You should authenticate as yourself (userA) and, provided you
+have the correct permissions, you will see userB’s workflows for interaction.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Operations that are not authorized will appear greyed out on the UI.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="troubleshooting-authorization">
+
+<h2>Troubleshooting Authorization<a class="headerlink" href="../../html/user-guide/sharing-access-to-workflows.html#troubleshooting-authorization" title="View HTML">§</a></h2>
+
+<p>If authorization is not performing as expected, check</p>
+<ul class="simple">
+<li>you are permitted by the site configuration to give away access.</li>
+<li>you have provided <code class="docutils literal notranslate"><span class="pre">read</span></code> permissions, which enables the user to see your
+workflows.</li>
+<li>check the spelling in your configuration. The correct spelling is
+<code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code></li>
+<li>the server has been started by the user of the workflows you are trying to
+access. Users currently can only spawn their own UI Servers.</li>
+</ul>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

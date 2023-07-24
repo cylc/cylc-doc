@@ -1,5 +1,13 @@
 {
+    "8.0.3": [
+        "slides",
+        "html"
+    ],
     "8.1.4": [
+        "slides",
+        "html"
+    ],
+    "8.1.0": [
         "slides",
         "html"
     ],
@@ -7,23 +15,19 @@
         "singlehtml",
         "html"
     ],
-    "8.0.2": [
-        "slides",
-        "html"
-    ],
     "7.9.3": [
         "singlehtml",
         "html"
     ],
-    "8.0.3": [
+    "8.0.2": [
+        "slides",
+        "html"
+    ],
+    "8.2.0": [
         "slides",
         "html"
     ],
     "8.0.0": [
-        "slides",
-        "html"
-    ],
-    "8.1.0": [
         "slides",
         "html"
     ],

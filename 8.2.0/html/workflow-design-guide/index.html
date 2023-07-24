@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Design Guide &mdash; Cylc 8.2.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/diff_selector.js"></script>
+        <script src="../_static/js/minicylc.js"></script>
+        <script src="../_static/js/spoiler.js"></script>
+        <script src="../_static/js/addons.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Style Guidelines" href="style-guide.html" />
+    <link rel="prev" title="Custom Job Submission Methods" href="../plugins/job-runners/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Workflow Design Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html">Style Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html">Basic Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="efficiency.html">Efficiency And Maintainability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html">Portable Workflows</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Workflow Design Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/workflow-design-guide/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-design-guide">
+<h1>Workflow Design Guide<a class="headerlink" href="#workflow-design-guide" title="Permalink to this heading"></a></h1>
+<p class="rubric">Cylc/Rose Workflow Design Best Practice Guide.</p>
+<p>This document provides guidance on making complex Cylc + Rose workflows that
+are clear, maintainable, and portable. Note that best practice advice may
+evolve over time with the capabilities of Rose and Cylc.</p>
+<p>Content is drawn from the Rose and Cylc user guides, earlier Met Office workflow
+design and operational workflow review documents, experience with real workflows
+across the Unified Model Consortium, and discussion among members of the UM
+TISD (Technical Infrastructure Workflow Design) working group.</p>
+<p>We start with the most general topics (coding style, general principles),
+move on to more advanced topics (efficiency and maintainability, portable
+workflows), and end with some pointers to future developments.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A good working knowledge of Cylc and Rose is assumed. For further details,
+please consult the:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a></p></li>
+<li><p><a class="reference external" href="https://metomi.github.io/rose">Rose Documentation</a></p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For non-Rose users: this document comes out of the Unified Model
+Consortium wherein Cylc is used within the Rose <em>workflow management
+framework</em>. However, the bulk of the information in this guide is about
+Cylc workflow design; which parts are Rose-specific should be clear from
+context.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style-guide.html">Style Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#tab-characters">Tab Characters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#trailing-whitespace">Trailing Whitespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#indentation">Indentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#titles-descriptions-and-urls">Titles, Descriptions, And URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#line-length-and-continuation">Line Length And Continuation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#task-naming-conventions">Task Naming Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="style-guide.html#rose-config-files">Rose Config Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="general-principles.html">Basic Principles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#utc-mode">UTC Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#fine-or-coarse-grained-workflows">Fine Or Coarse-Grained Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#monolithic-or-interdependent-workflows">Monolithic Or Interdependent Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#self-contained-workflows">Self-Contained Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#task-host-selection">Task Host Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#task-scripting">Task Scripting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#rose-apps">Rose Apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#rose-metadata-compliance">Rose Metadata Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#task-independence">Task Independence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#clock-triggered-tasks">Clock-Triggered Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#rose-app-file-polling">Rose App File Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#task-execution-time-limits">Task Execution Time Limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#restricting-workflow-activity">Restricting Workflow Activity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#workflow-housekeeping">Workflow Housekeeping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#complex-jinja2-code">Complex Jinja2 Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#shared-configuration">Shared Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#automating-failure-recovery">Automating Failure Recovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-principles.html#include-files">Include Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="efficiency.html">Efficiency And Maintainability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="efficiency.html#the-task-family-hierarchy">The Task Family Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="efficiency.html#generating-tasks-automatically">Generating Tasks Automatically</a></li>
+<li class="toctree-l2"><a class="reference internal" href="efficiency.html#optional-app-config-files">Optional App Config Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="portable-workflows.html">Portable Workflows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#the-jinja2-site-variable">The Jinja2 SITE Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-include-files">Site Include-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-specific-graphs">Site-Specific Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#inlined-site-switching">Inlined Site-Switching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-specific-workflow-variables">Site-Specific Workflow Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-specific-optional-workflow-configs">Site-Specific Optional Workflow Configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-agnostic-file-paths-in-app-configs">Site-Agnostic File Paths in App Configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#site-specific-optional-app-configs">Site-Specific Optional App Configs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#an-example">An Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#collaborative-development-model">Collaborative Development Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="portable-workflows.html#research-to-operations-transition">Research-To-Operations Transition</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../plugins/job-runners/index.html" class="btn btn-neutral float-left" title="Custom Job Submission Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="style-guide.html" class="btn btn-neutral float-right" title="Style Guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jul 24, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "workflow-design-guide/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Remote Usernames &mdash; Cylc 8.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Detailed Description of Major Changes" href="index.html" />
+    <link rel="next" title="Scheduling Algorithm" href="scheduling.html" />
+    <link rel="prev" title="Python 2 =&gt; 3" href="python-2-3.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="remote-usernames">
+
+<h1>Remote Usernames<a class="headerlink" href="../../../html/7-to-8/major-changes/remote-owner.html#remote-usernames" title="View HTML">§</a></h1>
+
+<div class="tip admonition">
+<p class="first admonition-title">does this change affect me?</p>
+<ul class="last simple">
+<li>If you set <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a></li>
+<li>If you use <code class="docutils literal notranslate"><span class="pre">--owner</span></code> on the command line</li>
+</ul>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overview">
+
+<h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/remote-owner.html#overview" title="View HTML">§</a></h2>
+
+<p>If your username differs between the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host and job hosts, then
+you may have configured Cylc to run jobs under the correct account using
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a>
+or used the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> Cylc command line option
+with commands which access remote hosts.</p>
+<p>Cylc no longer supports specifying the username in this way, we suggest
+configuring your remote username using the <a class="reference external" href="https://man.openbsd.org/ssh_config">SSH configuration file</a> e.g:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Host MyHost
+  User root
+</pre></div>
+</div>
+<p>SSH will then automatically use the configured username when connecting to the
+remote machine.</p>
+<p>Since Cylc uses SSH and Rsync to manage job hosts, the SSH config also configures
+Cylc.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This approach using the SSH configuration file also works with Cylc 7.</p>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
