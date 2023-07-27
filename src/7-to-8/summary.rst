@@ -39,9 +39,11 @@ Upgrading To Cylc 8
 
 There have been some configuration changes at Cylc 8.
 To upgrade your Cylc 7 suite to a Cylc 8 workflow, first make sure it validates
-in Cylc 7 without any warnings, then rename the workflow configuration file
-from ``suite.rc`` to  ``flow.cylc``, then run ``cylc validate`` in Cylc 8 and
-take action on any warnings.
+in Cylc 7 without any warnings, you can now run it in compatibility mode.
+
+To upgrade the workflow to run without compatibility mode, rename the workflow
+configuration file from ``suite.rc`` to  ``flow.cylc``, run ``cylc validate``
+in Cylc 8 and take action on any warnings.
 
 .. TODO Add ref to breaking changes section within Major changes, once created,
    including optional ouputs.
@@ -71,12 +73,14 @@ At Cylc 8, there are two UIs available to monitor and control your workflows:
 
    .. code-block:: bash
 
-      cylc gui
+      cylc gui <workflow_id>
 
 Command Changes
 ---------------
 
-``cylc run <suite_name>`` at Cylc 7 has become ``cylc play <workflow_id>``.
+``cylc run <suite_name>`` has become ``cylc play <workflow_id>``.
+
+``rose suite-run`` is now ``cylc vip`` (**V**\ alidate, **I**\ nstall, **P**\ lay).
 
 .. seealso::
 
@@ -84,8 +88,8 @@ Command Changes
    * Major Changes: :ref:`728.play_pause_stop`
    * Major Changes: :ref:`MajorChangesCLI`
 
-At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, halting all job
-submission. To restart the workflow, use ``cylc play <workflow_id>``.
+At Cylc 8, use ``cylc pause <workflow_id>`` to pause a workflow, preventing new
+job submissions. To restart the workflow, use ``cylc play <workflow_id>``.
 
 To start a fresh run, use ``cylc install`` and play it safely in the new run
 directory.
@@ -96,11 +100,12 @@ Task/Job States
 ---------------
 
 :term:`Tasks <task>` are nodes in the abstract workflow graph, representing
-applications to run at the appropriate point in the workflow. A :term:`job <job>`
+applications to run at the appropriate point in the workflow.
+
+A :term:`job <job>`
 is the script (and subsequent process) submitted by Cylc to
 actually run the application. A task can have multiple jobs as the result of
 automatic retries or manual re-triggering.
-
 
 The 13 task/job states in Cylc 7 have been simplified to 8. Tasks and jobs have been
 separated and states of both can be viewed in the GUI.

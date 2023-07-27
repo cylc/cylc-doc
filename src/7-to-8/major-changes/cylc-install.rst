@@ -118,21 +118,30 @@ See :ref:`the user guide <RemoteInit>` for more details.
 Migrating From ``rose suite-run``
 ---------------------------------
 
-The ``rose suite-run`` command has been replaced by ``cylc install``.
+The ``rose suite-run`` command did three things:
 
-.. code-block:: bash
+1. It validated the workflow.
+2. It installed the workflow into the ``cylc-run`` directory.
+3. It started a scheduler to run the workflow.
 
-   # rose 2019 / Cylc 7
-   $ rose suite-run
+At Cylc 8, there is a separate command for each of these three things:
 
-   # rose 2 / Cylc 8
+.. code-block:: console
+
+   $ cylc validate
    $ cylc install
-   $ cylc play <id>
+   $ cylc play
 
-Support for the ``rose-suite.conf`` file is provided by the :ref:`Cylc Rose`
+But for convenience there is a compound command which does all three:
+
+.. code-block:: console
+
+   $ cylc vip  # vip=validate-install-play
+
+Support for the ``rose-suite.conf`` file is now provided by the :ref:`Cylc Rose`
 plugin which must be installed for Rose integration.
 
-.. spoiler:: Installation
+.. spoiler:: Installation Details
    :class: hint
 
    See the :ref:`installation` section for instructions.
