@@ -1479,8 +1479,12 @@ Glossary
    optional output
       Optional :term:`task outputs <task output>` are marked with a question
       mark in the :term:`graph`, e.g. ``foo:x?``, or ``foo:fail?``,  or
-      ``foo?`` (short for ``foo:succeed?``). The may or may not be completed at
-      runtime. Optional outputs are primarily used for :term:`graph branching`.
+      ``foo?`` (short for ``foo:succeed?``).
+
+      One or more optional outputs must be generated when the task runs,
+      otherwise the workflow will :term:`stall`. This allows the workflow
+      to follow different pathways through the graph according to runtime
+      events, this is called :term:`graph branching`.
 
       .. seealso::
 
@@ -1489,7 +1493,6 @@ Glossary
 
 
    required output
-   expected output
       Task outputs that are not marked as :term:`optional <optional output>`
       in the :term:`graph` are required to be completed at runtime. If not, the
       :term:`scheduler` retains the task as :term:`incomplete` pending user

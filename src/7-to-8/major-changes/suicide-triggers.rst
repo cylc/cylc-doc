@@ -91,6 +91,9 @@ Also, the suicide triggers can be removed.
    - # Remove the "foo" task in the fail case.
    - recover => ! foo
 
+At least one optional output must be generated, so in this example ``foo`` must
+either succeed or fail.
+
 In Cylc 7, suicide triggers were used to remove tasks that did not complete
 during runtime. Cylc 8's event-driven graph handling allows such graph
 branching using optional output syntax, without the need for suicide triggers.
