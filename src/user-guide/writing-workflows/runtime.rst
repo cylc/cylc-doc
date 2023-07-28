@@ -567,22 +567,25 @@ task ``whizz`` downstream. The scheduler will then stall with
            script = "sleep 10"
 
 
-.. _EventHandling:
+.. _user_guide.runtime.task_event_handling:
 
-Event Handling
---------------
+Task Event Handling
+-------------------
 
-.. seealso::
+Task event handlers allow configured commands to run when task events occur.
 
-  * Task events :cylc:conf:`[runtime][<namespace>][events]`
-  * Workflow events :cylc:conf:`[scheduler][events]`
+.. note::
 
-.. cylc-scope:: flow.cylc[runtime][<namespace>]
+   Cylc supports workflow events e.g. ``startup`` and ``shutdown``
+   and task events e.g. ``submitted`` and ``failed``.
 
-Custom *event handler* scripts can be called when certain workflow and task
-events occur. Event handlers can be used to send a message, raise an alarm, or
-whatever you like. They can even call ``cylc`` commands to intervene in the
-workflow.
+   See also :ref:`user_guide.scheduler.workflow_event_handling`.
+
+Event handlers can be used to send a message, raise an alarm, or whatever you
+like. They can even call ``cylc`` commands to intervene in the workflow.
+
+Task event handlers are configured by
+:cylc:conf:`flow.cylc[runtime][<namespace>][events]`.
 
 .. note::
 
@@ -596,7 +599,7 @@ They should return quickly to avoid tying up the scheduler process pool -
 see :ref:`Managing External Command Execution`.
 
 
-.. cylc-scope::
+.. _user_guide.runtime.task_event_handling.event_specific_handlers:
 
 Event-Specific Handlers
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -634,18 +637,40 @@ can be:
 Values should be a list of commands, command lines, or command line templates
 (see below) to call if the specified event is triggered.
 
+
+.. _user_guide.runtime.task_event_handling.general_event_handlers:
+
 General Event Handlers
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Alternatively you can configure ``handler events`` and ``handlers``
-under :cylc:conf:`[runtime][<namespace>][events]`, where the former is a list
-of events (as above), and the latter a list of commands, command lines, lines
-or command line templates (see below) to call if any of the specified events
-are triggered.
+.. cylc-scope:: flow.cylc[runtime][<namespace>][events]
+
+Alternatively you can configure a list of generic event :cylc:conf:`handlers` to be run
+for configured :cylc:conf:`handler events`.
+
+:cylc:conf:`handler events`
+   A list of events which may include any of the above
+   events (e.g. ``submission failed`` or ``warning``) or
+   any of a task's :term:`custom outputs <custom output>`.
+:cylc:conf:`handlers`
+   A list of commands to be run for these events.
+   Information about the event can be provided using
+   :ref:`user_guide.runtime.event_handlers.task_event_handling.template_variables`.
+
+Example:
+
+.. code-block:: cylc
+
+   handlers = """
+      my-handler %(event)s %(workflow)s,
+      echo %(workflow)s-%(event)s >> my-log-file
+   """
+   handler events = submission failed, failed, warning, my-custom-output
 
 .. cylc-scope::
 
-.. _task_event_template_variables:
+
+.. _user_guide.runtime.event_handlers.task_event_handling.template_variables:
 
 Task Event Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
