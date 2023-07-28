@@ -8,20 +8,27 @@ Many of these configurations can also be defined at the site or user level in
 the :cylc:conf:`global.cylc[scheduler]` section where it applies to all
 workflows.
 
-.. _EventHandlers:
 
-Event handlers
---------------
+.. _user_guide.scheduler.workflow_event_handling:
+
+Workflow Event Handling
+-----------------------
+
+Workflow event handlers allow configured commands to run when workflow events
+occur.
 
 .. note::
 
-   Workflow event handlers are configured by:
+   Cylc supports workflow events e.g. ``startup`` and ``shutdown``
+   and task events e.g. ``submitted`` and ``failed``.
 
-   * :cylc:conf:`flow.cylc[scheduler][events]`
-   * :cylc:conf:`global.cylc[scheduler][events]`
+   See also :ref:`user_guide.runtime.task_event_handling`.
 
-Workflow event handlers allow configurable actions to be performed when
-workflow events occur.
+Workflow event handlers are configured by:
+
+* :cylc:conf:`flow.cylc[scheduler][events]` (per workflow)
+* :cylc:conf:`global.cylc[scheduler][events]` (user/site defaults)
+
 
 Workflow Events
 ^^^^^^^^^^^^^^^
