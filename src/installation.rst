@@ -250,6 +250,7 @@ To do so create a symbolic link to the wrapper, for each of these commands:
    ln -s cylc rosie
    ln -s cylc isodatetime
 
+
 Configuration
 -------------
 
@@ -259,7 +260,7 @@ However, many things may need to be configured, e.g:
 
 * :ref:`AdminGuide.PlatformConfigs` (jobs hosts, runners, etc)
 * :ref:`Scheduler Hosts<Submitting Workflows To a Pool Of Hosts>`
-* :ref:`Default Event Handlers<EventHandlers>`
+* :ref:`Default Event Handlers<user_guide.runtime.task_event_handling.general_event_handlers>`.
 
 Cylc Flow
 ^^^^^^^^^

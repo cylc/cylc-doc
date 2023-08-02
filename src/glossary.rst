@@ -1654,8 +1654,6 @@ Glossary
       WARNING messages from a task :term:`job`.
 
 
-   .. TODO cylc-flow cfgspec/workflow.py references "event handlers" plural
-
    handler
    event handler
    event handlers
@@ -1671,9 +1669,8 @@ Glossary
 
       .. seealso::
 
-         - :cylc:conf:`task events <[runtime][<namespace>][events]>`
-         - :cylc:conf:`workflow events <[scheduler][events]>`
-         - :ref:`Cylc User Guide <EventHandling>`
+         - :ref:`user_guide.scheduler.workflow_event_handling`
+         - :ref:`user_guide.runtime.task_event_handling`
 
 
    runahead limit

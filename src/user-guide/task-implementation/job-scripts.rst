@@ -127,7 +127,8 @@ execution has started, succeeded, or failed. Custom messages can also be sent
 by the same mechanism, with various severity levels. These can be used to
 trigger other tasks off specific task outputs (see :ref:`MessageTriggers`), or
 to trigger execution of event handlers by the scheduler (see
-:ref:`EventHandling`), or just to write information to the scheduler log.
+:ref:`user_guide.runtime.task_event_handling`)
+or just to write information to the scheduler log.
 
 .. cylc-scope:: global.cylc[platforms][<platform name>]
 
