@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration Changes at Cylc 8 &mdash; Cylc 8.2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.1 documentation" href="../../index.html" />
+    <link rel="up" title="Detailed Description of Major Changes" href="index.html" />
+    <link rel="next" title="Continuing a Cylc 7 Workflow with Cylc 8" href="continuing-c7-c8.html" />
+    <link rel="prev" title="Cylc 7 Compatibility Mode" href="compatibility-mode.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="configuration-changes-at-cylc-8">
+
+<h1>Configuration Changes at Cylc 8<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#configuration-changes-at-cylc-8" title="View HTML">§</a></h1>
+
+<p>Some configurations have moved or been renamed at Cylc 8.</p>
+<p>The old configurations are now deprecated, but still supported.
+These will be highlighted upon <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> after renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>
+to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>.</p>
+<p>Because some workflows use Jinja2 or EmPy branches which may not be switched on at
+the time of the initial <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> we have also provided
+a script, <a class="reference internal" href="../../user-guide/writing-workflows/configuration.html#cylc-lint-script"><span class="std std-ref">cylc lint -r 728</span></a> to check for Cylc 7
+syntax which may be deprecated.</p>
+<p>There are some examples below of how to upgrade:</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="graph">
+
+<h2>Graph<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#graph" title="View HTML">§</a></h2>
+
+<p>Cylc 7 had unnecessarily deep nesting of graph config sections:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;prep =&gt; foo&quot;</span>
+        <span class="nt">[[[R/^/P1D]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;foo =&gt; bar =&gt; baz&quot;</span>
+</pre></div>
+</div>
+<p>Cylc 8 cleans this up:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        R/^/P1D = &quot;foo =&gt; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="fixing-deprecation-warnings">
+
+<h2>Fixing deprecation warnings<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#fixing-deprecation-warnings" title="View HTML">§</a></h2>
+
+<p>Take the following example <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[cylc]</span>
+   <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2000-01-01</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> foo =&gt; bar</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo, bar]]</span>
+</pre></div>
+</div>
+<p>This workflow will pass validation at Cylc 8, but will give warnings:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+<span class="go">WARNING - deprecated items were automatically upgraded in &quot;workflow definition&quot;</span>
+<span class="go">WARNING -  * (8.0.0) [cylc] -&gt; [scheduler] - value unchanged</span>
+<span class="go">WARNING - deprecated graph items were automatically upgraded in &quot;workflow definition&quot;:</span>
+<span class="go">   * (8.0.0) [scheduling][dependencies][X]graph -&gt; [scheduling][graph]X - for X in:</span>
+<span class="go">         R1</span>
+<span class="go">Valid for cylc-8.0.0</span>
+</pre></div>
+</div>
+<p>The warnings explain what needs to be fixed. After making the following changes,
+the workflow will validate without any warnings:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-[cylc]</span>
+<span class="gi">+[scheduler]</span>
+<span class="w"> </span>    UTC mode = True
+<span class="w"> </span>[scheduling]
+<span class="w"> </span>    initial cycle point = 2000-01-01
+<span class="gd">-    [[dependencies]]</span>
+<span class="gd">-        [[[R1]]]</span>
+<span class="gd">-            graph = foo =&gt; bar</span>
+<span class="gi">+    [[graph]]</span>
+<span class="gi">+        R1 = foo =&gt; bar</span>
+<span class="w"> </span>[runtime]
+<span class="w"> </span>    [[foo, bar]]
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Later Cylc releases will not be able to upgrade obsolete Cylc 7
+configurations. It’s a good idea to address warnings as part of routine
+workflow review and maintenance to avoid problems later on.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="platforms">
+
+<h2>Platforms<a class="headerlink" href="../../../html/7-to-8/major-changes/config-changes.html#platforms" title="View HTML">§</a></h2>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference internal" href="platforms.html#majorchangesplatforms"><span class="std std-ref">Platforms at Cylc 8.</span></a></li>
+<li><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">System admin’s guide to writing platforms.</span></a></li>
+</ul>
+</div>
+<p>At Cylc 7, job hosts were defined to indicate where a job should run.
+At Cylc 8, this has been replaced by Platforms.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[runtime]
+<span class="w"> </span>    [[foo]]
+<span class="gd">-        [[[job]]]</span>
+<span class="gd">-            batch system = slurm</span>
+<span class="gd">-        [[[remote]]]</span>
+<span class="gd">-            host = hpc1.login.1</span>
+<span class="gi">+        platform = hpc1</span>
+</pre></div>
+</div>
+<p>For a comprehensive list of valid configuration, see: <a class="reference internal" href="../../reference/config/workflow.html#workflow-configuration"><span class="std std-ref">Workflow Configuration</span></a>
+and <a class="reference internal" href="../../reference/config/global.html#global-configuration"><span class="std std-ref">Global Configuration</span></a>.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
