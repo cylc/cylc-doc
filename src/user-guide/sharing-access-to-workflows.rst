@@ -36,7 +36,7 @@ must be configured:
 3. Cylc must be configured with user permissions.
 
 This configuration can all be performed in the same Jupyter / Cylc UI Server
-configuration file see :ref:`UI_Server_config` for more details.
+configuration file. See :ref:`UI_Server_config` for more details.
 
 .. rubric:: Quick Example:
 
@@ -46,7 +46,7 @@ configuration file see :ref:`UI_Server_config` for more details.
 
    # 1. Jupyter Hub
    #    Allow all authenticated users to access, start and stop
-   #    eachothers servers
+   #    each other's servers
    c.JupyterHub.load_roles = [
        {
            "name": "user",
@@ -67,7 +67,7 @@ configuration file see :ref:`UI_Server_config` for more details.
    # 3. Cylc
    #    Delegate permissions to users
    c.CylcUIServer.user_authorization = {
-       # proivide all authenticated users with read-only access to eachothers
+       # provide all authenticated users with read-only access to each other's
        # servers
        "*": ["READ"],
    }
@@ -83,12 +83,12 @@ Jupyter Hub Authorisation
 
 By default, `Jupyter Hub`_ only allows users to access their own servers.
 
-In order to allow access to other users servers, two scopes must be configured:
+In order to allow access to other users' servers, two scopes must be configured:
 
 ``access:servers``
-   Permits us to connect to another users server.
+   Permits us to connect to another user's server.
 ``servers``
-   Permits us to start another users server.
+   Permits us to start another user's server.
 
 This is done using the
 :py:attr:`c.JupyterHub.load_roles <jupyterhub.app.JupyterHub.load_roles>`
@@ -105,7 +105,7 @@ Example:
    c.JupyterHub.load_roles = [
        {
            # allow all authenticated users to access, start and stop
-           # eachother's servers
+           # each other's servers
            "name": "user",
            "scopes": ["self", "access:servers", "servers"],
        }
@@ -137,7 +137,7 @@ not on a per-workflow basis.
 
 By default users can only see and interact with their own workflows.
 
-Sites can restrict the permissions which users are allowed to delegate to each
+Sites can restrict the permissions that users are allowed to grant each
 other and can configure default permissions (see :ref:`site_configuration`).
 
 Authorization is configured by these two configurations:
@@ -170,7 +170,7 @@ Users
 There are three methods of identifying a user to grant access to:
 
 ``<username>``
-  Configures permissions for a singe user.
+  Configures permissions for a single user.
 ``group:<groupname>``
   Configures a user group. For more information, see :ref:`group_support`.
 ``*``
@@ -180,7 +180,7 @@ There are three methods of identifying a user to grant access to:
 
 .. note::
 
-   Using glob patterns (e.g. ``*``) to pattern match user and group names is
+   Using glob patterns to match user and group names is
    not currently supported.
 
 
@@ -190,7 +190,7 @@ Permissions
 .. TODO: autogenerate this permission list
    https://github.com/cylc/cylc-uiserver/issues/466
 
-Permissions can be granted for each Cylc command individually, for convenience
+Permissions can be granted for each Cylc command individually. For convenience,
 commands are arranged into groups to avoid having to list them individually:
 
 ``READ`` (i.e. read-only access)
@@ -238,11 +238,11 @@ commands are arranged into groups to avoid having to list them individually:
 
    To find out more about a command, see the GraphQL or CLI documentation.
 
-By default, users have ``ALL`` permissions for their own workflows and no
-permissions to other users workflows.
+By default, users have full permissions (``READ``, ``CONTROL`` and ``ALL``) for their own workflows and no
+permissions for other users' workflows.
 
-Permissions are additive, so delegating both ``READ`` and ``CONTROL`` would
-provide all permission in both groups.
+Permissions are additive, so for example, granting ``READ`` and ``CONTROL``
+would provide all of the permissions from those two groups.
 
 The ``!`` character can be used to subtract permissions, e.g. delegating
 ``CONTROL`` and ``!Stop`` would provide all control permissions except stop.
@@ -271,10 +271,10 @@ Examples
 In this scenario:
 
 - ``"*"``  represents any authenticated user. They have permission to view all
-  workflows, and view them on the GUI.
+  workflows on the GUI.
 - ``"group:groupA"`` applies ``CONTROL`` permissions to any member of system
   ``groupA``.
-  Note that, since permissions are additive, these users will gain ``READ`` access
+  Note that, since permissions are inherited, these users will gain ``READ`` access
   from the ``"*":["READ"]`` assignment.
 - ``"user1"`` will have permission to view workflows, ``pause`` but not ``play``
   workflows, even if ``user1`` is a member of the system ``groupA``. This is due
@@ -287,10 +287,10 @@ In this scenario:
 Cylc Site Configuration
 -----------------------
 
-The :py:attr:`c.CylcUIServer.site authorization
+The :py:attr:`c.CylcUIServer.site_authorization
 <cylc.uiserver.app.CylcUIServer.site_authorization>` configuration allows sites
 to configure sensible defaults and limits for the permissions users can
-delegate.
+grant.
 
 It takes the form:
 
@@ -300,7 +300,7 @@ It takes the form:
      "<owner>": {
        "<user>": {
          "default": [],
-         "limit", []
+         "limit": []
        }
      }
    }

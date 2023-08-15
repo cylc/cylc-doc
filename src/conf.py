@@ -110,7 +110,7 @@ autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
 # Mapping to other Sphinx projects we want to import references from.
-# NOTE: To work search available references, use:
+# NOTE: To search available references, use:
 # $ python -m sphinx.ext.intersphinx <url>/objects.inv | less
 intersphinx_mapping = {
     'rose': (
