@@ -34,9 +34,9 @@ Cylc 8.3.0
 ..
    Uncomment this before 8.3.0 release
 
-   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.3.x/CHANGES.md>`__
-   :cylc-uiserver: `1.3 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
-   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
+   :cylc-flow: `8.3 <https://github.com/cylc/cylc-flow/blob/8.3.x/CHANGES.md>`__
+   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
+   :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
 
 
 Upgrade To The Latest Jupyter Releases
