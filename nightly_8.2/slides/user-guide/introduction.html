@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Cylc 8.2.2.dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '8.2.2.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../_static/slides.js"></script>
+    <script type="text/javascript" src="../_static/sync.js"></script>
+    <script type="text/javascript" src="../_static/controller.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Cylc 8.2.2.dev documentation" href="../index.html" />
+    <link rel="up" title="User Guide" href="index.html" />
+    <link rel="next" title="Writing Workflows" href="writing-workflows/index.html" />
+    <link rel="prev" title="User Guide" href="index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="introduction">
+
+<h1>Introduction<a class="headerlink" href="../../html/user-guide/introduction.html#introduction" title="View HTML">§</a></h1>
+
+
+
+
+
+</article>
+<article class="slide level-2" id="what-is-a-workflow">
+
+<h2>What is a Workflow?<a class="headerlink" href="../../html/user-guide/introduction.html#what-is-a-workflow" title="View HTML">§</a></h2>
+
+<q class="epigraph">
+A workflow consists of an orchestrated and repeatable pattern of business
+activity enabled by the systematic organization of resources into processes
+that transform materials, provide services, or process information.</q>
+<div class="author">
+Wikipedia</div>
+<div class="tip tutorial-ref admonition">
+<p class="first admonition-title">Related Tutorial</p>
+<p class="last"><a class="reference internal" href="../tutorial/introduction.html#cylc-what-is-a-workflow"><span class="std std-ref">What is a Workflow?</span></a></p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="what-is-cylc">
+
+<h2>What is Cylc?<a class="headerlink" href="../../html/user-guide/introduction.html#what-is-cylc" title="View HTML">§</a></h2>
+
+<p>Cylc (pronounced silk) is a workflow engine, a system that automatically
+executes tasks according to schedules and dependencies.</p>
+<p>In a Cylc workflow each step is an application: an executable command, script,
+or program. Cylc runs each task as soon as it is appropriate to do so.</p>
+<div class="tip tutorial-ref admonition">
+<p class="first admonition-title">Related Tutorial</p>
+<p class="last"><a class="reference internal" href="../tutorial/introduction.html#cylc-what-is-cylc"><span class="std std-ref">What is Cylc?</span></a></p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-and-cycling-workflows">
+
+<h2>Cylc and Cycling Workflows<a class="headerlink" href="../../html/user-guide/introduction.html#cylc-and-cycling-workflows" title="View HTML">§</a></h2>
+
+<p>A <em>cycling workflow</em> is a repetitive process involving many interdependent
+tasks. Cylc tasks wrap arbitrary applications: executable commands,
+scripts, or programs. Example use cases include:</p>
+<ul class="simple">
+<li>Processing many similar datasets, through a pipeline or graph of tasks</li>
+<li>Forecasting systems that generate new forecasts at regular intervals</li>
+<li>Splitting a long model run and associated processing tasks into many smaller runs</li>
+<li>Iterative tuning of model parameters by model, processing, and validation tasks</li>
+</ul>
+<p>Cycling systems were traditionally managed by repeat-running the single-cycle
+workflow, finishing each new cycle before starting the next. Sometimes, however,
+it can be much more efficient to run multiple cycles at once. Even in real time
+forecasting systems that normally have a gap between cycles waiting on new
+data, this can greatly speed catch up from delays or downtime. But it can’t
+be done if the workflow manager has a global loop that handles only one cycle
+at a time and does not understand any intercycle dependence that may be present.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Cylc handles inter- and intra-cycle dependence equally, and it unrolls the
+cycle loop to create a single non-cycling workflow of repeating tasks, each
+with its own individual <em>cycle point</em>.</p>
+</div>
+<img alt="../_images/cycling.png" class="align-center" src="../_images/cycling.png" />
+<p>This removes the artificial barrier between cycles. Cylc tasks can advance
+constrained only by their individual dependencies, for maximum concurrency
+across as well as within cycles. This allows fast catch-up from delays in
+real time systems, and sustained high throughput off the clock.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="how-to-run-user-guide-examples">
+
+<h2>How to Run User Guide Examples<a class="headerlink" href="../../html/user-guide/introduction.html#how-to-run-user-guide-examples" title="View HTML">§</a></h2>
+
+<p>Many Cylc concepts and features in this document are illustrated with minimal
+snippets of workflow configuration. Most of these can be turned into a complete
+workflow that you can actually run, with a few easy steps:</p>
+<ul class="simple">
+<li>Add scheduling section headings, if missing, above the graph</li>
+<li>Use <code class="docutils literal notranslate"><span class="pre">[scheduler]allow</span> <span class="pre">implicit</span> <span class="pre">tasks</span> <span class="pre">=</span> <span class="pre">True</span></code> to automatically create dummy definitions
+for each task</li>
+<li>Configure the <code class="docutils literal notranslate"><span class="pre">root</span></code> task family to make the dummy jobs take a little time
+to run, so the workflow doesn’t evolve too quickly</li>
+<li>For cycling graphs, configure an initial cycle point to start at</li>
+</ul>
+<p>For example, here is a small cycling workflow graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># Avoid caffeine withdrawal</span>
+<span class="kd">PT6H</span> <span class="c">=</span> <span class="c">&quot;</span><span class="kd">grind_beans</span> <span class="o">=&gt;</span> <span class="kd">make_coffee</span> <span class="o">=&gt;</span> <span class="kd">drink_coffee</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<p>And here it is as a complete runnable workflow:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># Avoid caffeine withdrawal</span>
+        <span class="nv">PT6H = &quot;grind_beans =&gt; make_coffee </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">drink_coffee</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 10&quot;</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

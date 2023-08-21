@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Architecture &mdash; Cylc 8.2.2.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.2.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.2.dev documentation" href="../../index.html" />
+    <link rel="up" title="Reference" href="../index.html" />
+    <link rel="next" title="Cylc UI Server" href="ui-server.html" />
+    <link rel="prev" title="Job Script Environment Variables" href="../job-script-vars/index.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="architecture">
+
+<h1>Architecture<a class="headerlink" href="../../../html/reference/architecture/index.html#architecture" title="View HTML">§</a></h1>
+
+<p>This section provides an in-depth explanation of the architecture of the
+Cylc components intended for developers and system administrators.</p>
+<p>The main Cylc 8 system components are:</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-scheduler">
+
+<h2>Cylc Scheduler<a class="headerlink" href="../../../html/reference/architecture/index.html#cylc-scheduler" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>The workflow engine core, Python 3 based</li>
+<li>Includes the <strong>CLI</strong> (Command Line Interface)</li>
+<li>And <strong>TUI</strong>, a new Terminal UI application</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-ui">
+
+<h2>Cylc UI<a class="headerlink" href="../../../html/reference/architecture/index.html#cylc-ui" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>In-browser web UI, includes:</li>
+<li>A dashboard with summary information and documentation links</li>
+<li>Integrated gscan (multi-workflow) side-panel</li>
+<li>Responsive web design (from desktop to table to mobile)</li>
+<li>Tabbed interface to display multiple workflow views</li>
+<li>Command integration for interacting with task, jobs, and schedulers</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-ui-server">
+
+<h2>Cylc UI Server<a class="headerlink" href="../../../html/reference/architecture/index.html#cylc-ui-server" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>Interacts with Schedulers and the filesystem</li>
+<li>Serves the UI to users</li>
+<li>Can be launched by the privileged Hub, for multi-user installations</li>
+<li>Or run standalone for use by a single user</li>
+<li>(The UI Server is a <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extension)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="cylc-hub">
+
+<h2>Cylc Hub<a class="headerlink" href="../../../html/reference/architecture/index.html#cylc-hub" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>For proving the UI in multi-user setups.</li>
+<li>Authenticates users, spawns and proxies Cylc UI Servers</li>
+<li>Can run as a regular or privileged user</li>
+<li>(The Hub is a <a class="reference external" href="https://jupyter.org/hub">Jupyterhub</a> instance)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="network-layers">
+
+<h2>Network layers<a class="headerlink" href="../../../html/reference/architecture/index.html#network-layers" title="View HTML">§</a></h2>
+
+<ul class="simple">
+<li>Incremental push updates (c.f. polled full-state updates in Cylc 7)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="further-reading">
+
+<h2>Further Reading<a class="headerlink" href="../../../html/reference/architecture/index.html#further-reading" title="View HTML">§</a></h2>
+
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ui-server.html">Cylc UI Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ui-server.html#jupyter-server">Jupyter Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-server.html#single-user-mode">Single-User Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-server.html#jupyter-hub">Jupyter Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-server.html#multi-user-mode">Multi-User Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui-server.html#authorization">Authorization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-flow.html">Data Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-flow.html#protocols-transport-security">Protocols, Transport &amp; Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-flow.html#formats">Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-flow.html#component-interactions">Component Interactions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

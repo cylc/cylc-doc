@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Workflow Runtime Interface &mdash; Cylc 8.2.2.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.2.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.2.dev documentation" href="../../index.html" />
+    <link rel="up" title="Cylc API" href="index.html" />
+    <link rel="next" title="Conda Environments" href="../environments/conda.html" />
+    <link rel="prev" title="Scan API" href="scan.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="workflow-runtime-interface">
+
+<h1>Workflow Runtime Interface<a class="headerlink" href="../../../html/reference/api/zmq.html#workflow-runtime-interface" title="View HTML">§</a></h1>
+
+<p>Cylc workflows are TCP servers which use the ZeroMQ protocol to communicate with
+clients and jobs.</p>
+<p>Cylc provides a Python client to communicate with this server
+<a class="reference internal" href="#cylc.flow.network.client.WorkflowRuntimeClient" title="cylc.flow.network.client.WorkflowRuntimeClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.client.WorkflowRuntimeClient</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cylc.flow.network.client</span> <span class="kn">import</span> <span class="n">WorkflowRuntimeClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">WorkflowRuntimeClient</span><span class="p">(</span><span class="s1">&#39;my-workflow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ping_workflow&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Cylc also provides sub-command called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">client</span></code> which is a simple
+wrapper of the Python client.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>client<span class="w"> </span>generic<span class="w"> </span>ping_workflow<span class="w"> </span>-n
+<span class="go">true</span>
+</pre></div>
+</div>
+<p>The available “commands” or (“endpoints”) are contained in
+<a class="reference internal" href="#cylc.flow.network.server.WorkflowRuntimeServer" title="cylc.flow.network.server.WorkflowRuntimeServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.server.WorkflowRuntimeServer</span></code></a> class.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="client">
+
+<h2>Client<a class="headerlink" href="../../../html/reference/api/zmq.html#client" title="View HTML">§</a></h2>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.network.client.</span></code><code class="sig-name descname"><span class="pre">WorkflowRuntimeClient</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">workflow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">srv_public_key_loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initiate a client to the scheduler API.</p>
+<p>Initiates the REQ part of a ZMQ REQ-REP pair.</p>
+<p>This class contains the logic for the ZMQ message interface and client -
+server communication.</p>
+<p>Determine host and port from the contact file unless provided.</p>
+<p>If there is no socket bound to the specified host/port the client will
+bail after <code class="docutils literal notranslate"><span class="pre">timeout</span></code> seconds.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>workflow:</dt><dd>Name of the workflow to connect to.</dd>
+<dt>timeout:</dt><dd>Set the default timeout in seconds. The default is
+<code class="docutils literal notranslate"><span class="pre">ZMQClient.DEFAULT_TIMEOUT</span></code>.
+Note the default timeout can be overridden for individual requests.</dd>
+<dt>host:</dt><dd><p>The host where the flow is running if known.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</dd>
+<dt>port:</dt><dd><p>The port on which the REQ-REP TCP server is listening.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><dl class="docutils">
+<dt>host (str):</dt><dd>Workflow host name.</dd>
+<dt>port (int):</dt><dd>Workflow host port.</dd>
+<dt>timeout_handler (function):</dt><dd>Optional function which runs before ClientTimeout is raised.
+This provides an interface for raising more specific exceptions in
+the event of a communication timeout.</dd>
+<dt>header (dict):</dt><dd>Request “header” data to attach to each request.</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd>Call endpoints using <code class="docutils literal notranslate"><span class="pre">ZMQClient.__call__</span></code>.</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li>Accepts responses of the format: {“data”: {…}}</li>
+<li>Accepts error in the format: {“error”: {“message”: MSG}}</li>
+<li>Returns requests of the format: {“command”: CMD,
+“args”: {…}}</li>
+</ul>
+</dd>
+<dt>Raises:</dt><dd>WorkflowStopped: if the workflow is not running.</dd>
+<dt>Call server “endpoints” using:</dt><dd><dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">__call__</span></code>, <code class="docutils literal notranslate"><span class="pre">serial_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.serial_request">
+<code class="sig-name descname"><span class="pre">serial_request</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">req_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></span></dt>
+<dd><p>Send a request.</p>
+<p>For convenience use <code class="docutils literal notranslate"><span class="pre">__call__</span></code> to call this method.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>command: The name of the endpoint to call.
+args: Arguments to pass to the endpoint function.
+timeout: Override the default timeout (seconds).</dd>
+<dt>Raises:</dt><dd>ClientTimeout: If a response takes longer than timeout to arrive.
+ClientError: Coverall for all other issues including failed auth.</dd>
+<dt>Returns:</dt><dd><dl class="docutils">
+<dt>object: The data exactly as returned from the endpoint function,</dt><dd>nothing more, nothing less.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">async_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.async_request">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">async_request</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">req_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></span></dt>
+<dd><p>Send an asynchronous request using asyncio.</p>
+<p>Has the same arguments and return values as <code class="docutils literal notranslate"><span class="pre">serial_request</span></code>.</p>
+</dd></dl>
+
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+
+
+</article>
+<article class="slide level-2" id="server">
+
+<h2>Server<a class="headerlink" href="../../../html/reference/api/zmq.html#server" title="View HTML">§</a></h2>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.network.server.</span></code><code class="sig-name descname"><span class="pre">WorkflowRuntimeServer</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">schd</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Workflow runtime service API facade exposed via zmq.</p>
+<p>This class starts and coordinates the publisher and replier, and
+contains the Cylc endpoints invoked by the receiver to provide a response
+to incoming messages.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>schd (object): The parent object instantiating the server. In</dt><dd>this case, the workflow scheduler.</dd>
+</dl>
+</dd>
+<dt>Usage:</dt><dd><ul class="simple">
+<li>Define endpoints using the <code class="docutils literal notranslate"><span class="pre">expose</span></code> decorator.</li>
+<li>Endpoints are called via the receiver using the function name.</li>
+</ul>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li>Accepts messages of the format: {“command”: CMD, “args”: {…}}</li>
+<li>Returns responses of the format: {“data”: {…}}</li>
+<li>Returns error in the format: {“error”: {“message”: MSG}}</li>
+</ul>
+</dd>
+<dt>Common Arguments:</dt><dd><p>Arguments which are shared between multiple commands.</p>
+<dl class="docutils">
+<dt>task identifier (str):</dt><dd>A task identifier in the format <code class="docutils literal notranslate"><span class="pre">cycle-point/task-name</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">1/foo</span></code> or <code class="docutils literal notranslate"><span class="pre">20000101T0000Z/bar</span></code>.</dd>
+</dl>
+<dl class="docutils" id="task-globs">
+<dt>task globs (list):</dt><dd><p>A list of Cylc IDs relative to the workflow.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code> - The cycle point “1”.</li>
+<li><code class="docutils literal notranslate"><span class="pre">1/foo</span></code> - The task “foo” in the cycle “1”.</li>
+<li><code class="docutils literal notranslate"><span class="pre">1/foo/01</span></code> - The first job of the task “foo” from the cycle
+“1”.</li>
+</ul>
+<p>Glob-like patterns may be used to match multiple items e.g.</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">*</span></code></dt><dd>Matches everything.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">1/*</span></code></dt><dd>Matches everything in cycle <code class="docutils literal notranslate"><span class="pre">1</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*/*:failed</span></code></dt><dd>Matches all failed tasks.</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.api">
+<code class="sig-name descname"><span class="pre">api</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dd><p>Return information about this API.</p>
+<p>Returns a list of callable endpoints.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd><dl class="docutils">
+<dt>endpoint:</dt><dd>If specified the documentation for the endpoint
+will be returned instead.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd>List of endpoints or string documentation of the
+requested endpoint.</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.graphql">
+<code class="sig-name descname"><span class="pre">graphql</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">request_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return the GraphQL schema execution result.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>request_string: GraphQL request passed to Graphene.
+variables: Dict of variables passed to Graphene.
+meta: Dict containing auth user etc.</dd>
+<dt>Returns:</dt><dd>object: Execution result, or a list with errors.</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.operate">
+<code class="sig-name descname"><span class="pre">operate</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span></dt>
+<dd><p>Orchestrate the receive, send, publish of messages.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements">
+<code class="sig-name descname"><span class="pre">pb_data_elements</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></span></dt>
+<dd><p>Send the specified data elements in delta form.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>element_type: Key from DELTAS_MAP dictionary.</dd>
+</dl>
+<p>Returns serialised Protobuf message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow">
+<code class="sig-name descname"><span class="pre">pb_entire_workflow</span></code><span class="sig-paren">(</span><em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></span></dt>
+<dd><p>Send the entire data-store in a single Protobuf message.</p>
+<p>Returns serialised Protobuf message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.publish_queued_items">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">publish_queued_items</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span></dt>
+<dd><p>Publish all queued items.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.receiver">
+<code class="sig-name descname"><span class="pre">receiver</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Process incoming messages and coordinate response.</p>
+<p>Wrap incoming messages, dispatch them to exposed methods and/or
+coordinate a publishing stream.</p>
+<dl class="docutils">
+<dt>Args:</dt><dd>message (dict): message contents</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints">
+<code class="sig-name descname"><span class="pre">register_endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Register all exposed methods.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.start">
+<code class="sig-name descname"><span class="pre">start</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">barrier</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Start the TCP servers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.stop">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">stop</span></code><span class="sig-paren">(</span><em><span class="n"><span class="pre">reason</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#BaseException" title="(in Python v3.11)"><span class="pre">BaseException</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span></dt>
+<dd><p>Stop the TCP servers, and clean up authentication.</p>
+<p>This method must be called/awaited from a different thread to the
+server’s self.thread in order to interrupt the self.operate() loop
+and wait for self.thread to terminate.</p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

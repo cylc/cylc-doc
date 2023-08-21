@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Flow &mdash; Cylc 8.2.2.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.2.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.2.dev documentation" href="../../index.html" />
+    <link rel="up" title="Architecture" href="index.html" />
+    <link rel="next" title="Cylc API" href="../api/index.html" />
+    <link rel="prev" title="Cylc UI Server" href="ui-server.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="data-flow">
+
+<h1>Data Flow<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#data-flow" title="View HTML">§</a></h1>
+
+<p>This section looks at how Cylc synchronises data between its different
+components, the transports, security and formats used to do so.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-bbc033dc2abc4e5b314270dae1e5c178111a46e8.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph _ {
+Jobs -&gt; Scheduler [label=&quot; ZMQ\n GraphQL\n (default)&quot;]
+
+Scheduler -&gt; UIS [label=&quot; ZMQ\n GraphQL (control)\n Protobuf (data)&quot;]
+
+UIS -&gt; UI [label=&quot; Websocket\n GraphQL&quot;]
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="protocols-transport-security">
+
+<h2>Protocols, Transport &amp; Security<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#protocols-transport-security" title="View HTML">§</a></h2>
+
+<p>Cylc uses the following schemes for data and control:</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="zmq-over-tcp">
+
+<h3>ZMQ (Over TCP)<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#zmq-over-tcp" title="View HTML">§</a></h3>
+
+<p>Cylc uses <a class="reference external" href="https://zeromq.org/">ZMQ</a> over TCP for most server side interaction.</p>
+<p>All <a class="reference external" href="https://zeromq.org/">ZMQ</a> connections are secured by <a class="reference external" href="http://curvezmq.org/page:read-the-docs">CurveZMQ</a> which uses security keys
+which are stored on the filesystem with appropriate permissions.</p>
+<p>Where remote communication is involved Cylc synchronises the relevant keys
+to the appropriate platforms.</p>
+<p>For more information on the key files see <a class="reference internal" href="../../user-guide/running-workflows/authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="ssh">
+
+<h3>SSH<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#ssh" title="View HTML">§</a></h3>
+
+<p>SSH connections are used for some purposes such as installing the key files
+required for <a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a> transport.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="https-hypertext-transfer-protocol-secure">
+
+<h3>HTTPS (Hypertext Transfer Protocol Secure)<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#https-hypertext-transfer-protocol-secure" title="View HTML">§</a></h3>
+
+<p>HTTPS connections are used in the browser-based <a class="reference external" href="https://github.com/cylc/cylc-ui">Cylc UI</a>. The certificate
+used must be configured with the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> / <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="wss-websocket-secure">
+
+<h3>WSS (WebSocket Secure)<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#wss-websocket-secure" title="View HTML">§</a></h3>
+
+<p>Websocket connections are used in the browser-based <a class="reference external" href="https://github.com/cylc/cylc-ui">Cylc UI</a>. These
+connections are upgraded from HTTPS connections and share the same security.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="formats">
+
+<h2>Formats<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#formats" title="View HTML">§</a></h2>
+
+<p>Cylc uses the following transports to communicate over these protocols.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="protobuf">
+
+<h3>Protobuf<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#protobuf" title="View HTML">§</a></h3>
+
+<p>Protobuf is both a storage utility and transport.</p>
+<p>Protobuf is used for internal data stores and the synchronisation of those data
+stores.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="graphql">
+
+<h3>GraphQL<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#graphql" title="View HTML">§</a></h3>
+
+<p><a class="reference internal" href="#graphql">GraphQL</a> is a query language which is intended to be the user-facing
+data and control interface for Cylc workflows.</p>
+<p>It contains both data and mutations (actions) defined by a self-documenting
+schema.</p>
+<p>The GraphQL servers get their data from <a class="reference internal" href="#arch-protobuf"><span class="std std-ref">Protobuf</span></a> data stores.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="component-interactions">
+
+<h2>Component Interactions<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#component-interactions" title="View HTML">§</a></h2>
+
+<p>Here are some additional details on how the components interact.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="job-scheduler">
+
+<h3>Job -&gt; Scheduler<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#job-scheduler" title="View HTML">§</a></h3>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Default Protocol:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Format:</th><td class="field-body"><a class="reference internal" href="#arch-graphql"><span class="std std-ref">GraphQL</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>Jobs can communicate status updates back to the Scheduler using different
+methods. The method used is configured on a per-platform basis by the
+<a class="reference internal" href="../config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]communication</span> <span class="pre">method</span></code></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="client-scheduler">
+
+<h3>Client -&gt; Scheduler<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#client-scheduler" title="View HTML">§</a></h3>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Protocol:</th><td class="field-body"><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Format:</th><td class="field-body"><a class="reference internal" href="#arch-protobuf"><span class="std std-ref">Protobuf</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>The subcommands in the Cylc command line interface map onto <a class="reference internal" href="#graphql">GraphQL</a>
+mutations.</p>
+<p>Mutations are issued through <a class="reference external" href="https://zeromq.org/">ZMQ</a> connections.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="scheduler-ui-server">
+
+<h3>Scheduler -&gt; UI Server<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#scheduler-ui-server" title="View HTML">§</a></h3>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Protocol:</th><td class="field-body"><a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Formats:</th><td class="field-body"><a class="reference internal" href="#arch-protobuf"><span class="std std-ref">Protobuf</span></a> (data) and <a class="reference internal" href="#arch-graphql"><span class="std std-ref">GraphQL</span></a> (control)</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a> maintains an in-memory <a class="reference external" href="https://protobuf.dev/">Protobuf</a> data store which is
+backed up by a SQLite3 database.</p>
+<p>The database provides crash resilience and restart capability.</p>
+<p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> also maintains an in-memory <a class="reference external" href="https://protobuf.dev/">Protobuf</a> data store containing
+relevant data for the workflows it is actively monitoring.</p>
+<p>The synchronisation of the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a> and <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> data stores is
+done using one <a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a> connection per <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a>.</p>
+<p>The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Schedulers</span></a> that the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> connects to are
+determined by the active subscriptions registered. If there are no active
+subscriptions the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> will have no active <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a>
+connections.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="ui-server-ui">
+
+<h3>UI Server -&gt; UI<a class="headerlink" href="../../../html/reference/architecture/data-flow.html#ui-server-ui" title="View HTML">§</a></h3>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Protocols:</th><td class="field-body"><a class="reference internal" href="#arch-wss"><span class="std std-ref">WSS (WebSocket Secure)</span></a>, <a class="reference internal" href="#arch-https"><span class="std std-ref">HTTPS (Hypertext Transfer Protocol Secure)</span></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Format:</th><td class="field-body"><a class="reference internal" href="#arch-graphql"><span class="std std-ref">GraphQL</span></a></td>
+</tr>
+</tbody>
+</table>
+<p>Most UI functionality involves subscribing to “delta” updates. For these
+subscriptions the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> sends only the added/removed/updated data
+(a delta) to the UI enabling it to update its internal data store.</p>
+<p>The UI maintains a flat “lookup” which contains all objects in the store
+indexed by their ID. It also maintains a “tree” which contains references
+to the data in the “lookup” (but does not duplicate it) which it holds in a
+hierarchical structure more suitable for presentation purposes.</p>
+<p>The Cylc Web UI uses <a class="reference external" href="https://www.apollographql.com/docs/react/">Apollo Client</a> to handle <a class="reference internal" href="#graphql">GraphQL</a> requests.
+It will have one <a class="reference external" href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> per user session.</p>
+<div class="figure align-center">
+<img alt="../../_images/websocket-communication.png" src="../../_images/websocket-communication.png" />
+</div>
+<p>Every message received by the server is added to a queue, and processed
+by the server as soon as possible.</p>
+<p>It uses the Cylc UI Server schema and resolvers to validate the
+query and to fetch data from the data store for the query response.</p>
+<p>The query result is then serialized as JSON and sent back to the client.
+The work of the Apollo Client ends after it pushes the data to the Vuex
+store.</p>
+<p>The communication between client and server follows a protocol
+called <a class="reference external" href="https://github.com/apollographql/subscriptions-transport-ws/blob/master/PROTOCOL.md">graphql-ws protocol</a>.</p>
+<div class="figure align-center">
+<img alt="../../_images/websocket-graphql-ws-protocol.png" src="../../_images/websocket-graphql-ws-protocol.png" />
+</div>
+<p>After a channel between client and server is open, the messages
+follow that protocol, starting by the <code class="docutils literal notranslate"><span class="pre">connection</span> <span class="pre">init</span></code> message,
+that simply expects an <code class="docutils literal notranslate"><span class="pre">ack</span></code> message back from the server,
+where the <code class="docutils literal notranslate"><span class="pre">ack</span></code> is an acknowledgement to the client - note
+that the protocol does not define an <code class="docutils literal notranslate"><span class="pre">ack</span></code> as a MUST, but
+rather as a MAY, so a client may interpret not receiving an
+error as an acknowledgement to proceed as well.</p>
+<p>The next message will be a <code class="docutils literal notranslate"><span class="pre">start</span></code>, which will contain the
+GraphQL query subscription. If there were no errors, the client and
+server subscription is established, and the client will start
+receiving the GraphQL responses.</p>
+<p>The protocol also supports other messages, such as <code class="docutils literal notranslate"><span class="pre">stop</span></code>, to
+tell the server it doesn’t need to send any more data as that
+subscription is now cancelled.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

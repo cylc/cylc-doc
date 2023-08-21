@@ -42,5 +42,9 @@
     "latest": [
         "slides",
         "html"
+    ],
+    "nightly_8.2": [
+        "slides",
+        "html"
     ]
 }

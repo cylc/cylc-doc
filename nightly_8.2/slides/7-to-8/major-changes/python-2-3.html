@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python 2 =&gt; 3 &mdash; Cylc 8.2.2.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.2.2.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.2.2.dev documentation" href="../../index.html" />
+    <link rel="up" title="Detailed Description of Major Changes" href="index.html" />
+    <link rel="next" title="Remote Usernames" href="remote-owner.html" />
+    <link rel="prev" title="Play Pause Stop" href="play-pause-stop.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="python-2-3">
+
+<h1>Python 2 =&gt; 3<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#python-2-3" title="View HTML">§</a></h1>
+
+<div class="tip admonition">
+<p class="first admonition-title">Does This Change Affect Me?</p>
+<p>This change will affect you if your workflows extend Cylc or Jinja2 with
+custom Python scripts.</p>
+<p class="last">This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts; Cylc can still run Python 2
+tasks if desired.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overview">
+
+<h2>Overview<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#overview" title="View HTML">§</a></h2>
+
+<p>Cylc 7 ran under Python 2; Cylc 8 runs under Python 3.</p>
+<p>Cylc can be extended with custom Python scripts. These scripts are run under
+the same version of Python used by Cylc.</p>
+<p>As a result, if you are moving from Cylc 7 to Cylc 8, you must upgrade any
+scripts from Python 2 to Python 3 in the process.</p>
+<p>If you want to support both Cylc 7 and 8, you must support both Python 2 and 3.
+There are tools to help you do this, e.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="impacted-scripts">
+
+<h2>Impacted Scripts<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#impacted-scripts" title="View HTML">§</a></h2>
+
+<p>The following scripts must be upgraded if used:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a></dt><dd><p>These allow you to extend Jinja2 with Python code.</p>
+<p>These scripts are located in the following directories within a workflow:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Filters</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Tests</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Jinja2Globals</span></code></li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja2-importing-python-modules"><span class="std std-ref">Modules imported by Jinja2</span></a></dt><dd><p>Python modules can be imported from Jinja2 e.g:</p>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;os&quot;</span> <span class="k">import</span> <span class="nv">path</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</dd>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd>Any custom xtrigger functions.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="package-name-changes">
+
+<h2>Package Name Changes<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#package-name-changes" title="View HTML">§</a></h2>
+
+<p>Three Python packages have been renamed between Cylc 7 and Cylc 8:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">cylc.flow</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">metomi.isodatetime</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">rose</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">metomi.rose</span></code></li>
+</ul>
+<p>If you are importing from these packages you will need to update the package names.</p>
+<p>Here are some examples:</p>
+<p class="rubric">Convert Python code from Cylc 7 to Cylc 8:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- from cylc import LOG</span>
+<span class="gi">+ from cylc.flow import LOG</span>
+<span class="gd">- from isodatetime.data import Duration</span>
+<span class="gi">+ from metomi.isodatetime.data import Duration</span>
+</pre></div>
+</div>
+<p class="rubric">Python code which supports both Cylc 7 &amp; Cylc 8:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cylc.flow</span> <span class="kn">import</span> <span class="n">LOG</span>
+    <span class="kn">from</span> <span class="nn">metomi.isodatetime.data</span> <span class="kn">import</span> <span class="n">Duration</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cylc</span> <span class="kn">import</span> <span class="n">LOG</span>
+    <span class="kn">from</span> <span class="nn">isodatetime.data</span> <span class="kn">import</span> <span class="n">Duration</span>
+</pre></div>
+</div>
+<p class="rubric">Convert Jinja2 code from Cylc 7 to Cylc 8:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>#!Jinja2
+<span class="gd">- {% from &quot;cylc&quot; import LOG %}</span>
+<span class="gi">+ {% from &quot;cylc.flow&quot; import LOG %}</span>
+<span class="w"> </span> {% do LOG.debug(&quot;Hello World!&quot;) %}
+</pre></div>
+</div>
+<p class="rubric">Jinja2 code which supports both Cylc 7 &amp; Cylc 8:</p>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="x">#!Jinja2</span>
+<span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;sys&quot;</span> <span class="k">import</span> <span class="nv">version</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">version</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span> -<span class="cp">%}</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;cylc.flow&quot;</span> <span class="k">import</span> <span class="nv">LOG</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">else</span> -<span class="cp">%}</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;cylc&quot;</span> <span class="k">import</span> <span class="nv">LOG</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endif</span> -<span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">do</span> <span class="nv">LOG.debug</span><span class="o">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="o">)</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="jinja2-integers-with-leading-zeros">
+
+<h2>Jinja2 - integers with leading zeros<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#jinja2-integers-with-leading-zeros" title="View HTML">§</a></h2>
+
+<p>Integers with leading zeros in Jinja2 expressions are now illegal and will
+cause an error like  <code class="docutils literal notranslate"><span class="pre">Jinja2Error:</span> <span class="pre">expected</span> <span class="pre">token</span> <span class="pre">'x',</span> <span class="pre">got</span> <span class="pre">'integer'</span></code>.
+For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>my-workflow
+<span class="go">Jinja2Error: expected token &#39;end of statement block&#39;, got &#39;integer&#39;</span>
+<span class="go">File ~/cylc-run/my-workflow/flow.cylc</span>
+<span class="go">  {% if START_HOUR == 06 or START_HOUR == 12 %}       &lt;-- TemplateSyntaxError</span>
+</pre></div>
+</div>
+<p>The solution in this case is:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-{% if START_HOUR == 06 or START_HOUR == 12 %}</span>
+<span class="gi">+{% if START_HOUR == 6 or START_HOUR == 12 %}</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="rose">
+
+<h2>Rose<a class="headerlink" href="../../../html/7-to-8/major-changes/python-2-3.html#rose" title="View HTML">§</a></h2>
+
+<p>The same changes also impact Rose extensions:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://metomi.github.io/rose/2.0.0/html/api/rose-macro.html#api-rose-macro" title="(in Rose Documentation v2.0.0)"><span class="xref std std-ref">Rose Macros</span></a></li>
+<li><a class="reference external" href="https://metomi.github.io/rose/2.0.0/html/api/built-in/rose_ana.html#builtin-rose-ana" title="(in Rose Documentation v2.0.0)"><span class="xref std std-ref">Rose Ana Tasks</span></a></li>
+</ul>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
