@@ -46,5 +46,9 @@
     "nightly_8.2": [
         "slides",
         "html"
+    ],
+    "nightly_8.3": [
+        "slides",
+        "html"
     ]
 }

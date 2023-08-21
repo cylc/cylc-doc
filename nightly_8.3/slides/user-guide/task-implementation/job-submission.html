@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Job Submission and Management &mdash; Cylc 8.3.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.3.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.3.0.dev documentation" href="../../index.html" />
+    <link rel="up" title="Task Implementation" href="index.html" />
+    <link rel="next" title="at" href="job-runner-handlers/cylc.flow.job_runner_handlers.at.html" />
+    <link rel="prev" title="Task Implementation" href="job-scripts.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="job-submission-and-management">
+
+<h1>Job Submission and Management<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#job-submission-and-management" title="View HTML">§</a></h1>
+
+<p>This section explains how the Cylc scheduler submits <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a>
+when they are ready to run, and how to define new <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> handlers.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For the requirements a command, script, or program, must fulfil in order to
+function as a Cylc task, see <a class="reference internal" href="job-scripts.html#taskimplementation"><span class="std std-ref">Task Implementation</span></a>.</p>
+</div>
+<p>When a task is ready Cylc generates a <a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">job script</span></a> (see <a class="reference internal" href="job-scripts.html#jobscripts"><span class="std std-ref">Job Scripts</span></a>).
+The job script is submitted to be run by the job runner from the
+<a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> chosen for the task.
+Like other runtime properties, you can set a workflow default platform and
+override it for specific tasks or families:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[root]]</span> <span class="c1"># workflow defaults</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> platform_with_loadleveler</span>
+   <span class="nt">[[foo]]</span> <span class="c1"># just task foo</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> platform_with_at</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="supported-job-submission-methods">
+
+<h2>Supported Job Submission Methods<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#supported-job-submission-methods" title="View HTML">§</a></h2>
+
+<p>Cylc provided built-in support for the following batch submission systems:</p>
+<span class="target" id="module-cylc.flow.job_runner_handlers"></span><p>Cylc provides support for the following job runner handlers.</p>
+<table border="1" class="autosummary longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.at.html#module-cylc.flow.job_runner_handlers.at" title="cylc.flow.job_runner_handlers.at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.at</span></code></a></td>
+<td>Submits job scripts to the rudimentary Unix <code class="docutils literal notranslate"><span class="pre">at</span></code> scheduler.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.background.html#module-cylc.flow.job_runner_handlers.background" title="cylc.flow.job_runner_handlers.background"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.background</span></code></a></td>
+<td>Runs job scripts as Unix background processes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.loadleveler.html#module-cylc.flow.job_runner_handlers.loadleveler" title="cylc.flow.job_runner_handlers.loadleveler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.loadleveler</span></code></a></td>
+<td>Submits job scripts to loadleveler by the <code class="docutils literal notranslate"><span class="pre">llsubmit</span></code> command.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.lsf.html#module-cylc.flow.job_runner_handlers.lsf" title="cylc.flow.job_runner_handlers.lsf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.lsf</span></code></a></td>
+<td>Submits job scripts to IBM Platform LSF by the <code class="docutils literal notranslate"><span class="pre">bsub</span></code> command.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.moab.html#module-cylc.flow.job_runner_handlers.moab" title="cylc.flow.job_runner_handlers.moab"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.moab</span></code></a></td>
+<td>Submits job scripts to the Moab workload manager with <code class="docutils literal notranslate"><span class="pre">msub</span></code>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.pbs.html#module-cylc.flow.job_runner_handlers.pbs" title="cylc.flow.job_runner_handlers.pbs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.pbs</span></code></a></td>
+<td>Submits job scripts to PBS (or Torque) by the <code class="docutils literal notranslate"><span class="pre">qsub</span></code> command.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.sge.html#module-cylc.flow.job_runner_handlers.sge" title="cylc.flow.job_runner_handlers.sge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.sge</span></code></a></td>
+<td>Submits job scripts to Sun/Oracle Grid Engine with <code class="docutils literal notranslate"><span class="pre">qsub</span></code>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.slurm.html#module-cylc.flow.job_runner_handlers.slurm" title="cylc.flow.job_runner_handlers.slurm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.slurm</span></code></a></td>
+<td>Submits job scripts to Simple Linux Utility for Resource Management.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.slurm_packjob.html#module-cylc.flow.job_runner_handlers.slurm_packjob" title="cylc.flow.job_runner_handlers.slurm_packjob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.job_runner_handlers.slurm_packjob</span></code></a></td>
+<td>SLURM job submission and manipulation.</td>
+</tr>
+</tbody>
+</table>
+<p>See <a class="reference internal" href="../../plugins/job-runners/index.html#customjobsubmissionmethods"><span class="std std-ref">Custom Job Submission Methods</span></a> for how to add new job
+submission methods.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="default-directives-provided">
+
+<h3>Default Directives Provided<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#default-directives-provided" title="View HTML">§</a></h3>
+
+<p>For <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a> that use job file directives (PBS, Loadleveler,
+etc.) default directives are provided to set the job name, stdout and stderr
+file paths, and the execution time limit (if specified).</p>
+<p>Cylc constructs the job name string using a combination of the task ID and the
+workflow name. PBS fails a job submit if the job name in <code class="docutils literal notranslate"><span class="pre">-N</span> <span class="pre">name</span></code> is
+too long. For version 12 or below, this is 15 characters. For version 13, this
+is 236 characters. The default setting will truncate the job name string to 236
+characters. If you have PBS 12 or older at your site, you should modify your
+site’s global configuration file to allow the job name to be truncated at 15
+characters using
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]job name length maximum" title="global.cylc[platforms][&lt;platform name&gt;]job name length maximum"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]job</span> <span class="pre">name</span> <span class="pre">length</span> <span class="pre">maximum</span></code></a>.</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="directives-section-quirks-pbs-sge">
+
+<h3>Directives Section Quirks (PBS, SGE, …)<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#directives-section-quirks-pbs-sge" title="View HTML">§</a></h3>
+
+<p>To specify an option with no argument, such as <code class="docutils literal notranslate"><span class="pre">-V</span></code> in PBS or
+<code class="docutils literal notranslate"><span class="pre">-cwd</span></code> in SGE you must give a null string as the directive value in
+the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>The left hand side of a setting (i.e. the string before the first equal sign)
+must be unique. To specify multiple values using an option such as
+<code class="docutils literal notranslate"><span class="pre">-l</span></code> option in PBS, SGE, etc., either specify all items in a single
+line:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-l=select=28:ncpus=36:mpiprocs=18:ompthreads=2:walltime=12:00:00
+</pre></div>
+</div>
+<p>(Left hand side is <code class="docutils literal notranslate"><span class="pre">-l</span></code>. A second <code class="docutils literal notranslate"><span class="pre">-l=...</span></code> line will override the first.)</p>
+<p>Or separate the items:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-l select=28
+-l ncpus=36
+-l mpiprocs=18
+-l ompthreads=2
+-l walltime=12:00:00
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is no equal sign after <code class="docutils literal notranslate"><span class="pre">-l</span></code>.</p>
+</div>
+<p>(Left hand sides are now <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">select</span></code>, <code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">ncpus</span></code>, etc.)</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="task-stdout-and-stderr-logs">
+
+<h2>Task stdout and stderr Logs<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#task-stdout-and-stderr-logs" title="View HTML">§</a></h2>
+
+<p>When a task is ready to run Cylc generates a filename root to be used
+for the job script and log files. The file path contains the task
+name, cycle point, and a submit number that increments if the same task is
+re-triggered multiple times:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># job script:</span>
+~/cylc-run/my-workflow/basic/log/job/1/hello/01/job
+<span class="c"># stdout:</span>
+~/cylc-run/my-workflow/basic/log/job/1/hello/01/job.out
+<span class="c"># stderr:</span>
+~/cylc-run/my-workflow/basic/log/job/1/hello/01/job.err
+</pre></div>
+</div>
+<p>How the stdout and stderr streams are directed into these files depends on the
+<a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>. The
+<a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.background.html#module-cylc.flow.job_runner_handlers.background" title="cylc.flow.job_runner_handlers.background"><code class="xref py py-mod docutils literal notranslate"><span class="pre">background</span></code></a> method just
+uses appropriate output redirection on the command line, as shown above. The
+<a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.loadleveler.html#module-cylc.flow.job_runner_handlers.loadleveler" title="cylc.flow.job_runner_handlers.loadleveler"><code class="xref py py-mod docutils literal notranslate"><span class="pre">loadleveler</span></code></a> method writes
+appropriate directives to the job script that is submitted to loadleveler.</p>
+<p>Cylc obviously has no control over the stdout and stderr output from
+tasks that do their own internal output management (e.g. tasks
+that submit internal jobs and direct the associated output to other
+files). For less internally complex tasks, however, the files referred
+to here will be complete job logs.</p>
+<p>Some job runners, such as <a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.pbs.html#module-cylc.flow.job_runner_handlers.pbs" title="cylc.flow.job_runner_handlers.pbs"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PBS</span></code></a>,
+redirect a job’s stdout
+and stderr streams to a separate cache area while the job is running. The
+contents are only copied to the normal locations when the job completes. This
+means that <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code> will be unable to find the
+job’s stdout and stderr streams while the job is running. Some sites with these
+job runners are known to provide commands for viewing and/or
+tail-follow a job’s stdout and stderr streams that are redirected to these
+cache areas. If this is the case at your site, you can configure Cylc to make
+use of the provided commands by adding some settings to the global site/user
+config. E.g.:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[hosts]</span>
+    <span class="nt">[[HOST]]</span>  <span class="c1"># &lt;= replace this with a real host name</span>
+        <span class="nt">[[[batch systems]]]</span>
+            <span class="nt">[[[[pbs]]]]</span>
+                <span class="nv">err tailer </span><span class="o">=</span><span class="s"> qcat -f -e \%(job_id)s</span>
+                <span class="nv">out tailer </span><span class="o">=</span><span class="s"> qcat -f -o \%(job_id)s</span>
+                <span class="nv">err viewer </span><span class="o">=</span><span class="s"> qcat -e \%(job_id)s</span>
+                <span class="nv">out viewer </span><span class="o">=</span><span class="s"> qcat -o \%(job_id)s</span>
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="overriding-the-job-submission-command">
+
+<h2>Overriding The Job Submission Command<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#overriding-the-job-submission-command" title="View HTML">§</a></h2>
+
+<p>To change the form of the actual command used to submit a job you
+need to define a new
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]job runner command template" title="global.cylc[platforms][&lt;platform name&gt;]job runner command template"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]job</span> <span class="pre">runner</span> <span class="pre">command</span> <span class="pre">template</span></code></a>.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platform]</span>
+    <span class="nt">[[my_custom_platform]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> host1, host2</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> loadleveler</span>
+        <span class="c1"># Use &#39;-s&#39; to stop llsubmit returning</span>
+        <span class="c1"># until all job steps have completed:</span>
+        <span class="nv">job runner command template </span><span class="o">=</span><span class="s"> llsubmit -s %(job)s</span>
+</pre></div>
+</div>
+<p>The template’s <code class="docutils literal notranslate"><span class="pre">%(job)s</span></code> will be substituted by the job file path.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="job-polling">
+
+<h2>Job Polling<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#job-polling" title="View HTML">§</a></h2>
+
+<p>For supported <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a>, jobs can be <em>polled</em> to
+check that their true state matches what the scheduler expects based on received
+job status messages or previous polls. The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> executes a process
+on the task host, by non-interactive ssh, to interrogate the job runner, and to
+read the <code class="docutils literal notranslate"><span class="pre">job.status</span></code> file of the task which is automatically generated by the
+<a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">job script</span></a> as it runs.</p>
+<p>Polling may be required to update the workflow state correctly after unusual
+events such as</p>
+<ul class="simple">
+<li>a job gets killed by the untrappable SIGKILL signal (e.g. <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-9</span> <span class="pre">PID</span></code>)</li>
+<li>a machine being rebooted with tasks running on it</li>
+<li>network problems prevent task messages from getting back to the workflow host</li>
+<li>the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> itself was down when active jobs finished</li>
+</ul>
+<p>Tasks can be polled on demand by using the
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">poll</span></code> command.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">poll</span> <span class="pre">--help</span></code></li>
+</ul>
+</div>
+<p>Tasks are polled automatically, once, if they timeout while queueing in a
+job runner and submission timeout is set.
+(See <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][events]</span></code></a>
+for how to configure timeouts).</p>
+<p>Tasks are polled multiple times, where necessary, when they exceed their
+execution time limits. These are normally set with some initial delays to allow
+the job runners to kill the jobs.
+(See
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]execution time limit polling intervals" title="global.cylc[platforms][&lt;platform name&gt;]execution time limit polling intervals"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span> <span class="pre">polling</span> <span class="pre">intervals</span></code></a>
+for how to configure the polling intervals).</p>
+<p>Any tasks recorded in the <em>submitted</em> or <em>running</em> states at workflow
+restart are automatically polled to determine what happened to them while the
+workflow was down.</p>
+<p>By default, regular polling also takes place every 15 minutes whilst a job is
+submitted or running. The default polling intervals can be overridden in the
+global configuration:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]submission polling intervals" title="global.cylc[platforms][&lt;platform name&gt;]submission polling intervals"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]submission</span> <span class="pre">polling</span> <span class="pre">intervals</span></code></a></li>
+<li><a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]execution polling intervals" title="global.cylc[platforms][&lt;platform name&gt;]execution polling intervals"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]execution</span> <span class="pre">polling</span> <span class="pre">intervals</span></code></a></li>
+</ul>
+<p>The polling intervals can also be configured for individual tasks:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]submission polling intervals" title="flow.cylc[runtime][&lt;namespace&gt;]submission polling intervals"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]submission</span> <span class="pre">polling</span> <span class="pre">intervals</span></code></a></li>
+<li><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution polling intervals" title="flow.cylc[runtime][&lt;namespace&gt;]execution polling intervals"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">polling</span> <span class="pre">intervals</span></code></a></li>
+</ul>
+<p>Polling can be used as the sole method of determining task status on hosts that
+do not allow task messages to be routed back to the workflow host.
+See <a class="reference internal" href="../running-workflows/tracking-task-state.html#polling-to-track-job-status"><span class="std std-ref">Polling to Track Job Status</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For polling to work correctly, the job runner queueing system must have a
+job listing command for listing your jobs, and that the job listing must
+display job IDs as they are returned by the job runner queueing system submit
+command. For example, for pbs, moab and sge, the <code class="docutils literal notranslate"><span class="pre">qstat</span></code> command
+should list jobs with their IDs displayed in exactly the same format as they
+are returned by the <code class="docutils literal notranslate"><span class="pre">qsub</span></code> command.</p>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="job-killing">
+
+<h2>Job Killing<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#job-killing" title="View HTML">§</a></h2>
+
+<p>For supported <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a>, the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> can execute a process on
+the task host, by non-interactive ssh, to kill a submitted or running job
+according to its job runner.</p>
+<p>Tasks can be killed on demand by using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">kill</span></code> command.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="execution-time-limit">
+
+<h2>Execution Time Limit<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#execution-time-limit" title="View HTML">§</a></h2>
+
+<p>You can specify an <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> for all supported job
+submission methods. E.g.:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[task-x]]</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT1H</span>
+</pre></div>
+</div>
+<p>For tasks running with
+<a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.background.html#module-cylc.flow.job_runner_handlers.background" title="cylc.flow.job_runner_handlers.background"><code class="xref py py-mod docutils literal notranslate"><span class="pre">background</span></code></a> or
+<a class="reference internal" href="job-runner-handlers/cylc.flow.job_runner_handlers.at.html#module-cylc.flow.job_runner_handlers.at" title="cylc.flow.job_runner_handlers.at"><code class="xref py py-mod docutils literal notranslate"><span class="pre">at</span></code></a>, their jobs
+will be wrapped using the <code class="docutils literal notranslate"><span class="pre">timeout</span></code> command. For all other methods,
+the relevant time limit directive will be added to their job files.</p>
+<p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> setting will also inform the workflow when a
+a job should complete by. If a job has not reported completing within
+the specified time, the workflow will poll the job. (The default
+setting is <code class="docutils literal notranslate"><span class="pre">PT1M,</span> <span class="pre">PT2M,</span> <span class="pre">PT7M</span></code>. The accumulated times for these intervals will be
+roughly 1 minute, 1 + 2 = 3 minutes and 1 + 2 + 7 = 10 minutes after a job
+exceeds its <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a>.)</p>
+
+
+
+
+</article>
+<article class="slide level-3" id="execution-time-limit-and-execution-timeout">
+
+<h3>Execution Time Limit and Execution Timeout<a class="headerlink" href="../../../html/user-guide/task-implementation/job-submission.html#execution-time-limit-and-execution-timeout" title="View HTML">§</a></h3>
+
+<p>If you specify an <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> the
+execution timeout event handler will only be called if the job has
+not completed after the final poll (by default, 10 min after the time limit).
+This should only happen if the submission method you are using is not enforcing
+wallclock limits (unlikely) or you are unable to contact the machine to confirm
+the job status.</p>
+<p>If you specify an <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]execution timeout" title="flow.cylc[runtime][&lt;namespace&gt;][events]execution timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[events]execution</span> <span class="pre">timeout</span></code></a> and not an
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> then the
+execution timeout event handler will be called as soon as the
+specified time is reached. The job will also be polled to check its latest
+status (possibly resulting in an update in its status and the calling of the
+relevant event handler). This behaviour is deprecated, which users should avoid
+using.</p>
+<p>If you specify an <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]execution timeout" title="flow.cylc[runtime][&lt;namespace&gt;][events]execution timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[events]execution</span> <span class="pre">timeout</span></code></a> and an
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> then the execution timeout setting will be
+ignored.</p>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

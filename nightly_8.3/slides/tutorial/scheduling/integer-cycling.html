@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basic Cycling &mdash; Cylc 8.3.0.dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <link rel="stylesheet" href="../../_static/css/slides-custom.css" type="text/css" />
+    
+    
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/single.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/diff_selector.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/grid_table.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/tutorial.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/addons.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '8.3.0.dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
+    <script type="text/javascript" src="../../_static/js/diff_selector.js"></script>
+    <script type="text/javascript" src="../../_static/js/minicylc.js"></script>
+    <script type="text/javascript" src="../../_static/js/spoiler.js"></script>
+    <script type="text/javascript" src="../../_static/js/addons.js"></script>
+    <script type="text/javascript" src="../../_static/common.js"></script>
+    
+    <script type="text/javascript" src="../../_static/slides.js"></script>
+    <script type="text/javascript" src="../../_static/sync.js"></script>
+    <script type="text/javascript" src="../../_static/controller.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Cylc 8.3.0.dev documentation" href="../../index.html" />
+    <link rel="up" title="Scheduling" href="index.html" />
+    <link rel="next" title="Datetime Cycling" href="datetime-cycling.html" />
+    <link rel="prev" title="The flow.cylc File Format" href="graphing.html" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="basic-cycling">
+
+<h1>Basic Cycling<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#basic-cycling" title="View HTML">§</a></h1>
+
+<div class="aims admonition">
+<p class="first admonition-title">Aims</p>
+<div class="last line-block">
+<div class="line">You will be able to:</div>
+<div class="line">✅ Write simple <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling</span></a> (repeating) workflows.</div>
+</div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="repeating-workflows">
+
+<h2>Repeating Workflows<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#repeating-workflows" title="View HTML">§</a></h2>
+
+<p>To make a workflow repeat we must tell Cylc three things:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../../glossary.html#term-recurrence"><span class="xref std std-term">recurrence</span></a></li>
+<li><a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a></li>
+<li><a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a> (Optional)</li>
+</ul>
+
+
+
+
+</article>
+<article class="slide level-2" id="id1">
+
+<h2>Repeating Workflows<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id1" title="View HTML">§</a></h2>
+
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]
+<span class="gi">+    cycling mode = integer</span>
+<span class="gi">+    initial cycle point = 1</span>
+<span class="w"> </span>    [[graph]]
+<span class="gd">-        R1 = &quot;&quot;&quot;</span>
+<span class="gi">+        P1 = &quot;&quot;&quot;</span>
+<span class="w"> </span>            buy_ingredients =&gt; make_dough
+<span class="w"> </span>            pre_heat_oven &amp; make_dough =&gt; bake_bread
+<span class="w"> </span>            bake_bread =&gt; sell_bread &amp; clean_oven
+<span class="w"> </span>        &quot;&quot;&quot;
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id2">
+
+<h2>Repeating Workflows<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id2" title="View HTML">§</a></h2>
+
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-01cdfbbf3d7a8a7da6b86824adc2682acb58bc7c.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;7,15&quot;
+
+subgraph cluster_1 {
+    label = 1
+    style = dashed
+    &quot;1/pur&quot; [label=&quot;buy_ingredients\n1&quot;]
+    &quot;1/mak&quot; [label=&quot;make_dough\n1&quot;]
+    &quot;1/bak&quot; [label=&quot;bake_bread\n1&quot;]
+    &quot;1/sel&quot; [label=&quot;sell_bread\n1&quot;]
+    &quot;1/cle&quot; [label=&quot;clean_oven\n1&quot;]
+    &quot;1/pre&quot; [label=&quot;pre_heat_oven\n1&quot;]
+}
+
+subgraph cluster_2 {
+    label = 2
+    style = dashed
+    &quot;2/pur&quot; [label=&quot;buy_ingredients\n2&quot;]
+    &quot;2/mak&quot; [label=&quot;make_dough\n2&quot;]
+    &quot;2/bak&quot; [label=&quot;bake_bread\n2&quot;]
+    &quot;2/sel&quot; [label=&quot;sell_bread\n2&quot;]
+    &quot;2/cle&quot; [label=&quot;clean_oven\n2&quot;]
+    &quot;2/pre&quot; [label=&quot;pre_heat_oven\n2&quot;]
+}
+
+subgraph cluster_3 {
+    label = 3
+    style = dashed
+    &quot;3/pur&quot; [label=&quot;buy_ingredients\n3&quot;]
+    &quot;3/mak&quot; [label=&quot;make_dough\n3&quot;]
+    &quot;3/bak&quot; [label=&quot;bake_bread\n3&quot;]
+    &quot;3/sel&quot; [label=&quot;sell_bread\n3&quot;]
+    &quot;3/cle&quot; [label=&quot;clean_oven\n3&quot;]
+    &quot;3/pre&quot; [label=&quot;pre_heat_oven\n3&quot;]
+}
+
+&quot;1/pur&quot; -&gt; &quot;1/mak&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/sel&quot;
+&quot;1/pre&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/cle&quot;
+&quot;2/pur&quot; -&gt; &quot;2/mak&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/sel&quot;
+&quot;2/pre&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/cle&quot;
+&quot;3/pur&quot; -&gt; &quot;3/mak&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/sel&quot;
+&quot;3/pre&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/cle&quot;
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="intercycle-dependencies">
+
+<h2>Intercycle Dependencies<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#intercycle-dependencies" title="View HTML">§</a></h2>
+
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]
+<span class="w"> </span>    cycling mode = integer
+<span class="w"> </span>    initial cycle point = 1
+<span class="w"> </span>    [[graph]]
+<span class="w"> </span>        P1 = &quot;&quot;&quot;
+<span class="w"> </span>            buy_ingredients =&gt; make_dough
+<span class="w"> </span>            pre_heat_oven &amp; make_dough =&gt; bake_bread
+<span class="w"> </span>            bake_bread =&gt; sell_bread &amp; clean_oven
+<span class="gi">+            clean_oven[-P1] =&gt; pre_heat_oven</span>
+<span class="w"> </span>        &quot;&quot;&quot;
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id3">
+
+<h2>Intercycle Dependencies<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id3" title="View HTML">§</a></h2>
+
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-67061a0cb1a093d3d29cd2a417dc12c16a2e0b16.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;7,15&quot;
+
+subgraph cluster_1 {
+    label = 1
+    style = dashed
+    &quot;1/pur&quot; [label=&quot;buy_ingredients\n1&quot;]
+    &quot;1/mak&quot; [label=&quot;make_dough\n1&quot;]
+    &quot;1/bak&quot; [label=&quot;bake_bread\n1&quot;]
+    &quot;1/sel&quot; [label=&quot;sell_bread\n1&quot;]
+    &quot;1/cle&quot; [label=&quot;clean_oven\n1&quot;]
+    &quot;1/pre&quot; [label=&quot;pre_heat_oven\n1&quot;]
+}
+
+subgraph cluster_2 {
+    label = 2
+    style = dashed
+    &quot;2/pur&quot; [label=&quot;buy_ingredients\n2&quot;]
+    &quot;2/mak&quot; [label=&quot;make_dough\n2&quot;]
+    &quot;2/bak&quot; [label=&quot;bake_bread\n2&quot;]
+    &quot;2/sel&quot; [label=&quot;sell_bread\n2&quot;]
+    &quot;2/cle&quot; [label=&quot;clean_oven\n2&quot;]
+    &quot;2/pre&quot; [label=&quot;pre_heat_oven\n2&quot;]
+}
+
+subgraph cluster_3 {
+    label = 3
+    style = dashed
+    &quot;3/pur&quot; [label=&quot;buy_ingredients\n3&quot;]
+    &quot;3/mak&quot; [label=&quot;make_dough\n3&quot;]
+    &quot;3/bak&quot; [label=&quot;bake_bread\n3&quot;]
+    &quot;3/sel&quot; [label=&quot;sell_bread\n3&quot;]
+    &quot;3/cle&quot; [label=&quot;clean_oven\n3&quot;]
+    &quot;3/pre&quot; [label=&quot;pre_heat_oven\n3&quot;]
+}
+
+&quot;1/pur&quot; -&gt; &quot;1/mak&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/sel&quot;
+&quot;1/pre&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/cle&quot;
+&quot;1/cle&quot; -&gt; &quot;2/pre&quot;
+&quot;2/pur&quot; -&gt; &quot;2/mak&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/sel&quot;
+&quot;2/pre&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/cle&quot;
+&quot;2/cle&quot; -&gt; &quot;3/pre&quot;
+&quot;3/pur&quot; -&gt; &quot;3/mak&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/sel&quot;
+&quot;3/pre&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/cle&quot;
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id4">
+
+<h2>Intercycle Dependencies<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id4" title="View HTML">§</a></h2>
+
+<p>We need <code class="docutils literal notranslate"><span class="pre">buy_ingredients</span></code> to be dependent on <code class="docutils literal notranslate"><span class="pre">sell_bread</span></code> from
+two cycles before.</p>
+
+
+
+
+</article>
+<article class="slide level-2" id="id5">
+
+<h2>Intercycle Dependencies<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id5" title="View HTML">§</a></h2>
+
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]
+<span class="w"> </span>    cycling mode = integer
+<span class="w"> </span>    initial cycle point = 1
+<span class="w"> </span>    [[graph]]
+<span class="w"> </span>        P1 = &quot;&quot;&quot;
+<span class="w"> </span>            buy_ingredients =&gt; make_dough
+<span class="w"> </span>            pre_heat_oven &amp; make_dough =&gt; bake_bread
+<span class="w"> </span>            bake_bread =&gt; sell_bread &amp; clean_oven
+<span class="w"> </span>            clean_oven[-P1] =&gt; pre_heat_oven
+<span class="gi">+            sell_bread[-P2] =&gt; buy_ingredients</span>
+<span class="w"> </span>        &quot;&quot;&quot;
+</pre></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="id6">
+
+<h2>Intercycle Dependencies<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id6" title="View HTML">§</a></h2>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">[-P2]</span></code> suffix references a task two cycles back. For the first two
+cycles this doesn’t make sense, so those dependencies (and indeed any before
+the initial cycle point) will be ignored.</p>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e0054d6b31d1071b99e7fe278d0ac5efbadd46a8.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+size = &quot;4.5,15&quot;
+
+subgraph cluster_1 {
+    label = 1
+    style = dashed
+    &quot;1/pur&quot; [label=&quot;buy_ingredients\n1&quot;]
+    &quot;1/mak&quot; [label=&quot;make_dough\n1&quot;]
+    &quot;1/bak&quot; [label=&quot;bake_bread\n1&quot;]
+    &quot;1/sel&quot; [label=&quot;sell_bread\n1&quot;]
+    &quot;1/cle&quot; [label=&quot;clean_oven\n1&quot;]
+    &quot;1/pre&quot; [label=&quot;pre_heat_oven\n1&quot;]
+}
+
+subgraph cluster_2 {
+    label = 2
+    style = dashed
+    &quot;2/pur&quot; [label=&quot;buy_ingredients\n2&quot;]
+    &quot;2/mak&quot; [label=&quot;make_dough\n2&quot;]
+    &quot;2/bak&quot; [label=&quot;bake_bread\n2&quot;]
+    &quot;2/sel&quot; [label=&quot;sell_bread\n2&quot;]
+    &quot;2/cle&quot; [label=&quot;clean_oven\n2&quot;]
+    &quot;2/pre&quot; [label=&quot;pre_heat_oven\n2&quot;]
+}
+
+subgraph cluster_3 {
+    label = 3
+    style = dashed
+    &quot;3/pur&quot; [label=&quot;buy_ingredients\n3&quot;]
+    &quot;3/mak&quot; [label=&quot;make_dough\n3&quot;]
+    &quot;3/bak&quot; [label=&quot;bake_bread\n3&quot;]
+    &quot;3/sel&quot; [label=&quot;sell_bread\n3&quot;]
+    &quot;3/cle&quot; [label=&quot;clean_oven\n3&quot;]
+    &quot;3/pre&quot; [label=&quot;pre_heat_oven\n3&quot;]
+}
+
+subgraph cluster_4 {
+    label = 4
+    style = dashed
+    &quot;4/pur&quot; [label=&quot;buy_ingredients\n4&quot;]
+    &quot;4/mak&quot; [label=&quot;make_dough\n4&quot;]
+    &quot;4/bak&quot; [label=&quot;bake_bread\n4&quot;]
+    &quot;4/sel&quot; [label=&quot;sell_bread\n4&quot;]
+    &quot;4/cle&quot; [label=&quot;clean_oven\n4&quot;]
+    &quot;4/pre&quot; [label=&quot;pre_heat_oven\n4&quot;]
+}
+
+&quot;1/pur&quot; -&gt; &quot;1/mak&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/sel&quot;
+&quot;1/pre&quot; -&gt; &quot;1/bak&quot; -&gt; &quot;1/cle&quot;
+&quot;1/cle&quot; -&gt; &quot;2/pre&quot;
+&quot;1/sel&quot; -&gt; &quot;3/pur&quot;
+&quot;2/pur&quot; -&gt; &quot;2/mak&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/sel&quot;
+&quot;2/pre&quot; -&gt; &quot;2/bak&quot; -&gt; &quot;2/cle&quot;
+&quot;2/cle&quot; -&gt; &quot;3/pre&quot;
+&quot;2/sel&quot; -&gt; &quot;4/pur&quot;
+&quot;3/pur&quot; -&gt; &quot;3/mak&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/sel&quot;
+&quot;3/pre&quot; -&gt; &quot;3/bak&quot; -&gt; &quot;3/cle&quot;
+&quot;3/cle&quot; -&gt; &quot;4/pre&quot;
+&quot;4/pur&quot; -&gt; &quot;4/mak&quot; -&gt; &quot;4/bak&quot; -&gt; &quot;4/sel&quot;
+&quot;4/pre&quot; -&gt; &quot;4/bak&quot; -&gt; &quot;4/cle&quot;
+}</p></object></div>
+</div>
+
+
+
+
+</article>
+<article class="slide level-2" id="recurrence-sections">
+
+<h2>Recurrence Sections<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#recurrence-sections" title="View HTML">§</a></h2>
+
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+   <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+   <span class="nt">[[graph]]</span>
+      <span class="c1"># Repeat every cycle.</span>
+      <span class="nv">P1 </span><span class="o">=</span> <span class="kd">foo</span>
+      <span class="c1"># Repeat every second cycle.</span>
+      <span class="nv">P2 </span><span class="o">=</span> <span class="kd">bar</span>
+      <span class="c1"># Repeat every third cycle.</span>
+      <span class="nv">P3 </span><span class="o">=</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<img alt="../../_images/recurrence-sections.svg" class="align-center" src="../../_images/recurrence-sections.svg" />
+
+
+
+</article>
+<article class="slide level-2" id="id7">
+
+<h2>Recurrence Sections<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id7" title="View HTML">§</a></h2>
+
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">2/P2</span></code></dt><dd>Repeat every even cycle (Even if your initial cycle point was odd)</dd>
+</dl>
+<img alt="../../_images/recurrence-sections2.svg" class="align-center" src="../../_images/recurrence-sections2.svg" /><dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">+P5/P3</span></code></dt><dd>Repeat every third cycle starting 5 cycles <em>after</em> the initial cycle
+point.</dd>
+</dl>
+
+
+
+
+</article>
+<article class="slide level-2" id="id8">
+
+<h2>Recurrence Sections<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#id8" title="View HTML">§</a></h2>
+
+<p class="rubric">In this practical we will turn the <a class="reference internal" href="../../glossary.html#term-workflow"><span class="xref std std-term">workflow</span></a>
+of the previous section into a <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling workflow</span></a>.</p>
+<p>Next section: <a class="reference internal" href="datetime-cycling.html#tutorial-datetime-cycling"><span class="std std-ref">Datetime Cycling</span></a></p>
+<div class="note admonition" id="basic-cycling-practical">
+<p class="first admonition-title">Practical<a class="headerlink" href="../../../html/tutorial/scheduling/integer-cycling.html#basic-cycling-practical" title="View HTML">§</a></p>
+<p class="rubric">In this practical we will turn the <a class="reference internal" href="../../glossary.html#term-workflow"><span class="xref std std-term">workflow</span></a>
+of the previous section into a <a class="reference internal" href="../../glossary.html#term-cycling"><span class="xref std std-term">cycling workflow</span></a>.</p>
+<p>If you have not completed the previous practical use the following code for
+your <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">a</span> <span class="o">&amp;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">&amp;</span> <span class="kd">f</span>
+            <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">e</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<ol class="last arabic">
+<li><p class="first"><strong>Create a new workflow.</strong></p>
+<p>Create a new source directory <code class="docutils literal notranslate"><span class="pre">integer-cycling</span></code> under <code class="docutils literal notranslate"><span class="pre">~/cylc-src/</span></code>,
+and move into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/cylc-src/integer-cycling
+<span class="nb">cd</span><span class="w"> </span>~/cylc-src/integer-cycling
+</pre></div>
+</div>
+<p>Copy the above code into a <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file in that directory.</p>
+</li>
+<li><p class="first"><strong>Make the workflow cycle.</strong></p>
+<p>Add the following lines to your <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]
+<span class="gi">+    cycling mode = integer</span>
+<span class="gi">+    initial cycle point = 1</span>
+<span class="w"> </span>    [[graph]]
+<span class="gd">-        R1 = &quot;&quot;&quot;</span>
+<span class="gi">+        P1 = &quot;&quot;&quot;</span>
+<span class="w"> </span>            a &amp; c =&gt; b =&gt; d &amp; f
+<span class="w"> </span>            d =&gt; e
+<span class="w"> </span>        &quot;&quot;&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Visualise the workflow.</strong></p>
+<p>Try visualising your workflow using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cylc graph .
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">-c</span></code> (<code class="docutils literal notranslate"><span class="pre">--cycles</span></code>) option
+to draw a box around each cycle:</p>
+<div class="last highlight-none notranslate"><div class="highlight"><pre><span></span>cylc graph -c .
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> displays the first three cycles of the graph,
+but you can specify the range of cycles on the command line.
+Here’s how to display cycles <code class="docutils literal notranslate"><span class="pre">1</span></code> through <code class="docutils literal notranslate"><span class="pre">5</span></code>:</p>
+<div class="last highlight-none notranslate"><div class="highlight"><pre><span></span>cylc graph . 1 5
+</pre></div>
+</div>
+</div>
+</li>
+<li><p class="first"><strong>Add another recurrence.</strong></p>
+<p>Suppose we wanted the <code class="docutils literal notranslate"><span class="pre">e</span></code> task to run every <em>other</em> cycle
+as opposed to every cycle. We can do this by adding another
+recurrence.</p>
+<p>Make the following changes to your <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduling]
+<span class="w"> </span>    cycling mode = integer
+<span class="w"> </span>    initial cycle point = 1
+<span class="w"> </span>    [[graph]]
+<span class="w"> </span>        P1 = &quot;&quot;&quot;
+<span class="w"> </span>            a &amp; c =&gt; b =&gt; d &amp; f
+<span class="gd">-            d =&gt; e</span>
+<span class="w"> </span>        &quot;&quot;&quot;
+<span class="gi">+        P2 = &quot;&quot;&quot;</span>
+<span class="gi">+            d =&gt; e</span>
+<span class="gi">+        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> to see the effect this has on the workflow.</p>
+</li>
+<li><p class="first"><strong>intercycle dependencies.</strong></p>
+<p>Now we will add
+three intercycle dependencies:</p>
+<ol class="arabic simple">
+<li>Between <code class="docutils literal notranslate"><span class="pre">f</span></code> from the previous cycle and <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+<li>Between <code class="docutils literal notranslate"><span class="pre">d</span></code> from the previous cycle and <code class="docutils literal notranslate"><span class="pre">a</span></code>
+<em>every odd cycle</em> (e.g. 2/d =&gt; 3/a).</li>
+<li>Between <code class="docutils literal notranslate"><span class="pre">e</span></code> from the previous cycle and <code class="docutils literal notranslate"><span class="pre">a</span></code>
+<em>every even cycle</em> (e.g. 1/e =&gt; 2/a).</li>
+</ol>
+<p>Try adding these to your <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file to
+make your workflow match the diagram below.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">P2</span></code> means every other cycle, from the initial cycle point.</li>
+<li><code class="docutils literal notranslate"><span class="pre">2/P2</span></code> means every other cycle, from cycle point 2.</li>
+</ul>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-aca8d285197e57a400e199c11a8dce9f5229b6a0.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+ size = &quot;4.5,7&quot;
+
+ subgraph cluster_1 {
+     label = 1
+     style = dashed
+     &quot;1/a&quot; [label=&quot;a\n1&quot;]
+     &quot;1/b&quot; [label=&quot;b\n1&quot;]
+     &quot;1/d&quot; [label=&quot;d\n1&quot;]
+     &quot;1/f&quot; [label=&quot;f\n1&quot;]
+     &quot;1/c&quot; [label=&quot;c\n1&quot;]
+     &quot;1/e&quot; [label=&quot;e\n1&quot;]
+ }
+
+ subgraph cluster_2 {
+     label = 2
+     style = dashed
+     &quot;2/a&quot; [label=&quot;a\n2&quot;]
+     &quot;2/b&quot; [label=&quot;b\n2&quot;]
+     &quot;2/d&quot; [label=&quot;d\n2&quot;]
+     &quot;2/f&quot; [label=&quot;f\n2&quot;]
+     &quot;2/c&quot; [label=&quot;c\n2&quot;]
+ }
+
+ subgraph cluster_3 {
+     label = 3
+     style = dashed
+     &quot;3/a&quot; [label=&quot;a\n3&quot;]
+     &quot;3/b&quot; [label=&quot;b\n3&quot;]
+     &quot;3/d&quot; [label=&quot;d\n3&quot;]
+     &quot;3/f&quot; [label=&quot;f\n3&quot;]
+     &quot;3/c&quot; [label=&quot;c\n3&quot;]
+     &quot;3/e&quot; [label=&quot;e\n3&quot;]
+ }
+
+ &quot;1/a&quot; -&gt; &quot;1/b&quot; -&gt; &quot;1/f&quot;
+ &quot;1/b&quot; -&gt; &quot;1/d&quot;
+ &quot;1/c&quot; -&gt; &quot;1/b&quot;
+ &quot;2/a&quot; -&gt; &quot;2/b&quot; -&gt; &quot;2/f&quot;
+ &quot;2/b&quot; -&gt; &quot;2/d&quot;
+ &quot;2/c&quot; -&gt; &quot;2/b&quot;
+ &quot;3/a&quot; -&gt; &quot;3/b&quot; -&gt; &quot;3/f&quot;
+ &quot;3/b&quot; -&gt; &quot;3/d&quot;
+ &quot;3/c&quot; -&gt; &quot;3/b&quot;
+ &quot;1/d&quot; -&gt; &quot;1/e&quot; -&gt; &quot;2/a&quot;
+ &quot;3/d&quot; -&gt; &quot;3/e&quot;
+ &quot;2/d&quot; -&gt; &quot;3/a&quot;
+ &quot;1/f&quot; -&gt; &quot;2/c&quot;
+ &quot;2/f&quot; -&gt; &quot;3/c&quot;
+}</p></object></div>
+</div>
+<div class="spoiler warning admonition">
+<p class="first admonition-title">Solution</p>
+<div class="last highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">a</span> <span class="o">&amp;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">&amp;</span> <span class="kd">f</span>
+            <span class="kd">f</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">c</span>  <span class="c1"># (1)</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+        <span class="nv">P2 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">e</span>
+            <span class="kd">d</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># (2)</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+        <span class="nv">2/P2 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">e</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">a</span>  <span class="c1"># (3)</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+
+
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
