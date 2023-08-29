@@ -13,4 +13,4 @@ User level configuration should be located in ``~/.cylc/uiserver/jupyter_config.
 .. automodule:: cylc.uiserver.app
 
 .. autoconfigurable:: cylc.uiserver.app.CylcUIServer
-    :inherited-members: False
+   :inherited-members: False

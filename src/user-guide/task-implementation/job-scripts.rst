@@ -182,11 +182,10 @@ status message does not get through, the server will recover the correct task
 status by polling on job timeout (or earlier if regular polling is
 configured).
 
-Task messages are validated by
-:py:class:`cylc.flow.unicode_rules.TaskMessageValidator`.
+Task messages are validated by:
 
 .. autoclass:: cylc.flow.unicode_rules.TaskMessageValidator
-   :noindex:
+   :no-index:
 
 Aborting Job Scripts on Error
 -----------------------------
