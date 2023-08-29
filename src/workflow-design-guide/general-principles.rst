@@ -8,18 +8,11 @@ writing any workflow. More advanced topics are covered later:
 :ref:`Efficiency And Maintainability` and :ref:`Portable Workflows Label`.
 
 
-UTC Mode
---------
+Cycle point time zone
+---------------------
 
-Cylc has full timezone support if needed, but real time NWP workflows should use
-UTC mode to avoid problems at the transition between local standard time and
-daylight saving time, and to enable the same workflow to run the same way in
-different timezones.
-
-.. code-block:: cylc
-
-   [scheduler]
-       UTC mode = True
+Cylc has full local timezone support if needed, but the default cycle point time
+zone is UTC. See :cylc:conf:`flow.cylc[scheduler]cycle point time zone`.
 
 
 Fine Or Coarse-Grained Workflows
