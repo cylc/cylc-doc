@@ -73,7 +73,7 @@ jobs:
         uses: cylc/release-actions/configure-git@v1
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ inputs.cylc-flow-tag }}
           path: docs
@@ -109,7 +109,7 @@ jobs:
           working_directory: ./docs
 
       - name: checkout gh-pages
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
