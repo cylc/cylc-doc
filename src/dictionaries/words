@@ -5,6 +5,7 @@ arg
 args
 auth
 authenticator
+authoriser
 backticks
 baz
 boolean
@@ -185,6 +186,7 @@ timeouts
 timestep
 timezone
 timezones
+uiserver
 unpaused
 unpausing
 untracked
