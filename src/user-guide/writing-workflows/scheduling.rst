@@ -2165,7 +2165,7 @@ somewhere in the graph with no offset. This prevents unintentional creation of
 off-sequence tasks by an offset error in the graph.
 
 For instance, the following example fails validation with *no cycling sequences
-defined for ``foo``*:
+defined for* ``foo``:
 
 .. code-block:: cylc
 
