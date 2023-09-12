@@ -249,7 +249,7 @@ The ``!`` character can be used to subtract permissions, e.g. delegating
 
 .. note::
 
-   Granting acess to a group does not automatically grant access to lower
+   Granting access to a group does not automatically grant access to lower
    groups e.g. granting ``CONTROL`` access does not automatically grant
    ``READ`` access.
 
