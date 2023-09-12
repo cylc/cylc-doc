@@ -20,6 +20,36 @@ For more detail see the component changelogs:
 * `metomi-rose-changelog`_
 * `metomi-isodatetime-changelog`_
 
+
+----------
+
+Cylc 8.3.0
+----------
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   TODO
+
+..
+   Uncomment this before 8.3.0 release
+
+   :cylc-flow: `8.3 <https://github.com/cylc/cylc-flow/blob/8.3.x/CHANGES.md>`__
+   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
+   :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
+
+
+Upgrade To The Latest Jupyter Releases
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Cylc UI Server has been updated to work with the latest releases of
+`Jupyter Server`_ and `Jupyter Hub`_.
+
+If you are utilising Cylc's multi-user functionality then your configuration
+will require some changes to work with these releases.
+
+See :ref:`cylc.uiserver.multi-user` for more details
+
 ----------
 
 Cylc 8.2.0

@@ -178,8 +178,12 @@ spawns UI Servers on behalf of users and provides each with a fixed URL
 (usually <a class="reference external" href="https://github.com/corridor/configurable-http-proxy">Configurable HTTP Proxy</a>).</p>
 <p>Users can access each other’s UI Servers providing they have been granted
 permission.</p>
-<p>Authorization is performed by Cylc within the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a>, see
-<a class="reference internal" href="#cylc-authorization"><span class="std std-ref">Authorization</span></a>.</p>
+<p><em>Authentication</em> is provided by either <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> or <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
+<p><em>Authorization</em> in the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is provided by Cylc. In
+multi-user mode this allows users to connect to each other’s UI Servers for
+monitoring or control purposes.</p>
+<p>For more information on security and configuration see
+<a class="reference internal" href="../../user-guide/sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
 <p>For information on the architecture of <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> and the
 <a class="reference external" href="https://github.com/corridor/configurable-http-proxy">Configurable HTTP Proxy</a> see the <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/technical-overview.html">Jupyter Hub technical overview</a>.</p>
 <div class="hint admonition">
@@ -187,21 +191,6 @@ permission.</p>
 <p>See <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/reference/websecurity.html">Security In Jupyter Hub</a>.</p>
 </div>
 <a class="reference internal image-reference" href="../../_images/gui-arch-multi-user.svg"><img alt="../../_images/gui-arch-multi-user.svg" src="../../_images/gui-arch-multi-user.svg" width="100%" /></a>
-</section>
-<section id="authorization">
-<span id="cylc-authorization"></span><h2>Authorization<a class="headerlink" href="#authorization" title="Permalink to this heading"></a></h2>
-<p><em>Authentication</em> is provided by either <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> or <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
-<p><em>Authorization</em> in the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> is provided by Cylc. In
-multi-user mode this allows users to connect to each others UI Servers for
-monitoring or control purposes.</p>
-<p>See also <a class="reference internal" href="../../user-guide/sharing-access-to-workflows.html#authorization"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This authorization only applies to the <code class="docutils literal notranslate"><span class="pre">/cylc</span></code> endpoints managed by the
-Cylc extension.  Other <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extensions such as <a class="reference external" href="https://jupyterlab.readthedocs.io/en/stable/getting_started/overview.html">Jupyter Lab</a>
-do not share this authorization and will not be accessible to other users
-(unless they can be configured to allow this).</p>
-</div>
 </section>
 </section>
 
@@ -217,7 +206,7 @@ do not share this authorization and will not be accessible to other users
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Aug 15, 2023.
+      <span class="lastupdated">Last updated on Sep 12, 2023.
       </span></p>
   </div>
 
