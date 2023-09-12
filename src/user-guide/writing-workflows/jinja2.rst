@@ -153,12 +153,11 @@ Additional Jinja2 CYLC variables available when parsing an installed workflow:
 
 
 Additional Jinja2 CYLC variables available when the scheduler is parsing an
-installed workflow before starting or restarting a run:
+installed workflow at run time:
 
 .. table::
 
    =======================    ==============
-   CYLC_WORKFLOW_RUN_DIR      Workflow run directory
    CYLC_WORKFLOW_LOG_DIR      Workflow log sub-directory
    CYLC_WORKFLOW_SHARE_DIR    Workflow share sub-directory
    CYLC_WORKFLOW_WORK_DIR     Workflow work sub-directory
