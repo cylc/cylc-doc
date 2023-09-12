@@ -149,6 +149,7 @@ Additional Jinja2 CYLC variables available when parsing an installed workflow:
 
    ======================    ==============
    CYLC_WORKFLOW_ID          Workflow ID
+   CYLC_WORKFLOW_RUN_DIR     Workflow run directory
    ======================    ==============
 
 
