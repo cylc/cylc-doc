@@ -1,54 +1,54 @@
 {
+    "8.1.4": [
+        "html",
+        "slides"
+    ],
     "8.0.3": [
-        "slides",
-        "html"
+        "html",
+        "slides"
     ],
     "7.8.8": [
         "singlehtml",
         "html"
     ],
-    "8.0.2": [
-        "slides",
-        "html"
+    "8.1.0": [
+        "html",
+        "slides"
     ],
     "8.0.0": [
-        "slides",
-        "html"
+        "html",
+        "slides"
+    ],
+    "8.2.0": [
+        "html",
+        "slides"
     ],
     "7.9.3": [
         "singlehtml",
         "html"
     ],
-    "8.2.0": [
-        "slides",
-        "html"
-    ],
     "8.2.1": [
-        "slides",
-        "html"
+        "html",
+        "slides"
     ],
-    "8.1.4": [
-        "slides",
-        "html"
-    ],
-    "8.1.0": [
-        "slides",
-        "html"
+    "8.0.2": [
+        "html",
+        "slides"
     ],
     "stable": [
-        "slides",
-        "html"
+        "html",
+        "slides"
     ],
     "latest": [
-        "slides",
-        "html"
-    ],
-    "nightly_8.2": [
-        "slides",
-        "html"
+        "html",
+        "slides"
     ],
     "nightly_8.3": [
-        "slides",
-        "html"
+        "html",
+        "slides"
+    ],
+    "nightly_8.2": [
+        "html",
+        "slides"
     ]
 }

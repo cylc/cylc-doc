@@ -236,8 +236,7 @@ of messaging retries just holds up job completion unnecessarily. If a job
 status message does not get through, the server will recover the correct task
 status by polling on job timeout (or earlier if regular polling is
 configured).</p>
-<p>Task messages are validated by
-<a class="reference internal" href="../../reference/config/workflow.html#cylc.flow.unicode_rules.TaskMessageValidator" title="cylc.flow.unicode_rules.TaskMessageValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.unicode_rules.TaskMessageValidator</span></code></a>.</p>
+<p>Task messages are validated by:</p>
 <dl class="py class">
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">cylc.flow.unicode_rules.</span></code><code class="sig-name descname"><span class="pre">TaskMessageValidator</span></code></dt>
