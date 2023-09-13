@@ -25,7 +25,7 @@ runs:
           libfontconfig1-dev \
           aspell-en
 
-    - uses: conda-incubator/setup-miniconda@35d1405e78aa3f784fe3ce9a2eb378d5eeb62169 # v2.1.1
+    - uses: conda-incubator/setup-miniconda@3b0f2504dd76ef23b6d31f291f4913fb60ab5ff3 # v2.2.0
       with:
         channels: conda-forge
         python-version: ${{ matrix.python-version || '' }}
