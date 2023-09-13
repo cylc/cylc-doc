@@ -7,11 +7,9 @@ Jinja2
 .. tutorial::
    Configuration Consolidation Tutorial <tutorial-cylc-consolidating-configuration>
 
-Cylc supports use of the `Jinja2`_ template processor in workflow
-configurations. Jinja2 variables, expressions, loop control structures,
-conditional logic, etc., are processed to generate the final configuration. To
-the template processor, Jinja2 code is embedded in arbitrary text, but the
-result after processing must be valid Cylc syntax.
+Cylc supports the `Jinja2`_ template processor in workflow configurations.
+Jinja2 code can appear anywhere in the file. The result after Jinja2 processing
+must be valid Cylc syntax.
 
 To use Jinja2, put a hash-bang comment in the first line of :cylc:conf:`flow.cylc`:
 
@@ -19,22 +17,18 @@ To use Jinja2, put a hash-bang comment in the first line of :cylc:conf:`flow.cyl
 
    #!jinja2
 
-Template processing is the first thing done on parsing a workflow configuration
-so Jinja2 can appear anywhere in the file.
-
 Embedded Jinja2 code should be reasonably easy to understand for those with
-coding experience; but if not, Jinja2 is well documented `here
-<Jinja2_>`_.
+coding experience; otherwise Jinja2 is documented `here <Jinja2_>`_.
 
 Uses of Jinja2 in Cylc include:
 
  - Inclusion or exclusion of config sections by logical switch, e.g. to make
    portable workflows
- - Computation of config values from in input data
+ - Computation of config values from input data
  - Inclusion of files and sub-templates
- - Loop over parameters to generate groups of similar tasks and associated
+ - Looping over parameters to generate groups of similar tasks and associated
    dependencies - but see :ref:`Parameterized Tasks <User Guide Param>` for a
-   simpler alternative to this use case
+   simpler alternative to this where appropriate
 
 .. _fig-jinja2-ensemble:
 
@@ -99,7 +93,7 @@ to generate task names automatically with built-in
            R1 = "foo => mem<m> => post<m> => bar"
 
 
-The next example, which generates weather forecasts over a number of cities, is
+The next workflow, which generates weather forecasts over a number of cities, is
 more complex. To add a new city and associated tasks and dependencies just add
 the new city name to list at the top of the file. It makes use of Jinja2
 variables, loops, math, and logical flags to include or exclude tasks.
@@ -120,11 +114,69 @@ variables, loops, math, and logical flags to include or exclude tasks.
    New York City task family expanded.
 
 
-Accessing Environment Variables
--------------------------------
+.. _jinja2.workflow_files:
 
-Cylc automatically imports the environment to the template's global namespace
-(see :ref:`CustomJinja2Filters`) in a dictionary called ``environ``:
+Access to Workflow Files
+------------------------
+
+Your Jinja2 code can see the workflow directory by using
+:ref:`Python code <jinja2.importing_python_modules>`
+that simply reads from the *current working directory*.
+
+This will be the source directory if parsing a source workflow, or the run
+directory if parsing an installed workflow.
+
+
+.. _jinja2.workflow_context:
+
+Workflow Context variables
+--------------------------
+
+Jinja2 CYLC variables available when parsing any workflow (source or installed):
+
+.. table::
+
+   ======================    ==============
+   CYLC_VERSION              Version of Cylc parsing the configuration
+   CYLC_WORKFLOW_NAME        Workflow name (source, or run ID minus run name)
+   CYLC_TEMPLATE_VARS        Variables set by '--set' CLI options or plugins
+   ======================    ==============
+
+
+Additional Jinja2 CYLC variables available when parsing an installed workflow:
+
+.. table::
+
+   ======================    ==============
+   CYLC_WORKFLOW_ID          Workflow ID
+   CYLC_WORKFLOW_RUN_DIR     Workflow run directory
+   ======================    ==============
+
+
+Additional Jinja2 CYLC variables available when the scheduler is parsing an
+installed workflow at run time:
+
+.. table::
+
+   =======================    ==============
+   CYLC_WORKFLOW_LOG_DIR      Workflow log sub-directory
+   CYLC_WORKFLOW_SHARE_DIR    Workflow share sub-directory
+   CYLC_WORKFLOW_WORK_DIR     Workflow work sub-directory
+   =======================    ==============
+
+.. note::
+
+   Set default values for CYLC variables that are only defined for installed or
+   running workflows, to allow successful parsing in other contexts as well:
+   ``{{CYLC_WORKFLOW_RUN_DIR | default("not-defined")}}``.
+
+
+Environment Variables
+---------------------
+
+Cylc automatically imports the parse-time environment to the template
+processor's global namespace (see :ref:`CustomJinja2Filters`),
+in a dictionary called ``environ``:
 
 .. code-block:: cylc
 
@@ -133,41 +185,12 @@ Cylc automatically imports the environment to the template's global namespace
    [runtime]
        [[root]]
            [[[environment]]]
-               WORKFLOW_OWNER_HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
-
-In addition, the following variables are exported to this environment
-(hence are available in the ``environ`` dict) to provide workflow context:
-
-.. code-block:: sub
-
-   CYLC_VERBOSE                    # Verbose mode, true or false
-   CYLC_DEBUG                      # Debug mode (even more verbose), true or false
-
-   CYLC_WORKFLOW_ID                # Workflow ID
-   CYLC_WORKFLOW_NAME              # Workflow name
-                                   # (the ID with the run name removed)
-
-   CYLC_WORKFLOW_LOG_DIR           # Workflow log directory.
-   CYLC_WORKFLOW_RUN_DIR           # Location of the run directory in
-                                   # workflow host, e.g. ~/cylc-run/foo
-   CYLC_WORKFLOW_SHARE_DIR         # Workflow (or task post parsing!)
-                                   # shared directory.
-   CYLC_WORKFLOW_WORK_DIR          # Workflow work directory.
+               HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
 
 .. warning::
 
-   The environment is read on the workflow host when the configuration is
-   parsed. It is not read at run time by jobs on the job platform.
-
-The following Jinja2 variables are also available (i.e. standalone,
-not in the ``environ`` dict):
-
-``CYLC_VERSION``
-   Version of Cylc used.
-
-``CYLC_TEMPLATE_VARS``
-   All variables set by the ``-s``, ``--set-file`` or ``--set-list`` options,
-   or by a plugin.
+   The environment is read during configuration parsing. It is not the run time
+   job environment.
 
 
 .. _CustomJinja2Filters:
