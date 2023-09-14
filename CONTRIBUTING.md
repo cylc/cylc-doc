@@ -54,6 +54,7 @@ requests_).
  - Yinjing Lin
  - David Sutherland
  - Thomas Coleman
+ - Scott Wales
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
