@@ -62,131 +62,47 @@ documentation, configuration files, etc. When the workflow is :ref:`installed
    equivalent directories in the :ref:`workflow_share_directories`.
 
 
-.. _CodeInCylcConfigurations:
+.. _UnderstandingCodeInCylcConfigurations:
 
-Code in Workflow Configurations
--------------------------------
+Understanding Code in Workflow Configurations
+---------------------------------------------
 
-Cylc workflow configurations are not executable scripts or programs. Rather,
-they configure, at start-up, the Cylc scheduler program to run a particular
-workflow.
+A workflow configuration is not executable code. It configures the scheduler
+program to run your workflow. But a `flow.cylc` file may contain:
 
-The scheduler understands a static syntax that contains only ``[section
-headings]`` and configuration items of the form ``platform = hpc1``. These
-configuration items are not even "variables" that can be referenced elsewhere
-in the file. Some values may look complicated, but they are still just text
-strings with content that is meaningful to the scheduler.
+    - Embedded Python-like Jinja2 or EmPy templating code, such as
+      ``{% set PLANET = "earth" %}``
+    - Bash shell variable assignments and scripting, such as
+      ``script = "run-model.exe /path/to/data"``
 
-Nevertheless a `flow.cylc` file may appear to contain several kinds of embedded
-code:
+Jinja2 (or EmPy) templating code gets executed as a preprocessing step, to
+programmatically generate the workflow configuration for the scheduler.
+To see the result after template processing:
 
-    - Python-like Jinja2 or EmPy code, such as ``{% set PLANET = "earth" %}``
-    - Bash shell variable assignments such as ``PLANET=${PLANET:-earth}``
-    - Bash shell scripting, such as ``script = "run-model.exe /path/to/data"``
+.. code-block:: shell
 
-The documentation below explains exactly what these mean in the context of a
-workflow configuration, and when the code is evaluated.
+    # print the workflow configuration, processed but not parsed:
+    $ cylc view --process <workflow-id>
 
-
-Jinja2 (or EmPy) Code
-^^^^^^^^^^^^^^^^^^^^^
-
-If a `flow.cylc` file contains embedded blocks of Jinja2 code in curly
-brackets (or the equivalent for EmPy) then it is actually a template for
-programmatically generating the static configuration format required by the
-scheduler.
-
-The template processor manipulates the surrounding text (which to it is
-entirely arbitrary) and the result must be valid configuration syntax that
-will pass validation by Cylc.
-
-This is a preprocessing step. Jinja2 code does not execute as the workflow runs.
-
-Use ``cylc view -j`` to see the result, with all Jinja2 code "processed out".
-
-Note that the template processor does not have access to config items from the
-surrounding text:
-
-.. code-block:: cylc
-
-   # flow.cylc
-   platform = hpc1  # Cylc config item definition
-   {{ "Platform is: " ~ platform }}  # ERROR, platform not defined as Jinja2!
-
-However, you can assign a value to a Jinja2 variable and print it to the file
-wherever it is needed:
-
-.. code-block:: cylc
-
-   # flow.cylc
-   {% set PLATFORM = "hpc1" %}
-   platform = {{ PLATFORM }}  # OK
-   {{ "Platform is: " ~ PLATFORM }} # OK
- 
-Jinja2 code does not have access to the environment via normal shell syntax
-either, but you can read the local environment with native Jinja2 syntax:
-
-.. code-block:: cylc
-
-   # flow.cylc
-   {{ $HOME }}  # ERROR, $HOME is not defined (as a Jinja2 variable)!
-   {{ "$HOME" }}  # OK, prints the literal string "$HOME"
-   {{ environ["HOME"] }}  # OK, prints the value of $HOME
-
-Note however that this code executes during file parsing, at start-up, on the
-scheduler run host, because that is when template preprocessing is done. It
-does not read the environment at run time on the job host, even if the
-code appears in (i.e., writes to) a task definition section of the workflow.
-
-Similarly, any Jinja2 access (via Python) to the filesystem will happen during
-file parsing on the scheduler run host, not when jobs run on job hosts.
+    # print the workflow configuration, processed and parsed:
+    $ cylc config <workflow-id>
 
 
-Environment Variables and Shell Scripting
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The scheduler does not interpret shell syntax, but certain string-valued
+config items may contain shell code that gets written verbatim to job scripts,
+to be executed by the running job.
 
-Cylc generates Bash shell job scripts to implement the task definitions in your
-``flow.cylc``. These task definitions may configure environment variables and
-fragments of shell scripting to be written to the job script. 
+Some things to be aware of:
 
-Cylc itself does not evaluate this shell syntax during file parsing at start-up,
-or at run time. To the scheduler, these are just text strings to be written
-verbatim to job scripts. They will only be evaluated, by the shell, when
-the job script runs on the job host.
-
-For example, here a config item called ``ARCHIVE`` is assigned the literal
-string value ``"$HOME/archive"``:
-
-.. code-block:: cylc
-
-   # flow.cylc
-   [[[environment]]]
-      ARCHIVE = "$HOME/archive"
-
-The shell variable ``$HOME`` does not get evaluated by Cylc, because a
-``flow.cylc`` file is not a shell script. However, the scheduler knows
-that config items in this section are to be written to corresponding shell
-variable assignment expressions in the job script, using correct Bash syntax:
-
-.. code-block:: cylc
-
-    # job script
-    ARCHIVE=$HOME/archive
-    export ARCHIVE
-
-Again, this code will be evaluated by the shell when the job script runs on the
-job host.
-
-Beware of using Jinja2 to print environment variable values in task definitions.
-This may not be what you want because template preprocessing occurs at start-up
-on the scheduler run host, not in the job environment on the job host.
-
-.. code-block:: cylc
-
-   # flow.cylc
-   [[my-task]]
-      [[[environment]]]
-         ARCHIVE = {{ environ["HOME"] }}/archive  # BUG? (HOME not on job host!)
+    - Jinja2 code can only reference Jinja2 variables, not Cylc config items.
+    - Jinja2 (like Python) has its own syntax for reading environment variables.
+    - Jinja2 code that reads the environment or the filesystem will do so
+      during config file parsing on the scheduler run host, not on job hosts.
+      Beware of doing this in task definitions - do you want the scheduler
+      environment to affect shell code that runs in the job environment?
+    - Shell code destined for the job script can read the environment or
+      access the filesystem as the job runs on the job host, not on the
+      scheduler host.
 
 
 .. _SyntaxHighlighting:
