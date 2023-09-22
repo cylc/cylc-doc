@@ -54,7 +54,7 @@ You can set some or all instances of a task to fail using
 
 Tasks set to fail will succeed on their second or following simulated
 submission. If you want all submissions to fail, set
- :cylc.conf:`[runtime][<namespace>][simulation]fail try 1 only = False`.
+:cylc.conf:`[runtime][<namespace>][simulation]fail try 1 only = False`.
 
 For example, to simulate a task you know to be flaky on the half
 hour but not on the hour:
