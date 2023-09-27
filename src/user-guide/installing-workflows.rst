@@ -402,7 +402,8 @@ The run directory now looks as follows:
 
    If your workflow needs to create or install scripts or executables at runtime
    and you don't want Cylc to delete them on re-installation, you can use
-   ``bin`` and ``lib/python`` directories in the :ref:`workflow_share_directories`.
+   ``bin`` and ``lib/python`` directories in the
+   :ref:`workflow share directory<workflow_share_directories>`.
 
 
 Expected Errors
