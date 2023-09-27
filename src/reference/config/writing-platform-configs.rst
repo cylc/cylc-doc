@@ -377,8 +377,7 @@ Sharing environment variables with the Cylc server
 .. admonition:: Scenario
 
     An environment variable on the computer where you're running `cylc play`
-    needs to be shared with the Cylc server (e.g. to set up storage paths) or
-    with Cylc task hosts (e.g. to set PBS account defaults)
+    needs to be shared with the Cylc server (e.g. to set up storage paths)
 
 Normally if a Cylc server is running on a remote host it will not keep
 environment variables that are present when you run ``cylc play``. You can
