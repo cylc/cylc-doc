@@ -431,6 +431,7 @@ Start, Stop, Restart
       .. code-block:: bash
 
          cylc validate .
+         cylc install
 
       .. TODO: Add advice on what to do if the command fails.
 
