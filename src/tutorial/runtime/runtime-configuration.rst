@@ -312,7 +312,7 @@ Start, Stop, Restart
          cylc get-resources api-key
 
       Add the following lines to the ``[runtime]`` section of the
-      :cylc:conf:`flow.cylc` file replacing
+      :cylc:conf:`flow.cylc` file
 
       .. code-block:: cylc
 
@@ -327,8 +327,8 @@ Start, Stop, Restart
       Add three more ``get_observations`` tasks for each of the remaining
       weather stations.
 
-      You will need the API key and the site codes for the other three
-      weather stations, which are:
+      You will need to use the same API key for the other three
+      weather stations, and set the ``SITE_ID`` values, which are:
 
       * Camborne - ``3808``
       * Shetland - ``3005``
