@@ -380,15 +380,13 @@ Sharing environment variables with the Cylc server
     needs to be shared with the Cylc server (e.g. to set up storage paths) or
     with Cylc task hosts (e.g. to set PBS account defaults)
 
-Normally if a Cylc server or task is running on a remote host it will not keep
+Normally if a Cylc server is running on a remote host it will not keep
 environment variables that are present when you run ``cylc play``. You can
-whitelist variables to be sent to remote hosts using
+whitelist variables to be sent to remote servers using
 :cylc:conf:`global.cylc[scheduler][run hosts]ssh forward environment variables`.
 
-These variables are forwared to the Cylc server and then from there to task
-hosts. They can then be used to affect the global configuration or the task
-configuration (for instance ``qsub`` may use the value of ``$PROJECT`` to set a
-default account to charge usage to).
+These variables are forwared to the Cylc server and may be used in the
+`global.cylc` file templating.
 
  .. code-block:: cylc
     :caption: part of a ``global.cylc`` config file
@@ -409,8 +407,8 @@ default account to charge usage to).
                 -P = {{ environ['PROJECT'] }}
 
 In this example Cylc will install workflows into the directory specified by
-``$LUSTRE_DISK`` and use the project specified by ``$PROJECT`` on the server
-where you run ``cylc play``, e.g.
+``$LUSTRE_DISK`` and use the project specified by ``$PROJECT`` in the
+environment where you run ``cylc play``, e.g.
 
  .. code-block:: sh
 
@@ -421,10 +419,5 @@ where you run ``cylc play``, e.g.
 will store the workflow under ``/g/data/foo`` and submit jobs under project
 ``bar``.
 
-It's better to be explicit in what's happening when setting up the
-configuration - even though ``qsub`` will pick up ``$PROJECT`` from the
-environment we're also explicitly setting the account to use with ``-P`` in
-case the task is run manually.
-
-This setting only affects task submission - to set a variable once the task has
+This setting only affects the server - to set a variable once the task has
 started see :cylc:conf:`global.cylc[platforms][<platform name>]copyable environment variables`.
