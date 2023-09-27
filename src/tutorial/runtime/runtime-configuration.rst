@@ -311,8 +311,8 @@ Start, Stop, Restart
 
          cylc get-resources api-key
 
-      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
-      ``xxx...`` with your API key:
+      Add the following lines to the ``[runtime]`` section of the
+      :cylc:conf:`flow.cylc` file replacing
 
       .. code-block:: cylc
 
@@ -327,7 +327,8 @@ Start, Stop, Restart
       Add three more ``get_observations`` tasks for each of the remaining
       weather stations.
 
-      You will need the codes for the other three weather stations, which are:
+      You will need the API key and the site codes for the other three
+      weather stations, which are:
 
       * Camborne - ``3808``
       * Shetland - ``3005``
@@ -379,6 +380,7 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
+         cylc install
          cylc play runtime-tutorial
 
       If all goes well the workflow will startup and the tasks will run and
