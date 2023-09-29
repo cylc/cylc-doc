@@ -379,6 +379,7 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
+         cylc install
          cylc play runtime-tutorial
 
       If all goes well the workflow will startup and the tasks will run and
@@ -429,6 +430,7 @@ Start, Stop, Restart
       .. code-block:: bash
 
          cylc validate .
+         cylc install
 
       .. TODO: Add advice on what to do if the command fails.
 
