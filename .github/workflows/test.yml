@@ -83,7 +83,7 @@ jobs:
 
       - name: build & test
         run: |
-          make html slides spelling linkcheck doctest \
+          make html spelling linkcheck doctest \
             SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
 
       - name: debug sphinx failure
