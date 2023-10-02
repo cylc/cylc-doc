@@ -139,7 +139,6 @@ jobs:
           builddir="nightly_${{ matrix.meta_release }}"
           make -C docs \
             html \
-            slides \
             linkcheck \
             SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
