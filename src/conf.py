@@ -150,14 +150,16 @@ linkcheck_ignore = [
     r'https://github.com/.*',
 ]
 
-linkcheck_request_headers = {
-    'https://linux.die.net/man/1/bash': {
-        'User-Agent': (
-            'Mozilla/5.0 (X11; Linux x86_64; rv:12.0)'
-            ' Gecko/20100101 Firefox/12.'
-        )
-    }
-}
+user_agent = 'Mozilla/5.0'
+
+# linkcheck_request_headers = {
+#     'https://linux.die.net/man/1/bash': {
+#         'User-Agent': (
+#             'Mozilla/5.0 (X11; Linux x86_64; rv:12.0)'
+#             ' Gecko/20100101 Firefox/12.'
+#         )
+#     }
+# }
 
 nitpick_ignore_regex = [
     # intersphinx has trouble with pyzmq classes:
