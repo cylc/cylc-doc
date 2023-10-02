@@ -143,8 +143,18 @@ graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
 linkcheck_anchors_ignore_for_url = [
     # linkcheck has trouble handling GH anchors
     r'https://github.com/.*',
-    r'https://linux.die.net/.*',
 ]
+
+linkcheck_request_headers = {
+    'https://linux.die.net/man/1/bash': {
+        'User-Agent': (
+            'Mozilla/5.0'
+            ' (platform; rv:geckoversion)'
+            ' Gecko/geckotrail'
+            ' appname/appversion'
+        )
+    }
+}
 
 nitpick_ignore_regex = [
     # intersphinx has trouble with pyzmq classes:
