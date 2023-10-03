@@ -384,8 +384,12 @@ weather stations.</p>
 your workflow.</p>
 <p>Run the workflow either by pressing the play button in the Cylc UI or by
 running the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>play<span class="w"> </span>runtime-tutorial
-</pre></div>
+<div class="highlight-bash notranslate"><div class="highlight">
+    <pre><span></span>cylc<span class="w"> </span>install
+</pre>
+    <pre><span></span>cylc<span class="w"> </span>play<span class="w"> </span>runtime-tutorial
+</pre>
+</div>
 </div>
 <p>If all goes well the workflow will startup and the tasks will run and
 succeed. Note that the tasks which do not have a <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section
@@ -424,8 +428,12 @@ for you in the <code class="docutils literal notranslate"><span class="pre">runt
 <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>. Copy the code in the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> file to the
 bottom of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
 <p>Check the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is valid by running the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
-</pre></div>
+<div class="highlight-bash notranslate"><div class="highlight">
+  <pre><span></span>cylc<span class="w"> </span>install
+</pre>
+  <pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+</pre>
+</div>
 </div>
 </li>
 <li><p><strong>Run The Workflow.</strong></p>
