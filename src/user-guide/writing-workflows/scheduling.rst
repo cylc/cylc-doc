@@ -2002,103 +2002,137 @@ When using message triggers in this way there are two things to be aware of:
    Check that you understand how your tasks work, if they use custom outputs.
 
 
-Limiting Workflow Activity
---------------------------
-
-Cylc will usually try to trigger any task with met dependencies. If this
-risks running more tasks than you wish - if it would overwhelm the job
-platform for example - :ref:`RunaheadLimit` and :ref:`InternalQueues` provide
-tools to limit workflow activity.
-
 .. _RunaheadLimit:
 
 Runahead Limiting
-^^^^^^^^^^^^^^^^^
+-----------------
 
-The scheduler runahead limit determines how many consecutive cycle points can
-be active at once. The base point of the runahead calculation is the current
-lowest-valued point with :term:`active` or :term:`incomplete` tasks present.
+Runahead limiting prevents a workflow from getting too far ahead of the oldest
+active cycle point by holding back tasks in cycles beyond a specified limit.
 
-The runahead limit can be set with :cylc:conf:`[scheduling]runahead limit`,
-to an integer interval (for datetime or integer cycling workflows) or to
-a datetime interval (datetime cycling only).
+The runahead limit is defined as an interval measured from the oldest active cycle.
+A cycle is considered to be "active" if it contains any :term:`active` tasks
+(e.g. running tasks).
 
-The integer format ``Pn`` is an interval that spans ``n+1`` consecutive cycle
-points, regardless of how the cycle point values increment from one point to
-the next (i.e. regardless of the cycling interval).
+Tasks in cycles which are beyond the limit are called :term:`runahead` tasks
+and are displayed in the GUI/Tui with small circle above them:
 
-For example, the default runahead limit of ``P4`` allows 5 active cycle points
-(base point plus the 4 next points) whether the cycling is defined by
-``R/^/P1`` or ``R/^/P3`` etc. (for integer cycling) or ``R/^/PT6H`` etc. (for
-datetime cycling).
+.. image:: ../../img/task-job-icons/task-isRunahead.png
+   :width: 60px
+   :height: 60px
 
-In the following example, tasks ``1/foo`` through ``4/foo`` will submit to
-run immediately at start-up, but ``5/foo`` will be held back until ``1/foo``
-finishes and allows the runahead limit to move on:
+As the workflow advances and active cycles complete, the runahead limit moves
+forward allowing tasks in later cycles to run.
+
+There are two ways of defining the interval which defines the runahead limit,
+as an integer number of cycles, or as a datetime interval.
+
+
+Integer Format
+^^^^^^^^^^^^^^
+
+The runahead limit can be defined as an integer interval with the format
+``P<N>``, where ``N`` is an integer.
+
+For example the default runahead limit is ``P4`` (an interval of four cycles),
+which means that up to five cycles may be active simultaneously, the oldest
+active cycle and the next four after it.
+
+E.G. for this example workflow:
 
 .. code-block:: cylc
 
     [scheduling]
         cycling mode = integer
         initial cycle point = 1
-        runahead limit = P3  # max 4 active points
+        runahead limit = P4  # max 5 active points (the default)
         [[graph]]
-            P2 = foo  # cycle points 1, 3, 5, 7, 9, ...
+            P1 = foo
 
-The active cycle points in this workflow, at some point during the run,
-might be ``29, 31, 33, 35``, for example.
+When this workflow starts, the initial cycle point is 1 and the runahad limit
+is four cycles after this (i.e. cycle 4). So the task ``foo`` will immediately
+submit in cycles 1, 2, 3 and 4, however, the tasks in cycles 5 onwards will
+wait until earlier cycles complete, and the runahead limit advances.
+
+* 1 |task-submitted| - **initial cycle point**
+* 2 |task-submitted|
+* 3 |task-submitted|
+* 4 |task-submitted| - **runahead limit**
+* 5 |task-runahead-super| (held back by runahead limit)
+* 6 |task-runahead-super| (held back by runahead limit)
+* X |task-runahead-super| (held back by runahead limit)
+
+As the workflow advances and earlier cycles complete, the runahead limit
+moves on. E.G. Once the cycles 1 & 2 have completed, the runahead limit will
+advance to cycle 6.
+
+The integer format counts the number of cycles irrespective of the cycling
+interval, so if we change the cycling interval from ``P1`` to ``P2Y``:
 
 .. code-block:: cylc
+   :emphasize-lines: 2,5
 
     [scheduling]
-        initial cycle point = 2050
-        runahead limit = P3  # max 4 active points
+        initial cycle point = 2000  # date time cycling
+        runahead limit = P4  # max 5 active points
         [[graph]]
-            P2Y = foo  # cycle points 2050, 2052, 2054, ...
+            P2Y = foo  # cycle points 1, 3, 5, 7, 9, ...
 
-The active points in this workflow, at some point during the run, might be
-``2060, 2062, 2064, 2068``.
+Then, the task ``foo`` would submit immediately in the cycles 1, 3, 5 and 7.
+Cycles from 9 onwards will be held back.
 
-With a datetime interval, on the other hand, the number of active cycle points
-depends on the cycling intervals:
+* 2000 |task-submitted| - **initial cycle point**
+* 2002 |task-submitted|
+* 2004 |task-submitted|
+* 2006 |task-submitted| - **runahead limit**
+* 2008 |task-runahead-super| (held back by runahead limit)
+* 2010 |task-runahead-super| (held back by runahead limit)
+* XXXX |task-runahead-super| (held back by runahead limit)
+
+
+Datetime Format
+^^^^^^^^^^^^^^^
+
+The runahead interval can also be specified as an :term:`ISO8601 duration`.
+This approach *does* depend on the cycling intervals, e.g:
 
 .. code-block:: cylc
+   :emphasize-lines: 3
 
     [scheduling]
-        initial cycle point = 2050
+        initial cycle point = 2000
         runahead limit = P4Y  # max active point: base point + P4Y
         [[graph]]
             P2Y = foo  # cycle points 2050, 2052, 2054, ...
 
-The active points in this workflow, at some point during the run, might be
-``2060, 2062, 2064``. If the cycling interval was ``P1Y`` instead of ``P2Y``,
-they might be ``2060, 2061, 2062, 2063, 2064``.
+When this workflow starts, the task foo in the first three cycles will run:
+
+* 2000 |task-submitted| - **initial cycle point**
+* 2002 |task-submitted|
+* 2004 |task-submitted| - **runahead limit**
+* 2006 |task-runahead-super| (held back by runahead limit)
+* 2008 |task-runahead-super| (held back by runahead limit)
+* XXXX |task-runahead-super| (held back by runahead limit)
 
 
-.. note::
+Runahead Limit Notes
+^^^^^^^^^^^^^^^^^^^^
 
-   To restrict activity to a single cycle point at a time (just the base point)
-   use a null runahead interval: ``P0`` or (e.g.) ``PT0H``.
+To restrict activity to a single cycle point at a time (just the base point)
+use a null runahead interval: ``P0`` or (e.g.) ``PT0H``.
 
+Runahead limiting does not restrict activity within a cycle point.
+Workflows with a large number of tasks per cycle may need :ref:`internal
+queues <InternalQueues>` to constrain activity in absolute terms.
 
-.. note::
-
-   Runahead limiting does not restrict activity within a cycle point.
-   Workflows with a large number of tasks per cycle may need :ref:`internal
-   queues <InternalQueues>` to constrain activity in absolute terms.
-
-
-.. note::
-
-   The scheduler may automatically raise the runahead limit to accommodate
-   :term:`future triggered<future trigger>` tasks without stalling
-   the workflow.
+The scheduler may automatically raise the runahead limit to accommodate
+:term:`future triggered<future trigger>` tasks without stalling the workflow.
 
 
 .. _InternalQueues:
 
 Internal Queues
-^^^^^^^^^^^^^^^
+---------------
 
 Large workflows can potentially overwhelm the system by submitting too many
 jobs at once. Internal queues can prevent this by limiting the number of

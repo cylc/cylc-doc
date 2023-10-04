@@ -38,6 +38,9 @@
 .. _Cylc UI Server: https://github.com/cylc/cylc-uiserver
 .. _UI Server: https://github.com/cylc/cylc-uiserver
 
+
+.. Task Icons (inline)
+
 .. |task-waiting| image:: /img/task-job-icons/task-waiting.png
    :height: 18px
    :align: middle
@@ -71,6 +74,8 @@
    :align: middle
 
 
+.. Task Modifiers (inline)
+
 .. |task-held| image:: /img/task-job-icons/task-isHeld.png
    :height: 18px
    :align: middle
@@ -83,6 +88,23 @@
    :height: 18px
    :align: middle
 
+
+.. Task Modifiers (inline with modifiers as superscript)
+
+.. |task-held-super| image:: /img/task-job-icons/task-isHeld.png
+   :height: 24px
+   :align: middle
+
+.. |task-runahead-super| image:: /img/task-job-icons/task-isRunahead.png
+   :height: 24px
+   :align: middle
+
+.. |task-queued-super| image:: /img/task-job-icons/task-isQueued.png
+   :height: 24px
+   :align: middle
+
+
+.. Job Icons (inline)
 
 .. |job-submitted| image:: /img/task-job-icons/job-submitted.png
    :height: 18px
