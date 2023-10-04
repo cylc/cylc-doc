@@ -367,9 +367,15 @@ Start, Stop, Restart
 
       .. TODO: Add advice on what to do if the command fails.
 
-   #. **Test The** ``get_observations`` **Tasks.**
+   #. **Test the** ``get_observations`` **tasks.**
 
       Next we will test the ``get_observations`` tasks.
+
+      Install the workflow:
+
+      .. code-block:: bash
+
+         cylc install
 
       Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
       your workflow.
@@ -379,7 +385,6 @@ Start, Stop, Restart
 
       .. code-block:: bash
 
-         cylc install
          cylc play runtime-tutorial
 
       If all goes well the workflow will startup and the tasks will run and
