@@ -146,9 +146,8 @@ graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
 linkcheck_ignore = [
-    # linkcheck has trouble handling GH anchors
-    r'https://github.com/.*#.*',
-    r'https://linux.die.net/.*'
+    'https?://linux.die.net/man/1/bash',
+    'https?://github.com/.*#.*',
 ]
 
 nitpick_ignore_regex = [
