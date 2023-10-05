@@ -110,15 +110,20 @@ autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
 # Mapping to other Sphinx projects we want to import references from.
+# NOTE: To search available references, use:
+# $ python -m sphinx.ext.intersphinx <url>/objects.inv | less
 intersphinx_mapping = {
     'rose': (
-        'http://metomi.github.io/rose/2.0.0/html', None
+        'http://metomi.github.io/rose/2.1.0/html', None
     ),
     'python': (
         'https://docs.python.org/3/', None
     ),
     'jupyter_server': (
         'https://jupyter-server.readthedocs.io/en/latest/', None
+    ),
+    'jupyter_hub': (
+        'https://jupyterhub.readthedocs.io/en/stable/', None
     )
 }
 
@@ -140,9 +145,11 @@ graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
-linkcheck_anchors_ignore_for_url = [
+linkcheck_ignore = [
+    # linux.die.net doesn't like our request headers
+    'https?://linux.die.net/man/1/bash',
     # linkcheck has trouble handling GH anchors
-    r'https://github.com/.*'
+    'https?://github.com/.*#.*',
 ]
 
 nitpick_ignore_regex = [

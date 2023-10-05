@@ -92,8 +92,14 @@ spawns UI Servers on behalf of users and provides each with a fixed URL
 Users can access each other's UI Servers providing they have been granted
 permission.
 
-Authorization is performed by Cylc within the `Cylc UI Server`_, see
-:ref:`cylc authorization`.
+*Authentication* is provided by either `Jupyter Server`_ or `Jupyter Hub`_.
+
+*Authorization* in the `Cylc UI Server`_ is provided by Cylc. In
+multi-user mode this allows users to connect to each other's UI Servers for
+monitoring or control purposes.
+
+For more information on security and configuration see
+:ref:`cylc.uiserver.multi-user`.
 
 .. _Jupyter Hub technical overview: https://jupyterhub.readthedocs.io/en/stable/reference/technical-overview.html
 
@@ -109,24 +115,3 @@ For information on the architecture of `Jupyter Hub`_ and the
 
 .. image:: img/gui-arch-multi-user.svg
    :width: 100%
-
-
-.. _cylc authorization:
-
-Authorization
--------------
-
-*Authentication* is provided by either `Jupyter Server`_ or `Jupyter Hub`_.
-
-*Authorization* in the `Cylc UI Server`_ is provided by Cylc. In
-multi-user mode this allows users to connect to each others UI Servers for
-monitoring or control purposes.
-
-See also :ref:`Authorization`.
-
-.. note::
-
-   This authorization only applies to the ``/cylc`` endpoints managed by the
-   Cylc extension.  Other `Jupyter Server`_ extensions such as `Jupyter Lab`_
-   do not share this authorization and will not be accessible to other users
-   (unless they can be configured to allow this).
