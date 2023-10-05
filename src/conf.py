@@ -145,10 +145,11 @@ graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
-linkcheck_anchors_ignore_for_url = [
+linkcheck_ignore = [
+    # linux.die.net doesn't like our request headers
+    'https?://linux.die.net/man/1/bash',
     # linkcheck has trouble handling GH anchors
-    r'https://github.com/.*#.*',
-    r'https://linux.die.net/.*'
+    'https?://github.com/.*#.*',
 ]
 
 nitpick_ignore_regex = [
