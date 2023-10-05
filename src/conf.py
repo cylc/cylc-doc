@@ -145,11 +145,17 @@ graphviz_output_format = 'svg'
 graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
-linkcheck_ignore = [
-    # linkcheck has trouble handling GH anchors
-    r'https://github.com/.*#.*',
-    r'https://linux.die.net/.*'
-]
+MOZ_HEADER = {
+    'User-Agent': (
+        'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0)'
+        ' Gecko/20100101 Firefox/24.0'
+        )
+    }
+
+linkcheck_request_headers = {
+    r'https://docs.github.com/': MOZ_HEADER,
+    r'https://linux.die.net/': MOZ_HEADER,
+}
 
 nitpick_ignore_regex = [
     # intersphinx has trouble with pyzmq classes:
