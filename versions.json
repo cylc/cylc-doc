@@ -35,12 +35,13 @@
         "html",
         "singlehtml"
     ],
+    "8.2.2": [
+        "html"
+    ],
     "stable": [
-        "slides",
         "html"
     ],
     "latest": [
-        "slides",
         "html"
     ]
 }

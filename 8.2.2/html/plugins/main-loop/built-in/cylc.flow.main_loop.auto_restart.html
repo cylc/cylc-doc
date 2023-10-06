@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.main_loop.auto_restart &mdash; Cylc 8.2.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/diff_selector.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/grid_table.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/hieroglyph_theme_addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/tutorial.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/addons.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../_static/js/diff_selector.js"></script>
+        <script src="../../../_static/js/minicylc.js"></script>
+        <script src="../../../_static/js/spoiler.js"></script>
+        <script src="../../../_static/js/addons.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="cylc.flow.main_loop.health_check" href="cylc.flow.main_loop.health_check.html" />
+    <link rel="prev" title="Main Loop Plugins" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Plugins</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../cylc-rose.html">Cylc Rose</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Main Loop Plugins</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#built-in-plugins">Built In Plugins</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">cylc.flow.main_loop.auto_restart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylc.flow.main_loop.health_check.html">cylc.flow.main_loop.health_check</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylc.flow.main_loop.log_data_store.html">cylc.flow.main_loop.log_data_store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylc.flow.main_loop.log_main_loop.html">cylc.flow.main_loop.log_main_loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylc.flow.main_loop.log_memory.html">cylc.flow.main_loop.log_memory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylc.flow.main_loop.reset_bad_hosts.html">cylc.flow.main_loop.reset_bad_hosts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#configuring">Configuring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#developing-main-loop-plugins">Developing Main Loop Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../install/index.html">Pre-Configure And Post-Install Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../job-runners/index.html">Custom Job Submission Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Plugins</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Main Loop Plugins</a></li>
+      <li class="breadcrumb-item active">cylc.flow.main_loop.auto_restart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/plugins/main-loop/built-in/cylc.flow.main_loop.auto_restart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cylc.flow.main_loop.auto_restart">
+<span id="cylc-flow-main-loop-auto-restart"></span><h1>cylc.flow.main_loop.auto_restart<a class="headerlink" href="#module-cylc.flow.main_loop.auto_restart" title="Permalink to this heading"></a></h1>
+<p>Automatically restart workflows if they are running on bad servers.</p>
+<p>Loads in the global configuration to check if the server a workflow is running
+on is listed in <a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>.</p>
+<p>This is useful if a host needs to be taken off-line e.g. for scheduled
+maintenance.</p>
+<p>This functionality is configured via the following site configuration
+settings:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a></p></li>
+</ul>
+<p>The auto stop-restart feature has two modes:</p>
+<dl>
+<dt>Normal Mode</dt><dd><p>When a host is added to the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a> list, any workflows
+running on that host will automatically shutdown then restart selecting a
+new host from <a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a>.</p>
+<p>For safety, before attempting to stop the workflow Cylc will first wait
+for any jobs running locally (under background or at) to complete.</p>
+<p>In order for Cylc to be able to restart workflows the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]available</span></code></a> hosts must all be on a
+shared filesystem.</p>
+</dd>
+<dt>Force Mode</dt><dd><p>If a host is suffixed with an exclamation mark then Cylc will not attempt
+to automatically restart the workflow and any local jobs (running under
+background or at) will be left running.</p>
+</dd>
+</dl>
+<p>For example in the following configuration any workflows running on
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> will attempt to restart on <code class="docutils literal notranslate"><span class="pre">pub</span></code> whereas any workflows
+running on <code class="docutils literal notranslate"><span class="pre">bar</span></code> will stop immediately, making no attempt to restart.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+     <span class="nt">[[run hosts]]</span>
+         <span class="nv">available </span><span class="o">=</span><span class="s"> pub</span>
+         <span class="nv">condemned </span><span class="o">=</span><span class="s"> foo, bar!</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Cylc will reject hosts with ambiguous names such as <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or
+<code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> for this configuration as
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>
+are evaluated on the workflow host server.</p>
+</div>
+<p>To prevent large numbers of workflows attempting to restart simultaneously the
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a> setting defines a period
+of time in seconds.
+Workflows will wait for a random period of time between zero and
+<a class="reference internal" href="../../../reference/config/global.html#global.cylc[scheduler]auto restart delay" title="global.cylc[scheduler]auto restart delay"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]auto</span> <span class="pre">restart</span> <span class="pre">delay</span></code></a> seconds before
+attempting to stop and restart.</p>
+<p>Workflows that are started up in no-detach mode cannot auto stop-restart on a
+different host - as it will still end up attached to the condemned host.
+Therefore, a workflow in no-detach mode running on a condemned host will abort
+with a non-zero return code. The parent process should manually handle the
+restart of the workflow if desired.</p>
+<section id="python-api">
+<h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this heading"></a></h2>
+<p class="rubric">Coroutines</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cylc.flow.main_loop.auto_restart.auto_restart" title="cylc.flow.main_loop.auto_restart.auto_restart"><code class="xref py py-obj docutils literal notranslate"><span class="pre">auto_restart</span></code></a></p></td>
+<td><p>Automatically restart the workflow if configured to do so.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylc.flow.main_loop.auto_restart.auto_restart">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.flow.main_loop.auto_restart.</span></span><span class="sig-name descname"><span class="pre">auto_restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.main_loop.auto_restart.auto_restart" title="Permalink to this definition"></a></dt>
+<dd><p>Automatically restart the workflow if configured to do so.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Main Loop Plugins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cylc.flow.main_loop.health_check.html" class="btn btn-neutral float-right" title="cylc.flow.main_loop.health_check" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 06, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "plugins/main-loop/built-in/cylc.flow.main_loop.auto_restart";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
