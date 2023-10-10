@@ -72,6 +72,7 @@ Cylc provides syntax plugins for the following editors:
 .. _language-cylc: https://github.com/cylc/language-cylc
 .. _Cylc.tmbundle: https://github.com/cylc/Cylc.tmbundle
 .. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
+.. _cylc.vim: https://github.com/cylc/cylc.vim
 
 Atom
    install the `language-cylc`_ extension.
@@ -90,13 +91,12 @@ Kate
    running the following command
    ``cylc get-resources syntax/cylc.xml .``
    installation instructions are at the top of the file.
+NeoVim
+   Install the `cylc.vim` plugin.
 PyCharm
    Install the `Cylc.tmbundle`_.
 Vim
-   The syntax file can be obtained from the Cylc library by
-   running the following command
-   ``cylc get-resources syntax/cylc.vim .``
-   installation instructions are at the top of the file.
+   Install the `cylc.vim` plugin.
 Visual Studio Code
    Install the `vscode-cylc`_ extension.
 Sublime Text 3
