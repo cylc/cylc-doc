@@ -6,6 +6,7 @@ User Guide
    :maxdepth: 2
 
    introduction
+   examples/index
    writing-workflows/index
    installing-workflows
    running-workflows/index

@@ -56,6 +56,7 @@ cleanall:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 # NOTE: EXPORT_ALL_VARIABLES exports make vars as env vars
 %: Makefile .EXPORT_ALL_VARIABLES
+	bin/link-examples
 	# build documentation
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	# write out dict of available versions and formats
