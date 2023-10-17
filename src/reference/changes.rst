@@ -41,10 +41,10 @@ Cylc 8.3.0
 Cylc ignores `PYTHONPATH`
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Cylc now ignores ``PYTHONPATH`` to make it more robust to task
+Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
 environments which set this value. If you want to add to the Cylc
 environment itself, e.g. to install a Cylc extension,
-use ``CYLC_PYTHONPATH``.
+use ``$CYLC_PYTHONPATH``.
 
 
 Upgrade To The Latest Jupyter Releases
