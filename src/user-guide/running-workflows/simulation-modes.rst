@@ -48,6 +48,12 @@ Tasks always complete custom outputs.
 
 By default they succeed, and return a succeeded output.
 
+.. warning::
+
+   In simulation mode a succeeded output may not imply that
+   submitted and/or started outputs are generated - so you will not
+   be able to test graph pathways such as ``task:started => do_something`.
+
 You can set some or all instances of a task to fail using
 :cylc.conf:`[runtime][<namespace>][simulation]fail cycle points`.
 `fail cycle points` takes either a list of cycle point strings or "all".
