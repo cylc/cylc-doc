@@ -44,9 +44,9 @@ run length is computed by dividing the time limit by the speedup factor.
 Simulated Failure
 ^^^^^^^^^^^^^^^^^
 
-By default all tasks succeed, sending all task outputs.
+Tasks always complete custom outputs.
 
-But you may want to test how a workflow handles task failure.
+By default they succeed, and return a succeeded output.
 
 You can set some or all instances of a task to fail using
 :cylc.conf:`[runtime][<namespace>][simulation]fail cycle points`.
