@@ -52,20 +52,20 @@ By default they succeed, and return a succeeded output.
 
    In simulation mode a succeeded output may not imply that
    submitted and/or started outputs are generated - so you will not
-   be able to test graph pathways such as ``task:started => do_something`.
+   be able to test graph pathways such as ``task:started => do_something``.
 
 You can set some or all instances of a task to fail using
-:cylc.conf:`[runtime][<namespace>][simulation]fail cycle points`.
-`fail cycle points` takes either a list of cycle point strings or "all".
+:cylc:conf:`[runtime][<namespace>][simulation]fail cycle points`.
+``fail cycle points`` takes either a list of cycle point strings or "all".
 
 Tasks set to fail will succeed on their second or following simulated
 submission. If you want all submissions to fail, set
-:cylc.conf:`[runtime][<namespace>][simulation]fail try 1 only = False`.
+:cylc:conf:`[runtime][<namespace>][simulation]fail try 1 only = False`.
 
 For example, to simulate a task you know to be flaky on the half
 hour but not on the hour:
 
-.. code-block:: flow.cylc
+.. code-block:: cylc
 
    [[get_observations]]
       execution retry delays = PT30S
@@ -75,7 +75,7 @@ hour but not on the hour:
 In another case you might not expect the retry to work, and want to test
 whether your failure handling works correctly:
 
-.. code-block:: flow.cylc
+.. code-block:: cylc
 
    [[get_data]]
        execution retry delays = PT30S
