@@ -424,7 +424,7 @@ first ensure the variable is available on the server, e.g. by also forwarding
 the variable to ``[[localhost]]``. 
 
 This setting only affects the task submission (e.g. ``qsub``) which may use
-environment variables to set default direvtives. To set a variable once the
+environment variables to set default directives. To set a variable once the
 task has started see
 :cylc:conf:`global.cylc[platforms][<platform name>]copyable environment variables`.
 
