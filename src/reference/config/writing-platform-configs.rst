@@ -390,16 +390,17 @@ These variables are forwared to the Cylc server and may be used in the
  .. code-block:: cylc
     :caption: part of a ``global.cylc`` config file
 
-    [scheduler]
-        [[run hosts]]
-            ssh forward environment variables = LUSTRE_DISK, PROJECT
-
     [install]
         [[symlink dirs]]
             [[[hpc]]]
+                # Here the environment variable on the server is used
                 run = {{ environ['LUSTRE_DISK'] }}
 
     [platforms]
+        # 'localhost' platform is used when communicating with the server
+        [[localhost]]
+            ssh forward environment variables = LUSTRE_DISK, PROJECT
+
         [[hpc]]
             submit method = pbs
             [[[directives]]]
@@ -418,5 +419,24 @@ environment where you run ``cylc play``, e.g.
 will store the workflow under ``/g/data/foo`` and submit jobs under project
 ``bar``.
 
-This setting only affects the server - to set a variable once the task has
-started see :cylc:conf:`global.cylc[platforms][<platform name>]copyable environment variables`.
+You can also forward variables from the server to other platforms. You should
+first ensure the variable is available on the server, e.g. by also forwarding
+the variable to ``[[localhost]]``. 
+
+This setting only affects the task submission (e.g. ``qsub``) which may use
+environment variables to set default direvtives. To set a variable once the
+task has started see
+:cylc:conf:`global.cylc[platforms][<platform name>]copyable environment variables`.
+
+ .. code-block:: cylc
+    :caption: part of a ``global.cylc`` config file
+
+    [platforms]
+        [[localhost]]
+            ssh forward environment variables = PROJECT
+
+        [[hpc]]
+            # Here qsub has been configured to read from $PROJECT
+            ssh forward environment variables = PROJECT
+            submit method = pbs
+
