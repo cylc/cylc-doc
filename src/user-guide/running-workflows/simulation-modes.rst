@@ -79,8 +79,6 @@ whether your failure handling works correctly:
 
    [[get_data]]
        execution retry delays = PT30S
-       [[[outputs]]]
-          server_broken = "data server unreachable"
        [[[simulation]]]
           fail try 1 only = false
           fail cycle points = 2022-01-01T03:00Z
