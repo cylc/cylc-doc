@@ -39,7 +39,7 @@ Cylc 8.3.0
    :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
 
 Cylc ignores ``$PYTHONPATH``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
 environments which set this value. If you want to add to the Cylc
