@@ -120,6 +120,12 @@ when a workflow is started:
        [[events]]
            startup handlers = my-handler %(workflow)s %(host) %(port)
 
+
+.. note::
+
+   If you wish to use custom Python Libraries in an event handler you
+   need to add these to ``CYLC_PYTHONPATH`` rather than ``PYTHONPATH``.
+
 .. _workflow_event_template_variables:
 
 Workflow Event Template Variables

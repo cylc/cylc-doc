@@ -237,7 +237,7 @@ properties:
 - they can be located either:
 
   - in ``<workflow-dir>/lib/python/``;
-  - or anywhere in your Python library path.
+  - or anywhere in your ``$CYLC_PYTHONPATH``.
 
 - they can take arbitrary positional and keyword arguments
 - workflow and task identity, and cycle point, can be passed to trigger

@@ -38,6 +38,14 @@ Cylc 8.3.0
    :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
    :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
 
+Cylc ignores ``$PYTHONPATH``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
+environments which set this value. If you want to add to the Cylc
+environment itself, e.g. to install a Cylc extension,
+use a custom xtrigger, or event handler use ``$CYLC_PYTHONPATH``.
+
 
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -156,11 +164,11 @@ Combined Commands
 
 Two new commands have been added as short-cuts for common working patterns:
 
-``cylc vip`` 
+``cylc vip``
    Validate, install and plays a workflow, equivalent to:
 
    .. code-block:: bash
-   
+
       cylc validate <path>
       cylc install <path>
       cylc play <id>

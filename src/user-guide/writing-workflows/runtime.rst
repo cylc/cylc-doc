@@ -325,7 +325,7 @@ as it is running, these can be placed in:
 * ``share/bin/`` - for executables. This location is automatically added to ``PATH``
   (before the top-level ``bin/`` in the run dir).
 * ``share/lib/python/`` - for Python modules. This location is automatically added
-  to ``PYTHONPATH`` (before the top-level ``lib/python/`` in the run dir).
+  to ``$PYTHONPATH`` (before the top-level ``lib/python/`` in the run dir).
 
 .. note::
 
