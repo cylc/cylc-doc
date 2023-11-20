@@ -44,9 +44,7 @@ run length is computed by dividing the time limit by the speedup factor.
 Simulated Failure
 ^^^^^^^^^^^^^^^^^
 
-Tasks always complete custom outputs.
-
-By default they succeed, and return a succeeded output.
+Tasks always complete custom outputs, by default they succeed.
 
 .. warning::
 
