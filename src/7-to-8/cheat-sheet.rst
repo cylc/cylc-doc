@@ -260,6 +260,33 @@ Generate a visualisation for a workflow without running it:
 
        The web UI will have full graph vis. in a future release.
 
+Datetime Operations
+-------------------
+
+Datetime operations in task scripts:
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 7** & Rose 2019
+     - **Cylc 8** (Rose 2)
+   * - ::
+
+         rose date <point> --offset <offset>
+     - ::
+
+         isodatetime <point> --offset <offset>
+   * - ::
+
+         rose date -c
+         # equivalent to:
+         rose date "$CYLC_TASK_CYCLE_POINT"
+     - ::
+
+         isodatetime ref
+         # equivalent to:
+         isodatetime "$CYLC_TASK_CYCLE_POINT"
+
 Rose Stem
 ---------
 
