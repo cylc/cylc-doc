@@ -62,6 +62,11 @@ in :ref:`ClockTriggerTasks`.
 Clock triggers, unlike other trigger functions, are executed synchronously in
 the main process. The clock trigger function signature looks like this:
 
+..
+   NOTE: don't use autofunction here because cylc.flow.xtriggers.wall_clock
+   has a different signature, and instead there is special handling
+   in XtriggerManager
+
 .. code-block:: python
 
    wall_clock(offset=None)
@@ -130,10 +135,7 @@ tasks off of remote task statuses or messages in other workflows.
 
 The workflow state trigger function signature looks like this:
 
-.. code-block:: python
-
-   workflow_state(workflow, task, point, offset=None, status='succeeded',
-                  message=None, cylc_run_dir=None, debug=False)
+.. autofunction:: cylc.flow.xtriggers.workflow_state.workflow_state
 
 The first three arguments are compulsory; they single out the target workflow name
 (``workflow``) task name (``task``) and cycle point
@@ -344,9 +346,7 @@ time (useful for testing the effect of a long-running trigger function
 - which should be avoided) and has a configurable random chance of
 success. The function signature is:
 
-.. code-block:: python
-
-   xrandom(percent, secs=0, _=None, debug=False)
+.. autofunction:: cylc.flow.xtriggers.xrandom.xrandom
 
 The ``percent`` argument sets the odds of success in any given call;
 ``secs`` is the number of seconds to sleep before returning; and the
