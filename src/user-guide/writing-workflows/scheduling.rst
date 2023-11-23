@@ -599,10 +599,7 @@ The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 
 At start up the initial cycle point is passed to job environments
 as ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` and stored in the workflow
-database to persist across restarts. However it gets wiped out (set to
-``None``) by a :term:`warm start` (``cylc play --start-cycle-point`` or ``cylc
-play --start-task``) - which is essentially a restart that ignores prior state
-information.
+database to persist across restarts.
 
 The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
 check if they are running in the initial cycle point, when different behaviour
