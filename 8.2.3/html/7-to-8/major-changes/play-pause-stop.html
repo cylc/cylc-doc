@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Pause Stop &mdash; Cylc 8.2.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Python 2 =&gt; 3" href="python-2-3.html" />
+    <link rel="prev" title="Platforms" href="platforms.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Play Pause Stop</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#re-running-workflows">Re-Running Workflows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hold-release">Hold &amp; Release</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mapping-to-old-commands">Mapping To Old Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.2 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Play Pause Stop</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/play-pause-stop.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="play-pause-stop">
+<span id="id1"></span><h1>Play Pause Stop<a class="headerlink" href="#play-pause-stop" title="Permalink to this heading"></a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Does This Change Affect Me?</p>
+<p>Yes if you run Cylc workflows.</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>Cylc 8 uses a simplified model for controlling workflows based on the controls
+of a tape player.</p>
+<p>There are now three controls, play, pause and stop:</p>
+<ul class="simple">
+<li><p>When a workflow is playing, the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> is running.</p></li>
+<li><p>When a workflow is paused, no new jobs will be submitted.</p></li>
+<li><p>When a workflow is stopped the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> is no longer running.</p></li>
+</ul>
+<p>These controls are available in the web GUI or on the command line with the
+commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code></p></li>
+</ul>
+<p>A workflow can be safely played, paused and stopped any number of times without
+interrupting the workflow.</p>
+</section>
+<section id="re-running-workflows">
+<h2>Re-Running Workflows<a class="headerlink" href="#re-running-workflows" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command will always pick up where it left off (a
+<a class="reference internal" href="../../glossary.html#term-restart"><span class="xref std std-term">restart</span></a>).</p>
+<p>If you want to re-run the entire workflow again from the start either:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../user-guide/installing-workflows.html#using-cylc-install"><span class="std std-ref">Install a new run</span></a>.</p></li>
+<li><p>Or if you want to keep the data from the old run start a new <a class="reference internal" href="../../glossary.html#term-flow"><span class="xref std std-term">flow</span></a> at
+the beginning of the graph, and stop the original flow.</p></li>
+</ul>
+<p>It is still possible to re-run workflows in-place in the Cylc 7 manner, however,
+this is discouraged.
+To do this remove the workflow database as well as any other evidence of the
+previous run that is no longer desired:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove the workflow database, the work, share and log directories</span>
+cylc<span class="w"> </span>clean<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--rm<span class="w"> </span>.service/db:work:share:log
+
+<span class="c1"># only remove the worflow database</span>
+$<span class="w"> </span>cylc<span class="w"> </span>clean<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--rm<span class="w"> </span>.service/db
+</pre></div>
+</div>
+<p>Then restart with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+</section>
+<section id="hold-release">
+<h2>Hold &amp; Release<a class="headerlink" href="#hold-release" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code> commands are still present. These
+work on individual tasks rather than the workflow as a whole.</p>
+</section>
+<section id="mapping-to-old-commands">
+<h2>Mapping To Old Commands<a class="headerlink" href="#mapping-to-old-commands" title="Permalink to this heading"></a></h2>
+<table class="grid-table docutils align-default">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p><strong>Cylc 7</strong></p></td>
+<td><p><strong>Rose 2019</strong></p></td>
+<td><p><strong>Cylc 8</strong> (Rose 2)</p></td>
+</tr>
+<tr class="row-even"><td><p>Play</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">run</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rose</span> <span class="n">suite</span><span class="o">-</span><span class="n">run</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">play</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Pause</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">hold</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">hold</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">pause</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Resume</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">release</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">release</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">play</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Stop</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">stop</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rose</span> <span class="n">suite</span><span class="o">-</span><span class="n">shutdown</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">stop</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="platforms.html" class="btn btn-neutral float-left" title="Platforms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python-2-3.html" class="btn btn-neutral float-right" title="Python 2 =&gt; 3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Dec 05, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/play-pause-stop";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

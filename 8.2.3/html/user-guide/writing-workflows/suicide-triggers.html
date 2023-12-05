@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suicide Triggers &mdash; Cylc 8.2.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Scheduler Configuration" href="scheduler.html" />
+    <link rel="prev" title="External Triggers" href="external-triggers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Suicide Triggers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#remaining-use-case">Remaining Use Case</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scheduler.html">Scheduler Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compound-commands.html">Compound Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Suicide Triggers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/writing-workflows/suicide-triggers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="suicide-triggers">
+<span id="suicidetriggers"></span><h1>Suicide Triggers<a class="headerlink" href="#suicide-triggers" title="Permalink to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Suicided triggers were needed in Cylc 7 and earlier to remove pre-spawned
+waiting tasks from graph branches not taken at runtime, which would stall
+the workflow.</p>
+<p>However, <strong>Cylc 8 does not need suicide triggers for</strong> <a class="reference internal" href="../../glossary.html#term-branching"><span class="xref std std-term">graph
+branching</span></a>.</p>
+<p>They remain supported, and documented, for backward compatibility and for
+a rare <a class="reference internal" href="#remaining-use-cases"><span class="std std-ref">edge case</span></a>.</p>
+</div>
+<p>Suicide triggers remove waiting <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">tasks</span></a> from the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler’s</span></a> active <a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a> at runtime.</p>
+<p>They are activated just like normal <a class="reference internal" href="../../glossary.html#term-task-trigger"><span class="xref std std-term">task triggers</span></a> but
+they remove the downstream task (prefixed with <code class="docutils literal notranslate"><span class="pre">!</span></code>) instead of triggering it
+to run.</p>
+<p>Here, the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> will be removed if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="x">!bar</span>
+</pre></div>
+</div>
+<p>Suicide triggers combine in the same way as normal triggers, so this graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+<span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<p>is equivalent to this:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<p>i.e. both <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> must succeed for <code class="docutils literal notranslate"><span class="pre">baz</span></code> to be removed.</p>
+<p>To remove a task after any one of several events, use an OR operator:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">|</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="x">!baz</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>There’s no point removing tasks that are not in the <code class="docutils literal notranslate"><span class="pre">waiting</span></code> state</p></li>
+<li><p>In Cylc 8 all waiting tasks in front of the active window are virtual and
+don’t need to be “removed”</p></li>
+<li><p>The only non-virtual waiting tasks in Cylc 8 are those <a class="reference internal" href="../../glossary.html#term-active-waiting"><span class="xref std std-term">actively
+waiting</span></a> on an external trigger; these might need to
+be removed if they will never run</p></li>
+</ul>
+</div>
+<section id="remaining-use-case">
+<span id="remaining-use-cases"></span><h2>Remaining Use Case<a class="headerlink" href="#remaining-use-case" title="Permalink to this heading"></a></h2>
+<p>Suicide triggers may be needed to remove an <a class="reference internal" href="../../glossary.html#term-active-waiting-task"><span class="xref std std-term">active-waiting task</span></a> when it
+can be inferred from the status of another task that the external trigger will
+never be satisfied.</p>
+<p>In the following example imagine that the two xtriggers watch two locations for
+the same file to appear. The file will be delivered to one location or the
+other but not to both, so if one xtrigger is satisfied the other will never be.
+The stuck waiting task can be removed with a suicide trigger, so that it
+doesn’t stall the workflow:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="cp">@xtrigger1</span> <span class="o">=&gt;</span> <span class="kd">A</span>
+<span class="cp">@xtrigger2</span> <span class="o">=&gt;</span> <span class="kd">B</span>
+
+<span class="kd">A</span> <span class="o">=&gt;</span> <span class="x">!B</span>  <span class="c1"># If A succeeds, remove B</span>
+<span class="kd">B</span> <span class="o">=&gt;</span> <span class="x">!A</span>  <span class="c1"># If B succeeds, remove A</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="external-triggers.html" class="btn btn-neutral float-left" title="External Triggers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scheduler.html" class="btn btn-neutral float-right" title="Scheduler Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Dec 05, 2023.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-workflows/suicide-triggers";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
