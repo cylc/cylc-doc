@@ -75,6 +75,9 @@ jobs:
       - name: install dependencies
         uses: ./docs/.github/actions/install-dependencies
 
+      - name: install cylc-doc
+        run: pip install ./docs/
+
       - name: install libs to document
         id: install-libs
         uses: cylc/release-actions/install-cylc-components@v1
