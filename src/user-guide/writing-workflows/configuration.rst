@@ -153,7 +153,14 @@ show an inlined copy of the workflow with correct line numbers.
 ``cylc lint``
 ^^^^^^^^^^^^^
 
+.. seealso::
+
+   :ref:`How to configure Cylc lint at project level <lint.pyproject.toml>`
+   using a ``pyproject.toml``.
+
 .. automodule:: cylc.flow.scripts.lint
+
+.. _lint.pyproject.toml:
 
 Configure ``cylc lint`` at project level
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
