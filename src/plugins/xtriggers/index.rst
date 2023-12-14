@@ -46,7 +46,7 @@ entry points. Each xtrigger is registered individually.
    :caption: ``pyproject.toml``
 
    [project.entry-points."cylc.xtriggers"]
-   foo = my_package.foo:foo
-   bar = my_package.foo:bar
-   baz = my_package.baz:baz
+   foo = "my_package.foo:foo"
+   bar = "my_package.foo:bar"
+   baz = "my_package.baz:baz"
 
