@@ -7,7 +7,6 @@ Running Workflows
    :maxdepth: 2
 
    scheduler-start-up
-   task-job-states
    tasks-jobs-ui
    retrying-tasks
    tracking-task-state

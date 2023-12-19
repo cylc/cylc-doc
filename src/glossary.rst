@@ -68,10 +68,41 @@ Glossary
       don't get overwritten.
 
 
+   active
+   active task
+      An active task is a task which is near ready to run, in the process of
+      running, or which requires user intervention.
+
+      Active tasks are:
+
+      - Tasks which have some, but not all of their prerequisites satisfied.
+      - ``waiting`` tasks, that are actively waiting on:
+
+        - :term:`xtriggers <xtrigger>`.
+        - :ref:`internal queues <InternalQueues>`
+        - :ref:`runahead limit <RunaheadLimit>`
+      - ``preparing`` tasks - i.e. tasks in the process of submitting jobs
+      - ``submitted`` and ``running`` tasks - i.e. those with active jobs
+      - :term: `incomplete` tasks which have completed without satisfying all of their
+        :term:`required outputs <required output>`, (e.g. a failed task
+        where success was required).
+
+      Active tasks are in the ``n=0`` :term:`window <n-window>` which means they
+      will always be displayed in the GUI and Tui.
+
+      The distinction between active and non-active tasks is important for
+      the computing of the :term:`runahead limit`.
+
+
+   active cycle
+      A cycle is active if it contains any :term:`active tasks <active task>`.
+
+      Active cycles are counted towards the :term:`runahead limit`.
+
+
    window
    n-window
    active window
-   workflow window
    active task pool
       This is a :term:`graph`-based window or view of the workflow at runtime,
       including tasks out to ``n`` graph edges from current :term:`active
@@ -153,19 +184,6 @@ Glossary
       .. note::
          If you are not using named or numbered runs, the workflow name will be
          the same as :term:`workflow id`.
-
-
-   active
-   active task
-      An active task is a task in the submitted or running state.
-
-
-   active-waiting
-   active-waiting task
-      An active-waiting task is a task in the :term:`scheduler's <scheduler>`
-      ``n=0`` :term:`active window` that is ready to run according to its task
-      prerequisites, but is still waiting on a limiting mechanism such as a
-      :term:`clock trigger`, task :term:`hold`, or :term:`internal queue`.
 
 
    external trigger
@@ -1675,13 +1693,18 @@ Glossary
 
    runahead limit
    runahead
-      In a :term:`cycling workflow`, the runahead limit determines the maximum
-      number of consecutive cycle points that can be active at once.
+      In a :term:`cycling workflow`, the runahead limit determines how far
+      ahead of the oldest :ref:`active cycle point` the workflow is permitted
+      to run.
+
+      The "oldest active cycle point" is the first cycle in the workflow to contain
+      any :term:`active tasks <active task>` (e.g. running tasks).
 
       .. seealso::
 
          * :cylc:conf:`[scheduling]runahead limit`
          * :ref:`Runahead Limiting`
+         * :term:`active cycle`
 
 
    workflow completion

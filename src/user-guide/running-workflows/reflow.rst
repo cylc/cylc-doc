@@ -122,12 +122,14 @@ Triggering with No Active Flows
    same as if you had triggered the task just before the workflow completed.
 
 Special Case: Triggering ``n=0`` Tasks
-   Tasks in the ``n=0`` window are :term:`active`, :term:`active-waiting`, or
-   :term:`incomplete`. Their flow membership is already determined - that of
+   Tasks in the ``n=0`` window are :term:`active tasks <active task>`.
+   Their flow membership is already determined - that of
    the parent tasks that spawned them.
 
-   - Triggering an :term:`active task` has no effect (it is already triggered).
-   - Triggering an :term:`active-waiting task` queues it to run in the same flow.
+   - Triggering a task with a submitted or running job has no effect
+     (it is already triggered).
+   - Triggering other :term:`active tasks <active task>` e.g. (a waiting
+     task which is held) queues it to run in the same flow.
    - Triggering an :term:`incomplete task` queues it to re-run in the same flow.
 
 
