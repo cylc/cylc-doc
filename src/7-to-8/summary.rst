@@ -65,7 +65,7 @@ At Cylc 8, there are two UIs available to monitor and control your workflows:
 
    .. code-block:: bash
 
-      cylc tui <workflow_id>
+      cylc tui
 
 - a web based UI application (requires `Cylc UI Server`_)
 

@@ -47,6 +47,20 @@ environment itself, e.g. to install a Cylc extension,
 use a custom xtrigger, or event handler use ``$CYLC_PYTHONPATH``.
 
 
+Tui
+^^^
+
+The Tui (terminal user interface) is a command line version of the Gui.
+You can use it to monitor and control your workflows.
+
+There has been a major update to Tui at Cylc 8.3.0, you can now use Tui to
+browse your installed workflows. Tui is now able to keep up with larger
+workflows which would previously have caused it to time out.
+
+.. image:: changes/tui-1.gif
+   :width: 100%
+
+
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
