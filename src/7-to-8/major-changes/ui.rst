@@ -12,7 +12,7 @@ Cylc Tui
 Cylc Tui (TUI = Terminal User Interface) is a command line version of the GUI
 which comes packaged with the Cylc scheduler.
 
-It can by used to monitor and control any workflows running under your user
+It can be used to monitor and control any workflows running under your user
 account, trigger tasks, access log files and perform other common activities.
 
 Start Tui by running the ``cylc tui`` command.
