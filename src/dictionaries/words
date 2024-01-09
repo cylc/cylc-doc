@@ -19,6 +19,7 @@ configargs
 configs
 coroutine
 coroutines
+cprofile
 cyclepoint
 dataset
 datasets
