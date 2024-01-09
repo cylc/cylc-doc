@@ -382,7 +382,7 @@ Sharing environment variables with the Cylc server
 Normally if a Cylc server is running on a remote host it will not keep
 environment variables that are present when you run ``cylc play``. You can
 whitelist variables to be sent to remote servers using
-:cylc:conf:`global.cylc[scheduler][run hosts]ssh forward environment variables`.
+:cylc:conf:`global.cylc[platforms][<platform name>]ssh forward environment variables`.
 
 These variables are forwared to the Cylc server and may be used in the
 `global.cylc` file templating.
