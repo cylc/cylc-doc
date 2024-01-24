@@ -12,6 +12,7 @@ The following are "core" plugins maintained by the Cylc team:
    main-loop/index
    install/index
    job-runners/index
+   xtriggers/index
 
 .. warning::
 

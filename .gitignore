@@ -24,5 +24,6 @@ src/appendices/command-ref.rst
 # auto-generated documentation
 src/plugins/main-loop/built-in
 src/plugins/install/built-in
+src/plugins/xtriggers/built-in
 src/user-guide/task-implementation/job-runner-handlers
 src/dictionaries/sentence_case

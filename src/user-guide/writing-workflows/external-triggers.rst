@@ -230,14 +230,17 @@ properties:
 
 - they must:
 
-  - be defined in a module with the same name as the function;
+  - be defined in a module with the same name as the function, unless
+    provided using the ``cylc.xtriggers`` entry point;
   - be compatible with the same Python version that runs the scheduler
     (see :ref:`Requirements` for the latest version specification).
 
 - they can be located either:
 
   - in ``<workflow-dir>/lib/python/``;
-  - or anywhere in your ``$CYLC_PYTHONPATH``.
+  - anywhere in your ``$CYLC_PYTHONPATH``;
+  - or defined using the ``cylc.xtriggers`` entry point for an installed
+    package.
 
 - they can take arbitrary positional and keyword arguments
 - workflow and task identity, and cycle point, can be passed to trigger
