@@ -332,6 +332,8 @@ There are three ISO 8601 recurrence formats supported by Cylc, detailed below
 in order from most commonly used to least commonly used.
 
 
+.. _user_guide.cycling_format_3:
+
 Format 3: ``R[limit?]/[datetime]/[interval]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -391,6 +393,8 @@ If the limit is omitted, unlimited cycling is assumed. This will be
 bounded by the workflow's final cycle point if given.
 
 
+.. _user_guide.cycling_format_4:
+
 Format 4: ``R[limit?]/[interval]/[datetime]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -427,6 +431,8 @@ So, for example, you can write:
    P2W/T00   # Run every 2 weeks ending at 00:00 before/at the final cycle point
    R//T00    # Run every day ending at 00:00 before/at the final cycle point
 
+
+.. _user_guide.cycling_format_1:
 
 Format 1: ``R[limit?]/[datetime]/[datetime]``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
