@@ -37,6 +37,8 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
     'sphinxcontrib.spelling',
     # sphinx user community extensions
     'hieroglyph',
@@ -130,7 +132,10 @@ intersphinx_mapping = {
 nitpick_ignore = [
     # This class appears in documented type-hints but is not documented in the
     # Python docs so fails build.
-    ('py:class', 're.Pattern')
+    ('py:class', 're.Pattern'),
+    ('py:class', 'SubFuncContext'),
+    ('py:exc', 'ISO8601SyntaxError'),
+    ('py:exc', 'StrftimeSyntaxError'),
 ]
 
 # List of patterns, relative to source directory, that match files and
