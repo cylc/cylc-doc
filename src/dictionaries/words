@@ -11,6 +11,7 @@ backticks
 baz
 boolean
 booleans
+cfg
 changelog
 changelogs
 conf
@@ -20,6 +21,7 @@ configs
 coroutine
 coroutines
 cprofile
+ctx
 cyclepoint
 dataset
 datasets
@@ -72,6 +74,8 @@ iso
 iterable
 jitter
 jobscript
+kwarg
+kwargs
 latin
 lifecycle
 linearization
