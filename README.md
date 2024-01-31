@@ -76,6 +76,33 @@ to via intersphinx.
 We use a few custom Sphinx extensions, for details see
 [cylc-sphinx-extensions](https://cylc.github.io/cylc-sphinx-extensions/).
 
+
+### Label Guidance
+
+Some things to bear in mind when defining labels in cylc-doc e.g. `.. _my-label`:
+
+**Namespace your labels**
+
+* E.g. `user-guide.something` rather than `something`.
+* (Look for existing naming patterns before defining a new one).
+
+**Labels are imported from other projects (e.g. Rose, Jupyter Server, etc)**
+* So avoid excessively vague labels where possible.
+* And only add labels where they are needed (labels are only for references,
+  they don't serve any other purpose so adding excess ones doesn't benefit
+  other things).
+
+**References resolve attach headers**
+* So if a section has the heading `Running Schedulers`, then a good label
+  might be `user-guide.running-schedulers` rather than `scheduler runtime`
+  as this gives the person using the label a better idea of how it is
+  likely to be presented.
+
+**Labels are forever**
+* Other projects (e.g. metomi-docs) might use these labels!
+
+
+
 ## Development
 
 [![test](https://github.com/cylc/cylc-doc/workflows/test/badge.svg?branch=master&event=push)](https://github.com/cylc/cylc-doc/actions?query=workflow%3Atest)
