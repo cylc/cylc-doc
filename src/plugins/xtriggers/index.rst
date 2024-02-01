@@ -14,12 +14,14 @@ Cylc Flow provides the following xtriggers.
    :toctree: built-in
    :template: docstring_only.rst
 
-   cylc.flow.xtriggers.echo
-   cylc.flow.xtriggers.workflow_state
-   cylc.flow.xtriggers.xrandom
+   cylc.flow.xtriggers.echo.echo
+   cylc.flow.xtriggers.workflow_state.workflow_state
+   cylc.flow.xtriggers.xrandom.xrandom
 
 .. Note: Autosummary generates files in this directory, these are cleaned
          up by `make clean`.
+
+.. _developing.xtrigger.plugins:
 
 Developing ``xtrigger`` plugins
 -------------------------------

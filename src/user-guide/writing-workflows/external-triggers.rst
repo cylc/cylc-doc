@@ -228,28 +228,37 @@ Custom Trigger Functions
 Trigger functions are just normal Python functions, with a few special
 properties:
 
-- they must:
+- They must:
 
-  - be defined in a module with the same name as the function, unless
+  - Be defined in a module with the same name as the function, unless
     provided using the ``cylc.xtriggers`` entry point;
   - be compatible with the same Python version that runs the scheduler
     (see :ref:`Requirements` for the latest version specification).
 
-- they can be located either:
+- They can be located either:
 
-  - in ``<workflow-dir>/lib/python/``;
-  - anywhere in your ``$CYLC_PYTHONPATH``;
-  - or defined using the ``cylc.xtriggers`` entry point for an installed
+  - In ``<workflow-dir>/lib/python/``;
+  - Anywhere in your ``$CYLC_PYTHONPATH``;
+  - Defined using the ``cylc.xtriggers`` entry point for an installed
     package.
 
-- they can take arbitrary positional and keyword arguments
-- workflow and task identity, and cycle point, can be passed to trigger
+.. seealso::
+
+   :ref:`developing.xtrigger.plugins` for more information on writing
+   xtrigger plugins.
+
+- They can take arbitrary positional and keyword arguments
+- Workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
-- integer, float, boolean, and string arguments will be recognized and
+- Integer, float, boolean, and string arguments will be recognized and
   passed to the function as such
-- if a trigger function depends on files or directories (for example)
+- If a trigger function depends on files or directories (for example)
   that might not exist when the function is first called, just return
   unsatisfied until everything required does exist.
+- The module containing the xtrigger function may also contain a "validate"
+  function taking arguments ``args``, ``kwargs`` and ``signature``, and
+  raising ``cylc.flow.exceptions import WorkflowConfigError`` if validation
+  fails. See :ref:`xrandom.validate` for an example of a validate function.
 
 .. note::
 
@@ -362,6 +371,45 @@ An example xrandom trigger workflow:
 
 .. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
    :language: cylc
+
+.. _xrandom.validate:
+
+Validation example using xrandom
+""""""""""""""""""""""""""""""""
+
+The xrandom xtrigger module might also contain a ``validate`` function.
+
+This will be run on the inputs to an xtrigger, and should raise
+a ``WorkflowConfigError`` with a meaningful descripting if a condition
+is not met.
+
+.. code-block:: python
+
+   from cylc.flow.exceptions import WorkflowConfigError
+
+   def validate(args: List, kwargs: Dict, signature: str) -> None:
+       # Total number of args & kwargs makes sense:
+       totalargs = len(args) + len(kwargs)
+       if totalargs < 1 or totalargs > 4:
+           raise WorkflowConfigError(
+               f'{signature} xtrigger should have between 1 and 4 arguments')
+
+       # Check whether we have a percentage argument:
+       if not args and not 'percent' in kwargs:
+           raise WorkflowConfigError(
+               f'{signature} xtrigger should have a percentage argument')
+
+       # Check that percentage is a reasonable value:
+       percentage = args[0] if args else kwargs['percentage']
+       if (
+           not isinstance(percentage, (int, float))
+           or percentage > 100
+           or percentage < 0
+       ):
+           raise WorkflowConfigError(
+               f'{signature} xtrigger percentage argument'
+               f' must be a number between 0 and 100, not {percentage}')
+
 
 .. _Current Trigger Function Limitations:
 
