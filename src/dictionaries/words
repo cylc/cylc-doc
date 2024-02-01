@@ -46,6 +46,7 @@ filesystem
 filesystems
 fillchar
 foo
+fpath
 freeform
 fullmatch
 globals
@@ -127,6 +128,7 @@ py
 pythonically
 queueing
 qux
+randint
 rc
 refactor
 regex
@@ -146,6 +148,7 @@ ret
 retrigger
 retriggered
 retriggering
+rmtree
 roadmap
 ruleset
 rulesets
@@ -158,6 +161,7 @@ setup
 setups
 shebang
 shutdown
+shutil
 situ
 speedup
 ssh
@@ -183,6 +187,7 @@ symlink
 symlinked
 symlinking
 symlinks
+sys
 taskdef
 templated
 templating
@@ -192,6 +197,7 @@ timeouts
 timestep
 timezone
 timezones
+tuple
 uiserver
 unpaused
 unpausing
@@ -206,6 +212,7 @@ vs
 wallclock
 websocket
 websockets
+whitelist
 whitelisting
 whitespace
 workflow

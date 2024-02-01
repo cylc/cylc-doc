@@ -380,7 +380,7 @@ Validation example using xrandom
 The xrandom xtrigger module might also contain a ``validate`` function.
 
 This will be run on the inputs to an xtrigger, and should raise
-a ``WorkflowConfigError`` with a meaningful descripting if a condition
+a ``WorkflowConfigError`` with a meaningful description if a condition
 is not met.
 
 .. code-block:: python
