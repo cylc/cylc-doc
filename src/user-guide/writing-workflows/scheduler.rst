@@ -15,9 +15,12 @@ workflows.
 Workflow Events
 ---------------
 
-Cylc supports workflow events which pertain to the :term:`scheduler` e.g.
-``startup`` and ``shutdown`` and task events e.g. ``submitted`` and ``failed``
-which pertain to :term:`tasks <task>`. This section covers workflow events, for
+There are two types of event in Cylc:
+
+* workflow events e.g. ``startup`` and ``shutdown``, which pertain to the :term:`scheduler` 
+* task events e.g. ``submitted`` and ``failed``, which pertain to :term:`tasks <task>`.
+
+This section covers workflow events, for
 task events see :ref:`user_guide.runtime.task_event_handling`.
 
 .. rubric:: Event Handlers
@@ -75,6 +78,8 @@ Some workflow events have related configurations e.g. for setting the timeout.
 
    The timer starts counting down at scheduler startup. It resets on workflow
    restart.
+
+   Note, the `abort` event is not related to "Abort On Event" handlers.
 
 .. describe:: stall
 
