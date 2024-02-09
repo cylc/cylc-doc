@@ -181,6 +181,8 @@ Within the ``[tool.cylc.lint]`` section you may define the following:
    A list of rulesets to use.
 
    Allowed values: ``'728'``, ``'style'``, ``'all'``.
+   
+   (You can override this on the command line.)
 
 ``ignore``
    Individual rules to ignore: A list of rule codes, such as ``S007``.
