@@ -79,7 +79,7 @@ Some workflow events have related configurations e.g. for setting the timeout.
    The timer starts counting down at scheduler startup. It resets on workflow
    restart.
 
-   Note, the `abort` event is not related to "Abort On Event" handlers.
+   Note, the ``abort`` event is not raised by "Abort On Event" handlers.
 
 .. describe:: stall
 
