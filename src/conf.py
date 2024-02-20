@@ -111,6 +111,10 @@ autosummary_generate = True
 autosummary_generate_overwrite = True
 autosummary_imported_members = False
 
+# Autodoc type hints can look very messy if they are included in the signature,
+# so we only include them in the description instead:
+autodoc_typehints = 'description'
+
 # Mapping to other Sphinx projects we want to import references from.
 # NOTE: To search available references, use:
 # $ python -m sphinx.ext.intersphinx <url>/objects.inv | less
