@@ -11,6 +11,7 @@ Xtrigger Plugins
 
    * :ref:`Built-in Clock Triggers`
    * :ref:`Built-in Workflow State Triggers`
+   * :ref:`Built-in Toy Xtriggers`
 
 
 .. _developing.xtrigger.plugins:

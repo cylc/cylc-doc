@@ -157,6 +157,7 @@ runnable
 runtime
 schd
 screenshot
+secs
 setup
 setups
 shebang
@@ -177,6 +178,7 @@ subcommands
 subdir
 subdirectories
 subdirectory
+subprocess
 subprocesses
 subshell
 subshelled

@@ -299,6 +299,7 @@ The :term:`scheduler` manages trigger functions as follows:
   the workflow log in debug mode (stdout is needed to communicate return values
   from the sub-process in which the function executes)
 
+.. _Built-in Toy Xtriggers:
 
 Toy Examples
 ^^^^^^^^^^^^
