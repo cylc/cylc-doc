@@ -112,7 +112,7 @@ require remote initialization.
            install target = localhost
 
 Our Cylc scheduler does not have a job runner defined. Any job submitted to
-this ``localhost`` platform will run as a background job. Users can now set 
+this ``localhost`` platform will run as a background job. Users can now set
 :cylc:conf:`flow.cylc[runtime][<namespace>]platform` = ``pbs_cluster`` to run
 pbs jobs.
 
@@ -280,15 +280,17 @@ the login nodes, without the concern of selecting a specific platform.
 
 Symlinking Directories
 ----------------------
-To minimize the disk space used by ``~/cylc-run``, set
-:cylc:conf:`global.cylc[install][symlink dirs]`.
-The entire workflow directory can be symlinked, using the config item ``run`` 
-The following sub-directories  are also available for configuration:
 
-   * log
-   * share
-   * share/cycle
-   * work
+To minimize the disk space used by ``~/cylc-run``, set
+:cylc:conf:`global.cylc[install][symlink dirs]` to offload files onto other
+locations. The entire :term:`run directory` can be symlinked, as well as
+certain sub-directories.
+
+* ``run`` - the :term:`run directory` itself
+* ``log``
+* ``share`` (see :term:`share directory`)
+* ``share/cycle`` (typically used by `Rose`_ tasks)
+* ``work`` (see :term:`work directory`)
 
 These should be configured per :term:`install target`.
 
@@ -303,7 +305,7 @@ you could write the following in ``global.cylc``:
            [[[localhost]]]
                log = /somewhere/else
 
-This would result in the following file structure on the Cylc Scheduler:
+This would result in the following file structure on the Cylc scheduler host:
 
 .. code-block:: none
 
@@ -421,7 +423,7 @@ will store the workflow under ``/g/data/foo`` and submit jobs under project
 
 You can also forward variables from the server to other platforms. You should
 first ensure the variable is available on the server, e.g. by also forwarding
-the variable to ``[[localhost]]``. 
+the variable to ``[[localhost]]``.
 
 This setting only affects the task submission (e.g. ``qsub``) which may use
 environment variables to set default directives. To set a variable once the
@@ -439,4 +441,3 @@ task has started see
             # Here qsub has been configured to read from $PROJECT
             ssh forward environment variables = PROJECT
             submit method = pbs
-

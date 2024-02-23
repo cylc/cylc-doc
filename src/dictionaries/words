@@ -173,6 +173,7 @@ subcommands
 subdir
 subdirectories
 subdirectory
+subprocess
 subprocesses
 subshell
 subshelled
