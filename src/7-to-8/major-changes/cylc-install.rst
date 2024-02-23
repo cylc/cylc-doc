@@ -114,6 +114,36 @@ use :cylc:conf:`flow.cylc[scheduler]install`.
 
 See :ref:`the user guide <RemoteInit>` for more details.
 
+.. warning::
+
+   If you have tasks that mirror to a remote platform (such as
+   `FCM make <FCM_>`__ tasks), this can cause conflicts with
+   :ref:`symlink directory setup <SymlinkDirs>`.
+
+   You can find out if symlink directories are configured for the platform by
+   running::
+
+      cylc config -i '[install][symlink dirs][<platform-name>]'
+
+   The recommended workaround is to use a "dummy" task that runs on the
+   particular platform before any such mirror tasks in order to setup symlink
+   directories, but without running anything.
+
+   For example:
+
+   .. code-block:: cylc
+
+      [scheduling]
+          [[graph]]
+              R1 = hpc_init => fcm_make
+
+      [runtime]
+          [[hpc_init]]
+              platform = <platform-name>
+              script = true
+
+
+
 
 Migrating From ``rose suite-run``
 ---------------------------------
