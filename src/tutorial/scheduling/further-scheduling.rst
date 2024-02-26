@@ -53,38 +53,6 @@ to handle events within your code (custom outputs).
    *For more information see the* `Cylc User Guide`_.
 
 
-.. _tutorial-clock-triggers:
-
-Clock Triggers
---------------
-
-.. ifnotslides::
-
-   In Cylc, :term:`cycle points <cycle point>` are just task labels. Tasks are
-   triggered when their dependencies are met, regardless of cycle point.
-   But *clock triggers* can be used to force tasks to wait for a particular
-   real time, relative to their cycle point, before running.
-   This is necessary for certain operational and monitoring systems, e.g. for
-   tasks that process real-time data.
-
-   For example in the following workflow the cycle ``2000-01-01T12Z`` will wait
-   until 11:00 on the 1st of January 2000 before running:
-
-.. code-block:: cylc
-
-   [scheduling]
-       initial cycle point = 2000-01-01T00Z
-       [[xtriggers]]
-           PT1H_trigger = wall_clock(offset=-PT1H):PT30S
-       [[graph]]
-           # "daily" will run, at the earliest, one hour before midday.
-           T12 = @PT1H_trigger => daily
-
-.. tip::
-
-   See the :ref:`tutorial-cylc-clock-trigger` tutorial for more information.
-
-
 Alternative Calendars
 ---------------------
 
