@@ -62,6 +62,50 @@ documentation, configuration files, etc. When the workflow is :ref:`installed
    equivalent directories in the :ref:`workflow_share_directories`.
 
 
+.. _UnderstandingCodeInCylcConfigurations:
+
+Understanding Code in Workflow Configurations
+---------------------------------------------
+
+A workflow configuration is not executable code. It configures the scheduler
+program to run your workflow. A `flow.cylc` file may contain:
+
+- Embedded Python-like Jinja2 or EmPy templating code, such as
+  ``{% set PLANET = "earth" %}``
+- Bash shell variable assignments and scripting, such as
+  ``script = "run-model.exe /path/to/data"``
+
+Jinja2 (or EmPy) templating code gets executed as a preprocessing step, to
+programmatically generate the workflow configuration for the scheduler.
+To see the result after template processing:
+
+.. code-block:: shell
+
+    # print the workflow configuration, processed but not parsed:
+    $ cylc view --process <workflow-id>
+
+    # print the workflow configuration, processed and parsed:
+    $ cylc config <workflow-id>
+
+
+The scheduler does not interpret shell syntax, but certain string-valued
+config items may contain shell code that gets written verbatim to job scripts,
+to be executed by the running job.
+
+Some things to be aware of:
+
+- Jinja2 code is evaluated once when the workflow is started.
+- Jinja2 code can only reference Jinja2 variables, not Cylc config items.
+- Jinja2 (like Python) has its own syntax for reading environment variables.
+- Jinja2 code that reads the environment or the filesystem will do so
+  during config file parsing on the scheduler run host, not on job hosts.
+  Beware of doing this in task definitions - do you want the scheduler
+  environment to affect shell code that runs in the job environment?
+- Shell code destined for the job script can read the environment or
+  access the filesystem as the job runs on the job host, not on the
+  scheduler host.
+
+
 .. _SyntaxHighlighting:
 
 Syntax Highlighting For Workflow Configuration
