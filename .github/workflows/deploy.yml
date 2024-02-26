@@ -141,6 +141,10 @@ jobs:
             STABLE=${{ inputs.set_stable }} \
             LATEST=${{ inputs.set_latest }}
 
+      - name: debug - pip list
+        if: failure()
+        run: pip list
+
       - name: tidy old versions
         working-directory: docs
         run: |

@@ -152,6 +152,10 @@ jobs:
             FORCE_COLOR=true
           git -C gh-pages add "$builddir" 'versions.json'
 
+      - name: debug - pip list
+        if: failure()
+        run: pip list
+
       - name: push changes
         working-directory: gh-pages
         run: |
