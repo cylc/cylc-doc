@@ -90,3 +90,7 @@ jobs:
         if: failure()
         run: |
           cat /tmp/sphinx-err* || true  # sphinx traceback
+
+      - name: debug - pip list
+        if: failure()
+        run: pip list
