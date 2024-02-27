@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Script Environment Variables &mdash; Cylc 8.2.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Architecture" href="../architecture/index.html" />
+    <link rel="prev" title="Platform Configuration" href="../config/writing-platform-configs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../changes.html">Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/index.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Job Script Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+      <li class="breadcrumb-item active">Job Script Environment Variables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/job-script-vars/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="job-script-environment-variables">
+<h1>Job Script Environment Variables<a class="headerlink" href="#job-script-environment-variables" title="Permalink to this heading"></a></h1>
+<p>These environment variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available
+to Cylc job scripts at run time:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+CYLC_VERBOSE                       <span class="c"># Verbose mode, true or false</span>
+CYLC_DEBUG                         <span class="c"># Debug mode (even more verbose), true or false</span>
+
+CYLC_CYCLING_MODE                  <span class="c"># Cycling mode, e.g. gregorian</span>
+ISODATETIMECALENDAR                <span class="c"># Calendar mode for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_CYCLING_MODE</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_WORKFLOW_FINAL_CYCLE_POINT    <span class="c"># Final cycle point</span>
+CYLC_WORKFLOW_INITIAL_CYCLE_POINT  <span class="c"># Initial cycle point</span>
+CYLC_WORKFLOW_ID                   <span class="c"># Workflow ID</span>
+                                   <span class="c"># e.g. &quot;a/b/c/run1&quot;</span>
+CYLC_WORKFLOW_NAME                 <span class="c"># Workflow ID with the run name removed</span>
+                                   <span class="c"># (use CYLC_WORKFLOW_ID for most purposes)</span>
+                                   <span class="c"># e.g. &quot;a/b/c&quot;</span>
+CYLC_WORKFLOW_NAME_BASE            <span class="c"># The basename of the workflow name</span>
+                                   <span class="c"># (use CYLC_WORKFLOW_ID for most purposes)</span>
+                                   <span class="c"># e.g. &quot;c&quot;</span>
+CYLC_UTC                           <span class="c"># UTC mode, True or False</span>
+TZ                                 <span class="c"># Set to &quot;UTC&quot; in UTC mode or not defined</span>
+
+CYLC_WORKFLOW_RUN_DIR              <span class="c"># Location of the run directory in</span>
+                                   <span class="c"># job host, e.g. ~/cylc-run/foo</span>
+CYLC_WORKFLOW_HOST                 <span class="c"># Host running the workflow process</span>
+CYLC_WORKFLOW_OWNER                <span class="c"># User ID running the workflow process</span>
+
+CYLC_WORKFLOW_SHARE_DIR            <span class="c"># Workflow (or task!) shared directory (see below)</span>
+CYLC_WORKFLOW_UUID                 <span class="c"># Workflow UUID string</span>
+CYLC_WORKFLOW_WORK_DIR             <span class="c"># Workflow work directory (see below)</span>
+
+CYLC_TASK_JOB                      <span class="c"># Job identifier expressed as</span>
+                                   <span class="c"># CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER</span>
+                                   <span class="c">#   e.g. 20110511T1800Z/t1/01</span>
+
+CYLC_TASK_CYCLE_POINT              <span class="c"># Cycle point, e.g. 20110511T1800Z</span>
+ISODATETIMEREF                     <span class="c"># Reference time for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_TASK_CYCLE_POINT</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_TASK_NAME                     <span class="c"># Job&#39;s task name, e.g. t1</span>
+CYLC_TASK_ID                       <span class="c"># Task instance identifier CYCLE-POINT/TASK-NAME</span>
+                                   <span class="c">#   e.g. 20110511T1800Z/t1</span>
+
+CYLC_TASK_SUBMIT_NUMBER            <span class="c"># Job&#39;s submit number, e.g. 1,</span>
+                                   <span class="c">#   increments with every submit</span>
+CYLC_TASK_TRY_NUMBER               <span class="c"># Number of execution tries, e.g. 1</span>
+                                   <span class="c">#   increments with automatic execution retry delays.</span>
+CYLC_TASK_FLOW_NUMBERS             <span class="c"># Flows this task belongs to, e.g. 1,2</span>
+
+CYLC_TASK_LOG_DIR                  <span class="c"># Location of the job log directory</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/</span>
+CYLC_TASK_LOG_ROOT                 <span class="c"># The job script path</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job</span>
+CYLC_TASK_WORK_DIR                 <span class="c"># Location of task work directory (see below)</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1</span>
+
+CYLC_TASK_NAMESPACE_HIERARCHY      <span class="c"># Linearised family namespace of the task,</span>
+                                   <span class="c">#   e.g. root postproc t1</span>
+CYLC_TASK_DEPENDENCIES             <span class="c"># List of met dependencies that triggered the task</span>
+                                   <span class="c">#   e.g. 1/foo 1/bar</span>
+                                   <span class="c">#   (note this variable will not be</span>
+                                   <span class="c">#   exported if there are more than 50</span>
+                                   <span class="c">#   dependencies)</span>
+
+CYLC_TASK_COMMS_METHOD             <span class="c"># Set to &quot;ssh&quot; if communication method is &quot;ssh&quot;</span>
+CYLC_TASK_SSH_LOGIN_SHELL          <span class="c"># With &quot;ssh&quot; communication, if set to &quot;True&quot;,</span>
+                                   <span class="c">#   use login shell on workflow host</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../user-guide/writing-workflows/runtime.html#task-job-script-variables"><span class="std std-ref">Job Script Variables</span></a></p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../config/writing-platform-configs.html" class="btn btn-neutral float-left" title="Platform Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../architecture/index.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Feb 27, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/job-script-vars/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

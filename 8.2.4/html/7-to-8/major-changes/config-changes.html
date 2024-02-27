@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration Changes at Cylc 8 &mdash; Cylc 8.2.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Continuing a Cylc 7 Workflow with Cylc 8" href="continuing-c7-c8.html" />
+    <link rel="prev" title="Cylc 7 Compatibility Mode" href="compatibility-mode.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration Changes at Cylc 8</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#graph">Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fixing-deprecation-warnings">Fixing deprecation warnings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platforms">Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.2 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Configuration Changes at Cylc 8</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/config-changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration-changes-at-cylc-8">
+<span id="configuration-changes"></span><h1>Configuration Changes at Cylc 8<a class="headerlink" href="#configuration-changes-at-cylc-8" title="Permalink to this heading"></a></h1>
+<p>Some configurations have moved or been renamed at Cylc 8.</p>
+<p>The old configurations are now deprecated, but still supported.
+These will be highlighted upon <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> after renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>
+to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>.</p>
+<p>Because some workflows use Jinja2 or EmPy branches which may not be switched on at
+the time of the initial <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> we have also provided
+a script, <a class="reference internal" href="../../user-guide/writing-workflows/configuration.html#cylc-lint-script"><span class="std std-ref">cylc lint -r 728</span></a> to check for Cylc 7
+syntax which may be deprecated.</p>
+<p>There are some examples below of how to upgrade:</p>
+<section id="graph">
+<span id="to-8-graph-syntax"></span><h2>Graph<a class="headerlink" href="#graph" title="Permalink to this heading"></a></h2>
+<p>Cylc 7 had unnecessarily deep nesting of graph config sections:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;prep =&gt; foo&quot;</span>
+        <span class="nt">[[[R/^/P1D]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> &quot;foo =&gt; bar =&gt; baz&quot;</span>
+</pre></div>
+</div>
+<p>Cylc 8 cleans this up:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> now</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span><span class="c">&quot;</span>
+<span class="nv">        R/^/P1D = &quot;foo =&gt; bar </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="fixing-deprecation-warnings">
+<h2>Fixing deprecation warnings<a class="headerlink" href="#fixing-deprecation-warnings" title="Permalink to this heading"></a></h2>
+<p>Take the following example <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[cylc]</span>
+   <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2000-01-01</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> foo =&gt; bar</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo, bar]]</span>
+</pre></div>
+</div>
+<p>This workflow will pass validation at Cylc 8, but will give warnings:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+<span class="go">WARNING - deprecated items were automatically upgraded in &quot;workflow definition&quot;</span>
+<span class="go">WARNING -  * (8.0.0) [cylc] -&gt; [scheduler] - value unchanged</span>
+<span class="go">WARNING - deprecated graph items were automatically upgraded in &quot;workflow definition&quot;:</span>
+<span class="go">   * (8.0.0) [scheduling][dependencies][X]graph -&gt; [scheduling][graph]X - for X in:</span>
+<span class="go">         R1</span>
+<span class="go">Valid for cylc-8.0.0</span>
+</pre></div>
+</div>
+<p>The warnings explain what needs to be fixed. After making the following changes,
+the workflow will validate without any warnings:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-[cylc]</span>
+<span class="gi">+[scheduler]</span>
+<span class="w"> </span>    UTC mode = True
+<span class="w"> </span>[scheduling]
+<span class="w"> </span>    initial cycle point = 2000-01-01
+<span class="gd">-    [[dependencies]]</span>
+<span class="gd">-        [[[R1]]]</span>
+<span class="gd">-            graph = foo =&gt; bar</span>
+<span class="gi">+    [[graph]]</span>
+<span class="gi">+        R1 = foo =&gt; bar</span>
+<span class="w"> </span>[runtime]
+<span class="w"> </span>    [[foo, bar]]
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Later Cylc releases will not be able to upgrade obsolete Cylc 7
+configurations. It’s a good idea to address warnings as part of routine
+workflow review and maintenance to avoid problems later on.</p>
+</div>
+</section>
+<section id="platforms">
+<h2>Platforms<a class="headerlink" href="#platforms" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="platforms.html#majorchangesplatforms"><span class="std std-ref">Platforms at Cylc 8.</span></a></p></li>
+<li><p><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">System admin’s guide to writing platforms.</span></a></p></li>
+</ul>
+</div>
+<p>At Cylc 7, job hosts were defined to indicate where a job should run.
+At Cylc 8, this has been replaced by Platforms.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[runtime]
+<span class="w"> </span>    [[foo]]
+<span class="gd">-        [[[job]]]</span>
+<span class="gd">-            batch system = slurm</span>
+<span class="gd">-        [[[remote]]]</span>
+<span class="gd">-            host = hpc1.login.1</span>
+<span class="gi">+        platform = hpc1</span>
+</pre></div>
+</div>
+<p>For a comprehensive list of valid configuration, see: <a class="reference internal" href="../../reference/config/workflow.html#workflow-configuration"><span class="std std-ref">Workflow Configuration</span></a>
+and <a class="reference internal" href="../../reference/config/global.html#global-configuration"><span class="std std-ref">Global Configuration</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="compatibility-mode.html" class="btn btn-neutral float-left" title="Cylc 7 Compatibility Mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="continuing-c7-c8.html" class="btn btn-neutral float-right" title="Continuing a Cylc 7 Workflow with Cylc 8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Feb 27, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/config-changes";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
