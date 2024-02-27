@@ -72,6 +72,17 @@ will require some changes to work with these releases.
 
 See :ref:`cylc.uiserver.multi-user` for more details
 
+
+UI now remembers workspace tab layout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The UI now remembers the layout of your workspace tabs when you navigate away
+from that workflow. Note that this only applies per browser session.
+
+.. image:: changes/ui-workspace-tabs.gif
+   :width: 100%
+
+
 ----------
 
 Cylc 8.2.0
