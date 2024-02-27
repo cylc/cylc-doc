@@ -1,47 +1,43 @@
 {
-    "8.0.3": [
-        "slides",
-        "html"
-    ],
-    "8.2.3": [
-        "html"
-    ],
     "8.1.4": [
-        "slides",
-        "html"
-    ],
-    "8.0.0": [
-        "slides",
-        "html"
+        "html",
+        "slides"
     ],
     "8.2.4": [
         "html"
     ],
     "8.0.2": [
-        "slides",
-        "html"
+        "html",
+        "slides"
+    ],
+    "8.0.3": [
+        "html",
+        "slides"
     ],
     "7.8.8": [
         "html",
         "singlehtml"
-    ],
-    "8.2.0": [
-        "slides",
-        "html"
-    ],
-    "8.1.0": [
-        "slides",
-        "html"
-    ],
-    "8.2.1": [
-        "slides",
-        "html"
     ],
     "7.9.3": [
         "html",
         "singlehtml"
     ],
     "8.2.2": [
+        "html"
+    ],
+    "8.2.1": [
+        "html",
+        "slides"
+    ],
+    "8.2.0": [
+        "html",
+        "slides"
+    ],
+    "8.1.0": [
+        "html",
+        "slides"
+    ],
+    "8.2.3": [
         "html"
     ],
     "stable": [

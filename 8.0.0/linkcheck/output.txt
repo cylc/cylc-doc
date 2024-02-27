@@ -1,5 +1,0 @@
-reference/architecture/ui-server.rst:66: [redirected permanently] https://github.com/AbdealiJK/configurable-http-proxy to https://github.com/corridor/configurable-http-proxy
-glossary.rst:468: [redirected with Found] http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html to https://www.cl.cam.ac.uk/~mgk25/iso-time.html
-tutorial/runtime/configuration-consolidation/index.rst:165: [redirected with Found] https://jinja.palletsprojects.com/ to https://jinja.palletsprojects.com/en/3.1.x/
-reference/architecture/data-flow.rst:53: [redirected with Found] https://jupyter-server.readthedocs.io to https://jupyter-server.readthedocs.io/en/latest/
-workflow-design-guide/general-principles.rst:129: [redirected with Found] https://www.python.org/dev/peps/pep-0008/ to https://peps.python.org/pep-0008/
