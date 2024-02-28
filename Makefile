@@ -20,6 +20,7 @@ clean:
 	# remove auto-generated content
 	rm -rf src/plugins/main-loop/built-in
 	rm -rf src/plugins/install/built-in
+	rm -rf src/plugins/xtriggers/built-in
 	rm -rf src/user-guide/task-implementation/job-runner-handlers
 
 watch: clean

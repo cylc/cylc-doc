@@ -34,13 +34,11 @@ broker.
 
 Cylc has several built-in external trigger functions:
 
-- clock triggers - see :ref:`Built-in Clock Triggers`
-- inter-workflow triggers - see :ref:`Built-in Workflow State Triggers`
+- :ref:`Built-in Clock Triggers`
+- :ref:`Built-in Workflow State Triggers`
 
 Trigger functions are normal Python functions, with certain constraints as
-described below in:
-
-- custom trigger functions - see :ref:`Custom Trigger Functions`
+described below in :ref:`Custom Trigger Functions`.
 
 External triggers are configured in the
 :cylc:conf:`flow.cylc[scheduling][xtriggers]` section.
@@ -62,9 +60,7 @@ in :ref:`ClockTriggerTasks`.
 Clock triggers, unlike other trigger functions, are executed synchronously in
 the main process. The clock trigger function signature looks like this:
 
-.. code-block:: python
-
-   wall_clock(offset=None)
+.. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
 
 The ``offset`` argument is a datetime duration (``PT1H`` is 1
 hour) relative to the dependent task's cycle point (automatically passed to the
@@ -130,10 +126,7 @@ tasks off of remote task statuses or messages in other workflows.
 
 The workflow state trigger function signature looks like this:
 
-.. code-block:: python
-
-   workflow_state(workflow, task, point, offset=None, status='succeeded',
-                  message=None, cylc_run_dir=None, debug=False)
+.. autofunction:: cylc.flow.xtriggers.workflow_state.workflow_state
 
 The first three arguments are compulsory; they single out the target workflow name
 (``workflow``) task name (``task``) and cycle point
@@ -228,28 +221,33 @@ Custom Trigger Functions
 Trigger functions are just normal Python functions, with a few special
 properties:
 
-- they must:
+- They must:
 
-  - be defined in a module with the same name as the function, unless
+  - Be defined in a module with the same name as the function, unless
     provided using the ``cylc.xtriggers`` entry point;
   - be compatible with the same Python version that runs the scheduler
     (see :ref:`Requirements` for the latest version specification).
 
-- they can be located either:
+- They can be located either:
 
-  - in ``<workflow-dir>/lib/python/``;
-  - anywhere in your ``$CYLC_PYTHONPATH``;
-  - or defined using the ``cylc.xtriggers`` entry point for an installed
-    package.
+  - In ``<workflow-dir>/lib/python/``;
+  - Anywhere in your ``$CYLC_PYTHONPATH``;
+  - Defined using the ``cylc.xtriggers`` entry point for an installed
+    package - see :ref:`developing.xtrigger.plugins`
 
-- they can take arbitrary positional and keyword arguments
-- workflow and task identity, and cycle point, can be passed to trigger
+- They can take arbitrary positional and keyword arguments
+- Workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
-- integer, float, boolean, and string arguments will be recognized and
+- Integer, float, boolean, and string arguments will be recognized and
   passed to the function as such
-- if a trigger function depends on files or directories (for example)
+- If a trigger function depends on files or directories (for example)
   that might not exist when the function is first called, just return
   unsatisfied until everything required does exist.
+- The module containing the xtrigger function may also contain a ``validate``
+  function taking a single argument, which is a dictionary of all the arguments
+  passed to the xtrigger function in ``flow.cylc``. It should raise an
+  exception if validation fails. See :ref:`xrandom.validate` for an example
+  of a validate function.
 
 .. note::
 
@@ -301,6 +299,7 @@ The :term:`scheduler` manages trigger functions as follows:
   the workflow log in debug mode (stdout is needed to communicate return values
   from the sub-process in which the function executes)
 
+.. _Built-in Toy Xtriggers:
 
 Toy Examples
 ^^^^^^^^^^^^
@@ -311,14 +310,9 @@ echo
 The trivial built-in ``echo`` function takes any number of positional
 and keyword arguments (from the workflow configuration) and simply prints
 them to stdout, and then returns False (i.e. trigger condition not
-satisfied). Here it is in its entirety.
+satisfied).
 
-.. code-block:: python
-
-   def echo(*args, **kwargs):
-       print("echo: ARGS:", args)
-       print("echo: KWARGS:", kwargs)
-       return False, {}
+.. autofunction:: cylc.flow.xtriggers.echo.echo
 
 Here's an example echo trigger workflow:
 
@@ -347,9 +341,7 @@ time (useful for testing the effect of a long-running trigger function
 - which should be avoided) and has a configurable random chance of
 success. The function signature is:
 
-.. code-block:: python
-
-   xrandom(percent, secs=0, _=None, debug=False)
+.. autofunction:: cylc.flow.xtriggers.xrandom.xrandom
 
 The ``percent`` argument sets the odds of success in any given call;
 ``secs`` is the number of seconds to sleep before returning; and the
@@ -362,6 +354,47 @@ An example xrandom trigger workflow:
 
 .. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
    :language: cylc
+
+.. _xrandom.validate:
+
+Validation example using xrandom
+""""""""""""""""""""""""""""""""
+
+The ``xrandom`` xtrigger module contains a ``validate`` function.
+
+This will be run on the inputs to the xtrigger when calling
+``cylc validate`` or before the workflow starts, and should raise an exception
+with a meaningful description if a condition is not met.
+
+A simplified example looks like this:
+
+.. code-block:: python
+
+   from cylc.flow.exceptions import WorkflowConfigError
+
+   def validate(args: Dict[str, Any]) -> None:
+       # Check that percentage is a reasonable value:
+       percent = args['percent']
+       if (
+           not isinstance(percent, (float, int))
+           or not (0 <= percent <= 100)
+       ):
+           raise WorkflowConfigError(
+               "'percent' should be a float between 0 and 100"
+           )
+
+See below for a link to the full ``validate`` function:
+
+.. autofunction:: cylc.flow.xtriggers.xrandom.validate
+
+.. tip::
+
+   The arguments you call the xtrigger function with are automatically
+   validated against the function signature, so you don't necessarily need
+   to check for the presence of arguments or their types in the validate
+   function. However, you may want to check that the values are of the correct
+   type or within a certain range.
+
 
 .. _Current Trigger Function Limitations:
 
