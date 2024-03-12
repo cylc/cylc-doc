@@ -97,6 +97,8 @@ These dependencies are not installed by Conda or pip:
 
 * ``bash``
 * GNU `coreutils`_
+* ``ssh``
+* ``rsync``
 * ``mail`` (optional - for automated email functionality)
 
 These dependencies are installed by Conda but not by pip:
