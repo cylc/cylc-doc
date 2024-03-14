@@ -1,0 +1,21 @@
+[scheduler]
+  cycle point format = %Y
+[scheduling]
+    initial cycle point = 2010
+    sequential xtriggers = True
+    [[xtriggers]]
+         upstream = workflow_state(workflow=up, task=foo, point=%(point)s, \
+            message='data ready'):PT10S
+         clock_0 = wall_clock(offset=PT0H, sequential=False)
+   [[graph]]
+        P1Y = """
+            @clock_0 => foo
+            @clock_0 & @upstream => FAM:succeed-all => blam
+        """
+[runtime]
+    [[root]]
+        script = sleep 5
+    [[foo, blam]]
+    [[FAM]]
+    [[f1,f2,f3]]
+        inherit = FAM

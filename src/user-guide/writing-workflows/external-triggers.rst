@@ -220,6 +220,47 @@ To see this, take a look at the job script for one of the downstream tasks:
    configuration.
 
 
+.. _Sequential Trigger Spawning:
+
+Sequential Trigger Spawning
+---------------------------
+
+Parent-less tasks (having no graph dependencies on other tasks) naturally spawn
+out to the runahead limit. The consequence for workflows with large runahead
+limits and/or task count may not only be UI clutter but also needless trigger
+checking. An example of this would be ``wall_clock``, where there's clearly
+no point in checking the future if the present trigger is unsatisfied.
+
+Sequential trigger spawning is a way of altering the default spawning behavior
+of these parent-less tasks. This is achieved by setting any number of triggers
+as sequential so that associated tasks only spawn their next (cycle point)
+instance on satisfaction of these triggers.
+
+A trigger can be set as sequential in any/all of the following ways.
+
+By setting the workflow wide ``sequential xtriggers`` (defaults
+to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
+the xtrigger declaration:
+
+.. literalinclude:: ../../workflows/xtrigger/sequential/flow.cylc
+   :language: cylc
+
+And/or via a ``sequential`` keyword argument default in the trigger function
+definition (see :Ref:`Custom Trigger Functions`) itself:
+
+.. code-block:: python
+
+   my_xtrigger(my_in, my_out, sequential=True)
+
+Xtrigger declaration takes precedence over function, and function over workflow
+wide setting. So the above workflow definition would read:
+
+- ``foo`` spawns out to the runahead limit.
+- ``FAM`` spawns only when ``@upstream`` is satisfied.
+- All associated xtriggers are checked and, as expected, their satisfaction
+  is a prerequisite to task readiness.
+
+
 .. _Custom Trigger Functions:
 
 Custom Trigger Functions
@@ -243,6 +284,7 @@ properties:
     package.
 
 - they can take arbitrary positional and keyword arguments
+  (``sequential`` is reserved, see :ref:`Sequential Trigger Spawning`)
 - workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
 - integer, float, boolean, and string arguments will be recognized and
