@@ -220,23 +220,22 @@ To see this, take a look at the job script for one of the downstream tasks:
    configuration.
 
 
-.. _Sequential Trigger Spawning:
+.. _Sequential Xtriggers:
 
-Sequential Trigger Spawning
+Sequential Xtriggers
 ---------------------------
 
-Parent-less tasks (having no graph dependencies on other tasks) naturally spawn
-out to the runahead limit. The consequence for workflows with large runahead
-limits and/or task count may not only be UI clutter but also needless trigger
-checking. An example of this would be ``wall_clock``, where there's clearly
-no point in checking the future if the present trigger is unsatisfied.
+Parent-less tasks (which don't depend on other tasks upstream in the graph)
+naturally spawn out to the runahead limit. This may cause UI clutter, and
+unnecessary (or even pointless?) xtrigger checking if the xtriggers would only
+be satisfied in order.
 
-Sequential trigger spawning is a way of altering the default spawning behavior
-of these parent-less tasks. This is achieved by setting any number of triggers
-as sequential so that associated tasks only spawn their next (cycle point)
-instance on satisfaction of these triggers.
+You can use *sequential* xtriggers to avoid this problem: the next instance
+of a task (i.e., at the next cycle point) that depends on a sequential xtrigger
+will not be spawned until the previous xtrigger is satisfied. The
+``wall_clock`` xtrigger is sequential by default.
 
-A trigger can be set as sequential in any/all of the following ways.
+A trigger can be set as sequential in any or all of the following ways.
 
 By setting the workflow wide ``sequential xtriggers`` (defaults
 to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
@@ -245,7 +244,7 @@ the xtrigger declaration:
 .. literalinclude:: ../../workflows/xtrigger/sequential/flow.cylc
    :language: cylc
 
-And/or via a ``sequential`` keyword argument default in the trigger function
+And/or via a ``sequential`` keyword argument in the xtrigger function
 definition (see :Ref:`Custom Trigger Functions`) itself:
 
 .. code-block:: python
@@ -284,7 +283,7 @@ properties:
     package.
 
 - they can take arbitrary positional and keyword arguments
-  (``sequential`` is reserved, see :ref:`Sequential Trigger Spawning`)
+  (``sequential`` is reserved, see :ref:`Sequential Xtriggers`)
 - workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
 - integer, float, boolean, and string arguments will be recognized and
