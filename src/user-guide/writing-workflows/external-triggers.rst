@@ -227,8 +227,8 @@ Sequential Xtriggers
 
 Parent-less tasks (which don't depend on other tasks upstream in the graph)
 naturally spawn out to the runahead limit. This may cause UI clutter, and
-unnecessary (or even pointless?) xtrigger checking if the xtriggers would only
-be satisfied in order.
+unnecessary xtrigger checking if the xtriggers would only be satisfied in
+order.
 
 You can use *sequential* xtriggers to avoid this problem: the next instance
 of a task (i.e., at the next cycle point) that depends on a sequential xtrigger
@@ -237,19 +237,20 @@ will not be spawned until the previous xtrigger is satisfied. The
 
 A trigger can be set as sequential in any or all of the following ways.
 
-By setting the workflow wide ``sequential xtriggers`` (defaults
-to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
+By setting the workflow-wide :cylc:conf:`flow.cylc[scheduling]sequential xtriggers`
+(defaults to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
 the xtrigger declaration:
 
 .. literalinclude:: ../../workflows/xtrigger/sequential/flow.cylc
    :language: cylc
 
-And/or via a ``sequential`` keyword argument in the xtrigger function
-definition (see :Ref:`Custom Trigger Functions`) itself:
+When implementing a :ref:`custom xtrigger <Custom Trigger Functions>`, you can
+set the default for the ``sequential`` keyword argument in the xtrigger function
+definition itself:
 
 .. code-block:: python
 
-   my_xtrigger(my_in, my_out, sequential=True)
+   def my_xtrigger(my_in, my_out, sequential=True)
 
 Xtrigger declaration takes precedence over function, and function over workflow
 wide setting. So the above workflow definition would read:
@@ -283,7 +284,7 @@ properties:
     package.
 
 - they can take arbitrary positional and keyword arguments
-  (``sequential`` is reserved, see :ref:`Sequential Xtriggers`)
+  (except ``sequential``, which is reserved - see :ref:`Sequential Xtriggers`)
 - workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
 - integer, float, boolean, and string arguments will be recognized and
