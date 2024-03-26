@@ -225,7 +225,7 @@ To see this, take a look at the job script for one of the downstream tasks:
 Sequential Xtriggers
 ---------------------------
 
-Parent-less tasks (which don't depend on other tasks upstream in the graph)
+Parentless tasks (which don't depend on other tasks upstream in the graph)
 naturally spawn out to the runahead limit. This may cause UI clutter, and
 unnecessary xtrigger checking if the xtriggers would only be satisfied in
 order.
