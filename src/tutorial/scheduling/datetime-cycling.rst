@@ -266,6 +266,55 @@ Intercycle Dependencies
 * ``baz[^]``: the task ``baz`` from the initial cycle point.
 
 
+.. _tutorial-clock-triggers:
+
+Clock Triggers
+--------------
+
+.. ifnotslides::
+
+   In Cylc, :term:`cycle points <cycle point>` are just task labels. Tasks are
+   triggered when their dependencies are met, regardless of cycle point.
+   But *clock triggers* can be used to force tasks to wait for a particular
+   real time, relative to their cycle point, before running.
+   This is necessary for certain operational and monitoring systems, e.g. for
+   tasks that process real-time data.
+
+   For example in the following workflow the cycle ``2050-01-01T12Z`` will wait
+   until 12:00 on the 1st of January 2050 before running:
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 2050-01-01T00Z
+       [[xtriggers]]
+           on_time = wall_clock()
+       [[graph]]
+           # "daily" will run, at the earliest, one hour before midday.
+           T12 = @on_time => do_this_on_or_after_noon
+
+.. ifnotslides::
+
+   Clock triggers take an argument - ``offset`` which allows you to specify
+   an offset. For example, it might be ok for a task to run up to an hour
+   before the specified cycle point:
+
+``wall_clock(-PT1H)``
+
+.. ifnotslides::
+
+   All xtriggers take a ``:recurrance`` indicating how often the scheduler
+   will run the check.
+
+   It is good practice not to check more often than necessary:
+
+``wall_clock():PT17M``
+
+.. tip::
+
+   See the :ref:`tutorial-cylc-clock-trigger` tutorial for more information.
+
+
 .. _tutorial-cylc-datetime-utc:
 
 UTC Mode
@@ -637,3 +686,45 @@ Putting It All Together
          +          +PT12H/PT6H = """
          +              forecast[-PT6H] => forecast
          +          """
+
+   #. **Clock Triggers**
+
+      To ensure that the ``get_observations_<location>`` tasks run only
+      after the time of the observation add a clock trigger.
+      Observations are available by 10 minutes past the hour.
+      We don't want to overburden the Cylc server, so check for observations
+      every 5 minutes.
+
+      .. spoiler:: Hint hint
+
+         See :ref:`tutorial-clock-triggers`
+
+      .. spoiler:: Solution warning
+
+         .. note::
+
+            There are a number of ways of writing the dependency: This
+            example shows multiple patterns.
+
+         .. code-block:: diff
+
+           [scheduling]
+               initial cycle point = 20000101T00Z
+           +   [[xtriggers]]
+           +       obs_clock_trigger = wall_clock(PT10M):PT5M
+               [[graph]]
+                   PT3H = """
+           +           @obs_clock_trigger => get_observations_aldergrove & get_observations_camborne
+           +           @obs_clock_trigger => get_observations_heathrow
+                       get_observations_aldergrove => consolidate_observations
+                       get_observations_camborne => consolidate_observations
+                       get_observations_heathrow => consolidate_observations
+           -           get_observations_shetland => consolidate_observations
+           +           @obs_clock_trigger => get_observations_shetland => consolidate_observations
+                   """
+                   +PT6H/PT6H = """
+                       consolidate_observations => forecast
+                       consolidate_observations[-PT3H] => forecast
+                       consolidate_observations[-PT6H] => forecast
+                       get_rainfall => forecast => post_process_exeter
+                   """
