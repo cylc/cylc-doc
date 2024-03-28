@@ -1,0 +1,4 @@
+﻿cylc.flow.xtriggers.echo
+========================
+
+.. automodule:: cylc.flow.xtriggers.echo

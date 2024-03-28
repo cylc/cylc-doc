@@ -1,0 +1,4 @@
+﻿cylc.flow.xtriggers.workflow\_state
+===================================
+
+.. automodule:: cylc.flow.xtriggers.workflow_state

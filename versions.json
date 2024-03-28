@@ -27,6 +27,9 @@
     "latest": [
         "html"
     ],
+    "nightly_8.3": [
+        "html"
+    ],
     "nightly_8.2": [
         "html"
     ]
