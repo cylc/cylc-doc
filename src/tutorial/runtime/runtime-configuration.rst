@@ -378,14 +378,22 @@ Start, Stop, Restart
          cylc install
 
       Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
-      your workflow.
+      your workflow. Run the workflow either from the UI or command line.
 
-      Run the workflow either by pressing the play button in the Cylc UI or by
-      running the command:
+      .. spoiler:: Hint hint
 
-      .. code-block:: bash
+         .. code-block:: bash
 
-         cylc play runtime-tutorial
+            cylc tui runtime-tutorial
+            # or
+            cylc gui  # If you haven't already got an instance running.
+
+         Run the workflow either by:
+
+         * GUI: selecting the runtime-tutorial workflow in the sidebar and
+           pressing the play button.
+         * Tui: pressing enter on the workflow and selecting "play".
+         * Command line: running ``cylc play runtime-tutorial``.
 
       If all goes well the workflow will startup and the tasks will run and
       succeed. Note that the tasks which do not have a ``[runtime]`` section
@@ -430,34 +438,40 @@ Start, Stop, Restart
       :term:`run directory`. Copy the code in the ``runtime`` file to the
       bottom of the :cylc:conf:`flow.cylc` file.
 
+      Now that all the tasks have runtime sections, remove
+      :cylc:conf:`[scheduler]allow implicit tasks`:
+
+      .. code-block:: diff
+
+          [scheduler]
+              UTC mode = True
+         -    allow implicit tasks = True  # TODO: remove at end of exercise
+
+      Removing this ensures that any tasks in the graph without a corresponding
+      runtime section will cause validation to fail (e.g. due to a typo).
+
       Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
       .. code-block:: bash
 
          cylc validate .
+
+      Now install a new run of the workflow:
+
+      .. code-block:: bash
+
          cylc install
 
       .. TODO: Add advice on what to do if the command fails.
 
    #. **Run The Workflow.**
 
-      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) to view
-      your workflow.
+      Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) and
+      run the workflow.
 
-      .. spoiler:: Hint hint
+      .. tip::
 
-         .. code-block:: bash
-
-            cylc tui runtime-tutorial
-            # or
-            cylc gui  # If you haven't already got an instance running.
-
-         Run the workflow either by:
-
-         * Pressing the play button in the Cylc GUI. Then, ensuring that
-           "Cold Start" is selected within the dialogue window, pressing the
-           "Start" button.
-         * Running the command ``cylc play runtime-tutorial``.
+         Make sure you play the latest run that was newly installed.
 
    #. **View The Forecast Summary.**
 
