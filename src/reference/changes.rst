@@ -20,23 +20,29 @@ For more detail see the component changelogs:
 * `metomi-rose-changelog`_
 * `metomi-isodatetime-changelog`_
 
-
 ----------
 
-Cylc 8.3.0
-----------
+Cylc 8.2
+--------
 
 .. admonition:: Cylc Components
    :class: hint
 
-   TODO
+   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
 
-..
-   Uncomment this before 8.3.0 release
 
-   :cylc-flow: `8.3 <https://github.com/cylc/cylc-flow/blob/8.3.x/CHANGES.md>`__
-   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
-   :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/1.4.x/CHANGES.md>`__
+UI now remembers workspace tab layout
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.4.4
+
+The UI now remembers the layout of your workspace tabs when you navigate away
+from that workflow. Note that this only applies per browser session.
+
+.. image:: changes/ui-workspace-tabs.gif
+   :width: 100%
 
 Cylc ignores ``$PYTHONPATH``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -64,6 +70,8 @@ workflows which would previously have caused it to time out.
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. versionadded:: cylc-uiserver 1.4.0
+
 The Cylc UI Server has been updated to work with the latest releases of
 `Jupyter Server`_ and `Jupyter Hub`_.
 
@@ -72,32 +80,7 @@ will require some changes to work with these releases.
 
 See :ref:`cylc.uiserver.multi-user` for more details
 
-
-UI now remembers workspace tab layout
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The UI now remembers the layout of your workspace tabs when you navigate away
-from that workflow. Note that this only applies per browser session.
-
-.. image:: changes/ui-workspace-tabs.gif
-   :width: 100%
-
-
-----------
-
-Cylc 8.2.0
-----------
-
-.. admonition:: Cylc Components
-   :class: hint
-
-   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
-   :cylc-uiserver: `1.3 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
-   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
-
-
-Configure The Default View
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. versionadded:: cylc-uiserver 1.3.0
 
 You can now configure the view which is opened by default when you navigate to
 a new workflow in the GUI. Navigate to the settings page to select your chosen
@@ -113,6 +96,8 @@ configuring certain options on those views.
 Reload
 ^^^^^^
 
+.. versionadded:: cylc-flow 8.2.0
+
 When workflows are
 :ref:`reloaded <Reloading The Workflow Configuration At Runtime>`,
 (e.g. by ``cylc reload``), Cylc will now pause the workflow and wait for any
@@ -124,8 +109,8 @@ workflow status message which appears at the top of the GUI and Tui interfaces.
 
 ----------
 
-Cylc 8.1.0
-----------
+Cylc 8.1
+--------
 
 .. admonition:: Cylc Components
    :class: hint
@@ -140,8 +125,21 @@ Cylc 8.1.0
    **cannot** be restarted with Cylc 8.1 due to database changes.
 
 
+Analysis View
+^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.2.2
+
+The web UI also has a new view for displaying task queue & run time statistics.
+
+.. image:: changes/analysis_view.gif
+   :width: 80%
+
+
 Graph View
 ^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.2.0
 
 The web UI now has a graph view which displays a visualisation of a workflow's graph:
 
@@ -155,6 +153,8 @@ will be added in later releases.
 Log View
 ^^^^^^^^
 
+.. versionadded:: cylc-uiserver 1.2.0
+
 The web UI now has a log view which displays workflow and job log files:
 
 .. image:: changes/log-view-screenshot.png
@@ -163,8 +163,11 @@ The web UI now has a log view which displays workflow and job log files:
 Support for viewing more log files, syntax highlighting, searching and line
 numbers are planned for future releases.
 
+
 Edit Runtime
 ^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.2.0
 
 The web UI now has a command for editing the :cylc:conf:`[runtime]` section
 of a task or family.
@@ -174,18 +177,11 @@ of a task or family.
 
 Any changes made are :ref:`broadcast <cylc-broadcast>` to the running workflow.
 
-Analysis View
-^^^^^^^^^^^^^
-
-.. versionadded:: cylc-uiserver 1.2.2
-
-The web UI also has a new view for displaying task queue & run time statistics.
-
-.. image:: changes/analysis_view.gif
-   :width: 80%
 
 Combined Commands
 ^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-flow 8.1.0
 
 Two new commands have been added as short-cuts for common working patterns:
 
@@ -217,6 +213,8 @@ For more information see the command line help:
 Bash Completion
 ^^^^^^^^^^^^^^^
 
+.. versionadded:: cylc-flow 8.1.0
+
 Cylc now provides a high performance Bash completion script which saves you typing:
 
 * Cylc commands & options
@@ -232,8 +230,8 @@ Cylc now provides a high performance Bash completion script which saves you typi
 
 ----------
 
-Cylc 8.0.0
-----------
+Cylc 8.0
+--------
 
 .. admonition:: Cylc Components
    :class: hint
