@@ -11,7 +11,7 @@ The information logged here includes:
 - Event timestamps, at the start of each line
 - Workflow server host, port and process ID
 - Workflow initial and final cycle points
-- Workflow start type (i.e. cold start, warn start, restart)
+- Workflow (re)start number (1 for the first play, 2 or more for restarts)
 - Task events (task started, succeeded, failed, etc.)
 - Workflow stalled warnings.
 - Client commands (e.g. ``cylc hold``)
