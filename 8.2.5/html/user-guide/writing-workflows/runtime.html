@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Configuration &mdash; Cylc 8.2.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/js/diff_selector.js"></script>
+        <script src="../../_static/js/minicylc.js"></script>
+        <script src="../../_static/js/spoiler.js"></script>
+        <script src="../../_static/js/addons.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Task Parameters" href="parameterized-tasks.html" />
+    <link rel="prev" title="Scheduling Configuration" href="scheduling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Task Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#task-and-family-names">Task and Family Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-root-family">The Root Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#defining-multiple-tasks-or-families-at-once">Defining Multiple Tasks or Families at Once</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#families-of-families">Families of Families</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inheriting-from-multiple-parents">Inheriting from Multiple Parents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#job-environment">Job Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remote-task-hosting">Remote Task Hosting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implicit-tasks">Implicit Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#task-retry-on-failure">Task Retry On Failure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#task-event-handling">Task Event Handling</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduler.html">Scheduler Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../compound-commands.html">Compound Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Task Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/writing-workflows/runtime.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="task-configuration">
+<span id="user-guide-runtime"></span><h1>Task Configuration<a class="headerlink" href="#task-configuration" title="Permalink to this heading"></a></h1>
+<div class="tip tutorial-ref admonition">
+<p class="admonition-title">Related Tutorial</p>
+<p><a class="reference internal" href="../../tutorial/runtime/index.html#tutorial-runtime"><span class="std std-ref">Runtime Tutorial</span></a></p>
+</div>
+<p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> section of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+defines what job each <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> should run, and where and how to
+submit each one to run.</p>
+<p>It is an inheritance hierarchy that allows common settings to be factored
+out and defined once in task <a class="reference internal" href="../../glossary.html#term-family"><span class="xref std std-term">families</span></a> (duplication
+of configuration is a maintenance risk in a complex workflow).</p>
+<section id="task-and-family-names">
+<span id="namespace-names"></span><h2>Task and Family Names<a class="headerlink" href="#task-and-family-names" title="Permalink to this heading"></a></h2>
+<p>Task and family names must match in the graph and runtime sections of the
+workflow config file. They do not need to match the names of the external
+applications wrapped by the tasks.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.unicode_rules.TaskNameValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.flow.unicode_rules.</span></span><span class="sig-name descname"><span class="pre">TaskNameValidator</span></span><a class="headerlink" href="#cylc.flow.unicode_rules.TaskNameValidator" title="Permalink to this definition"></a></dt>
+<dd><p>The rules for valid task and family names:</p>
+<ul class="simple">
+<li><p>must start with: alphanumeric</p></li>
+<li><p>can only contain: alphanumeric, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">%</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;</span></code></p></li>
+<li><p>cannot start with: <code class="docutils literal notranslate"><span class="pre">_cylc</span></code></p></li>
+<li><p>cannot be: <code class="docutils literal notranslate"><span class="pre">root</span></code></p></li>
+</ul>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At runtime, tasks can access their own workflow task name as
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_NAME</span></code> in the job environment <a class="reference internal" href="#taskexecutionenvironment"><span class="std std-ref">job environment</span></a> if needed.</p>
+</div>
+<p>The following runtime configuration defines one family called <code class="docutils literal notranslate"><span class="pre">FAM</span></code> and two
+member tasks <code class="docutils literal notranslate"><span class="pre">fm1</span></code> and <code class="docutils literal notranslate"><span class="pre">fm2</span></code> that inherit settings from it. Members can
+also override inherited settings and define their own private settings.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[FAM]]</span>  <span class="c1"># &lt;-- a family</span>
+        <span class="c1">#...  settings for all FAM members</span>
+
+    <span class="nt">[[fm1]]</span>  <span class="c1"># &lt;-- task</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM</span>
+        <span class="c1">#...  fm1-specific settings</span>
+
+    <span class="nt">[[fm2]]</span>  <span class="c1"># &lt;-- a task</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAM</span>
+        <span class="c1">#...  fm2-specific settings</span>
+</pre></div>
+</div>
+<p>Note that families are not nested in terms of the file sub-heading structure. A
+runtime subsection defines a family if others inherit from it, otherwise
+it defines a task.</p>
+</section>
+<section id="the-root-family">
+<h2>The Root Family<a class="headerlink" href="#the-root-family" title="Permalink to this heading"></a></h2>
+<p>All tasks inherit implicitly from a family called <code class="docutils literal notranslate"><span class="pre">root</span></code> that can provide
+default settings for all tasks in the workflow (non-root families require an
+explicit <code class="docutils literal notranslate"><span class="pre">inherit</span></code> statement).</p>
+<p>For example, if all tasks are to run on the same platform, that could
+can be specified once for all tasks under <code class="docutils literal notranslate"><span class="pre">root</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="c1"># all tasks run on hpc1 (unless they override this setting)</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> hpc1</span>
+</pre></div>
+</div>
+</section>
+<section id="defining-multiple-tasks-or-families-at-once">
+<span id="multitaskdef"></span><h2>Defining Multiple Tasks or Families at Once<a class="headerlink" href="#defining-multiple-tasks-or-families-at-once" title="Permalink to this heading"></a></h2>
+<p>Runtime sub-section headings can be a comma-separated list of task or family
+names, in which case the settings below it apply to each list member.</p>
+<p>Here a group of three related tasks all run the same script on the same
+<a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a>, but pass their own names to it on the command line:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[ENSEMBLE]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> hpc1</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;run-model.sh $CYLC_TASK_NAME&quot;</span>
+
+    <span class="nt">[[m1, m2, m3]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> ENSEMBLE</span>
+
+    <span class="nt">[[m1]]</span>
+        <span class="c1">#...  m1-specific settings</span>
+</pre></div>
+</div>
+<p>Particular tasks (such as <code class="docutils literal notranslate"><span class="pre">m1</span></code> above) can still be singled out to add
+task-specific settings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="parameterized-tasks.html#user-guide-param"><span class="std std-ref">Task parameters</span></a> or template processing (see
+<a class="reference internal" href="jinja2.html#user-guide-jinja2"><span class="std std-ref">Jinja2</span></a> and <a class="reference internal" href="empy.html#user-guide-empy"><span class="std std-ref">EmPy</span></a>) can be used to
+programmatically generate family members and associated dependencies.</p>
+</div>
+</section>
+<section id="families-of-families">
+<h2>Families of Families<a class="headerlink" href="#families-of-families" title="Permalink to this heading"></a></h2>
+<p>Families can inherit from other families, to any depth.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[HPC1]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> hpc1</span>
+
+    <span class="nt">[[BIG-HPC1]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> HPC1</span>
+        <span class="c1">#...  add in high memory batch system directives</span>
+
+    <span class="nt">[[model]]</span>  <span class="c1"># a big task that runs on hpc1</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> BIG-HPC1</span>
+</pre></div>
+</div>
+<p>If the same item is defined (and redefined) at several levels in the family
+tree, the highest level (closest to the task) takes precedence.</p>
+</section>
+<section id="inheriting-from-multiple-parents">
+<h2>Inheriting from Multiple Parents<a class="headerlink" href="#inheriting-from-multiple-parents" title="Permalink to this heading"></a></h2>
+<p>Sometimes a multi-level single-parent tree is not sufficient to avoid all
+duplication of settings. Fortunately tasks can inherit from multiple parents at
+once <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[HPC1]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> hpc1</span>
+
+    <span class="nt">[[BIG]]</span>  <span class="c1"># high memory batch system directives</span>
+        <span class="c1">#...</span>
+
+    <span class="nt">[[model]]</span>  <span class="c1"># a big task that runs on hpc1</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> BIG, HPC1</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> to check exactly what settings a task or family ends up
+with after inheritance processing:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>config<span class="w"> </span>--item<span class="w"> </span><span class="s2">&quot;[runtime][model]environment&quot;</span><span class="w"> </span>&lt;workflow-id&gt;
+</pre></div>
+</div>
+</div>
+<section id="first-parent-family-hierarchy-for-visualization">
+<h3>First-parent Family Hierarchy for Visualization<a class="headerlink" href="#first-parent-family-hierarchy-for-visualization" title="Permalink to this heading"></a></h3>
+<p>Tasks can be collapsed into first-parent families in the Cylc GUI, so first
+parents should reflect the logical purpose of a task where possible, rather
+than (say) shared technical settings:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[HPC]]</span>
+        <span class="c1"># technical platform settings</span>
+
+    <span class="nt">[[MODEL]]</span>
+        <span class="c1"># atmospheric model tasks</span>
+
+    <span class="nt">[[atmos]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> MODEL, HPC</span>  <span class="c1"># (not HPC, MODEL)</span>
+</pre></div>
+</div>
+<p>If this is not what you want, given that the primary purpose of the family
+hierarchy is inheritance of runtime settings, a dummy first parent <code class="docutils literal notranslate"><span class="pre">None</span></code> can
+be used to disable the visualization usage without affecting inheritance:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[BAR]]</span>
+        <span class="c1">#...</span>
+    <span class="nt">[[foo]]</span>
+        <span class="c1"># inherit from BAR but stay under root for visualization</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> None, BAR</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="job-environment">
+<span id="taskexecutionenvironment"></span><h2>Job Environment<a class="headerlink" href="#job-environment" title="Permalink to this heading"></a></h2>
+<p><a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">Job scripts</span></a> export various environment variables before
+running <code class="docutils literal notranslate"><span class="pre">script</span></code> blocks (see <a class="reference internal" href="../task-implementation/job-submission.html#taskjobsubmission"><span class="std std-ref">Job Submission and Management</span></a>).</p>
+<p>Scheduler-defined variables appear first to identify the workflow, the task,
+and log directory locations. These are followed by user-defined variables from
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][environment]" title="flow.cylc[runtime][&lt;namespace&gt;][environment]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][environment]</span></code></a>. Order of variable definition
+is preserved so that new variable assignments can reference previous ones.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Task environment variables are evaluated at runtime, by jobs, on the
+job platform. So <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> in a task environment, for instance, evaluates at
+runtime to the home directory on the job platform, not on the scheduler
+platform.</p>
+</div>
+<p>In this example the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> ends up with <code class="docutils literal notranslate"><span class="pre">SHAPE=circle</span></code>, <code class="docutils literal notranslate"><span class="pre">COLOR=blue</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">TEXTURE=rough</span></code> in its environment:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> red</span>
+            <span class="nv">SHAPE </span><span class="o">=</span><span class="s"> circle</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> blue</span>  <span class="c1"># root override</span>
+            <span class="nv">TEXTURE </span><span class="o">=</span><span class="s"> rough</span> <span class="c1"># new variable</span>
+</pre></div>
+</div>
+<p>Job access to Cylc itself is configured first so that variable
+assignment expressions (as well as scripting) can use Cylc commands:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">REFERENCE_TIME </span><span class="o">=</span><span class="s"> $(cylc cyclepoint --offset-hours=6)</span>
+</pre></div>
+</div>
+<section id="overriding-inherited-environment-variables">
+<h3>Overriding Inherited Environment Variables<a class="headerlink" href="#overriding-inherited-environment-variables" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you override an inherited task environment variable the parent config
+item gets <em>replaced</em> before it is ever used to define the shell variable in
+the <a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">job script</span></a>. Consequently the job cannot see the parent value as
+well as the task value:</p>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[FOO]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> red</span>
+    <span class="nt">[[bar]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FOO</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">tmp </span><span class="o">=</span><span class="s"> $COLOR</span>  <span class="c1"># !! ERROR: $COLOR is undefined here</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> dark-$tmp</span>  <span class="c1"># !! as this overrides COLOR in FOO.</span>
+</pre></div>
+</div>
+<p>The compressed variant of this, <code class="docutils literal notranslate"><span class="pre">COLOR</span> <span class="pre">=</span> <span class="pre">dark-$COLOR</span></code>, is also an error for
+the same reason. To achieve the desired result, use a different name for the
+parent variable:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[FOO]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">FOO_COLOR </span><span class="o">=</span><span class="s"> red</span>
+    <span class="nt">[[bar]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FOO</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> dark-$FOO_COLOR</span>  <span class="c1"># OK</span>
+</pre></div>
+</div>
+</section>
+<section id="job-script-variables">
+<span id="task-job-script-variables"></span><h3>Job Script Variables<a class="headerlink" href="#job-script-variables" title="Permalink to this heading"></a></h3>
+<p>These variables provided by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available to
+<a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">job scripts</span></a>:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_VERSION                       <span class="c"># Version of cylc installation used</span>
+CYLC_VERBOSE                       <span class="c"># Verbose mode, true or false</span>
+CYLC_DEBUG                         <span class="c"># Debug mode (even more verbose), true or false</span>
+
+CYLC_CYCLING_MODE                  <span class="c"># Cycling mode, e.g. gregorian</span>
+ISODATETIMECALENDAR                <span class="c"># Calendar mode for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_CYCLING_MODE</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_WORKFLOW_FINAL_CYCLE_POINT    <span class="c"># Final cycle point</span>
+CYLC_WORKFLOW_INITIAL_CYCLE_POINT  <span class="c"># Initial cycle point</span>
+CYLC_WORKFLOW_ID                   <span class="c"># Workflow ID</span>
+                                   <span class="c"># e.g. &quot;a/b/c/run1&quot;</span>
+CYLC_WORKFLOW_NAME                 <span class="c"># Workflow ID with the run name removed</span>
+                                   <span class="c"># (use CYLC_WORKFLOW_ID for most purposes)</span>
+                                   <span class="c"># e.g. &quot;a/b/c&quot;</span>
+CYLC_WORKFLOW_NAME_BASE            <span class="c"># The basename of the workflow name</span>
+                                   <span class="c"># (use CYLC_WORKFLOW_ID for most purposes)</span>
+                                   <span class="c"># e.g. &quot;c&quot;</span>
+CYLC_UTC                           <span class="c"># UTC mode, True or False</span>
+TZ                                 <span class="c"># Set to &quot;UTC&quot; in UTC mode or not defined</span>
+
+CYLC_WORKFLOW_RUN_DIR              <span class="c"># Location of the run directory in</span>
+                                   <span class="c"># job host, e.g. ~/cylc-run/foo</span>
+CYLC_WORKFLOW_HOST                 <span class="c"># Host running the workflow process</span>
+CYLC_WORKFLOW_OWNER                <span class="c"># User ID running the workflow process</span>
+
+CYLC_WORKFLOW_SHARE_DIR            <span class="c"># Workflow (or task!) shared directory (see below)</span>
+CYLC_WORKFLOW_UUID                 <span class="c"># Workflow UUID string</span>
+CYLC_WORKFLOW_WORK_DIR             <span class="c"># Workflow work directory (see below)</span>
+
+CYLC_TASK_JOB                      <span class="c"># Job identifier expressed as</span>
+                                   <span class="c"># CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER</span>
+                                   <span class="c">#   e.g. 20110511T1800Z/t1/01</span>
+
+CYLC_TASK_CYCLE_POINT              <span class="c"># Cycle point, e.g. 20110511T1800Z</span>
+ISODATETIMEREF                     <span class="c"># Reference time for the `isodatetime` command,</span>
+                                   <span class="c">#   defined with the value of CYLC_TASK_CYCLE_POINT</span>
+                                   <span class="c">#   when in any datetime cycling mode</span>
+
+CYLC_TASK_NAME                     <span class="c"># Job&#39;s task name, e.g. t1</span>
+CYLC_TASK_ID                       <span class="c"># Task instance identifier CYCLE-POINT/TASK-NAME</span>
+                                   <span class="c">#   e.g. 20110511T1800Z/t1</span>
+
+CYLC_TASK_SUBMIT_NUMBER            <span class="c"># Job&#39;s submit number, e.g. 1,</span>
+                                   <span class="c">#   increments with every submit</span>
+CYLC_TASK_TRY_NUMBER               <span class="c"># Number of execution tries, e.g. 1</span>
+                                   <span class="c">#   increments with automatic execution retry delays.</span>
+CYLC_TASK_FLOW_NUMBERS             <span class="c"># Flows this task belongs to, e.g. 1,2</span>
+
+CYLC_TASK_LOG_DIR                  <span class="c"># Location of the job log directory</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/</span>
+CYLC_TASK_LOG_ROOT                 <span class="c"># The job script path</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job</span>
+CYLC_TASK_WORK_DIR                 <span class="c"># Location of task work directory (see below)</span>
+                                   <span class="c">#   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1</span>
+
+CYLC_TASK_NAMESPACE_HIERARCHY      <span class="c"># Linearised family namespace of the task,</span>
+                                   <span class="c">#   e.g. root postproc t1</span>
+CYLC_TASK_DEPENDENCIES             <span class="c"># List of met dependencies that triggered the task</span>
+                                   <span class="c">#   e.g. 1/foo 1/bar</span>
+                                   <span class="c">#   (note this variable will not be</span>
+                                   <span class="c">#   exported if there are more than 50</span>
+                                   <span class="c">#   dependencies)</span>
+
+CYLC_TASK_COMMS_METHOD             <span class="c"># Set to &quot;ssh&quot; if communication method is &quot;ssh&quot;</span>
+CYLC_TASK_SSH_LOGIN_SHELL          <span class="c"># With &quot;ssh&quot; communication, if set to &quot;True&quot;,</span>
+                                   <span class="c">#   use login shell on workflow host</span>
+</pre></div>
+</div>
+<p>Some global shell variables are also defined in the job script, but not
+exported to subshells:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>CYLC_FAIL_SIGNALS               <span class="c"># List of signals trapped by the error trap</span>
+CYLC_VACATION_SIGNALS           <span class="c"># List of signals trapped by the vacation trap</span>
+CYLC_TASK_MESSAGE_STARTED_PID   <span class="c"># PID of &quot;cylc message&quot; job started&quot; command</span>
+CYLC_TASK_WORK_DIR_BASE         <span class="c"># Alternate task work directory,</span>
+                                <span class="c">#   relative to the workflow work directory</span>
+</pre></div>
+</div>
+</section>
+<section id="workflow-share-directories">
+<span id="id2"></span><h3>Workflow Share Directories<a class="headerlink" href="#workflow-share-directories" title="Permalink to this heading"></a></h3>
+<p>The workflow <a class="reference internal" href="../../glossary.html#term-share-directory"><span class="xref std std-term">share directory</span></a> is created automatically under the
+workflow run directory as a convenient shared space for tasks. The location is
+available to tasks as <code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_SHARE_DIR</span></code>. In a cycling workflow,
+output files are typically held in cycle point sub-directories of this.</p>
+<p>The top level share directory location can be changed, e.g. to a large data
+area, by global config settings under <a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>.</p>
+<p>If your workflow creates or installs executables or Python libraries
+as it is running, these can be placed in:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">share/bin/</span></code> - for executables. This location is automatically added to <code class="docutils literal notranslate"><span class="pre">PATH</span></code>
+(before the top-level <code class="docutils literal notranslate"><span class="pre">bin/</span></code> in the run dir).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">share/lib/python/</span></code> - for Python modules. This location is automatically added
+to <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> (before the top-level <code class="docutils literal notranslate"><span class="pre">lib/python/</span></code> in the run dir).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cylc will not create these folders.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="configuration.html#workflowdefinitiondirectories"><span class="std std-ref">Top level “bin/” and “lib/python/” directories</span></a>.</p>
+</div>
+</section>
+<section id="task-work-directories">
+<h3>Task Work Directories<a class="headerlink" href="#task-work-directories" title="Permalink to this heading"></a></h3>
+<p>Job scripts are executed from within <a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directories</span></a> created automatically under the workflow run directory. A task can
+access its own work directory via <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_WORK_DIR</span></code> (or simply <code class="docutils literal notranslate"><span class="pre">$PWD</span></code>
+if it does not change to another location at runtime). By default the location
+contains task name and cycle point, to provide a unique workspace for every
+instance of every task.</p>
+<p>The top level work directory location can be changed, e.g. to a large data
+area, by global config settings under <a class="reference internal" href="../../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>.</p>
+</section>
+</section>
+<section id="remote-task-hosting">
+<span id="runningtasksonaremotehost"></span><h2>Remote Task Hosting<a class="headerlink" href="#remote-task-hosting" title="Permalink to this heading"></a></h2>
+<p>Job <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platforms</span></a> are defined in <code class="docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code>.</p>
+<p>If a task declares a different platform to that where the scheduler is running,
+Cylc uses non-interactive SSH to submit the job to the platform <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job
+runner</span></a> on one of the platform hosts. Workflow source files will be installed
+on the platform, via the associated <code class="docutils literal notranslate"><span class="pre">global.cylc[install</span> <span class="pre">targets]</span></code>, just
+before the first job is submitted to run there.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[foo]]</span>
+       <span class="nv">platform </span><span class="o">=</span><span class="s"> orca</span>
+</pre></div>
+</div>
+<p>For this to work:</p>
+<ul class="simple">
+<li><p>Non-interactive SSH is required from the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host
+to the platform hosts</p></li>
+<li><p>Cylc must be installed on the hosts of the destination platform</p>
+<ul>
+<li><p>If polling task communication is used, there is no other requirement</p></li>
+<li><p>If SSH task communication is configured, non-interactive SSH is required
+from the job platform to the scheduler platform</p></li>
+<li><p>If TCP (default) task communication is configured, the task platform
+should have access to the Cylc ports on the scheduler host</p></li>
+</ul>
+</li>
+</ul>
+<p>Platforms, like other runtime settings, can be declared globally in the root
+family, or in other families, or for individual tasks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The platform known as <code class="docutils literal notranslate"><span class="pre">localhost</span></code> is the platform where the scheduler
+is running, in many cases a dedicated server and <em>not</em> your desktop.</p>
+</div>
+<section id="internal-platform-and-host-selection">
+<h3>Internal Platform and Host Selection<a class="headerlink" href="#internal-platform-and-host-selection" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]platform" title="flow.cylc[runtime][&lt;namespace&gt;]platform"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]platform</span></code></a> item points to either a
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]" title="global.cylc[platforms][&lt;platform name&gt;]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">platform</span></code></a> or a
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platform groups][&lt;group&gt;]" title="global.cylc[platform groups][&lt;group&gt;]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">platform</span> <span class="pre">group</span></code></a>.</p>
+<p><a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">Cylc platforms</span></a> allow you to configure compute platforms
+you wish Cylc to run jobs on.</p>
+<p><a class="reference internal" href="../../glossary.html#term-platform-group"><span class="xref std std-term">Platform groups</span></a> allow you to group together platforms
+any of which would be suitable for a given job.
+Platform groups can improve robustness by allowing jobs to be submitted on
+any platform in the group, as well as providing an interface for
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platform groups][&lt;group&gt;][selection]method" title="global.cylc[platform groups][&lt;group&gt;][selection]method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">basic</span> <span class="pre">load</span> <span class="pre">balancing</span></code></a>.</p>
+<p><a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">Platforms</span></a> are selected from a <a class="reference internal" href="../../glossary.html#term-platform-group"><span class="xref std std-term">platform group</span></a> once,
+when a job is submitted.</p>
+<p>Hosts within a <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> are re-selected each time the scheduler
+needs to communicate with a job.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">Platform Configuration</span></a>: For details of how Platforms and
+Platform Groups are set up and in-depth examples.</p>
+</div>
+</section>
+<section id="external-platform-selection-scripts">
+<h3>External Platform Selection Scripts<a class="headerlink" href="#external-platform-selection-scripts" title="Permalink to this heading"></a></h3>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Cylc 8 can select hosts from a group of suitable hosts listed in the
+platform config, so in many cases this logic should no longer be necessary.</p>
+</div>
+<p>Instead of hardwiring platform names into the workflow configuration you can
+give a command that prints a platform name, or an environment variable, as the
+value of <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]platform" title="flow.cylc[runtime][&lt;namespace&gt;]platform"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]platform</span></code></a>.</p>
+<p>For example:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> $(script-which-returns-a-platform-name)</span>
+</pre></div>
+</div>
+</div>
+<p>Job hosts are always selected dynamically, for the chosen platform or
+platform group.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">$(script-which-returns-a-platform-name)</span></code> returns a non-zero exit
+code then the scheduler will assign the
+<a class="reference internal" href="../running-workflows/task-job-states.html#task-job-states"><span class="std std-ref">submit-failed</span></a> state to this <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">job</span></a>.
+If you have submit retries set up for the job, the scheduler will retry
+running your platform selection script in the same was is it would for
+any other submission failure.</p>
+</div>
+</section>
+<section id="remote-job-log-directories">
+<h3>Remote Job Log Directories<a class="headerlink" href="#remote-job-log-directories" title="Permalink to this heading"></a></h3>
+<p>Job stdout and stderr streams are written to <a class="reference internal" href="../../glossary.html#term-job-log"><span class="xref std std-term">log files</span></a>
+under the workflow <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> (see <a class="reference internal" href="../task-implementation/job-submission.html#whitherstdoutandstderr"><span class="std std-ref">Task stdout and stderr Logs</span></a>).
+For remote tasks the same directory is used, on the job host.</p>
+</section>
+</section>
+<section id="implicit-tasks">
+<span id="implicittasks"></span><h2>Implicit Tasks<a class="headerlink" href="#implicit-tasks" title="Permalink to this heading"></a></h2>
+<p>An implicit task is one that appears in the graph but is not defined under
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime]</span></code></a>.</p>
+<p>Depending on the value of <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]allow implicit tasks" title="flow.cylc[scheduler]allow implicit tasks"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]allow</span> <span class="pre">implicit</span> <span class="pre">tasks</span></code></a>,
+Cylc can automatically create default task definitions for these, to submit
+local dummy jobs that just return the standard job status messages.</p>
+<p>Implicit tasks can be used to mock up functional workflows very quickly. A
+default <code class="docutils literal notranslate"><span class="pre">script</span></code> can be added to the root family, e.g. to slow job execution
+down a little. Here is a complete workflow definition using implicit tasks:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep =&gt; run-a &amp; run-b </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">done</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 10&quot;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Implicit tasks are somewhat dangerous because they can easily be created by
+mistake: misspelling a task’s name divorces it from its <code class="docutils literal notranslate"><span class="pre">runtime</span></code> definition.</p>
+</div>
+<p>For this reason implicit tasks are not allowed by default, and if used they
+should be turned off once the real task definitions are complete.</p>
+<p>You can get the convenience without the danger with a little more effort, by
+adding empty runtime placeholders instead of allowing implicit tasks:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;prep =&gt; run-a &amp; run-b </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">done</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 10&quot;</span>
+    <span class="nt">[[prep]]</span>
+    <span class="nt">[[run-a, run-b]]</span>
+    <span class="nt">[[done]]</span>
+</pre></div>
+</div>
+</section>
+<section id="task-retry-on-failure">
+<span id="taskretries"></span><h2>Task Retry On Failure<a class="headerlink" href="#task-retry-on-failure" title="Permalink to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution retry delays" title="flow.cylc[runtime][&lt;namespace&gt;]execution retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">retry</span> <span class="pre">delays</span></code></a>.</p>
+</div>
+<p>Tasks can have a list of <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 durations</span></a> as retry
+intervals. If the job fails the task will return to the <code class="docutils literal notranslate"><span class="pre">waiting</span></code> state
+with a clock-trigger configured with the next retry delay.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tasks only enter the <code class="docutils literal notranslate"><span class="pre">submit-failed</span></code> state if job submission fails with no
+retries left. Otherwise they return to the waiting state, to wait on the
+next try.</p>
+<p>Tasks only enter the <code class="docutils literal notranslate"><span class="pre">failed</span></code> state if job execution fails with no retries
+left. Otherwise they return to the waiting state, to wait on the next try.</p>
+</div>
+<p>In the following example, tasks <code class="docutils literal notranslate"><span class="pre">bad</span></code> and <code class="docutils literal notranslate"><span class="pre">flaky</span></code> each have 3 retries
+configured, with a 10 second delay between. On the final try, <code class="docutils literal notranslate"><span class="pre">bad</span></code> fails
+again and goes to the <code class="docutils literal notranslate"><span class="pre">failed</span></code> state, while <code class="docutils literal notranslate"><span class="pre">flaky</span></code> succeeds and triggers
+task <code class="docutils literal notranslate"><span class="pre">whizz</span></code> downstream. The scheduler will then stall with
+<code class="docutils literal notranslate"><span class="pre">bad</span></code> retained as an incomplete task.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">bad</span> <span class="o">=&gt;</span> <span class="kd">cheese</span>
+            <span class="kd">flaky</span> <span class="o">=&gt;</span> <span class="kd">whizz</span>
+         <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[bad]]</span>
+        <span class="c1"># retry 3 times then fail</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">            false</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 3*PT10S</span>
+    <span class="nt">[[flaky]]</span>
+        <span class="c1"># retry 3 times then succeed</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">            test $CYLC_TASK_TRY_NUMBER -gt 3</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 3*PT10S</span>
+    <span class="nt">[[cheese, whizz]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;sleep 10&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="task-event-handling">
+<span id="user-guide-runtime-task-event-handling"></span><h2>Task Event Handling<a class="headerlink" href="#task-event-handling" title="Permalink to this heading"></a></h2>
+<p>Task event handlers allow configured commands to run when task events occur.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cylc supports workflow events e.g. <code class="docutils literal notranslate"><span class="pre">startup</span></code> and <code class="docutils literal notranslate"><span class="pre">shutdown</span></code>
+and task events e.g. <code class="docutils literal notranslate"><span class="pre">submitted</span></code> and <code class="docutils literal notranslate"><span class="pre">failed</span></code>.</p>
+<p>See also <a class="reference internal" href="scheduler.html#user-guide-scheduler-workflow-event-handling"><span class="std std-ref">Workflow Event Handling</span></a>.</p>
+</div>
+<p>Event handlers can be used to send a message, raise an alarm, or whatever you
+like. They can even call <code class="docutils literal notranslate"><span class="pre">cylc</span></code> commands to intervene in the workflow.</p>
+<p>Task event handlers are configured by
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][events]</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Task event handlers are called by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, not by the task
+jobs that generate the events - so they do not see the job environment.</p>
+</div>
+<p>Event handlers can be stored in the workflow <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory, or anywhere in
+<code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> environment.</p>
+<p>They should return quickly to avoid tying up the scheduler process pool -
+see <a class="reference internal" href="scheduler.html#managing-external-command-execution"><span class="std std-ref">External Command Execution</span></a>.</p>
+<section id="event-specific-handlers">
+<span id="user-guide-runtime-task-event-handling-event-specific-handlers"></span><h3>Event-Specific Handlers<a class="headerlink" href="#event-specific-handlers" title="Permalink to this heading"></a></h3>
+<p>Event-specific handlers are configured by <code class="docutils literal notranslate"><span class="pre">&lt;event&gt;</span> <span class="pre">handlers</span></code>
+under <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][events]</span></code></a>, where <code class="docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code>
+can be:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Event</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>submitted</p></td>
+<td><p>job submitted</p></td>
+</tr>
+<tr class="row-odd"><td><p>submission retry</p></td>
+<td><p>job submission failed but will retry later</p></td>
+</tr>
+<tr class="row-even"><td><p>submission failed</p></td>
+<td><p>job submission failed</p></td>
+</tr>
+<tr class="row-odd"><td><p>started</p></td>
+<td><p>job started running</p></td>
+</tr>
+<tr class="row-even"><td><p>retry</p></td>
+<td><p>job failed but will retry later</p></td>
+</tr>
+<tr class="row-odd"><td><p>failed</p></td>
+<td><p>job failed</p></td>
+</tr>
+<tr class="row-even"><td><p>succeeded</p></td>
+<td><p>job succeeded</p></td>
+</tr>
+<tr class="row-odd"><td><p>submission timeout</p></td>
+<td><p>job timed out in the <code class="docutils literal notranslate"><span class="pre">submitted</span></code> state</p></td>
+</tr>
+<tr class="row-even"><td><p>execution timeout</p></td>
+<td><p>job timed out in the <code class="docutils literal notranslate"><span class="pre">running</span></code> state</p></td>
+</tr>
+<tr class="row-odd"><td><p>warning</p></td>
+<td><p>scheduler received a message of severity WARNING from job</p></td>
+</tr>
+<tr class="row-even"><td><p>critical</p></td>
+<td><p>scheduler received a message of severity CRITICAL from job</p></td>
+</tr>
+<tr class="row-odd"><td><p>custom</p></td>
+<td><p>scheduler received a message of severity CUSTOM from job <br> (note: literally, the word <code class="docutils literal notranslate"><span class="pre">CUSTOM</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>expired</p></td>
+<td><p>task expired and will not submit (too far behind)</p></td>
+</tr>
+<tr class="row-odd"><td><p>late</p></td>
+<td><p>task running later than expected</p></td>
+</tr>
+</tbody>
+</table>
+<p>Values should be a list of commands, command lines, or command line templates
+(see below) to call if the specified event is triggered.</p>
+</section>
+<section id="general-event-handlers">
+<span id="user-guide-runtime-task-event-handling-general-event-handlers"></span><h3>General Event Handlers<a class="headerlink" href="#general-event-handlers" title="Permalink to this heading"></a></h3>
+<p>Alternatively you can configure a list of generic event <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]handlers" title="flow.cylc[runtime][&lt;namespace&gt;][events]handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">handlers</span></code></a> to be run
+for configured <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]handler events" title="flow.cylc[runtime][&lt;namespace&gt;][events]handler events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">handler</span> <span class="pre">events</span></code></a>.</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]handler events" title="flow.cylc[runtime][&lt;namespace&gt;][events]handler events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">handler</span> <span class="pre">events</span></code></a></dt><dd><p>A list of events which may include any of the above
+events (e.g. <code class="docutils literal notranslate"><span class="pre">submission</span> <span class="pre">failed</span></code> or <code class="docutils literal notranslate"><span class="pre">warning</span></code>) or
+any of a task’s <a class="reference internal" href="../../glossary.html#term-custom-output"><span class="xref std std-term">custom outputs</span></a>.</p>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]handlers" title="flow.cylc[runtime][&lt;namespace&gt;][events]handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">handlers</span></code></a></dt><dd><p>A list of commands to be run for these events.
+Information about the event can be provided using
+<a class="reference internal" href="#user-guide-runtime-event-handlers-task-event-handling-template-variables"><span class="std std-ref">Task Event Template Variables</span></a>.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">handlers </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">   my-handler %(event)s %(workflow)s,</span>
+<span class="s2">   echo %(workflow)s-%(event)s &gt;&gt; my-log-file</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="nv">handler events </span><span class="o">=</span><span class="s"> submission failed, failed, warning, my-custom-output</span>
+</pre></div>
+</div>
+</section>
+<section id="task-event-template-variables">
+<span id="user-guide-runtime-event-handlers-task-event-handling-template-variables"></span><h3>Task Event Template Variables<a class="headerlink" href="#task-event-template-variables" title="Permalink to this heading"></a></h3>
+<dl>
+<p>The following variables are available to task event handlers.</p>
+<p>They can be templated into event handlers with Python percent style string
+formatting e.g:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%(workflow)s is running on %(host)s
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">%(event)s</span></code> string, for instance, will be replaced by the actual
+event name when the handler is invoked.</p>
+<p>If no templates or arguments are specified the following default command
+line will be used:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;event-handler&gt; %(event)s %(workflow)s %(id)s %(message)s
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Substitution patterns should not be quoted in the template strings.
+This is done automatically where required.</p>
+</div>
+<p>For an explanation of the substitution syntax, see
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">String Formatting Operations in the Python documentation</a>.</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">event</span></span></dt>
+<dd><p>Event name.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow</span></span></dt>
+<dd><p>Workflow ID.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">suite</span></span></dt>
+<dd><p>Workflow ID.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “workflow”.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">uuid</span></span></dt>
+<dd><p>The unique identification string for this workflow run.</p>
+<p>This string is preserved for the lifetime of the scheduler and is restored
+from the database on restart.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">suite_uuid</span></span></dt>
+<dd><p>The unique identification string for this workflow run.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use ‘uuid’.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">point</span></span></dt>
+<dd><p>The task’s cycle point.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">submit_num</span></span></dt>
+<dd><p>The job’s submit number.</p>
+<p>This starts at 1 and increments with each additional job submission.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">try_num</span></span></dt>
+<dd><p>The job’s try number.</p>
+<p>The number of execution attempts.
+It starts at 1 and increments with automatic
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution retry delays" title="flow.cylc[runtime][&lt;namespace&gt;]execution retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]execution</span> <span class="pre">retry</span> <span class="pre">delays</span></code></a>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">id</span></span></dt>
+<dd><p>The task ID (i.e. <code class="docutils literal notranslate"><span class="pre">%(point)/%(name)</span></code>).</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">message</span></span></dt>
+<dd><p>Events message, if any.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">job_runner_name</span></span></dt>
+<dd><p>The job runner name.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">batch_sys_name</span></span></dt>
+<dd><p>The job runner name.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “job_runner_name”.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">job_id</span></span></dt>
+<dd><p>The job ID in the job runner.</p>
+<p>I.E. The job submission ID. For background jobs this is the process ID.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">batch_sys_job_id</span></span></dt>
+<dd><p>The job ID in the job runner.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “job_id”.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">submit_time</span></span></dt>
+<dd><p>Date-time when the job was submitted, in ISO8601 format.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">start_time</span></span></dt>
+<dd><p>Date-time when the job started, in ISO8601 format.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">finish_time</span></span></dt>
+<dd><p>Date-time when the job finished, in ISO8601 format.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">platform_name</span></span></dt>
+<dd><p>The name of the platform where the job is submitted.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">user&#64;host</span></span></dt>
+<dd><p>The name of the platform where the job is submitted.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “platform_name”.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This now provides the platform name rather than <code class="docutils literal notranslate"><span class="pre">user&#64;host</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">name</span></span></dt>
+<dd><p>The name of the task.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">task_url</span></span></dt>
+<dd><p>The URL defined in the task’s metadata.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use <code class="docutils literal notranslate"><span class="pre">URL</span></code> from <code class="docutils literal notranslate"><span class="pre">&lt;task</span> <span class="pre">metadata&gt;</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow_url</span></span></dt>
+<dd><p>The URL defined in the workflow’s metadata.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use <code class="docutils literal notranslate"><span class="pre">workflow_URL</span></code> from <code class="docutils literal notranslate"><span class="pre">workflow_&lt;workflow</span> <span class="pre">metadata&gt;</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">&lt;task</span> <span class="pre">metadata&gt;</span></span></dt>
+<dd><p>Any task metadata defined in
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][meta]" title="flow.cylc[runtime][&lt;namespace&gt;][meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][meta]</span></code></a> can be used e.g:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">%(title)s</span></code></dt><dd><p>Task title</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(URL)s</span></code></dt><dd><p>Task URL</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(importance)s</span></code></dt><dd><p>Example custom task metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow_&lt;workflow</span> <span class="pre">metadata&gt;</span></span></dt>
+<dd><p>Any workflow metadata defined in
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[meta]" title="flow.cylc[meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[meta]</span></code></a> can be used with the <code class="docutils literal notranslate"><span class="pre">workflow_</span></code>
+e.g. prefix:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">%(workflow_title)s</span></code></dt><dd><p>Workflow title</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(workflow_URL)s</span></code></dt><dd><p>Workflow URL.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">%(workflow_rating)s</span></code></dt><dd><p>Example custom workflow metadata.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dl>
+
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<p>The following <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> snippets illustrate the two (general and
+task-specific) ways to configure event handlers:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> test ${CYLC_TASK_TRY_NUMBER} -eq 2</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>  <span class="c1"># event-specific handlers:</span>
+            <span class="nv">retry handlers </span><span class="o">=</span><span class="s"> notify-retry.py</span>
+            <span class="nv">failed handlers </span><span class="o">=</span><span class="s"> notify-failed.py</span>
+</pre></div>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            test ${CYLC_TASK_TRY_NUMBER} -eq 2</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; &#39;oopsy daisy&#39;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>  <span class="c1"># general handlers:</span>
+            <span class="nv">handlers </span><span class="o">=</span><span class="s"> notify-events.py</span>
+            <span class="c1"># Note: task output name can be used as an event in this method</span>
+            <span class="nv">handler events </span><span class="o">=</span><span class="s"> retry, failed, oops</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">oops </span><span class="o">=</span><span class="s"> oopsy daisy</span>
+</pre></div>
+</div>
+</section>
+<section id="built-in-email-event-handler">
+<h3>Built-in Email Event Handler<a class="headerlink" href="#built-in-email-event-handler" title="Permalink to this heading"></a></h3>
+<p>To send an email on task events, configure relevant tasks with a list of events
+to handle by email. Custom task output names can also be used as event names,
+in which case the event triggers when the output message is received.</p>
+<p>E.g. to send an email on task failed, retry, and a custom message event:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            test ${CYLC_TASK_TRY_NUMBER} -eq 3</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; &#39;oopsy daisy&#39;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> PT0S, PT30S</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">mail events </span><span class="o">=</span><span class="s"> failed, retry, oops</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">oops </span><span class="o">=</span><span class="s"> oopsy daisy</span>
+</pre></div>
+</div>
+<p>By default, event emails will be sent to the current user with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">to:</span></code> set as <code class="docutils literal notranslate"><span class="pre">$USER</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from:</span></code> set as <code class="docutils literal notranslate"><span class="pre">notifications&#64;$(hostname)</span></code></p></li>
+<li><p>SMTP server at <code class="docutils literal notranslate"><span class="pre">localhost:25</span></code></p></li>
+</ul>
+<p>These can be configured using the settings:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][mail]to" title="flow.cylc[runtime][&lt;namespace&gt;][mail]to"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[mail]to</span></code></a> (list of email addresses)</p></li>
+<li><p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][mail]from" title="flow.cylc[runtime][&lt;namespace&gt;][mail]from"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[mail]from</span></code></a></p></li>
+</ul>
+<p>The scheduler batches events over a 5 minute interval, by default, to avoid
+flooding your Inbox if many events occur in a short time. The batching interval
+can be configured with <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][mail]task event batch interval" title="flow.cylc[scheduler][mail]task event batch interval"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler][mail]task</span> <span class="pre">event</span> <span class="pre">batch</span> <span class="pre">interval</span></code></a>.</p>
+</section>
+<section id="late-events">
+<span id="id3"></span><h3>Late Events<a class="headerlink" href="#late-events" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The scheduler can only check for lateness once a task has appeared in its
+active task window. In Cylc 8 this is usually when the task is actually
+ready to run, which severely limits the usefulness of late events as
+currently implemented.</p>
+</div>
+<p>If a real time (clock-triggered) workflow performs fairly consistently from one
+cycle to the next, you may want to be notified when certain tasks are running
+late with respect the time they normally trigger in each cycle.</p>
+<p>Cylc can generate a <em>late</em> event if a task has not triggered by a given offset
+from its cycle point in real time. For example, if a task <code class="docutils literal notranslate"><span class="pre">forecast</span></code> normally
+triggers at 30 minutes after cycle point, a late event could be configured like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[forecast]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> run-model.sh</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">late offset </span><span class="o">=</span><span class="s"> PT40M</span>  <span class="c1"># allow a 10 minute delay</span>
+            <span class="nv">late handlers </span><span class="o">=</span><span class="s"> my-handler %(message)s</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Late offset intervals are not computed automatically so be careful to update
+them after any workflow change that affects triggering times.</p>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>The order of precedence for inheritance from multiple parents is
+determined by the <a class="reference external" href="https://en.wikipedia.org/wiki/C3_linearization">C3 algorithm</a> used to find
+the linear method resolution order for multiple inheritance in Python.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scheduling.html" class="btn btn-neutral float-left" title="Scheduling Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="parameterized-tasks.html" class="btn btn-neutral float-right" title="Task Parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Apr 05, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.2.5";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-workflows/runtime";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
