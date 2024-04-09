@@ -63,14 +63,10 @@ jobs:
           metomi_rose: true
           metomi_rose_opts: ''
 
-      - name: install eslint
-        run: |
-          npm install -g eslint
-
       - name: lint
         run: |
           flake8
-          eslint .
+          npx eslint@v8 .
 
       - name: (debug only) list language dictionaries
         if: runner.debug
