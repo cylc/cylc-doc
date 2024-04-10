@@ -25,10 +25,21 @@ Check the workflow configuration for errors:
      - ::
 
          # validate from $PWD
-         rose suite-run --validate
+         rose suite-run --validate-suite-only
      - ::
 
          cylc validate <name/path>
+
+.. note::
+
+   If you are using a plugin (such as :ref:`cylc rose`) to install files **and**
+   your config includes those files:
+
+   You will still need to install the workflow and then
+   validate the installed workflow.
+
+   I.e. ``cylc install && cylc validate <workflow id>``.
+
 
 Installing & Running
 --------------------
