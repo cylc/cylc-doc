@@ -136,15 +136,15 @@ executes tasks according to schedules and dependencies.</p>
 <p>In a Cylc workflow each step is a computational task that runs a script or
 application of some kind. Cylc runs each task as soon as it is appropriate
 to do so.</p>
-<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-00d9f1296c2560307a9ef9922aec5f3a947f16da.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-2514b7f1b29297ee472fe45bb53f8ec4d9e0cdf5.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-b -&gt; d
-f
-c
-a -&gt; b
-d -&gt; f
 e -&gt; f
+d -&gt; f
+c
+f
+b -&gt; d
 b -&gt; c
+a -&gt; b
 }</p></object></div>
 </div>
 </div><p>Cylc can automatically:</p>
@@ -178,7 +178,7 @@ User Interface), web GUI, and <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Apr 05, 2024.
+      <span class="lastupdated">Last updated on Apr 10, 2024.
       </span></p>
   </div>
 

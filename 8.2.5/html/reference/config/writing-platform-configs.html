@@ -386,17 +386,16 @@ used for both.</p>
 <section id="symlinking-directories">
 <span id="symlinkdirssetup"></span><h2>Symlinking Directories<a class="headerlink" href="#symlinking-directories" title="Permalink to this heading"></a></h2>
 <p>To minimize the disk space used by <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>, set
-<a class="reference internal" href="global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>.
-The entire workflow directory can be symlinked, using the config item <code class="docutils literal notranslate"><span class="pre">run</span></code>
-The following sub-directories  are also available for configuration:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>log</p></li>
-<li><p>share</p></li>
-<li><p>share/cycle</p></li>
-<li><p>work</p></li>
+<a class="reference internal" href="global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a> to offload files onto other
+locations. The entire <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> can be symlinked, as well as
+certain sub-directories.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code> - the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> itself</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">share</span></code> (see <a class="reference internal" href="../../glossary.html#term-share-directory"><span class="xref std std-term">share directory</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">share/cycle</span></code> (typically used by <a class="reference external" href="https://github.com/metomi/rose">Rose</a> tasks)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">work</span></code> (see <a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a>)</p></li>
 </ul>
-</div></blockquote>
 <p>These should be configured per <a class="reference internal" href="../../glossary.html#term-install-target"><span class="xref std std-term">install target</span></a>.</p>
 <p>For example, to configure workflow <code class="docutils literal notranslate"><span class="pre">log</span></code> directories (on the
 <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> host) so that they symlink to a different location,
@@ -407,7 +406,7 @@ you could write the following in <code class="docutils literal notranslate"><spa
             <span class="nv">log </span><span class="o">=</span><span class="s"> /somewhere/else</span>
 </pre></div>
 </div>
-<p>This would result in the following file structure on the Cylc Scheduler:</p>
+<p>This would result in the following file structure on the Cylc scheduler host:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>~/cylc-run
 └── myflow
     ├── flow.cylc
@@ -486,7 +485,7 @@ be <code class="docutils literal notranslate"><span class="pre">localhost</span>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Apr 05, 2024.
+      <span class="lastupdated">Last updated on Apr 10, 2024.
       </span></p>
   </div>
 

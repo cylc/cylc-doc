@@ -157,14 +157,6 @@ sub-directories as symlinks to other locations. This is a useful way of
 offloading data onto other drives to limit the disk space taken up by
 ``~/cylc-run``.
 
-Directories that can be individually symlinked are:
-
-* ``log``
-* ``share``
-* ``share/cycle``
-* ``work``
-* the :term:`run directory` itself
-
 The symlink targets are configured per install target in
 :cylc:conf:`global.cylc[install][symlink dirs]`. For more information see
 :ref:`SymlinkDirsSetup`

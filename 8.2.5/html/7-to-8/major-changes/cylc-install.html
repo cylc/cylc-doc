@@ -222,6 +222,31 @@ Jinja2 check like so:</p>
 </div>
 </div>
 <p>See <a class="reference internal" href="../../user-guide/running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">the user guide</span></a> for more details.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you have tasks that mirror/copy the run directory to a remote platform
+(such as <a class="reference external" href="https://metomi.github.io/fcm/doc/">FCM make</a> tasks), this can cause conflicts with
+<a class="reference internal" href="../../user-guide/installing-workflows.html#symlinkdirs"><span class="std std-ref">symlink directory setup</span></a>.</p>
+<p>You can find out if symlink directories are configured for the platform by
+running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">config</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;[install][symlink dirs][&lt;platform-name&gt;]&#39;</span>
+</pre></div>
+</div>
+<p>The recommended workaround is to use a “dummy” task that runs on the
+particular platform before any such mirror tasks in order to setup symlink
+directories, but without running anything.</p>
+<p>For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = hpc_init </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">fcm_make</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[hpc_init]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> &lt;platform-name&gt;</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> true</span>
+</pre></div>
+</div>
+</div>
 </section>
 <section id="migrating-from-rose-suite-run">
 <h2>Migrating From <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code><a class="headerlink" href="#migrating-from-rose-suite-run" title="Permalink to this heading"></a></h2>
@@ -290,7 +315,7 @@ See <a class="reference internal" href="#remote-installation">Remote Installatio
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2023 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Apr 05, 2024.
+      <span class="lastupdated">Last updated on Apr 10, 2024.
       </span></p>
   </div>
 
