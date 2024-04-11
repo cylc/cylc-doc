@@ -30,8 +30,8 @@ Cylc 8.3
 
    TODO
 
-Manually setting task outputs / prerequisites
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Manually setting task outputs and prerequisites
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 At Cylc 8.3.0, the ``cylc set-outputs`` command has been replaced by the new
 ``cylc set`` command.
@@ -43,7 +43,7 @@ set-outputs``.
 
 The new ``cylc set`` command is able to directly set task outputs as if they
 had completed naturally, making the command more intuitive and avoiding the
-need for ``cylc remove``.
+need for ``cylc remove``. It can also set prerequisites, as if they were satisfied naturally.
 
 For example, say there's a failed task holding up your workflow and you want
 Cylc to continue as if the task had succeeded. Here are the interventions
