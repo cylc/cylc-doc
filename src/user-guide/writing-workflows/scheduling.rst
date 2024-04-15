@@ -1099,10 +1099,10 @@ To trigger off of a task submitting, or failing to submit:
 .. code-block:: cylc
 
    # B triggers if A submits successfully:
-   R1 = "A:submit => B"
+   R1 = "A:submit? => B"
 
    # D triggers if C fails to submit successfully:
-   R1 = "C:submit-fail => D"
+   R1 = "C:submit-fail? => D"
 
 A possible use case for submit-fail triggering: if a task fails to submit,
 possibly after multiple retries, another task that inherits (mostly) the same
