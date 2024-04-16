@@ -1,4 +1,4 @@
-.. SDG:
+.. _workflow design guide:
 
 Workflow Design Guide
 =====================

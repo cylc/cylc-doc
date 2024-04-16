@@ -48,3 +48,11 @@ reasons:*
   extensions makes it easier to refactor and maintain the template code
   as its complexity grows. Inline Python code can be gathered into subroutines
   and eventually into separate modules and packages in a seamless manner.
+
+
+Workflow files and Context Variables
+------------------------------------
+
+The EmPy processor has the same access as Jinja2 to
+:ref:`workflow files <jinja2.workflow_files>` and
+:ref:`workflow context variables <jinja2.workflow_context>`.

@@ -220,6 +220,47 @@ To see this, take a look at the job script for one of the downstream tasks:
    configuration.
 
 
+.. _Sequential Xtriggers:
+
+Sequential Xtriggers
+---------------------------
+
+Parentless tasks (which don't depend on other tasks upstream in the graph)
+naturally spawn out to the runahead limit. This may cause UI clutter, and
+unnecessary xtrigger checking if the xtriggers would only be satisfied in
+order.
+
+You can use *sequential* xtriggers to avoid this problem: the next instance
+of a task (i.e., at the next cycle point) that depends on a sequential xtrigger
+will not be spawned until the previous xtrigger is satisfied. The
+``wall_clock`` xtrigger is sequential by default.
+
+A trigger can be set as sequential in any or all of the following ways.
+
+By setting the workflow-wide :cylc:conf:`flow.cylc[scheduling]sequential xtriggers`
+(defaults to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
+the xtrigger declaration:
+
+.. literalinclude:: ../../workflows/xtrigger/sequential/flow.cylc
+   :language: cylc
+
+When implementing a :ref:`custom xtrigger <Custom Trigger Functions>`, you can
+set the default for the ``sequential`` keyword argument in the xtrigger function
+definition itself:
+
+.. code-block:: python
+
+   def my_xtrigger(my_in, my_out, sequential=True)
+
+Xtrigger declaration takes precedence over function, and function over workflow
+wide setting. So the above workflow definition would read:
+
+- ``foo`` spawns out to the runahead limit.
+- ``FAM`` spawns only when ``@upstream`` is satisfied.
+- All associated xtriggers are checked and, as expected, their satisfaction
+  is a prerequisite to task readiness.
+
+
 .. _Custom Trigger Functions:
 
 Custom Trigger Functions
@@ -230,16 +271,20 @@ properties:
 
 - they must:
 
-  - be defined in a module with the same name as the function;
+  - be defined in a module with the same name as the function, unless
+    provided using the ``cylc.xtriggers`` entry point;
   - be compatible with the same Python version that runs the scheduler
     (see :ref:`Requirements` for the latest version specification).
 
 - they can be located either:
 
   - in ``<workflow-dir>/lib/python/``;
-  - or anywhere in your Python library path.
+  - anywhere in your ``$CYLC_PYTHONPATH``;
+  - or defined using the ``cylc.xtriggers`` entry point for an installed
+    package.
 
 - they can take arbitrary positional and keyword arguments
+  (except ``sequential``, which is reserved - see :ref:`Sequential Xtriggers`)
 - workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
 - integer, float, boolean, and string arguments will be recognized and

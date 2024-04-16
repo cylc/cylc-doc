@@ -37,6 +37,8 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
     'sphinxcontrib.spelling',
     # sphinx user community extensions
     'hieroglyph',
@@ -94,7 +96,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Cylc'
-__copyright_year = 2023  # NOTE: this is automatically set by GH Actions
+__copyright_year = 2024  # NOTE: this is automatically set by GH Actions
 copyright = (
     f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
 )
@@ -130,7 +132,10 @@ intersphinx_mapping = {
 nitpick_ignore = [
     # This class appears in documented type-hints but is not documented in the
     # Python docs so fails build.
-    ('py:class', 're.Pattern')
+    ('py:class', 're.Pattern'),
+    ('py:class', 'SubFuncContext'),
+    ('py:exc', 'ISO8601SyntaxError'),
+    ('py:exc', 'StrftimeSyntaxError'),
 ]
 
 # List of patterns, relative to source directory, that match files and
@@ -146,7 +151,9 @@ graphviz_dot_args = ['-Gfontname=sans', '-Gbgcolor=none',
                      '-Nfontname=sans']
 
 linkcheck_ignore = [
+    # linux.die.net doesn't like our request headers
     'https?://linux.die.net/man/1/bash',
+    # linkcheck has trouble handling GH anchors
     'https?://github.com/.*#.*',
 ]
 

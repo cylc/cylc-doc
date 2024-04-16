@@ -329,8 +329,8 @@ Symlinks for remote install targets are created during :ref:`RemoteInit` followi
 ``cylc play``.
 
 
-Advanced Platform Example
--------------------------
+Advanced Platform Examples
+--------------------------
 
 Platform with no ``$HOME`` directory
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -372,3 +372,72 @@ In this example Cylc will install workflows into
    If you are running :term:`schedulers <scheduler>` directly on the login node
    and submitting jobs locally then the platform name and install target should
    be ``localhost``.
+
+Sharing environment variables with the Cylc server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. admonition:: Scenario
+
+    An environment variable on the computer where you're running ``cylc play``
+    needs to be shared with the Cylc server (e.g. to set up storage paths)
+
+Normally if a Cylc server is running on a remote host it will not keep
+environment variables that are present when you run ``cylc play``. You can
+whitelist variables to be sent to remote servers using
+:cylc:conf:`global.cylc[platforms][<platform name>]ssh forward environment variables`.
+
+These variables are forwarded to the Cylc server and may be used in the
+`global.cylc` file templating.
+
+ .. code-block:: cylc
+    :caption: part of a ``global.cylc`` config file
+
+    [install]
+        [[symlink dirs]]
+            [[[hpc]]]
+                # Here the environment variable on the server is used
+                run = {{ environ['LUSTRE_DISK'] }}
+
+    [platforms]
+        # 'localhost' platform is used when communicating with the server
+        [[localhost]]
+            ssh forward environment variables = LUSTRE_DISK, PROJECT
+
+        [[hpc]]
+            submit method = pbs
+            [[[directives]]]
+                -P = {{ environ['PROJECT'] }}
+
+In this example Cylc will install workflows into the directory specified by
+``$LUSTRE_DISK`` and use the project specified by ``$PROJECT`` in the
+environment where you run ``cylc play``, e.g.
+
+ .. code-block:: sh
+
+    export LUSTRE_DISK=/g/data/foo
+    export PROJECT=bar
+    cylc play
+
+will store the workflow under ``/g/data/foo`` and submit jobs under project
+``bar``.
+
+You can also forward variables from the server to other platforms. You should
+first ensure the variable is available on the server, e.g. by also forwarding
+the variable to ``[[localhost]]``.
+
+This setting only affects the task submission (e.g. ``qsub``) which may use
+environment variables to set default directives. To set a variable once the
+task has started see
+:cylc:conf:`global.cylc[platforms][<platform name>]copyable environment variables`.
+
+ .. code-block:: cylc
+    :caption: part of a ``global.cylc`` config file
+
+    [platforms]
+        [[localhost]]
+            ssh forward environment variables = PROJECT
+
+        [[hpc]]
+            # Here qsub has been configured to read from $PROJECT
+            ssh forward environment variables = PROJECT
+            submit method = pbs

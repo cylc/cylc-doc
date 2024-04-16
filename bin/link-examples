@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# rm cylc-flow-examples || true
+examples="$(python -c 'import cylc.flow; from pathlib import Path; print(Path(cylc.flow.__file__).parent)')/etc/examples"
+for example in $(echo "${examples}/"*); do
+    if [[ -d "${example}" ]]; then
+        target="src/user-guide/examples/$(basename "${example}")"
+        rm "${target}" || true
+        ln -s "${example}" "${target}"
+    fi
+done
+

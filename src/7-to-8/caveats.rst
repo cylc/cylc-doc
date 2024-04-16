@@ -38,7 +38,7 @@ Installing Workflows
    At present there is no way to view or install
    :term:`source workflows <source directory>` in the UI.
 Rose Edit
-   Rose Edit is awaiting reimplementation in the UI.
+   Rose Edit is awaiting reimplementation.
 Xtrigger Visibility
    Xtriggers are not yet visible in the UI.
 
@@ -47,32 +47,6 @@ Documentation / Orientation Guide
    Some form of documentation will be provided within the UI itself.
 
    * https://github.com/cylc/cylc-ui/issues/155
-
-
-Terminal User Interface
------------------------
-
-The ``cylc tui`` command (Tui) replaces the old ``cylc monitor``. It provides a
-tree view that is very similar to the Cylc UI and supports some control
-functionality.
-
-Performance
-   TUI currently refreshes its display every second. Large workflows which
-   change rapidly may evolve faster than TUI is able to keep pace with which
-   will cause TUI to freeze.
-
-   A more performant implementation which does not rely on a scheduled global
-   update will follow in due course.
-
-   * https://github.com/cylc/cylc-flow/issues/3527
-GScan
-   The old ``cylc gscan`` GUI has been removed. You can now find the gscan
-   display on the left-hand side of the Cylc UI.
-
-   In a future release ``cylc tui`` will be able to list workflows in a similar
-   way.
-
-   * https://github.com/cylc/cylc-flow/issues/3464
 
 
 UI Server

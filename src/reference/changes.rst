@@ -22,6 +22,74 @@ For more detail see the component changelogs:
 
 ----------
 
+Cylc 8.3
+--------
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   TODO
+
+Manually setting task outputs and prerequisites
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+At Cylc 8.3.0, the ``cylc set-outputs`` command has been replaced by the new
+``cylc set`` command.
+
+The ``cylc set-outputs`` command made it look like an output had been generated
+to downstream tasks, but did not update the task status to match. As a result,
+it was often necessary to use ``cylc remove`` in combination with ``cylc
+set-outputs``.
+
+The new ``cylc set`` command is able to directly set task outputs as if they
+had completed naturally, making the command more intuitive and avoiding the
+need for ``cylc remove``. It can also set prerequisites, as if they were satisfied naturally.
+
+For example, say there's a failed task holding up your workflow and you want
+Cylc to continue as if the task had succeeded. Here are the interventions
+you would need to perform with Cylc 8.2 and 8.3 side-by-side.
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 8.2** (set-outputs)
+     - **Cylc 8.3** (set)
+   * - .. code-block:: bash
+
+          # let downstream tasks run:
+          cylc set-outputs <task>
+          # remove the failed task:
+          cylc remove <task>
+
+     - .. code-block:: bash
+
+          # tell Cylc that the task succeeded:
+          cylc set <task>
+
+   * - .. image:: changes/cylc-set-outputs.gif
+          :align: center
+          :width: 100%
+
+     - .. image:: changes/cylc-set.gif
+          :align: center
+          :width: 100%
+
+
+Tui
+^^^
+
+The Tui (terminal user interface) is a command line version of the Gui.
+You can use it to monitor and control your workflows.
+
+There has been a major update to Tui at Cylc 8.3.0, you can now use Tui to
+browse your installed workflows. Tui is also able to keep up with larger
+workflows which would previously have caused it to time out.
+
+.. image:: changes/tui-1.gif
+   :width: 100%
+
+----------
+
 Cylc 8.2
 --------
 
@@ -44,6 +112,13 @@ from that workflow. Note that this only applies per browser session.
 .. image:: changes/ui-workspace-tabs.gif
    :width: 100%
 
+Cylc ignores ``$PYTHONPATH``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
+environments which set this value. If you want to add to the Cylc
+environment itself, e.g. to install a Cylc extension,
+use a custom xtrigger, or event handler use ``$CYLC_PYTHONPATH``.
 
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -57,10 +132,6 @@ If you are utilising Cylc's multi-user functionality then your configuration
 will require some changes to work with these releases.
 
 See :ref:`cylc.uiserver.multi-user` for more details
-
-
-Configure The Default View
-^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionadded:: cylc-uiserver 1.3.0
 

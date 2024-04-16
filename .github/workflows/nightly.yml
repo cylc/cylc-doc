@@ -35,10 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     outputs:
-      meta-releases: ${{ steps.set-meta-releases.outputs.meta-releases }}
+      list: ${{ steps.set-meta-releases.outputs.meta-releases }}
+      dict: ${{ steps.set-meta-releases.outputs.meta-releases-dict }}
+
     steps:
-      - name: install libs
-        id: set-meta-releases
+      - id: set-meta-releases
         uses: cylc/release-actions/set-meta-releases@v1
 
   deploy:
@@ -52,29 +53,33 @@ jobs:
     strategy:
       # run one job per meta-release
       matrix:
-        meta_release: ${{ fromJson(needs.set-meta-releases.outputs.meta-releases) }}
+        meta_release: ${{ fromJson(needs.set-meta-releases.outputs.list) }}
       # don't stop if one job fails
       fail-fast: false
       # only run one job at a time
       max-parallel: 1
+    env:
+      META_DICT: ${{ needs.set-meta-releases.outputs.dict }}
     steps:
       - name: configure python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
+          ref: ${{ fromJson(env.META_DICT)[matrix.meta_release]['cylc/cylc-doc'] }}
           path: docs
 
       - name: install dependencies
         uses: ./docs/.github/actions/install-dependencies
 
       - name: install cylc-doc
-        run: pip install "${{ github.workspace }}/docs[all]"
+        run: pip install ./docs/
 
       - name: install libs to document
+        id: install-libs
         uses: cylc/release-actions/install-cylc-components@v1
         with:
           meta_release: ${{ matrix.meta_release }}
@@ -88,7 +93,7 @@ jobs:
           metomi_rose_opts: ''
 
       - name: checkout gh-pages branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
@@ -139,7 +144,6 @@ jobs:
           builddir="nightly_${{ matrix.meta_release }}"
           make -C docs \
             html \
-            slides \
             linkcheck \
             SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
@@ -147,6 +151,10 @@ jobs:
             BUILDDIR="doc/$builddir" \
             FORCE_COLOR=true
           git -C gh-pages add "$builddir" 'versions.json'
+
+      - name: debug - pip list
+        if: failure()
+        run: pip list
 
       - name: push changes
         working-directory: gh-pages

@@ -50,8 +50,12 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-from sphinx.ext.autodoc import AttributeDocumenter
-from sphinx.ext.autodoc import ClassDocumenter
+
+from typing import List, Tuple
+
+from sphinx.ext.autodoc import (
+    AttributeDocumenter, ClassDocumenter, ObjectMember
+)
 from traitlets import TraitType
 from traitlets import Undefined
 
@@ -62,19 +66,19 @@ class ConfigurableDocumenter(ClassDocumenter):
     objtype = "configurable"
     directivetype = "class"
 
-    def get_object_members(self, want_all):
+    def get_object_members(
+        self, want_all: bool
+    ) -> Tuple[bool, List[ObjectMember]]:
         """Add traits with .tag(config=True) to members list"""
-        check, members = super().get_object_members(want_all)
-        get_traits = (
-            self.object.class_own_traits
-            if self.options.inherited_members
-            else self.object.class_traits
-        )
-        trait_members = []
-        for name, trait in sorted(get_traits(config=True).items()):
-            # put help in __doc__ where autodoc will look for it
-            trait.__doc__ = trait.help
-            trait_members.append((name, trait))
+        check, _ = super().get_object_members(want_all)
+        if self.options.inherited_members:
+            get_traits = self.object.class_own_traits
+        else:
+            get_traits = self.object.class_traits
+        trait_members = [
+            ObjectMember(name, trait, docstring=trait.help)
+            for name, trait in sorted(get_traits(config=True).items())
+        ]
         return check, trait_members
 
 
