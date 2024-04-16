@@ -5,7 +5,7 @@ on:
     branches:
       - '8.*.x'
   schedule:
-    - cron: '11 11 * * 7' # every Sunday at 11:11
+    - cron: '11 11 * * 0' # every Sunday at 11:11
   workflow_dispatch:
     inputs:
       head_branch:

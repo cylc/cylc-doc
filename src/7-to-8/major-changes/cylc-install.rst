@@ -116,8 +116,8 @@ See :ref:`the user guide <RemoteInit>` for more details.
 
 .. warning::
 
-   If you have tasks that mirror to a remote platform (such as
-   `FCM make <FCM_>`__ tasks), this can cause conflicts with
+   If you have tasks that mirror/copy the run directory to a remote platform
+   (such as `FCM make <FCM_>`__ tasks), this can cause conflicts with
    :ref:`symlink directory setup <SymlinkDirs>`.
 
    You can find out if symlink directories are configured for the platform by
@@ -141,8 +141,6 @@ See :ref:`the user guide <RemoteInit>` for more details.
           [[hpc_init]]
               platform = <platform-name>
               script = true
-
-
 
 
 Migrating From ``rose suite-run``
