@@ -268,19 +268,12 @@ Intercycle Dependencies
 
 .. _tutorial-cylc-datetime-utc:
 
-UTC Mode
---------
+Cycle Point Time Zone
+---------------------
 
-.. ifnotslides::
-
-   Cylc can generate datetime cycle points in any time zone, but "daylight saving"
-   boundaries can cause problems so we typically use UTC, i.e. the ``+00`` time
-   zone:
-
-.. code-block:: cylc
-
-   [scheduler]
-       UTC mode = True
+Cylc can generate datetime cycle points in any time zone, but "daylight saving"
+boundaries can cause confusion, so the default is UTC, i.e. the ``+00`` time
+zone. You can override this by setting :cylc:conf:`[scheduler]cycle point time zone`.
 
 .. note::
 
