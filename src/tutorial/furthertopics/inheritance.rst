@@ -373,7 +373,7 @@ penny farthing.
    :alt: Penny Farthing Bicycle
    :align: center
 
-To do this we will need to add two new families, ``LAND_VEICHLE`` and
+To do this we will need to add two new families, ``LAND_VEHICLE`` and
 ``BICYCLE`` as well as a new task, ``penny_farthing`` related in the
 following manner:
 
