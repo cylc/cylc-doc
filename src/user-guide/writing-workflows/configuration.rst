@@ -108,7 +108,7 @@ WebStorm
 Nano
    The syntax file can be obtained from the Cylc library by
    running the following command
-   ``cylc get-resources syntax/cylc.nanorc .``
+   ``cylc get-resources syntax/cylc.nanorc ~/.config/nano``
    installation instructions are at the top of the file.
 
 
@@ -122,6 +122,9 @@ several top level section headings:
    Information about the workflow e.g. title and description.
 :cylc:conf:`[scheduler]`
    Non task-specific workflow configuration.
+:cylc:conf:`[task parameters]`
+   Parameters for use when defining graphs and tasks.
+   See :ref:`user guide param`.
 :cylc:conf:`[scheduling]`
    Determines when tasks are ready to run.
 
