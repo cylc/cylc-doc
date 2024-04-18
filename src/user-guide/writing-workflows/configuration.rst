@@ -104,7 +104,13 @@ Sublime Text 3
 TextMate
    Install the `Cylc.tmbundle`_.
 WebStorm
-      Install the `Cylc.tmbundle`_.
+   Install the `Cylc.tmbundle`_.
+Nano
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   ``cylc get-resources syntax/cylc.nanorc .``
+   installation instructions are at the top of the file.
+
 
 Gross File Structure
 ^^^^^^^^^^^^^^^^^^^^
