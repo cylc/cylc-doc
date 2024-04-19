@@ -302,12 +302,13 @@ Clock Triggers
 
 .. ifnotslides::
 
-   All xtriggers take a ``:recurrance`` indicating how often the scheduler
-   will run the check.
+   All xtriggers can be suffixed with ``:interval`` indicating how often the
+   scheduler will run the check. The default is 10 seconds.
+   
+   It is good practice not to check more often than necessary. This will
+   depend on the specific use case. For example:
 
-   It is good practice not to check more often than necessary:
-
-``wall_clock():PT17M``
+``wall_clock():PT20M``
 
 .. tip::
 
