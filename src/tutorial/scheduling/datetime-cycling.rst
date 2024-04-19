@@ -690,10 +690,11 @@ Putting It All Together
    #. **Clock Triggers**
 
       To ensure that the ``get_observations_<location>`` tasks run only
-      after the time of the observation add a clock trigger.
-      Observations are available by 10 minutes past the hour.
-      We don't want to overburden the Cylc server, so check for observations
-      every 5 minutes.
+      after the time of the observation, add a clock trigger.
+      Observations will be available by 10 minutes past the hour.
+      By default, the scheduler will check the clock trigger every 10
+      seconds, but there is no point in doing this for any interval
+      less than around 5 minutes in this case.
 
       .. spoiler:: Hint hint
 
