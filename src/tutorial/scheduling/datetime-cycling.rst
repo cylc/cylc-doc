@@ -696,7 +696,7 @@ Putting It All Together
       seconds, but there is no point in doing this for any interval
       less than around 5 minutes in this case.
 
-      .. spoiler:: Hint hint
+      .. hint::
 
          See :ref:`tutorial-clock-triggers`
 
