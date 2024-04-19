@@ -288,10 +288,9 @@ Clock Triggers
    [scheduling]
        initial cycle point = 2050-01-01T00Z
        [[xtriggers]]
-           on_time = wall_clock()
+           clock = wall_clock()
        [[graph]]
-           # "daily" will run, at the earliest, one hour before midday.
-           T12 = @on_time => do_this_on_or_after_noon
+           T12 = @clock => do_this_on_or_after_noon
 
 .. ifnotslides::
 
