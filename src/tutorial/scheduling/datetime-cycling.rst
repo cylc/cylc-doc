@@ -715,9 +715,13 @@ Putting It All Together
            +       obs_clock_trigger = wall_clock(PT10M):PT5M
                [[graph]]
                    PT3H = """
+           -            get_observations_aldergrove => consolidate_observations
            +           @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
+           -            get_observations_heathrow => consolidate_observations
            +           @obs_clock_trigger => get_observations_heathrow => consolidate_observations
+           -            get_observations_aldergrove => consolidate_observations
            +           @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
+           -            get_observations_camborne => consolidate_observations
            +           @obs_clock_trigger => get_observations_camborne => consolidate_observations
                    """
                    +PT6H/PT6H = """
