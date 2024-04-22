@@ -709,24 +709,24 @@ Putting It All Together
 
          .. code-block:: diff
 
-           [scheduling]
-               initial cycle point = 20000101T00Z
-           +   [[xtriggers]]
-           +       obs_clock_trigger = wall_clock(PT10M):PT5M
-               [[graph]]
-                   PT3H = """
+            [scheduling]
+                initial cycle point = 20000101T00Z
+           +    [[xtriggers]]
+           +        obs_clock_trigger = wall_clock(PT10M):PT5M
+                [[graph]]
+                    PT3H = """
            -            get_observations_aldergrove => consolidate_observations
-           +           @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
+           +            @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
            -            get_observations_heathrow => consolidate_observations
-           +           @obs_clock_trigger => get_observations_heathrow => consolidate_observations
+           +            @obs_clock_trigger => get_observations_heathrow => consolidate_observations
            -            get_observations_aldergrove => consolidate_observations
-           +           @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
+           +            @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
            -            get_observations_camborne => consolidate_observations
-           +           @obs_clock_trigger => get_observations_camborne => consolidate_observations
-                   """
-                   +PT6H/PT6H = """
-                       consolidate_observations => forecast
-                       consolidate_observations[-PT3H] => forecast
-                       consolidate_observations[-PT6H] => forecast
-                       get_rainfall => forecast => post_process_exeter
-                   """
+           +            @obs_clock_trigger => get_observations_camborne => consolidate_observations
+                    """
+                    +PT6H/PT6H = """
+                        consolidate_observations => forecast
+                        consolidate_observations[-PT3H] => forecast
+                        consolidate_observations[-PT6H] => forecast
+                        get_rainfall => forecast => post_process_exeter
+                    """
