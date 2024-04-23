@@ -290,16 +290,6 @@ Clock Triggers
        [[graph]]
            T12 = @wall_clock => do_this_on_or_after_noon
 
-.. ifnotslides::
-
-   All xtriggers can be suffixed with ``:interval`` indicating how often the
-   scheduler will run the check. The default is 10 seconds.
-   
-   It is good practice not to check more often than necessary. This will
-   depend on the specific use case. For example:
-
-``wall_clock():PT20M``
-
 .. tip::
 
    See the :ref:`tutorial-cylc-clock-trigger` tutorial for more information.
