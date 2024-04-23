@@ -672,9 +672,6 @@ Putting It All Together
       To ensure that the ``get_observations_<location>`` tasks run only
       after the time of the observation, add a clock trigger.
       Observations will be available by 10 minutes past the hour.
-      By default, the scheduler will check the clock trigger every 10
-      seconds, but there is no point in doing this for any interval
-      less than around 5 minutes in this case.
 
       .. hint::
 
