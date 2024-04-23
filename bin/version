@@ -27,7 +27,6 @@ from pkg_resources import parse_version
 DUMMY_FORMATS = [
     'doctrees',
     'linkcheck',
-    'doctest',
     'coverage'
 ]
 

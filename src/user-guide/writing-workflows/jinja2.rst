@@ -227,14 +227,6 @@ In the argument list of a filter or test function, the first argument is
 the variable value to be filtered or tested, and subsequent arguments can be
 whatever is needed. Currently three custom filters are supplied:
 
-.. import the filters to allow their doctests to pass (make doctest)
-
-.. testsetup::
-
-   from cylc.flow.jinja.filters.pad import pad
-   from cylc.flow.jinja.filters.strftime import strftime
-   from cylc.flow.jinja.filters.duration_as import duration_as
-
 .. autosummary::
    :nosignatures:
 
