@@ -705,9 +705,4 @@ Putting It All Together
                        get_observations_heathrow => consolidate_observations
                        get_observations_shetland => consolidate_observations
                     """
-                    +PT6H/PT6H = """
-                        consolidate_observations => forecast
-                        consolidate_observations[-PT3H] => forecast
-                        consolidate_observations[-PT6H] => forecast
-                        get_rainfall => forecast => post_process_exeter
-                    """
+
