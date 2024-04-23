@@ -14,7 +14,8 @@ Clock-triggering effectively enables us to tether the "cycle time" to the
 .. note::
 
    Clock triggers are :ref:`Section External Triggers`. They differ from
-   custom external triggers only in that they are provided with Cylc.
+   custom external triggers only in that they are provided with Cylc, and
+   that the ``:interval`` suffix has no effect.
 
 
 Clock Triggering
@@ -135,9 +136,9 @@ Edit the ``[[scheduling]]`` section to read:
    initial cycle point = now
    final cycle point = +P1D # Run for one day
    [[xtriggers]]
-       quarter_past_trigger = wall_clock(offset=PT15M):PT30S
-       half_past_trigger = wall_clock(offset=PT30M):PT30S
-       quarter_to_trigger = wall_clock(offset=PT45M):PT30S
+       quarter_past_trigger = wall_clock(offset=PT15M)
+       half_past_trigger = wall_clock(offset=PT30M)
+       quarter_to_trigger = wall_clock(offset=PT45M)
    [[graph]]
        PT1H = """
            @wall_clock => bell
@@ -163,15 +164,6 @@ Again, notice how the tasks trigger until the current time is reached.
 
 Leave your workflow running for a while to confirm it is working as expected
 before stopping it.
-
-
-.. note::
-
-   You may have noticed the ``:PT30S`` at the end of each clock trigger
-   definition. This how often the :ref:`Section External Triggers` is checked.
-   By default external triggers are checked every 10 seconds, but if there
-   are a lot of external triggers this can be hard work for the computer
-   running the workflow and it may not be necessary to check this often.
 
 
 Summary

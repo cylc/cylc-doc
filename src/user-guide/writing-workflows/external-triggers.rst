@@ -75,7 +75,7 @@ cycle point value by one hour:
    [scheduling]
        initial cycle point = 2018-01-01
        [[xtriggers]]
-           clock_1 = wall_clock(offset=PT1H):PT10S
+           clock_1 = wall_clock(offset=PT1H)
        [[graph]]
            P1D = "@clock_1 => foo"
    [runtime]
@@ -83,9 +83,7 @@ cycle point value by one hour:
            script = run-foo.sh
 
 Notice that the short label ``clock_1`` is used to represent the
-trigger function in the graph. The function call interval, which determines how
-often the :term:`scheduler` checks the clock, is optional. Here it is
-``PT10S`` (i.e. 10 seconds, which is also the default value).
+trigger function in the graph.
 
 Argument keywords can be omitted if called in the right order, so the
 ``clock_1`` trigger can also be declared like this:
