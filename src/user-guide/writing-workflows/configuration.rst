@@ -65,7 +65,7 @@ documentation, configuration files, etc. When the workflow is :ref:`installed
 .. _SyntaxHighlighting:
 
 Syntax Highlighting For Workflow Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------
 
 Cylc provides syntax plugins for the following editors:
 
@@ -107,7 +107,7 @@ WebStorm
       Install the `Cylc.tmbundle`_.
 
 Gross File Structure
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 Cylc :cylc:conf:`flow.cylc` files consist of configuration items grouped under
 several top level section headings:
@@ -134,7 +134,7 @@ several top level section headings:
 .. _Validation:
 
 Validation
-^^^^^^^^^^
+----------
 
 The ``cylc validate`` command evaluates the :cylc:conf:`flow.cylc` file
 against a specification that defines all legal entries, values and options.
@@ -150,13 +150,19 @@ show an inlined copy of the workflow with correct line numbers.
 
 .. _cylc_lint_script:
 
-``cylc lint``
-^^^^^^^^^^^^^
+Linting
+-------
+
+The ``cylc lint`` command checks code style, deprecated syntax and other
+issues in Cylc configuration files.
 
 .. seealso::
 
    :ref:`How to configure Cylc lint at project level <lint.pyproject.toml>`
    using a ``pyproject.toml``.
+
+``cylc lint``
+^^^^^^^^^^^^^
 
 .. automodule:: cylc.flow.scripts.lint
 
@@ -168,32 +174,40 @@ Configure ``cylc lint`` at project level
 You can configure ``cylc lint`` for each workflow using a
 ``pyproject.toml`` file.
 
-To define settings for ``cylc lint`` use a ``[cylc-lint]`` section.
-Within the ``[cylc-lint]`` section you may define the following:
+To define settings for ``cylc lint`` use a ``[tool.cylc.lint]`` section.
+Within the ``[tool.cylc.lint]`` section you may define the following:
 
-rulesets
-   A list of rulesets to use. If you run cylc lint without setting rulesets
-   on the command line this value will override
-   the default (``['728', 'style']``).
+``rulesets``
+   A list of rulesets to use.
 
-   Allowed Values: '728', 'style'
+   Allowed values: ``'728'``, ``'style'``, ``'all'``.
+   
+   (You can override this on the command line.)
 
-ignore
+``ignore``
    Individual rules to ignore: A list of rule codes, such as ``S007``.
 
-exclude
+``exclude``
    A list of files or glob patterns for files which will not be checked.
 
-max-line-length
-   Set longest line length to permit in Cylc Configs for this project.
-   If unset, line length is not checked.
+``max-line-length``
+   Set longest line length to permit in Cylc configs for this project.
 
+   Default: ``130``.
+
+
+.. note::
+
+   .. versionchanged:: 8.3.0
+
+      The ``[cylc-lint]`` section has been deprecated in favour of
+      ``[tool.cylc.lint]``.
 
 An example ``pyproject.toml`` might look like this:
 
 .. code-block:: toml
 
-   [cylc-lint]
+   [tool.cylc.lint]
    # Enforce a line limit of 99 chars
    max-line-length = 99
 

@@ -10,53 +10,115 @@ workflows.
 
 
 .. _user_guide.scheduler.workflow_event_handling:
+.. _user_guide.scheduler.workflow_events:
 
-Workflow Event Handling
------------------------
+Workflow Events
+---------------
 
-Workflow event handlers allow configured commands to run when workflow events
-occur.
+There are two types of event in Cylc:
 
-.. note::
+* workflow events e.g. ``startup`` and ``shutdown``, which pertain to the :term:`scheduler` 
+* task events e.g. ``submitted`` and ``failed``, which pertain to :term:`tasks <task>`.
 
-   Cylc supports workflow events e.g. ``startup`` and ``shutdown``
-   and task events e.g. ``submitted`` and ``failed``.
+This section covers workflow events, for
+task events see :ref:`user_guide.runtime.task_event_handling`.
 
-   See also :ref:`user_guide.runtime.task_event_handling`.
+.. rubric:: Event Handlers
 
-Workflow event handlers are configured by:
+Workflow events have "handlers" (i.e. hooks) which allow configured commands to
+run when workflow events occur. These can be configured by:
 
 * :cylc:conf:`flow.cylc[scheduler][events]` (per workflow)
 * :cylc:conf:`global.cylc[scheduler][events]` (user/site defaults)
 
+.. rubric:: Abort On Event
 
-Workflow Events
-^^^^^^^^^^^^^^^
+As well as event handlers, you can tell the scheduler to abort (i.e., shut down
+immediately with error status) on certain workflow events, using the
+``abort on ...`` configurations.
 
-The list of events is:
+.. rubric:: Configuration
 
-startup
-   The scheduler started running the workflow.
-shutdown
-   The workflow finished and the scheduler will shut down.
-abort
+Some workflow events have related configurations e.g. for setting the timeout.
+
+.. rubric:: List of workflow events:
+
+.. cylc-scope:: global.cylc[scheduler][events]
+
+.. describe:: startup
+
+   :Event Handler: `startup handlers`
+
+   The scheduler was started or restarted.
+
+   E.G. using one of these commands ``cylc play``, ``cylc vip`` or ``cylc vr``.
+
+.. describe:: shutdown
+
+   :Event Handler: `shutdown handlers`
+
+   The scheduler was shut down.
+
+   E.G. using the ``cylc stop`` command.
+
+.. describe:: abort
+
+   :Event Handler: `abort handlers`
+
    The scheduler shut down early with error status, due to a fatal error
    condition or a configured timeout.
-workflow timeout
+
+.. describe:: workflow timeout
+
+   :Configuration: `workflow timeout`
+   :Event Handler: `workflow timeout handlers`
+   :Abort On Event: `abort on workflow timeout`
+
    The workflow run timed out.
-stall
-   The workflow stalled.
-stall timeout
+
+   The timer starts counting down at scheduler startup. It resets on workflow
+   restart.
+
+   Note, the ``abort`` event is not raised by "Abort On Event" handlers.
+
+.. describe:: stall
+
+   :Event Handler: `stall handlers`
+
+   The workflow :term:`stalled <stall>` (i.e. the scheduler cannot make any
+   further progress due to runtime events).
+
+   E.G. a task failure is blocking the pathway through the graph.
+
+.. describe:: stall timeout
+
+   :Configuration: `stall timeout`
+   :Event Handler: `stall timeout handlers`
+   :Abort On Event: `abort on stall timeout`
+
    The workflow timed out after stalling.
-inactivity timeout
-   The workflow timed out with no activity.
 
-You can tell the scheduler to abort (i.e., shut down immediately with error
-status) on certain workflow events, with the following settings:
+.. describe:: inactivity timeout
 
-- abort on stall timeout
-- abort on inactivity timeout
-- abort on workflow timeout
+   :Configuration: `inactivity timeout`
+   :Event Handler: `inactivity timeout handlers`
+   :Abort On Event: `abort on inactivity timeout`
+
+   The workflow timed out with no activity (i.e. a period with no job
+   submissions or task messages).
+
+   This can be useful for system administrators to help catch workflows which
+   have become stalled on external conditions or system issues.
+
+.. describe:: restart timeout
+
+   :Configuration: `restart timeout`
+
+   If a workflow that has run to completion is restarted, the scheduler will
+   have nothing to do so will shut down. This timeout gives the user a grace
+   period in which to trigger new tasks to continue the workflow run.
+
+.. cylc-scope::
 
 Mail Events
 ^^^^^^^^^^^
