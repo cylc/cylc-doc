@@ -266,6 +266,35 @@ Intercycle Dependencies
 * ``baz[^]``: the task ``baz`` from the initial cycle point.
 
 
+.. _tutorial-clock-triggers:
+
+Clock Triggers
+--------------
+
+.. ifnotslides::
+
+   In Cylc, :term:`cycle points <cycle point>` are just task labels. Tasks are
+   triggered when their dependencies are met, regardless of cycle point.
+   But *clock triggers* can be used to force tasks to wait for a particular
+   real time, relative to their cycle point, before running.
+   This is necessary for certain operational and monitoring systems, e.g. for
+   tasks that process real-time data.
+
+   For example, in the following workflow, the task ``do_this_on_or_after_noon``
+   will wait until 12:00 every day before running (starting on January 1st 2050):
+
+.. code-block:: cylc
+
+   [scheduling]
+       initial cycle point = 2050-01-01T00Z
+       [[graph]]
+           T12 = @wall_clock => do_this_on_or_after_noon
+
+.. tip::
+
+   See the :ref:`tutorial-cylc-clock-trigger` tutorial for more information.
+
+
 .. _tutorial-cylc-datetime-utc:
 
 Cycle Point Time Zone
@@ -630,3 +659,39 @@ Putting It All Together
          +          +PT12H/PT6H = """
          +              forecast[-PT6H] => forecast
          +          """
+
+   #. **Clock Triggers**
+
+      To ensure that the ``get_observations_<location>`` tasks run only
+      after the time of the observation, add a clock trigger.
+      Observations will be available by 10 minutes past the hour.
+
+      .. hint::
+
+         See :ref:`tutorial-clock-triggers`
+
+      .. spoiler:: Solution warning
+
+         .. note::
+
+            There are a number of ways of writing the dependency.
+            You can be correct and not look _exactly_ like this.
+
+         .. code-block:: diff
+
+            [scheduling]
+                initial cycle point = 20000101T00Z
+           +    [[xtriggers]]
+           +        wall_clock = wall_clock(PT10M)
+                [[graph]]
+                    PT3H = """
+           +           @wall_clock => get_observations_aldergrove
+           +           @wall_clock => get_observations_camborne
+           +           @wall_clock => get_observations_heathrow
+           +           @wall_clock => get_observations_shetland
+                       get_observations_aldergrove => consolidate_observations
+                       get_observations_camborne => consolidate_observations
+                       get_observations_heathrow => consolidate_observations
+                       get_observations_shetland => consolidate_observations
+                    """
+
