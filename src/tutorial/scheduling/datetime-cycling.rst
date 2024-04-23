@@ -693,17 +693,17 @@ Putting It All Together
             [scheduling]
                 initial cycle point = 20000101T00Z
            +    [[xtriggers]]
-           +        obs_clock_trigger = wall_clock(PT10M):PT5M
+           +        wall_clock = wall_clock(PT10M)
                 [[graph]]
                     PT3H = """
-           -            get_observations_aldergrove => consolidate_observations
-           +            @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
-           -            get_observations_heathrow => consolidate_observations
-           +            @obs_clock_trigger => get_observations_heathrow => consolidate_observations
-           -            get_observations_aldergrove => consolidate_observations
-           +            @obs_clock_trigger => get_observations_aldergrove => consolidate_observations
-           -            get_observations_camborne => consolidate_observations
-           +            @obs_clock_trigger => get_observations_camborne => consolidate_observations
+           +           @wall_clock => get_observations_aldergrove
+           +           @wall_clock => get_observations_camborne
+           +           @wall_clock => get_observations_heathrow
+           +           @wall_clock => get_observations_shetland
+                       get_observations_aldergrove => consolidate_observations
+                       get_observations_camborne => consolidate_observations
+                       get_observations_heathrow => consolidate_observations
+                       get_observations_shetland => consolidate_observations
                     """
                     +PT6H/PT6H = """
                         consolidate_observations => forecast
