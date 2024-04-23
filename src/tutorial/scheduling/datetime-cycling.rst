@@ -287,18 +287,8 @@ Clock Triggers
 
    [scheduling]
        initial cycle point = 2050-01-01T00Z
-       [[xtriggers]]
-           clock = wall_clock()
        [[graph]]
-           T12 = @clock => do_this_on_or_after_noon
-
-.. ifnotslides::
-
-   Clock triggers take an argument - ``offset`` which allows you to specify
-   an offset. For example, it might be ok for a task to run up to an hour
-   before the specified cycle point:
-
-``wall_clock(-PT1H)``
+           T12 = @wall_clock => do_this_on_or_after_noon
 
 .. ifnotslides::
 
