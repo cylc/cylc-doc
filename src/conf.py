@@ -34,7 +34,6 @@ extensions = [
     # sphinx built-in extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',

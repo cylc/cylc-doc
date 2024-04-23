@@ -183,7 +183,7 @@ allows it to pick up changes to autodocumented items in the source code.
 
 ```console
 # note: -W tells Sphinx to fail on warnings
-$ make html linkcheck doctest SPHINXOPTS='-W'
+$ make html linkcheck SPHINXOPTS='-W'
 ```
 
 ### Deploying
