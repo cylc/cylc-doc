@@ -8,5 +8,6 @@ Configuration
    workflow
    global
    ui-server
+   sharing-access-to-workflows
    types
    writing-platform-configs

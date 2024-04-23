@@ -14,5 +14,4 @@ User Guide
    running-workflows/index
    task-implementation/index
    removing-workflows
-   sharing-access-to-workflows
    compound-commands
