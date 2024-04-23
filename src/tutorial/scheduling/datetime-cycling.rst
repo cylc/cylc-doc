@@ -280,9 +280,8 @@ Clock Triggers
    This is necessary for certain operational and monitoring systems, e.g. for
    tasks that process real-time data.
 
-   For example in the following workflow the tasks at cycle
-   ``2050-01-01T12Z`` will wait
-   until 12:00 on the 1st of January 2050 before running:
+   For example, in the following workflow, the task ``do_this_on_or_after_noon``
+   will wait until 12:00 every day before running (starting on January 1st 2050):
 
 .. code-block:: cylc
 
