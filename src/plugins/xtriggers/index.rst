@@ -66,4 +66,4 @@ These xtriggers can be registered in the package's ``setup.cfg`` or
 
    It is recommended to implement only one xtrigger per module. This allows
    you to write a ``validate`` function for each xtrigger - see
-   :ref:`xrandom.validate` for an example.
+   :py:mod:`cylc.flow.xtriggers.xrandom` for an example.
