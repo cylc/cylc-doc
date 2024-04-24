@@ -288,7 +288,7 @@ properties:
 - The module containing the xtrigger function may also contain a ``validate``
   function taking a single argument, which is a dictionary of all the arguments
   passed to the xtrigger function in ``flow.cylc``. It should raise an
-  exception if validation fails. See :ref:`xrandom.validate` for an example
+  exception if validation fails. See :py:mod:`cylc.flow.xtriggers.xrandom` for an example
   of a validate function.
 
 .. note::
