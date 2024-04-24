@@ -402,30 +402,12 @@ An example xrandom trigger workflow:
 Validation example using xrandom
 """"""""""""""""""""""""""""""""
 
-The ``xrandom`` xtrigger module contains a ``validate`` function.
+The ``xrandom`` xtrigger module contains an example of an xtrigger validation
+function.
 
-This will be run on the inputs to the xtrigger when calling
-``cylc validate`` or before the workflow starts, and should raise an exception
-with a meaningful description if a condition is not met.
-
-A simplified example looks like this:
-
-.. code-block:: python
-
-   from cylc.flow.exceptions import WorkflowConfigError
-
-   def validate(args: Dict[str, Any]) -> None:
-       # Check that percentage is a reasonable value:
-       percent = args['percent']
-       if (
-           not isinstance(percent, (float, int))
-           or not (0 <= percent <= 100)
-       ):
-           raise WorkflowConfigError(
-               "'percent' should be a float between 0 and 100"
-           )
-
-See below for a link to the full ``validate`` function:
+Validation functions are run on the inputs to the xtrigger when calling
+``cylc validate``, and should raise an exception with user facing error
+messages if validation fails.
 
 .. autofunction:: cylc.flow.xtriggers.xrandom.validate
 
