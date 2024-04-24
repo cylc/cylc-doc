@@ -51,6 +51,7 @@ you would need to perform with Cylc 8.2 and 8.3 side-by-side.
 
 .. list-table::
    :class: grid-table
+   :widths: 50 50
 
    * - **Cylc 8.2** (set-outputs)
      - **Cylc 8.3** (set)
@@ -87,6 +88,37 @@ workflows which would previously have caused it to time out.
 
 .. image:: changes/tui-1.gif
    :width: 100%
+
+
+N-Window selector in the GUI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The :term:`n-window` determines how much of a workflow is visible in the GUI / Tui.
+
+The ``n=0`` window contains only the active tasks
+(i.e. queued, preparing, submitted or running tasks).
+
+The ``n=1`` window, also contains tasks one "edge" out from active tasks
+(i.e. the tasks immediately upstream or downstream of active tasks).
+
+The ``n=2`` window, also contains tasks two "edges" out from active tasks,
+and so on.
+
+It is now possible to change the window extent in the GUI via a button in the
+toolbar allowing you to see tasks further back in the workflow's history.
+
+.. image:: changes/gui-n-window-selector.gif
+   :width: 100%
+
+.. note::
+
+   This is currently a per-workflow setting so changing the n-window in one
+   browser tab will also change it in other browser tabs and Tui sessions.
+
+.. warning::
+
+   Using high n-window values with complex workflows may have performance
+   impacts.
 
 ----------
 
