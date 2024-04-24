@@ -285,11 +285,9 @@ properties:
 - If a trigger function depends on files or directories (for example)
   that might not exist when the function is first called, just return
   unsatisfied until everything required does exist.
-- The module containing the xtrigger function may also contain a ``validate``
-  function taking a single argument, which is a dictionary of all the arguments
-  passed to the xtrigger function in ``flow.cylc``. It should raise an
-  exception if validation fails. See :py:mod:`cylc.flow.xtriggers.xrandom` for an example
-  of a validate function.
+- The module can also provide a ``validate`` function for checking configured
+  arguments / keyword arguments, see
+  :ref:`user-guide.xtrigger-validation-functions` for details.
 
 .. note::
 
@@ -341,6 +339,26 @@ The :term:`scheduler` manages trigger functions as follows:
   the workflow log in debug mode (stdout is needed to communicate return values
   from the sub-process in which the function executes)
 
+
+.. _user-guide.xtrigger-validation-functions:
+
+Xtrigger Validation Functions
+-----------------------------
+
+The arguments you call the xtrigger function with are automatically validated
+against the function signature, however, you might wish to add extra validation
+logic to your custom xtrigger, e.g. to check argument types or values.
+
+If a function named ``validate`` is present alongside the xtrigger in its
+module, it will be automatically called with a dictionary of all the arguments
+passed to the xtrigger function in the workflow config. It should raise a
+:py:obj:`cylc.flow.exceptions.WorkflowConfigError` exception if an error is
+detected.
+
+The :py:mod:`cylc.flow.xtriggers.xrandom` xtrigger module contains an example
+of an xtrigger validation function.
+
+
 .. _Built-in Toy Xtriggers:
 
 Toy Examples
@@ -383,7 +401,8 @@ time (useful for testing the effect of a long-running trigger function
 - which should be avoided) and has a configurable random chance of
 success. The function signature is:
 
-.. autofunction:: cylc.flow.xtriggers.xrandom.xrandom
+.. automodule:: cylc.flow.xtriggers.xrandom
+   :members: xrandom
 
 The ``percent`` argument sets the odds of success in any given call;
 ``secs`` is the number of seconds to sleep before returning; and the
@@ -396,28 +415,6 @@ An example xrandom trigger workflow:
 
 .. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
    :language: cylc
-
-.. _xrandom.validate:
-
-Validation example using xrandom
-""""""""""""""""""""""""""""""""
-
-The ``xrandom`` xtrigger module contains an example of an xtrigger validation
-function.
-
-Validation functions are run on the inputs to the xtrigger when calling
-``cylc validate``, and should raise an exception with user facing error
-messages if validation fails.
-
-.. autofunction:: cylc.flow.xtriggers.xrandom.validate
-
-.. tip::
-
-   The arguments you call the xtrigger function with are automatically
-   validated against the function signature, so you don't necessarily need
-   to check for the presence of arguments or their types in the validate
-   function. However, you may want to check that the values are of the correct
-   type or within a certain range.
 
 
 .. _Current Trigger Function Limitations:
