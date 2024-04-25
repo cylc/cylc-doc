@@ -400,14 +400,8 @@ time (useful for testing the effect of a long-running trigger function
 success. The function signature is:
 
 .. automodule:: cylc.flow.xtriggers.xrandom
-   :members: xrandom
-
-The ``percent`` argument sets the odds of success in any given call;
-``secs`` is the number of seconds to sleep before returning; and the
-``_`` argument (underscore is a conventional name for a variable
-that is not used, in Python) is provided to allow specialization of the
-trigger to (for example) task name, task ID, or cycle point (just use
-the appropriate string templates in the workflow configuration for this).
+   :members: xrandom, validate
+   :member-order: bysource
 
 An example xrandom trigger workflow:
 
