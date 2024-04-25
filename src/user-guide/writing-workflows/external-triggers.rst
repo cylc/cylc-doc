@@ -75,7 +75,7 @@ cycle point value by one hour:
    [scheduling]
        initial cycle point = 2018-01-01
        [[xtriggers]]
-           clock_1 = wall_clock(offset=PT1H):PT10S
+           clock_1 = wall_clock(offset=PT1H)
        [[graph]]
            P1D = "@clock_1 => foo"
    [runtime]
@@ -83,9 +83,7 @@ cycle point value by one hour:
            script = run-foo.sh
 
 Notice that the short label ``clock_1`` is used to represent the
-trigger function in the graph. The function call interval, which determines how
-often the :term:`scheduler` checks the clock, is optional. Here it is
-``PT10S`` (i.e. 10 seconds, which is also the default value).
+trigger function in the graph.
 
 Argument keywords can be omitted if called in the right order, so the
 ``clock_1`` trigger can also be declared like this:
@@ -402,14 +400,8 @@ time (useful for testing the effect of a long-running trigger function
 success. The function signature is:
 
 .. automodule:: cylc.flow.xtriggers.xrandom
-   :members: xrandom
-
-The ``percent`` argument sets the odds of success in any given call;
-``secs`` is the number of seconds to sleep before returning; and the
-``_`` argument (underscore is a conventional name for a variable
-that is not used, in Python) is provided to allow specialization of the
-trigger to (for example) task name, task ID, or cycle point (just use
-the appropriate string templates in the workflow configuration for this).
+   :members: xrandom, validate
+   :member-order: bysource
 
 An example xrandom trigger workflow:
 
