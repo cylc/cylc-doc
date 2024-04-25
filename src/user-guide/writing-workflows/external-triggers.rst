@@ -284,7 +284,6 @@ properties:
   passed to the function as such
 - If a trigger function depends on files or directories (for example)
   that might not exist when the function is first called, just return
-  unsatisfied until everything required does exist.
 - The module can also provide a ``validate`` function for checking configured
   arguments / keyword arguments, see
   :ref:`user-guide.xtrigger-validation-functions` for details.
@@ -294,6 +293,7 @@ properties:
    Trigger functions cannot store data Pythonically between invocations
    because each call is executed in an independent process in the process
    pool. If necessary the filesystem can be used for this purpose.
+
 
 .. spelling:word-list::
 
@@ -415,7 +415,6 @@ An example xrandom trigger workflow:
 
 .. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
    :language: cylc
-
 
 .. _Current Trigger Function Limitations:
 
