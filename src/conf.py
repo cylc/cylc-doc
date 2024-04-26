@@ -43,6 +43,7 @@ extensions = [
     # sphinx user community extensions
     'hieroglyph',
     'sphinx_rtd_theme',
+    'sphinx_design',
     # custom project extensions (located in ext/)
     'autodoc_traits',  # autodoc uiserver traitlets
     'database_diagram',

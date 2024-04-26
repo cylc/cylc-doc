@@ -9,6 +9,7 @@ User Guide
 
    introduction
    examples/index
+   interventions/index
    writing-workflows/index
    installing-workflows
    running-workflows/index
