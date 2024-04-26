@@ -34,13 +34,11 @@ broker.
 
 Cylc has several built-in external trigger functions:
 
-- clock triggers - see :ref:`Built-in Clock Triggers`
-- inter-workflow triggers - see :ref:`Built-in Workflow State Triggers`
+- :ref:`Built-in Clock Triggers`
+- :ref:`Built-in Workflow State Triggers`
 
 Trigger functions are normal Python functions, with certain constraints as
-described below in:
-
-- custom trigger functions - see :ref:`Custom Trigger Functions`
+described below in :ref:`Custom Trigger Functions`.
 
 External triggers are configured in the
 :cylc:conf:`flow.cylc[scheduling][xtriggers]` section.
@@ -62,9 +60,7 @@ in :ref:`ClockTriggerTasks`.
 Clock triggers, unlike other trigger functions, are executed synchronously in
 the main process. The clock trigger function signature looks like this:
 
-.. code-block:: python
-
-   wall_clock(offset=None)
+.. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
 
 The ``offset`` argument is a datetime duration (``PT1H`` is 1
 hour) relative to the dependent task's cycle point (automatically passed to the
@@ -79,7 +75,7 @@ cycle point value by one hour:
    [scheduling]
        initial cycle point = 2018-01-01
        [[xtriggers]]
-           clock_1 = wall_clock(offset=PT1H):PT10S
+           clock_1 = wall_clock(offset=PT1H)
        [[graph]]
            P1D = "@clock_1 => foo"
    [runtime]
@@ -87,9 +83,7 @@ cycle point value by one hour:
            script = run-foo.sh
 
 Notice that the short label ``clock_1`` is used to represent the
-trigger function in the graph. The function call interval, which determines how
-often the :term:`scheduler` checks the clock, is optional. Here it is
-``PT10S`` (i.e. 10 seconds, which is also the default value).
+trigger function in the graph.
 
 Argument keywords can be omitted if called in the right order, so the
 ``clock_1`` trigger can also be declared like this:
@@ -130,10 +124,7 @@ tasks off of remote task statuses or messages in other workflows.
 
 The workflow state trigger function signature looks like this:
 
-.. code-block:: python
-
-   workflow_state(workflow, task, point, offset=None, status='succeeded',
-                  message=None, cylc_run_dir=None, debug=False)
+.. autofunction:: cylc.flow.xtriggers.workflow_state.workflow_state
 
 The first three arguments are compulsory; they single out the target workflow name
 (``workflow``) task name (``task``) and cycle point
@@ -269,35 +260,38 @@ Custom Trigger Functions
 Trigger functions are just normal Python functions, with a few special
 properties:
 
-- they must:
+- They must:
 
-  - be defined in a module with the same name as the function, unless
+  - Be defined in a module with the same name as the function, unless
     provided using the ``cylc.xtriggers`` entry point;
   - be compatible with the same Python version that runs the scheduler
     (see :ref:`Requirements` for the latest version specification).
 
-- they can be located either:
+- They can be located either:
 
-  - in ``<workflow-dir>/lib/python/``;
-  - anywhere in your ``$CYLC_PYTHONPATH``;
-  - or defined using the ``cylc.xtriggers`` entry point for an installed
-    package.
+  - In ``<workflow-dir>/lib/python/``;
+  - Anywhere in your ``$CYLC_PYTHONPATH``;
+  - Defined using the ``cylc.xtriggers`` entry point for an installed
+    package - see :ref:`developing.xtrigger.plugins`
 
-- they can take arbitrary positional and keyword arguments
+- They can take arbitrary positional and keyword arguments
   (except ``sequential``, which is reserved - see :ref:`Sequential Xtriggers`)
-- workflow and task identity, and cycle point, can be passed to trigger
+- Workflow and task identity, and cycle point, can be passed to trigger
   functions by using string templates in function arguments (see below)
-- integer, float, boolean, and string arguments will be recognized and
+- Integer, float, boolean, and string arguments will be recognized and
   passed to the function as such
-- if a trigger function depends on files or directories (for example)
+- If a trigger function depends on files or directories (for example)
   that might not exist when the function is first called, just return
-  unsatisfied until everything required does exist.
+- The module can also provide a ``validate`` function for checking configured
+  arguments / keyword arguments, see
+  :ref:`user-guide.xtrigger-validation-functions` for details.
 
 .. note::
 
    Trigger functions cannot store data Pythonically between invocations
    because each call is executed in an independent process in the process
    pool. If necessary the filesystem can be used for this purpose.
+
 
 .. spelling:word-list::
 
@@ -344,6 +338,27 @@ The :term:`scheduler` manages trigger functions as follows:
   from the sub-process in which the function executes)
 
 
+.. _user-guide.xtrigger-validation-functions:
+
+Xtrigger Validation Functions
+-----------------------------
+
+The arguments you call the xtrigger function with are automatically validated
+against the function signature, however, you might wish to add extra validation
+logic to your custom xtrigger, e.g. to check argument types or values.
+
+If a function named ``validate`` is present alongside the xtrigger in its
+module, it will be automatically called with a dictionary of all the arguments
+passed to the xtrigger function in the workflow config. It should raise a
+:py:obj:`cylc.flow.exceptions.WorkflowConfigError` exception if an error is
+detected.
+
+The :py:mod:`cylc.flow.xtriggers.xrandom` xtrigger module contains an example
+of an xtrigger validation function.
+
+
+.. _Built-in Toy Xtriggers:
+
 Toy Examples
 ^^^^^^^^^^^^
 
@@ -353,14 +368,9 @@ echo
 The trivial built-in ``echo`` function takes any number of positional
 and keyword arguments (from the workflow configuration) and simply prints
 them to stdout, and then returns False (i.e. trigger condition not
-satisfied). Here it is in its entirety.
+satisfied).
 
-.. code-block:: python
-
-   def echo(*args, **kwargs):
-       print("echo: ARGS:", args)
-       print("echo: KWARGS:", kwargs)
-       return False, {}
+.. autofunction:: cylc.flow.xtriggers.echo.echo
 
 Here's an example echo trigger workflow:
 
@@ -389,16 +399,9 @@ time (useful for testing the effect of a long-running trigger function
 - which should be avoided) and has a configurable random chance of
 success. The function signature is:
 
-.. code-block:: python
-
-   xrandom(percent, secs=0, _=None, debug=False)
-
-The ``percent`` argument sets the odds of success in any given call;
-``secs`` is the number of seconds to sleep before returning; and the
-``_`` argument (underscore is a conventional name for a variable
-that is not used, in Python) is provided to allow specialization of the
-trigger to (for example) task name, task ID, or cycle point (just use
-the appropriate string templates in the workflow configuration for this).
+.. automodule:: cylc.flow.xtriggers.xrandom
+   :members: xrandom, validate
+   :member-order: bysource
 
 An example xrandom trigger workflow:
 

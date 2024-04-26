@@ -34,7 +34,6 @@ extensions = [
     # sphinx built-in extensions
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
@@ -110,6 +109,10 @@ version = CYLC_RELEASE  # short version (for pinning / display) e.g. "8.0"
 autosummary_generate = True
 autosummary_generate_overwrite = True
 autosummary_imported_members = False
+
+# Autodoc type hints can look very messy if they are included in the signature,
+# so we only include them in the description instead:
+autodoc_typehints = 'description'
 
 # Mapping to other Sphinx projects we want to import references from.
 # NOTE: To search available references, use:
