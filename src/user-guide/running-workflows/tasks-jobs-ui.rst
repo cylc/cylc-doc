@@ -71,7 +71,7 @@ Task Modifiers
 --------------
 
 Tasks are run as soon as their dependencies are satisfied, however, there are
-some other conditional which can prevent tasks from being run. These are
+some other conditions which can prevent tasks from being run. These are
 given "modifier" icons which appear to the top-left of the task icon:
 
 .. list-table::
