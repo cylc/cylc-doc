@@ -5,8 +5,13 @@ Fixing and Reloading Workflows
 
 .. admonition:: Aim
 
-   Use ``cylc reinstall`` and ``cylc reload`` to repair a broken workflow
-   configuration without having to run the whole workflow again.
+
+... note::
+
+   This tutorial explores one working practice. You might, alternatively, wish
+   to use ``cylc shutdown``, ``cylc reinstall`` and ``cylc play`` to modify and restart
+   an existing workflow.
+
 
 
 .. ifnotslides::
