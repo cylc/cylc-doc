@@ -184,4 +184,4 @@ Which Approach To Use
 
 .. ifslides::
 
-   Next section: :ref:`Rose Tutorial <tutorial-rose-configurations>`
+   Next section: :ref:`Reinstalling workflows <tutorial.Reinstalling-workflows>`
