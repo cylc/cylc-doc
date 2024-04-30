@@ -141,6 +141,9 @@ log will report an error and the reload will have no effect.
 Note, :ref:`RemoteInit` will be redone for each job platform, when the first
 job is submitted there after a reload.
 
+
+.. _user-guide.restarting-or-reloading-after-graph-changes:
+
 Restarting or Reloading after Graph Changes
 -------------------------------------------
 
