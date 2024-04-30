@@ -225,36 +225,32 @@ To find out more, see the ``job.err`` file.
 
    .. cylc-scope::
 
-If you're struggling to track down the error, you might want to restart the
-workflow in debug mode and run the task again:
+If you're struggling to track down the error, you might want to put the
+workflow into debug mode::
 
-.. TODO Update this advice after https://github.com/cylc/cylc-flow/issues/5829
-
-.. code-block:: console
-
-   # shut the workflow down (leave any active jobs running)
-   $ cylc stop --now --now <workflow>
-   # restart the workflow in debug mode
-   $ cylc play <workflow> --debug
-   # re-run all failed task(s)
-   $ cylc trigger '<workflow>//*:failed'
+   cylc verbosity DEBUG <workflow-id>
 
 When a workflow is running in debug mode, all jobs will create a ``job.xtrace``
-file which can help you to locate the error within the job script.
+file when run in addition to ``job.err``. This can help you to locate the error
+within the job script.
+
+You can also start workflows in debug mode::
+
+   cylc play --debug <workflow-id>
 
 
-My workflow shutdown unexpectedly
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+My workflow shut down unexpectedly
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When a Cylc scheduler shuts down, it should leave behind a log message explaining why.
 
-E.G. this message means that a workflow shutdown because it was told to:
+E.G. this message means that a workflow shut down because it was told to:
 
 .. code-block::
 
    Workflow shutting down - REQUEST(CLEAN)
 
-If a workflow shutdown due to a critical problem, you should find some
+If a workflow shut down due to a critical problem, you should find some
 traceback in this log. If this traceback doesn't look like it comes from your
 system, please report it to the Cylc developers for investigation (on
 GitHub or Discourse).
@@ -276,6 +272,10 @@ Why isn't my task running?
 To find out why a task is not being run, use the ``cylc show`` command.
 This will list the task's prerequisites and xtriggers.
 
+Note, at present ``cylc show`` can only display
+:term:`active tasks <active task>`. Waiting tasks beyond the
+:term:`n=0 window <n-window>` have no satisfied prerequisites.
+
 Note, tasks which are held |task-held| will not be run, use ``cylc release``
 to release a held task.
 
@@ -296,7 +296,7 @@ If something has gone wrong during installation, an error should have been
 logged a file in this directory:
 ``$HOME/cylc-run/<workflow-id>/log/remote-install/``.
 
-``If you need to access files from a remote platform (e.g. 2-stage ``fcm_make``),
+If you need to access files from a remote platform (e.g. 2-stage ``fcm_make``),
 ensure that a task has submitted to it before you do so. If needed you can use
 a blank "dummy" task to ensure that remote installation is completed *before*
 you run any tasks which require this e.g:
@@ -312,12 +312,12 @@ Conda / Mamba environment activation fails
 Some Conda packages rely on activation scripts which are run when you call the
 activate command.
 
-Sadly, some of these scripts don't defend against command failure or unset
-environment variables causing them to fail when configured in Cylc ``*script``
-(see also :ref:`troubleshooting.my_job_failed` for details).
+Unfortunately, some of these scripts don't defend against command failure or
+unset environment variables causing them to fail when configured in Cylc
+``*script`` (see also :ref:`troubleshooting.my_job_failed` for details).
 
 To avoid this, run ``set +eu`` before activating your environment. This turns
-off some Bash safety features allowing environment activation to complete.
+off some Bash safety features, allowing environment activation to complete.
 Remember to run ``set -eu`` afterwards to turn these features back on.
 
 .. code-block:: cylc
@@ -360,7 +360,7 @@ E.G. the following error:
 
    FileNotFoundError: [Errno 2] No such file or directory: 'ssh'
 
-Means that ``ssh`` is not installed.
+Means that ``ssh`` is not installed or not in your ``$PATH``.
 
 See :ref:`non-python-requirements` for details on system requirements.
 
@@ -376,8 +376,8 @@ a remote platform.
 This either means that:
 
 1. The platform is down (e.g. all login nodes are offline).
-2. There is a network problem (e.g. you cannot connect to the login nodes).
-3. The platform is not correctly configured.
+2. Or, there is a network problem (e.g. you cannot connect to the login nodes).
+3. Or, the platform is not correctly configured.
 
 Check the scheduler log, you might find some stderr associated with this
 message.
@@ -395,15 +395,14 @@ note that this defaults to the platform name if not explicitly set.
 ``OperationalError: disk I/O error``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This means that something was unable to write to a file when it would expect to
-have been able to.
+This means that Cylc was unable to write to the database.
 
-This error usually occurs if when you have exceeded you filesystem quota.
+This error usually occurs if when you have exceeded your filesystem quota.
 
-If a Cylc workflow cannot write to the filesystem, it will shutdown. Once
+If a Cylc scheduler cannot write to the filesystem, it will shutdown. Once
 you've cleared out enough space for the workflow to continue you should be able
-to safely restart it as you would normally using ``cylc play``, the workflow
-will continue where it left off.
+to safely restart it as you would normally using ``cylc play``. The workflow
+will continue from where it left off.
 
 
 ``socket.gaierror``
@@ -418,7 +417,7 @@ login nodes you submit jobs to).
 Cylc expects each host to have a unique and stable fully qualified domain name
 (FQDN) and to be identifiable from other hosts on the network using this name.
 
-I.E. If a host identifies itself with an FQDN, then we should be able to look it
+I.e., If a host identifies itself with an FQDN, then we should be able to look it
 from another host by this FQDN. If we can't, then Cylc can't tell which host is
 which and will not be able to function properly.
 
@@ -429,7 +428,7 @@ DNS setup is consistent.
 Sometimes we do not have control over the platforms we use and it is not
 possible to compel system administrators to address these issues. If this is
 the case, you can fall back to IP address based host identification which may
-work (i.e. use IP address rather than host names, makes logs less human
+work (i.e. use IP addresses rather than host names, which makes logs less human
 readable). As a last resort you can also hard-code the host name for each host.
 
 For more information, see
@@ -449,10 +448,10 @@ increase this limit.
 ``Cannot determine whether workflow is running on <host>``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When a Cylc workflow runs, it creates a :term:`contact file` which tells us on
+When Cylc runs a workflow, it creates a :term:`contact file` which tells us on
 which host and port it can be contacted.
 
-If the workflow cannot be contacted, Cylc will attempt to check whether the
+If the scheduler cannot be contacted, Cylc will attempt to check whether the
 process is still running to ensure it hasn't crashed.
 
 If you are seeing this error message, it means that Cylc was unable to
