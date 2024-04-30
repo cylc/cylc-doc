@@ -20,12 +20,12 @@ You can perform these interventions in multiple ways:
       The Cylc web app (GUI) can be launched with the ``cylc gui`` command.
 
       Some sites provide a central deployment for you where you log in via the
-      web browser rather than launching it youself.
+      web browser rather than launching it yourself.
 
    .. tab-item:: With the Tui
       :sync: tui
 
-      Cylc Tui is an interactive in-terminal application, kinda like a minimal
+      Cylc Tui is an interactive in-terminal application, like a minimal
       version of the GUI. Start it with the ``cylc tui`` command.
 
       Launch it with the ``cylc tui`` command.
@@ -189,7 +189,7 @@ You can also :ref:`set task prerequisites <interventions.set-task-prerequisites>
 Should I set task outputs or prerequisites?
 
 * If you set a task's outputs, then tasks downstream of it may start to run.
-* If you set a task's prerequisites, this will not happen.
+* If you set a task's prerequisites, the task itself may start to run.
 
 
 .. _interventions.set-task-prerequisites:
@@ -254,7 +254,7 @@ You can also :ref:`set task outputs <interventions.set-task-outputs>`.
 Should I set task outputs or prerequisites?
 
 * If you set a task's outputs, then tasks downstream of it may start to run.
-* If you set a task's prerequisites, this will not happen.
+* If you set a task's prerequisites, the task itself may start to run.
 
 
 Set a Switch Task
@@ -354,7 +354,7 @@ Edit a Task's Configuration and Re-Run It
 
       .. note::
 
-         Any changes you make, apply only to this one instance of the task, not
+         Any changes you make apply only to this one instance of the task, not
          to any future instances.
 
          To change future instances, either use "broadcast" or see
@@ -400,6 +400,12 @@ Edit The Workflow Configuration
 
          $ vim ~/cylc-src/myworkflow  # edit the workflow configuration
          $ cylc vr myworkflow         # reinstall and reload the workflow
+
+.. note::
+
+   For information on how graph changes (e.g. the adding or removing of tasks)
+   are applied, see
+   :ref:`user-guide.restarting-or-reloading-after-graph-changes`.
 
 
 Orphan a "Stuck" Job Submission
