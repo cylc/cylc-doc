@@ -34,7 +34,8 @@ The ``suite.rc`` filename triggers a backward compatibility mode in which:
     branching)
 
 - only ``succeeded`` task outputs are :ref:`*required* <User Guide Required Outputs>`,
-  meaning the scheduler will retain tasks that do not succeed as incomplete
+  so the scheduler will retain all non-succeeded :term:`finished tasks <finished task>`
+  in the :term:`n=0 window <n-window>`.
 
   - (in Cylc 8, **all** outputs are *required* unless marked as
     :ref:`*optional* <User Guide Optional Outputs>` by the new ``?`` syntax)

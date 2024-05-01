@@ -128,9 +128,9 @@ Special Case: Triggering ``n=0`` Tasks
 
    - Triggering a task with a submitted or running job has no effect
      (it is already triggered).
-   - Triggering other :term:`active tasks <active task>` e.g. (a waiting
-     task which is held) queues it to run in the same flow.
-   - Triggering an :term:`incomplete task` queues it to re-run in the same flow.
+   - Triggering other :term:`active tasks <active task>` (including
+     :term:`incomplete <output completion>`
+     :term:`finished <finished task>` tasks) queues them to run in the same flow.
 
 
 .. _flow-merging:
@@ -138,28 +138,16 @@ Special Case: Triggering ``n=0`` Tasks
 Flow Merging in ``n=0``
 -----------------------
 
-If a task spawning into the ``n=0`` :term:`window` finds another instance
-of itself already there (i.e., same name and cycle point, different flow
-number) a single instance will carry both (sets of) flow numbers forward from
-that point. Downstream tasks belong to both flows.
+If a task spawning into the :term:`n=0 window <n-window>` finds another instance
+of itself (same task ID) already there, the two will merge and carry both
+(sets of) flow numbers forward. Downstream tasks will belong to both flows.
 
-Flow merging in ``n=0`` means flows are not completely independent. One flow
-might not be able to entirely overtake another because one or more of its tasks
-might merge in ``n=0``. Merging is necessary while task IDs - and associated
-log directory paths etc. - do not incorporate flow numbers, because task IDs
-must be unique in the :term:`active task pool`.
+Flow merging is necessary because :term:`active <active task>` task IDs
+must be unique.
 
-Merging with Incomplete tasks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-:term:`Incomplete<incomplete>` tasks are retained in the active window in
-expectation of retriggering to complete :term:`required outputs<required
-output>` and continue their flow.
-
-If another flow encounters an incomplete task (i.e. if another instance of the
-same task collides with it in the ``n=0`` :term:`active window`) the task will
-run again and carry both flow numbers forward if it successfully completes its
-required outputs.
+If original task instance is :term:`finished <finished task>` but
+:term:`incomplete <output completion>` the merged task will be reset to
+run again without manual intervention.
 
 
 Stopping Flows
@@ -168,7 +156,7 @@ Stopping Flows
 By default, ``cylc stop`` halts the workflow and shuts the scheduler down.
 
 It can also stop specific flows: ``cylc stop --flow=N`` removes the flow number
-``N`` from tasks in the :term:`active task pool`. Tasks that have no flow
+``N`` from :term:`active tasks <active task>`. Tasks that have no flow
 numbers left as a result do not spawn children at all. If there are no active
 flows left, the scheduler shuts down.
 

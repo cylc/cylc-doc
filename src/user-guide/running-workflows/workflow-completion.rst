@@ -4,8 +4,8 @@ Workflow Completion
 ===================
 
 If there is nothing more to run (according to the graph) and there are no
-:term:`incomplete tasks <incomplete task>` present, the scheduler will report
-workflow completion and shut down when current active tasks finish. 
+:term:`incomplete <output completion>` tasks present in :term:`n=0 <n-window>`
+the workflow is complete and the scheduler will shut down automatically. 
 
 
 .. _scheduler stall:
@@ -13,16 +13,19 @@ workflow completion and shut down when current active tasks finish.
 Scheduler Stall
 ===============
 
-If there is nothing more to run (according to the graph) but there are
-:term:`incomplete tasks <incomplete task>` present, the scheduler will
-:term:`stall` and stay alive for 1 hour (by default) awaiting user intervention
+If there is nothing more to run, but there are
+:term:`incomplete <output completion>` tasks present in the
+:term:`n=0 window <n-window>` the workflow did not run to
+completion, so the scheduler will :term:`stall` and stay
+alive for 1 hour (by default) awaiting user intervention
 to allow the workflow to continue.
 
-The presence of incomplete tasks means that the workflow did not run to
-completion as expected, because some :term:`required task outputs
-<required output>` were not completed at runtime.
+A stall can be caused by tasks with partially satisfied
+prerequisites or tasks that finished incomplete. However,
+partially satisfied prerequisites normally result from
+upstream tasks finishing incomplete.
 
-Restarting a stalled workflow triggers a new stall timer.
+Restarting a stalled workflow resets the stall timer.
 
 
 .. note::
