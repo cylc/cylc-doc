@@ -352,7 +352,7 @@ then this is not an expected error, please report the traceback to us.
 
 This is the error message Python gives when you try to call an executable which
 does not exist in the ``$PATH``. It means there's something wrong with the Cylc
-installation.
+installation, or something missing from the environment or system in which Cylc has been installed.
 
 E.G. the following error:
 
@@ -399,7 +399,7 @@ This means that Cylc was unable to write to the database.
 
 This error usually occurs if when you have exceeded your filesystem quota.
 
-If a Cylc scheduler cannot write to the filesystem, it will shutdown. Once
+If a Cylc scheduler cannot write to the filesystem, it will shut down. Once
 you've cleared out enough space for the workflow to continue you should be able
 to safely restart it as you would normally using ``cylc play``. The workflow
 will continue from where it left off.
