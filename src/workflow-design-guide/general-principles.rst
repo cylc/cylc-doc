@@ -152,6 +152,11 @@ workflow and its tasks, all task scripts should:
    Examples and more details `are available <https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/>`_
    for the above three ``set`` commands.
 
+   Inline scripts (defined in the job-script section of the
+   workflow configuration) do not need to ``set -euo pipefail``:
+   It is already set as part of the
+   :ref:`job script's error handling <job-scripts.aborting-on-error>`.
+
 
 Rose Apps
 ---------
