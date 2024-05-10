@@ -1894,12 +1894,12 @@ A more realistic example might have several tasks on each branch. The
 ``bar``, but configured differently to avoid the failure.
 
 
-Message Trigger Example
-^^^^^^^^^^^^^^^^^^^^^^^
+Custom Outputs
+^^^^^^^^^^^^^^
 
-Branching is particularly powerful when using :ref:`MessageTriggers` (i.e.
-:term:`custom outputs <custom output>`) to define multiple parallel paths in
-the graph.
+Branching is particularly powerful when using
+:term:`custom outputs <custom output>` to define multiple parallel paths in the
+graph.
 
 In the following graph there is a task called ``showdown`` which produces one
 of three possible custom outputs, ``good``, ``bad`` or ``ugly``. Cylc will follow
@@ -1961,7 +1961,7 @@ three custom outputs:
 
    [runtime]
        [[showdown]]
-           # Randomly return one of the three custom outputs.
+           # Randomly return one of the three custom outputs:
            script = """
                SEED=$RANDOM
                if ! (( $SEED % 3 )); then
@@ -1972,36 +1972,62 @@ three custom outputs:
                    cylc message 'The Ugly'
                fi
            """
+
+           # Ensure that at least one of the custom outputs is produced:
+           completion = succeeded and (good or bad or ugly)
+
+           # Register the three custom outputs:
            [[[outputs]]]
-               # Register the three custom outputs.
                good = 'The Good'
                bad = 'The Bad'
                ugly = 'The Ugly'
 
+Completion Expressions
+""""""""""""""""""""""
 
-When using message triggers in this way there are two things to be aware of:
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
-1. Message triggers are not exit states.
+The :cylc:conf:`completion` configuration above is optional, it adds a basic
+validation check which ensures that at least one of the three custom outputs is
+produced when the task runs. This protects you against the possibility that
+none of the outputs are produced e.g. due to a task design error.
 
-   Custom output messages are generated *before* the task has completed, so it
-   can be useful to combine them with a regular trigger for safety e.g:
+If the task does not produce at least one of these three outputs, then it will
+be marked as having incomplete outputs and will be retained in a similar manner
+to if it had failed. This provides you with an opportunity to intervene to
+rectify the situation, otherwise the workflow will :term:`stall`.
 
-   .. code-block:: cylc-graph
+.. cylc-scope:: flow.cylc
 
-      # good will wait for showdown to finish before running
-      showdown:finish & showdown:good => good
+Mutually Exclusive Outputs
+""""""""""""""""""""""""""
 
-      # if showdown fails then good will not run
-      showdown:succeed & showdown:good => good
+It is not possible to enforce mutually exclusive outputs in Cylc as
+tasks may be re-run multiple times and the outputs from previous runs
+accumulate.
 
-2. Whether message outputs from a single task are mutually exclusive or not
-   depends on the task, and the workflow should be designed accordingly.
+E.g, this expression ensures that **at least one** of the three custom outputs
+is produced when the task runs:
 
-   For example, the ``showdown`` task above could instead send all three
-   messages in succession, after writing out corresponding *good*, *bad*, and
-   *ugly* files.
+.. code-block:: cylc
 
-   Check that you understand how your tasks work, if they use custom outputs.
+   completion = succeeded and (good or bad or ugly)
+
+However, it is not possible to ensure that **only** one of the three is
+produced.
+
+Custom Output Generation Timing
+"""""""""""""""""""""""""""""""
+
+Custom outputs are generated *before* the task succeeds or fails. This is handy
+if you don't want downstream tasks to wait for upstream tasks to finish
+executing, e.g:
+
+.. code-block:: cylc-graph
+
+   # run "process_file_1" as soon as the output "file_1" is completed, but
+   # don't wait for "model" to finish first
+   model:file_1_ready => process_file_1
 
 
 .. _RunaheadLimit:
