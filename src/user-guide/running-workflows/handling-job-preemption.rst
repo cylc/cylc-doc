@@ -17,10 +17,4 @@ because Loadleveler sends the SIGUSR1 signal before SIGKILL for preemption.
 Other :term:`job runners <job runner>` just send SIGTERM before SIGKILL as normal, so Cylc
 cannot distinguish a preemption job kill from a normal job kill. After this the
 job will poll as failed (correctly, because it was killed, and the job status
-file records that). To handle this kind of preemption automatically you could
-use a task failed or retry event handler that queries the job runner queue
-(after an appropriate delay if necessary) and then, if the job has been
-requeued, uses ``cylc reset`` to reset the task to the submitted state.
-
-
-
+file records that).

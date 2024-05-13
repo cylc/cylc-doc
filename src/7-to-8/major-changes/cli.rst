@@ -80,16 +80,16 @@ renamed or removed.
 ``cylc print``
   - Equivalent to ``cylc scan --states=all``.
 ``cylc reset``
-  - It is no longer possible to manually change a task's state.
-  - You can, however, override the outputs the task generated which has a
-    similar effect with ``cylc set-outputs``.
+  - ``cylc reset`` has been replaced by ``cylc set``
+  - At Cylc 8 we override task's prerequisites & outputs rather than modifying
+    the task state directly.
 ``cylc restart``
   - Replaced by ``cylc play``.
 ``cylc run``
   - Replaced by ``cylc play``.
 ``cylc spawn``
   - Spawning is now performed automatically, on demand. Use ``cylc trigger`` to run
-    a task, or ``cylc set-outputs`` to spawn tasks that depend on specified outputs.
+    a task, or ``cylc set`` to spawn tasks that depend on specified outputs.
 ``cylc suite-state``
   - Renamed as ``cylc workflow-state``.
 
