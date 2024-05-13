@@ -45,6 +45,6 @@ sequence, or remove it.
 
 
 If you want trigger downstream tasks despite ``3/foo`` being removed before it
-could succeed, use ``cylc set-outputs`` to artificially mark its ``succeeded``
+could succeed, use ``cylc set`` to artificially mark its ``succeeded``
 output as complete (and with the ``--flow`` option, to make the :term:`flow`
 continue on from there).
