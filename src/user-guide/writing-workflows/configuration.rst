@@ -10,12 +10,12 @@ The ``flow.cylc`` File
 
 Cylc workflows are defined in :cylc:conf:`flow.cylc` files that specify the
 tasks to be managed by the Cylc scheduler, the dependencies between them,
-and the schedules to run time on.
+and the schedules to run them to.
 
-General file syntax is described in the :ref:`File Format Reference
+The ``.cylc`` file syntax is described in the :ref:`File Format Reference
 <file-format>`.
 
-Legal configuration settings are documented in :ref:`workflow-configuration`.
+The configurations you can use are documented in :ref:`workflow-configuration`.
 
 .. _template processors: https://en.wikipedia.org/wiki/Template_processor
 
@@ -48,7 +48,7 @@ A Cylc :term:`source directory` contains:
    the scheduler and job execution environments. It can be used by:
 
    - Tasks
-   - Custom :ref:`job submission modules <CustomJobSubmissionMethods>`
+   - Custom :ref:`job runners <CustomJobSubmissionMethods>`
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`
 
 Other files and folders may be placed in the :term:`source directory` too:
