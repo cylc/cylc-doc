@@ -123,6 +123,15 @@ toolbar allowing you to see tasks further back in the workflow's history.
    Using high n-window values with complex workflows may have performance
    impacts.
 
+
+Group by cycle point in the graph view
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The graph view now has an option to group tasks by cycle point.
+
+.. image:: changes/cylc-graph-group-by-cycle-point.png
+   :width: 100%
+
 ----------
 
 Cylc 8.2
