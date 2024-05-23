@@ -82,9 +82,12 @@ Tui
 The Tui (terminal user interface) is a command line version of the Gui.
 You can use it to monitor and control your workflows.
 
-There has been a major update to Tui at Cylc 8.3.0, you can now use Tui to
-browse your installed workflows. Tui is also able to keep up with larger
-workflows which would previously have caused it to time out.
+There has been a major update to Tui at Cylc 8.3.0:
+
+* Larger workflows will no longer cause Tui to time out.
+* You can now browse all your workflows including stopped workflows.
+* You can monitor multiple workflows at the same time.
+* The workflow and job logs are now available from within Tui.
 
 .. image:: changes/tui-1.gif
    :width: 100%
@@ -119,6 +122,15 @@ toolbar allowing you to see tasks further back in the workflow's history.
 
    Using high n-window values with complex workflows may have performance
    impacts.
+
+
+Group by cycle point in the graph view
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The graph view now has an option to group tasks by cycle point.
+
+.. image:: changes/cylc-graph-group-by-cycle-point.png
+   :width: 100%
 
 ----------
 
