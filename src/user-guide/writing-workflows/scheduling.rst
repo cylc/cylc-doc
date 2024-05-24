@@ -1549,22 +1549,20 @@ Required Outputs
 :term:`optional <optional output>` (marked with ``?`` in the graph).
 
 Tasks are expected to complete required outputs at runtime, but
-they can finish without completing optional outputs.
+they don't have to complete optional outputs.
 
 This allows the scheduler to correctly diagnose
 :term:`workflow completion`. [2]_
 
-Tasks that :term:`finish <finished task>` without completing their
+Tasks that achieve a :term:`final status` without completing their
 outputs [3]_ are retained in the :term:`n=0 window <n-window>` pending user
 intervention, e.g. to be retriggered after a bug fix.
 
 .. note::
-   Tasks that finish without completing their outputs will raise a warning
-   and stall the workflow when there is nothing else for the scheduler to
-   run. to do (see
-
-   :ref:`workflow completion`). They also count toward the :term:`runahead
-   limit`, because they may run again once dealt with.
+   Tasks that achieve a final status without completing their outputs will
+   raise a warning and stall the workflow when there is nothing else for
+   the scheduler to run (see :ref:`workflow completion`). They also count
+   toward the :term:`runahead limit`, because they may run again once dealt with.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
@@ -1573,7 +1571,7 @@ This graph says task ``bar`` should trigger if ``foo`` succeeds:
    foo => bar  # short for "foo:succeed => bar"
 
 Additionally, ``foo`` is required to succeed, because its success is not marked
-as optional. If ``foo`` :term:`finishes <finished task>` without succeeding the
+as optional. If ``foo`` achieves a :term:`final status` without succeeding the
 scheduler will not run ``bar``, and ``foo`` will be retained
 in :term:`n=0 <n-window>` pending user intervention.
 
@@ -1676,7 +1674,8 @@ following graph, ``foo`` is required to succeed, but it doesn't matter whether
 .. note::
 
    Optional outputs do not affect *triggering*. They just tell the scheduler
-   what to do with the task if it finishes without completing the output.
+   what to do with the task if it reaches a :term:`final status` without
+   completing the output.
 
    This graph triggers ``bar`` if ``foo`` succeeds, and does not trigger
    ``bar`` if ``foo`` fails:

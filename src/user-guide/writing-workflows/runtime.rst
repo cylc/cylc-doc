@@ -538,7 +538,7 @@ In the following example, tasks ``bad`` and ``flaky`` each have 3 retries
 configured, with a 10 second delay between. On the final try, ``bad`` fails
 again and goes to the ``failed`` state, while ``flaky`` succeeds and triggers
 task ``whizz`` downstream. The scheduler will then stall because
-``bad`` finished with incomplete outputs.
+``bad`` failed (which is a :term:`final status`) with incomplete outputs.
 
 .. code-block:: cylc
 

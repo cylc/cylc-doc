@@ -128,9 +128,9 @@ Special Case: Triggering ``n=0`` Tasks
 
    - Triggering a task with a submitted or running job has no effect
      (it is already triggered).
-   - Triggering other :term:`active tasks <active task>` (including
-     :term:`incomplete <output completion>`
-     :term:`finished <finished task>` tasks) queues them to run in the same flow.
+   - Triggering other :term:`active tasks <active task>`, including
+     :term:`incomplete <output completion>` tasks with a :term:`final status`,
+     queues them to run in the same flow.
 
 
 .. _flow-merging:
@@ -145,7 +145,7 @@ of itself (same task ID) already there, the two will merge and carry both
 Flow merging is necessary because :term:`active <active task>` task IDs
 must be unique.
 
-If original task instance is :term:`finished <finished task>` but
+If original task instance has a :term:`final status` but is
 :term:`incomplete <output completion>` the merged task will be reset to
 run again without manual intervention.
 

@@ -86,7 +86,7 @@ Glossary
 
       - ``preparing`` tasks - i.e. tasks in the process of submitting jobs
       - ``submitted`` and ``running`` tasks - i.e. those with active jobs
-      - tasks that finished without completing their
+      - tasks that reached a :term:`final status` without completing their
         :term:`required outputs <required output>`
         (e.g. a task failed where success was required).
 
@@ -570,7 +570,7 @@ Glossary
       Tasks in :term:`datetime cycling` workflows can be configured to *expire*
       if the :term:`wallclock time` exceeds some offset from the cycle point.
 
-      Expired is a :term:`final task status` - an expired task will not run
+      Expired is a :term:`final status` - an expired task will not run
       even if its prerequisites get satisfied.
       
       The associated ``:expire`` :term:`output <task output>` can be used to
@@ -862,9 +862,8 @@ Glossary
 
 
    job
-      Jobs are the real processes that run on a computer to realise
-      :term:`tasks <task>` in a :term:`workflow`. In Cylc, they are
-      implemented by :term:`job scripts
+      Jobs are the real processes that :term:`tasks <task>` represent in
+      a :term:`workflow`. In Cylc, they are implemented by :term:`job scripts
       <job script>` prepared by the :term:`scheduler`.
 
 
@@ -1371,11 +1370,10 @@ Glossary
          * :ref:`Cylc User Guide <FamilyTriggers>`
 
 
-   final task status
-   finished task
-      A finished task has achieved a final task status, i.e., expired,
-      submit-failed, succeeded, or failed. Finished tasks cannot change
-      state again except by manual intervention (e.g. by retriggering).
+   final status
+      A task that has achieved a final status (expired, submit-failed,
+      succeeded, or failed) will not change state in the workflow, except by
+      manual intervention.
 
 
    standard output
@@ -1413,6 +1411,8 @@ Glossary
          foo => bar  # means foo:succeeded => bar
 
 
+   complete
+   incomplete
    output completion
    output completion condition
       A task's outputs are *complete* if its *output completion condition* 
@@ -1428,11 +1428,12 @@ Glossary
         submit-fails.
       - Or, if expiry is optional, then the outputs are complete if it expires.
 
-      Tasks that :term:`finish <finished task>` with
-      :term:`complete outputs <output completion>`
-      have done their job, allowing the workflow to move on.
+      Tasks that achieve a :term:`final status` with
+      :term:`complete outputs <output completion>` have done their job in the
+      workflow, allowing the workflow to move on.
       
-      Tasks that finish with :term:`incomplete outputs <output completion>`
+      Tasks that achieve a final status with
+      :term:`incomplete outputs <output completion>`
       are retained in :term:`n=0 <n-window>` pending user
       intervention, and will :term:`stall` the workflow.
 
@@ -1567,7 +1568,7 @@ Glossary
    expected output
       Task outputs that are not marked as :term:`optional <optional output>`
       in the :term:`graph` must be completed at runtime. If a task
-      :term:`finishes <finished task>` without completing its required
+      achieves a :term:`final status` without completing its required
       outputs, the :term:`scheduler` will keep it in the
       :term:`n=0 window <n-window>` pending user intervention.
 
@@ -1581,8 +1582,9 @@ Glossary
    stalled state
       In a stalled workflow, there is nothing more the scheduler can do,
       but it stays up for a while awaiting manual intervention because
-      the presence of :term:`incomplete <output completion>` tasks in
-      the :term:`n=0 window <n-window>` implies that the workflow has not successfully
+      the presence of :term:`incomplete <output completion>` tasks, or
+      partially satisfied tasks, in the :term:`n=0 window <n-window>`
+      implies that the workflow has not successfully
       run to :term:`completion <workflow completion>`.
 
       Stalls are usually, but not always, caused by unexpected task failures:

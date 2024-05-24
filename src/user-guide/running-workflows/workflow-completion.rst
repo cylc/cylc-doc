@@ -21,9 +21,10 @@ alive for 1 hour (by default) awaiting user intervention
 to allow the workflow to continue.
 
 A stall can be caused by tasks with partially satisfied
-prerequisites or tasks that finished incomplete. However,
-partially satisfied prerequisites normally result from
-upstream tasks finishing incomplete.
+prerequisites or tasks that achieved a :term:`final status`
+with incomplete outputs. Partially satisfied prerequisites
+normally result from incomplete tasks with final status 
+upstream in the graph.
 
 Restarting a stalled workflow resets the stall timer.
 
