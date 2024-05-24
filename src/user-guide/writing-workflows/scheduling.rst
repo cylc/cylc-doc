@@ -2092,7 +2092,7 @@ E.G. for this example workflow:
         [[graph]]
             P1 = foo
 
-When this workflow starts, the initial cycle point is 1 and the runahad limit
+When this workflow starts, the initial cycle point is 1 and the runahead limit
 is four cycles after this (i.e. cycle 4). So the task ``foo`` will immediately
 submit in cycles 1, 2, 3 and 4, however, the tasks in cycles 5 onwards will
 wait until earlier cycles complete, and the runahead limit advances.
