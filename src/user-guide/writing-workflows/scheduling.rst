@@ -1898,7 +1898,7 @@ Custom Outputs
 ^^^^^^^^^^^^^^
 
 Branching is particularly powerful when using
-:term:`custom outputs <custom output>` to define multiple parallel paths in the
+:term:`custom outputs <custom output>` to define alternate parallel paths in the
 graph.
 
 In the following graph there is a task called ``showdown`` which produces one
@@ -1990,7 +1990,7 @@ Completion Expressions
 The :cylc:conf:`completion` configuration above is optional, it adds a basic
 validation check which ensures that at least one of the three custom outputs is
 produced when the task runs. This protects you against the possibility that
-none of the outputs are produced e.g. due to a task design error.
+none of the outputs are produced e.g. due to a task implementation error.
 
 If the task does not produce at least one of these three outputs, then it will
 be marked as having incomplete outputs and will be retained in a similar manner

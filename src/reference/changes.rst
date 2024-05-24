@@ -136,7 +136,7 @@ The graph view now has an option to group tasks by cycle point.
 Completion Expressions
 ^^^^^^^^^^^^^^^^^^^^^^
 
-When a task finishes, its outputs are validated against a "completion
+When a task achieves a final status, its outputs are validated against a "completion
 expression" to ensure that it has produced all of its
 :term:`required outputs <required output>`.
 If a task fails this validation check it is said to have "incomplete outputs"
@@ -152,7 +152,7 @@ expression for finer control. This is particularly useful for anyone using
 :term:`custom outputs <custom output>`.
 
 For example, ``mytask`` must produce one of the outputs ``x`` or ``y`` to pass
-the configured completion expression configured here:
+the completion expression configured here:
 
 .. code-block:: cylc
 
