@@ -1,3 +1,5 @@
+.. _troubleshooting:
+
 Troubleshooting
 ===============
 
@@ -9,6 +11,8 @@ Troubleshooting
    :local:
    :backlinks: none
 
+
+.. _troubleshooting.log_files:
 
 Log Files
 ---------
