@@ -8,11 +8,12 @@ User Guide
    :maxdepth: 2
 
    introduction
-   interventions/index
    writing-workflows/index
    installing-workflows
    running-workflows/index
    task-implementation/index
+   interventions/index
    removing-workflows
    cheat-sheet
    examples/index
+   troubleshooting
