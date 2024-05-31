@@ -215,7 +215,7 @@ To find out more, see the ``job.err`` file.
 .. note::
 
    To ensure Cylc jobs fail when they are supposed to, Cylc configures Bash
-   to be a bit stricter than it is by default by running ``set -euo pipefail``.
+   to be stricter than it is by default by running ``set -euo pipefail``.
 
    .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
@@ -224,6 +224,11 @@ To find out more, see the ``job.err`` file.
    Bash scripts to call *from* the job script.
 
    .. cylc-scope::
+
+.. info::
+
+   One particularly common issue when developing a workflow is failure
+   to make a script executable. Use ``ls -l`` to check.
 
 If you're struggling to track down the error, you might want to put the
 workflow into debug mode::
@@ -464,6 +469,66 @@ determine whether the workflow is running. Likely cause:
 It's possible that this check might not work correctly in some containerised
 environments. If you encounter this issue in combination with containers,
 please let us know.
+
+
+Understanding Existing Workflows
+--------------------------------
+
+See what the Jinja2 is doing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes understanding what Jinja2 templating is doing
+to a workflow configuration can be difficult.
+
+``cylc view --process`` (or ``-p``) shows you what the
+configuration will look like after Jinja2 processing.
+
+For example:
+
+.. code-block:: cylc-graph
+
+   {% for n in my_function(3) %}
+       R/1983/P{{n}}Y = cicada_{{n}}[-P{{n}}Y] => cicada_{{n}}
+   {% endfor %}
+
+is much easier to understand as:
+
+.. code-block:: cylc-graph
+
+      R/1983/P2Y = cicada_2[-P2Y] => cicada_2
+      R/1983/P3Y = cicada_3[-P3Y] => cicada_3
+      R/1983/P5Y = cicada_5[-P5Y] => cicada_5
+
+If you have installed and played a workflow
+(even using ``play --pause``) this processed content
+is shown in ``log/config/flow-processed.cylc``.
+
+Other Processed Configuration Files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes it is useful to see a history of configurations
+for a workflow.
+
+Each time a workflow is
+
+* Played for the first time
+* Played from stopped
+* Reloaded
+
+...the configuration used is recorded in a file in ``log/config``.
+This provides a series of snapshots of the configuration.
+These files are named:
+
+``<LOG FILE NUMBER>-<EVENT>-<RESTART NUMBER>``. If for example
+we did:
+
+.. code-block:: console
+
+   # Command            # File created
+   cylc play workflow   # 01-start-01.cylc
+   cylc vr workflow     # 02-reload-01.cylc
+   cylc stop workflow
+   cylc play workflow   # 03-restart-02.cylc
 
 
 Getting Help
