@@ -25,7 +25,9 @@ CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
 CYLC_WORKFLOW_HOST                 # Host running the workflow process
 CYLC_WORKFLOW_OWNER                # User ID running the workflow process
 
-CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory (see below)
+CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory
+CYLC_SHARE_CYCLE_DIR               # The share/cycle/<cycle point directory>
+                                   # for this task.
 CYLC_WORKFLOW_UUID                 # Workflow UUID string
 CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
