@@ -509,9 +509,7 @@ workflows:
    can include :ref:`Jinja2 <troubleshooting.jinja2>` (use ``-j``)
    or Empy template processing.
 
-   Include files are inlined (use ``-i``) - especially useful
-   since the line numbers of failures of ``cylc validate``
-   refer to the line numbers of the output of ``cylc view``.
+   Include files can be inlined (use ``-i``).
 
 ``cylc config``
    Prints workflow configuration after Cylc has parsed the runtime
