@@ -132,6 +132,41 @@ The graph view now has an option to group tasks by cycle point.
 .. image:: changes/cylc-graph-group-by-cycle-point.png
    :width: 100%
 
+
+Completion Expressions
+^^^^^^^^^^^^^^^^^^^^^^
+
+When a task achieves a final status, its outputs are validated against a "completion
+expression" to ensure that it has produced all of its
+:term:`required outputs <required output>`.
+If a task fails this validation check it is said to have "incomplete outputs"
+and will be retained in the :term:`active window` pending user intervention.
+
+This completion expression is generated automatically from the graph.
+By default, tasks are expected to succeed, if you register any additional
+required output in the graph, then these must also
+be produced.
+
+At Cylc 8.3.0 it is now possible to manually configure this completion
+expression for finer control. This is particularly useful for anyone using
+:term:`custom outputs <custom output>`.
+
+For example, ``mytask`` must produce one of the outputs ``x`` or ``y`` to pass
+the completion expression configured here:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[mytask]]
+           completion = succeeded and (x or y)
+           [[[outputs]]]
+               x = output-x
+               y = output-y
+
+For more information, see the reference for the
+:cylc:conf:`[runtime][<namespace>]completion` configuration.
+
+
 ----------
 
 Cylc 8.2
