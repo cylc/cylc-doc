@@ -247,7 +247,7 @@ To find out more, see the ``job.err`` file.
 
    .. cylc-scope::
 
-.. info::
+.. note::
 
    One particularly common issue when developing a workflow is failure
    to make a script executable. Use ``ls -l`` to check.
@@ -496,6 +496,66 @@ please let us know.
 Debugging Workflow Configurations
 ---------------------------------
 
+Cylc Debugging Utilites
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. TODO Add cheatsheet link here
+
+Cylc comes with a number of utilies designed to allow inspection of
+workflows:
+
+``cylc view``
+   Prints workflow configurations before full parsing by Cylc. This
+   can include :ref:`Jinja2 <troubleshooting.jinja2>` (use ``-j``)
+   or Empy template processing.
+
+   Include files are inlined (use ``-i``) - especially useful
+   since the line numbers of failures of ``cylc validate``
+   refer to the line numbers of the output of ``cylc view``.
+
+``cylc config``
+   Prints workflow configuration after Cylc has parsed the runtime
+   configuration. For example:
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[foo, bar]]
+              script = echo 'Hello'
+          [[bar]]
+              post-script = echo 'World'
+
+   would be shown as:
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[root]]
+          [[foo]]
+              script = echo 'Hello'
+          [[bar]]
+              script = echo 'Hello'
+              post-script = echo 'World'
+
+``cylc lint``
+   #. Checks the config against the :ref:`style_guide`.
+   #. Looks deprecated Cylc 7 configurations and recommends
+      Cylc 8 configurations to replace them.
+
+   .. seealso::
+
+      :ref:`cylc_lint_script`
+
+``cylc validate``
+
+   Validate a workflow configuration.
+
+   .. seealso::
+
+      :ref:`Validation`
+
+.. _troubleshooting.jinja2:
+
 See what the Jinja2 is doing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -507,7 +567,7 @@ configuration will look like after Jinja2 processing.
 
 For example:
 
-.. code-block:: cylc-graph
+.. code-block:: jinja2
 
    {% for n in my_function(3) %}
        R/1983/P{{n}}Y = cicada_{{n}}[-P{{n}}Y] => cicada_{{n}}
