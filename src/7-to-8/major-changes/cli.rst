@@ -121,7 +121,7 @@ which automate common working practices, namely:
    Validate, install and play a workflow. This is similar to what
    ``rose suite-run`` did.
 ``cylc vr``
-   Valiate, install, then either reload (if the workflow is running) or restart
+   Validate, reinstall, then either reload (if the workflow is running) or restart
    (if it is stopped) the workflow. This is similar to what
    ``rose suite-run --reload`` and ``rose suite-run --restart`` did.
 

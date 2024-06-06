@@ -29,10 +29,10 @@ Working with Workflows
 Install and start a workflow::
 
    # validate a workflow
-   cylc validate <name/path>
+   cylc validate <name|path>
 
    # install a workflow
-   cylc install <name/path>
+   cylc install <name|path>
 
    # start a workflow
    cylc play <id>
@@ -41,9 +41,9 @@ For convenience, these three operations can be combined with the ``cylc vip`` co
 (vip = validate + install + play)::
 
    # validate, install and play a workflow
-   cylc vip <name/path>
+   cylc vip <name|path>
 
-When you're done with a workflow, remove it with ``cylc clean``::
+When you're done with a workflow run, remove it with ``cylc clean``::
 
    # delete a workflow installation
    cylc clean <id>
@@ -79,7 +79,7 @@ resume a workflow::
 
 The Cylc play, pause and stop commands work similarly to the play, pause and
 stop buttons on an old tape player. You can play, pause or stop a workflow as
-many times as you like, Cylc will never loose its place in the workflow.
+many times as you like; Cylc will never lose its place in the workflow.
 
 
 List Workflows
@@ -91,7 +91,7 @@ The ``cylc scan`` command can list your installed workflows::
    cylc scan
 
    # get information about running workflows
-   cylc scan -t rich
+   cylc scan --format=rich
 
    # list all installed workflows
    cylc scan --states=all
@@ -142,48 +142,48 @@ Inspecting Workflows
 
 Validate the workflow configuration (good for spotting errors)::
 
-   cylc validate <path/id>
+   cylc validate <path|id>
 
 Check the workflow for common problems and code style::
 
-   cylc lint <path/id>
+   cylc lint <path|id>
 
 View the workflow configuration *before* Cylc has parsed it
-(good for debugging Jinja2 errors)::
+(but after pre-processing - good for debugging Jinja2 errors)::
 
-   cylc view -p <path/id>
+   cylc view -p <path|id>
 
 View the workflow configuration *after* Cylc has parsed it
 (good for debugging family inheritance)::
 
-   cylc config <path/id>
+   cylc config <path|id>
 
    # view a specific task's configuration
-   cylc config <path/id> -i '[runtime][<task>]'
+   cylc config <path|id> -i '[runtime][<task>]'
 
    # view the workflow configuration with defaults applied
-   cylc config <path/id> --defaults
+   cylc config <path|id> --defaults
 
 Generate a graphical representation of the workflow's :term:`graph`
 (a useful tool for developing workflow graphs)::
 
-   cylc graph <path/id>
+   cylc graph <path|id>
 
    # render the graph between two cycle points
-   cylc graph <path/id> <cycle1> <cycle2>
+   cylc graph <path|id> <cycle1> <cycle2>
 
    # render the graph transposed (can make it easier to read)
-   cylc graph <path/id> --transpose
+   cylc graph <path|id> --transpose
 
    # group tasks by cycle point
-   cylc graph <path/id> --cycles
+   cylc graph <path|id> --cycles
 
    # collapse tasks within a family (can reduce the number of tasks displayed)
-   cylc graph <path/id> --group=<family>
+   cylc graph <path|id> --group=<family>
 
 List all tasks and families defined in a workflow::
 
-   cylc list <path/id>
+   cylc list <path|id>
 
 
 Running Rose Stem Workflows
@@ -209,7 +209,7 @@ a Rose Stem workflow with ``cylc vip``.
 Interventions
 -------------
 
-You can intervene with the running a workflow, e.g. to re-run a task.
+You can intervene in the running a workflow, e.g. to re-run a task.
 
 Interventions are written up in :ref:`user-guide.interventions`. Here is a
 quick summary:
@@ -238,7 +238,7 @@ the line in a task's script that caused the error.
 
 Start a workflow in debug mode::
 
-   $ cylc vip --debug <name/path>
+   $ cylc vip --debug <name|path>
 
    # OR
    $ cylc play --debug <id>
@@ -262,10 +262,10 @@ Many Cylc commands can operate over multiple workflows::
    cylc pause '*'
 
    # re-run all failed tasks in all workflows
-   cylc trigger '*//*/*:failed'
+   cylc trigger "*//*/*:failed"
 
-The ``*`` characters in these examples are "globs", make sure you put quotes
-around them or they won't do what you're expecting.
+The ``*`` characters in these examples are "globs". Make sure you put quotes
+around them to prevent the shell from trying to expand them.
 
 For more information on globs or the Cylc ID format, run ``cylc help id``.
 

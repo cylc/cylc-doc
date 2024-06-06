@@ -467,7 +467,7 @@ For example Cylc provides a command to validate, install and play a workflow.
 
 Compound commands make common ways of working easier.
 
-.. note::
+.. tip::
 
    Use ``cylc command --help`` to get help for each compound command,
    including a full list of available options.
