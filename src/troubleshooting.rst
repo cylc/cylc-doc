@@ -57,6 +57,28 @@ for debugging some specific issues:
    These files can allow you to see how the configuration was changed between
    restarts and reloads.
 
+   Each time a workflow is
+
+   * Played for the first time
+   * Played from stopped
+   * Reloaded
+
+   the configuration used is recorded in a file in ``log/config``.
+   This provides a series of snapshots of the configuration.
+   These files are named:
+
+   ``<LOG FILE NUMBER>-<EVENT>-<RESTART NUMBER>``.
+
+   If for example we did:
+
+   .. code-block:: console
+
+      # Command            # File created
+      cylc play workflow   # 01-start-01.cylc
+      cylc vr workflow     # 02-reload-01.cylc
+      cylc stop workflow
+      cylc play workflow   # 03-restart-02.cylc
+
 
 Shell Login/Profile Files
 -------------------------
@@ -471,8 +493,8 @@ environments. If you encounter this issue in combination with containers,
 please let us know.
 
 
-Understanding Existing Workflows
---------------------------------
+Debugging Workflow Configurations
+---------------------------------
 
 See what the Jinja2 is doing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -502,33 +524,6 @@ is much easier to understand as:
 If you have installed and played a workflow
 (even using ``play --pause``) this processed content
 is shown in ``log/config/flow-processed.cylc``.
-
-Other Processed Configuration Files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Sometimes it is useful to see a history of configurations
-for a workflow.
-
-Each time a workflow is
-
-* Played for the first time
-* Played from stopped
-* Reloaded
-
-...the configuration used is recorded in a file in ``log/config``.
-This provides a series of snapshots of the configuration.
-These files are named:
-
-``<LOG FILE NUMBER>-<EVENT>-<RESTART NUMBER>``. If for example
-we did:
-
-.. code-block:: console
-
-   # Command            # File created
-   cylc play workflow   # 01-start-01.cylc
-   cylc vr workflow     # 02-reload-01.cylc
-   cylc stop workflow
-   cylc play workflow   # 03-restart-02.cylc
 
 
 Getting Help
