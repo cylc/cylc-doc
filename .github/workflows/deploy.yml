@@ -73,7 +73,7 @@ jobs:
         uses: cylc/release-actions/configure-git@v1
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           ref: ${{ inputs.cylc-flow-tag }}
           path: docs

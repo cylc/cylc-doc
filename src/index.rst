@@ -23,4 +23,3 @@ indefinitely.
    workflow-design-guide/index
    reference/index
    glossary
-   troubleshooting

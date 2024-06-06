@@ -113,12 +113,17 @@ GUI. Consequently the following commands have also been removed:
 The ``cylc gui`` command remains, it launches a standalone version of the
 web GUI (providing the `Cylc UI Server`_ is installed).
 
-.. seealso::
+Additionally, there are two
+":ref:`compound commands <installing_workflows.compound_commands>`"
+which automate common working practices, namely:
 
-   :ref:`CompoundCommands` - For your convenience we have
-    provided commands which represent common working practices. For
-    example ``cylc vip`` (Validate-Install-Play) which runs
-    ``cylc validate``, ``cylc install`` and ``cylc play``.
+``cylc vip``
+   Validate, install and play a workflow. This is similar to what
+   ``rose suite-run`` did.
+``cylc vr``
+   Validate, reinstall, then either reload (if the workflow is running) or restart
+   (if it is stopped) the workflow. This is similar to what
+   ``rose suite-run --reload`` and ``rose suite-run --restart`` did.
 
 
 Cylc 8 Standardised IDs

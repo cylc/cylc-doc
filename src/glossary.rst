@@ -81,6 +81,7 @@ Glossary
         - :term:`xtriggers <xtrigger>`.
         - :ref:`internal queues <InternalQueues>`
         - :ref:`runahead limit <RunaheadLimit>`
+
       - ``preparing`` tasks - i.e. tasks in the process of submitting jobs
       - ``submitted`` and ``running`` tasks - i.e. those with active jobs
       - :term: `incomplete` tasks which have completed without satisfying all of their
