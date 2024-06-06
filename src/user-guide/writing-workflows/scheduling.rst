@@ -1995,7 +1995,7 @@ none of the outputs are produced e.g. due to a task implementation error.
 If the task does not produce at least one of these three outputs, then it will
 be marked as having incomplete outputs and will be retained in a similar manner
 to if it had failed. This provides you with an opportunity to intervene to
-rectify the situation, otherwise the workflow will :term:`stall`.
+rectify the situation: Without intervention the workflow will :term:`stall`.
 
 .. cylc-scope:: flow.cylc
 
