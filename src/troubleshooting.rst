@@ -247,7 +247,7 @@ To find out more, see the ``job.err`` file.
 
    .. cylc-scope::
 
-.. info::
+.. note::
 
    One particularly common issue when developing a workflow is failure
    to make a script executable. Use ``ls -l`` to check.
