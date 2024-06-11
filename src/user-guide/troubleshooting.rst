@@ -503,7 +503,10 @@ Debugging Workflow Configurations
 Cylc Debugging Utilites
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. TODO Add cheatsheet link here
+.. seealso::
+
+   :ref:`user-guide.cheat_sheet`
+
 
 Cylc comes with a number of utilies designed to allow inspection of
 workflows:
@@ -569,7 +572,7 @@ configuration will look like after Jinja2 processing.
 
 For example:
 
-.. code-block:: 
+.. code-block::
 
    {% for n in my_function(3) %}
        R/1983/P{{n}}Y = cicada_{{n}}[-P{{n}}Y] => cicada_{{n}}
