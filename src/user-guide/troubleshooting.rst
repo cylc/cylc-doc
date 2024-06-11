@@ -569,7 +569,7 @@ configuration will look like after Jinja2 processing.
 
 For example:
 
-.. code-block:: jinja2
+.. code-block:: 
 
    {% for n in my_function(3) %}
        R/1983/P{{n}}Y = cicada_{{n}}[-P{{n}}Y] => cicada_{{n}}
