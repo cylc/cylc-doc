@@ -520,27 +520,45 @@ workflows:
 
 ``cylc config``
    Prints workflow configuration after Cylc has parsed the runtime
-   configuration. For example:
+   configuration.
 
-   .. code-block:: cylc
-
-      [runtime]
-          [[foo, bar]]
-              script = echo 'Hello'
-          [[bar]]
-              post-script = echo 'World'
-
-   would be shown as:
+   It is useful because it shows you how inheritance is expanded -
+   for example:
 
    .. code-block:: cylc
 
       [runtime]
           [[root]]
-          [[foo]]
+              execution time limit = PT5S
+          [[FAMILY]]
+              pre-script = sleep 15
+          [[foo, bar]]
               script = echo 'Hello'
           [[bar]]
-              script = echo 'Hello'
+              inherit = FAMILY
               post-script = echo 'World'
+
+   would be shown as (revealing in this example why task ``bar``
+   always fails):
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[root]]
+              execution time limit = PT5S
+          [[FAMILY]]
+              execution time limit = PT5S
+              pre-script = sleep 15
+          [[foo]]
+              execution time limit = PT5S
+              script = echo 'Hello'
+          [[bar]]
+              execution time limit = PT5S
+              pre-script = sleep 15
+              script = echo 'Hello'
+              inherit = FAMILY
+              post-script = echo 'World'
+
 
 ``cylc lint``
    #. Checks the config against the :ref:`style_guide`.
