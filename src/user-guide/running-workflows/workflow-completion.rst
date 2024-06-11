@@ -3,9 +3,19 @@
 Workflow Completion
 ===================
 
-If there is nothing more to run (according to the graph) and there are no
-:term:`incomplete <output completion>` tasks present in :term:`n=0 <n-window>`
-the workflow is complete and the scheduler will shut down automatically. 
+   A workflow is complete, and the scheduler will automatically
+   :term:`shut down <shutdown>`, if no tasks remain in the
+   :term:`n=0 <n-window>`.
+
+   That is, all active tasks have finished, and no tasks remain waiting on
+   :term:`prerequisites <prerequisite>` or "external" constraints (such as
+   :term:`xtriggers <xtrigger>` or task :term:`hold`).
+
+   If no active tasks remain and all external constraints are satisfied,
+   but the n=0 window contains tasks waiting with partially satisfied
+   :term:`prerequisites`, or tasks with :term:`final status` and
+     :term:`incomplete outputs <output completion>`, then the workflow is
+   not complete and the scheduler will :term:`stall` pending manual intervention.
 
 
 .. _scheduler stall:
@@ -13,29 +23,17 @@ the workflow is complete and the scheduler will shut down automatically.
 Scheduler Stall
 ===============
 
-If there is nothing more to run, but there are
-:term:`incomplete <output completion>` tasks present in the
-:term:`n=0 window <n-window>` the workflow did not run to
-completion, so the scheduler will :term:`stall` and stay
-alive for 1 hour (by default) awaiting user intervention
-to allow the workflow to continue.
+A stalled workflow has not run to :term:`completion <workflow completion>`
+but cannot continue without manual intervention. 
 
-A stall can be caused by tasks with partially satisfied
-prerequisites or tasks that achieved a :term:`final status`
-with incomplete outputs. Partially satisfied prerequisites
-normally result from incomplete tasks with final status 
-upstream in the graph.
+A stalled scheduler stays alive for a configurable timeout period
+pending manual intervention. If it shuts down (on the stall timeout
+or otherwise) it will remain in the stalled state on restart.
 
-Restarting a stalled workflow resets the stall timer.
-
-
-.. note::
-
-   Partially satisfied prerequisites can also cause a stall. If ``a & b => c``,
-   and ``a`` succeeds but ``b`` never even runs, the scheduler will take
-   partial completion of ``c``'s prerequisites as a sign that the workflow did
-   not run to completion as expected.
-
+Stalls are often caused by unexpected task failures, either directly (tasks
+with :term:`final status` and :term:`incomplete outputs <output completion>`)
+or indirectly (tasks with partially satisfed prerequisites, downstream of an
+unexpected failure).
 
 .. warning::
 

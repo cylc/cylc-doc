@@ -1506,11 +1506,9 @@ Family triggers are also provided for task expiry:
 
 .. code-block:: cylc-graph
 
-   R1 = """
-      foo:expire? => bar
-      FAM:expire-all? => baz
-      FAM:expire-any? => qux
-   """
+   foo:expire? => bar
+   FAM:expire-all? => baz
+   FAM:expire-any? => qux
 
 Task expiration is configured with
 :cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
@@ -1707,16 +1705,12 @@ is optional" and that a non-optional version of the trigger makes sense.
 .. code-block:: cylc-graph
 
    # Good:
-   R1 = """
-      foo:finish => bar
-      foo? => baz
-   """
+   foo:finish => bar
+   foo? => baz
 
    # Error:
-   R1 = """
-      foo:finish => bar
-      foo => baz  # ERROR : foo:succeed must be optional here!
-   """
+   foo:finish => bar
+   foo => baz  # ERROR : foo:succeed must be optional here!
 
 .. _optional outputs.family triggers:
 

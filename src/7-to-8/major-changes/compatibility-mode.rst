@@ -34,8 +34,9 @@ The ``suite.rc`` filename triggers a backward compatibility mode in which:
     branching)
 
 - ``succeeded`` task outputs are :ref:`*required* <User Guide Required Outputs>`,
-  so the scheduler will retain all other tasks with :term:`final status`
-  in the :term:`n=0 window <n-window>`.
+  so in the absence of suicide triggers the scheduler will retain other
+  :term:`final status` tasks in the :term:`n=0 window <n-window>` to stall the
+   workflow.
 
   - (in Cylc 8, **all** outputs are *required* unless marked as
     :ref:`*optional* <User Guide Optional Outputs>` by the new ``?`` syntax)
