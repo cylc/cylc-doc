@@ -76,7 +76,8 @@ Glossary
 
       Active tasks are:
 
-      - Tasks which have some, but not all of their prerequisites satisfied.
+      - Tasks which have some, but not all of their
+        :term:`prerequisites <prerequisite>` satisfied.
       - ``waiting`` tasks, that are actively waiting on:
 
         - :term:`xtriggers <xtrigger>`.
@@ -567,7 +568,7 @@ Glossary
       if the :term:`wallclock time` exceeds some offset from the cycle point.
 
       Expired is a :term:`final status` - an expired task will not run
-      even if its prerequisites get satisfied.
+      even if its :term:`prerequisites <prerequisite>` get satisfied.
 
       The associated ``:expire`` :term:`output <task output>` can be used to
       trigger other tasks. It must be marked as an :term:`optional output`,
@@ -1384,7 +1385,7 @@ Glossary
 
    prerequisite
    task prerequisite
-      A task's prerequisites are the :term:`outputs <task outputs>` of
+      A task's prerequisites are the :term:`outputs <task output>` of
       parent tasks upstream in the graph that must be completed before
       it can run. Tasks are said to "depend on" their prerequisites, hence
       the term :term:`dependency graph <graph>`.
@@ -1769,6 +1770,7 @@ Glossary
 
       If no active tasks remain and all external constraints are satisfied,
       but the n=0 window contains tasks waiting with partially satisfied
-      :term:`prerequisites`, or tasks with :term:`final status` and
-        :term:`incomplete outputs <output completion>`, then the workflow is
+      :term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
+      :term:`incomplete outputs <output completion>`, then the workflow is
       not complete and the scheduler will :term:`stall` pending manual intervention.
+

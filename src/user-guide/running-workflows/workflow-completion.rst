@@ -13,8 +13,8 @@ Workflow Completion
 
    If no active tasks remain and all external constraints are satisfied,
    but the n=0 window contains tasks waiting with partially satisfied
-   :term:`prerequisites`, or tasks with :term:`final status` and
-     :term:`incomplete outputs <output completion>`, then the workflow is
+   :term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
+   :term:`incomplete outputs <output completion>`, then the workflow is
    not complete and the scheduler will :term:`stall` pending manual intervention.
 
 
@@ -32,8 +32,8 @@ or otherwise) it will remain in the stalled state on restart.
 
 Stalls are often caused by unexpected task failures, either directly (tasks
 with :term:`final status` and :term:`incomplete outputs <output completion>`)
-or indirectly (tasks with partially satisfed prerequisites, downstream of an
-unexpected failure).
+or indirectly (tasks with partially satisfied :term:`prerequisites <prerequisite>`,
+downstream of an unexpected failure).
 
 .. warning::
 

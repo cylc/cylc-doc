@@ -402,6 +402,7 @@ success. The function signature is:
 .. automodule:: cylc.flow.xtriggers.xrandom
    :members: xrandom, validate
    :member-order: bysource
+   :noindex:
 
 An example xrandom trigger workflow:
 
