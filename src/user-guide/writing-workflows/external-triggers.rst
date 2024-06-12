@@ -126,11 +126,9 @@ The workflow state trigger function signature looks like this:
 
 .. autofunction:: cylc.flow.xtriggers.workflow_state.workflow_state
 
-The first three arguments are compulsory; they single out the target workflow name
-(``workflow``) task name (``task``) and cycle point
-(``point``). The function arguments mirror the arguments and options of
-the ``cylc workflow-state`` command - see
-``cylc workflow-state --help`` for documentation.
+The first argument identifies the target workflow, cycle, task, and status or
+output trigger name. The function arguments mirror the arguments and options of
+the ``cylc workflow-state`` command - see ``cylc workflow-state --help``.
 
 As a simple example, consider the following "upstream"
 workflow (which we want to trigger off of):
@@ -158,8 +156,8 @@ Some important points to note about this:
 - The ``workflow_state`` trigger function, like the
   ``cylc workflow-state`` command, must have read-access to the upstream
   workflow's public database.
-- The cycle point argument is supplied by a string template
-  ``%(point)s``. The string templates available to trigger function
+- The cycle point is supplied by a string template
+  ``%(point)s``. The string templates available to trigger functions
   arguments are described in :ref:`Custom Trigger Functions`).
 
 The return value of the ``workflow_state`` trigger function looks like
@@ -168,20 +166,17 @@ this:
 .. code-block:: python
 
    results = {
-       'workflow': workflow,
-       'task': task,
-       'point': point,
-       'offset': offset,
-       'status': status,
-       'message': message,
-       'cylc_run_dir': cylc_run_dir
+       'workflow_id': workflow_id,
+       'task_id': task_id,
+       'task_selector': task_selector,
+       'flow_num': flow_num,
    }
    return (satisfied, results)
 
 The ``satisfied`` variable is boolean (value True or False, depending
 on whether or not the trigger condition was found to be satisfied). The
-``results`` dictionary contains the names and values of all of the
-target workflow state parameters. Each item in it gets qualified with the
+``results`` dictionary contains the names and values of the
+target workflow state parameters. Each name gets qualified with the
 unique trigger label ("upstream" here) and passed to the environment of
 dependent tasks (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
@@ -194,18 +189,16 @@ To see this, take a look at the job script for one of the downstream tasks:
        # TASK RUNTIME ENVIRONMENT:
        export upstream_workflow upstream_cylc_run_dir upstream_offset \
          upstream_message upstream_status upstream_point upstream_task
-       upstream_workflow="up"
-       upstream_cylc_run_dir="/home/vagrant/cylc-run"
-       upstream_offset="None"
-       upstream_message="data ready"
-       upstream_status="succeeded"
-       upstream_point="2011"
-       upstream_task="foo"}
+       upstream_workflow_id="up"
+	   upstream_task_id="2011/foo"
+       upstream_selector="succeeded"
+	   upstream_flow_num="1"
+   }
    ...
 
 .. note::
 
-   The task has to know the name (label) of the external trigger that it
+   The dependent task has to know the name of the xtrigger that it
    depends on - "upstream" in this case - in order to use this information.
    However the name could be given to the task environment in the workflow
    configuration.
