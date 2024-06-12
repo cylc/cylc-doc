@@ -559,7 +559,7 @@ workflows:
 
 ``cylc lint``
    #. Checks the config against the :ref:`style_guide`.
-   #. Looks deprecated Cylc 7 configurations and recommends
+   #. Looks for deprecated Cylc 7 configurations and recommends
       Cylc 8 configurations to replace them.
 
    .. seealso::
