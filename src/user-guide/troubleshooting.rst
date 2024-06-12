@@ -519,11 +519,8 @@ workflows:
    Include files can be inlined (use ``-i``).
 
 ``cylc config``
-   Prints workflow configuration after Cylc has parsed the runtime
-   configuration.
-
-   It is useful because it shows you how inheritance is expanded -
-   for example:
+   Prints all or part of the workflow configuration after Cylc has parsed the file
+   and expanded the runtime inheritance hierarchy. For example:
 
    .. code-block:: cylc
 
