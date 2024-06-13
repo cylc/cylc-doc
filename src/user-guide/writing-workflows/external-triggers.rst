@@ -170,8 +170,8 @@ this:
        'task': task_name,
        'point': cycle_point,
        'status': task_status,  # or
-	   'trigger': task_output_trigger,  # or
-	   'message': task_output_message,
+       'trigger': task_output_trigger,  # or
+       'message': task_output_message,
        'flow_num': flow_num  # if given
    }
    return (satisfied, results)
@@ -193,8 +193,8 @@ To see this, take a look at the job script for one of the downstream tasks:
        export upstream_workflow upstream_cylc_run_dir upstream_offset \
          upstream_message upstream_status upstream_point upstream_task
        upstream_workflow="up"
-	   upstream_task="foo"
-	   upstream_point="2011"
+       upstream_task="foo"
+       upstream_point="2011"
        upstream_status="succeeded"
    }
    ...
@@ -398,7 +398,6 @@ success. The function signature is:
 .. automodule:: cylc.flow.xtriggers.xrandom
    :members: xrandom, validate
    :member-order: bysource
-   :noindex:
 
 An example xrandom trigger workflow:
 

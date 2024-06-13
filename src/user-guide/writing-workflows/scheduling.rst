@@ -1560,7 +1560,7 @@ intervention, e.g. to be retriggered after a bug fix.
    Tasks that achieve a final status without completing their outputs will
    raise a warning and stall the workflow when there is nothing else for
    the scheduler to run (see :ref:`workflow completion`). They also count
-   toward the :term:`runahead limit`, because they may run again once dealt with.
+   toward the :term:`runahead limit`.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 

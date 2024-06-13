@@ -33,7 +33,7 @@ The ``suite.rc`` filename triggers a backward compatibility mode in which:
   - (Cylc 8 spawns tasks on demand, and suicide triggers are not needed for
     branching)
 
-- ``succeeded`` task outputs are :ref:`*required* <User Guide Required Outputs>`,
+- ``succeeded`` task outputs are :ref:`required <User Guide Required Outputs>`,
   so in the absence of suicide triggers the scheduler will retain other
   :term:`final status` tasks in the :term:`n=0 window <n-window>` to stall the
   workflow.

@@ -106,11 +106,11 @@ Glossary
    window
    n-window
    active window
-      The UI provides a :term:`graph`-based window or view of the workflow at
+      The GUI provides a :term:`graph`-based window or view of the workflow at
       runtime, including tasks out to ``n`` graph edges from current
       :term:`active tasks <active task>`.
 
-      Active tasks form the ``n=0`` core of the :term:`n-window`.
+      Active tasks form the ``n=0``` window.
 
       .. seealso::
 
@@ -1383,17 +1383,6 @@ Glossary
       - ``:succeeded``, or ``:failed``
 
 
-   prerequisite
-   task prerequisite
-      A task's prerequisites are the :term:`outputs <task output>` of
-      parent tasks upstream in the graph that must be completed before
-      it can run. Tasks are said to "depend on" their prerequisites, hence
-      the term :term:`dependency graph <graph>`.
-
-      Tasks can depend on :term:`external triggers <xtrigger>` as well as
-      the outputs of other, upstream, tasks.
-
-
    output
    task output
       Task outputs mark the progression of a :term:`task` from waiting (for
@@ -1426,8 +1415,9 @@ Glossary
       A task's outputs are *complete* if its *output completion condition* 
       is satisfied.
 
-      The completion condition can be defined by the user, or otherwise
-      it is automatically generated according to the rules:
+      The completion condition can be defined by the user in
+      :cylc:conf:`flow.cylc[runtime][<namespace>]completion`,
+      otherwise it is automatically generated according to the rules:
 
       - All :term:`required outputs <required output>` (referenced in the graph)
         must be completed.
@@ -1444,10 +1434,13 @@ Glossary
       the workflow.
 
 
+   prerequisite
    dependence
    dependency
       Dependencies in the :term:`graph` show how :term:`tasks <task>` depend on
       some combination of the :term:`outputs <task output>` of other tasks.
+      These dependencies are also called the prerequisites of the downstream.
+      task.
 
       For example, in the following dependency the task ``baz`` depends on both
       ``foo`` and ``bar`` succeeding:
@@ -1461,6 +1454,8 @@ Glossary
           * :term:`task trigger`
           * :term:`conditional dependence`
           * :term:`intercycle dependence`
+
+      Tasks can also depend on :term:`external triggers <xtrigger>`.
 
 
    conditional dependence
