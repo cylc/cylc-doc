@@ -537,8 +537,8 @@ with a clock-trigger configured with the next retry delay.
 In the following example, tasks ``bad`` and ``flaky`` each have 3 retries
 configured, with a 10 second delay between. On the final try, ``bad`` fails
 again and goes to the ``failed`` state, while ``flaky`` succeeds and triggers
-task ``whizz`` downstream. The scheduler will then stall with
-``bad`` retained as an incomplete task.
+task ``whizz`` downstream. The scheduler will then stall because
+``bad`` failed (which is a :term:`final status`) with incomplete outputs.
 
 .. code-block:: cylc
 

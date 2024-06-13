@@ -185,7 +185,7 @@ configured).
 Task messages are validated by:
 
 .. autoclass:: cylc.flow.unicode_rules.TaskMessageValidator
-   :no-index:
+   :noindex:
 
 .. _job-scripts.aborting-on-error:
 

@@ -1494,26 +1494,34 @@ to the task cycle point.
 Clock-Expire Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Tasks can be configured to *expire* and skip job submission if they are too far
-behind the wallclock when they become ready to run (and other tasks can trigger
-off of this).
+Tasks can be configured to :term:`expire <expired task>` if the wall clock
+time exceeds some offset from their cycle point.
 
-For example, if a clock-triggered task always copies the latest of a set of
-files to overwrite the previous set, in every cycle, there would be no point in
-running it late because the files it copied would be immediately overwritten by
-the next task instance as the workflow catches back up to real time operation.
 
-Clock-expire tasks are configured with
+The associated ``:expire`` :term:`output <task output>` can be used to
+trigger other tasks. It must be marked as an :term:`optional output`,
+i.e. expiry cannot be :term:`required <required output>`.
+
+Family triggers are also provided for task expiry:
+
+.. code-block:: cylc-graph
+
+   foo:expire? => bar
+   FAM:expire-all? => baz
+   FAM:expire-any? => qux
+
+Task expiration is configured with
 :cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
 :cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
 with a datetime offset relative to cycle point.
+
 The offset should be positive to make the task expire if the wallclock time
 has gone beyond the cycle point.
 
 .. warning::
 
-   The scheduler can only determine that a task has expired once it has
-   appeared in the active window of the workflow.
+   The scheduler can only determine that a task has expired once it
+   enters the :term:`n=0 window <n-window>`.
 
 
 .. _WorkflowConfigExternalTriggers:
@@ -1528,29 +1536,31 @@ in :ref:`Section External Triggers`.
 
 .. _User Guide Required Outputs:
 .. _required outputs:
-.. _incomplete tasks:
 
 Required Outputs
 ----------------
 
 .. versionadded:: 8.0.0
 
-:term:`Task outputs <task output>` in the :term:`graph` are either
-:term:`required <required output>` (the default) or  :term:`optional <optional
-output>`.
+:term:`Task outputs <task output>` in the :term:`graph` can be
+:term:`required <required output>` (the default) or
+:term:`optional <optional output>` (marked with ``?`` in the graph).
 
-The scheduler requires all task outputs to be completed at runtime, unless they
-are marked with ``?`` as optional. This allows it to correctly diagnose
+Tasks are expected to complete required outputs at runtime, but
+they don't have to complete optional outputs.
+
+This allows the scheduler to correctly diagnose
 :term:`workflow completion`. [2]_
 
-Tasks that finish without completing required outputs  [3]_ are retained as
-:ref:`incomplete <incomplete tasks>` pending user intervention, e.g. to be
-retriggered after a bug fix.
+Tasks that achieve a :term:`final status` without completing their
+outputs [3]_ are retained in the :term:`n=0 window <n-window>` pending user
+intervention, e.g. to be retriggered after a bug fix.
 
 .. note::
-   Incomplete tasks stall the workflow if there is nothing else to do (see
-   :ref:`workflow completion`). They also count toward the :term:`runahead
-   limit`, because they may run again once dealt with.
+   Tasks that achieve a final status without completing their outputs will
+   raise a warning and stall the workflow when there is nothing else for
+   the scheduler to run (see :ref:`workflow completion`). They also count
+   toward the :term:`runahead limit`.
 
 This graph says task ``bar`` should trigger if ``foo`` succeeds:
 
@@ -1559,8 +1569,9 @@ This graph says task ``bar`` should trigger if ``foo`` succeeds:
    foo => bar  # short for "foo:succeed => bar"
 
 Additionally, ``foo`` is required to succeed, because its success is not marked
-as optional. If ``foo`` does not succeeded, the scheduler will not run ``bar``,
-and ``foo`` will be retained as an incomplete task.
+as optional. If ``foo`` achieves a :term:`final status` without succeeding the
+scheduler will not run ``bar``, and ``foo`` will be retained
+in :term:`n=0 <n-window>` pending user intervention.
 
 Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all required outputs:
 
@@ -1607,8 +1618,9 @@ trigger if ``foo`` succeeds:
 
    foo? => bar  # short for "foo:succeed? => bar"
 
-But now ``foo:succeed`` is optional, so we might expect it to fail sometimes.
-And if it does fail, it will not be marked as an incomplete task.
+But now ``foo:succeed`` is optional so we might expect it to fail sometimes.
+And if it does fail, it will not be retained in the
+:term:`n=0 window <n-window>` as incomplete.
 
 Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all optional outputs:
 
@@ -1660,7 +1672,8 @@ following graph, ``foo`` is required to succeed, but it doesn't matter whether
 .. note::
 
    Optional outputs do not affect *triggering*. They just tell the scheduler
-   what to do with the task if it finishes without completing the output.
+   what to do with the task if it reaches a :term:`final status` without
+   completing the output.
 
    This graph triggers ``bar`` if ``foo`` succeeds, and does not trigger
    ``bar`` if ``foo`` fails:
@@ -1692,16 +1705,12 @@ is optional" and that a non-optional version of the trigger makes sense.
 .. code-block:: cylc-graph
 
    # Good:
-   R1 = """
-      foo:finish => bar
-      foo? => baz
-   """
+   foo:finish => bar
+   foo? => baz
 
    # Error:
-   R1 = """
-      foo:finish => bar
-      foo => baz  # ERROR : foo:succeed must be optional here!
-   """
+   foo:finish => bar
+   foo => baz  # ERROR : foo:succeed must be optional here!
 
 .. _optional outputs.family triggers:
 
@@ -2077,7 +2086,7 @@ E.G. for this example workflow:
         [[graph]]
             P1 = foo
 
-When this workflow starts, the initial cycle point is 1 and the runahad limit
+When this workflow starts, the initial cycle point is 1 and the runahead limit
 is four cycles after this (i.e. cycle 4). So the task ``foo`` will immediately
 submit in cycles 1, 2, 3 and 4, however, the tasks in cycles 5 onwards will
 wait until earlier cycles complete, and the runahead limit advances.

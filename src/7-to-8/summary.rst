@@ -121,14 +121,15 @@ Optional and Required Task Outputs
    * User Guide::ref:`User Guide Optional Outputs`
 
 By default, all Cylc 8 tasks are required to succeed - i.e., success is
-a :term:`required output`. Otherwise they will be marked
-as :term:`incomplete tasks<incomplete task>` needing user intervention.
-In a workflow with incomplete tasks, if there is nothing left to do, the
-scheduler will :term:`stall` rather than shut down.
+a :term:`required output`. Tasks with :term:`final status` and incomplete
+outputs get retained in the :term:`n=0 window <n-window>` pending user
+intervention, which will :term:`stall` the workflow.
 
-Alternatively, task outputs can be marked as :term:`optional <optional output>`.
-This supports :term:`graph branching` and it allows the scheduler to
-correctly diagnose :term:`workflow completion`.
+Alternatively, outputs can be marked as :term:`optional <optional output>`,
+which allows :term:`optional graph branching <graph branching>`.
+
+This allows the scheduler to correctly diagnose :term:`workflow completion`.
+
 
 Platform Awareness
 ------------------

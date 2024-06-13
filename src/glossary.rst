@@ -71,11 +71,13 @@ Glossary
    active
    active task
       An active task is a task which is near ready to run, in the process of
-      running, or which requires user intervention.
+      running, or which requires user intervention. These are all the tasks
+      being actively managed by the scheduler at this point in the run. 
 
       Active tasks are:
 
-      - Tasks which have some, but not all of their prerequisites satisfied.
+      - Tasks which have some, but not all of their
+        :term:`prerequisites <prerequisite>` satisfied.
       - ``waiting`` tasks, that are actively waiting on:
 
         - :term:`xtriggers <xtrigger>`.
@@ -84,9 +86,9 @@ Glossary
 
       - ``preparing`` tasks - i.e. tasks in the process of submitting jobs
       - ``submitted`` and ``running`` tasks - i.e. those with active jobs
-      - :term: `incomplete` tasks which have completed without satisfying all of their
-        :term:`required outputs <required output>`, (e.g. a failed task
-        where success was required).
+      - tasks that reached a :term:`final status` without completing their
+        :term:`required outputs <required output>`
+        (e.g. a task failed where success was required).
 
       Active tasks are in the ``n=0`` :term:`window <n-window>` which means they
       will always be displayed in the GUI and Tui.
@@ -96,7 +98,7 @@ Glossary
 
 
    active cycle
-      A cycle is active if it contains any :term:`active tasks <active task>`.
+      A cycle point is active if it contains any :term:`active tasks <active task>`.
 
       Active cycles are counted towards the :term:`runahead limit`.
 
@@ -104,10 +106,11 @@ Glossary
    window
    n-window
    active window
-   active task pool
-      This is a :term:`graph`-based window or view of the workflow at runtime,
-      including tasks out to ``n`` graph edges from current :term:`active
-      tasks<active task>`. The *active window* is ``n=0``.
+      The GUI provides a :term:`graph`-based window or view of the workflow at
+      runtime, including tasks out to ``n`` graph edges from current
+      :term:`active tasks <active task>`.
+
+      Active tasks form the ``n=0`` window.
 
       .. seealso::
 
@@ -210,8 +213,8 @@ Glossary
    queue
    internal queue
       Internal queues (so called to distinguish them from external batch
-      queueing systems) allow you to limit how many :term:`tasks <task>` can be
-      active (submitted or running) at once, across defined groups of tasks.
+      queueing systems) limit how many :term:`jobs <job>` can be
+      active at once, across defined groups of tasks.
 
       Use queues prevent large or busy workflows from swamping their
       :term:`job platforms <job platform>` with too many jobs at once.
@@ -559,6 +562,23 @@ Glossary
          * :term:`exact datetime unit`
 
 
+   clock expire
+   expired task
+      Tasks in :term:`datetime cycling` workflows can be configured to *expire*
+      if the :term:`wallclock time` exceeds some offset from the cycle point.
+
+      Expired is a :term:`final status` - an expired task will not run
+      even if its :term:`prerequisites <prerequisite>` get satisfied.
+
+      The associated ``:expire`` :term:`output <task output>` can be used to
+      trigger other tasks. It must be marked as an :term:`optional output`,
+      i.e. expiry cannot be :term:`required <required output>`.
+
+      .. seealso::
+
+         * :ref:`Cylc User Guide <ClockExpireTasks>`
+
+
    clock trigger
       Clock triggers connect cycle points to the :term:`wallclock time`, in
       :term:`datetime cycling` workflows. Tasks that depend on a clock trigger
@@ -839,8 +859,8 @@ Glossary
 
 
    job
-      Jobs are real processes that perform :term:`tasks <task>` in a
-      :term:`workflow`. In Cylc, they are implemented by :term:`job scripts
+      Jobs are the real processes that :term:`tasks <task>` represent in
+      a :term:`workflow`. In Cylc, they are implemented by :term:`job scripts
       <job script>` prepared by the :term:`scheduler`.
 
 
@@ -1195,8 +1215,9 @@ Glossary
 
       :ref:`RemoteInit` will be redone for each job platform, when the first job is submitted there after a reload.
 
-      Any :term:`task` that is active at reload will continue with its
-      pre-reload configuration. It's next instance (at the next cycle point)
+      Any :term:`task` that is :term:`active <active task>` at reload
+      will continue with its pre-reload configuration.
+      The next instance of the task (at the next cycle point)
       will adopt the new configuration.
 
       Reloading changes is safe providing they don't affect the
@@ -1346,20 +1367,28 @@ Glossary
          * :ref:`Cylc User Guide <FamilyTriggers>`
 
 
+   final status
+      A task that has achieved a final status (expired, submit-failed,
+      succeeded, or failed) will not change state in the workflow, except by
+      manual intervention.
+
+
    standard output
      Every :term:`task` has a set of standard :term:`outputs <task output>`
      that trigger :term:`task state` changes:
 
+      - ``:expired```
       - ``:submitted``, or ``:submit-failed``
       - ``:started``
       - ``:succeeded``, or ``:failed``
 
 
+   output
    task output
       Task outputs mark the progression of a :term:`task` from waiting (for
-      prerequisites to be satisfied) through to success or failure at run
-      time. Downstream tasks can trigger off of the outputs of other tasks, as
-      determined by the :term:`graph`.
+      :term:`prerequisites <prerequisite>` to be satisfied) through to success
+      or failure at run time. Tasks can trigger off of upstream task outputs in
+      the :term:`graph`.
 
       Outputs are written as ``task-name:output`` in the :term:`graph`, and can
       be :term:`required <required output>` or :term:`optional <optional output>`.
@@ -1381,6 +1410,31 @@ Glossary
          foo => bar  # means foo:succeeded => bar
 
 
+   output completion
+   output completion condition
+      A task's outputs are *complete* if its *output completion condition* 
+      is satisfied.
+
+      The completion condition can be defined by the user in
+      :cylc:conf:`flow.cylc[runtime][<namespace>]completion`,
+      otherwise it is automatically generated according to the rules:
+
+      - All :term:`required outputs <required output>` (referenced in the graph)
+        must be completed.
+      - Or, if success is optional, then the outputs are complete if it fails.
+      - Or, if submission is optional, then the outputs are complete if it
+        submit-fails.
+      - Or, if expiry is optional, then the outputs are complete if it expires.
+
+      Tasks that achieve a :term:`final status` with complete outputs have done
+      their job, allowing the workflow to move on.
+
+      Tasks that achieve a final status with incomplete outputs are retained in
+      :term:`n=0 <n-window>` pending user intervention, and will :term:`stall`
+      the workflow.
+
+
+   prerequisite
    dependence
    dependency
       Dependencies in the :term:`graph` show how :term:`tasks <task>` depend on
@@ -1398,6 +1452,8 @@ Glossary
           * :term:`task trigger`
           * :term:`conditional dependence`
           * :term:`intercycle dependence`
+
+      Tasks can also depend on :term:`external triggers <xtrigger>`.
 
 
    conditional dependence
@@ -1510,36 +1566,24 @@ Glossary
    required output
    expected output
       Task outputs that are not marked as :term:`optional <optional output>`
-      in the :term:`graph` are required to be completed at runtime. If not, the
-      :term:`scheduler` retains the task as :term:`incomplete` pending user
-      intervention.
+      in the :term:`graph` must be completed at runtime. If a task
+      achieves a :term:`final status` without completing its required
+      outputs, the :term:`scheduler` will keep it in the
+      :term:`n=0 window <n-window>` pending user intervention.
 
       .. seealso::
 
          * :ref:`Cylc User Guide <required outputs>`
 
 
-   incomplete
-   incomplete task
-      Incomplete tasks are :term:`tasks <task>` that finish (succeed or fail)
-      without completing all :term:`required outputs <required output>`. They
-      are retained by the :term:`scheduler` in the :term:`n=0 window
-      <n-window>` pending user intervention, and will cause a :term:`stall`
-      if there are no more tasks to run.
-
-      .. seealso::
-
-         * :term:`optional output`
-         * :ref:`Cylc User Guide <incomplete tasks>`
-
-
    stall
    stalled workflow
-   stalled state
-      If there are no more tasks to run according to the :term:`graph`, but
-      :term:`incomplete tasks <incomplete task>` are present, the
-      :term:`scheduler` will stall and stay up for a time instead of
-      shutting down with the workflow :term:`complete <workflow completion>`.
+      A stalled workflow has not run to :term:`completion <workflow completion>`
+      but cannot continue without manual intervention. 
+
+      A stalled scheduler stays alive for a configurable timeout period
+      pending manual intervention. If it shuts down (on the stall timeout
+      or otherwise) it will remain in the stalled state on restart.
 
       Stalls are usually caused by unexpected task failures:
 
@@ -1556,16 +1600,16 @@ Glossary
       run, but ``bar:fail`` was not marked as an :term:`optional output`.
 
       User intervention is required to fix a stall, e.g. by retriggering
-      incomplete tasks after fixing the problems that caused them to fail.
+      tasks after fixing the problems that caused them to fail.
 
 
    suicide trigger
-      Suicide triggers remove :term:`tasks <task>` from the :term:`scheduler's
-      <scheduler>` active (:term:`n=0 <n-window>`) window at runtime.
+      Suicide triggers remove :term:`tasks <task>` from the 
+      :term:`active window <n-window>` at runtime.
 
       They are denoted by exclamation marks, and are triggered like normal
       dependencies. For instance, the following suicide trigger will remove the
-      task ``bar`` from the active window if ``foo`` succeeds:
+      task ``bar`` if ``foo`` succeeds:
 
       .. code-block:: cylc-graph
 
@@ -1649,15 +1693,15 @@ Glossary
 
 
    flow front
-      Active (submitted or running) tasks, i.e. tasks in the ``n=0``
-      :term:`active window`, with a common :term:`flow number` comprise the
-      active front of that flow.
+      :term:`Active tasks <active task>`, i.e. tasks in the
+      :term:`n=0 window <n-window>`, with a common :term:`flow number`
+      comprise the active front of the flow.
 
 
    flow merge
       When a :term:`flow` tries to spawn a child task and finds an instance
       with the same task ID already exists in the ``n=0`` :term:`active
-      window`, the one active task will carry both flow numbers forward.
+      window`, one merged task will carry both flow numbers forward.
 
 
    event
@@ -1695,7 +1739,7 @@ Glossary
    runahead limit
    runahead
       In a :term:`cycling workflow`, the runahead limit determines how far
-      ahead of the oldest :ref:`active cycle point` the workflow is permitted
+      ahead of the oldest :term:`active cycle` the workflow is permitted
       to run.
 
       The "oldest active cycle point" is the first cycle in the workflow to contain
@@ -1709,12 +1753,17 @@ Glossary
 
 
    workflow completion
-      A workflow is deemed complete if there are no more tasks to run,
-      according to the graph, and there are no :term:`incomplete task
-      <incomplete task>` present.
+      A workflow is complete, and the scheduler will automatically
+      :term:`shut down <shutdown>`, if no tasks remain in the
+      :term:`n=0 <n-window>`.
 
-      If the workflow is complete, the scheduler will automatically :term:`shut
-      down <shutdown>`.
+      That is, all active tasks have finished, and no tasks remain waiting on
+      :term:`prerequisites <prerequisite>` or "external" constraints (such as
+      :term:`xtriggers <xtrigger>` or task :term:`hold`).
 
-      If there are no more tasks to run, but there are incomplete tasks
-      present, the scheduler will :term:`stall` rather than shut down.
+      If no active tasks remain and all external constraints are satisfied,
+      but the n=0 window contains tasks waiting with partially satisfied
+      :term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
+      :term:`incomplete outputs <output completion>`, then the workflow is
+      not complete and the scheduler will :term:`stall` pending manual intervention.
+
