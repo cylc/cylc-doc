@@ -1439,8 +1439,6 @@ Glossary
    dependency
       Dependencies in the :term:`graph` show how :term:`tasks <task>` depend on
       some combination of the :term:`outputs <task output>` of other tasks.
-      These dependencies are also called the prerequisites of the downstream.
-      task.
 
       For example, in the following dependency the task ``baz`` depends on both
       ``foo`` and ``bar`` succeeding:
