@@ -166,10 +166,13 @@ this:
 .. code-block:: python
 
    results = {
-       'workflow_id': workflow_id,
-       'task_id': task_id,
-       'task_selector': task_selector,
-       'flow_num': flow_num,
+       'workflow': workflow_id,
+       'task': task_name,
+       'point': cycle_point,
+       'status': task_status,  # or
+	   'trigger': task_output_trigger,  # or
+	   'message': task_output_message,
+       'flow_num': flow_num  # if given
    }
    return (satisfied, results)
 
@@ -189,10 +192,10 @@ To see this, take a look at the job script for one of the downstream tasks:
        # TASK RUNTIME ENVIRONMENT:
        export upstream_workflow upstream_cylc_run_dir upstream_offset \
          upstream_message upstream_status upstream_point upstream_task
-       upstream_workflow_id="up"
-	   upstream_task_id="2011/foo"
-       upstream_selector="succeeded"
-	   upstream_flow_num="1"
+       upstream_workflow="up"
+	   upstream_task="foo"
+	   upstream_point="2011"
+       upstream_status="succeeded"
    }
    ...
 
