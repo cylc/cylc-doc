@@ -110,7 +110,7 @@ Glossary
       runtime, including tasks out to ``n`` graph edges from current
       :term:`active tasks <active task>`.
 
-      Active tasks form the ``n=0``` window.
+      Active tasks form the ``n=0`` window.
 
       .. seealso::
 
