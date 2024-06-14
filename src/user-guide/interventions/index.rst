@@ -482,7 +482,7 @@ Hold The Workflow And Trigger Tasks One By One
 
    Workflow Pause
       When a workflow is :term:`paused <pause>`, no new jobs will be submitted.
-      This gives you an oportunity to make changes to the workflow, however, if
+      This gives you an opportunity to make changes to the workflow, however, if
       you trigger tasks, they will not run until the workflow is resumed.
 
    Task Hold
