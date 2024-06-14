@@ -439,3 +439,52 @@ Terminate a Chain of Automatic Retries
 Use the same intervention as :ref:`interventions.set-task-outputs`,
 but specify the "failed" output rather than
 "succeeded".
+
+
+Hold The Workflow And Trigger Tasks One By One
+----------------------------------------------
+
+:Example:
+   I want to hold back the workflow whilst I manually run one or more tasks
+   to fix a problem or test a task.
+
+:Solution:
+   * Hold all tasks after a specified cycle.
+   * Trigger the task(s) you want to run.
+   * When you're done triggering, release the held tasks to allow the workflow
+     to continue.
+
+.. tab-set::
+
+   .. tab-item:: GUI
+      :sync: gui
+
+      .. image:: set-and-release-hold-point.gif
+         :width: 75%
+
+   .. tab-item:: CLI
+      :sync: cli
+
+      .. code-block:: console
+
+         $ # hold all tasks after the cycle "2000"
+         $ cylc hold --after=2000 <workflow>
+
+         $ # trigger the task(s) you want to run
+         $ cylc trigger <workflow>//<cycle>/<task>
+
+         $ # release the "hold point" to allow the workflow to continue
+         $ cylc release --all <workflow>
+
+.. note::
+
+   The difference between the workflow "paused" state and the task "held" state:
+
+   Workflow Pause
+      When a workflow is :term:`paused <pause>`, no new jobs will be submitted.
+      This gives you an oportunity to make changes to the workflow, however, if
+      you trigger tasks, they will not run until the workflow is resumed.
+
+   Task Hold
+      When a task is :term:`held <hold>`, then it will not submit (if ready to
+      submit) until released.
