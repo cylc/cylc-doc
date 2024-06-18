@@ -212,7 +212,7 @@ For example, you can (and should) now write:
    -     point="20240101",
    -     message="succeeded"
    - )
-   + my_xtrigger = workflow_state('my-workflow//20240101/mytask:succeeded')
+   + my_xtrigger = workflow_state('my-workflow//20240101/mytask:succeeded', is_trigger=True)
 
 .. important::
 
