@@ -216,7 +216,7 @@ For example, you can (and should) now write:
 
 .. important::
 
-   The new workflow state triggers use the trigger either trigger or message in
+   The new workflow state trigger syntax can use either the trigger or message from
    ``trigger=message`` in :cylc:conf:`[runtime][<namespace>][outputs]`.
 
    The trigger and message are the same for the most common use cases (``succeeded`` and ``started``)
