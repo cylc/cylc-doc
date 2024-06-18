@@ -203,7 +203,7 @@ For example, you can (and should) now write:
 
    # On the command line
    - cylc workflow-state my-workflow --point 20240101 --task mytask --message "succeeded"
-   + cylc workflow-state my-workflow//20240101/mytask:succeeded
+   + cylc workflow-state my-workflow//20240101/mytask:succeeded --triggers
 
    # In the flow.cylc file
    - my_xtrigger = workflow_state(
