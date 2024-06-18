@@ -28,7 +28,12 @@ Cylc 8.3
 .. admonition:: Cylc Components
    :class: hint
 
-   TODO
+   :cylc-flow: `8.3 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-ui: `2.5 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.5 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+   :rose: `2.3 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+
 
 Manually setting task outputs and prerequisites
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -175,9 +180,9 @@ Cylc 8.2
 .. admonition:: Cylc Components
    :class: hint
 
-   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
-   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
-   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.2.x/CHANGES.md>`__
+   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
+   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.3.x/CHANGES.md>`__
 
 
 UI now remembers workspace tab layout
