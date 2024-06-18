@@ -216,8 +216,8 @@ For example, you can (and should) now write:
 
 .. important::
 
-   The new workflow state triggers use the trigger rather than the message
-   where ``trigger=message`` in :cylc:conf:`[runtime][<namespace>][outputs]`.
+   The new workflow state triggers use the trigger either trigger or message in
+   ``trigger=message`` in :cylc:conf:`[runtime][<namespace>][outputs]`.
 
    The trigger and message are the same for the most common use cases (``succeeded`` and ``started``)
    but may differ for other outputs, namely :term:`custom outputs <custom output>`.
