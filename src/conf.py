@@ -159,6 +159,7 @@ linkcheck_ignore = [
     'https?://linux.die.net/man/1/bash',
     # linkcheck has trouble handling GH anchors
     'https?://github.com/.*#.*',
+    'https?://matrix.to/.*#.*',
 ]
 
 nitpick_ignore_regex = [
