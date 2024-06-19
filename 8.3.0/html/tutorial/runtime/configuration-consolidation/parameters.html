@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameterized Tasks &mdash; Cylc 8.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=87e54e7c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=641c35a1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Tutorial Summary" href="../summary.html" />
+    <link rel="prev" title="Jinja2" href="jinja2.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../scheduling/index.html">Scheduling</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Runtime</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../runtime-configuration.html">Runtime Configuration</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Consolidating Configuration</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="families.html">Families</a></li>
+<li class="toctree-l4"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Parameterized Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#the-cylc-config-command">The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> Command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#the-three-approaches">The Three Approaches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="index.html#which-approach-to-use">Which Approach To Use</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../summary.html">Tutorial Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../furthertopics/index.html">Further Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Tutorial</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Runtime</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Consolidating Configuration</a></li>
+      <li class="breadcrumb-item active">Parameterized Tasks</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/tutorial/runtime/configuration-consolidation/parameters.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameterized-tasks">
+<span id="tutorial-cylc-parameterization"></span><h1>Parameterized Tasks<a class="headerlink" href="#parameterized-tasks" title="Link to this heading"></a></h1>
+<p>Parameterized tasks (see <a class="reference internal" href="../../../glossary.html#term-parameterization"><span class="xref std std-term">parameterization</span></a>) provide a way of implicitly
+looping over tasks without the need for Jinja2.</p>
+<section id="cylc-parameters">
+<h2>Cylc Parameters<a class="headerlink" href="#cylc-parameters" title="Link to this heading"></a></h2>
+<p>Parameters are defined in their own section, e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+    <span class="nv">world </span><span class="o">=</span><span class="s"> Mercury, Venus, Earth</span>
+</pre></div>
+</div>
+<p>They can then be referenced by writing the name of the parameter in angle
+brackets, e.g:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = start =&gt; hello&lt;world&gt; </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">end</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[hello</span>&lt;<span class="nb">world</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+<p>When the <a class="reference internal" href="../../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is read by Cylc, the parameters will be expanded.
+For example the code above is equivalent to:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">hello_Mercury</span> <span class="o">=&gt;</span> <span class="kd">end</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">hello_Venus</span> <span class="o">=&gt;</span> <span class="kd">end</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">hello_Earth</span> <span class="o">=&gt;</span> <span class="kd">end</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[hello_Mercury]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Hello World!&#39;</span>
+    <span class="nt">[[hello_Venus]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Hello World!&#39;</span>
+    <span class="nt">[[hello_Earth]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Hello World!&#39;</span>
+</pre></div>
+</div>
+<p>We can refer to a specific parameter by writing it after an <code class="docutils literal notranslate"><span class="pre">=</span></code> sign:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello</span>&lt;<span class="nb">world=Earth</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &#39;Greetings Earth!&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h2>
+<p>The name of the parameter is provided to the job as an environment variable
+called <code class="docutils literal notranslate"><span class="pre">CYLC_TASK_PARAM_&lt;parameter&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;parameter&gt;</span></code> is the name of
+the parameter (in the present case <code class="docutils literal notranslate"><span class="pre">world</span></code>):</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello</span>&lt;<span class="nb">world</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;Hello ${CYLC_TASK_PARAM_world}!&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="parameter-types">
+<h2>Parameter Types<a class="headerlink" href="#parameter-types" title="Link to this heading"></a></h2>
+<p>Parameters can be either strings or integers:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+    <span class="nv">foo </span><span class="o">=</span><span class="s"> 1..5</span>
+    <span class="nv">bar </span><span class="o">=</span><span class="s"> 1..5..2</span>
+    <span class="nv">baz </span><span class="o">=</span><span class="s"> pub, qux, bol</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Remember that by default Cylc automatically inserts an underscore between the task and
+the parameter, e.g. the following lines are equivalent:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">task</span>&lt;<span class="nb">baz=pub</span>&gt;
+<span class="kd">task_pub</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>When using integer parameters, to prevent confusion, Cylc prefixes the
+parameter value with the parameter name. For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># task&lt;bar&gt; would result in:</span>
+            <span class="kd">task_bar1</span>
+            <span class="kd">task_bar3</span>
+            <span class="kd">task_bar5</span>
+
+            <span class="c1"># task&lt;baz&gt; would result in:</span>
+            <span class="kd">task_pub</span>
+            <span class="kd">task_qux</span>
+            <span class="kd">task_bol</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Using parameters the <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> configuration could be written like
+so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+   <span class="nt">[[graph]]</span>
+       <span class="nv">T00/PT3H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+           <span class="kd">get_observations</span>&lt;<span class="nb">station</span>&gt; <span class="o">=&gt;</span> <span class="kd">consolidate_observations</span>
+       <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[get_observations</span>&lt;<span class="nb">station</span>&gt;<span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+
+    <span class="nt">[[get_observations</span>&lt;<span class="nb">station=aldergrove</span>&gt;<span class="nt">]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3917</span>
+    <span class="nt">[[get_observations</span>&lt;<span class="nb">station=camborne</span>&gt;<span class="nt">]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3808</span>
+    <span class="nt">[[get_observations</span>&lt;<span class="nb">station=heathrow</span>&gt;<span class="nt">]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+    <span class="nt">[[get_observations</span>&lt;<span class="nb">station=shetland</span>&gt;<span class="nt">]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3005</span>
+</pre></div>
+</div>
+<p>For more information see the <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
+<div class="note admonition" id="cylc-tutorial-parameters-practical">
+<p class="admonition-title">Practical</p>
+<p class="rubric">This practical continues on from the
+<a class="reference internal" href="jinja2.html#cylc-tutorial-jinja2-practical"><span class="std std-ref">Jinja2 practical</span></a>.</p>
+<ol class="arabic" start="4">
+<li><p><strong>Use Parameterization To Consolidate The</strong> <code class="docutils literal notranslate"><span class="pre">get_observations</span></code>
+<strong>Tasks</strong>.</p>
+<p>Next we will parameterize the <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks.</p>
+<p>Add a parameter called <code class="docutils literal notranslate"><span class="pre">station</span></code>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+[task parameters]</span>
+<span class="gi">+    station = aldergrove, camborne, heathrow, shetland</span>
+
+<span class="w"> </span>[scheduler]
+<span class="w"> </span>    UTC mode = True
+</pre></div>
+</div>
+<p>Remove the four <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks and insert the following code
+in their place:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[get_observations</span>&lt;<span class="nb">station</span>&gt;<span class="nt">]]</span>
+    <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> </span><span class="cp">{{ API_KEY }}</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> you should see that Cylc replaces the
+<code class="docutils literal notranslate"><span class="pre">&lt;station&gt;</span></code> with each of the stations in turn, creating a new task for
+each:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>config<span class="w"> </span>.<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;[runtime]&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks are now missing the <code class="docutils literal notranslate"><span class="pre">SITE_ID</span></code>
+environment variable. Add a new section for each station with a
+<code class="docutils literal notranslate"><span class="pre">SITE_ID</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[get_observations</span>&lt;<span class="nb">station=heathrow</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The relevant IDs are:</p>
+<ul class="simple">
+<li><p>Aldergrove - <code class="docutils literal notranslate"><span class="pre">3917</span></code></p></li>
+<li><p>Camborne - <code class="docutils literal notranslate"><span class="pre">3808</span></code></p></li>
+<li><p>Heathrow - <code class="docutils literal notranslate"><span class="pre">3772</span></code></p></li>
+<li><p>Shetland - <code class="docutils literal notranslate"><span class="pre">3005</span></code></p></li>
+</ul>
+</div>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[get_observations</span>&lt;<span class="nb">station=aldergrove</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3917</span>
+<span class="nt">[[get_observations</span>&lt;<span class="nb">station=camborne</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3808</span>
+<span class="nt">[[get_observations</span>&lt;<span class="nb">station=heathrow</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+<span class="nt">[[get_observations</span>&lt;<span class="nb">station=shetland</span>&gt;<span class="nt">]]</span>
+    <span class="nt">[[[environment]]]</span>
+        <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3005</span>
+</pre></div>
+</div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> you should now see four <code class="docutils literal notranslate"><span class="pre">get_observations</span></code>
+tasks, each with a <code class="docutils literal notranslate"><span class="pre">script</span></code>, an <code class="docutils literal notranslate"><span class="pre">API_KEY</span></code> and a <code class="docutils literal notranslate"><span class="pre">SITE_ID</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>config<span class="w"> </span>.<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;[runtime]&quot;</span>
+</pre></div>
+</div>
+<p>Finally we can use this parameterization to simplify the workflow’s
+graphing. Replace the <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> lines in the graph with
+<code class="docutils literal notranslate"><span class="pre">get_observations&lt;station&gt;</span></code>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span># Repeat every three hours starting at the initial cycle point.
+<span class="w"> </span>PT3H = &quot;&quot;&quot;
+<span class="gd">-    get_observations_aldergrove =&gt; consolidate_observations</span>
+<span class="gd">-    get_observations_camborne =&gt; consolidate_observations</span>
+<span class="gd">-    get_observations_heathrow =&gt; consolidate_observations</span>
+<span class="gd">-    get_observations_shetland =&gt; consolidate_observations</span>
+<span class="gi">+    get_observations&lt;station&gt; =&gt; consolidate_observations</span>
+<span class="w"> </span>&quot;&quot;&quot;
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> command does not expand parameters or families
+in the graph so you must use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> to inspect changes to the
+graphing.</p>
+</div>
+</li>
+<li><p><strong>Use Parameterization To Consolidate The</strong> <code class="docutils literal notranslate"><span class="pre">post_process</span></code> <strong>Tasks</strong>.</p>
+<p>At the moment we only have one <code class="docutils literal notranslate"><span class="pre">post_process</span></code> task
+(<code class="docutils literal notranslate"><span class="pre">post_process_exeter</span></code>), but suppose we wanted to add a second task for
+Edinburgh.</p>
+<p>Create a new parameter called <code class="docutils literal notranslate"><span class="pre">site</span></code> and set it to contain <code class="docutils literal notranslate"><span class="pre">exeter</span></code>
+and <code class="docutils literal notranslate"><span class="pre">edinburgh</span></code>. Parameterize the <code class="docutils literal notranslate"><span class="pre">post_process</span></code> task using this
+parameter.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The first argument to the <code class="docutils literal notranslate"><span class="pre">post-process</span></code> task is the name of the
+site. We can use the <code class="docutils literal notranslate"><span class="pre">CYLC_TASK_PARAM_site</span></code> environment variable to
+avoid having to write out this section twice.</p>
+</div>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<p>First we must create the <code class="docutils literal notranslate"><span class="pre">site</span></code> parameter:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduler]
+<span class="w"> </span>    UTC mode = True
+<span class="w"> </span>[task parameters]
+<span class="w"> </span>    station = aldergrove, camborne, heathrow, shetland
+<span class="gi">+        site = exeter, edinburgh</span>
+</pre></div>
+</div>
+<p>Next we parameterize the task in the graph:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-get_rainfall =&gt; forecast =&gt; post_process_exeter</span>
+<span class="gi">+get_rainfall =&gt; forecast =&gt; post_process&lt;site&gt;</span>
+</pre></div>
+</div>
+<p>And also the runtime:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-[[post_process_exeter]]</span>
+<span class="gi">+[[post_process&lt;site&gt;]]</span>
+<span class="w"> </span>    # Generate a forecast for Exeter 60 minutes in the future.
+<span class="gd">-    script = post-process exeter 60</span>
+<span class="gi">+    script = post-process $CYLC_TASK_PARAM_site 60</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jinja2.html" class="btn btn-neutral float-left" title="Jinja2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../summary.html" class="btn btn-neutral float-right" title="Tutorial Summary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/runtime/configuration-consolidation/parameters";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

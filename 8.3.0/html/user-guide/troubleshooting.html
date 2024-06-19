@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting &mdash; Cylc 8.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=641c35a1"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugins" href="../plugins/index.html" />
+    <link rel="prev" title="Inter-Workflow Triggering" href="examples/inter-workflow-triggers/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#log-files">Log Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shell-login-profile-files">Shell Login/Profile Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#problems">Problems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#job-status-isn-t-updating">Job Status Isn’t Updating</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#my-job-submit-failed">My Job Submit-Failed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#my-job-failed">My Job Failed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#my-workflow-shut-down-unexpectedly">My workflow shut down unexpectedly</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-isn-t-my-task-running">Why isn’t my task running?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#required-files-are-not-being-installed-on-remote-platforms">Required files are not being installed on remote platforms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conda-mamba-environment-activation-fails">Conda / Mamba environment activation fails</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#error-messages">Error Messages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#filenotfounderror-no-such-file-or-directory"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platform-name-initialisation-did-not-complete"><code class="docutils literal notranslate"><span class="pre">platform:</span> <span class="pre">&lt;name&gt;</span> <span class="pre">-</span> <span class="pre">initialisation</span> <span class="pre">did</span> <span class="pre">not</span> <span class="pre">complete</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operationalerror-disk-i-o-error"><code class="docutils literal notranslate"><span class="pre">OperationalError:</span> <span class="pre">disk</span> <span class="pre">I/O</span> <span class="pre">error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#socket-gaierror"><code class="docutils literal notranslate"><span class="pre">socket.gaierror</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#failed-xcpu"><code class="docutils literal notranslate"><span class="pre">failed/XCPU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cannot-determine-whether-workflow-is-running-on-host"><code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">determine</span> <span class="pre">whether</span> <span class="pre">workflow</span> <span class="pre">is</span> <span class="pre">running</span> <span class="pre">on</span> <span class="pre">&lt;host&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting">
+<span id="id1"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#log-files" id="id2">Log Files</a></p></li>
+<li><p><a class="reference internal" href="#shell-login-profile-files" id="id3">Shell Login/Profile Files</a></p></li>
+<li><p><a class="reference internal" href="#problems" id="id4">Problems</a></p>
+<ul>
+<li><p><a class="reference internal" href="#job-status-isn-t-updating" id="id5">Job Status Isn’t Updating</a></p></li>
+<li><p><a class="reference internal" href="#my-job-submit-failed" id="id6">My Job Submit-Failed</a></p></li>
+<li><p><a class="reference internal" href="#my-job-failed" id="id7">My Job Failed</a></p></li>
+<li><p><a class="reference internal" href="#my-workflow-shut-down-unexpectedly" id="id8">My workflow shut down unexpectedly</a></p></li>
+<li><p><a class="reference internal" href="#why-isn-t-my-task-running" id="id9">Why isn’t my task running?</a></p></li>
+<li><p><a class="reference internal" href="#required-files-are-not-being-installed-on-remote-platforms" id="id10">Required files are not being installed on remote platforms</a></p></li>
+<li><p><a class="reference internal" href="#conda-mamba-environment-activation-fails" id="id11">Conda / Mamba environment activation fails</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#error-messages" id="id12">Error Messages</a></p>
+<ul>
+<li><p><a class="reference internal" href="#filenotfounderror-no-such-file-or-directory" id="id13"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code></a></p></li>
+<li><p><a class="reference internal" href="#platform-name-initialisation-did-not-complete" id="id14"><code class="docutils literal notranslate"><span class="pre">platform:</span> <span class="pre">&lt;name&gt;</span> <span class="pre">-</span> <span class="pre">initialisation</span> <span class="pre">did</span> <span class="pre">not</span> <span class="pre">complete</span></code></a></p></li>
+<li><p><a class="reference internal" href="#operationalerror-disk-i-o-error" id="id15"><code class="docutils literal notranslate"><span class="pre">OperationalError:</span> <span class="pre">disk</span> <span class="pre">I/O</span> <span class="pre">error</span></code></a></p></li>
+<li><p><a class="reference internal" href="#socket-gaierror" id="id16"><code class="docutils literal notranslate"><span class="pre">socket.gaierror</span></code></a></p></li>
+<li><p><a class="reference internal" href="#failed-xcpu" id="id17"><code class="docutils literal notranslate"><span class="pre">failed/XCPU</span></code></a></p></li>
+<li><p><a class="reference internal" href="#cannot-determine-whether-workflow-is-running-on-host" id="id18"><code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">determine</span> <span class="pre">whether</span> <span class="pre">workflow</span> <span class="pre">is</span> <span class="pre">running</span> <span class="pre">on</span> <span class="pre">&lt;host&gt;</span></code></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#getting-help" id="id19">Getting Help</a></p></li>
+</ul>
+</nav>
+<section id="log-files">
+<span id="troubleshooting-log-files"></span><h2>Log Files<a class="headerlink" href="#log-files" title="Link to this heading"></a></h2>
+<p>If things have gone wrong and you’re not sure why, there are few files which
+you’ll find in the workflow’s <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> that should contain the
+required information to work out what’s going on:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">log/scheduler/log</span></code></dt><dd><p>There’s a log file for each workflow in
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/&lt;workflow&gt;/log/scheduler/log</span></code>.</p>
+<p>This records all the essential information including every job submission
+and task state change.</p>
+<p>You can view this in the GUI, Tui or on the command line using
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span> <span class="pre">&lt;workflow&gt;</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job.err</span></code></dt><dd><p>This contains the stderr captured when the job ran. It’s useful for
+debugging job failures.</p>
+<p>You can view this in the GUI, Tui or on the command line using
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span> <span class="pre">&lt;workflow&gt;//&lt;cycle&gt;/&lt;task&gt;/&lt;job&gt;</span> <span class="pre">-f</span> <span class="pre">e</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job-activity.log</span></code></dt><dd><p>This file records the interaction Cylc has had with a job, namely submission
+and polling. This can be useful in determining the cause of job submission
+failures.</p>
+<p>You can view this in the GUI, Tui or on the command line using
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span> <span class="pre">&lt;workflow&gt;//&lt;cycle&gt;/&lt;task&gt;/&lt;job&gt;</span> <span class="pre">-f</span> <span class="pre">a</span></code>.</p>
+</dd>
+</dl>
+<p>Additionally, these directories contain extra information which can be useful
+for debugging some specific issues:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">log/install/</span></code></dt><dd><p>Contains logging from local workflow installation (e.g.``cylc install``).</p>
+<p>This can be useful for inspecting Rose file installation.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">log/remote-install/</span></code></dt><dd><p>Records information about file installation on remote platforms
+(see <a class="reference internal" href="running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">Remote Initialization</span></a>).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">log/config/</span></code></dt><dd><p>Records the workflow configuration (and the Rose suite configuration if one
+is used).</p>
+<p>These files can allow you to see how the configuration was changed between
+restarts and reloads.</p>
+</dd>
+</dl>
+</section>
+<section id="shell-login-profile-files">
+<h2>Shell Login/Profile Files<a class="headerlink" href="#shell-login-profile-files" title="Link to this heading"></a></h2>
+<p>Cylc runs many commands using
+<a class="reference external" href="https://linuxhandbook.com/login-shell/">Bash login shells</a>.</p>
+<p>This allows you to configure aspects of Cylc’s behaviour using login files
+such as <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> and <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>.</p>
+<p>However, it also means that the contents of these files can interfere with
+Cylc (and potentially other systems too).</p>
+<p>If you have things in your login files which are only intended for use in
+interactive terminal sessions, wrap them inside an <code class="docutils literal notranslate"><span class="pre">if</span></code> block so they only
+run for interactive sessions like so:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$-</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*i*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">   </span><span class="c1"># only run this for interactive (terminal) sessions</span>
+<span class="w">   </span><span class="c1"># (and not for non-interactive login sessions)</span>
+<span class="w">   </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Hello </span><span class="nv">$USER</span><span class="s2">&quot;</span>
+<span class="w">   </span><span class="nb">alias</span><span class="w"> </span><span class="nv">rsync</span><span class="o">=</span><span class="s1">&#39;rsync -v&#39;</span>
+<span class="w">   </span>conda<span class="w"> </span>activate<span class="w"> </span>my_env
+<span class="w">   </span><span class="nb">export</span><span class="w"> </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;\$ </span><span class="k">$(</span>tput<span class="w"> </span>bold<span class="k">)</span><span class="s2">[</span><span class="nv">$PREFIX</span><span class="s2">]</span><span class="k">$(</span>tput<span class="w"> </span>sgr<span class="w"> </span><span class="m">0</span><span class="k">)</span><span class="s2"> &quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># this runs for all sessions including non-interactive login sessions</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MY_LIB_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/my-lib/1.0/&quot;</span>
+</pre></div>
+</div>
+<p>Some things to check your login files for:</p>
+<ul class="simple">
+<li><p>Don’t write to stdout (e.g. using <code class="docutils literal notranslate"><span class="pre">echo</span></code> or <code class="docutils literal notranslate"><span class="pre">printf</span></code>), this can interfere
+with command output.</p></li>
+<li><p>Avoid loading modules or environments by default, you can create short cuts
+for loading these using functions, aliases or commands.</p></li>
+<li><p>Don’t add non-existent directories into your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>, this can cause
+commands to hang.</p></li>
+<li><p>Always prepend or append to <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>, never overwrite it.</p></li>
+<li><p>Don’t override (i.e. clobber) standard commands with aliases, functions,
+scripts or the like. This can prevent tools from being able to access the
+original command.</p></li>
+</ul>
+</section>
+<section id="problems">
+<h2>Problems<a class="headerlink" href="#problems" title="Link to this heading"></a></h2>
+<section id="job-status-isn-t-updating">
+<h3>Job Status Isn’t Updating<a class="headerlink" href="#job-status-isn-t-updating" title="Link to this heading"></a></h3>
+<p>Cylc keeps track of a job’s progress in one of two ways (according to how
+the platform the job was submitted to is configured):</p>
+<ul class="simple">
+<li><p>Jobs send messages to the scheduler (push).</p></li>
+<li><p>The scheduler polls jobs (pull).</p></li>
+</ul>
+<p>In either case, the job will also write its updates to the <code class="docutils literal notranslate"><span class="pre">job.status</span></code> file.</p>
+<p>This is what the <code class="docutils literal notranslate"><span class="pre">job.status</span></code> file should look like for a successful job,
+note the <code class="docutils literal notranslate"><span class="pre">SUCCEEDED</span></code> line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CYLC_JOB_RUNNER_NAME</span><span class="o">=</span><span class="n">background</span>
+<span class="n">CYLC_JOB_ID</span><span class="o">=</span><span class="mi">12345</span>
+<span class="n">CYLC_JOB_RUNNER_SUBMIT_TIME</span><span class="o">=</span><span class="mi">2000</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">CYLC_JOB_PID</span><span class="o">=</span><span class="mi">108179</span>
+<span class="n">CYLC_JOB_INIT_TIME</span><span class="o">=</span><span class="mi">2000</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T00</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">CYLC_JOB_EXIT</span><span class="o">=</span><span class="n">SUCCEEDED</span>
+<span class="n">CYLC_JOB_EXIT_TIME</span><span class="o">=</span><span class="mi">2000</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T01</span><span class="p">:</span><span class="mi">30</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">job.status</span></code> file is showing something different to what the GUI or
+Tui is showing, then…</p>
+<p class="rubric">If your platform uses push communication:</p>
+<p>If messages aren’t getting back to the scheduler, there should be some
+evidence of this in the <code class="docutils literal notranslate"><span class="pre">job.err</span></code> file, likely either an error or a
+traceback. Likely causes:</p>
+<ul class="simple">
+<li><p>There is a network issue.</p></li>
+<li><p>TCP ports are not open (zmq communications).</p></li>
+<li><p>Non-interactive SSH has not been correctly configured (ssh communications).</p></li>
+</ul>
+<p class="rubric">If your platform uses pull communication:</p>
+<p>Firstly, check the polling interval, it’s possible that the scheduler has been
+configured to poll infrequently and you need to wait for the next poll, or
+request a poll manually using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">poll</span></code> command (also available in the
+GUI &amp; Tui).</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code> command to inspect the platform’s configuration to
+determine the configured polling schedule.</p>
+<p>Then check the <code class="docutils literal notranslate"><span class="pre">job-activity.log</span></code> file, there may have been a problem polling
+the remote platform, e.g. a network or configuration error.</p>
+<p>Likely causes:</p>
+<ul class="simple">
+<li><p>The platform is down (e.g. all login nodes are offline).</p></li>
+<li><p>There is a network issue.</p></li>
+<li><p>Non-interactive SSH has not been correctly configured.</p></li>
+</ul>
+</section>
+<section id="my-job-submit-failed">
+<h3>My Job Submit-Failed<a class="headerlink" href="#my-job-submit-failed" title="Link to this heading"></a></h3>
+<p>A submit-failed job means one of three things:</p>
+<ol class="arabic">
+<li><p>There is a Bash syntax error in the task configuration.</p>
+<p>E.G. the following <code class="docutils literal notranslate"><span class="pre">script</span></code> has a syntax error, it is missing a
+<code class="docutils literal notranslate"><span class="pre">&quot;</span></code> character after <code class="docutils literal notranslate"><span class="pre">$WORLD</span></code>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            echo &quot;Hello $WORLD</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>This will result in a submission-failure which should appear in the
+<code class="docutils literal notranslate"><span class="pre">job-activity.log</span></code> file (and also the scheduler log) something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[jobs-submit cmd] (prepare job file)
+[jobs-submit ret_code] 1
+[jobs-submit err]
+/path/to/job.tmp: line 46: unexpected EOF while looking for matching `&quot;&#39;
+/path/to/job.tmp: line 50: syntax error: unexpected end of file
+</pre></div>
+</div>
+</li>
+<li><p>There was an error submitting the job to the specified platform (including
+network issues).</p>
+<p>See the <code class="docutils literal notranslate"><span class="pre">job-activity.log</span></code> and the scheduler log. Diagnostic information
+should be in one or both of those files.</p>
+</li>
+<li><p>The platform is not correctly configured.</p>
+<p>See also <a class="reference internal" href="#troubleshooting-remote-init-did-not-complete"><span class="std std-ref">platform: &lt;name&gt; - initialisation did not complete</span></a>.</p>
+</li>
+</ol>
+</section>
+<section id="my-job-failed">
+<span id="troubleshooting-my-job-failed"></span><h3>My Job Failed<a class="headerlink" href="#my-job-failed" title="Link to this heading"></a></h3>
+<p>This means something went wrong executing the job.
+To find out more, see the <code class="docutils literal notranslate"><span class="pre">job.err</span></code> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To ensure Cylc jobs fail when they are supposed to, Cylc configures Bash
+to be a bit stricter than it is by default by running <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-euo</span> <span class="pre">pipefail</span></code>.</p>
+<p>This only applies to scripts you’ve configured in the Cylc script
+settings (i.e. <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]script" title="flow.cylc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a>, <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]pre-script" title="flow.cylc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a>, <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]post-script" title="flow.cylc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a>, etc), not to any
+Bash scripts to call <em>from</em> the job script.</p>
+</div>
+<p>If you’re struggling to track down the error, you might want to put the
+workflow into debug mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">verbosity</span> <span class="n">DEBUG</span> <span class="o">&lt;</span><span class="n">workflow</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>When a workflow is running in debug mode, all jobs will create a <code class="docutils literal notranslate"><span class="pre">job.xtrace</span></code>
+file when run in addition to <code class="docutils literal notranslate"><span class="pre">job.err</span></code>. This can help you to locate the error
+within the job script.</p>
+<p>You can also start workflows in debug mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">play</span> <span class="o">--</span><span class="n">debug</span> <span class="o">&lt;</span><span class="n">workflow</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="my-workflow-shut-down-unexpectedly">
+<h3>My workflow shut down unexpectedly<a class="headerlink" href="#my-workflow-shut-down-unexpectedly" title="Link to this heading"></a></h3>
+<p>When a Cylc scheduler shuts down, it should leave behind a log message explaining why.</p>
+<p>E.G. this message means that a workflow shut down because it was told to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Workflow</span> <span class="n">shutting</span> <span class="n">down</span> <span class="o">-</span> <span class="n">REQUEST</span><span class="p">(</span><span class="n">CLEAN</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a workflow shut down due to a critical problem, you should find some
+traceback in this log. If this traceback doesn’t look like it comes from your
+system, please report it to the Cylc developers for investigation (on
+GitHub or Discourse).</p>
+<p>In some extreme cases, Cylc might not be able to write a log message e.g:</p>
+<ul class="simple">
+<li><p>There’s not enough disk space for Cylc to write a log message.</p></li>
+<li><p>If the scheduler was killed in a nasty way e.g. <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-9</span></code>.</p></li>
+<li><p>If the scheduler host goes down (e.g. power off).</p></li>
+</ul>
+<p>If the issue is external to the workflow, once the issue is resolved it should
+be possible to restart it as you would normally using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>. Cylc
+will pick up where it left off.</p>
+</section>
+<section id="why-isn-t-my-task-running">
+<h3>Why isn’t my task running?<a class="headerlink" href="#why-isn-t-my-task-running" title="Link to this heading"></a></h3>
+<p>To find out why a task is not being run, use the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code> command.
+This will list the task’s prerequisites and xtriggers.</p>
+<p>Note, at present <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">show</span></code> can only display
+<a class="reference internal" href="../glossary.html#term-active-task"><span class="xref std std-term">active tasks</span></a>. Waiting tasks beyond the
+<a class="reference internal" href="../glossary.html#term-n-window"><span class="xref std std-term">n=0 window</span></a> have no satisfied prerequisites.</p>
+<p>Note, tasks which are held <a class="reference internal" href="../_images/task-isHeld.png"><img alt="task-held" class="align-middle" src="../_images/task-isHeld.png" style="height: 18px;" /></a> will not be run, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code>
+to release a held task.</p>
+<p>Note, Cylc will not submit jobs if the scheduler is paused, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>
+to resume a paused workflow.</p>
+</section>
+<section id="required-files-are-not-being-installed-on-remote-platforms">
+<h3>Required files are not being installed on remote platforms<a class="headerlink" href="#required-files-are-not-being-installed-on-remote-platforms" title="Link to this heading"></a></h3>
+<p>Cylc installs selected workflow files onto remote platforms when the first task
+submits to it.</p>
+<p>See <a class="reference internal" href="running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">Remote Initialization</span></a> for the list of directories installed and how to
+configure them.</p>
+<p>If something has gone wrong during installation, an error should have been
+logged a file in this directory:
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/log/remote-install/</span></code>.</p>
+<p>If you need to access files from a remote platform (e.g. 2-stage <code class="docutils literal notranslate"><span class="pre">fcm_make</span></code>),
+ensure that a task has submitted to it before you do so. If needed you can use
+a blank “dummy” task to ensure that remote installation is completed <em>before</em>
+you run any tasks which require this e.g:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">dummy</span> <span class="o">=&gt;</span> <span class="kd">fetch_files</span>
+</pre></div>
+</div>
+</section>
+<section id="conda-mamba-environment-activation-fails">
+<h3>Conda / Mamba environment activation fails<a class="headerlink" href="#conda-mamba-environment-activation-fails" title="Link to this heading"></a></h3>
+<p>Some Conda packages rely on activation scripts which are run when you call the
+activate command.</p>
+<p>Unfortunately, some of these scripts don’t defend against command failure or
+unset environment variables causing them to fail when configured in Cylc
+<code class="docutils literal notranslate"><span class="pre">*script</span></code> (see also <a class="reference internal" href="#troubleshooting-my-job-failed"><span class="std std-ref">My Job Failed</span></a> for details).</p>
+<p>To avoid this, run <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">+eu</span></code> before activating your environment. This turns
+off some Bash safety features, allowing environment activation to complete.
+Remember to run <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-eu</span></code> afterwards to turn these features back on.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[my_task]]</span>
+         <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            set +eu</span>
+<span class="s2">            conda activate &lt;my_environment&gt;</span>
+<span class="s2">            set -eu</span>
+
+<span class="s2">            do-something</span>
+<span class="s2">            do-something-else</span>
+<span class="s2">         &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-messages">
+<h2>Error Messages<a class="headerlink" href="#error-messages" title="Link to this heading"></a></h2>
+<p>Cylc should normally present you with a simple, short error message when things
+go wrong.</p>
+<p>To see the full traceback, run the command / workflow in debug mode, e.g. using
+the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option.</p>
+<p>If you are presented with traceback when you are <em>not</em> running in debug mode,
+then this is not an expected error, please report the traceback to us.</p>
+<section id="filenotfounderror-no-such-file-or-directory">
+<h3><code class="docutils literal notranslate"><span class="pre">FileNotFoundError:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code><a class="headerlink" href="#filenotfounderror-no-such-file-or-directory" title="Link to this heading"></a></h3>
+<p>This is the error message Python gives when you try to call an executable which
+does not exist in the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>. It means there’s something wrong with the Cylc
+installation, or something missing from the environment or system in which Cylc has been installed.</p>
+<p>E.G. the following error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">FileNotFoundError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">2</span><span class="p">]</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">:</span> <span class="s1">&#39;ssh&#39;</span>
+</pre></div>
+</div>
+<p>Means that <code class="docutils literal notranslate"><span class="pre">ssh</span></code> is not installed or not in your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p>
+<p>See <a class="reference internal" href="../installation.html#non-python-requirements"><span class="std std-ref">Non-Python Requirements</span></a> for details on system requirements.</p>
+</section>
+<section id="platform-name-initialisation-did-not-complete">
+<span id="troubleshooting-remote-init-did-not-complete"></span><h3><code class="docutils literal notranslate"><span class="pre">platform:</span> <span class="pre">&lt;name&gt;</span> <span class="pre">-</span> <span class="pre">initialisation</span> <span class="pre">did</span> <span class="pre">not</span> <span class="pre">complete</span></code><a class="headerlink" href="#platform-name-initialisation-did-not-complete" title="Link to this heading"></a></h3>
+<p>This means that Cylc was unable to install the required workflow files onto
+a remote platform.</p>
+<p>This either means that:</p>
+<ol class="arabic simple">
+<li><p>The platform is down (e.g. all login nodes are offline).</p></li>
+<li><p>Or, there is a network problem (e.g. you cannot connect to the login nodes).</p></li>
+<li><p>Or, the platform is not correctly configured.</p></li>
+</ol>
+<p>Check the scheduler log, you might find some stderr associated with this
+message.</p>
+<p>If your site has configured this platform for you, it’s probably (1) or (2),
+check you are able to access the platform and notify the site administrator as
+appropriate.</p>
+<p>If you are in the progress of setting up a new platform, it’s probably (3).
+You might want to check that you’ve configured the
+<a class="reference internal" href="../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]install target" title="global.cylc[platforms][&lt;platform name&gt;]install target"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]install</span> <span class="pre">target</span></code></a> correctly,
+note that this defaults to the platform name if not explicitly set.</p>
+</section>
+<section id="operationalerror-disk-i-o-error">
+<h3><code class="docutils literal notranslate"><span class="pre">OperationalError:</span> <span class="pre">disk</span> <span class="pre">I/O</span> <span class="pre">error</span></code><a class="headerlink" href="#operationalerror-disk-i-o-error" title="Link to this heading"></a></h3>
+<p>This means that Cylc was unable to write to the database.</p>
+<p>This error usually occurs if when you have exceeded your filesystem quota.</p>
+<p>If a Cylc scheduler cannot write to the filesystem, it will shut down. Once
+you’ve cleared out enough space for the workflow to continue you should be able
+to safely restart it as you would normally using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>. The workflow
+will continue from where it left off.</p>
+</section>
+<section id="socket-gaierror">
+<h3><code class="docutils literal notranslate"><span class="pre">socket.gaierror</span></code><a class="headerlink" href="#socket-gaierror" title="Link to this heading"></a></h3>
+<p>This usually means that a host could not be found on the network. The likely
+cause is DNS configuration.</p>
+<p>Cylc is a distributed system so needs to be able to identify the hosts it has
+been configured to use (e.g. the servers where you run Cylc workflows or any
+login nodes you submit jobs to).
+Cylc expects each host to have a unique and stable fully qualified domain name
+(FQDN) and to be identifiable from other hosts on the network using this name.</p>
+<p>I.e., If a host identifies itself with an FQDN, then we should be able to look it
+from another host by this FQDN. If we can’t, then Cylc can’t tell which host is
+which and will not be able to function properly.</p>
+<p>If the FQDN of a host is reported differently from different hosts on the
+network, then Cylc commands will likely fail. To fix the issue, ensure that the
+DNS setup is consistent.</p>
+<p>Sometimes we do not have control over the platforms we use and it is not
+possible to compel system administrators to address these issues. If this is
+the case, you can fall back to IP address based host identification which may
+work (i.e. use IP addresses rather than host names, which makes logs less human
+readable). As a last resort you can also hard-code the host name for each host.</p>
+<p>For more information, see
+<a class="reference internal" href="../reference/config/global.html#global.cylc[scheduler][host self-identification]" title="global.cylc[scheduler][host self-identification]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][host</span> <span class="pre">self-identification]</span></code></a>.</p>
+</section>
+<section id="failed-xcpu">
+<h3><code class="docutils literal notranslate"><span class="pre">failed/XCPU</span></code><a class="headerlink" href="#failed-xcpu" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">XCPU</span></code> is the signal that most batch systems will use when a job hits its
+execution time limit.</p>
+<p>Use <a class="reference internal" href="../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> to
+increase this limit.</p>
+</section>
+<section id="cannot-determine-whether-workflow-is-running-on-host">
+<h3><code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">determine</span> <span class="pre">whether</span> <span class="pre">workflow</span> <span class="pre">is</span> <span class="pre">running</span> <span class="pre">on</span> <span class="pre">&lt;host&gt;</span></code><a class="headerlink" href="#cannot-determine-whether-workflow-is-running-on-host" title="Link to this heading"></a></h3>
+<p>When Cylc runs a workflow, it creates a <a class="reference internal" href="../glossary.html#term-contact-file"><span class="xref std std-term">contact file</span></a> which tells us on
+which host and port it can be contacted.</p>
+<p>If the scheduler cannot be contacted, Cylc will attempt to check whether the
+process is still running to ensure it hasn’t crashed.</p>
+<p>If you are seeing this error message, it means that Cylc was unable to
+determine whether the workflow is running. Likely cause:</p>
+<ul class="simple">
+<li><p>SSH issues.</p></li>
+<li><p>Network issues.</p></li>
+<li><p>Cylc server is down.</p></li>
+</ul>
+<p>It’s possible that this check might not work correctly in some containerised
+environments. If you encounter this issue in combination with containers,
+please let us know.</p>
+</section>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading"></a></h2>
+<p>If your site has deployed and configured Cylc for you and your issue appears
+related to the platforms you are using or the Cylc setup, please contact your
+site’s administrator.</p>
+<p>For general Cylc issues, create a post on the Cylc <a class="reference external" href="https://cylc.discourse.group/">Discourse</a> forum.
+Please include any relevant error messages, workflow configuration and sections
+of logs to help us debug your issue.</p>
+<p>For Cylc / plugin development issues, you might prefer to contact us on the
+<a class="reference external" href="https://matrix.to/#/#cylc-general:matrix.org">developer’s chat</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/inter-workflow-triggers/index.html" class="btn btn-neutral float-left" title="Inter-Workflow Triggering" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../plugins/index.html" class="btn btn-neutral float-right" title="Plugins" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/troubleshooting";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

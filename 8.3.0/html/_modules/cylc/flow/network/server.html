@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.network.server &mdash; Cylc 8.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=87e54e7c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=641c35a1"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.network.server</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.network.server</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;Server for workflow runtime API.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+<span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">graphql.execution.executors.asyncio</span> <span class="kn">import</span> <span class="n">AsyncioExecutor</span>
+<span class="kn">import</span> <span class="nn">zmq</span>
+<span class="kn">from</span> <span class="nn">zmq.auth.thread</span> <span class="kn">import</span> <span class="n">ThreadAuthenticator</span>
+
+<span class="kn">from</span> <span class="nn">cylc.flow</span> <span class="kn">import</span> <span class="n">LOG</span><span class="p">,</span> <span class="n">workflow_files</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.cfgspec.glbl_cfg</span> <span class="kn">import</span> <span class="n">glbl_cfg</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.authorisation</span> <span class="kn">import</span> <span class="n">authorise</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.graphql</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CylcGraphQLBackend</span><span class="p">,</span> <span class="n">IgnoreFieldMiddleware</span><span class="p">,</span> <span class="n">instantiate_middleware</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.publisher</span> <span class="kn">import</span> <span class="n">WorkflowPublisher</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.replier</span> <span class="kn">import</span> <span class="n">WorkflowReplier</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.resolvers</span> <span class="kn">import</span> <span class="n">Resolvers</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.network.schema</span> <span class="kn">import</span> <span class="n">schema</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.data_store_mgr</span> <span class="kn">import</span> <span class="n">DELTAS_MAP</span>
+<span class="kn">from</span> <span class="nn">cylc.flow.data_messages_pb2</span> <span class="kn">import</span> <span class="n">PbEntireWorkflow</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cylc.flow.scheduler</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+    <span class="kn">from</span> <span class="nn">graphql.execution</span> <span class="kn">import</span> <span class="n">ExecutionResult</span>
+
+
+<span class="c1"># maps server methods to the protobuf message (for client/UIS import)</span>
+<span class="n">PB_METHOD_MAP</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;pb_entire_workflow&#39;</span><span class="p">:</span> <span class="n">PbEntireWorkflow</span><span class="p">,</span>
+    <span class="s1">&#39;pb_data_elements&#39;</span><span class="p">:</span> <span class="n">DELTAS_MAP</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">expose</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Expose a method on the sever.&quot;&quot;&quot;</span>
+    <span class="n">func</span><span class="o">.</span><span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">func</span>
+
+
+<span class="k">def</span> <span class="nf">filter_none</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out `None` items from a dictionary:</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; filter_none({</span>
+<span class="sd">        ...     &#39;a&#39;: 0,</span>
+<span class="sd">        ...     &#39;b&#39;: &#39;&#39;,</span>
+<span class="sd">        ...     &#39;c&#39;: None</span>
+<span class="sd">        ... })</span>
+<span class="sd">        {&#39;a&#39;: 0, &#39;b&#39;: &#39;&#39;}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">key</span><span class="p">:</span> <span class="n">value</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">}</span>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer">[docs]</a>
+<span class="k">class</span> <span class="nc">WorkflowRuntimeServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Workflow runtime service API facade exposed via zmq.</span>
+
+<span class="sd">    This class starts and coordinates the publisher and replier, and</span>
+<span class="sd">    contains the Cylc endpoints invoked by the receiver to provide a response</span>
+<span class="sd">    to incoming messages.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        schd (object): The parent object instantiating the server. In</span>
+<span class="sd">            this case, the workflow scheduler.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        * Define endpoints using the ``expose`` decorator.</span>
+<span class="sd">        * Endpoints are called via the receiver using the function name.</span>
+
+<span class="sd">    Message interface:</span>
+<span class="sd">        * Accepts messages of the format: {&quot;command&quot;: CMD, &quot;args&quot;: {...}}</span>
+<span class="sd">        * Returns responses of the format: {&quot;data&quot;: {...}}</span>
+<span class="sd">        * Returns error in the format: {&quot;error&quot;: {&quot;message&quot;: MSG}}</span>
+
+<span class="sd">    Common Arguments:</span>
+<span class="sd">        Arguments which are shared between multiple commands.</span>
+
+<span class="sd">        task identifier (str):</span>
+<span class="sd">            A task identifier in the format ``cycle-point/task-name``</span>
+<span class="sd">            e.g. ``1/foo`` or ``20000101T0000Z/bar``.</span>
+
+<span class="sd">        .. _task globs:</span>
+
+<span class="sd">        task globs (list):</span>
+<span class="sd">            A list of Cylc IDs relative to the workflow.</span>
+
+<span class="sd">            * ``1`` - The cycle point &quot;1&quot;.</span>
+<span class="sd">            * ``1/foo`` - The task &quot;foo&quot; in the cycle &quot;1&quot;.</span>
+<span class="sd">            * ``1/foo/01`` - The first job of the task &quot;foo&quot; from the cycle</span>
+<span class="sd">              &quot;1&quot;.</span>
+
+<span class="sd">            Glob-like patterns may be used to match multiple items e.g.</span>
+
+<span class="sd">            ``*``</span>
+<span class="sd">               Matches everything.</span>
+<span class="sd">            ``1/*``</span>
+<span class="sd">               Matches everything in cycle ``1``.</span>
+<span class="sd">            ``*/*:failed``</span>
+<span class="sd">               Matches all failed tasks.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">endpoints</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span>
+
+    <span class="n">OPERATE_SLEEP_INTERVAL</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">STOP_SLEEP_INTERVAL</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schd</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmq_context</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub_port</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replier</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_pub_key_dir</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="p">:</span> <span class="s1">&#39;Scheduler&#39;</span> <span class="o">=</span> <span class="n">schd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span> <span class="o">=</span> <span class="n">Resolvers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="p">,</span>
+            <span class="n">schd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">schd</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">middleware</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">IgnoreFieldMiddleware</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_queue</span><span class="p">:</span> <span class="s1">&#39;Queue[Iterable[tuple]]&#39;</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waiting_to_stop</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_endpoints</span><span class="p">()</span>
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.start">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.start">[docs]</a>
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barrier</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start the TCP servers.&quot;&quot;&quot;</span>
+        <span class="c1"># set asyncio loop on thread</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">set_event_loop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">)</span>
+
+        <span class="c1"># TODO: this in zmq asyncio context?</span>
+        <span class="c1"># Requires the scheduler main loop in asyncio first</span>
+        <span class="c1"># And use of concurrent.futures.ThreadPoolExecutor?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zmq_context</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+        <span class="c1"># create an authenticator for the ZMQ context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span> <span class="o">=</span> <span class="n">ThreadAuthenticator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zmq_context</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="n">LOG</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># start the authentication thread</span>
+
+        <span class="c1"># Setting the location means that the CurveZMQ auth will only</span>
+        <span class="c1"># accept public client certificates from the given directory, as</span>
+        <span class="c1"># generated by a user when they initiate a ZMQ socket ready to</span>
+        <span class="c1"># connect to a server.</span>
+        <span class="n">workflow_srv_dir</span> <span class="o">=</span> <span class="n">workflow_files</span><span class="o">.</span><span class="n">get_workflow_srv_dir</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
+        <span class="n">client_pub_keyinfo</span> <span class="o">=</span> <span class="n">workflow_files</span><span class="o">.</span><span class="n">KeyInfo</span><span class="p">(</span>
+            <span class="n">workflow_files</span><span class="o">.</span><span class="n">KeyType</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">,</span>
+            <span class="n">workflow_files</span><span class="o">.</span><span class="n">KeyOwner</span><span class="o">.</span><span class="n">CLIENT</span><span class="p">,</span>
+            <span class="n">workflow_srv_dir</span><span class="o">=</span><span class="n">workflow_srv_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_pub_key_dir</span> <span class="o">=</span> <span class="n">client_pub_keyinfo</span><span class="o">.</span><span class="n">key_path</span>
+
+        <span class="c1"># Initial load for the localhost key.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span><span class="o">.</span><span class="n">configure_curve</span><span class="p">(</span>
+            <span class="n">domain</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span>
+            <span class="n">location</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_pub_key_dir</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="o">=</span> <span class="n">glbl_cfg</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="s1">&#39;scheduler&#39;</span><span class="p">,</span> <span class="s1">&#39;run hosts&#39;</span><span class="p">,</span> <span class="s1">&#39;ports&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replier</span> <span class="o">=</span> <span class="n">WorkflowReplier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zmq_context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replier</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="n">WorkflowPublisher</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">workflow</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">zmq_context</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replier</span><span class="o">.</span><span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="o">.</span><span class="n">delta_workflow_ports</span><span class="p">()</span>
+
+        <span class="c1"># wait for threads to setup socket ports before continuing</span>
+        <span class="n">barrier</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">operate</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.stop">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.stop">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop the TCP servers, and clean up authentication.</span>
+
+<span class="sd">        This method must be called/awaited from a different thread to the</span>
+<span class="sd">        server&#39;s self.thread in order to interrupt the self.operate() loop</span>
+<span class="sd">        and wait for self.thread to terminate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waiting_to_stop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+            <span class="c1"># Wait for self.operate() loop to finish:</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">waiting_to_stop</span><span class="p">:</span>
+                <span class="c1"># Non-async sleep - yield to other threads rather than</span>
+                <span class="c1"># event loop (allows self.operate() running in different</span>
+                <span class="c1"># thread to return)</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STOP_SLEEP_INTERVAL</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">replier</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">replier</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">stop_loop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_queued_items</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
+                <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;shutdown&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">stop_loop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">curve_auth</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>  <span class="c1"># stop the authentication thread</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># Wait for processes to return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.operate">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.operate">[docs]</a>
+    <span class="k">def</span> <span class="nf">operate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Orchestrate the receive, send, publish of messages.&quot;&quot;&quot;</span>
+        <span class="c1"># Note: this cannot be an async method because the response part</span>
+        <span class="c1"># of the listener runs the event loop synchronously</span>
+        <span class="c1"># (in graphql AsyncioExecutor)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">waiting_to_stop</span><span class="p">:</span>
+                <span class="c1"># The self.stop() method is waiting for us to signal that we</span>
+                <span class="c1"># have finished here</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">waiting_to_stop</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">return</span>
+
+            <span class="c1"># Gather and respond to any requests.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">replier</span><span class="o">.</span><span class="n">listener</span><span class="p">()</span>
+            <span class="c1"># Publish all requested/queued.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">publish_queued_items</span><span class="p">())</span>
+
+            <span class="c1"># Yield control to other threads</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OPERATE_SLEEP_INTERVAL</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.publish_queued_items">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.publish_queued_items">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">publish_queued_items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Publish all queued items.&quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">():</span>
+            <span class="n">articles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="o">*</span><span class="n">articles</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.receiver">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.receiver">[docs]</a>
+    <span class="k">def</span> <span class="nf">receiver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process incoming messages and coordinate response.</span>
+
+<span class="sd">        Wrap incoming messages, dispatch them to exposed methods and/or</span>
+<span class="sd">        coordinate a publishing stream.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (dict): message contents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: If requested, coordinate publishing response/stream.</span>
+
+        <span class="c1"># determine the server method to call</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">])</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]})</span>
+            <span class="k">if</span> <span class="s1">&#39;meta&#39;</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+                <span class="n">args</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># malformed message</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Request missing required field(s).&#39;</span><span class="p">}}</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># no exposed method by that name</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;No method by the name &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">message</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]}}</span>
+
+        <span class="c1"># generate response</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">method</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="c1"># includes incorrect arguments (TypeError)</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>  <span class="c1"># note the error server side</span>
+            <span class="kn">import</span> <span class="nn">traceback</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span> <span class="s1">&#39;traceback&#39;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}}</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">response</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.register_endpoints">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints">[docs]</a>
+    <span class="k">def</span> <span class="nf">register_endpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register all exposed methods.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoints</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">obj</span>
+                          <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                          <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;exposed&#39;</span><span class="p">)}</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.api">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.api">[docs]</a>
+    <span class="nd">@authorise</span><span class="p">()</span>
+    <span class="nd">@expose</span>
+    <span class="k">def</span> <span class="nf">api</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">endpoint</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">_kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return information about this API.</span>
+
+<span class="sd">        Returns a list of callable endpoints.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endpoint:</span>
+<span class="sd">                If specified the documentation for the endpoint</span>
+<span class="sd">                will be returned instead.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of endpoints or string documentation of the</span>
+<span class="sd">            requested endpoint.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">endpoint</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">method</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">),</span> <span class="s1">&#39;exposed&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;No method by name &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">endpoint</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">exposed</span><span class="p">:</span>
+            <span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">tail</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;No method by name &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">endpoint</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.graphql">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.graphql">[docs]</a>
+    <span class="nd">@authorise</span><span class="p">()</span>
+    <span class="nd">@expose</span>
+    <span class="k">def</span> <span class="nf">graphql</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">request_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">variables</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the GraphQL schema execution result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            request_string: GraphQL request passed to Graphene.</span>
+<span class="sd">            variables: Dict of variables passed to Graphene.</span>
+<span class="sd">            meta: Dict containing auth user etc.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            object: Execution result, or a list with errors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">executed</span><span class="p">:</span> <span class="s1">&#39;ExecutionResult&#39;</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="n">request_string</span><span class="p">,</span>
+                <span class="n">variable_values</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span>
+                <span class="n">context_value</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;resolvers&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">,</span>
+                    <span class="s1">&#39;meta&#39;</span><span class="p">:</span> <span class="n">meta</span> <span class="ow">or</span> <span class="p">{},</span>
+                <span class="p">},</span>
+                <span class="n">backend</span><span class="o">=</span><span class="n">CylcGraphQLBackend</span><span class="p">(),</span>
+                <span class="n">middleware</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">instantiate_middleware</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">middleware</span><span class="p">)),</span>
+                <span class="n">executor</span><span class="o">=</span><span class="n">AsyncioExecutor</span><span class="p">(),</span>
+                <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># validate schema (dev only? default is True)</span>
+                <span class="n">return_promise</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;ERROR: GraphQL execution error </span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">exc</span>
+        <span class="k">if</span> <span class="n">executed</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+            <span class="n">errors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">executed</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;__traceback__&#39;</span><span class="p">):</span>
+                    <span class="kn">import</span> <span class="nn">traceback</span>
+                    <span class="n">formatted_tb</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span>
+                        <span class="nb">type</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="n">error</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">__traceback__</span>
+                    <span class="p">)</span>
+                    <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_tb</span><span class="p">))</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span>
+                            <span class="s1">&#39;traceback&#39;</span><span class="p">:</span> <span class="n">formatted_tb</span>
+                        <span class="p">}</span>
+                    <span class="p">})</span>
+                    <span class="k">continue</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">errors</span>
+        <span class="k">return</span> <span class="n">executed</span><span class="o">.</span><span class="n">data</span></div>
+
+
+    <span class="c1"># UIServer Data Commands</span>
+<div class="viewcode-block" id="WorkflowRuntimeServer.pb_entire_workflow">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow">[docs]</a>
+    <span class="nd">@authorise</span><span class="p">()</span>
+    <span class="nd">@expose</span>
+    <span class="k">def</span> <span class="nf">pb_entire_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send the entire data-store in a single Protobuf message.</span>
+
+<span class="sd">        Returns serialised Protobuf message</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pb_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="o">.</span><span class="n">get_entire_workflow</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">pb_msg</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeServer.pb_data_elements">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements">[docs]</a>
+    <span class="nd">@authorise</span><span class="p">()</span>
+    <span class="nd">@expose</span>
+    <span class="k">def</span> <span class="nf">pb_data_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send the specified data elements in delta form.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element_type: Key from DELTAS_MAP dictionary.</span>
+
+<span class="sd">        Returns serialised Protobuf message</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pb_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schd</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="o">.</span><span class="n">get_data_elements</span><span class="p">(</span><span class="n">element_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pb_msg</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/network/server";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

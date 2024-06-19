@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 2 =&gt; 3 &mdash; Cylc 8.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=641c35a1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Remote Usernames" href="remote-owner.html" />
+    <link rel="prev" title="Play Pause Stop" href="play-pause-stop.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Python 2 =&gt; 3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#impacted-scripts">Impacted Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#package-name-changes">Package Name Changes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jinja2-integers-with-leading-zeros">Jinja2 - integers with leading zeros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rose">Rose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.3 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Python 2 =&gt; 3</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/python-2-3.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="python-2-3">
+<span id="py23"></span><h1>Python 2 =&gt; 3<a class="headerlink" href="#python-2-3" title="Link to this heading"></a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Does This Change Affect Me?</p>
+<p>This change will affect you if your workflows extend Cylc or Jinja2 with
+custom Python scripts.</p>
+<p>This does not impact <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> scripts; Cylc can still run Python 2
+tasks if desired.</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Cylc 7 ran under Python 2; Cylc 8 runs under Python 3.</p>
+<p>Cylc can be extended with custom Python scripts. These scripts are run under
+the same version of Python used by Cylc.</p>
+<p>As a result, if you are moving from Cylc 7 to Cylc 8, you must upgrade any
+scripts from Python 2 to Python 3 in the process.</p>
+<p>If you want to support both Cylc 7 and 8, you must support both Python 2 and 3.
+There are tools to help you do this, e.g. <a class="reference external" href="https://pypi.org/project/six/">six</a>.</p>
+</section>
+<section id="impacted-scripts">
+<h2>Impacted Scripts<a class="headerlink" href="#impacted-scripts" title="Link to this heading"></a></h2>
+<p>The following scripts must be upgraded if used:</p>
+<dl>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#customjinja2filters"><span class="std std-ref">Custom Jinja2 Filters, Tests and Globals</span></a></dt><dd><p>These allow you to extend Jinja2 with Python code.</p>
+<p>These scripts are located in the following directories within a workflow:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Filters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Tests</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Jinja2Globals</span></code></p></li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja2-importing-python-modules"><span class="std std-ref">Modules imported by Jinja2</span></a></dt><dd><p>Python modules can be imported from Jinja2 e.g:</p>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;os&quot;</span> <span class="k">import</span> <span class="nv">path</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</dd>
+<dt><a class="reference internal" href="../../user-guide/writing-workflows/external-triggers.html#custom-trigger-functions"><span class="std std-ref">Custom Trigger Functions</span></a></dt><dd><p>Any custom xtrigger functions.</p>
+</dd>
+</dl>
+</section>
+<section id="package-name-changes">
+<h2>Package Name Changes<a class="headerlink" href="#package-name-changes" title="Link to this heading"></a></h2>
+<p>Three Python packages have been renamed between Cylc 7 and Cylc 8:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">cylc.flow</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">metomi.isodatetime</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rose</span></code> =&gt; <code class="docutils literal notranslate"><span class="pre">metomi.rose</span></code></p></li>
+</ul>
+<p>If you are importing from these packages you will need to update the package names.</p>
+<p>Here are some examples:</p>
+<p class="rubric">Convert Python code from Cylc 7 to Cylc 8:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- from cylc import LOG</span>
+<span class="gi">+ from cylc.flow import LOG</span>
+<span class="gd">- from isodatetime.data import Duration</span>
+<span class="gi">+ from metomi.isodatetime.data import Duration</span>
+</pre></div>
+</div>
+<p class="rubric">Python code which supports both Cylc 7 &amp; Cylc 8:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cylc.flow</span> <span class="kn">import</span> <span class="n">LOG</span>
+    <span class="kn">from</span> <span class="nn">metomi.isodatetime.data</span> <span class="kn">import</span> <span class="n">Duration</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">cylc</span> <span class="kn">import</span> <span class="n">LOG</span>
+    <span class="kn">from</span> <span class="nn">isodatetime.data</span> <span class="kn">import</span> <span class="n">Duration</span>
+</pre></div>
+</div>
+<p class="rubric">Convert Jinja2 code from Cylc 7 to Cylc 8:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>#!Jinja2
+<span class="gd">- {% from &quot;cylc&quot; import LOG %}</span>
+<span class="gi">+ {% from &quot;cylc.flow&quot; import LOG %}</span>
+<span class="w"> </span> {% do LOG.debug(&quot;Hello World!&quot;) %}
+</pre></div>
+</div>
+<p class="rubric">Jinja2 code which supports both Cylc 7 &amp; Cylc 8:</p>
+<div class="highlight-jinja notranslate"><div class="highlight"><pre><span></span><span class="x">#!Jinja2</span>
+<span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;sys&quot;</span> <span class="k">import</span> <span class="nv">version</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">version</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span> -<span class="cp">%}</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;cylc.flow&quot;</span> <span class="k">import</span> <span class="nv">LOG</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">else</span> -<span class="cp">%}</span>
+<span class="x">    </span><span class="cp">{%</span> <span class="k">from</span> <span class="s2">&quot;cylc&quot;</span> <span class="k">import</span> <span class="nv">LOG</span> -<span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endif</span> -<span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">do</span> <span class="nv">LOG.debug</span><span class="o">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="o">)</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</section>
+<section id="jinja2-integers-with-leading-zeros">
+<h2>Jinja2 - integers with leading zeros<a class="headerlink" href="#jinja2-integers-with-leading-zeros" title="Link to this heading"></a></h2>
+<p>Integers with leading zeros in Jinja2 expressions are now illegal and will
+cause an error like  <code class="docutils literal notranslate"><span class="pre">Jinja2Error:</span> <span class="pre">expected</span> <span class="pre">token</span> <span class="pre">'x',</span> <span class="pre">got</span> <span class="pre">'integer'</span></code>.
+For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>my-workflow
+<span class="go">Jinja2Error: expected token &#39;end of statement block&#39;, got &#39;integer&#39;</span>
+<span class="go">File ~/cylc-run/my-workflow/flow.cylc</span>
+<span class="go">  {% if START_HOUR == 06 or START_HOUR == 12 %}       &lt;-- TemplateSyntaxError</span>
+</pre></div>
+</div>
+<p>The solution in this case is:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-{% if START_HOUR == 06 or START_HOUR == 12 %}</span>
+<span class="gi">+{% if START_HOUR == 6 or START_HOUR == 12 %}</span>
+</pre></div>
+</div>
+</section>
+<section id="rose">
+<h2>Rose<a class="headerlink" href="#rose" title="Link to this heading"></a></h2>
+<p>The same changes also impact Rose extensions:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://metomi.github.io/rose/2.1.0/html/api/rose-macro.html#api-rose-macro" title="(in Rose Documentation v2.1.0)"><span class="xref std std-ref">Rose Macros</span></a></p></li>
+<li><p><a class="reference external" href="https://metomi.github.io/rose/2.1.0/html/api/built-in/rose_ana.html#builtin-rose-ana" title="(in Rose Documentation v2.1.0)"><span class="xref std std-ref">Rose Ana Tasks</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="play-pause-stop.html" class="btn btn-neutral float-left" title="Play Pause Stop" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="remote-owner.html" class="btn btn-neutral float-right" title="Remote Usernames" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/python-2-3";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

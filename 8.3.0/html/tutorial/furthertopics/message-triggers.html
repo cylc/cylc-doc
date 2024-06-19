@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Triggers &mdash; Cylc 8.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=641c35a1"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="User Guide" href="../../user-guide/index.html" />
+    <link rel="prev" title="Retries" href="retries.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scheduling/index.html">Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../runtime/index.html">Runtime</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Further Topics</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="clock-triggered-tasks.html">Clock Triggered Tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="broadcast.html">Broadcast Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="family-triggers.html">Family Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html">Inheritance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queues.html">Queues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="retries.html">Retries</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Message Triggers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#explanation">Explanation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-create-a-message-trigger">How to create a message trigger</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Tutorial</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Further Topics</a></li>
+      <li class="breadcrumb-item active">Message Triggers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorial/furthertopics/message-triggers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="message-triggers">
+<span id="tutorial-cylc-message-triggers"></span><h1>Message Triggers<a class="headerlink" href="#message-triggers" title="Link to this heading"></a></h1>
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> allow us to trigger dependent tasks
+before the upstream task has completed.</p>
+<section id="explanation">
+<h2>Explanation<a class="headerlink" href="#explanation" title="Link to this heading"></a></h2>
+<p>We have seen <a class="reference internal" href="../scheduling/further-scheduling.html#tutorial-qualifiers"><span class="std std-ref">before</span></a> that tasks can have
+<a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifiers</span></a> for different
+<a class="reference internal" href="../../glossary.html#term-task-state"><span class="xref std std-term">task states</span></a>.
+<a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> are essentially custom qualifiers.
+We can produce a bespoke output while our task is still running.
+This output could be, for example, a report or perhaps another task.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> are particularly useful if we have
+a long running task and we want to produce multiple tailored outputs whilst
+this task is running, rather than having to wait for the task to
+complete.</p>
+<p>We could also set up <a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">message triggers</span></a> to, for example,
+send an email to inform us that a submission has failed, making use of Cylc’s
+task event handling system. More information is available on these in the
+<a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
+<p><a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">Message triggers</span></a> provide a superior solution to
+the problem of file system polling. We could, for example, design our workflow
+such that we check if our task is finished by polling at intervals.
+It is inefficient to ‘spam’ task hosts with polling commands, it is preferable
+to set up a message trigger.</p>
+</section>
+<section id="how-to-create-a-message-trigger">
+<h2>How to create a message trigger<a class="headerlink" href="#how-to-create-a-message-trigger" title="Link to this heading"></a></h2>
+<p>In order to get our workflow to trigger messages, we need to:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>specify our custom message in a section called <code class="docutils literal notranslate"><span class="pre">[[outputs]]</span></code> within the</dt><dd><p><code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section of our workflow,</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>add <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span> <span class="pre">--</span> <span class="pre">&quot;${CYLC_WORKFLOW_ID}&quot;</span> <span class="pre">&quot;${CYLC_TASK_JOB}&quot;</span> <span class="pre">&quot;YOUR</span> <span class="pre">CHOSEN</span> <span class="pre">TRIGGER</span> <span class="pre">MESSAGE&quot;</span></code></dt><dd><p>to the <code class="docutils literal notranslate"><span class="pre">script</span></code> section of <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code>, your chosen trigger message
+should be unique and should exactly match the message defined in
+<code class="docutils literal notranslate"><span class="pre">[[outputs]]</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><p>Refer to these messages in the <code class="docutils literal notranslate"><span class="pre">[dependencies]</span></code> section of our workflow.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The message will be recorded in the workflow’s scheduler log.
+See <a class="reference internal" href="../../user-guide/running-workflows/scheduler-log-files.html#scheduler-logs-cylc-message"><span class="std std-ref">Cylc Message</span></a> for details of how messages appear.</p>
+</div>
+<p>These outputs are then triggered during the running of the task.
+We can use these to manage tasks dependent on partially completed tasks.</p>
+<p>So, a basic example, where we have a task foo, that when partially completed
+triggers another task bar and when fully completed triggers another task, baz.</p>
+<blockquote>
+<div><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span><span class="c">:</span><span class="kd">out1</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+            <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 5</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; &quot;file 1 done&quot;</span>
+<span class="s2">            sleep 10</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;file 1 done&quot;</span>
+
+    <span class="nt">[[bar, baz]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 10</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="note admonition" id="message-triggers-practical">
+<p class="admonition-title">Practical</p>
+<p class="rubric">In this practical example, we will create a workflow to demonstrate
+<a class="reference internal" href="../../glossary.html#term-message-trigger"><span class="xref std std-term">message triggers</span></a>. We will use message triggers
+to both produce a report and trigger a new task from a partially completed
+task.</p>
+<ol class="arabic">
+<li><p><strong>Create a new directory.</strong></p>
+<p>Within your <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code> directory create a new directory called</p>
+<p><code class="docutils literal notranslate"><span class="pre">message-triggers</span></code> and move into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>~/cylc-src/message-triggers
+<span class="nb">cd</span><span class="w"> </span>~/cylc-src/message-triggers
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install the script needed for our workflow</strong></p>
+<p>The workflow we will be designing requires a bash script, <code class="docutils literal notranslate"><span class="pre">random.sh</span></code>,
+to produce our report. It will simply create a text file <code class="docutils literal notranslate"><span class="pre">report.txt</span></code>
+with some random numbers in it. This will be executed when the associated
+task is run.</p>
+<p>Scripts should be kept in the <code class="docutils literal notranslate"><span class="pre">bin</span></code> sub-directory within the
+<a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>. If a <code class="docutils literal notranslate"><span class="pre">/bin</span></code>
+exists in the run directory, it will be prepended $PATH at run
+time.</p>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">/bin</span></code> directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>~/cylc-src/message-triggers/bin
+</pre></div>
+</div>
+<p>Create a bash script in the bin directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>bin/random.sh
+</pre></div>
+</div>
+<p>We will need to make this script executable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>bin/random.sh
+</pre></div>
+</div>
+<p>Open the file and paste the following basic bash script into it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="nb">set</span><span class="w"> </span>-eu<span class="w">  </span><span class="c1"># Prevent bash script failing quietly.</span>
+
+<span class="nv">counter</span><span class="o">=</span><span class="m">1</span>
+
+<span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$counter</span><span class="w"> </span>-le<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nv">newrand</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="o">((</span><span class="w"> </span><span class="nv">RANDOM</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">40</span><span class="o">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="k">))</span><span class="p">;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$newrand</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>report.txt<span class="p">;</span>
+<span class="w">    </span><span class="nv">counter</span><span class="o">=</span><span class="k">$((</span><span class="nv">counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="k">))</span><span class="p">;</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create a new workflow.</strong></p>
+<p>Create a <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file and paste the following basic workflow into it:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test workflow to demo message triggers&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2M </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">long_forecasting_task</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+            <span class="kd">long_forecasting_task</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+            <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>This is a basic workflow, currently it does not have any message triggers
+attached to any task.</p>
+</li>
+<li><p><strong>Define our tasks in the runtime section.</strong></p>
+<p>Next we want to create our <code class="docutils literal notranslate"><span class="pre">runtime</span></code> section of our workflow.
+First we define what the tasks do. In this example
+<code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> will sleep, create a file containing some
+random numbers and produce a message.
+(Note that the random number generator bash script has already been
+preloaded into your <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory.)
+<code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code> simply sleep.</p>
+<p>Add the following code to the  <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Create message triggers.</strong></p>
+<p>We now have a workflow with a task, <code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> which, after
+it has fully completed, triggers two more tasks, <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code>
+and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code>.</p>
+<p>Suppose we want <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code>
+to start before <code class="docutils literal notranslate"><span class="pre">long_forecasting_task</span></code> has fully completed, perhaps
+after some data has become available.</p>
+<p>In this case, we shall trigger <code class="docutils literal notranslate"><span class="pre">another_weather_task</span></code> after one set of
+random numbers has been created
+and <code class="docutils literal notranslate"><span class="pre">different_weather_task</span></code> after a second set of random numbers has
+been created.</p>
+<p>There are three aspects of creating message triggers.
+The first is to create the messages. Within <code class="docutils literal notranslate"><span class="pre">runtime</span></code>, <code class="docutils literal notranslate"><span class="pre">TASK</span></code> in our
+workflow, we need to create a sub-section called <code class="docutils literal notranslate"><span class="pre">outputs</span></code>. Here we create
+our custom outputs.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+        [[[outputs]]]</span>
+<span class="gi">+            update1 = &quot;Task partially complete, report ready to view&quot;</span>
+<span class="gi">+            update2 = &quot;Task partially complete, report updated&quot;</span>
+</pre></div>
+</div>
+<p>The second thing we need to do is to create a cylc message in our script.
+This should be placed where you want the message to be called. In our
+case, this is after each of the first two set of random numbers are
+generated.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Remember that the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> should exactly match the outputs
+stated in our <code class="docutils literal notranslate"><span class="pre">[[[outputs]]]</span></code> section.</p>
+</div>
+<p>Modify the <code class="docutils literal notranslate"><span class="pre">[[long_forecasting_task]]</span></code> script in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+as follows:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>[runtime]
+
+<span class="w"> </span>   [[long_forecasting_task]]
+<span class="w"> </span>       script = &quot;&quot;&quot;
+<span class="w"> </span>           sleep 2
+<span class="w"> </span>           random.sh
+<span class="gi">+           cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="gi">+                &quot;Task partially complete, report ready to view&quot;</span>
+<span class="w"> </span>           sleep 2
+<span class="w"> </span>           random.sh
+<span class="gi">+           cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="gi">+               &quot;Task partially complete, report updated&quot;</span>
+<span class="w"> </span>           sleep 2
+<span class="w"> </span>           random.sh
+<span class="w"> </span>       &quot;&quot;&quot;
+</pre></div>
+</div>
+<p>Lastly, we need to make reference to the messages in the
+graph section.
+This will ensure your tasks trigger off of the messages correctly.</p>
+<p>Adapt the <code class="docutils literal notranslate"><span class="pre">[[dependencies]]</span></code> section in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file to read as
+follows:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        [[[P2M]]]
+<span class="w"> </span>            graph = &quot;&quot;&quot;
+<span class="gd">-               long_forecasting_task =&gt;  another_weather_task</span>
+<span class="gd">-               long_forecasting_task =&gt; different_weather_task</span>
+<span class="gi">+               long_forecasting_task:update1 =&gt;  another_weather_task</span>
+<span class="gi">+               long_forecasting_task:update2 =&gt; different_weather_task</span>
+<span class="w"> </span>               long_forecasting_task[-P2M] =&gt; long_forecasting_task
+<span class="w"> </span>           &quot;&quot;&quot;
+</pre></div>
+</div>
+<p>This completes our <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>Our final workflow should look like this:</p>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test workflow to demo message triggers&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2M </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update1</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update2</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+            <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report ready to view&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report updated&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">update1 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report ready to view&quot;</span>
+            <span class="nv">update2 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report updated&quot;</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>Validate the workflow.</strong></p>
+<p>It is a good idea to check that our <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file does not have any
+configuration issues.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> to check for any errors:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install and Play the workflow.</strong></p>
+<p>Now we are ready to run our workflow. Validate, install, then open
+the <a class="reference internal" href="../runtime/introduction.html#tutorial-gui"><span class="std std-ref">GUI</span></a> or <a class="reference internal" href="../runtime/introduction.html#tutorial-tui"><span class="std std-ref">TUI</span></a> and play
+the workflow.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+cylc<span class="w"> </span>install
+cylc<span class="w"> </span>play<span class="w"> </span>message-triggers
+</pre></div>
+</div>
+<p>Your workflow should now run, the tasks should succeed.</p>
+</li>
+<li><p><strong>Inspect the work directory.</strong></p>
+<p>You can now check for your report outputs. These should appear in the
+<a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a> of the workflow. All being well, our first cycle
+point should produce a test file with some random numbers, and each
+subsequent cycle point file should have more random numbers added.</p>
+</li>
+<li><p><strong>Extension.</strong></p>
+<p>Suppose now we would like to send an email alerting us to the reports
+being ready to view.</p>
+<p>We will need to add to our <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> section, add a sub-section called <code class="docutils literal notranslate"><span class="pre">[[[events]]]</span></code>.
+Within this section we will make use of the built-in setting
+<code class="docutils literal notranslate"><span class="pre">mail</span> <span class="pre">events</span></code>.
+Here, we specify a list of events for which notifications should be sent.</p>
+<p>The events we are interested in are, in this case, our outputs.</p>
+<p>Add the following code to your <code class="docutils literal notranslate"><span class="pre">[[[events]]]</span></code> section.</p>
+<blockquote>
+<div><div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[[events]]]</span>
+    <span class="nv">mail events </span><span class="o">=</span><span class="s"> update1, update2</span>
+</pre></div>
+</div>
+<p>Our updated workflow should look like this:</p>
+</div></blockquote>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
+<span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> &quot;test workflow to demo message triggers&quot;</span>
+<span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2019-06-27T00Z</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> 2019-10-27T00Z</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P2M </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update1</span> <span class="o">=&gt;</span>  <span class="kd">another_weather_task</span>
+            <span class="kd">long_forecasting_task</span><span class="c">:</span><span class="kd">update2</span> <span class="o">=&gt;</span> <span class="kd">different_weather_task</span>
+            <span class="kd">long_forecasting_task</span>[<span class="nb">-P2M</span>] <span class="o">=&gt;</span> <span class="kd">long_forecasting_task</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[long_forecasting_task]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report ready to view&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">            cylc message -- &quot;${CYLC_WORKFLOW_ID}&quot; &quot;${CYLC_TASK_JOB}&quot; \</span>
+<span class="s2">                &quot;Task partially complete, report updated&quot;</span>
+<span class="s2">            sleep 2</span>
+<span class="s2">            random.sh</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">update1 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report ready to view&quot;</span>
+            <span class="nv">update2 </span><span class="o">=</span><span class="s"> &quot;Task partially complete, report updated&quot;</span>
+
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">mail events </span><span class="o">=</span><span class="s"> update1, update2</span>
+
+    <span class="nt">[[another_weather_task, different_weather_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 1</span>
+</pre></div>
+</div>
+</div>
+<p>Save your changes and run your workflow.
+Check your emails and you should have, one email for the first update and,
+a second email alerting you to the subsequent updated reports being ready.</p>
+<p>Note that the second email automatically bundles the messages to prevent
+your inbox from being flooded.</p>
+</li>
+</ol>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="retries.html" class="btn btn-neutral float-left" title="Retries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../user-guide/index.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 19, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/furthertopics/message-triggers";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
