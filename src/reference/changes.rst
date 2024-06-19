@@ -137,6 +137,25 @@ The graph view now has an option to group tasks by cycle point.
 .. image:: changes/cylc-graph-group-by-cycle-point.png
    :width: 100%
 
+Gantt View
+^^^^^^^^^^
+
+The GUI now has a `Gantt <https://en.wikipedia.org/wiki/Gantt_chart>`_ view option:
+
+.. image:: changes/gantt_view.png
+   :width: 100%
+   :alt: A picture of the Gantt view in operation.
+
+Analysis View
+^^^^^^^^^^^^^
+
+New Analysis added - a layout which plots run times against cycle points.
+
+
+.. image:: changes/time_series.png
+   :width: 100%
+   :alt: A picture of the Time Series task analysis in operation.
+
 
 Completion Expressions
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -171,6 +190,42 @@ the completion expression configured here:
 For more information, see the reference for the
 :cylc:conf:`[runtime][<namespace>]completion` configuration.
 
+
+Workflow State Triggers & Commands
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Workflow state xtriggers and command now take Cylc universal IDs instead of
+separate arguments:
+
+For example, you can (and should) now write:
+
+.. code-block:: diff
+
+   # On the command line
+   - cylc workflow-state my-workflow --point 20240101 --task mytask --message "succeeded"
+   + cylc workflow-state my-workflow//20240101/mytask:succeeded --triggers
+
+   # In the flow.cylc file
+   - my_xtrigger = workflow_state(
+   -     workflow="my-workflow",
+   -     task="mytask",
+   -     point="20240101",
+   -     message="succeeded"
+   - )
+   + my_xtrigger = workflow_state('my-workflow//20240101/mytask:succeeded', is_trigger=True)
+
+.. important::
+
+   The new workflow state trigger syntax can use either the trigger or message from
+   ``trigger=message`` in :cylc:conf:`[runtime][<namespace>][outputs]`.
+
+   The trigger and message are the same for the most common use cases (``succeeded`` and ``started``)
+   but may differ for other outputs, namely :term:`custom outputs <custom output>`.
+
+.. note::
+
+   The ``suite-state`` xtrigger has been reimplemented for compatibility with
+   Cylc 7 workflows.
 
 ----------
 
