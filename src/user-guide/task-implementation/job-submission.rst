@@ -70,7 +70,7 @@ line:
 
 .. code-block:: none
 
-   -l=select=28:ncpus=36:mpiprocs=18:ompthreads=2:walltime=12:00:00
+   -l=select=28:ncpus=36:mpiprocs=18:ompthreads=2
 
 (Left hand side is ``-l``. A second ``-l=...`` line will override the first.)
 
@@ -82,7 +82,6 @@ Or separate the items:
    -l ncpus=36
    -l mpiprocs=18
    -l ompthreads=2
-   -l walltime=12:00:00
 
 .. note::
 
