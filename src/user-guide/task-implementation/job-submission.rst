@@ -47,6 +47,16 @@ For :term:`job runners <job runner>` that use job file directives (PBS, Loadleve
 etc.) default directives are provided to set the job name, stdout and stderr
 file paths, and the execution time limit (if specified).
 
+.. tip::
+
+   Use :cylc:conf:`[runtime][<namespace>]execution time limit` to set
+   time limits, rather than setting this as a directive yourself.
+
+   This allows Cylc to identify execution timeout even if the
+   job runner cannot be contacted.
+
+   See :ref:`ExecutionTimeLimit`
+
 Cylc constructs the job name string using a combination of the task ID and the
 workflow name. PBS fails a job submit if the job name in ``-N name`` is
 too long. For version 12 or below, this is 15 characters. For version 13, this
@@ -58,15 +68,6 @@ characters using
 
 Directives Section Quirks (PBS, SGE, ...)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. warning::
-
-   Use :cylc:conf:`[runtime][<namespace>]execution time limit` rather
-   than directives.
-
-   This makes Cylc aware of execution time limits so that execution
-   time out can be identified even if the :term:`job runner` cannot be
-   contacted.
 
 To specify an option with no argument, such as ``-V`` in PBS or
 ``-cwd`` in SGE you must give a null string as the directive value in
@@ -254,6 +255,8 @@ according to its job runner.
 
 Tasks can be killed on demand by using the ``cylc kill`` command.
 
+
+.. _ExecutionTimeLimit:
 
 Execution Time Limit
 --------------------
