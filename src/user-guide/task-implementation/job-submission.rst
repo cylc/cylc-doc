@@ -59,6 +59,15 @@ characters using
 Directives Section Quirks (PBS, SGE, ...)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. warning::
+
+   Use :cylc:conf:`[runtime][<namespace>]execution time limit` rather
+   than directives.
+
+   This makes Cylc aware of execution time limits so that execution
+   time out can be identified even if the :term:`job runner` cannot be
+   contacted.
+
 To specify an option with no argument, such as ``-V`` in PBS or
 ``-cwd`` in SGE you must give a null string as the directive value in
 the :cylc:conf:`flow.cylc` file.
