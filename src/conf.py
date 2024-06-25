@@ -120,7 +120,7 @@ autodoc_typehints = 'description'
 # $ python -m sphinx.ext.intersphinx <url>/objects.inv | less
 intersphinx_mapping = {
     'rose': (
-        'http://metomi.github.io/rose/2.1.0/html', None
+        'http://metomi.github.io/rose/2.3.0/html', None
     ),
     'python': (
         'https://docs.python.org/3/', None
