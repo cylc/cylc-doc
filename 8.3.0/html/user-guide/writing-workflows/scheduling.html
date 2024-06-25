@@ -1708,7 +1708,7 @@ continue on to <code class="docutils literal notranslate"><span class="pre">d</s
 dependency</span></a>.</p>
 <p>Branching is often used for automatic failure recovery. Here’s a simple
 example:</p>
-<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span><span class="kt">?</span>
 <span class="kd">bar</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">recover</span>
 <span class="kd">bar</span><span class="kt">?</span> <span class="o">|</span> <span class="kd">recover</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
 </pre></div>
@@ -2130,7 +2130,7 @@ marked as optional.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 19, 2024.
+      <span class="lastupdated">Last updated on Jun 25, 2024.
       </span></p>
   </div>
 

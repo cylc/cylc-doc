@@ -1870,7 +1870,7 @@ example:
 
 .. code-block:: cylc-graph
 
-   foo => bar
+   foo => bar?
    bar:fail? => recover
    bar? | recover => baz
 

@@ -47,6 +47,16 @@ For :term:`job runners <job runner>` that use job file directives (PBS, Loadleve
 etc.) default directives are provided to set the job name, stdout and stderr
 file paths, and the execution time limit (if specified).
 
+.. tip::
+
+   Use :cylc:conf:`[runtime][<namespace>]execution time limit` to set
+   time limits, rather than setting this as a directive yourself.
+
+   This allows Cylc to identify execution timeout even if the
+   job runner cannot be contacted.
+
+   See :ref:`ExecutionTimeLimit`
+
 Cylc constructs the job name string using a combination of the task ID and the
 workflow name. PBS fails a job submit if the job name in ``-N name`` is
 too long. For version 12 or below, this is 15 characters. For version 13, this
@@ -70,7 +80,7 @@ line:
 
 .. code-block:: none
 
-   -l=select=28:ncpus=36:mpiprocs=18:ompthreads=2:walltime=12:00:00
+   -l=select=28:ncpus=36:mpiprocs=18:ompthreads=2
 
 (Left hand side is ``-l``. A second ``-l=...`` line will override the first.)
 
@@ -82,7 +92,6 @@ Or separate the items:
    -l ncpus=36
    -l mpiprocs=18
    -l ompthreads=2
-   -l walltime=12:00:00
 
 .. note::
 
@@ -246,6 +255,8 @@ according to its job runner.
 
 Tasks can be killed on demand by using the ``cylc kill`` command.
 
+
+.. _ExecutionTimeLimit:
 
 Execution Time Limit
 --------------------

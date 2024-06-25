@@ -295,10 +295,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-ef2dddb2d1e236bd5f1ad509bb4a2ff37c434c50.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough
 buy_ingredients -&gt; make_dough
+make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -306,10 +306,10 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7ccba40a02871f25b497c686c0fa8907aea5f097.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-d42311cae20983e3c14428d21c8d53deaaea9662.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
 bake_bread -&gt; sell_bread
+sell_bread
 buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
 }</p></object></div>
@@ -320,16 +320,16 @@ make_dough -&gt; bake_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-40451086cbfa8109867d2c9886e68a3fad9772c4.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f7b1d5ecb3882c1bdb45b91c7dc63caf13218053.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread -&gt; clean_oven
 bake_bread
-buy_ingredients -&gt; make_dough
 clean_oven
-bake_bread -&gt; sell_bread
 sell_bread
-pre_heat_oven -&gt; bake_bread
+buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
+bake_bread -&gt; clean_oven
+bake_bread -&gt; sell_bread
+pre_heat_oven -&gt; bake_bread
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -498,7 +498,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 19, 2024.
+      <span class="lastupdated">Last updated on Jun 25, 2024.
       </span></p>
   </div>
 

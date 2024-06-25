@@ -187,6 +187,14 @@ submission methods.</p>
 <p>For <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a> that use job file directives (PBS, Loadleveler,
 etc.) default directives are provided to set the job name, stdout and stderr
 file paths, and the execution time limit (if specified).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> to set
+time limits, rather than setting this as a directive yourself.</p>
+<p>This allows Cylc to identify execution timeout even if the
+job runner cannot be contacted.</p>
+<p>See <a class="reference internal" href="#executiontimelimit"><span class="std std-ref">Execution Time Limit</span></a></p>
+</div>
 <p>Cylc constructs the job name string using a combination of the task ID and the
 workflow name. PBS fails a job submit if the job name in <code class="docutils literal notranslate"><span class="pre">-N</span> <span class="pre">name</span></code> is
 too long. For version 12 or below, this is 15 characters. For version 13, this
@@ -205,7 +213,7 @@ the <a class="reference internal" href="../../reference/config/workflow.html#flo
 must be unique. To specify multiple values using an option such as
 <code class="docutils literal notranslate"><span class="pre">-l</span></code> option in PBS, SGE, etc., either specify all items in a single
 line:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-l=select=28:ncpus=36:mpiprocs=18:ompthreads=2:walltime=12:00:00
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-l=select=28:ncpus=36:mpiprocs=18:ompthreads=2
 </pre></div>
 </div>
 <p>(Left hand side is <code class="docutils literal notranslate"><span class="pre">-l</span></code>. A second <code class="docutils literal notranslate"><span class="pre">-l=...</span></code> line will override the first.)</p>
@@ -214,7 +222,6 @@ line:</p>
 -l ncpus=36
 -l mpiprocs=18
 -l ompthreads=2
--l walltime=12:00:00
 </pre></div>
 </div>
 <div class="admonition note">
@@ -357,7 +364,7 @@ according to its job runner.</p>
 <p>Tasks can be killed on demand by using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">kill</span></code> command.</p>
 </section>
 <section id="execution-time-limit">
-<h2>Execution Time Limit<a class="headerlink" href="#execution-time-limit" title="Link to this heading"></a></h2>
+<span id="executiontimelimit"></span><h2>Execution Time Limit<a class="headerlink" href="#execution-time-limit" title="Link to this heading"></a></h2>
 <p>You can specify an <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution time limit" title="flow.cylc[runtime][&lt;namespace&gt;]execution time limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code></a> for all supported job
 submission methods. E.g.:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
@@ -410,7 +417,7 @@ ignored.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 19, 2024.
+      <span class="lastupdated">Last updated on Jun 25, 2024.
       </span></p>
   </div>
 
