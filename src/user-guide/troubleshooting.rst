@@ -61,6 +61,8 @@ for debugging some specific issues:
    These files can allow you to see how the configuration was changed between
    restarts and reloads.
 
+For more information on workflow log files, see :ref:`user-guide.log_files`.
+
 
 Shell Login/Profile Files
 -------------------------
