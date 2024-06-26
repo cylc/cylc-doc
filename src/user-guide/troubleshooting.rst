@@ -61,22 +61,7 @@ for debugging some specific issues:
    These files can allow you to see how the configuration was changed between
    restarts and reloads.
 
-   Each time a workflow is started, restarted or reloaded,
-   the configuration used is recorded in a file in ``log/config``.
-   This provides a series of snapshots of the configuration.
-   These files are named:
-
-   ``<LOG FILE NUMBER>-<EVENT>-<(RE)START NUMBER>``.
-
-   If for example we did:
-
-   .. code-block:: console
-
-      # Command            # File created
-      cylc play workflow   # 01-start-01.cylc
-      cylc vr workflow     # 02-reload-01.cylc
-      cylc stop workflow
-      cylc play workflow   # 03-restart-02.cylc
+For more information on workflow log files, see :ref:`user-guide.log_files`.
 
 
 Shell Login/Profile Files
