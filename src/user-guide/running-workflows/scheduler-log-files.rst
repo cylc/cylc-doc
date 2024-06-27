@@ -4,8 +4,9 @@
 Workflow Logs
 =============
 
-Cylc produces a number of log files which record information about the
-wortkflow, how it was installed, what tasks have run, their outcomes and more.
+Cylc produces log files which record information about how the workflow was
+installed, configured when started or changed, and about tasks that have run
+and their outcomes.
 
 
 Log Files
