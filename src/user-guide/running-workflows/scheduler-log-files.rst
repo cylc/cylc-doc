@@ -4,8 +4,9 @@
 Workflow Logs
 =============
 
-Cylc produces a number of log files which record information about the
-wortkflow, how it was installed, what tasks have run, their outcomes and more.
+Cylc produces log files which record information about how the workflow was
+installed, configured when started or changed, and about tasks that have run
+and their outcomes.
 
 
 Log Files
@@ -36,7 +37,7 @@ Cylc log files are located in the workflow :term:`run directory`.
 
    .. describe:: log/config/flow-processed.cylc
 
-      The un-parsed contents of the ``flow.cylc`` (or ``suite.rc``) file that
+      The unparsed contents of the ``flow.cylc`` (or ``suite.rc``) file that
       the workflow was most recently started or restarted from. This file has
       not been parsed by Cylc so is still in the definition order, however,
       Jinja2 process has been performed making it useful for debugging Jinja2
@@ -92,7 +93,7 @@ Cylc log files are located in the workflow :term:`run directory`.
    ``type``
       Is either ``start``, ``restart`` or ``reload``.
    ``file_number``
-      Is initally ``1``, if the log file exceeds the `maximum size in bytes`,
+      Is initially ``1``, if the log file exceeds the `maximum size in bytes`,
       it will "roll over" into a new log file and this number will increment.
       If the number of "roll over" log files exceeds the
       `rolling archive length`, then Cylc will remove an old log file before
