@@ -236,6 +236,36 @@ Scheduling Algorithm
 The scheduling algorithm has been changed, more information is available:
 :ref:`728.scheduling_algorithm`.
 
+Log Files
+---------
+
+The workflow log files have moved to new locations and some new files have been
+added. For information on the Cylc 8 log files, see
+:ref:`user-guide.log_files`.
+
+.. list-table::
+
+   * - **Cylc 7** (and Rose 2019)
+     - **Cylc 8**
+   * - ``log/suite/log``
+     - ``log/scheduler/log``
+   * - ``log/suite/log.<time>``
+     - ``log/scheduler/<start_number>-<type>-<file_number>.log``
+   * - ``suite.rc.processed``
+     - ``log/config/flow-processed.cylc``
+   * - ``log/rose-suite-run.log``
+     - ``log/install/<start_number>-install.log``
+
+       ``log/remote-install/<start_number>-<type>-<platform>.log``
+   * - ``log/rose-conf/<time>-run.conf``
+     - ``log/config/<time>-rose-suite.conf``
+   * - ``log/<time>-run.version``
+     - ``log/version/uncommitted.diff``
+
+       ``log/version/vcs.json``
+   * - ``log/suiterc/<time>-run.rc``
+     - ``log/config/<start_number>-<type>-<file_number>.cylc``
+
 Other Changes
 -------------
 
