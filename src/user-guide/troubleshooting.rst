@@ -61,17 +61,12 @@ for debugging some specific issues:
    These files can allow you to see how the configuration was changed between
    restarts and reloads.
 
-   Each time a workflow is
-
-   * Played for the first time
-   * Played from stopped
-   * Reloaded
-
+   Each time a workflow is started, restarted or reloaded,
    the configuration used is recorded in a file in ``log/config``.
    This provides a series of snapshots of the configuration.
    These files are named:
 
-   ``<LOG FILE NUMBER>-<EVENT>-<RESTART NUMBER>``.
+   ``<LOG FILE NUMBER>-<EVENT>-<(RE)START NUMBER>``.
 
    If for example we did:
 
@@ -251,7 +246,7 @@ To find out more, see the ``job.err`` file.
 
    .. cylc-scope::
 
-.. note::
+.. tip::
 
    One particularly common issue when developing a workflow is failure
    to make a script executable. Use ``ls -l`` to check.
@@ -568,7 +563,7 @@ workflows:
 
 ``cylc validate``
 
-   Validate a workflow configuration.
+   Validates the workflow configuration.
 
    .. seealso::
 
@@ -579,8 +574,8 @@ workflows:
 See what the Jinja2 is doing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Sometimes understanding what Jinja2 templating is doing
-to a workflow configuration can be difficult.
+It can sometimes be difficult to understand what Jinja2
+templating is doing to a workflow configuration.
 
 ``cylc view --process`` (or ``-p``) shows you what the
 configuration will look like after Jinja2 processing.
