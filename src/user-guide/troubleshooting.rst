@@ -495,15 +495,15 @@ please let us know.
 Debugging Workflow Configurations
 ---------------------------------
 
-Cylc Debugging Utilites
-^^^^^^^^^^^^^^^^^^^^^^^
+Cylc Debugging Utilities
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. seealso::
 
    :ref:`user-guide.cheat_sheet`
 
 
-Cylc comes with a number of utilies designed to allow inspection of
+Cylc comes with a number of utilities designed to allow inspection of
 workflows:
 
 ``cylc view``
