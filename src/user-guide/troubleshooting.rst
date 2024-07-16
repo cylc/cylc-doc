@@ -61,6 +61,23 @@ for debugging some specific issues:
    These files can allow you to see how the configuration was changed between
    restarts and reloads.
 
+   Each time a workflow is started, restarted or reloaded,
+   the configuration used is recorded in a file in ``log/config``.
+   This provides a series of snapshots of the configuration.
+   These files are named:
+
+   ``<LOG FILE NUMBER>-<EVENT>-<(RE)START NUMBER>``.
+
+   If for example we did:
+
+   .. code-block:: console
+
+      # Command            # File created
+      cylc play workflow   # 01-start-01.cylc
+      cylc vr workflow     # 02-reload-01.cylc
+      cylc stop workflow
+      cylc play workflow   # 03-restart-02.cylc
+
 
 Shell Login/Profile Files
 -------------------------
@@ -219,7 +236,7 @@ To find out more, see the ``job.err`` file.
 .. note::
 
    To ensure Cylc jobs fail when they are supposed to, Cylc configures Bash
-   to be a bit stricter than it is by default by running ``set -euo pipefail``.
+   to be stricter than it is by default by running ``set -euo pipefail``.
 
    .. cylc-scope:: flow.cylc[runtime][<namespace>]
 
@@ -228,6 +245,11 @@ To find out more, see the ``job.err`` file.
    Bash scripts to call *from* the job script.
 
    .. cylc-scope::
+
+.. tip::
+
+   One particularly common issue when developing a workflow is failure
+   to make a script executable. Use ``ls -l`` to check.
 
 If you're struggling to track down the error, you might want to put the
 workflow into debug mode::
@@ -468,6 +490,115 @@ determine whether the workflow is running. Likely cause:
 It's possible that this check might not work correctly in some containerised
 environments. If you encounter this issue in combination with containers,
 please let us know.
+
+
+Debugging Workflow Configurations
+---------------------------------
+
+Cylc Debugging Utilities
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. seealso::
+
+   :ref:`user-guide.cheat_sheet`
+
+
+Cylc comes with a number of utilities designed to allow inspection of
+workflows:
+
+``cylc view``
+   Prints workflow configurations before full parsing by Cylc. This
+   can include :ref:`Jinja2 <troubleshooting.jinja2>` (use ``-j``)
+   or Empy template processing.
+
+   Include files can be inlined (use ``-i``).
+
+``cylc config``
+   Prints all or part of the workflow configuration after Cylc has parsed the file
+   and expanded the runtime inheritance hierarchy. For example:
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[root]]
+              execution time limit = PT5S
+          [[FAMILY]]
+              pre-script = sleep 15
+          [[foo, bar]]
+              script = echo 'Hello'
+          [[bar]]
+              inherit = FAMILY
+              post-script = echo 'World'
+
+   would be shown as (revealing in this example why task ``bar``
+   always fails):
+
+   .. code-block:: cylc
+
+      [runtime]
+          [[root]]
+              execution time limit = PT5S
+          [[FAMILY]]
+              execution time limit = PT5S
+              pre-script = sleep 15
+          [[foo]]
+              execution time limit = PT5S
+              script = echo 'Hello'
+          [[bar]]
+              execution time limit = PT5S
+              pre-script = sleep 15
+              script = echo 'Hello'
+              inherit = FAMILY
+              post-script = echo 'World'
+
+
+``cylc lint``
+   #. Checks the config against the :ref:`style_guide`.
+   #. Looks for deprecated Cylc 7 configurations and recommends
+      Cylc 8 configurations to replace them.
+
+   .. seealso::
+
+      :ref:`cylc_lint_script`
+
+``cylc validate``
+
+   Validates the workflow configuration.
+
+   .. seealso::
+
+      :ref:`Validation`
+
+.. _troubleshooting.jinja2:
+
+See what the Jinja2 is doing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It can sometimes be difficult to understand what Jinja2
+templating is doing to a workflow configuration.
+
+``cylc view --process`` (or ``-p``) shows you what the
+configuration will look like after Jinja2 processing.
+
+For example:
+
+.. code-block::
+
+   {% for n in my_function(3) %}
+       R/1983/P{{n}}Y = cicada_{{n}}[-P{{n}}Y] => cicada_{{n}}
+   {% endfor %}
+
+is much easier to understand as:
+
+.. code-block:: cylc-graph
+
+      R/1983/P2Y = cicada_2[-P2Y] => cicada_2
+      R/1983/P3Y = cicada_3[-P3Y] => cicada_3
+      R/1983/P5Y = cicada_5[-P5Y] => cicada_5
+
+If you have installed and played a workflow
+(even using ``play --pause``) this processed content
+is shown in ``log/config/flow-processed.cylc``.
 
 
 Getting Help
