@@ -49,6 +49,8 @@ To make a workflow repeat we must tell Cylc three things:
 
 .. code-block:: diff
 
+    [scheduler]
+        allow implicit tasks = True
     [scheduling]
    +    cycling mode = integer
    +    initial cycle point = 1
