@@ -131,7 +131,7 @@ First, make your required changes to the files in the workflow's
    # validate, reinstall and reload the workflow
    cylc vr <id>
 
-If you want to quickly edit a task's configuration, e.g. whilst developing a
+If you want to quickly edit a task's configuration, e.g. while developing a
 workflow or testing changes, the 
 :ref:`"Edit Runtime" feature <interventions.edit-a-tasks-configuration>`
 in the GUI can be convenient.
