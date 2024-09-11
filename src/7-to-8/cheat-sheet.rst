@@ -329,7 +329,7 @@ Set task outputs:
          cylc reset -s=succeeded
      - ::
 
-         cylc set --out=succeeded``
+         cylc set --out=succeeded
 
 
 Insert a task:
