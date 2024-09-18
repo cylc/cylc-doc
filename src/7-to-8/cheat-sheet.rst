@@ -308,3 +308,38 @@ Run a :ref:`rose:Rose Stem` test suite.
 
          # start
          cylc play <name>
+
+
+Interventions
+-------------
+
+.. note::
+
+   See the :ref:`user-guide.interventions` section for more details.
+
+Set task outputs:
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 7**
+     - **Cylc 8**
+   * - ::
+
+         cylc reset -s=succeeded
+     - ::
+
+         cylc set --out=succeeded
+
+
+Insert a task:
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 7**
+     - **Cylc 8**
+   * - ::
+
+         cylc insert
+     - Tasks are inserted automatically when you "trigger" or "set" them.

@@ -117,7 +117,7 @@ Installing On Mac OS
 --------------------
 
 .. _Homebrew: https://formulae.brew.sh/
-.. _atrun: https://www.unix.com/man-page/FreeBSD/8/atrun/
+.. _atrun: https://man.freebsd.org/cgi/man.cgi?query=atrun&sektion=8&format=html
 
 Cylc requires some extra packages to function on Mac OS. We recommend
 installing them using the `Homebrew`_ package manager:
