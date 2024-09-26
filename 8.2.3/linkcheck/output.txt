@@ -1,2 +1,0 @@
-glossary.rst:468: [redirected with Found] http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html to https://www.cl.cam.ac.uk/~mgk25/iso-time.html
-reference/architecture/data-flow.rst:53: [redirected with Found] https://jupyter-server.readthedocs.io to https://jupyter-server.readthedocs.io/en/latest/
