@@ -642,8 +642,15 @@ This graph can be written more concisely, with the same result, like this:
            T06,T18 = "C => X"
 
 
-Excluding Dates
-^^^^^^^^^^^^^^^
+.. _user_guide.scheduling.exclusions:
+
+Exclusions
+^^^^^^^^^^
+
+Exclusions allow you to subtract dates or recurrences from a cycling section
+using the exclamation mark symbol (!).
+
+.. rubric:: Excluding Dates
 
 :term:`datetimes <ISO 8601 datetime>` can be excluded from a :term:`recurrence`
 by an exclamation mark for example ``PT1D!20000101`` means run daily except on
@@ -671,8 +678,7 @@ workflow ``foo`` will only run once as its second run is excluded.
        [[graph]]
            R2/P1D!20000102 = foo
 
-Excluding Recurrences
-^^^^^^^^^^^^^^^^^^^^^
+.. rubric:: Excluding Recurrences
 
 Exclusions may themselves be datetime recurrence sequences. Any partial
 datetime or sequence after the exclamation mark will be excluded from the main
