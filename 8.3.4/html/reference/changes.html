@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changes &mdash; Cylc 8.3.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=986d2f06"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuration" href="config/index.html" />
+    <link rel="prev" title="Reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-8-3">Cylc 8.3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#manually-setting-task-outputs-and-prerequisites">Manually setting task outputs and prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tui">Tui</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#n-window-selector-in-the-gui">N-Window selector in the GUI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#group-by-cycle-point-in-the-graph-view">Group by cycle point in the graph view</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gantt-view">Gantt View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis-view">Analysis View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#completion-expressions">Completion Expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#workflow-state-triggers-commands">Workflow State Triggers &amp; Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-8-2">Cylc 8.2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ui-now-remembers-workspace-tab-layout">UI now remembers workspace tab layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-ignores-pythonpath">Cylc ignores <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#upgrade-to-the-latest-jupyter-releases">Upgrade To The Latest Jupyter Releases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reload">Reload</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-8-1">Cylc 8.1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Analysis View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#graph-view">Graph View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-view">Log View</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#edit-runtime">Edit Runtime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#combined-commands">Combined Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bash-completion">Bash Completion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-8-0">Cylc 8.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="job-script-vars/index.html">Job Script Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Reference</a></li>
+      <li class="breadcrumb-item active">Changes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/changes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="changes">
+<h1>Changes<a class="headerlink" href="#changes" title="Link to this heading"></a></h1>
+<p>This page contains a summary of significant changes across all Cylc components for each
+release.</p>
+<p>For more detail see the component changelogs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-flow/blob/master/CHANGES.md">cylc-flow-changelog</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md">cylc-uiserver-changelog</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-ui/blob/master/CHANGES.md">cylc-ui-changelog</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cylc/cylc-rose/blob/master/CHANGES.md">cylc-rose-changelog</a></p></li>
+<li><p><a class="reference external" href="https://github.com/metomi/rose/blob/master/CHANGES.md">metomi-rose-changelog</a></p></li>
+<li><p><a class="reference external" href="https://github.com/metomi/isodatetime/blob/master/CHANGES.md">metomi-isodatetime-changelog</a></p></li>
+</ul>
+<hr class="docutils" />
+<section id="cylc-8-3">
+<h2>Cylc 8.3<a class="headerlink" href="#cylc-8-3" title="Link to this heading"></a></h2>
+<div class="hint admonition">
+<p class="admonition-title">Cylc Components</p>
+<dl class="field-list simple">
+<dt class="field-odd">cylc-flow<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-flow/blob/master/CHANGES.md">8.3</a></p>
+</dd>
+<dt class="field-even">cylc-ui<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://github.com/cylc/cylc-ui/blob/master/CHANGES.md">2.5</a></p>
+</dd>
+<dt class="field-odd">cylc-uiserver<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md">1.5</a></p>
+</dd>
+<dt class="field-even">cylc-rose<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://github.com/cylc/cylc-rose/blob/master/CHANGES.md">1.4</a></p>
+</dd>
+<dt class="field-odd">rose<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/metomi/rose/blob/master/CHANGES.md">2.3</a></p>
+</dd>
+</dl>
+</div>
+<section id="manually-setting-task-outputs-and-prerequisites">
+<h3>Manually setting task outputs and prerequisites<a class="headerlink" href="#manually-setting-task-outputs-and-prerequisites" title="Link to this heading"></a></h3>
+<p>At Cylc 8.3.0, the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set-outputs</span></code> command has been replaced by the new
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span></code> command.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set-outputs</span></code> command made it look like an output had been generated
+to downstream tasks, but did not update the task status to match. As a result,
+it was often necessary to use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code> in combination with <code class="docutils literal notranslate"><span class="pre">cylc</span>
+<span class="pre">set-outputs</span></code>.</p>
+<p>The new <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span></code> command is able to directly set task outputs as if they
+had completed naturally, making the command more intuitive and avoiding the
+need for <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code>. It can also set prerequisites, as if they were satisfied naturally.</p>
+<p>For example, say there’s a failed task holding up your workflow and you want
+Cylc to continue as if the task had succeeded. Here are the interventions
+you would need to perform with Cylc 8.2 and 8.3 side-by-side.</p>
+<table class="grid-table docutils align-default">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Cylc 8.2</strong> (set-outputs)</p></td>
+<td><p><strong>Cylc 8.3</strong> (set)</p></td>
+</tr>
+<tr class="row-even"><td><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># let downstream tasks run:</span>
+cylc<span class="w"> </span>set-outputs<span class="w"> </span>&lt;task&gt;
+<span class="c1"># remove the failed task:</span>
+cylc<span class="w"> </span>remove<span class="w"> </span>&lt;task&gt;
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># tell Cylc that the task succeeded:</span>
+cylc<span class="w"> </span><span class="nb">set</span><span class="w"> </span>&lt;task&gt;
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="../_images/cylc-set-outputs.gif"><img alt="../_images/cylc-set-outputs.gif" class="align-center" src="../_images/cylc-set-outputs.gif" style="width: 100%;" /></a>
+</td>
+<td><a class="reference internal image-reference" href="../_images/cylc-set.gif"><img alt="../_images/cylc-set.gif" class="align-center" src="../_images/cylc-set.gif" style="width: 100%;" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tui">
+<h3>Tui<a class="headerlink" href="#tui" title="Link to this heading"></a></h3>
+<p>The Tui (terminal user interface) is a command line version of the Gui.
+You can use it to monitor and control your workflows.</p>
+<p>There has been a major update to Tui at Cylc 8.3.0:</p>
+<ul class="simple">
+<li><p>Larger workflows will no longer cause Tui to time out.</p></li>
+<li><p>You can now browse all your workflows including stopped workflows.</p></li>
+<li><p>You can monitor multiple workflows at the same time.</p></li>
+<li><p>The workflow and job logs are now available from within Tui.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/tui-1.gif"><img alt="../_images/tui-1.gif" src="../_images/tui-1.gif" style="width: 100%;" /></a>
+</section>
+<section id="n-window-selector-in-the-gui">
+<h3>N-Window selector in the GUI<a class="headerlink" href="#n-window-selector-in-the-gui" title="Link to this heading"></a></h3>
+<p>The <a class="reference internal" href="../glossary.html#term-n-window"><span class="xref std std-term">n-window</span></a> determines how much of a workflow is visible in the GUI / Tui.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n=0</span></code> window contains only the active tasks
+(i.e. queued, preparing, submitted or running tasks).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n=1</span></code> window, also contains tasks one “edge” out from active tasks
+(i.e. the tasks immediately upstream or downstream of active tasks).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">n=2</span></code> window, also contains tasks two “edges” out from active tasks,
+and so on.</p>
+<p>It is now possible to change the window extent in the GUI via a button in the
+toolbar allowing you to see tasks further back in the workflow’s history.</p>
+<a class="reference internal image-reference" href="../_images/gui-n-window-selector.gif"><img alt="../_images/gui-n-window-selector.gif" src="../_images/gui-n-window-selector.gif" style="width: 100%;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is currently a per-workflow setting so changing the n-window in one
+browser tab will also change it in other browser tabs and Tui sessions.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Using high n-window values with complex workflows may have performance
+impacts.</p>
+</div>
+</section>
+<section id="group-by-cycle-point-in-the-graph-view">
+<h3>Group by cycle point in the graph view<a class="headerlink" href="#group-by-cycle-point-in-the-graph-view" title="Link to this heading"></a></h3>
+<p>The graph view now has an option to group tasks by cycle point.</p>
+<a class="reference internal image-reference" href="../_images/cylc-graph-group-by-cycle-point.png"><img alt="../_images/cylc-graph-group-by-cycle-point.png" src="../_images/cylc-graph-group-by-cycle-point.png" style="width: 100%;" /></a>
+</section>
+<section id="gantt-view">
+<h3>Gantt View<a class="headerlink" href="#gantt-view" title="Link to this heading"></a></h3>
+<p>The GUI now has a <a class="reference external" href="https://en.wikipedia.org/wiki/Gantt_chart">Gantt</a> view option:</p>
+<a class="reference internal image-reference" href="../_images/gantt_view.png"><img alt="A picture of the Gantt view in operation." src="../_images/gantt_view.png" style="width: 100%;" /></a>
+</section>
+<section id="analysis-view">
+<h3>Analysis View<a class="headerlink" href="#analysis-view" title="Link to this heading"></a></h3>
+<p>New Analysis added - a layout which plots run times against cycle points.</p>
+<a class="reference internal image-reference" href="../_images/time_series.png"><img alt="A picture of the Time Series task analysis in operation." src="../_images/time_series.png" style="width: 100%;" /></a>
+</section>
+<section id="completion-expressions">
+<h3>Completion Expressions<a class="headerlink" href="#completion-expressions" title="Link to this heading"></a></h3>
+<p>When a task achieves a final status, its outputs are validated against a “completion
+expression” to ensure that it has produced all of its
+<a class="reference internal" href="../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a>.
+If a task fails this validation check it is said to have “incomplete outputs”
+and will be retained in the <a class="reference internal" href="../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a> pending user intervention.</p>
+<p>This completion expression is generated automatically from the graph.
+By default, tasks are expected to succeed, if you register any additional
+required output in the graph, then these must also
+be produced.</p>
+<p>At Cylc 8.3.0 it is now possible to manually configure this completion
+expression for finer control. This is particularly useful for anyone using
+<a class="reference internal" href="../glossary.html#term-custom-output"><span class="xref std std-term">custom outputs</span></a>.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">mytask</span></code> must produce one of the outputs <code class="docutils literal notranslate"><span class="pre">x</span></code> or <code class="docutils literal notranslate"><span class="pre">y</span></code> to pass
+the completion expression configured here:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask]]</span>
+        <span class="nv">completion </span><span class="o">=</span><span class="s"> succeeded and (x or y)</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="nv">x </span><span class="o">=</span><span class="s"> output-x</span>
+            <span class="nv">y </span><span class="o">=</span><span class="s"> output-y</span>
+</pre></div>
+</div>
+<p>For more information, see the reference for the
+<a class="reference internal" href="config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]completion" title="flow.cylc[runtime][&lt;namespace&gt;]completion"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]completion</span></code></a> configuration.</p>
+</section>
+<section id="workflow-state-triggers-commands">
+<h3>Workflow State Triggers &amp; Commands<a class="headerlink" href="#workflow-state-triggers-commands" title="Link to this heading"></a></h3>
+<p>Workflow state xtriggers and command now take Cylc universal IDs instead of
+separate arguments:</p>
+<p>For example, you can (and should) now write:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span># On the command line
+<span class="gd">- cylc workflow-state my-workflow --point 20240101 --task mytask --message &quot;succeeded&quot;</span>
+<span class="gi">+ cylc workflow-state my-workflow//20240101/mytask:succeeded --triggers</span>
+
+# In the flow.cylc file
+<span class="gd">- my_xtrigger = workflow_state(</span>
+<span class="gd">-     workflow=&quot;my-workflow&quot;,</span>
+<span class="gd">-     task=&quot;mytask&quot;,</span>
+<span class="gd">-     point=&quot;20240101&quot;,</span>
+<span class="gd">-     message=&quot;succeeded&quot;</span>
+<span class="gd">- )</span>
+<span class="gi">+ my_xtrigger = workflow_state(&#39;my-workflow//20240101/mytask:succeeded&#39;, is_trigger=True)</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The new workflow state trigger syntax can use either the trigger or message from
+<code class="docutils literal notranslate"><span class="pre">trigger=message</span></code> in <a class="reference internal" href="config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][outputs]" title="flow.cylc[runtime][&lt;namespace&gt;][outputs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][outputs]</span></code></a>.</p>
+<p>The trigger and message are the same for the most common use cases (<code class="docutils literal notranslate"><span class="pre">succeeded</span></code> and <code class="docutils literal notranslate"><span class="pre">started</span></code>)
+but may differ for other outputs, namely <a class="reference internal" href="../glossary.html#term-custom-output"><span class="xref std std-term">custom outputs</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">suite-state</span></code> xtrigger has been reimplemented for compatibility with
+Cylc 7 workflows.</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cylc-8-2">
+<h2>Cylc 8.2<a class="headerlink" href="#cylc-8-2" title="Link to this heading"></a></h2>
+<div class="hint admonition">
+<p class="admonition-title">Cylc Components</p>
+<dl class="field-list simple">
+<dt class="field-odd">cylc-flow<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-flow/blob/8.2.x/CHANGES.md">8.2</a></p>
+</dd>
+<dt class="field-even">cylc-uiserver<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md">1.4</a></p>
+</dd>
+<dt class="field-odd">cylc-rose<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-rose/blob/1.3.x/CHANGES.md">1.3</a></p>
+</dd>
+</dl>
+</div>
+<section id="ui-now-remembers-workspace-tab-layout">
+<h3>UI now remembers workspace tab layout<a class="headerlink" href="#ui-now-remembers-workspace-tab-layout" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.4.4</p>
+</div>
+<p>The UI now remembers the layout of your workspace tabs when you navigate away
+from that workflow. Note that this only applies per browser session.</p>
+<a class="reference internal image-reference" href="../_images/ui-workspace-tabs.gif"><img alt="../_images/ui-workspace-tabs.gif" src="../_images/ui-workspace-tabs.gif" style="width: 100%;" /></a>
+</section>
+<section id="cylc-ignores-pythonpath">
+<h3>Cylc ignores <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code><a class="headerlink" href="#cylc-ignores-pythonpath" title="Link to this heading"></a></h3>
+<p>Cylc now ignores <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code> to make it more robust to task
+environments which set this value. If you want to add to the Cylc
+environment itself, e.g. to install a Cylc extension,
+use a custom xtrigger, or event handler use <code class="docutils literal notranslate"><span class="pre">$CYLC_PYTHONPATH</span></code>.</p>
+</section>
+<section id="upgrade-to-the-latest-jupyter-releases">
+<h3>Upgrade To The Latest Jupyter Releases<a class="headerlink" href="#upgrade-to-the-latest-jupyter-releases" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.4.0</p>
+</div>
+<p>The Cylc UI Server has been updated to work with the latest releases of
+<a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> and <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
+<p>If you are utilising Cylc’s multi-user functionality then your configuration
+will require some changes to work with these releases.</p>
+<p>See <a class="reference internal" href="config/sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a> for more details</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.3.0</p>
+</div>
+<p>You can now configure the view which is opened by default when you navigate to
+a new workflow in the GUI. Navigate to the settings page to select your chosen
+view.</p>
+<a class="reference internal image-reference" href="../_images/ui-view-selector.jpg"><img alt="../_images/ui-view-selector.jpg" src="../_images/ui-view-selector.jpg" style="width: 100%;" /></a>
+<p>In the future we plan to support configuring a layout of multiple views and
+configuring certain options on those views.</p>
+</section>
+<section id="reload">
+<h3>Reload<a class="headerlink" href="#reload" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-flow: </span>8.2.0</p>
+</div>
+<p>When workflows are
+<a class="reference internal" href="../user-guide/running-workflows/scheduler-start-up.html#reloading-the-workflow-configuration-at-runtime"><span class="std std-ref">reloaded</span></a>,
+(e.g. by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reload</span></code>), Cylc will now pause the workflow and wait for any
+preparing tasks to be submitted before proceeding with the reload.
+Once the reload has been completed, the workflow will be resumed.</p>
+<p>You can now see more information about the status of the reload in the
+workflow status message which appears at the top of the GUI and Tui interfaces.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cylc-8-1">
+<h2>Cylc 8.1<a class="headerlink" href="#cylc-8-1" title="Link to this heading"></a></h2>
+<div class="hint admonition">
+<p class="admonition-title">Cylc Components</p>
+<dl class="field-list simple">
+<dt class="field-odd">cylc-flow<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-flow/blob/8.1.x/CHANGES.md">8.1</a></p>
+</dd>
+<dt class="field-even">cylc-uiserver<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://github.com/cylc/cylc-uiserver/blob/1.2.x/CHANGES.md">1.2</a></p>
+</dd>
+<dt class="field-odd">cylc-rose<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-rose/blob/1.1.0/CHANGES.md#user-content-cylc-rose-110-released-2022-07-28">1.1</a></p>
+</dd>
+</dl>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Workflows started with Cylc 8.0 which contain multiple <a class="reference internal" href="../glossary.html#term-flow"><span class="xref std std-term">flows</span></a>
+<strong>cannot</strong> be restarted with Cylc 8.1 due to database changes.</p>
+</div>
+<section id="id1">
+<h3>Analysis View<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.2.2</p>
+</div>
+<p>The web UI also has a new view for displaying task queue &amp; run time statistics.</p>
+<a class="reference internal image-reference" href="../_images/analysis_view.gif"><img alt="../_images/analysis_view.gif" src="../_images/analysis_view.gif" style="width: 80%;" /></a>
+</section>
+<section id="graph-view">
+<h3>Graph View<a class="headerlink" href="#graph-view" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.2.0</p>
+</div>
+<p>The web UI now has a graph view which displays a visualisation of a workflow’s graph:</p>
+<a class="reference internal image-reference" href="../_images/cylc-graph.gif"><img alt="../_images/cylc-graph.gif" src="../_images/cylc-graph.gif" style="width: 80%;" /></a>
+<p>Family &amp; cycle grouping as well as the ability to view graphs for stopped workflows
+will be added in later releases.</p>
+</section>
+<section id="log-view">
+<h3>Log View<a class="headerlink" href="#log-view" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.2.0</p>
+</div>
+<p>The web UI now has a log view which displays workflow and job log files:</p>
+<a class="reference internal image-reference" href="../_images/log-view-screenshot.png"><img alt="../_images/log-view-screenshot.png" src="../_images/log-view-screenshot.png" style="width: 80%;" /></a>
+<p>Support for viewing more log files, syntax highlighting, searching and line
+numbers are planned for future releases.</p>
+</section>
+<section id="edit-runtime">
+<h3>Edit Runtime<a class="headerlink" href="#edit-runtime" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.2.0</p>
+</div>
+<p>The web UI now has a command for editing the <a class="reference internal" href="config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> section
+of a task or family.</p>
+<a class="reference internal image-reference" href="../_images/edit-runtime-screenshot.png"><img alt="../_images/edit-runtime-screenshot.png" src="../_images/edit-runtime-screenshot.png" style="width: 80%;" /></a>
+<p>Any changes made are <a class="reference internal" href="../user-guide/running-workflows/dynamic-behaviour.html#cylc-broadcast"><span class="std std-ref">broadcast</span></a> to the running workflow.</p>
+</section>
+<section id="combined-commands">
+<h3>Combined Commands<a class="headerlink" href="#combined-commands" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-flow: </span>8.1.0</p>
+</div>
+<p>Two new commands have been added as short-cuts for common working patterns:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code></dt><dd><p>Validate, install and plays a workflow, equivalent to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>&lt;path&gt;
+cylc<span class="w"> </span>install<span class="w"> </span>&lt;path&gt;
+cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code></dt><dd><p>Validate and reinstall a workflow, then either:
+- reload the workflow if it is running.
+- restart the workflow if it is stopped.</p>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../_images/vip-vr.gif"><img alt="../_images/vip-vr.gif" src="../_images/vip-vr.gif" style="width: 100%;" /></a>
+<p>For more information see the command line help:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>vip<span class="w"> </span>--help
+cylc<span class="w"> </span>vr<span class="w"> </span>--help
+</pre></div>
+</div>
+</section>
+<section id="bash-completion">
+<h3>Bash Completion<a class="headerlink" href="#bash-completion" title="Link to this heading"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version cylc-flow: </span>8.1.0</p>
+</div>
+<p>Cylc now provides a high performance Bash completion script which saves you typing:</p>
+<ul class="simple">
+<li><p>Cylc commands &amp; options</p></li>
+<li><p>Workflow IDs</p></li>
+<li><p>Cycle points</p></li>
+<li><p>Task names</p></li>
+<li><p>Job numbers</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/cylc-completion.bash.gif"><img alt="../_images/cylc-completion.bash.gif" src="../_images/cylc-completion.bash.gif" style="width: 80%;" /></a>
+<p><a class="reference internal" href="../installation.html#installation-shell-auto-completion"><span class="std std-ref">Installation instructions</span></a>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cylc-8-0">
+<h2>Cylc 8.0<a class="headerlink" href="#cylc-8-0" title="Link to this heading"></a></h2>
+<div class="hint admonition">
+<p class="admonition-title">Cylc Components</p>
+<dl class="field-list simple">
+<dt class="field-odd">cylc-flow<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-flow/blob/8.0.0/CHANGES.md#user-content-major-changes-in-cylc-8">8.0</a></p>
+</dd>
+<dt class="field-even">cylc-uiserver<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://github.com/cylc/cylc-uiserver/blob/1.1.0/CHANGES.md#user-content-cylc-uiserver-110-released-2022-07-28">1.1</a></p>
+</dd>
+<dt class="field-odd">cylc-rose<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://github.com/cylc/cylc-rose/blob/1.1.0/CHANGES.md#user-content-cylc-rose-110-released-2022-07-28">1.1</a></p>
+</dd>
+</dl>
+</div>
+<p>The first official release of Cylc 8.</p>
+<p>For a summary of changes see the <a class="reference internal" href="../7-to-8/summary.html#overview"><span class="std std-ref">migration guide</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config/index.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 26, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/changes";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

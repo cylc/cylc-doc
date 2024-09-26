@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Configuration &mdash; Cylc 8.3.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=f63d8bfa" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=986d2f06"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+        <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+        <script src="../../_static/js/spoiler.js?v=12631137"></script>
+        <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Scheduling Configuration" href="scheduling.html" />
+    <link rel="prev" title="Writing Workflows" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Workflows</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Workflow Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-flow-cylc-file">The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#workflow-configuration-directories">Workflow Configuration Directories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-code-in-workflow-configurations">Understanding Code in Workflow Configurations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#syntax-highlighting-for-workflow-configuration">Syntax Highlighting For Workflow Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gross-file-structure">Gross File Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validation">Validation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linting">Linting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="empy.html">EmPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduler.html">Scheduler Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Workflow Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/writing-workflows/configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-configuration">
+<span id="user-guide-configuration"></span><h1>Workflow Configuration<a class="headerlink" href="#workflow-configuration" title="Link to this heading"></a></h1>
+<section id="the-flow-cylc-file">
+<span id="flowconfigfile"></span><h2>The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File<a class="headerlink" href="#the-flow-cylc-file" title="Link to this heading"></a></h2>
+<p>Cylc workflows are defined in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files that specify the
+tasks to be managed by the Cylc scheduler, the dependencies between them,
+and the schedules to run them to.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.cylc</span></code> file syntax is described in the <a class="reference internal" href="../../reference/config/file-format.html#file-format"><span class="std std-ref">File Format Reference</span></a>.</p>
+<p>The configurations you can use are documented in <a class="reference internal" href="../../reference/config/workflow.html#workflow-configuration"><span class="std std-ref">Workflow Configuration</span></a>.</p>
+<p>Cylc also supports two <a class="reference external" href="https://en.wikipedia.org/wiki/Template_processor">template processors</a> for use in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jinja.palletsprojects.com/en/3.0.x/">Jinja2</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/empy/">EmPy</a></p></li>
+</ul>
+</section>
+<section id="workflow-configuration-directories">
+<span id="workflowdefinitiondirectories"></span><h2>Workflow Configuration Directories<a class="headerlink" href="#workflow-configuration-directories" title="Link to this heading"></a></h2>
+<p>A Cylc <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> contains:</p>
+<dl>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a></dt><dd><p>The file which configures the workflow.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">bin/</span></code> (optional)</dt><dd><p>A directory for scripts and executables used by workflow tasks. It is
+added to <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in job environments.</p>
+<p>Jobs can also run scripting defined in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file,
+executables installed to user-defined locations of the workflow run
+directory, and external executables.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">lib/python/</span></code> (optional)</dt><dd><p>A directory for Python modules. It is added to <code class="docutils literal notranslate"><span class="pre">$PYTHONPATH</span></code> in
+the scheduler and job execution environments. It can be used by:</p>
+<ul class="simple">
+<li><p>Tasks</p></li>
+<li><p>Custom <a class="reference internal" href="../../plugins/job-runners/index.html#customjobsubmissionmethods"><span class="std std-ref">job runners</span></a></p></li>
+<li><p>Custom <a class="reference internal" href="jinja2.html#customjinja2filters"><span class="std std-ref">Jinja2 Filters</span></a></p></li>
+</ul>
+</dd>
+</dl>
+<p>Other files and folders may be placed in the <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> too:
+documentation, configuration files, etc. When the workflow is <a class="reference internal" href="../installing-workflows.html#installing-workflows"><span class="std std-ref">installed</span></a> these will be copied over to the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your workflow needs to create or install scripts or executables at runtime
+and you don’t want Cylc to delete them on re-installation, you can use
+equivalent directories in the <a class="reference internal" href="runtime.html#workflow-share-directories"><span class="std std-ref">Workflow Share Directories</span></a>.</p>
+</div>
+</section>
+<section id="understanding-code-in-workflow-configurations">
+<span id="understandingcodeincylcconfigurations"></span><h2>Understanding Code in Workflow Configurations<a class="headerlink" href="#understanding-code-in-workflow-configurations" title="Link to this heading"></a></h2>
+<p>A workflow configuration is not executable code. It configures the scheduler
+program to run your workflow. A <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file may contain:</p>
+<ul class="simple">
+<li><p>Embedded Python-like Jinja2 or EmPy templating code, such as
+<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">set</span> <span class="pre">PLANET</span> <span class="pre">=</span> <span class="pre">&quot;earth&quot;</span> <span class="pre">%}</span></code></p></li>
+<li><p>Bash shell variable assignments and scripting, such as
+<code class="docutils literal notranslate"><span class="pre">script</span> <span class="pre">=</span> <span class="pre">&quot;run-model.exe</span> <span class="pre">/path/to/data&quot;</span></code></p></li>
+</ul>
+<p>Jinja2 (or EmPy) templating code gets executed as a preprocessing step, to
+programmatically generate the workflow configuration for the scheduler.
+To see the result after template processing:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the workflow configuration, processed but not parsed:</span>
+$<span class="w"> </span>cylc<span class="w"> </span>view<span class="w"> </span>--process<span class="w"> </span>&lt;workflow-id&gt;
+
+<span class="c1"># print the workflow configuration, processed and parsed:</span>
+$<span class="w"> </span>cylc<span class="w"> </span>config<span class="w"> </span>&lt;workflow-id&gt;
+</pre></div>
+</div>
+<p>The scheduler does not interpret shell syntax, but certain string-valued
+config items may contain shell code that gets written verbatim to job scripts,
+to be executed by the running job.</p>
+<p>Some things to be aware of:</p>
+<ul class="simple">
+<li><p>Jinja2 code is evaluated once when the workflow is started.</p></li>
+<li><p>Jinja2 code can only reference Jinja2 variables, not Cylc config items.</p></li>
+<li><p>Jinja2 (like Python) has its own syntax for reading environment variables.</p></li>
+<li><p>Jinja2 code that reads the environment or the filesystem will do so
+during config file parsing on the scheduler run host, not on job hosts.
+Beware of doing this in task definitions - do you want the scheduler
+environment to affect shell code that runs in the job environment?</p></li>
+<li><p>Shell code destined for the job script can read the environment or
+access the filesystem as the job runs on the job host, not on the
+scheduler host.</p></li>
+</ul>
+</section>
+<section id="syntax-highlighting-for-workflow-configuration">
+<span id="syntaxhighlighting"></span><h2>Syntax Highlighting For Workflow Configuration<a class="headerlink" href="#syntax-highlighting-for-workflow-configuration" title="Link to this heading"></a></h2>
+<p>Cylc provides syntax plugins for the following editors:</p>
+<dl class="simple">
+<dt>Atom</dt><dd><p>install the <a class="reference external" href="https://github.com/cylc/language-cylc">language-cylc</a> extension.</p>
+</dd>
+<dt>Emacs</dt><dd><p>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-resources</span> <span class="pre">syntax/cylc-mode.el</span> <span class="pre">.</span></code>
+installation instructions are at the top of the file.</p>
+</dd>
+<dt>Gedit</dt><dd><p>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-resources</span> <span class="pre">syntax/cylc.lang</span> <span class="pre">.</span></code>
+installation instructions are at the top of the file.</p>
+</dd>
+<dt>Kate</dt><dd><p>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-resources</span> <span class="pre">syntax/cylc.xml</span> <span class="pre">.</span></code>
+installation instructions are at the top of the file.</p>
+</dd>
+<dt>PyCharm</dt><dd><p>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</p>
+</dd>
+<dt>Vim</dt><dd><p>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-resources</span> <span class="pre">syntax/cylc.vim</span> <span class="pre">.</span></code>
+installation instructions are at the top of the file.</p>
+</dd>
+<dt>Visual Studio Code</dt><dd><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc">vscode-cylc</a> extension.</p>
+</dd>
+<dt>Sublime Text 3</dt><dd><p>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</p>
+</dd>
+<dt>TextMate</dt><dd><p>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</p>
+</dd>
+<dt>WebStorm</dt><dd><p>Install the <a class="reference external" href="https://github.com/cylc/Cylc.tmbundle">Cylc.tmbundle</a>.</p>
+</dd>
+<dt>Nano</dt><dd><p>The syntax file can be obtained from the Cylc library by
+running the following command
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">get-resources</span> <span class="pre">syntax/cylc.nanorc</span> <span class="pre">~/.config/nano</span></code>
+installation instructions are at the top of the file.</p>
+</dd>
+</dl>
+</section>
+<section id="gross-file-structure">
+<h2>Gross File Structure<a class="headerlink" href="#gross-file-structure" title="Link to this heading"></a></h2>
+<p>Cylc <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files consist of configuration items grouped under
+several top level section headings:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[meta]" title="flow.cylc[meta]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[meta]</span></code></a></dt><dd><p>Information about the workflow e.g. title and description.</p>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]" title="flow.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]</span></code></a></dt><dd><p>Non task-specific workflow configuration.</p>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[task parameters]" title="flow.cylc[task parameters]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[task</span> <span class="pre">parameters]</span></code></a></dt><dd><p>Parameters for use when defining graphs and tasks.
+See <a class="reference internal" href="parameterized-tasks.html#user-guide-param"><span class="std std-ref">Task Parameters</span></a>.</p>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]" title="flow.cylc[scheduling]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]</span></code></a></dt><dd><p>Determines when tasks are ready to run.</p>
+<ul class="simple">
+<li><p>special scheduling constraints e.g.
+<a class="reference internal" href="external-triggers.html#section-external-triggers"><span class="std std-ref">external triggers</span></a>.</p></li>
+<li><p>the dependency graph, which defines the relationships
+between tasks</p></li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a></dt><dd><p>Determines how, where, and what to execute when tasks are ready</p>
+<ul class="simple">
+<li><p>script, environment, job submission, remote hosting, etc.</p></li>
+<li><p>workflow-wide defaults in the <em>root</em> family</p></li>
+<li><p>a nested family hierarchy with common properties
+inherited by related tasks</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="validation">
+<span id="id1"></span><h2>Validation<a class="headerlink" href="#validation" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> command evaluates the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file
+against a specification that defines all legal entries, values and options.
+It also performs some integrity checks designed to catch certain configuration
+issues and impossible scheduling constraints.</p>
+<p>These checks are also performed by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> before starting a workflow.</p>
+<p>All legal entries are documented in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> reference.</p>
+<p>If a <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file uses include-files <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">view</span></code> will
+show an inlined copy of the workflow with correct line numbers.</p>
+</section>
+<section id="linting">
+<span id="cylc-lint-script"></span><h2>Linting<a class="headerlink" href="#linting" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">lint</span></code> command checks code style, deprecated syntax and other
+issues in Cylc configuration files.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#lint-pyproject-toml"><span class="std std-ref">How to configure Cylc lint at project level</span></a>
+using a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p>
+</div>
+<section id="module-cylc.flow.scripts.lint">
+<span id="cylc-lint"></span><h3><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">lint</span></code><a class="headerlink" href="#module-cylc.flow.scripts.lint" title="Link to this heading"></a></h3>
+<p>Cylc configuration linter.</p>
+<p>Checks code style, deprecated syntax and other issues.</p>
+<p>Individual errors can be ignored using the <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">noqa</span></code> line comment.
+It is good practice to specify specific errors you wish to ignore using
+<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">noqa:</span> <span class="pre">S002</span> <span class="pre">S007</span> <span class="pre">U999</span></code></p>
+<section id="style">
+<h4>Style<a class="headerlink" href="#style" title="Link to this heading"></a></h4>
+<section id="id2">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#tab-characters">S001</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h5>
+<p>Use multiple spaces, not tabs</p>
+</section>
+<section id="id3">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#indentation">S002</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h5>
+<p>Item not indented.</p>
+</section>
+<section id="id4">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#indentation">S003</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h5>
+<p>Top level sections should not be indented.</p>
+</section>
+<section id="id5">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#indentation">S004</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h5>
+<p>Second level sections should be indented exactly 4 spaces.</p>
+</section>
+<section id="id6">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#indentation">S005</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h5>
+<p>Third level sections should be indented exactly 8 spaces.</p>
+</section>
+<section id="id7">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#trailing-whitespace">S006</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
+<p>trailing whitespace.</p>
+</section>
+<section id="id8">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#task-naming-conventions">S007</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
+<p>Family name contains lowercase characters.</p>
+</section>
+<section id="s008">
+<h5><a class="reference internal" href="#s008">S008</a><a class="headerlink" href="#s008" title="Link to this heading"></a></h5>
+<p>jinja2 found: no shebang (#!jinja2)</p>
+</section>
+<section id="id9">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/7-to-8/major-changes/platforms.html">S009</a><a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
+<p>Host Selection Script may be redundant with platform</p>
+</section>
+<section id="id10">
+<h5><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3825">S010</a><a class="headerlink" href="#id10" title="Link to this heading"></a></h5>
+<p>Using backticks to invoke subshell is deprecated</p>
+</section>
+<section id="s011">
+<h5><a class="reference internal" href="#s011">S011</a><a class="headerlink" href="#s011" title="Link to this heading"></a></h5>
+<p>Cylc will process commented Jinja2!</p>
+</section>
+<section id="id11">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/workflow-design-guide/style-guide.html#line-length-and-continuation">S012</a><a class="headerlink" href="#id11" title="Link to this heading"></a></h5>
+<p>line &gt; <code class="docutils literal notranslate"><span class="pre">&lt;max_line_len&gt;</span></code> characters. Max line  length set in pyproject.toml (default 130)</p>
+</section>
+<section id="s013">
+<h5><a class="reference internal" href="#s013">S013</a><a class="headerlink" href="#s013" title="Link to this heading"></a></h5>
+<p>Items should be indented in 4 space blocks.</p>
+</section>
+</section>
+<section id="to-8-upgrades">
+<h4>7 to 8 upgrades<a class="headerlink" href="#to-8-upgrades" title="Link to this heading"></a></h4>
+<section id="u001">
+<h5><a class="reference internal" href="#u001">U001</a><a class="headerlink" href="#u001" title="Link to this heading"></a></h5>
+<p><code class="docutils literal notranslate"><span class="pre">[scheduling][dependencies][&lt;recurrence&gt;]graph</span> <span class="pre">=</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">[scheduling][graph]&lt;recurrence&gt;</span> <span class="pre">=</span></code> (<code class="docutils literal notranslate"><span class="pre">[dependencies]</span></code> detected)</p>
+</section>
+<section id="u002">
+<h5><a class="reference internal" href="#u002">U002</a><a class="headerlink" href="#u002" title="Link to this heading"></a></h5>
+<p><code class="docutils literal notranslate"><span class="pre">[scheduling][dependencies][&lt;recurrence&gt;]graph</span> <span class="pre">=</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">[scheduling][graph]&lt;recurrence&gt;</span> <span class="pre">=</span></code> (<code class="docutils literal notranslate"><span class="pre">graph</span> <span class="pre">=</span></code> detected)</p>
+</section>
+<section id="u003">
+<h5><a class="reference internal" href="#u003">U003</a><a class="headerlink" href="#u003" title="Link to this heading"></a></h5>
+<p>settings in <code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][remote]</span></code> have been moved to <code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]</span></code> and <code class="docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platforms</span> <span class="pre">name&gt;]</span></code></p>
+</section>
+<section id="u004">
+<h5><a class="reference internal" href="#u004">U004</a><a class="headerlink" href="#u004" title="Link to this heading"></a></h5>
+<p>settings in <code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][job]</span></code> have been moved to <code class="docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]</span></code> and <code class="docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platforms</span> <span class="pre">name&gt;]</span></code></p>
+</section>
+<section id="u005">
+<h5><a class="reference internal" href="#u005">U005</a><a class="headerlink" href="#u005" title="Link to this heading"></a></h5>
+<p><code class="docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][job]batch</span> <span class="pre">system</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]job</span> <span class="pre">runner</span></code></p>
+</section>
+<section id="id12">
+<h5><a class="reference external" href="https://github.com/cylc/cylc-flow/issues/3825">U006</a><a class="headerlink" href="#id12" title="Link to this heading"></a></h5>
+<p>Using backticks to invoke subshell will fail at Cylc 8.</p>
+</section>
+<section id="id13">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/7-to-8/major-changes/platforms.html">U007</a><a class="headerlink" href="#id13" title="Link to this heading"></a></h5>
+<p>Use built in platform selection instead of rose host-select.</p>
+</section>
+<section id="id14">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/7-to-8/major-changes/suicide-triggers.html">U008</a><a class="headerlink" href="#id14" title="Link to this heading"></a></h5>
+<p>Suicide triggers are not required at Cylc 8.</p>
+</section>
+<section id="u009">
+<h5><a class="reference internal" href="#u009">U009</a><a class="headerlink" href="#u009" title="Link to this heading"></a></h5>
+<p>This line contains an obsolete Cylc CLI command.</p>
+</section>
+<section id="u010">
+<h5><a class="reference internal" href="#u010">U010</a><a class="headerlink" href="#u010" title="Link to this heading"></a></h5>
+<p>rose suite-hook is deprecated at Rose 2,</p>
+</section>
+<section id="id15">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/7-to-8/major-changes/python-2-3.html#jinja2-integers-with-leading-zeros">U011</a><a class="headerlink" href="#id15" title="Link to this heading"></a></h5>
+<p>Leading zeros are no longer valid for Jinja2 integers.</p>
+</section>
+<section id="id16">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/reference/job-script-vars/index.html">U012</a><a class="headerlink" href="#id16" title="Link to this heading"></a></h5>
+<p>The following environment variables are deprecated:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Deprecated Variable</p></th>
+<th class="head"><p>New Variable</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_HOST</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_HOST</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_OWNER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_OWNER</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_SHARE_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_SHARE_DIR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_SHARE_PATH</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_SHARE_PATH</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_NAME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_ID</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_LOG_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_LOG_DIR</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_INITIAL_CYCLE_POINT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_INITIAL_CYCLE_POINT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_INITIAL_CYCLE_TIME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_INITIAL_CYCLE_TIME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_FINAL_CYCLE_POINT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_FINAL_CYCLE_POINT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_FINAL_CYCLE_TIME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_FINAL_CYCLE_TIME</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_WORK_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_WORK_DIR</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_UUID</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_UUID</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_RUN_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_RUN_DIR</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id17">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/reference/job-script-vars/index.html">U013</a><a class="headerlink" href="#id17" title="Link to this heading"></a></h5>
+<p>The following environment variables are obsolete:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_DEF_PATH</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_DEF_PATH_ON_SUITE_HOST</span></code></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id18">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/7-to-8/cheat-sheet.html#datetime-operations">U014</a><a class="headerlink" href="#id18" title="Link to this heading"></a></h5>
+<p>For datetime operations in task scripts:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> instead of <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">date</span></code></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">isodatetime</span> <span class="pre">ref</span></code> instead of <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">date</span> <span class="pre">-c</span></code> for the current cycle point</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id19">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/user-guide/writing-workflows/runtime.html#task-event-template-variables">U015</a><a class="headerlink" href="#id19" title="Link to this heading"></a></h5>
+<dl class="simple">
+<dt>The following template variables, mostly used in event handlers,are deprecated, and should be replaced:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">suite</span></code> ⇒ workflow</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">suite_uuid</span></code> ⇒ uuid</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_sys_name</span></code> ⇒ job_runner_name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_sys_job_id</span></code> ⇒ job_id</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user&#64;host</span></code> ⇒ platform_name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task_url</span></code> ⇒ <code class="docutils literal notranslate"><span class="pre">URL</span></code> (if set in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[meta]URL" title="flow.cylc[meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[meta]URL</span></code></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workflow_url</span></code> ⇒ <code class="docutils literal notranslate"><span class="pre">workflow_URL</span></code> (if set in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][meta]URL" title="flow.cylc[runtime][&lt;namespace&gt;][meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][meta]URL</span></code></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h5><a class="reference external" href="https://cylc.github.io/cylc-doc/stable/html/plugins/cylc-rose.html#special-variables">U016</a><a class="headerlink" href="#id20" title="Link to this heading"></a></h5>
+<p>It is no longer necessary to configure the environment variables <code class="docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code>, <code class="docutils literal notranslate"><span class="pre">ROSE_VERSION</span></code> or <code class="docutils literal notranslate"><span class="pre">FCM_VERSION</span></code>.</p>
+</section>
+</section>
+<section id="auto-generated-7-to-8-upgrades">
+<h4>Auto Generated 7 to 8 upgrades<a class="headerlink" href="#auto-generated-7-to-8-upgrades" title="Link to this heading"></a></h4>
+<p>U998 and U999 represent automatically generated sets of deprecations and upgrades.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][workflow</span> <span class="pre">state</span> <span class="pre">polling]run-dir</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][workflow</span> <span class="pre">state</span> <span class="pre">polling]alt-cylc-run-dir</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][authentication]</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]include</span> <span class="pre">at</span> <span class="pre">start-up</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]exclude</span> <span class="pre">at</span> <span class="pre">start-up</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]log</span> <span class="pre">resolved</span> <span class="pre">dependencies</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]required</span> <span class="pre">run</span> <span class="pre">mode</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]health</span> <span class="pre">check</span> <span class="pre">interval</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]mail</span> <span class="pre">retry</span> <span class="pre">delays</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__]extra</span> <span class="pre">log</span> <span class="pre">files</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][job]shell</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][remote]suite</span> <span class="pre">definition</span> <span class="pre">directory</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]abort</span> <span class="pre">if</span> <span class="pre">any</span> <span class="pre">task</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]disable</span> <span class="pre">automatic</span> <span class="pre">shutdown</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][environment]</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][reference</span> <span class="pre">test]</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][simulation]disable</span> <span class="pre">suite</span> <span class="pre">event</span> <span class="pre">handlers</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][simulation]</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[visualization]</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[scheduling]spawn</span> <span class="pre">to</span> <span class="pre">max</span> <span class="pre">active</span> <span class="pre">cycle</span> <span class="pre">points</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]task</span> <span class="pre">event</span> <span class="pre">mail</span> <span class="pre">interval</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][mail]task</span> <span class="pre">event</span> <span class="pre">batch</span> <span class="pre">interval</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][suite</span> <span class="pre">state</span> <span class="pre">polling]</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][workflow</span> <span class="pre">state</span> <span class="pre">polling]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][workflow</span> <span class="pre">state</span> <span class="pre">polling]host</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][workflow</span> <span class="pre">state</span> <span class="pre">polling]user</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][parameters]</span></code> is now <code class="docutils literal notranslate"><span class="pre">[task</span> <span class="pre">parameters]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][parameter</span> <span class="pre">templates]</span></code> is now <code class="docutils literal notranslate"><span class="pre">[task</span> <span class="pre">parameters][templates]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]mail</span> <span class="pre">to</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][mail]to</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]mail</span> <span class="pre">from</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][mail]from</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]mail</span> <span class="pre">footer</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][mail]footer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]mail</span> <span class="pre">to</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][mail]to</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]mail</span> <span class="pre">from</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][mail]from</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]mail</span> <span class="pre">smtp</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]mail</span> <span class="pre">smtp</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[scheduling]max</span> <span class="pre">active</span> <span class="pre">cycle</span> <span class="pre">points</span></code> is now <code class="docutils literal notranslate"><span class="pre">[scheduling]runahead</span> <span class="pre">limit</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[scheduling]hold</span> <span class="pre">after</span> <span class="pre">point</span></code> is now <code class="docutils literal notranslate"><span class="pre">[scheduling]hold</span> <span class="pre">after</span> <span class="pre">cycle</span> <span class="pre">point</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]timeout</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]stall</span> <span class="pre">timeout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">on</span> <span class="pre">timeout</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">on</span> <span class="pre">stall</span> <span class="pre">timeout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]inactivity</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]inactivity</span> <span class="pre">timeout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">on</span> <span class="pre">inactivity</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">on</span> <span class="pre">inactivity</span> <span class="pre">timeout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]startup</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]startup</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]shutdown</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]shutdown</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]timeout</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]stall</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]stalled</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]stall</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]aborted</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]inactivity</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[cylc][events]inactivity</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]expired</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]expired</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]late</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]late</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submitted</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submitted</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]started</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]started</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]succeeded</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]succeeded</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]failed</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]failed</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">failed</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">failed</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]warning</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]warning</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]critical</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]critical</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]retry</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]retry</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">retry</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">retry</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]execution</span> <span class="pre">timeout</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]execution</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">timeout</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]submission</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]custom</span> <span class="pre">handler</span></code> is now <code class="docutils literal notranslate"><span class="pre">[runtime][__MANY__][events]custom</span> <span class="pre">handlers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">on</span> <span class="pre">stalled</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">if</span> <span class="pre">startup</span> <span class="pre">handler</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">if</span> <span class="pre">shutdown</span> <span class="pre">handler</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">if</span> <span class="pre">timeout</span> <span class="pre">handler</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">if</span> <span class="pre">inactivity</span> <span class="pre">handler</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc][events]abort</span> <span class="pre">if</span> <span class="pre">stalled</span> <span class="pre">handler</span> <span class="pre">fails</span></code> is not available at Cylc 8</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[cylc]</span></code> is now <code class="docutils literal notranslate"><span class="pre">[scheduler]</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="configure-cylc-lint-at-project-level">
+<span id="lint-pyproject-toml"></span><h3>Configure <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">lint</span></code> at project level<a class="headerlink" href="#configure-cylc-lint-at-project-level" title="Link to this heading"></a></h3>
+<p>You can configure <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">lint</span></code> for each workflow using a
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file.</p>
+<p>To define settings for <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">lint</span></code> use a <code class="docutils literal notranslate"><span class="pre">[tool.cylc.lint]</span></code> section.
+Within the <code class="docutils literal notranslate"><span class="pre">[tool.cylc.lint]</span></code> section you may define the following:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">rulesets</span></code></dt><dd><p>A list of rulesets to use.</p>
+<p>Allowed values: <code class="docutils literal notranslate"><span class="pre">'728'</span></code>, <code class="docutils literal notranslate"><span class="pre">'style'</span></code>, <code class="docutils literal notranslate"><span class="pre">'all'</span></code>.</p>
+<p>(You can override this on the command line.)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ignore</span></code></dt><dd><p>Individual rules to ignore: A list of rule codes, such as <code class="docutils literal notranslate"><span class="pre">S007</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">exclude</span></code></dt><dd><p>A list of files or glob patterns for files which will not be checked.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">max-line-length</span></code></dt><dd><p>Set longest line length to permit in Cylc configs for this project.</p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">130</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.3.0: </span>The <code class="docutils literal notranslate"><span class="pre">[cylc-lint]</span></code> section has been deprecated in favour of
+<code class="docutils literal notranslate"><span class="pre">[tool.cylc.lint]</span></code>.</p>
+</div>
+</div>
+<p>An example <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> might look like this:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.cylc.lint]</span>
+<span class="c1"># Enforce a line limit of 99 chars</span>
+<span class="n">max-line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span>
+
+<span class="c1"># Ignore style [S] rule 007 (It&#39;s good practice comment with a reason)</span>
+<span class="n">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;S007&#39;</span><span class="p">]</span><span class="w">   </span><span class="c1"># Family names start with lowercase in this workflow</span>
+
+<span class="c1"># Don&#39;t check files matching these globs</span>
+<span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;history/*.old.cylc&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;someother.cylc&#39;</span><span class="p">]</span>
+
+<span class="c1"># By default check for style</span>
+<span class="n">rulesets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span>
+
+<span class="k">[some-other-section]</span>
+<span class="c1"># Cylc lint won&#39;t pay any attention to this.</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Writing Workflows" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scheduling.html" class="btn btn-neutral float-right" title="Scheduling Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2024 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 26, 2024.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.3.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-workflows/configuration";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
