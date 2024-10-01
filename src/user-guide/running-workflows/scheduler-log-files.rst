@@ -1,7 +1,113 @@
 .. _Scheduler Logs:
+.. _user-guide.log_files:
 
-Scheduler Logs
---------------
+Workflow Logs
+=============
+
+Cylc produces log files which record information about how the workflow was
+installed, configured when started or changed, and about tasks that have run
+and their outcomes.
+
+
+Log Files
+---------
+
+Cylc log files are located in the workflow :term:`run directory`.
+
+.. describe:: log/scheduler/
+
+   Contains the scheduler log files, these detail everything that a workflow
+   did whilst it ran and are key to debugging issues.
+
+   Every time you start or restart a workflow a new log file is created in this
+   location:
+
+   .. describe:: log/scheduler/<start_number>-<type>-<file_number>.log
+
+      For more information on this file, see :ref:`log_files.scheduler_log`.
+
+.. describe:: log/config/
+
+   Contains a record of the workflow configuration files:
+
+   .. describe:: log/config/<start_number>-<type>-<file_number>.cylc
+
+      The parsed contents of the ``flow.cylc`` (or ``suite.rc``) file from
+      each start, restart or reload of the workflow.
+
+   .. describe:: log/config/flow-processed.cylc
+
+      The unparsed contents of the ``flow.cylc`` (or ``suite.rc``) file that
+      the workflow was most recently started or restarted from. This file has
+      not been parsed by Cylc so is still in the definition order, however,
+      Jinja2 process has been performed making it useful for debugging Jinja2
+      issues.
+
+   .. describe:: log/config/<time>-rose-suite.conf
+
+      The parsed contents of the ``rose-suite.conf`` file if present in the workflow.
+
+.. describe:: log/install/
+
+   Contains the workflow installation log (i.e. the output of the
+   ``cylc install`` command.
+
+   .. describe:: log/install/<start_number>-install.log
+
+.. describe:: log/remote-install/
+
+   Contains a record of any remote platforms that the workflow has been
+   installed onto.
+
+   .. describe:: log/remote-install/<start_number>-<type>-<platform>.log
+
+.. describe:: log/version/
+
+   If the workflow :term:`source directory` is version controlled with Git or
+   SVN, this directory will contain information extracted from the version
+   control system at the time the workflow was installed:P
+
+   .. describe:: log/version/uncommitted.diff
+
+      Any uncommitted diff in unified diff format.
+
+   .. describe:: log/version/vcs.json
+
+      Information including the commit hash / revision number.
+
+.. describe:: opt/rose-suite-cylc-install.conf
+
+   If Rose is used, this file will contain any Rose options that were used
+   with the ``cylc install`` command (i.e. any overrides which were applied
+   when the workflow was installed).
+
+.. note::
+
+   Where the ``<variables>`` in the above paths are:
+
+   .. cylc-scope:: global.cylc[scheduler][logging]
+
+   ``start_number``
+      Is ``1`` when you first start the workflow. This number increments with
+      each restart.
+   ``type``
+      Is either ``start``, ``restart`` or ``reload``.
+   ``file_number``
+      Is initially ``1``, if the log file exceeds the `maximum size in bytes`,
+      it will "roll over" into a new log file and this number will increment.
+      If the number of "roll over" log files exceeds the
+      `rolling archive length`, then Cylc will remove an old log file before
+      creating a new one.
+   ``time``
+      Is a timestamp in ISO8601 format.
+
+.. cylc-scope::
+
+
+.. _log_files.scheduler_log:
+
+The Scheduler Log File
+----------------------
 
 Each workflow maintains its own log of time-stamped events in the
 :term:`workflow log directory` (``$HOME/cylc-run/<workflow-id>/log/scheduler/``).
