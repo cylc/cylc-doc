@@ -220,7 +220,7 @@ Any tasks recorded in the *submitted* or *running* states at workflow
 restart are automatically polled to determine what happened to them while the
 workflow was down.
 
-By default, regular polling also takes place every 15 minutes whilst a job is
+By default, regular polling also takes place every 15 minutes while a job is
 submitted or running. The default polling intervals can be overridden in the
 global configuration:
 
