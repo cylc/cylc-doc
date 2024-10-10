@@ -5,8 +5,8 @@ Interventions
 
 Sometimes things don't go to plan!
 
-So Cylc allows you to take manual control of your workflow whilst it's running
-allowing you to do things like edit a task's configuration, re-run a section
+So Cylc allows you to take manual control of your workflow whilst it's running,
+to do things like edit a task's configuration, re-run a section
 of your graph or override task outputs.
 
 This section of the documentation covers some of the common interventions you
@@ -86,6 +86,19 @@ Re-Run a Task
       .. code-block:: console
 
          $ cylc trigger <workflow>//<task>
+
+   .. tab-item:: Explanation
+      :sync: explanation
+
+      In this example, a failed task blocked the flow because downstream
+      tasks depended on its success. Triggering the failed task to run again
+      (if it succeeds this time) allows the original flow to continue.
+
+      The flow will only continue downstream of a triggered task if it has not
+      already traversed that part of the graph.
+
+      So if you trigger a past task that did not block the flow, only the triggered
+      task itself will run - unless you tell Cylc to start a new flow.
 
 
 Re-Run Multiple Tasks
