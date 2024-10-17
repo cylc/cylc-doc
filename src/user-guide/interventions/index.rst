@@ -5,7 +5,7 @@ Interventions
 
 Sometimes things don't go to plan!
 
-So Cylc allows you to take manual control of your workflow whilst it's running
+So Cylc allows you to take manual control of your workflow while it's running
 allowing you to do things like edit a task's configuration, re-run a section
 of your graph or override task outputs.
 
@@ -445,7 +445,7 @@ Hold The Workflow And Trigger Tasks One By One
 ----------------------------------------------
 
 :Example:
-   I want to hold back the workflow whilst I manually run one or more tasks
+   I want to hold back the workflow while I manually run one or more tasks
    to fix a problem or test a task.
 
 :Solution:

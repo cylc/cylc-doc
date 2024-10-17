@@ -11,7 +11,7 @@ running workflow, on-the-fly.
 Purpose
 -------
 
-``cylc broadcast`` can be used to change any ``[runtime]`` setting whilst the
+``cylc broadcast`` can be used to change any ``[runtime]`` setting while the
 workflow is running.
 
 The standard use of ``cylc broadcast`` is to update the workflow to an
@@ -57,7 +57,7 @@ the log entry will look like this::
    10120101T0000Z - We are the knights who say "ni"!
 
 The ``cylc broadcast`` command enables us to change runtime configuration
-whilst the workflow is running. For instance we could change the value of the
+while the workflow is running. For instance we could change the value of the
 ``WORD`` environment variable using the command::
 
    cylc broadcast tutorial-broadcast -n announce -s "[environment]WORD=it"
