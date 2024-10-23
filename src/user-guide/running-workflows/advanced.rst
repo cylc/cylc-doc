@@ -1,3 +1,25 @@
+Advanced
+========
+
+
+Scheduler Signals
+-----------------
+
+The Cylc scheduler will shutdown gracefully on receipt of any of the following
+signals:
+
+* ``SIGINT``
+* ``SIGTERM``
+* ``SIGHUP``
+
+The signal will cause the scheduler to shutdown in ``--now`` mode.
+
+If the scheduler is already shutting down in ``--now`` mode, the signal will
+escalate shutdown to ``--now --now`` mode.
+
+See ``cylc stop --help`` for details on stop modes.
+
+
 .. _PreemptionHPC:
 
 Handling Job Preemption
