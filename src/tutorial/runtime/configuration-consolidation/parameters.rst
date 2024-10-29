@@ -209,9 +209,6 @@ Parameters can be either strings or integers:
          +[task parameters]
          +    station = aldergrove, camborne, heathrow, shetland
 
-          [scheduler]
-              UTC mode = True
-
       Remove the four ``get_observations`` tasks and insert the following code
       in their place:
 
@@ -319,8 +316,6 @@ Parameters can be either strings or integers:
 
          .. code-block:: diff
 
-             [scheduler]
-                 UTC mode = True
              [task parameters]
                  station = aldergrove, camborne, heathrow, shetland
             +        site = exeter, edinburgh

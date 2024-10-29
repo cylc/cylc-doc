@@ -49,9 +49,6 @@ Paste the following code into a ``flow.cylc`` file:
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True # Ignore DST
-
    [scheduling]
        initial cycle point = TODO
        final cycle point = +P1D # Run for one day

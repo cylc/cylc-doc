@@ -47,9 +47,6 @@ And paste the following code into a ``flow.cylc`` file. This workflow has a
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True # Ignore DST
-
    [scheduling]
        [[graph]]
            R1 = start => roll_doubles => win

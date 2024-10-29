@@ -444,7 +444,6 @@ Start, Stop, Restart
       .. code-block:: diff
 
           [scheduler]
-              UTC mode = True
          -    allow implicit tasks = True  # TODO: remove at end of exercise
 
       Removing this ensures that any tasks in the graph without a corresponding
