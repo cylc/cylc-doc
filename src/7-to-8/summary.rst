@@ -38,10 +38,16 @@ Upgrading To Cylc 8
    * Major Changes: :ref:`cylc_7_compat_mode`
 
 There have been some configuration changes at Cylc 8.
-To upgrade your Cylc 7 suite to a Cylc 8 workflow, first make sure it validates
-in Cylc 7 without any warnings, then rename the workflow configuration file
-from ``suite.rc`` to  ``flow.cylc``, then run ``cylc validate`` in Cylc 8 and
-take action on any warnings.
+To upgrade your Cylc 7 suite to a Cylc 8 workflow:
+
+#. Using Cylc 7, make sure the configuration validates (``cylc validate``)
+   without any warnings.
+#. Using Cylc 8 check that you can run the workflow. Running Cylc 8 with a
+   workflow configured with a ``suite.rc`` turns on
+   :ref:`compatibility mode <cylc_7_compat_mode>`.
+#. Rename the workflow configuration file from ``suite.rc`` to  ``flow.cylc``.
+#. Using Cylc 8 run ``cylc lint --ruleset 728`` and ``cylc validate``. Make
+   sure that you deal with any warnings produced by these scripts.
 
 .. TODO Add ref to breaking changes section within Major changes, once created,
    including optional ouputs.
