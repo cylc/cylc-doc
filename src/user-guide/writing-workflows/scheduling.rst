@@ -1909,6 +1909,108 @@ A more realistic example might have several tasks on each branch. The
 ``bar``, but configured differently to avoid the failure.
 
 
+Dependencies With Multiple Optional Outputs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We might have a task that depends on multiple optional outputs.
+
+For example, this workflow is like the "recovery task" example above, but in
+this case we only want to run the recover task if both of the upstream tasks
+fail.
+
+.. digraph:: Example
+   :align: center
+
+   rankdir = "LR"
+
+   one -> run_if_both_fail [label=":fail?", color="red", "fontcolor"="red"]
+   two -> run_if_both_fail [label=":fail?", color="red", "fontcolor"="red"]
+
+   one -> always_run [label=":finish", color="orange", "fontcolor"="orange"]
+   two -> always_run [label=":finish", color="orange", "fontcolor"="orange"]
+
+   subgraph cluster_1 {
+     label = "one:failed AND two:failed"
+     color = "red"
+     fontcolor = "red"
+     style = "dashed"
+
+     run_if_both_fail
+   }
+
+   subgraph cluster_2 {
+     label = "both tasks finished"
+     color = "orange"
+     fontcolor = "orange"
+     style = "dashed"
+
+     always_run
+   }
+
+We might try to write the graph like so:
+
+.. code-block:: cylc-graph
+
+   # run irrespective of whether the tasks succeed or fail
+   one:finish & two:finish => always_run
+
+   # run if both tasks fail  <-- ERROR
+   one:fail? & two:fail? => run_if_both_fail
+
+However, there is a problem with this.
+
+1. If both tasks fail, then ``run_if_both_fail`` will run.
+2. If both tasks succeed, then ``run_if_both_fail`` will not run.
+3. If one task succeeds and the other fails, then the task ``run_if_both_fail``
+   will be left with one satisfied and one unsatisfied dependency. This will
+   cause the workflow to :term:`stall`.
+
+To prevent the workflow from stalling in the third case, it is necessay to use
+:term:`suicide triggers <suicide trigger>` to remove the task
+``run_if_both_fail``.
+
+.. code-block:: cylc-graph
+
+   # run irrespective of whether the tasks succeed or fail
+   one:finish & two:finish => always_run
+
+   # run if both tasks fail
+   one:fail? & two:fail? => run_if_both_fail
+   one:succeeded? | two:succeeded? => !run_if_both_fail
+
+Here's an example workflow showing how to trigger tasks with each possible
+combination of success/failre for the two tasks:
+
+.. code-block:: cylc
+
+   [scheduler]
+       allow implicit tasks = True
+
+   [scheduling]
+       [[graph]]
+           R1 = """
+               one:finish & two:finish => always_run
+
+               one:succeeded? | two:succeeded? => run_if_at_least_one_succeeds
+
+               one:failed? | two:failed? => run_if_at_least_one_fails
+
+               one:succeeded? & two:succeeded? => run_if_both_succeed
+               one:failed? | two:failed? => !run_if_both_succeed
+
+               one:fail? & two:fail? => run_if_both_fail
+               one:succeeded? | two:succeeded? => !run_if_both_fail
+           """
+
+   [runtime]
+       [[one]]
+           script = true
+       [[two]]
+           script = false
+
+Try editing the ``script`` in this example to see which tasks are run.
+
+
 Custom Outputs
 ^^^^^^^^^^^^^^
 
