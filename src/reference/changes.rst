@@ -227,6 +227,11 @@ For example, you can (and should) now write:
    The ``suite-state`` xtrigger has been reimplemented for compatibility with
    Cylc 7 workflows.
 
+From 8.3.4 the validation of arguments for the workflow-state command and
+xtrigger has been improved: You will only be able to poll for
+:ref:`final task states <final status>`.
+
+
 ----------
 
 Cylc 8.2
