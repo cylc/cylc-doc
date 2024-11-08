@@ -1965,7 +1965,7 @@ However, there is a problem with this.
    will be left with one satisfied and one unsatisfied dependency. This will
    cause the workflow to :term:`stall`.
 
-To prevent the workflow from stalling in the third case, it is necessay to use
+To prevent the workflow from stalling in the third case, it is necessary to use
 :term:`suicide triggers <suicide trigger>` to remove the task
 ``run_if_both_fail``.
 
@@ -1979,7 +1979,7 @@ To prevent the workflow from stalling in the third case, it is necessay to use
    one:succeeded? | two:succeeded? => !run_if_both_fail
 
 Here's an example workflow showing how to trigger tasks with each possible
-combination of success/failre for the two tasks:
+combination of success/failure for the two tasks:
 
 .. code-block:: cylc
 
