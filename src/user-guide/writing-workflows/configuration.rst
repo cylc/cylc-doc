@@ -19,10 +19,9 @@ The configurations you can use are documented in :ref:`workflow-configuration`.
 
 .. _template processors: https://en.wikipedia.org/wiki/Template_processor
 
-Cylc also supports two `template processors`_ for use in the ``flow.cylc`` file:
-
-* `Jinja2`_
-* `EmPy`_
+Cylc also supports the `Jinja2`_
+`template processor <https://en.wikipedia.org/wiki/Template_processor>`_
+for use in the `flow.cylc` file.
 
 
 .. _WorkflowDefinitionDirectories:
@@ -70,12 +69,12 @@ Understanding Code in Workflow Configurations
 A workflow configuration is not executable code. It configures the scheduler
 program to run your workflow. A `flow.cylc` file may contain:
 
-- Embedded Python-like Jinja2 or EmPy templating code, such as
+- Embedded Python-like Jinja2 templating code, such as
   ``{% set PLANET = "earth" %}``
 - Bash shell variable assignments and scripting, such as
   ``script = "run-model.exe /path/to/data"``
 
-Jinja2 (or EmPy) templating code gets executed as a preprocessing step, to
+Jinja2 templating code gets executed as a preprocessing step, to
 programmatically generate the workflow configuration for the scheduler.
 To see the result after template processing:
 

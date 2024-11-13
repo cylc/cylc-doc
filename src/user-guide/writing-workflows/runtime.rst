@@ -105,7 +105,7 @@ task-specific settings.
 .. note::
 
    :ref:`Task parameters <User Guide Param>` or template processing (see
-   :ref:`User Guide Jinja2` and :ref:`User Guide EmPy`) can be used to
+   :ref:`User Guide Jinja2`) can be used to
    programmatically generate family members and associated dependencies.
 
 

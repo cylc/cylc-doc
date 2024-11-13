@@ -9,7 +9,6 @@ Writing Workflows
    runtime
    parameterized-tasks
    jinja2
-   empy
    external-triggers
    suicide-triggers
    scheduler

@@ -59,7 +59,7 @@ See :ref:`below <compat.eg.c7val>` for an example.
 
    ``cylc validate`` operates on the processed ``suite.rc``, which
    means it will not detect any deprecated syntax that is inside a
-   currently-unused Jinja2/EmPy ``if...else`` branch.
+   currently-unused Jinja2 ``if...else`` branch.
 
 Some workflows may require modifications to either upgrade to Cylc 8 or make
 interoperable with Cylc 8 backward compatibility mode. Read on for more details.

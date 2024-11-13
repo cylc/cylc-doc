@@ -69,9 +69,6 @@ install:
 
 .. code-block:: sub
 
-   # EmPy support
-   $ pip install 'cylc-flow[empy]'
-
    # Support for running the tutorial workflows
    $ pip install 'cylc-flow[tutorial]'
 

@@ -494,7 +494,7 @@ workflows:
 ``cylc view``
    Prints workflow configurations before full parsing by Cylc. This
    can include :ref:`Jinja2 <troubleshooting.jinja2>` (use ``-j``)
-   or Empy template processing.
+   processing.
 
    Include files can be inlined (use ``-i``).
 

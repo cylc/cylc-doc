@@ -1266,8 +1266,7 @@ Glossary
       tasks.
 
       Other ways of consolidating configuration include :term:`runtime
-      inheritance` and templating with :ref:`Jinja2 <Jinja>` or :ref:`Empy
-      <User Guide Empy>`.
+      inheritance` and templating with :ref:`Jinja2 <Jinja>`.
 
       .. code-block:: cylc
 

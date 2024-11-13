@@ -7,16 +7,16 @@ Template Variables
    Read this section if you set Cylc template variables on the command line
    using the ``-s``, ``--set`` or ``-set-file`` options.
 
-   This does *not* affect the Rose ``jinja2:suite.rc`` and
-   ``empy:suite.rc`` variables set using the ``-S`` option to the
+   This does *not* affect the Rose ``jinja2:suite.rc``
+   variables set using the ``-S`` option to the
    ``rose suite-run`` command.
 
 
 Overview
 --------
 
-Template variables are passed to :ref:`Jinja2 <Jinja>` or
-:ref:`EmPy <User Guide EmPy>` for parsing the workflow definition in the
+Template variables are passed to :ref:`Jinja2 <Jinja>`
+for parsing the workflow definition in the
 :cylc:conf:`flow.cylc` file.
 
 In Cylc 7 template variables could only be strings, in Cylc 8 they can be any

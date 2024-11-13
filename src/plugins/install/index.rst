@@ -99,10 +99,10 @@ following keys:
    A dictionary of environment variables to be exported to the scheduler
    environment.
 ``template_variables``
-   A dictionary of template variables to be used by Jinja2 or EmPy when
+   A dictionary of template variables to be used by Jinja2 when
    templating the workflow configuration files.
 ``templating_detected``
-   ``jinja2`` | ``empy`` to be used when templating. N.b: This will result in
+   ``jinja2`` to be used when templating. N.b: This will result in
    failure if the templating language set does not match the shebang line of
    the ``flow.cylc`` file.
 
