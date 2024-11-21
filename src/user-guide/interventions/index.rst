@@ -441,18 +441,17 @@ but specify the "failed" output rather than
 "succeeded".
 
 
-Hold The Workflow And Trigger Tasks One By One
-----------------------------------------------
+Pause The Workflow And Trigger Tasks One By One
+-----------------------------------------------
 
 :Example:
-   I want to hold back the workflow while I manually run one or more tasks
+   I want to pause the workflow while I manually run one or more tasks
    to fix a problem or test a task.
 
 :Solution:
-   * Hold all tasks after a specified cycle.
+   * Pause the workflow.
    * Trigger the task(s) you want to run.
-   * When you're done triggering, release the held tasks to allow the workflow
-     to continue.
+   * When you're done triggering, unpause (play) the workflow to continue.
 
 .. tab-set::
 
@@ -467,24 +466,25 @@ Hold The Workflow And Trigger Tasks One By One
 
       .. code-block:: console
 
-         $ # hold all tasks after the cycle "2000"
-         $ cylc hold --after=2000 <workflow>
+         $ # pause the workflow
+         $ cylc pause <workflow>
 
          $ # trigger the task(s) you want to run
          $ cylc trigger <workflow>//<cycle>/<task>
 
-         $ # release the "hold point" to allow the workflow to continue
-         $ cylc release --all <workflow>
+         $ # unpause (play) the workflow to continue
+         $ cylc play <workflow>
 
 .. note::
 
    The difference between the workflow "paused" state and the task "held" state:
 
    Workflow Pause
-      When a workflow is :term:`paused <pause>`, no new jobs will be submitted.
-      This gives you an opportunity to make changes to the workflow, however, if
-      you trigger tasks, they will not run until the workflow is resumed.
+      When a workflow is :term:`paused <pause>` no new jobs will be submitted
+      automatically, but you can still trigger tasks manually.
+      This gives you an opportunity to make changes to the workflow.
 
    Task Hold
       When a task is :term:`held <hold>`, then it will not submit (if ready to
-      submit) until released.
+      submit) until released. If you hold a running task its job will not be
+      affected, but it will not submit any :term:`retries <retry>` until released.
