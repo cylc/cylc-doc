@@ -450,7 +450,6 @@ Putting It All Together
       .. code-block:: cylc
 
          [scheduler]
-             UTC mode = True
              allow implicit tasks = True
          [scheduling]
              initial cycle point = 20000101T00Z
@@ -478,7 +477,6 @@ Putting It All Together
          .. code-block:: diff
 
              [scheduler]
-                 UTC mode = True
                  allow implicit tasks = True
              [scheduling]
                  initial cycle point = 20000101T00Z
@@ -523,7 +521,6 @@ Putting It All Together
          .. code-block:: cylc
 
            [scheduler]
-               UTC mode = True
                allow implicit tasks = True
            [scheduling]
                initial cycle point = 20000101T00Z
