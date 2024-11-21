@@ -1151,7 +1151,9 @@ Glossary
 
    pause
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
-      running but it will not submit any new jobs.
+      running but it will not automatically submit new jobs.
+
+      You can still :term:`trigger` jobs manually in a paused workflow.
 
       This can be useful if you want to make a change to a running workflow.
 
@@ -1485,6 +1487,9 @@ Glossary
       Triggers can be based on :term:`standard <standard output>` or
       :term:`custom <custom output>` task outputs. In the latter case they
       are known as :term:`message triggers <message trigger>`.
+
+      The term "trigger" also refers the action of manually triggering
+      a task to run, via the ``cylc trigger`` command or the GUI. 
 
 
    message trigger
