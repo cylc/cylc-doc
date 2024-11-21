@@ -59,8 +59,6 @@ Paste the following configuration into the :cylc:conf:`flow.cylc` file:
 
 .. code-block:: cylc
 
-   [scheduler]
-       UTC mode = True # Ignore DST
    [scheduling]
        [[graph]]
            R1 = visit_mine => MINERS
