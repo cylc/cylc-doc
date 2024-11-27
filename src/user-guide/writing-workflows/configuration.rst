@@ -136,11 +136,11 @@ Kate
    ``cylc get-resources syntax/cylc.xml .``
    installation instructions are at the top of the file.
 NeoVim
-   Install the `cylc.vim` plugin.
+   Install the `cylc.vim`_ plugin.
 PyCharm
    Install the `Cylc.tmbundle`_.
 Vim
-   Install the `cylc.vim` plugin.
+   Install the `cylc.vim`_ plugin.
 Visual Studio Code
    Install the `vscode-cylc`_ extension.
 Sublime Text 3
