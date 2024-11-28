@@ -450,8 +450,8 @@ Pause The Workflow And Trigger Tasks One By One
 
 :Solution:
    * Pause the workflow.
-   * Trigger the task(s) you want to run.
-   * When you're done triggering, unpause (play) the workflow to continue.
+   * Trigger the task(s) you want to run, with the ``--now`` option.
+   * When you're done triggering, resume (unpause) the workflow.
 
 .. tab-set::
 
@@ -470,9 +470,9 @@ Pause The Workflow And Trigger Tasks One By One
          $ cylc pause <workflow>
 
          $ # trigger the task(s) you want to run
-         $ cylc trigger <workflow>//<cycle>/<task>
+         $ cylc trigger --now <workflow>//<cycle>/<task>
 
-         $ # unpause (play) the workflow to continue
+         $ # resume (unpause) the workflow to continue
          $ cylc play <workflow>
 
 .. note::
@@ -480,7 +480,7 @@ Pause The Workflow And Trigger Tasks One By One
    The difference between the workflow "paused" state and the task "held" state:
 
    Workflow Pause
-      When a workflow is :term:`paused <pause>` no new jobs will be submitted
+      When a workflow is :term:`paused <pause>` new jobs will not be submitted
       automatically, but you can still trigger tasks manually.
       This gives you an opportunity to make changes to the workflow.
 
