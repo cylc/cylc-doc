@@ -125,7 +125,7 @@ See :ref:`the user guide <RemoteInit>` for more details.
 
       cylc config -i '[install][symlink dirs][<platform-name>]'
 
-   The recommended workaround is to use a "dummy" task that runs on the
+   The recommended workaround is to use a :term:`dummy task` that runs on the
    particular platform before any such mirror tasks in order to setup symlink
    directories, but without running anything.
 

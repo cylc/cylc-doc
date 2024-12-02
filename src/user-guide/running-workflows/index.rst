@@ -12,7 +12,7 @@ Running Workflows
    tracking-task-state
    workflow-completion
    reflow
-   simulation-modes
+   workflow-run-modes
    scheduler-log-files
    dynamic-behaviour
    authentication-files
