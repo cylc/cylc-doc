@@ -95,6 +95,16 @@ run for interactive sessions like so:
    export PATH="$HOME/bin:$PATH"
    export MY_LIB_PATH="$HOME/my-lib/1.0/"
 
+Conversely, make sure to **remove** the interactive guard clause that is present in the default ``.bashrc`` of some Linux distributions (e.g. `Debian <https://sources.debian.org/src/bash/4.3-11/debian/skel.bashrc/>`_).
+
+.. code-block:: bash
+
+   # If not running interactively, don't do anything
+   case $- in
+       *i*) ;;
+         *) return;;
+   esac
+
 Some things to check your login files for:
 
 * Don't write to stdout (e.g. using ``echo`` or ``printf``), this can interfere
