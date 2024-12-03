@@ -22,6 +22,28 @@ For more detail see the component changelogs:
 
 ----------
 
+
+Cylc 8.4
+--------
+
+.. TODO - fix before release
+
+   .. admonition:: Cylc Components
+      :class: hint
+
+      :cylc-flow: `8.3 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+      :cylc-ui: `2.5 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+      :cylc-uiserver: `1.5 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+      :cylc-rose: `1.4 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+      :rose: `2.3 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+
+EmPy Support Removed
+^^^^^^^^^^^^^^^^^^^^
+
+Support for the EmPy template processor (an alternative to Jinja2) has been
+removed.
+
+
 Cylc 8.3
 --------
 

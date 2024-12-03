@@ -15,8 +15,8 @@ values. Uses for this include:
 
 .. note::
 
-   Cylc supports use of :ref:`Jinja2 <User Guide Jinja2>` and :ref:`Empy
-   <User Guide Empy>` templating for programmatic generation of workflow
+   Cylc supports use of :ref:`Jinja2 <User Guide Jinja2>`
+   templating for programmatic generation of workflow
    configurations. The built-in parameterization system described here
    is a cleaner and easier alternative *for generating tasks and families
    over a range of parameters*, but unlike general templating it can only be
