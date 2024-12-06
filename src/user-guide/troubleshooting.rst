@@ -309,7 +309,7 @@ logged a file in this directory:
 
 If you need to access files from a remote platform (e.g. 2-stage ``fcm_make``),
 ensure that a task has submitted to it before you do so. If needed you can use
-a blank "dummy" task to ensure that remote installation is completed *before*
+a blank :term:`dummy task` to ensure that remote installation is completed *before*
 you run any tasks which require this e.g:
 
 .. code-block:: cylc-graph

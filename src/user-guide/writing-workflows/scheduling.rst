@@ -1287,9 +1287,10 @@ number of members of ``FAM1`` and ``M`` is the number of members of ``FAM2``.
 This can result in high memory use as the number of family members grows.
 
 You can greatly reduce the number of dependencies generated here by putting
-dummy tasks in the graph to represent the state of the upstream family. For
-example, if ``FAM2`` should trigger off any member of ``FAM1`` succeeding you
-can use a dummy task ``FAM1_done`` like this:
+:term:`dummy tasks<dummy task>` in the graph to represent the state of the 
+upstream family. For example, if ``FAM2`` should trigger off any member of
+``FAM1`` succeeding you can use a :term:`dummy tasks<dummy task>`
+``FAM1_done`` like this:
 
 .. code-block:: cylc
 
@@ -1301,11 +1302,17 @@ can use a dummy task ``FAM1_done`` like this:
    [runtime]
    # ...
        [[FAM1_done]]
-           script = true
+           run mode = skip
    # ...
 
 This :term:`graph` generates only ``N + M`` dependencies, which takes
 significantly less memory and CPU to store and evaluate.
+
+.. note::
+
+   By setting :cylc:conf:`[runtime][<namespace>]run mode` to ``skip``,
+   the task will instantly complete without submitting a job.
+   See :ref:`task-run-modes.skip`.
 
 
 .. _InterCyclePointTriggers:

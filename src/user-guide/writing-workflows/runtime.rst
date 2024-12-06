@@ -468,7 +468,7 @@ An implicit task is one that appears in the graph but is not defined under
 
 Depending on the value of :cylc:conf:`flow.cylc[scheduler]allow implicit tasks`,
 Cylc can automatically create default task definitions for these, to submit
-local dummy jobs that just return the standard job status messages.
+:term:`dummy jobs <dummy task>` that just return the standard job status messages.
 
 Implicit tasks can be used to mock up functional workflows very quickly. A
 default ``script`` can be added to the root family, e.g. to slow job execution

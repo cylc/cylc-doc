@@ -50,7 +50,7 @@ To upgrade your Cylc 7 suite to a Cylc 8 workflow:
    sure that you deal with any warnings produced by these scripts.
 
 .. TODO Add ref to breaking changes section within Major changes, once created,
-   including optional ouputs.
+   including optional outputs.
 
 .. note::
 
