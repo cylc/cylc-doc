@@ -288,10 +288,7 @@ certain sub-directories.
 
 * ``run`` - the :term:`run directory` itself
 * ``log`` (see :term:`workflow log directory`)
-* ``log/job`` The ``log/job`` directory contains more files than ``log``
-  and the risks (to the workflow) from losing them are smaller: Tasks
-  without log files might need re-running: Loss of workflow logs might
-  require re-running part or all of a workflow.
+  * ``log/job`` - contains job scripts and outputs.
 * ``share`` (see :term:`share directory`)
 * ``share/cycle`` (typically used by `Rose`_ tasks)
 * ``work`` (see :term:`work directory`)
