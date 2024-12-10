@@ -16,3 +16,4 @@ job fails and the task is re-run).
    job-scripts
    job-submission
    ssh-job-management
+   skip-mode

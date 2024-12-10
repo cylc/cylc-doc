@@ -127,6 +127,8 @@ to allow chaining of dependencies:
            R1 = pre => MODELS:succeed-all => post
 
 
+.. _family-to-family-triggering:
+
 Family-to-Family Triggering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -150,6 +152,10 @@ interpose a blank task that signifies completion of the first family:
        [[graph]]
            R1 = BIG_FAM_1:succeed-all => big_fam_1_done => BIG_FAM_2
 
+    [runtime]
+        [[big_fam_1_done]]
+            run mode = skip
+
 For families with ``M`` and ``N`` members respectively, this
 reduces the number of dependencies from ``M*N`` to ``M+N``
 without affecting the scheduling.
@@ -157,6 +163,10 @@ without affecting the scheduling.
 .. image:: ../img/fam-to-fam-1.png
 
 .. image:: ../img/fam-to-fam-2.png
+
+.. seealso::
+
+   :ref:`EfficientInterFamilyTriggering`
 
 
 .. _Task Families And Visualization:
