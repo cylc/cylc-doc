@@ -287,7 +287,7 @@ locations. The entire :term:`run directory` can be symlinked, as well as
 certain sub-directories.
 
 * ``run`` - the :term:`run directory` itself
-* ``log`` (see :term:`workflow log directory`)
+* ``log``
   * ``log/job`` - contains job scripts and outputs.
 * ``share`` (see :term:`share directory`)
 * ``share/cycle`` (typically used by `Rose`_ tasks)
