@@ -32,5 +32,8 @@
     ],
     "nightly_8.4": [
         "html"
+    ],
+    "nightly_8.3": [
+        "html"
     ]
 }
