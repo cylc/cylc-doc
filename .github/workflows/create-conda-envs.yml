@@ -6,6 +6,8 @@ on:
       - '.github/workflows/create-conda-envs.yml'
       - '.github/actions/create-conda-envs/*'
       - 'src/reference/environments/env/*.ya?ml'
+  schedule:
+    - cron: '35 0 * * *'
   workflow_dispatch:
     inputs:
       cylc_flow_version:
