@@ -458,7 +458,7 @@ Pause The Workflow And Trigger Tasks One By One
    .. tab-item:: GUI
       :sync: gui
 
-      .. image:: set-and-release-hold-point.gif
+      .. image:: trigger-while-paused.gif
          :width: 75%
 
    .. tab-item:: CLI
