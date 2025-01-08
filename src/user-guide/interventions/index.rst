@@ -523,3 +523,36 @@ I want to Skip a cycle of tasks and allow the workflow to continue
    ``-n root`` matches all tasks in a cycle. Similarly, it is possible to
    broadcast this setting to the root namespace of any family, or to
    multiple named tasks.
+
+
+Remove Tasks
+------------
+
+:Example:
+   I triggered tasks I did not mean to. They may have run-on. I want to undo
+   this.
+
+:Solution:
+   Use ``cylc remove`` to remove unwanted tasks.
+
+.. tab-set::
+
+   .. tab-item:: GUI
+      :sync: gui
+
+      .. image:: remove.gif
+         :width: 75%
+
+      .. note::
+
+         The removed task will be greyed out but it might not
+         disappear from view because the GUI displays all tasks
+         in a graph-based window around current active tasks.
+
+
+   .. tab-item:: CLI
+      :sync: cli
+
+      .. code-block:: console
+
+         cylc remove <workflow>//<cycle>/<id>
