@@ -543,7 +543,7 @@ Remove Tasks
       .. image:: remove.gif
          :width: 75%
 
-      .. warning::
+      .. note::
 
          The removed task will be greyed out but it might not
          disappear from view because the GUI displays all tasks
