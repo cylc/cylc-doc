@@ -1151,7 +1151,9 @@ Glossary
 
    pause
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
-      running but it will not submit any new jobs.
+      running but it will not automatically submit new jobs.
+
+      You can still manually :term:`trigger` tasks in a paused workflow.
 
       This can be useful if you want to make a change to a running workflow.
 
@@ -1247,7 +1249,11 @@ Glossary
          :term:`Tasks <task>` can be :term:`held <hold>` with ``cylc hold`` and
          :term:`released <release>` with ``cylc release``.
 
-         When a workflow is resumed, any held tasks remain held.
+         When a paused workflow is resumed, any held tasks remain held.
+
+         If a submitted or running task is held its active job will not be
+         affected, but it will not submit any more jobs (such as automatic
+         :term:`retries <retry>`) until released.
 
 
    release
@@ -1485,6 +1491,9 @@ Glossary
       Triggers can be based on :term:`standard <standard output>` or
       :term:`custom <custom output>` task outputs. In the latter case they
       are known as :term:`message triggers <message trigger>`.
+
+      The term "trigger" also refers the action of manually triggering
+      a task to run, via the ``cylc trigger`` command or the GUI. 
 
 
    message trigger
