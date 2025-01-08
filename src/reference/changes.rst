@@ -35,6 +35,18 @@ Cylc 8.4
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
+Cylc Remove
+^^^^^^^^^^^
+
+
+Skip Mode
+^^^^^^^^^
+
+Trigger When Paused
+^^^^^^^^^^^^^^^^^^^
+
+
+
 EmPy Support Removed
 ^^^^^^^^^^^^^^^^^^^^
 
