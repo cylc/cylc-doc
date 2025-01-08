@@ -1153,9 +1153,7 @@ Glossary
       When a :term:`workflow` is "paused" the :term:`scheduler` is still
       running but it will not automatically submit new jobs.
 
-      You can still manually :term:`trigger` tasks in a paused workflow. By
-      default they will run once the workflow is resumed, or immediately
-      with the ``--now`` trigger option.
+      You can still manually :term:`trigger` tasks in a paused workflow.
 
       This can be useful if you want to make a change to a running workflow.
 
@@ -1253,9 +1251,9 @@ Glossary
 
          When a paused workflow is resumed, any held tasks remain held.
 
-         If a running task is held its running job is not affected, but it will
-         not submit any more jobs (such as automatic :term:`retries <retry>`)
-         until released. The children of held tasks are not automatically held.
+         If a submitted or running task is held its active job will not be
+         affected, but it will not submit any more jobs (such as automatic
+         :term:`retries <retry>`) until released.
 
 
    release

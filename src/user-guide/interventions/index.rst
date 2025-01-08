@@ -450,7 +450,7 @@ Pause The Workflow And Trigger Tasks One By One
 
 :Solution:
    * Pause the workflow.
-   * Trigger the task(s) you want to run, with the ``--now`` option.
+   * Trigger the task(s) you want to run.
    * When you're done triggering, resume (unpause) the workflow.
 
 .. tab-set::
