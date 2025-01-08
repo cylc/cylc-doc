@@ -288,6 +288,7 @@ certain sub-directories.
 
 * ``run`` - the :term:`run directory` itself
 * ``log``
+  * ``log/job`` - contains job scripts and outputs.
 * ``share`` (see :term:`share directory`)
 * ``share/cycle`` (typically used by `Rose`_ tasks)
 * ``work`` (see :term:`work directory`)

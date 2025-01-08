@@ -488,3 +488,39 @@ Pause The Workflow And Trigger Tasks One By One
       When a task is :term:`held <hold>` it will not submit a job until released.
       Holding a running task does not affect its existing job, but it will not
       submit any new jobs (such as :term:`retries <retry>`) until released.
+
+
+I want to Skip a cycle of tasks and allow the workflow to continue
+------------------------------------------------------------------
+
+:Example:
+
+   I want to skip a cycle (or group) of tasks and continue as if they had run
+   and succeeded.
+
+:Solution:
+
+   Set the run mode of the tasks to skip and Cylc will pretend that they
+   have run (very quickly).
+
+.. tab-set::
+
+   .. tab-item:: GUI
+      :sync: gui
+
+      .. image:: skip-cycle.gui.gif
+         :width: 75%
+
+   .. tab-item:: CLI
+      :sync: cli
+
+      .. code-block:: console
+
+         cylc broadcast -p '<cycle>' -n root -s 'run mode = skip'
+
+.. note::
+
+   ``-n root`` matches all tasks in a cycle. Similarly, it is possible to
+   broadcast this setting to the root namespace of any family, or to
+   multiple named tasks.
+

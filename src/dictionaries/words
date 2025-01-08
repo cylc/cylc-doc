@@ -55,6 +55,7 @@ gscan
 hardcodes
 hardwired
 hardwiring
+heathrow
 heredocs
 hetjob
 hostname
@@ -75,12 +76,14 @@ iso
 iterable
 jitter
 jobscript
+json
 kwarg
 kwargs
 latin
 lifecycle
 linearization
 linter
+linting
 localhost
 lowercase
 markup
@@ -202,6 +205,7 @@ timestamp
 timestep
 timezone
 timezones
+toolbar
 tuple
 uiserver
 unparsed
@@ -220,6 +224,7 @@ wallclock
 websocket
 websockets
 whitelist
+whitelisted
 whitelisting
 whitespace
 workflow

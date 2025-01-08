@@ -22,6 +22,39 @@ For more detail see the component changelogs:
 
 ----------
 
+
+Cylc 8.4
+--------
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   :cylc-flow: `8.4 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-ui: `2.7 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.6 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+   :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+
+EmPy Support Removed
+^^^^^^^^^^^^^^^^^^^^
+
+Support for the EmPy template processor (an alternative to Jinja2) has been
+removed.
+
+Info View
+^^^^^^^^^
+
+An info view has been added, displaying
+
+* :cylc:conf:`[runtime][<namespace>][meta]`.
+* :ref:`task ouputs<required outputs>`.
+* Task :term:`prerequisite`.
+* Task :term:`output completion condition`.
+
+.. image:: changes/cylc-gui-info-view.gif
+   :width: 80%
+
+
 Cylc 8.3
 --------
 

@@ -1274,8 +1274,7 @@ Glossary
       tasks.
 
       Other ways of consolidating configuration include :term:`runtime
-      inheritance` and templating with :ref:`Jinja2 <Jinja>` or :ref:`Empy
-      <User Guide Empy>`.
+      inheritance` and templating with :ref:`Jinja2 <Jinja>`.
 
       .. code-block:: cylc
 
@@ -1778,3 +1777,11 @@ Glossary
       :term:`incomplete outputs <output completion>`, then the workflow is
       not complete and the scheduler will :term:`stall` pending manual intervention.
 
+   dummy task
+      A task which runs a trivially simple script such as ``sleep 1``,
+      ``exit 0`` or ``true``, or which uses :ref:`task-run-modes.skip`
+      to avoid running a script at all.
+
+   dummy mode
+      A workflow run mode that replaces all tasks with :term:`dummy tasks <dummy task>`.
+      See :ref:`workflow-run-modes.dummy`.
