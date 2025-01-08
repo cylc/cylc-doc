@@ -545,11 +545,9 @@ Remove Tasks
 
       .. warning::
 
-         Internal implemenation details mean that the task icon will not be
-         removed.
-
-         .. the implementation detail in question is that remove removes
-         .. flows from tasks.
+         The removed task will be greyed out but it might not
+         disappear from view because the GUI displays all tasks
+         in a graph-based window around current active tasks.
 
 
    .. tab-item:: CLI
