@@ -29,6 +29,8 @@ Skip mode is designed as an aid to workflow control:
    If you are using skip mode deliberately then this can be
    ignored.
 
+.. _skip_mode.task_outputs:
+
 Task Outputs
 ------------
 
@@ -96,6 +98,8 @@ families improves the efficiency of the Cylc scheduler.
 
    This scenario is explained in detail in
    :ref:`EfficientInterFamilyTriggering`
+
+.. _skip_mode.parameter_exclusion:
 
 Parameter Exclusion
 ^^^^^^^^^^^^^^^^^^^

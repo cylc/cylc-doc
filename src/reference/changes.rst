@@ -38,13 +38,58 @@ Cylc 8.4
 Cylc Remove
 ^^^^^^^^^^^
 
+Cylc Remove now allows removing tasks which are not longer active, making
+it look like they never ran. Removing a running task will now kill that task.
+
+The ``cylc remove`` command now has the ``--flow`` option, allowing removal
+of a task from specific flows.
+
+Tasks Removed from all flows are retained in the workflow database with
+``flow=none`` for provenance.
+
+.. image:: ../user-guide/interventions/remove.gif
+   :width: 60%
+
+.. seealso::
+
+   See :ref:`interventions.remove_tasks` to see an example of this feature in
+   action.
 
 Skip Mode
 ^^^^^^^^^
 
+Tasks can be configured to run in skip mode, either from the configuration
+or by broadcasting.
+
+.. image:: ../user-guide/interventions/skip-cycle.gui.gif
+   :width: 60%
+
+``cylc set --out skip`` will set outputs for a task as if the task has run
+in skip mode. The task outputs delivered by skip mode can be customized using
+:cylc:conf:`[runtime][<namespace>][skip]outputs` or defaults to behaviour
+described in :ref:`skip_mode.task_outputs`.
+
+This can be used to skip a cycle or a task (for a full example see
+ :ref:`interventions.skip_cycle`).
+
+It may also be useful for :ref:`EfficientInterFamilyTriggering` and
+for :ref:`skip_mode.parameter_exclusion`.
+
+.. seealso::
+
+   :ref:`task-run-modes.skip`
+
 Trigger When Paused
 ^^^^^^^^^^^^^^^^^^^
 
+Tasks can now be triggered and will run immediately while the workflow
+is paused.
+
+
+.. image:: ../user-guide/interventions/trigger-while-paused.gif
+   :width: 60%
+
+See :ref:`interventions.trigger_while_paused` for an example of this feature.
 
 
 EmPy Support Removed
