@@ -441,6 +441,8 @@ but specify the "failed" output rather than
 "succeeded".
 
 
+.. _interventions.trigger_while_paused:
+
 Pause The Workflow And Trigger Tasks One By One
 -----------------------------------------------
 
@@ -489,6 +491,7 @@ Pause The Workflow And Trigger Tasks One By One
       submit) until released. If you hold a running task its job will not be
       affected, but it will not submit any :term:`retries <retry>` until released.
 
+.. _interventions.skip_cycle:
 
 I want to Skip a cycle of tasks and allow the workflow to continue
 ------------------------------------------------------------------
@@ -524,6 +527,8 @@ I want to Skip a cycle of tasks and allow the workflow to continue
    broadcast this setting to the root namespace of any family, or to
    multiple named tasks.
 
+
+.. _interventions.remove_tasks:
 
 Remove Tasks
 ------------
