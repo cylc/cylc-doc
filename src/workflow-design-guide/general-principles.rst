@@ -467,13 +467,13 @@ Sometimes it may be useful to refer to other cycles - to do this use
 
 See ``isodatetime --help`` for usage instructions.
 
-.. versionadded:: 8.3.1
+.. versionadded:: 8.5.0
 
    ``$CYLC_WORKFLOW_SHARE_DIR`` and the ``isodatetime`` are designed to
    provide a Cylc internal replacement for the use of ``rose task-env``
    to provide ``$ROSE_DATAC`` and derived variables.
 
-Subdirectories of ``$CYLC_SHARE_CYCLE_DIR`` etc. should be agreed between
+Subdirectories of ``$CYLC_SHARE_CYCLE_DIR`` should be agreed between
 different sub-systems of the workflow; typically they are named for the
 file-generating tasks, and the file-consuming tasks should know to look there.
 
