@@ -290,10 +290,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-194935d8af5bcb677dda98ebd876694ee5c3f272.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-ef2dddb2d1e236bd5f1ad509bb4a2ff37c434c50.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough
 buy_ingredients -&gt; make_dough
+make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -301,12 +301,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-25b2c8f89e2d9ce87f7b979ec728730bcd827a8e.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e26f8ce6dee3a7dc0406bd6d3398fca124d5a8b9.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread -&gt; sell_bread
-make_dough -&gt; bake_bread
 sell_bread
 buy_ingredients -&gt; make_dough
+make_dough -&gt; bake_bread
+bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -315,16 +315,16 @@ buy_ingredients -&gt; make_dough
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7055dc3735c94085298238f1f2ac5f1816b0686d.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-b6ed721393365a0ed1201f5eb2f2293111491a9f.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
+clean_oven
+bake_bread -&gt; clean_oven
+sell_bread
+buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
 bake_bread -&gt; sell_bread
 bake_bread
 pre_heat_oven -&gt; bake_bread
-buy_ingredients -&gt; make_dough
-sell_bread
-clean_oven
-bake_bread -&gt; clean_oven
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -493,7 +493,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 09, 2025.
+      <span class="lastupdated">Last updated on Jan 10, 2025.
       </span></p>
   </div>
 
