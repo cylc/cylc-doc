@@ -469,7 +469,8 @@ See ``isodatetime --help`` for usage instructions.
 
 .. versionadded:: 8.5.0
 
-   ``$CYLC_WORKFLOW_SHARE_DIR`` and the ``isodatetime`` are designed to
+   ``$CYLC_SHARE_CYCLE_DIR`` (used in combination with the ``isodatetime``
+   command) is designed to
    provide a Cylc internal replacement for the use of ``rose task-env``
    to provide ``$ROSE_DATAC`` and derived variables.
 
