@@ -15,12 +15,19 @@ Cylc runs on Unix-like systems including Linux and Mac OS.
 Via Conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note::
+.. admonition:: Supported Python versions
 
-   We recommend using the fast Mamba environment solver to install Cylc.
-   Mamba can be used as `a drop-in replacement for the conda command
-   <https://mamba.readthedocs.io/en/latest/index.html>`_,
-   or as `a conda command plugin
+   * cylc-flow supports Python 3.8+.
+   * cylc-uiserver currently only supports Python 3.8-3.9.
+
+.. tip::
+
+   We recommend using Mamba to install Cylc.
+   Mamba (or Micromamba) can be used as
+   `a faster, drop-in replacement for the conda command
+   <https://mamba.readthedocs.io/en/latest/index.html>`_.
+   If using Conda, make sure to use the libmamba-solver by updating to
+   Conda 23.10 or using the `conda-libmamba-solver plugin for conda
    <https://conda.github.io/conda-libmamba-solver/getting-started/>`_.
    The classic conda environment solver may be too slow for a complex package
    like Cylc.
@@ -39,9 +46,10 @@ Via Conda (recommended)
 Via Pip (+npm)
 ^^^^^^^^^^^^^^
 
-.. note::
+.. admonition:: Supported Python versions
 
-   Requires Python 3.7 - 3.9
+   * cylc-flow supports Python 3.7+.
+   * cylc-uiserver currently only supports Python 3.8-3.9.
 
 .. important::
 
@@ -139,7 +147,7 @@ your ``$PATH``, follow the instructions in the ``brew install`` output.
 
 .. warning::
 
-   For Mac OS Versions 10.15.0 (Catalina) and higher SSH is disabled by
+   For Mac OS Versions 10.15.0 (Catalina) and higher, SSH is disabled by
    default. The ability to SSH into your Mac OS box may be required for
    certain Cylc installations.
 
