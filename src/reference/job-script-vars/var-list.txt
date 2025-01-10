@@ -29,6 +29,9 @@ CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory (see b
 CYLC_WORKFLOW_UUID                 # Workflow UUID string
 CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
+CYLC_SHARE_CYCLE_DIR               # The location of the <workflow>/share/cycle/<cycle_point>
+                                   # directory.
+
 CYLC_TASK_JOB                      # Job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER
                                    #   e.g. 20110511T1800Z/t1/01
