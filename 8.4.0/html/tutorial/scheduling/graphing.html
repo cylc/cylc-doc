@@ -301,11 +301,11 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e26f8ce6dee3a7dc0406bd6d3398fca124d5a8b9.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-3cc3f7768a5affdc79804c3e458386e1426a9483.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
 buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
+sell_bread
 bake_bread -&gt; sell_bread
 }</p></object></div>
 </div>
@@ -315,16 +315,16 @@ bake_bread -&gt; sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-b6ed721393365a0ed1201f5eb2f2293111491a9f.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-f42a3ccb6a60654375f19b34808356c5e8985be0.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-clean_oven
-bake_bread -&gt; clean_oven
-sell_bread
-buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
 bake_bread -&gt; sell_bread
-bake_bread
+bake_bread -&gt; clean_oven
 pre_heat_oven -&gt; bake_bread
+buy_ingredients -&gt; make_dough
+sell_bread
+clean_oven
+bake_bread
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).

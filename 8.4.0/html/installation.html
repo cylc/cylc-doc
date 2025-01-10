@@ -125,11 +125,20 @@ Forge, into a conda environment; or from PyPI, into a Python 3 virtual environme
 <p>Cylc runs on Unix-like systems including Linux and Mac OS.</p>
 <section id="via-conda-recommended">
 <h3>Via Conda (recommended)<a class="headerlink" href="#via-conda-recommended" title="Link to this heading"></a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We recommend using the fast Mamba environment solver to install Cylc.
-Mamba can be used as <a class="reference external" href="https://mamba.readthedocs.io/en/latest/index.html">a drop-in replacement for the conda command</a>,
-or as <a class="reference external" href="https://conda.github.io/conda-libmamba-solver/getting-started/">a conda command plugin</a>.
+<div class="admonition-supported-python-versions admonition">
+<p class="admonition-title">Supported Python versions</p>
+<ul class="simple">
+<li><p>cylc-flow supports Python 3.8+.</p></li>
+<li><p>cylc-uiserver currently only supports Python 3.8-3.9.</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommend using Mamba to install Cylc.
+Mamba (or Micromamba) can be used as
+<a class="reference external" href="https://mamba.readthedocs.io/en/latest/index.html">a faster, drop-in replacement for the conda command</a>.
+If using Conda, make sure to use the libmamba-solver by updating to
+Conda 23.10 or using the <a class="reference external" href="https://conda.github.io/conda-libmamba-solver/getting-started/">conda-libmamba-solver plugin for conda</a>.
 The classic conda environment solver may be too slow for a complex package
 like Cylc.</p>
 </div>
@@ -145,9 +154,12 @@ $ conda install -c conda-forge cylc-rose metomi-rose
 </section>
 <section id="via-pip-npm">
 <h3>Via Pip (+npm)<a class="headerlink" href="#via-pip-npm" title="Link to this heading"></a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Requires Python 3.7 - 3.9</p>
+<div class="admonition-supported-python-versions admonition">
+<p class="admonition-title">Supported Python versions</p>
+<ul class="simple">
+<li><p>cylc-flow supports Python 3.7+.</p></li>
+<li><p>cylc-uiserver currently only supports Python 3.8-3.9.</p></li>
+</ul>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -229,7 +241,7 @@ for security reasons and must be manually enabled.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>For Mac OS Versions 10.15.0 (Catalina) and higher SSH is disabled by
+<p>For Mac OS Versions 10.15.0 (Catalina) and higher, SSH is disabled by
 default. The ability to SSH into your Mac OS box may be required for
 certain Cylc installations.</p>
 <p>See the <a class="reference external" href="https://support.apple.com/en-gb/guide/mac-help/mchlp1066/mac">Apple support page</a>
