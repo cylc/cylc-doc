@@ -451,7 +451,7 @@ Primarily, for self-containment (see :ref:`Self-Contained Workflows`) shared IO
 paths should be under the *workflow share directory*, the location of which is
 passed to all tasks as ``$CYLC_WORKFLOW_SHARE_DIR``.
 
-The ``$CYLC_SHARE_CYCLE_DIR`` variable can be used to target
+The ``$CYLC_TASK_SHARE_CYCLE_DIR`` variable can be used to target
 cyclepoint-specific locations under the workflow share directory.
 
 Sometimes it may be useful to refer to other cycles - to do this use
@@ -469,12 +469,12 @@ See ``isodatetime --help`` for usage instructions.
 
 .. versionadded:: 8.5.0
 
-   ``$CYLC_SHARE_CYCLE_DIR`` (used in combination with the ``isodatetime``
+   ``$CYLC_TASK_SHARE_CYCLE_DIR`` (used in combination with the ``isodatetime``
    command) is designed to
    provide a Cylc internal replacement for the use of ``rose task-env``
    to provide ``$ROSE_DATAC`` and derived variables.
 
-Subdirectories of ``$CYLC_SHARE_CYCLE_DIR`` should be agreed between
+Subdirectories of ``$CYLC_TASK_SHARE_CYCLE_DIR`` should be agreed between
 different sub-systems of the workflow; typically they are named for the
 file-generating tasks, and the file-consuming tasks should know to look there.
 
