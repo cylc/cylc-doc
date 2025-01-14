@@ -55,6 +55,7 @@ CYLC_TASK_LOG_ROOT                 # The job script path
 CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
                                    #   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
 CYLC_TASK_SHARE_CYCLE_DIR          # The share/cycle/<cycle point directory>
+                                   # for this task.
 
 CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                    #   e.g. root postproc t1
