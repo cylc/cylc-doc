@@ -26,7 +26,6 @@ CYLC_WORKFLOW_HOST                 # Host running the workflow process
 CYLC_WORKFLOW_OWNER                # User ID running the workflow process
 
 CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory
-                                   # for this task.
 CYLC_WORKFLOW_UUID                 # Workflow UUID string
 CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
 
