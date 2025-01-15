@@ -451,27 +451,30 @@ Primarily, for self-containment (see :ref:`Self-Contained Workflows`) shared IO
 paths should be under the *workflow share directory*, the location of which is
 passed to all tasks as ``$CYLC_WORKFLOW_SHARE_DIR``.
 
-The ``rose task-env`` utility can provide additional environment
-variables that refer to static and cyclepoint-specific locations under the
-workflow share directory.
+The ``$CYLC_TASK_SHARE_CYCLE_DIR`` variable can be used to target
+cyclepoint-specific locations under the workflow share directory.
 
-.. code-block:: cylc
-
-   [runtime]
-       [[my-task]]
-           env-script = $(eval rose task-env -T P1D -T P2D)
-
-For a current cycle point of ``20170105`` this will make the following
-variables available to tasks:
+Sometimes it may be useful to refer to other cycles - to do this use
+``isodatetime``:
 
 .. code-block:: bash
 
-   ROSE_DATA=$CYLC_WORKFLOW_SHARE_DIR/data
-   ROSE_DATAC=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170105
-   ROSE_DATACP1D=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170104
-   ROSE_DATACP2D=$CYLC_WORKFLOW_SHARE_DIR/cycle/20170103
+   # Cylc task script
+   CYCLE_POINT_MINUS_P1D=$(isodatetime "${CYLC_TASK_CYCLE_POINT} --offset -P1D)"
+   SHARE_CYCLE_DIR_MINUS_P1D="${CYLC_WORKFLOW_SHARE_DIR}/cycle/${CYCLE_POINT_MINUS_P1D}"
+   mkdir -p "${SHARE_CYCLE_DIR_MINUS_P1D}"
+   echo "I believe in ..." > "${SHARE_CYCLE_DIR_MINUS_P1D}/somefile"
 
-Subdirectories of ``$ROSE_DATAC`` etc. should be agreed between
+See ``isodatetime --help`` for usage instructions.
+
+.. versionadded:: 8.5.0
+
+   ``$CYLC_TASK_SHARE_CYCLE_DIR`` (used in combination with the ``isodatetime``
+   command) is designed to
+   provide a Cylc internal replacement for the use of ``rose task-env``
+   to provide ``$ROSE_DATAC`` and derived variables.
+
+Subdirectories of ``$CYLC_TASK_SHARE_CYCLE_DIR`` should be agreed between
 different sub-systems of the workflow; typically they are named for the
 file-generating tasks, and the file-consuming tasks should know to look there.
 
