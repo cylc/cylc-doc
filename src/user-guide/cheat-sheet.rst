@@ -132,7 +132,7 @@ First, make your required changes to the files in the workflow's
    cylc vr <id>
 
 If you want to quickly edit a task's configuration, e.g. while developing a
-workflow or testing changes, the 
+workflow or testing changes, the
 :ref:`"Edit Runtime" feature <interventions.edit-a-tasks-configuration>`
 in the GUI can be convenient.
 
@@ -218,7 +218,7 @@ Run or re-run a task (:ref:`more info <interventions.re-run-a-task>`)::
 
    cylc trigger <id>//<cycle>/<task>
 
-Mark a task as "succeeded"
+Mark a task as complete
 (:ref:`more info <interventions.set-task-outputs>`)::
 
    cylc set <id>//<cycle>/<task>
