@@ -22,6 +22,38 @@ For more detail see the component changelogs:
 
 ----------
 
+Cylc 8.5
+--------
+
+.. TODO: Modify these URL's and uncomment this block before release
+
+   .. admonition:: Cylc Components
+   :class: hint
+
+   :cylc-flow: `8.4 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-ui: `2.7 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.6 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+   :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+
+
+Cylc Tui
+^^^^^^^^
+
+``cylc tui`` can now open log files in external tools.
+
+.. image:: ../reference/changes/tui-external-editor.gif
+   :align: center
+   :width: 65%
+
+Configure your ``$EDITOR``, `$GEDITOR`` and ``$PAGER`` environment variables
+to change which tool is used.
+
+.. note::
+
+   Make sure your configured command waits for the tool to be closed before
+   exiting, e.g. use ``GEDITOR=gvim -f`` rather than ``EDITOR=gvim``.
+
 
 Cylc 8.4
 --------
