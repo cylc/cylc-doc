@@ -25,9 +25,9 @@ CYLC_WORKFLOW_RUN_DIR              # Location of the run directory in
 CYLC_WORKFLOW_HOST                 # Host running the workflow process
 CYLC_WORKFLOW_OWNER                # User ID running the workflow process
 
-CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory (see below)
+CYLC_WORKFLOW_SHARE_DIR            # Workflow (or task!) shared directory
 CYLC_WORKFLOW_UUID                 # Workflow UUID string
-CYLC_WORKFLOW_WORK_DIR             # Workflow work directory (see below)
+CYLC_WORKFLOW_WORK_DIR             # Workflow work directory
 
 CYLC_TASK_JOB                      # Job identifier expressed as
                                    # CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER
@@ -54,6 +54,8 @@ CYLC_TASK_LOG_ROOT                 # The job script path
                                    #   e.g. ~/cylc-run/foo/log/job/20110511T1800Z/t1/01/job
 CYLC_TASK_WORK_DIR                 # Location of task work directory (see below)
                                    #   e.g. ~/cylc-run/foo/work/20110511T1800Z/t1
+CYLC_TASK_SHARE_CYCLE_DIR          # The share/cycle/<cycle-point> directory
+                                   # for this task.
 
 CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
                                    #   e.g. root postproc t1
