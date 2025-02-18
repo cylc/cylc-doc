@@ -104,31 +104,26 @@ The "n" Window
 
 .. versionchanged:: 8.0.0
 
-Cylc workflow :term:`graphs <graph>` can be very large, even infinite for
-:term:`cycling workflows <cycling workflow>` with no :term:`final cycle point`.
+Cylc workflow :term:`graphs <graph>` can be very large, or infinite in
+extent for :term:`cycling workflows <cycling workflow>` with no
+:term:`final cycle point`.
 
 Consequently the GUI often can't display "all of the tasks" at once. Instead
-it displays all :term:`active tasks <active task>` (e.g. running tasks)
-as well as any tasks which are a configurable number of tasks away from
-them in the task dependency :term:`graph`.
+it displays all tasks a configurable :term:`n-window` around the current
+:term:`active tasks <active task>`.
 
 .. image:: ../../img/n-window.png
    :align: center
 
 
 n=0:
-   The ``n=0`` window contains :term:`active tasks <active task>`. An active
-   task is a task which is near ready to run, in the process of running, or
-   which requires user intervention (see the :term:`glossary <active task>`
-   for a more detailed description).
+   The ``n=0`` window contains current :term:`active tasks`: those that are
+   near ready to run, running, or which require user intervention.
 n=1:
-   The ``n=1`` window contains all "active tasks" as well as any tasks one
-   "edge" out from them, i.e. their dependencies (the tasks that come immediately
-   before them in the graph) and their descendants (the tasks that come
-   immediately after them in the graph).
+   The ``n=1`` window contains the ``n=0`` tasks plus those out
+   to *one* graph edge around them in the graph.
 n=2:
-   The ``n=2`` window contains all "active tasks" as well as any tasks *two*
-   edges out from them, and so on.
+   The ``n=2`` window extends out to *two* graph edges from ``n=0``.
 
 This animation shows how the n-window advances as a workflow runs, tasks are
 colour coded according to their n-window value with the colours changing from

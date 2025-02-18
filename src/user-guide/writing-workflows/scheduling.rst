@@ -1623,7 +1623,7 @@ Tasks are expected to complete required outputs at runtime, but
 they don't have to complete optional outputs.
 
 This allows the scheduler to correctly diagnose
-:term:`workflow completion`. [2]_
+:ref:`workflow completion`. [2]_
 
 Tasks that achieve a :term:`final status` without completing their
 outputs [3]_ are retained in the :term:`n=0 window <n-window>` pending user
@@ -2219,15 +2219,12 @@ executing, e.g:
 Runahead Limiting
 -----------------
 
-Runahead limiting prevents a workflow from getting too far ahead of the oldest
-active cycle point by holding back tasks in cycles beyond a specified limit.
+Runahead limiting prevents workflow activity from getting too far ahead of the
+earliest :term:`active cycle`, by holding back tasks in cycles beyond a
+configurable limit.
 
-The runahead limit is defined as an interval measured from the oldest active cycle.
-A cycle is considered to be "active" if it contains any :term:`active` tasks
-(e.g. running tasks).
-
-Tasks in cycles which are beyond the limit are called :term:`runahead` tasks
-and are displayed in the GUI/Tui with small circle above them:
+Tasks in cycles beyond the runahead limit are called "runahead limited" and are
+displayed in the GUI/Tui with small circle above them:
 
 .. image:: ../../img/task-job-icons/task-isRunahead.png
    :width: 60px
@@ -2236,7 +2233,7 @@ and are displayed in the GUI/Tui with small circle above them:
 As the workflow advances and active cycles complete, the runahead limit moves
 forward allowing tasks in later cycles to run.
 
-There are two ways of defining the interval which defines the runahead limit,
+There are two ways of defining the interval which defines the runahead limit:
 as an integer number of cycles, or as a datetime interval.
 
 

@@ -3,43 +3,37 @@
 Workflow Completion
 ===================
 
-A workflow is complete, and the scheduler will automatically
-:term:`shut down <shutdown>`, if no tasks remain in the
-:term:`n=0 <n-window>`.
-
-That is, all active tasks have finished, and no tasks remain waiting on
-:term:`prerequisites <prerequisite>` or "external" constraints (such as
-:term:`xtriggers <xtrigger>` or task :term:`hold`).
-
-If no active tasks remain and all external constraints are satisfied,
-but the n=0 window contains tasks waiting with partially satisfied
-:term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
-:term:`incomplete outputs <output completion>`, then the workflow is
-not complete and the scheduler will :term:`stall` pending manual intervention.
-
+A workflow can :term:`shut down <shutdown>` once all
+:term:`active tasks <active task>` complete without spawning further
+downstream activity - i.e., when :term:`n=0 window` empties out.
 
 .. _scheduler stall:
 
 Scheduler Stall
 ===============
 
-A stalled workflow has not run to :term:`completion <workflow completion>`
-but cannot continue without manual intervention. 
+If there are no tasks waiting on as yet unsatisfied external constraints
+such clock and xtriggers, and all activity has ceased but workflow has
+not :ref:`run to completion <workflow completion>`, then it
+has stalled and requires manual intervention to continue.
+
+Stalls are caused by :term:`final status incomplete tasks <output completion>`
+and :term:`partially satisfied tasks <prerequisite>`.
+
+These most often result from task failures that the workflow does not
+handle automatically by retries or optional branching.
 
 A stalled scheduler stays alive for a configurable timeout period
-pending manual intervention. If it shuts down (on the stall timeout
-or otherwise) it will remain in the stalled state on restart.
+to allow you to intervene, e.g. by manually triggering an incomplete
+task after fixing the bug that caused it to fail.
 
-Stalls are often caused by unexpected task failures, either directly (tasks
-with :term:`final status` and :term:`incomplete outputs <output completion>`)
-or indirectly (tasks with partially satisfied :term:`prerequisites <prerequisite>`,
-downstream of an unexpected failure).
+If a stalled workflow does eventually shut down, on the stall timeout
+or by stop command, it will immediately stall again on restart.
 
 .. warning::
 
-   At present you have to consult the :term:`scheduler log` to see the reason
-   for a stall.
-
+   At present you have to look at the :term:`scheduler log` to see
+   which tasks caused a stall.
 
 .. seealso::
 
