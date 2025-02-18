@@ -26,7 +26,7 @@ state, with a new clock trigger to handle the configured retry delay.
 Aborting a Retry Sequence
 -------------------------
 
-To prevent a waiting task from retrying, remove it from the scheduler's
+To prevent a task from retrying, remove it from the scheduler's
 :term:`active window`. For a task ``3/foo`` in workflow ``brew``:
 
 .. code-block:: console
@@ -45,6 +45,7 @@ sequence, or remove it.
 
 
 If you want trigger downstream tasks despite ``3/foo`` being removed before it
-could succeed, use ``cylc set`` to artificially mark its ``succeeded``
-output as complete (and with the ``--flow`` option, to make the :term:`flow`
-continue on from there).
+could succeed, use ``cylc set`` to artificially mark its
+:term:`required outputs <required output>`
+as complete (and with the ``--flow`` option, if needed to make a specific
+:term:`flow` continue on from there).

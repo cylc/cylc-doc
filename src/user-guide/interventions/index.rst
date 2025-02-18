@@ -165,8 +165,10 @@ Set Task Outputs
       .. image:: set-task-outputs.gui.gif
          :width: 75%
 
-      By default this sets the "succeeded" output, press the pencil icon next
-      to the trigger command to specify a different output.
+      By default, this sets all :term:`required outputs <required output>` for
+      the task, which usually includes ``succeeded``.
+      To specify the output(s) you would like to set,
+      press the pencil icon next to the "Set" command .
 
    .. tab-item:: Tui
       :sync: tui
@@ -174,8 +176,10 @@ Set Task Outputs
       .. image:: set-task-outputs.tui.gif
          :width: 75%
 
-      By default, this sets the "succeeded" output. Use ``cylc set --output``
-      to specify a different output.
+      By default, this sets all :term:`required outputs <required output>` for
+      the task, which usually includes ``succeeded``.
+      To specify the output(s) you would like to set,
+      use ``cylc set --output``.
 
    .. tab-item:: CLI
       :sync: cli
@@ -184,8 +188,10 @@ Set Task Outputs
 
          $ cylc set <workflow>//<task>
 
-      By default, this sets the "succeeded" output. Use the ``--output`` option
-      to specify a different output.
+      By default, this sets all :term:`required outputs <required output>` for
+      the task, which usually includes ``succeeded``.
+      To specify the output(s) you would like to set,
+      use the ``--output`` option.
 
 You can also :ref:`set task prerequisites <interventions.set-task-prerequisites>`.
 Should I set task outputs or prerequisites?
@@ -203,7 +209,7 @@ Set Task Prerequisites
 
    [scheduler]
        allow implicit tasks = True
-   
+
    [scheduling]
        [[graph]]
            R1 = """
@@ -214,7 +220,7 @@ Set Task Prerequisites
                # set prereqs "1/b2:succeeded" and "1/c:succeeded" on 1/z1
                # set prereqs "all" on 1/z2
            """
-   
+
    [runtime]
        [[b1]]
            script = sleep 600
@@ -274,10 +280,10 @@ Set a Switch Task
                switch:normal? => normal
                switch:alternate? => alternate
                normal | alternate => end
-   
+
                end[-P1] => start
            """
-   
+
    [runtime]
        [[start]]
            script = """
@@ -298,15 +304,15 @@ Set a Switch Task
    take a particular path ahead of time:
 
    .. code-block:: cylc-graph
-   
+
       start => switch
-   
+
       # by default, the workflow follows the "normal" path
       switch:normal? => normal
-   
+
       # but it can follow an alternate route if desired
       switch:alternate? => alternate
-   
+
       normal | alternate => end
 
 :Solution:
@@ -314,7 +320,7 @@ Set a Switch Task
    ``-wait`` option. Cylc will follow the desired path when it gets there.
 
    .. note::
-   
+
       We set the "succeeded" output to prevent the task from being re-run when the
       flow approaches it.
 
