@@ -328,9 +328,9 @@ Cylc 8.2
 .. admonition:: Cylc Components
    :class: hint
 
-   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.2.x/CHANGES.md>`__
-   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.x/CHANGES.md>`__
-   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.3.x/CHANGES.md>`__
+   :cylc-flow: `8.2 <https://github.com/cylc/cylc-flow/blob/8.2.7/CHANGES.md>`__
+   :cylc-uiserver: `1.4 <https://github.com/cylc/cylc-uiserver/blob/1.4.4/CHANGES.md>`__
+   :cylc-rose: `1.3 <https://github.com/cylc/cylc-rose/blob/1.3.4/CHANGES.md>`__
 
 
 UI now remembers workspace tab layout
@@ -400,9 +400,9 @@ Cylc 8.1
 .. admonition:: Cylc Components
    :class: hint
 
-   :cylc-flow: `8.1 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md#cylc-814-released-2023-05-04>`__
-   :cylc-uiserver: `1.2 <https://github.com/cylc/cylc-uiserver/blob/1.2.x/CHANGES.md>`__
-   :cylc-rose: `1.1 <https://github.com/cylc/cylc-rose/blob/1.1.0/CHANGES.md#user-content-cylc-rose-110-released-2022-07-28>`__
+   :cylc-flow: `8.1 <https://github.com/cylc/cylc-flow/blob/8.1.4/CHANGES.md>`__
+   :cylc-uiserver: `1.2 <https://github.com/cylc/cylc-uiserver/blob/1.2.2/CHANGES.md>`__
+   :cylc-rose: `1.1 <https://github.com/cylc/cylc-rose/blob/1.1.1/CHANGES.md>`__
 
 .. warning::
 
