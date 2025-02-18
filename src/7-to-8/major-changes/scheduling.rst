@@ -23,10 +23,12 @@ Cylc can manage infinite workflows of repeating tasks:
 
 Cylc 8 has a new scheduling algorithm that:
 
-- Is much more efficient because it only has to manage active tasks
+- Is much more efficient because it doesn't need to track nearly as 
+  many waiting and succeeded tasks in addition to the active
+  (submitted and running) ones. 
 
   - waiting tasks are not pre-spawned before they are needed
-  - succeeded tasks are not kept across the active task window
+  - succeeded tasks are not retained across the :term:`active window`
   - no costly indiscriminate dependency matching is done
 - Distinguishes between :term:`optional <optional output>` and
   :term:`required <required output>` task outputs, to support:
@@ -37,7 +39,7 @@ Cylc 8 has a new scheduling algorithm that:
 
   - instances of same task can run out of cycle point order
   - the workflow will not unnecessarily stall downstream of failed tasks
-- Provides a sensible active-task based window on the evolving workflow
+- Provides a sensible activity-based window on the evolving workflow
 
   - (to fully understand which tasks appeared in the Cylc 7 GUI you had to
     understand the scheduling algorithm)

@@ -102,31 +102,32 @@ The "n" Window
 
 .. versionchanged:: 8.0.0
 
-Cylc workflow :term:`graphs <graph>` can be very large, even infinite for
-:term:`cycling workflows <cycling workflow>` with no :term:`final cycle point`.
+Cylc workflow :term:`graphs <graph>` can be very large, or infinite in
+extent for :term:`cycling workflows <cycling workflow>` with no
+:term:`final cycle point`.
 
 Consequently the GUI often can't display "all of the tasks" at once. Instead
-it displays all :term:`active tasks <active task>` (e.g. running tasks)
-as well as any tasks which are a configurable number of tasks away from
-them in the task dependency :term:`graph`.
+it displays all tasks in the :term:`active window` of the workflow, as well
+as any tasks out to a configurable number of graph edges away from them in
+the task dependency :term:`graph`.
 
 .. image:: ../../img/n-window.png
    :align: center
 
 
 n=0:
-   The ``n=0`` window contains :term:`active tasks <active task>`. An active
-   task is a task which is near ready to run, in the process of running, or
-   which requires user intervention (see the :term:`glossary <active task>`
-   for a more detailed description).
+   The ``n=0`` window corresponds to the scheduler's active window:
+   tasks that are near ready to run, in the process of running, or
+   which require user intervention. See the :term:`glossary <active window>`
+   for a more detailed description.
 n=1:
-   The ``n=1`` window contains all "active tasks" as well as any tasks one
-   "edge" out from them, i.e. their dependencies (the tasks that come immediately
-   before them in the graph) and their descendants (the tasks that come
-   immediately after them in the graph).
+   The ``n=1`` window contains the ``n=0`` window plus all tasks out to one
+   graph edge around them, i.e. their dependencies (the tasks that come immediately
+   before them in the graph) and their descendants (immediately after them in the
+   graph).
 n=2:
-   The ``n=2`` window contains all "active tasks" as well as any tasks *two*
-   edges out from them, and so on.
+   The ``n=2`` window extends out to *two* graph edges around
+   the :term:`active window`, and so on.
 
 This animation shows how the n-window advances as a workflow runs, tasks are
 colour coded according to their n-window value with the colours changing from

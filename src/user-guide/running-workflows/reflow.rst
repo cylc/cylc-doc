@@ -117,19 +117,18 @@ Triggering with No Active Flows
    ``cylc trigger [--wait] ID``
 
    By default, triggered tasks will be given the flow numbers of the most
-   recent active task. This can happen, for instance, if you restart a
+   recent :term:`active tasks <active task>`. This can happen, for instance, if you restart a
    completed workflow and then trigger a task in it. The result will be the
    same as if you had triggered the task just before the workflow completed.
 
-Special Case: Triggering ``n=0`` Tasks
-   Tasks in the ``n=0`` window are :term:`active tasks <active task>`.
-   Their flow membership is already determined - that of
-   the parent tasks that spawned them.
+Special Case: Triggering ``n=0`` (:term:`active window`) Tasks
+   Tasks in the :term:`active window` already have flow membership assigned
+   (namely that of the parent tasks that spawned them).
 
    - Triggering a task with a submitted or running job has no effect
      (it is already triggered).
-   - Triggering other :term:`n=0 tasks <n-window>`, including tasks with
-     :term:`incomplete outputs <output completion>` queues them to run in
+   - Triggering other :term:`active window` tasks, including tasks with
+     :term:`incomplete outputs <output completion>`, queues them to run in
      the flow that they already belong to.
 
 
@@ -142,8 +141,9 @@ If a task spawning into the :term:`n=0 window <n-window>` finds another instance
 of itself (same task ID) already there, the two will merge and carry both
 (sets of) flow numbers forward. Downstream tasks will belong to both flows.
 
-Flow merging is necessary because :term:`active <active task>` task IDs
-must be unique.
+Flow merging is necessary because tasks in the :term:`active window` must have
+unique task IDs. However, it is also useful: it allows a single flow to carry
+on downstream of multi-flow interventions.
 
 If the original task instance has a :term:`final status` (and has been retained
 in the :term:`n=0 window <n-window>` with
@@ -157,7 +157,7 @@ Stopping Flows
 By default, ``cylc stop`` halts the workflow and shuts the scheduler down.
 
 It can also stop specific flows: ``cylc stop --flow=N`` removes the flow number
-``N`` from :term:`active tasks <active task>`. Tasks that have no flow
+``N`` from tasks in the :term:`active window`. Tasks that have no flow
 numbers left as a result do not spawn children at all. If there are no active
 flows left, the scheduler shuts down.
 

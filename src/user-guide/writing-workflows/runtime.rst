@@ -760,7 +760,7 @@ Late Events
 .. warning::
 
   The scheduler can only check for lateness once a task has appeared in its
-  active task window. In Cylc 8 this is usually when the task is actually
+  :term:`active window`. In Cylc 8 this is usually when the task is actually
   ready to run, which severely limits the usefulness of late events as
   currently implemented.
 

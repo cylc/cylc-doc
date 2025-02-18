@@ -196,17 +196,14 @@ N-Window selector in the GUI
 
 The :term:`n-window` determines how much of a workflow is visible in the GUI / Tui.
 
-The ``n=0`` window contains only the active tasks
-(i.e. queued, preparing, submitted or running tasks).
+The ``n=0`` window displays only the scheduler's :term:`active window`.
 
-The ``n=1`` window, also contains tasks one "edge" out from active tasks
-(i.e. the tasks immediately upstream or downstream of active tasks).
+The ``n=1`` window also contains tasks one graph "edge", i.e. immediately
+upstream or downstream from, those in the :term:`active window`. And so on, for
+``n=2`` and ``n=3``.
 
-The ``n=2`` window, also contains tasks two "edges" out from active tasks,
-and so on.
-
-It is now possible to change the window extent in the GUI via a button in the
-toolbar allowing you to see tasks further back in the workflow's history.
+You can change the n-window extent in the GUI with a toolbar button, to display
+fewer or more tasks around the current ``n=0`` :term:`active window`.
 
 .. image:: changes/gui-n-window-selector.gif
    :width: 100%

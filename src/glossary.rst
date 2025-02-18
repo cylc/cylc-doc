@@ -67,50 +67,39 @@ Glossary
       Submit number also appears in the job log path so that job log files
       don't get overwritten.
 
-
-   active
    active task
-      An active task is a task which is near ready to run, in the process of
-      running, or which requires user intervention. These are all the tasks
-      being actively managed by the scheduler at this point in the run. 
+      Tasks that are in the ``submitted`` and ``running`` states, i.e., those
+      with active jobs. Be aware that the :term:`active window` of the workflow
+      may also contain some tasks that are not active in this sense.
 
-      Active tasks are:
+   window
+   active window
+      The active window of a workflow contains only the tasks that Cylc needs
+      to actively manage in order to perform its job of scheduling efficiently:
 
-      - Tasks which have some, but not all of their
-        :term:`prerequisites <prerequisite>` satisfied.
-      - ``waiting`` tasks, that are actively waiting on:
-
-        - :term:`xtriggers <xtrigger>`.
-        - :ref:`internal queues <InternalQueues>`
-        - :ref:`runahead limit <RunaheadLimit>`
-
+      - :term:`active tasks <active task>` (``submitted`` and ``running``, with active jobs)
       - ``preparing`` tasks - i.e. tasks in the process of submitting jobs
-      - ``submitted`` and ``running`` tasks - i.e. those with active jobs
+      - ``waiting`` tasks that are nearly ready to run but:
+
+        - still have some (but not all) unsatisfied :term:`prerequisites <prerequisite>`
+        - are waiting on :term:`xtriggers <xtrigger>`,
+          :ref:`internal queues <InternalQueues>`, or the :ref:`runahead limit <RunaheadLimit>`
+
       - tasks that reached a :term:`final status` without completing their
         :term:`required outputs <required output>`
         (e.g. a task failed where success was required).
 
-      Active tasks are in the ``n=0`` :term:`window <n-window>` which means they
-      will always be displayed in the GUI and Tui.
-
-      The distinction between active and non-active tasks is important for
-      the computing of the :term:`runahead limit`.
-
+   n-window
+      The GUI provides a view extending ``n`` (default ``n=1``)
+      graph edges out from the :term:`active window` of the workflow.
+      Thus in the context of the GUI the active window may also be
+      referred to as the `n=0` window.
 
    active cycle
-      A cycle point is active if it contains any :term:`active tasks <active task>`.
+      A cycle point is active if any of its tasks appear in the :term:`active window`
+      of the workflow.
 
-      Active cycles are counted towards the :term:`runahead limit`.
-
-
-   window
-   n-window
-   active window
-      The GUI provides a :term:`graph`-based window or view of the workflow at
-      runtime, including tasks out to ``n`` graph edges from current
-      :term:`active tasks <active task>`.
-
-      Active tasks form the ``n=0`` window.
+     Active cycles are counted towards the :term:`runahead limit`.
 
       .. seealso::
 
@@ -1215,9 +1204,10 @@ Glossary
       workflow :term:`source directory` before reload, rather than made by
       editing the installed files directly.
 
-      :ref:`RemoteInit` will be redone for each job platform, when the first job is submitted there after a reload.
+      :ref:`RemoteInit` will be redone for each job platform, when the first
+      job is submitted there after a reload.
 
-      Any :term:`task` that is :term:`active <active task>` at reload
+      Any :term:`task` that is already present in the :term:`active window` at reload
       will continue with its pre-reload configuration.
       The next instance of the task (at the next cycle point)
       will adopt the new configuration.
@@ -1613,7 +1603,7 @@ Glossary
 
    suicide trigger
       Suicide triggers remove :term:`tasks <task>` from the 
-      :term:`active window <n-window>` at runtime.
+      :term:`active window` at runtime.
 
       They are denoted by exclamation marks, and are triggered like normal
       dependencies. For instance, the following suicide trigger will remove the
@@ -1701,9 +1691,8 @@ Glossary
 
 
    flow front
-      :term:`Active tasks <active task>`, i.e. tasks in the
-      :term:`n=0 window <n-window>`, with a common :term:`flow number`
-      comprise the active front of the flow.
+      Tasks in the :term:`active window` of the workflow with a common
+      :term:`flow number` comprise the active front of the flow.
 
 
    flow merge
@@ -1750,8 +1739,8 @@ Glossary
       ahead of the oldest :term:`active cycle` the workflow is permitted
       to run.
 
-      The "oldest active cycle point" is the first cycle in the workflow to contain
-      any :term:`active tasks <active task>` (e.g. running tasks).
+      The "oldest active cycle point" is the first cycle in the workflow to
+      contain any submitted or running tasks.
 
       .. seealso::
 
@@ -1765,11 +1754,11 @@ Glossary
       :term:`shut down <shutdown>`, if no tasks remain in the
       :term:`n=0 <n-window>`.
 
-      That is, all active tasks have finished, and no tasks remain waiting on
+      That is, all :term:`active tasks <active task>` have finished, and no tasks remain waiting on
       :term:`prerequisites <prerequisite>` or "external" constraints (such as
       :term:`xtriggers <xtrigger>` or task :term:`hold`).
 
-      If no active tasks remain and all external constraints are satisfied,
+      If no :term:`active tasks <active task>` remain and all external constraints are satisfied,
       but the n=0 window contains tasks waiting with partially satisfied
       :term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
       :term:`incomplete outputs <output completion>`, then the workflow is
