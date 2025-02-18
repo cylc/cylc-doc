@@ -134,6 +134,8 @@ intersphinx_mapping = {
 }
 
 nitpick_ignore = [
+    # external deps we don't cross-link to
+    ('py:class', 'zmq.auth.thread.ThreadAuthenticator'),
     # This class appears in documented type-hints but is not documented in the
     # Python docs so fails build.
     ('py:class', 're.Pattern'),
