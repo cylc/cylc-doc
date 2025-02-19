@@ -116,7 +116,7 @@ the task dependency :term:`graph`.
 
 
 n=0:
-   The ``n=0`` window corresponds to the scheduler's active window:
+   The ``n=0`` window corresponds to the scheduler's :term:`active window`:
    tasks that are near ready to run, in the process of running, or
    which require user intervention. See the :term:`glossary <active window>`
    for a more detailed description.

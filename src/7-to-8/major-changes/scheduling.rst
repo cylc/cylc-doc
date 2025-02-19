@@ -26,9 +26,9 @@ Cylc 8 has a new scheduling algorithm that:
 - Is much more efficient because it doesn't need to track as 
   many waiting and succeeded tasks.
 
-  - waiting tasks are not pre-spawned before they are needed
-  - succeeded tasks are not retained across the :term:`active window`
-  - no costly indiscriminate dependency matching is done
+  - Tasks are not pre-spawned before they are needed.
+  - Tasks are not retained when they succeed.
+  - No costly indiscriminate dependency matching is done.
 - Distinguishes between :term:`optional <optional output>` and
   :term:`required <required output>` task outputs, to support:
 

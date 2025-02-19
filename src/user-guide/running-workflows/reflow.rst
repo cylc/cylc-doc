@@ -92,7 +92,7 @@ Triggering in Specific Flows
 
    The result is like the default above, except that tasks in the new front
    belong only to the specified flow(s), regardless of which flows are
-   :term:`active` at triggering time.
+   active at triggering time.
 
 Triggering a New Flow
    ``cylc trigger --flow=new ID``
@@ -122,8 +122,8 @@ Triggering with No Active Flows
    same as if you had triggered the task just before the workflow completed.
 
 Special Case: Triggering ``n=0`` (:term:`active window`) Tasks
-   Tasks in the :term:`active window` already have flow membership assigned
-   (namely that of the parent tasks that spawned them).
+   Tasks in the :term:`active window` already have flow membership assigned.
+   Flow numbers are inherited from parent (upstream) tasks in the graph.
 
    - Triggering a task with a submitted or running job has no effect
      (it is already triggered).

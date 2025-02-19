@@ -17,7 +17,7 @@ Suicide Triggers
 
 
 Suicide triggers remove waiting :term:`tasks <task>` from the
-:term:`scheduler's <scheduler>` active :term:`active window` at runtime.
+:term:`scheduler's <scheduler>` :term:`active window` at runtime.
 
 They are activated just like normal :term:`task triggers <task trigger>` but
 they remove the downstream task (prefixed with ``!``) instead of triggering it

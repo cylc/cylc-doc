@@ -93,7 +93,7 @@ Glossary
       The GUI provides a view extending ``n`` (default ``n=1``)
       graph edges out from the :term:`active window` of the workflow.
       Thus in the context of the GUI the active window may also be
-      referred to as the `n=0` window.
+      referred to as the ``n=0`` window.
 
    active cycle
       A cycle point is active if any of its tasks appear in the :term:`active window`
@@ -1697,8 +1697,8 @@ Glossary
 
    flow merge
       When a :term:`flow` tries to spawn a child task and finds an instance
-      with the same task ID already exists in the ``n=0`` :term:`active
-      window`, one merged task will carry both flow numbers forward.
+      with the same task ID already exists in the ``n=0``
+      :term:`active window`, one merged task will carry both flow numbers forward.
 
 
    event

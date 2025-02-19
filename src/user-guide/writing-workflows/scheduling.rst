@@ -2160,10 +2160,10 @@ Runahead Limiting
 -----------------
 
 Runahead limiting prevents a workflow from getting too far ahead of the oldest
-:term:`active cycle point` by holding back tasks in cycles beyond a specified limit.
+:term:`active cycle` by holding back tasks in cycles beyond a specified limit.
 
 The runahead limit is defined as an interval measured from the oldest active cycle.
-A cycle is considered to be "active" if it contains any :term:`active window` tasks
+A cycle is considered to be *active* if it contains any :term:`active window` tasks
 (e.g. running tasks).
 
 Tasks in cycles which are beyond the limit are called :term:`runahead` tasks
