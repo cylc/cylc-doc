@@ -1739,7 +1739,7 @@ Glossary
       ahead of the oldest :term:`active cycle` the workflow is permitted
       to run.
 
-      The "oldest active cycle point" is the first cycle in the workflow to
+      The "oldest active cycle point" is the earliest cycle in the workflow to
       contain any submitted or running tasks.
 
       .. seealso::

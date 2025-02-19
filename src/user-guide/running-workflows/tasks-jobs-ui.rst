@@ -122,7 +122,7 @@ n=0:
    for a more detailed description.
 n=1:
    The ``n=1`` window contains the ``n=0`` window plus all tasks out to one
-   graph edge around them, i.e. their dependencies (the tasks that come immediately
+   graph edge around them, i.e. their parents (the tasks that come immediately
    before them in the graph) and their descendants (immediately after them in the
    graph).
 n=2:
