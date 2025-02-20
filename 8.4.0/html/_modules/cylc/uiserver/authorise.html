@@ -260,12 +260,12 @@
         <span class="n">log</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">owner_user_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">owner_user_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">owner_user_groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_groups</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">owner_user_name</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">owner_auth_conf</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">owner_auth_conf</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">site_auth_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">site_auth_conf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">owner_user_groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_groups</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">owner_user_name</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">owner_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_owner_site_auth_conf</span><span class="p">()</span>
 
         <span class="c1"># lru_cache this method - see flake8-bugbear B019</span>
@@ -773,7 +773,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 10, 2025.
+      <span class="lastupdated">Last updated on Feb 20, 2025.
       </span></p>
   </div>
 

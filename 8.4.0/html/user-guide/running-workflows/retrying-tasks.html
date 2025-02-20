@@ -147,7 +147,7 @@ left. Otherwise they return to the waiting state, to wait on the next try.</p>
 </div>
 <section id="aborting-a-retry-sequence">
 <h2>Aborting a Retry Sequence<a class="headerlink" href="#aborting-a-retry-sequence" title="Link to this heading"></a></h2>
-<p>To prevent a waiting task from retrying, remove it from the scheduler’s
+<p>To prevent a task from retrying, remove it from the scheduler’s
 <a class="reference internal" href="../../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a>. For a task <code class="docutils literal notranslate"><span class="pre">3/foo</span></code> in workflow <code class="docutils literal notranslate"><span class="pre">brew</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>remove<span class="w"> </span>brew//3/foo
 </pre></div>
@@ -161,9 +161,10 @@ sequence, or remove it.</p>
 </pre></div>
 </div>
 <p>If you want trigger downstream tasks despite <code class="docutils literal notranslate"><span class="pre">3/foo</span></code> being removed before it
-could succeed, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span></code> to artificially mark its <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>
-output as complete (and with the <code class="docutils literal notranslate"><span class="pre">--flow</span></code> option, to make the <a class="reference internal" href="../../glossary.html#term-flow"><span class="xref std std-term">flow</span></a>
-continue on from there).</p>
+could succeed, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span></code> to artificially mark its
+<a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a>
+as complete (and with the <code class="docutils literal notranslate"><span class="pre">--flow</span></code> option, if needed to make a specific
+<a class="reference internal" href="../../glossary.html#term-flow"><span class="xref std std-term">flow</span></a> continue on from there).</p>
 </section>
 </section>
 
@@ -179,7 +180,7 @@ continue on from there).</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 10, 2025.
+      <span class="lastupdated">Last updated on Feb 20, 2025.
       </span></p>
   </div>
 

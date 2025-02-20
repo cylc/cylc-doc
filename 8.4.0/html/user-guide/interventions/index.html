@@ -277,16 +277,20 @@ that the task succeeded.</p>
 GUI</label><div class="sd-tab-content docutils">
 <a class="reference internal image-reference" href="../../_images/set-task-outputs.gui.gif"><img alt="../../_images/set-task-outputs.gui.gif" src="../../_images/set-task-outputs.gui.gif" style="width: 75%;" />
 </a>
-<p>By default this sets the “succeeded” output, press the pencil icon next
-to the trigger command to specify a different output.</p>
+<p>By default, this sets all <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a> for
+the task, which usually includes <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>.
+To specify the output(s) you would like to set,
+press the pencil icon next to the “Set” command .</p>
 </div>
 <input id="sd-tab-item-11" name="sd-tab-set-4" type="radio">
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="tui" for="sd-tab-item-11">
 Tui</label><div class="sd-tab-content docutils">
 <a class="reference internal image-reference" href="../../_images/set-task-outputs.tui.gif"><img alt="../../_images/set-task-outputs.tui.gif" src="../../_images/set-task-outputs.tui.gif" style="width: 75%;" />
 </a>
-<p>By default, this sets the “succeeded” output. Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span> <span class="pre">--output</span></code>
-to specify a different output.</p>
+<p>By default, this sets all <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a> for
+the task, which usually includes <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>.
+To specify the output(s) you would like to set,
+use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">set</span> <span class="pre">--output</span></code>.</p>
 </div>
 <input id="sd-tab-item-12" name="sd-tab-set-4" type="radio">
 <label class="sd-tab-label" data-sync-group="tab" data-sync-id="cli" for="sd-tab-item-12">
@@ -294,8 +298,10 @@ CLI</label><div class="sd-tab-content docutils">
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span><span class="nb">set</span><span class="w"> </span>&lt;workflow&gt;//&lt;task&gt;
 </pre></div>
 </div>
-<p>By default, this sets the “succeeded” output. Use the <code class="docutils literal notranslate"><span class="pre">--output</span></code> option
-to specify a different output.</p>
+<p>By default, this sets all <a class="reference internal" href="../../glossary.html#term-required-output"><span class="xref std std-term">required outputs</span></a> for
+the task, which usually includes <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>.
+To specify the output(s) you would like to set,
+use the <code class="docutils literal notranslate"><span class="pre">--output</span></code> option.</p>
 </div>
 </div>
 <p>You can also <a class="reference internal" href="#interventions-set-task-prerequisites"><span class="std std-ref">set task prerequisites</span></a>.
@@ -628,7 +634,7 @@ CLI</label><div class="sd-tab-content docutils">
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 10, 2025.
+      <span class="lastupdated">Last updated on Feb 20, 2025.
       </span></p>
   </div>
 

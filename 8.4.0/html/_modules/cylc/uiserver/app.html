@@ -236,7 +236,9 @@
 <span class="s1">    cylc gui                  # Start the Cylc GUI (at the dashboard page)</span>
 <span class="s1">    cylc gui [workflow]       # Start the Cylc GUI (at the workflow page)</span>
 <span class="s1">    cylc gui --new [workflow] # Start a new Cylc server instance if an old one</span>
-<span class="s1">                              # has become unresponsive.</span>
+<span class="s1">                              # has become unresponsive, or, if the GUI has</span>
+<span class="s1">                              # been configured to launch via a centralised</span>
+<span class="s1">                              # hub.</span>
 <span class="s1">    cylc gui --no-browser     # Start the server but don&#39;t open the browser</span>
 
 <span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>  <span class="c1"># type: ignore[assignment]</span>
@@ -684,7 +686,7 @@
             <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">(),</span>
             <span class="n">user_auth</span><span class="p">,</span>
             <span class="n">site_auth</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">initialize_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -732,7 +734,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 10, 2025.
+      <span class="lastupdated">Last updated on Feb 20, 2025.
       </span></p>
   </div>
 

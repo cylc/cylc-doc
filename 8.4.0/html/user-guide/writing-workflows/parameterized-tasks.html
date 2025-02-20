@@ -217,21 +217,19 @@ template syntax.</p>
 model<span class="s">&lt;run&gt;&lt;obs&gt;</span> <span class="c"># Alternatively, from Cylc 8.2.0</span>
 </pre></div>
 </div>
-<div class="versionadded">
-<p><span class="versionmodified added">Added in version 8.2.0: </span>From this version you can also use the equivalent <code class="docutils literal notranslate"><span class="pre">model&lt;run&gt;&lt;obs&gt;</span></code>
-syntax. This allows more flexibility in templating: You can now construct
-names like <code class="docutils literal notranslate"><span class="pre">beginning&lt;run&gt;middle&lt;obs&gt;end</span></code>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Before Cylc 8.2.0 this syntax worked in many cases, but was
-not formally supported, and failed if used in the names of
-<a class="reference internal" href="#families-and-parameters"><span class="std std-ref">families</span></a>.</p>
-</div>
 <p>expands to these tasks names:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model_run1_ship, model_run1_buoy, model_run1_plane,
 model_run2_ship, model_run2_buoy, model_run2_plane
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">model&lt;run&gt;&lt;obs&gt;</span></code> syntax was introduced in Cylc 8.2.0.
+This allows more flexibility in templating; you can now construct
+names like <code class="docutils literal notranslate"><span class="pre">beginning&lt;run&gt;middle&lt;obs&gt;end</span></code>.
+Before Cylc 8.2.0 this syntax worked in many cases, but was
+not formally supported, and failed if used in the names of
+<a class="reference internal" href="#families-and-parameters"><span class="std std-ref">families</span></a>.</p>
 </div>
 <p>Here’s a simple but complete example workflow:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
@@ -668,7 +666,7 @@ earlier cycles.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jan 10, 2025.
+      <span class="lastupdated">Last updated on Feb 20, 2025.
       </span></p>
   </div>
 
