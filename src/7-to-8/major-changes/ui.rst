@@ -67,13 +67,15 @@ As some workflows can be very large, or even infinite, the GUI uses a "window"
 system to determine what to display. For more information, see :ref:`n-window`.
 
 
+.. _Cylc Hub:
+
 Cylc Hub
 --------
 
 The Cylc 8 GUI can be deployed with Jupyter Hub to support multi-user access
 where it is possible to grant users the permission to view and interact with
-workflows running under other user accounts. In these deployments, users will
-have to authenticate when they open the GUI in the browser.
+workflows running under other user accounts. In these deployments, users
+authenticate when they open the GUI in the browser.
 
 The central server is started by the ``cylc hub`` command.
 
