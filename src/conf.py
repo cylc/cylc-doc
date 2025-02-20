@@ -166,7 +166,7 @@ linkcheck_ignore = [
 
 nitpick_ignore_regex = [
     # intersphinx has trouble with pyzmq classes:
-    ('py:class', 'zmq\.asyncio\.\w+')
+    ('py:class', r'zmq\.asyncio\.\w+')
 ]
 
 # -- Options for Slides output ----------------------------------------------
