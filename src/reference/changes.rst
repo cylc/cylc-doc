@@ -35,10 +35,27 @@ Cylc 8.4
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
+Wrapper script fix for Cylc Hub
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-flow 8.4.1
+
+Fixed wrapper script ``$PATH`` override preventing selection of Cylc version
+when playing workflows in the GUI on :ref:`Cylc Hub`.
+
+.. important::
+
+   Sites with existing wrapper scripts should update them with this change:
+   https://github.com/cylc/cylc-flow/pull/6616/files.
+
+.. seealso::
+
+   :ref:`managing environments`
+
 Cylc Remove
 ^^^^^^^^^^^
 
-Cylc Remove now allows removing tasks which are no longer active, making
+``cylc remove`` now allows removing tasks which are no longer active, making
 it look like they never ran. Removing a running task will now kill that task.
 
 The ``cylc remove`` command now has the ``--flow`` option, allowing removal
