@@ -1,0 +1,1657 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary &mdash; Cylc 8.4.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="_static/cylc-favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4e3f4076"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="_static/js/spoiler.js?v=12631137"></script>
+      <script src="_static/js/addons.js?v=39bd7dee"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Cylc Development History - Major Changes" href="reference/dev-history-major-changes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/glossary.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Link to this heading"></a></h1>
+<dl class="glossary">
+<dt id="term-active">active<a class="headerlink" href="#term-active" title="Link to this term"></a></dt><dt id="term-active-task">active task<a class="headerlink" href="#term-active-task" title="Link to this term"></a></dt><dd><p>An active task is a task which is near ready to run, in the process of
+running, or which requires user intervention. These are all the tasks
+being actively managed by the scheduler at this point in the run.</p>
+<p>Active tasks are:</p>
+<ul class="simple">
+<li><p>Tasks which have some, but not all of their
+<a class="reference internal" href="#term-prerequisite"><span class="xref std std-term">prerequisites</span></a> satisfied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">waiting</span></code> tasks, that are actively waiting on:</p>
+<ul>
+<li><p><a class="reference internal" href="#term-xtrigger"><span class="xref std std-term">xtriggers</span></a>.</p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#internalqueues"><span class="std std-ref">internal queues</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#runaheadlimit"><span class="std std-ref">runahead limit</span></a></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preparing</span></code> tasks - i.e. tasks in the process of submitting jobs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">submitted</span></code> and <code class="docutils literal notranslate"><span class="pre">running</span></code> tasks - i.e. those with active jobs</p></li>
+<li><p>tasks that reached a <a class="reference internal" href="#term-final-status"><span class="xref std std-term">final status</span></a> without completing their
+<a class="reference internal" href="#term-required-output"><span class="xref std std-term">required outputs</span></a>
+(e.g. a task failed where success was required).</p></li>
+</ul>
+<p>Active tasks are in the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> <a class="reference internal" href="#term-n-window"><span class="xref std std-term">window</span></a> which means they
+will always be displayed in the GUI and Tui.</p>
+<p>The distinction between active and non-active tasks is important for
+the computing of the <a class="reference internal" href="#term-runahead-limit"><span class="xref std std-term">runahead limit</span></a>.</p>
+</dd>
+<dt id="term-active-cycle">active cycle<a class="headerlink" href="#term-active-cycle" title="Link to this term"></a></dt><dd><p>A cycle point is active if it contains any <a class="reference internal" href="#term-active-task"><span class="xref std std-term">active tasks</span></a>.</p>
+<p>Active cycles are counted towards the <a class="reference internal" href="#term-runahead-limit"><span class="xref std std-term">runahead limit</span></a>.</p>
+</dd>
+<dt id="term-artificial-dependency">artificial dependency<a class="headerlink" href="#term-artificial-dependency" title="Link to this term"></a></dt><dd><p>An artificial <a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependency</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> does not reflect
+real dependence between the tasks involved. This can sometimes be
+useful but should be avoided if possible. Artificial dependencies muddy
+the real dependencies of the workflow and they may unnecessarily
+constrain the scheduler.</p>
+<p>In the following <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling</span></a> workflow, if the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> does not
+actually depend on any real outputs of <code class="docutils literal notranslate"><span class="pre">baz</span></code> in the previous cycle,
+then the intercycle dependence is artificial.</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">P1</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+   <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+   <span class="kd">baz</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">foo</span>
+<span class="c">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-branching">branching<a class="headerlink" href="#term-branching" title="Link to this term"></a></dt><dt id="term-graph-branching">graph branching<a class="headerlink" href="#term-graph-branching" title="Link to this term"></a></dt><dd><p>Cylc handles workflow <a class="reference internal" href="#term-graph"><span class="xref std std-term">graphs</span></a> in an event-driven way.
+It can automatically follow different paths depending on events at
+runtime. This relies on <a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional outputs</span></a> and is
+called <em>branching</em>.</p>
+<p>For example, the following workflow follows one of two possible paths
+depending on the outcome of task <code class="docutils literal notranslate"><span class="pre">b</span></code>:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="c1"># the success branch</span>
+<span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">c</span>
+<span class="c1"># the fail branch</span>
+<span class="kd">b</span><span class="c">:</span><span class="kd">fail</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">r</span>
+<span class="c1"># joining the two branches together</span>
+<span class="kd">c</span> <span class="o">|</span> <span class="kd">r</span> <span class="o">=&gt;</span> <span class="kd">d</span>
+</pre></div>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-a8b1e9e93fab74bdbf93d1612a22c4eef701651d.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+subgraph cluster_success {
+   label = &quot;:succeed&quot;
+   color = &quot;green&quot;
+   fontcolor = &quot;green&quot;
+   style = &quot;dashed&quot;
+
+   c
+}
+
+subgraph cluster_failure {
+   label = &quot;:fail&quot;
+   color = &quot;red&quot;
+   fontcolor = &quot;red&quot;
+   style = &quot;dashed&quot;
+
+   r
+}
+
+a -&gt; b -&gt; c -&gt; d
+b -&gt; r -&gt; d
+}</p></object></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional output</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#graph-branching"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-clock-expire">clock expire<a class="headerlink" href="#term-clock-expire" title="Link to this term"></a></dt><dt id="term-expired-task">expired task<a class="headerlink" href="#term-expired-task" title="Link to this term"></a></dt><dd><p>Tasks in <a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflows can be configured to <em>expire</em>
+if the <a class="reference internal" href="#term-wallclock-time"><span class="xref std std-term">wallclock time</span></a> exceeds some offset from the cycle point.</p>
+<p>Expired is a <a class="reference internal" href="#term-final-status"><span class="xref std std-term">final status</span></a> - an expired task will not run
+even if its <a class="reference internal" href="#term-prerequisite"><span class="xref std std-term">prerequisites</span></a> get satisfied.</p>
+<p>The associated <code class="docutils literal notranslate"><span class="pre">:expire</span></code> <a class="reference internal" href="#term-task-output"><span class="xref std std-term">output</span></a> can be used to
+trigger other tasks. It must be marked as an <a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional output</span></a>,
+i.e. expiry cannot be <a class="reference internal" href="#term-required-output"><span class="xref std std-term">required</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#clockexpiretasks"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-clock-trigger">clock trigger<a class="headerlink" href="#term-clock-trigger" title="Link to this term"></a></dt><dd><p>Clock triggers connect cycle points to the <a class="reference internal" href="#term-wallclock-time"><span class="xref std std-term">wallclock time</span></a>, in
+<a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> workflows. Tasks that depend on a clock trigger
+will not trigger until the wallclock time is equal to their cycle point
+plus or minus some offset.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/external-triggers.html#built-in-clock-triggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/furthertopics/clock-triggered-tasks.html#tutorial-cylc-clock-trigger"><span class="std std-ref">Cylc Tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cold-start">cold start<a class="headerlink" href="#term-cold-start" title="Link to this term"></a></dt><dd><p>A cold start is when the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> <a class="reference internal" href="#term-startup"><span class="xref std std-term">starts</span></a> a
+<a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> at the beginning of <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>. In a <a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling
+workflow</span></a> this is determined by the <a class="reference internal" href="#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>.</p>
+<p>This is the default behaviour of <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> for an installed workflow
+that hasn’t run yet.</p>
+<p>To satisfy unbounded <a class="reference internal" href="#term-intercycle-dependence"><span class="xref std std-term">intercycle dependence</span></a> in the graph, tasks
+prior to the initial cycle point are treated as if they have succeeded.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]initial cycle point" title="flow.cylc[scheduling]initial cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]initial</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a></p></li>
+<li><p><a class="reference internal" href="#term-warm-start"><span class="xref std std-term">warm start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start-task"><span class="xref std std-term">start task</span></a></p></li>
+<li><p><a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a></p></li>
+<li><p><a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shutdown</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-conditional-dependence">conditional dependence<a class="headerlink" href="#term-conditional-dependence" title="Link to this term"></a></dt><dt id="term-conditional-dependency">conditional dependency<a class="headerlink" href="#term-conditional-dependency" title="Link to this term"></a></dt><dt id="term-conditional-trigger">conditional trigger<a class="headerlink" href="#term-conditional-trigger" title="Link to this term"></a></dt><dd><p>Conditional <a class="reference internal" href="#term-dependence"><span class="xref std std-term">dependence</span></a> is when a <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> depends on a
+combination of multiple upstream <a class="reference internal" href="#term-task-output"><span class="xref std std-term">task outputs</span></a>.</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">a</span> <span class="o">&amp;</span> <span class="p">(</span><span class="kd">b</span><span class="c">:</span><span class="kd">fail</span> <span class="o">|</span> <span class="kd">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kd">d</span>
+</pre></div>
+</div>
+<p>The left hand side of a conditional dependency can be called a
+conditional <a class="reference internal" href="#term-trigger"><span class="xref std std-term">trigger</span></a>.</p>
+</dd>
+<dt id="term-contact-file">contact file<a class="headerlink" href="#term-contact-file" title="Link to this term"></a></dt><dd><p>The contact file, in the <a class="reference internal" href="#term-service-directory"><span class="xref std std-term">service directory</span></a>, records information
+about a running <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> such as host, TCP port, and process ID.
+It is read by Cylc client commands so they can target the right scheduler.</p>
+<p>The contact file is created at scheduler startup and removed on clean
+shutdown. If you delete it, the scheduler will (after a delay) notice
+this and shut down.</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/.service/contact
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If the scheduler dies in an uncontrolled way, for example if the
+process is killed or the host goes down, the contact file may be
+left behind. Some Cylc commands automatically detect these files
+and remove them, otherwise they should be manually removed.</p>
+</div>
+</dd>
+<dt id="term-custom-output">custom output<a class="headerlink" href="#term-custom-output" title="Link to this term"></a></dt><dd><p>A custom task output is a user-defined <a class="reference internal" href="#term-task-output"><span class="xref std std-term">task output</span></a> that marks
+an event runtime event between task <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> start and finish. To
+complete a custom output, the job must send a message defined in the
+<a class="reference internal" href="reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file to the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+<p>Triggers based on custom outputs are called <a class="reference internal" href="#term-message-trigger"><span class="xref std std-term">message triggers</span></a>.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="c1"># output name = output message</span>
+            <span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;Output 1 completed&quot;</span>
+            <span class="nv">out2 </span><span class="o">=</span><span class="s"> &quot;Output 2 completed&quot;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-standard-output"><span class="xref std std-term">standard output</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/furthertopics/message-triggers.html#tutorial-cylc-message-triggers"><span class="std std-ref">Cylc Tutorial</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#messagetriggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cycle">cycle<a class="headerlink" href="#term-cycle" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a>, cycles are repetitions of a <a class="reference internal" href="#term-graph-string"><span class="xref std std-term">graph
+string</span></a>. Each cycle is identified by a <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a>. The sequence
+of cycle points is defined by the graph string’s <a class="reference internal" href="#term-recurrence"><span class="xref std std-term">recurrence</span></a>
+pattern.</p>
+<p>This defines the structure of the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>. At runtime, however,
+Cylc does not impose a global loop over cycles. Each individual task,
+with its own cycle point, advances according to its own
+<a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependencies</span></a>.</p>
+<p>For example, in the following workflow each dotted box represents a cycle
+and the <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> within it are the <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a>
+belonging to that cycle. The numbers (i.e. <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>) are the
+<a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a>.</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-a0b983d4be5182e8e12f4aacfcc75c2683db3c40.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+size = &quot;3,5&quot;
+
+subgraph cluster_1 {
+    label = &quot;1&quot;
+    style = dashed
+    &quot;1/foo&quot; [label=&quot;foo\n1&quot;]
+    &quot;1/bar&quot; [label=&quot;bar\n1&quot;]
+    &quot;1/baz&quot; [label=&quot;baz\n1&quot;]
+}
+
+subgraph cluster_2 {
+    label = &quot;2&quot;
+    style = dashed
+    &quot;2/foo&quot; [label=&quot;foo\n2&quot;]
+    &quot;2/bar&quot; [label=&quot;bar\n2&quot;]
+    &quot;2/baz&quot; [label=&quot;baz\n2&quot;]
+}
+
+subgraph cluster_3 {
+    label = &quot;3&quot;
+    style = dashed
+    &quot;3/foo&quot; [label=&quot;foo\n3&quot;]
+    &quot;3/bar&quot; [label=&quot;bar\n3&quot;]
+    &quot;3/baz&quot; [label=&quot;baz\n3&quot;]
+}
+
+&quot;1/foo&quot; -&gt; &quot;1/bar&quot; -&gt; &quot;1/baz&quot;
+&quot;2/foo&quot; -&gt; &quot;2/bar&quot; -&gt; &quot;2/baz&quot;
+&quot;3/foo&quot; -&gt; &quot;3/bar&quot; -&gt; &quot;3/baz&quot;
+&quot;1/bar&quot; -&gt; &quot;2/bar&quot; -&gt; &quot;3/bar&quot;
+}</p></object></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial/scheduling/integer-cycling.html#tutorial-integer-cycling"><span class="std std-ref">Basic Cycling</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/scheduling/datetime-cycling.html#tutorial-datetime-cycling"><span class="std std-ref">Datetime Cycling</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cycle-point">cycle point<a class="headerlink" href="#term-cycle-point" title="Link to this term"></a></dt><dd><p>The unique label given to tasks that belong to a particular <a class="reference internal" href="#term-cycle"><span class="xref std std-term">cycle</span></a>.
+For <a class="reference internal" href="#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a> these will be integers, e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">3</span></code>, etc.
+For <a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> they will be <a class="reference internal" href="#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a> datetimes,
+e.g. <code class="docutils literal notranslate"><span class="pre">2000-01-01T00:00Z</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cycle-point-time-zone">cycle point time zone<a class="headerlink" href="#term-cycle-point-time-zone" title="Link to this term"></a></dt><dd><p>The time zone used for task <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduler]cycle point time zone" title="flow.cylc[scheduler]cycle point time zone"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]cycle</span> <span class="pre">point</span> <span class="pre">time</span> <span class="pre">zone</span></code></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cycling">cycling<a class="headerlink" href="#term-cycling" title="Link to this term"></a></dt><dt id="term-cycling-workflow">cycling workflow<a class="headerlink" href="#term-cycling-workflow" title="Link to this term"></a></dt><dd><p>A cycling <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> in Cylc is defined by a graph of
+repeating tasks with individual <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-cycle"><span class="xref std std-term">cycle</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-cylc-run-directory">cylc-run directory<a class="headerlink" href="#term-cylc-run-directory" title="Link to this term"></a></dt><dd><p>This refers to the top level directory for <a class="reference internal" href="#term-workflow-installation"><span class="xref std std-term">installed</span></a> workflows: <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>.</p>
+<p>Cylc can be configured to symlink cylc-run sub-directories to
+other locations.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a></p></li>
+</ul>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The cylc-run directory should not be confused with specific
+<a class="reference internal" href="#term-run-directory"><span class="xref std std-term">workflow run directories</span></a> below it.</p>
+</div>
+</dd>
+<dt id="term-datetime-cycling">datetime cycling<a class="headerlink" href="#term-datetime-cycling" title="Link to this term"></a></dt><dd><p>A datetime <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling</span></a> workflow uses
+<a class="reference internal" href="#term-ISO-8601-datetime"><span class="xref std std-term">ISO 8601 datetime</span></a> <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a>
+(e.g.  <code class="docutils literal notranslate"><span class="pre">2000-01-01T00:00Z</span></code>) and <a class="reference internal" href="#term-recurrence"><span class="xref std std-term">recurrences</span></a>
+(e.g. <code class="docutils literal notranslate"><span class="pre">P3D</span></code> means every third day).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]cycling mode" title="flow.cylc[scheduling]cycling mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]cycling</span> <span class="pre">mode</span></code></a></p></li>
+<li><p><a class="reference internal" href="#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/scheduling/datetime-cycling.html#tutorial-datetime-cycling"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-directive">directive<a class="headerlink" href="#term-directive" title="Link to this term"></a></dt><dd><p>Directives request task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> resources such as memory and
+node count from external <a class="reference internal" href="#term-job-runner"><span class="xref std std-term">job runners</span></a>. They are job
+runner-specific.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][directives]" title="flow.cylc[runtime][&lt;namespace&gt;][directives]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][directives]</span></code></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-dummy-mode">dummy mode<a class="headerlink" href="#term-dummy-mode" title="Link to this term"></a></dt><dd><p>A workflow run mode that replaces all tasks with <a class="reference internal" href="#term-dummy-task"><span class="xref std std-term">dummy tasks</span></a>.
+See <a class="reference internal" href="user-guide/running-workflows/workflow-run-modes.html#workflow-run-modes-dummy"><span class="std std-ref">Dummy Mode</span></a>.</p>
+</dd>
+<dt id="term-dummy-task">dummy task<a class="headerlink" href="#term-dummy-task" title="Link to this term"></a></dt><dd><p>A task which runs a trivially simple script such as <code class="docutils literal notranslate"><span class="pre">sleep</span> <span class="pre">1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">true</span></code>, or which uses <a class="reference internal" href="user-guide/task-implementation/skip-mode.html#task-run-modes-skip"><span class="std std-ref">Skip Mode</span></a>
+to avoid running a script at all.</p>
+</dd>
+<dt id="term-event">event<a class="headerlink" href="#term-event" title="Link to this term"></a></dt><dd><p>An event is a milestone in the lifecycle of a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> or
+<a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> at which the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> provides a hook for
+attaching <a class="reference internal" href="#term-event-handler"><span class="xref std std-term">event handlers</span></a>.</p>
+<p>Workflow events include <a class="reference internal" href="#term-startup"><span class="xref std std-term">startup</span></a>, <a class="reference internal" href="#term-stall"><span class="xref std std-term">stall</span></a>, and
+<a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shutdown</span></a>.</p>
+<p>Task events include <a class="reference internal" href="#term-task-state"><span class="xref std std-term">task state</span></a> changes, to <code class="docutils literal notranslate"><span class="pre">running</span></code> or
+<code class="docutils literal notranslate"><span class="pre">failed</span></code>, for example, or when the scheduler receivers CRITICAL or
+WARNING messages from a task <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a>.</p>
+</dd>
+<dt id="term-exact-datetime-unit">exact datetime unit<a class="headerlink" href="#term-exact-datetime-unit" title="Link to this term"></a></dt><dd><p>An exact datetime unit is any unit of a datetime that has a fixed
+duration, which does not depend on its position in the calendar.
+In Cylc, the following are exact units:</p>
+<ul class="simple">
+<li><p>second: SI base unit</p></li>
+<li><p>minute: 60 seconds</p></li>
+<li><p>hour: 60 minutes</p></li>
+<li><p>day: 24 hours</p></li>
+<li><p>week: 7 days</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the <a class="reference internal" href="#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a> standard specifies that weeks and days
+are <a class="reference internal" href="#term-inexact-datetime-unit"><span class="xref std std-term">inexact</span></a> due to the possibility of
+daylight saving time, leap seconds etc., they are always exact in
+Cylc because workflows always maintain the same time zone, and leap
+seconds are not supported.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-inexact-datetime-unit"><span class="xref std std-term">inexact datetime unit</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-external-trigger">external trigger<a class="headerlink" href="#term-external-trigger" title="Link to this term"></a></dt><dt id="term-xtrigger">xtrigger<a class="headerlink" href="#term-xtrigger" title="Link to this term"></a></dt><dd><p>External triggers allow <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> to
+depend on external events, such as a file being delivered to some
+location, or a database being updated in some way.</p>
+<p>The <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> can repeatedly call a user-supplied Python function
+to check that the external event has occurred.</p>
+<p>Cylc has a built in external trigger for triggering off of events in
+other workflows.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling][xtriggers]" title="flow.cylc[scheduling][xtriggers]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][xtriggers]</span></code></a></p></li>
+<li><p><a class="reference internal" href="#term-clock-trigger"><span class="xref std std-term">clock trigger</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/external-triggers.html#section-external-triggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/external-triggers.html#built-in-workflow-state-triggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-family">family<a class="headerlink" href="#term-family" title="Link to this term"></a></dt><dd><p>In Cylc a family is a collection of <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> that share
+common configuration and which can be referred to collectively in the
+<a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>.</p>
+<p>By convention, family names are upper case, with the exception of the
+special <code class="docutils literal notranslate"><span class="pre">root</span></code> family that all tasks inherit from.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-family-inheritance"><span class="xref std std-term">family inheritance</span></a></p></li>
+<li><p><a class="reference internal" href="#term-family-trigger"><span class="xref std std-term">family trigger</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#user-guide-runtime"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/runtime/configuration-consolidation/families.html#tutorial-cylc-families"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-family-trigger">family trigger<a class="headerlink" href="#term-family-trigger" title="Link to this term"></a></dt><dd><p><a class="reference internal" href="#term-task"><span class="xref std std-term">Tasks</span></a> that belong to a <a class="reference internal" href="#term-family"><span class="xref std std-term">family</span></a> can be
+referred to collectively in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> using a family
+<a class="reference internal" href="#term-trigger"><span class="xref std std-term">trigger</span></a>.</p>
+<p>Family triggers take the form <code class="docutils literal notranslate"><span class="pre">family-name:qualifier</span></code>, where
+the <a class="reference internal" href="#term-qualifier"><span class="xref std std-term">qualifier</span></a> describes the collective state of member tasks
+needed for the dependency to be met. Some commonly used qualifiers
+are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">succeed-all</span></code></dt><dd><p>All members succeeded.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">succeed-any</span></code></dt><dd><p>Any one member succeeded.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">fail-all</span></code></dt><dd><p>All members failed.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">finish-all</span></code></dt><dd><p>All members finished (succeeded or failed).</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependency</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/furthertopics/family-triggers.html#tutorial-cylc-family-triggers"><span class="std std-ref">Cylc Tutorial</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#familytriggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-final-cycle-point">final cycle point<a class="headerlink" href="#term-final-cycle-point" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling workflow</span></a> the final cycle point, if there
+is one, is the last <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]final cycle point" title="flow.cylc[scheduling]final cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]final</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#term-stop-cycle-point"><span class="xref std std-term">stop cycle point</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-final-status">final status<a class="headerlink" href="#term-final-status" title="Link to this term"></a></dt><dd><p>A task that has achieved a final status (expired, submit-failed,
+succeeded, or failed) will not change state in the workflow, except by
+manual intervention.</p>
+</dd>
+<dt id="term-flow">flow<a class="headerlink" href="#term-flow" title="Link to this term"></a></dt><dd><p>A flow is a self-propagating run through the a Cylc <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>
+<a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> starting from some initial task or tasks.</p>
+<p>Cylc <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">schedulers</span></a> can manage multiple flows at once.</p>
+<p>Flows are identified by a <a class="reference internal" href="#term-flow-number"><span class="xref std std-term">flow number</span></a>. The original flow
+started automatically by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> has flow number <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/running-workflows/reflow.html#user-guide-reflow"><span class="std std-ref">Concurrent Flows</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-flow-front">flow front<a class="headerlink" href="#term-flow-front" title="Link to this term"></a></dt><dd><p><a class="reference internal" href="#term-active-task"><span class="xref std std-term">Active tasks</span></a>, i.e. tasks in the
+<a class="reference internal" href="#term-n-window"><span class="xref std std-term">n=0 window</span></a>, with a common <a class="reference internal" href="#term-flow-number"><span class="xref std std-term">flow number</span></a>
+comprise the active front of the flow.</p>
+</dd>
+<dt id="term-flow-merge">flow merge<a class="headerlink" href="#term-flow-merge" title="Link to this term"></a></dt><dd><p>When a <a class="reference internal" href="#term-flow"><span class="xref std std-term">flow</span></a> tries to spawn a child task and finds an instance
+with the same task ID already exists in the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> <a class="reference internal" href="#term-active-window"><span class="xref std std-term">active
+window</span></a>, one merged task will carry both flow numbers forward.</p>
+</dd>
+<dt id="term-flow-number">flow number<a class="headerlink" href="#term-flow-number" title="Link to this term"></a></dt><dd><p>Flow numbers are integers passed down from parent task to child task in
+the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> as a flow progresses, to identify which <a class="reference internal" href="#term-flow"><span class="xref std std-term">flow</span></a>
+(or flows) the tasks belong to. They are passed to job environments as
+<code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_FLOW_NUMBERS</span></code>.</p>
+</dd>
+<dt id="term-future-trigger">future trigger<a class="headerlink" href="#term-future-trigger" title="Link to this term"></a></dt><dd><p>A future trigger expresses dependence on a task in a “future”
+(higher-valued) <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a>.</p>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">1/bar</span></code> triggers off of <code class="docutils literal notranslate"><span class="pre">2/foo</span></code>; <code class="docutils literal notranslate"><span class="pre">2/bar</span></code> triggers off of
+<code class="docutils literal notranslate"><span class="pre">3/foo</span></code>; and so on:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 = &quot;foo[+P1] </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span><span class="c">&quot;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-intercycle-trigger"><span class="xref std std-term">intercycle trigger</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-graph">graph<a class="headerlink" href="#term-graph" title="Link to this term"></a></dt><dd><p>A workflow graph is defined by one or more <a class="reference internal" href="#term-graph-string"><span class="xref std std-term">graph strings</span></a>
+under the <a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling][graph]" title="flow.cylc[scheduling][graph]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][graph]</span></code></a> section of a <a class="reference internal" href="#term-cylc-workflow"><span class="xref std std-term">workflow</span></a> definition.</p>
+<p>For example, the following is, collectively, a graph:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">P1D</span> <span class="c">=</span> <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+<span class="kd">PT12H</span> <span class="c">=</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-9c6c3320344b9bad792fb330e3b5a3287587062f.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+size = &quot;7,15&quot;
+
+subgraph cluster_1 {
+    label = &quot;2000-01-01T00:00Z&quot;
+    style = dashed
+    &quot;01T00/foo&quot; [label=&quot;foo\n2000-01-01T00:00Z&quot;]
+    &quot;01T00/bar&quot; [label=&quot;bar\n2000-01-01T00:00Z&quot;]
+    &quot;01T00/baz&quot; [label=&quot;baz\n2000-01-01T00:00Z&quot;]
+}
+
+subgraph cluster_2 {
+    label = &quot;2000-01-01T12:00Z&quot;
+    style = dashed
+    &quot;b01T12/az&quot; [label=&quot;baz\n2000-01-01T12:00Z&quot;]
+}
+
+subgraph cluster_3 {
+    label = &quot;2000-01-02T00:00Z&quot;
+    style = dashed
+    &quot;02T00/foo&quot; [label=&quot;foo\n2000-01-02T00:00Z&quot;]
+    &quot;02T00/bar&quot; [label=&quot;bar\n2000-01-02T00:00Z&quot;]
+    &quot;02T00/baz&quot; [label=&quot;baz\n2000-01-02T00:00Z&quot;]
+}
+
+&quot;01T00/foo&quot; -&gt; &quot;01T00/bar&quot;
+&quot;02T00/foo&quot; -&gt; &quot;02T00/bar&quot;
+}</p></object></div>
+</div>
+</dd>
+<dt id="term-graph-string">graph string<a class="headerlink" href="#term-graph-string" title="Link to this term"></a></dt><dd><p>A graph string is a collection of task <a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependencies</span></a>
+in the <a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling][graph]" title="flow.cylc[scheduling][graph]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][graph]</span></code></a> section of a workflow definition,
+with an associated recurrence that defines its sequence of cycle points.</p>
+<p>The example below shows one graph string in a datetime cycling workflow,
+with a daily cycle point sequence:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">R</span><span class="c">/^/</span><span class="kd">P1D</span> <span class="c">=</span> <span class="c">&quot;&quot;&quot;</span>
+   <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span> <span class="o">&amp;</span> <span class="kd">pub</span> <span class="o">=&gt;</span> <span class="kd">qux</span>
+   <span class="kd">pub</span> <span class="o">=&gt;</span> <span class="kd">bool</span>
+<span class="c">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-handler">handler<a class="headerlink" href="#term-handler" title="Link to this term"></a></dt><dt id="term-event-handler">event handler<a class="headerlink" href="#term-event-handler" title="Link to this term"></a></dt><dt id="term-event-handlers">event handlers<a class="headerlink" href="#term-event-handlers" title="Link to this term"></a></dt><dd><p>An event handler is a user-defined executable that the
+<a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> runs when selected <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> or <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>
+<a class="reference internal" href="#term-event"><span class="xref std std-term">events</span></a> occur.</p>
+<p>Use-cases include:</p>
+<ul class="simple">
+<li><p>Send an email message.</p></li>
+<li><p>Run a Cylc command.</p></li>
+<li><p>Run <em>any</em> user-specified script or command.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduler.html#user-guide-scheduler-workflow-event-handling"><span class="std std-ref">Workflow Events</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#user-guide-runtime-task-event-handling"><span class="std std-ref">Task Event Handling</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-hold">hold<a class="headerlink" href="#term-hold" title="Link to this term"></a></dt><dt id="term-held-task">held task<a class="headerlink" href="#term-held-task" title="Link to this term"></a></dt><dt id="term-hold-after-cycle-point">hold after cycle point<a class="headerlink" href="#term-hold-after-cycle-point" title="Link to this term"></a></dt><dd><p>A <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> held with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> will not submit its <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> when ready to run.</p>
+<p>It is also possible to set a “hold after cycle point”; all tasks after
+this cycle point will be held.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#term-workflow"><span class="xref std std-term">Workflows</span></a> can be <a class="reference internal" href="#term-pause"><span class="xref std std-term">paused</span></a> with <code class="docutils literal notranslate"><span class="pre">cylc</span>
+<span class="pre">pause</span></code>, and unpaused/resumed with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+<p><a class="reference internal" href="#term-task"><span class="xref std std-term">Tasks</span></a> can be <a class="reference internal" href="#term-hold"><span class="xref std std-term">held</span></a> with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> and
+<a class="reference internal" href="#term-release"><span class="xref std std-term">released</span></a> with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code>.</p>
+<p>When a paused workflow is resumed, any held tasks remain held.</p>
+<p>If a submitted or running task is held its active job will not be
+affected, but it will not submit any more jobs (such as automatic
+<a class="reference internal" href="#term-retry"><span class="xref std std-term">retries</span></a>) until released.</p>
+</div>
+</dd>
+<dt id="term-implicit-task">implicit task<a class="headerlink" href="#term-implicit-task" title="Link to this term"></a></dt><dd><p>Implicit tasks are <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> which are not defined in
+the <a class="reference internal" href="reference/config/workflow.html#flow.cylc[runtime]" title="flow.cylc[runtime]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime]</span></code></a> section.</p>
+<p>Like regular tasks they <a class="reference internal" href="#term-family-inheritance"><span class="xref std std-term">inherit</span></a> from the <code class="docutils literal notranslate"><span class="pre">root</span></code>
+<a class="reference internal" href="#term-family"><span class="xref std std-term">family</span></a>.</p>
+<p>Implicit tasks submit real jobs that just exit without doing anything
+useful. They may be useful placeholders during workflow development but
+are not allowed by default because they can be created accidentally by
+simply misspelling a task name in the graph or under <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code>.</p>
+<p>Here <code class="docutils literal notranslate"><span class="pre">bar</span></code> is implicit:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+<span class="c1"># eof</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduler]allow implicit tasks" title="flow.cylc[scheduler]allow implicit tasks"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]allow</span> <span class="pre">implicit</span> <span class="pre">tasks</span></code></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#implicittasks"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Cylc 7</p>
+<p>In Cylc 7 and earlier, implicit tasks were known as “naked dummy tasks”.</p>
+</div>
+</dd>
+<dt id="term-inexact-datetime-unit">inexact datetime unit<a class="headerlink" href="#term-inexact-datetime-unit" title="Link to this term"></a></dt><dt id="term-nominal-duration">nominal duration<a class="headerlink" href="#term-nominal-duration" title="Link to this term"></a></dt><dd><p>An inexact datetime unit is any unit of a datetime that does not have
+a fixed duration; it instead depends on its position in the calendar.
+In Cylc, the following are inexact units (when using the Gregorian
+calendar):</p>
+<ul class="simple">
+<li><p>year: either 365 or 366 days depending on whether it is a leap year</p></li>
+<li><p>month: between 28 - 31 days depending on the specific month and year</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-exact-datetime-unit"><span class="xref std std-term">exact datetime unit</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-initial-cycle-point">initial cycle point<a class="headerlink" href="#term-initial-cycle-point" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling workflow</span></a> the initial cycle point is the
+first <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]initial cycle point" title="flow.cylc[scheduling]initial cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]initial</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-install">install<a class="headerlink" href="#term-install" title="Link to this term"></a></dt><dt id="term-installation">installation<a class="headerlink" href="#term-installation" title="Link to this term"></a></dt><dt id="term-workflow-installation">workflow installation<a class="headerlink" href="#term-workflow-installation" title="Link to this term"></a></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command installs workflow <a class="reference internal" href="#term-source-directory"><span class="xref std std-term">source files</span></a> into a new <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a> under the
+<a class="reference internal" href="#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-reinstall"><span class="xref std std-term">reinstall</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-install-target">install target<a class="headerlink" href="#term-install-target" title="Link to this term"></a></dt><dd><p>Cylc uses install targets to determine which platforms share file systems.
+Install targets should normally be managed at site level. They are configured in
+<a class="reference internal" href="reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]install target" title="global.cylc[platforms][&lt;platform name&gt;]install target"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]install</span> <span class="pre">target</span></code></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/writing-platform-configs.html#install-targets"><span class="std std-ref">What Are Install Targets?</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-integer-cycling">integer cycling<a class="headerlink" href="#term-integer-cycling" title="Link to this term"></a></dt><dd><p>An integer <a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a> uses integer <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a> and <a class="reference internal" href="#term-recurrence"><span class="xref std std-term">recurrences</span></a> (e.g. <code class="docutils literal notranslate"><span class="pre">P3</span></code> means
+every third cycle).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]cycling mode" title="flow.cylc[scheduling]cycling mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]cycling</span> <span class="pre">mode</span></code></a></p></li>
+<li><p><a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/scheduling/integer-cycling.html#tutorial-integer-cycling"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-intercycle-dependence">intercycle dependence<a class="headerlink" href="#term-intercycle-dependence" title="Link to this term"></a></dt><dt id="term-intercycle-dependency">intercycle dependency<a class="headerlink" href="#term-intercycle-dependency" title="Link to this term"></a></dt><dt id="term-intercycle-trigger">intercycle trigger<a class="headerlink" href="#term-intercycle-trigger" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling workflow</span></a>, intercycle dependence refers to
+a <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> depending on other tasks at different cycle points.</p>
+<p>For example, in the following workflow the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> depends on
+its own previous instance:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+            <span class="kd">bar</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">bar</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-a0b983d4be5182e8e12f4aacfcc75c2683db3c40.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+size = &quot;3,5&quot;
+
+subgraph cluster_1 {
+    label = &quot;1&quot;
+    style = dashed
+    &quot;1/foo&quot; [label=&quot;foo\n1&quot;]
+    &quot;1/bar&quot; [label=&quot;bar\n1&quot;]
+    &quot;1/baz&quot; [label=&quot;baz\n1&quot;]
+}
+
+subgraph cluster_2 {
+    label = &quot;2&quot;
+    style = dashed
+    &quot;2/foo&quot; [label=&quot;foo\n2&quot;]
+    &quot;2/bar&quot; [label=&quot;bar\n2&quot;]
+    &quot;2/baz&quot; [label=&quot;baz\n2&quot;]
+}
+
+subgraph cluster_3 {
+    label = &quot;3&quot;
+    style = dashed
+    &quot;3/foo&quot; [label=&quot;foo\n3&quot;]
+    &quot;3/bar&quot; [label=&quot;bar\n3&quot;]
+    &quot;3/baz&quot; [label=&quot;baz\n3&quot;]
+}
+
+&quot;1/foo&quot; -&gt; &quot;1/bar&quot; -&gt; &quot;1/baz&quot;
+&quot;2/foo&quot; -&gt; &quot;2/bar&quot; -&gt; &quot;2/baz&quot;
+&quot;3/foo&quot; -&gt; &quot;3/bar&quot; -&gt; &quot;3/baz&quot;
+&quot;1/bar&quot; -&gt; &quot;2/bar&quot; -&gt; &quot;3/bar&quot;
+}</p></object></div>
+</div>
+</dd>
+<dt id="term-ISO-8601">ISO 8601<a class="headerlink" href="#term-ISO-8601" title="Link to this term"></a></dt><dt id="term-ISO8601">ISO8601<a class="headerlink" href="#term-ISO8601" title="Link to this term"></a></dt><dd><p>ISO 8601 is an international standard for writing datetimes, durations,
+and <a class="reference internal" href="#term-recurrence"><span class="xref std std-term">recurrences</span></a> (sequences of datetimes). Cylc uses
+ISO 8601 for <a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-ISO-8601-datetime"><span class="xref std std-term">ISO 8601 datetime</span></a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">Wikipedia (ISO 8601)</a></p></li>
+<li><p><a class="reference external" href="https://www.iso.org/iso-8601-date-and-time-format.html">International Organisation For Standardisation</a></p></li>
+<li><p><a class="reference external" href="http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html">a summary of the international standard date and time notation</a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-ISO-8601-datetime">ISO 8601 datetime<a class="headerlink" href="#term-ISO-8601-datetime" title="Link to this term"></a></dt><dt id="term-ISO8601-datetime">ISO8601 datetime<a class="headerlink" href="#term-ISO8601-datetime" title="Link to this term"></a></dt><dd><p>A datetime written in the <a class="reference internal" href="#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a> format, e.g:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">2000-01-01T00:00Z</span></code>: midnight on the 1st of January 2000, UTC.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial/scheduling/datetime-cycling.html#tutorial-iso8601-datetimes"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-ISO-8601-duration">ISO 8601 duration<a class="headerlink" href="#term-ISO-8601-duration" title="Link to this term"></a></dt><dt id="term-ISO8601-duration">ISO8601 duration<a class="headerlink" href="#term-ISO8601-duration" title="Link to this term"></a></dt><dd><p>A duration written in the ISO 8601 format e.g:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PT1H30M</span></code>: one hour and thirty minutes.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-ISO-8601"><span class="xref std std-term">ISO 8601</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/scheduling/datetime-cycling.html#tutorial-iso8601-durations"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-job">job<a class="headerlink" href="#term-job" title="Link to this term"></a></dt><dd><p>Jobs are the real processes that <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> represent in
+a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>. In Cylc, they are implemented by <a class="reference internal" href="#term-job-script"><span class="xref std std-term">job scripts</span></a> prepared by the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+</dd>
+<dt id="term-job-host">job host<a class="headerlink" href="#term-job-host" title="Link to this term"></a></dt><dd><p>A job host is a compute resource that a <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> runs on. For
+example <code class="docutils literal notranslate"><span class="pre">node_1</span></code> would be one of two possible job hosts on the
+<a class="reference internal" href="#term-platform"><span class="xref std std-term">platform</span></a> <code class="docutils literal notranslate"><span class="pre">my_hpc</span></code> for the task <code class="docutils literal notranslate"><span class="pre">solver</span></code> in the
+following workflow:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">global.cylc</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[my_hpc]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> node_1, node_2</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[solver]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> my_hpc</span>
+</pre></div>
+</div>
+</div>
+</dd>
+<dt id="term-job-log">job log<a class="headerlink" href="#term-job-log" title="Link to this term"></a></dt><dt id="term-job-log-directory">job log directory<a class="headerlink" href="#term-job-log-directory" title="Link to this term"></a></dt><dd><p>Task <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> log files are stored in job specific log directories
+under the workflow <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a>. These include:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">job</span></code></dt><dd><p>The task <a class="reference internal" href="#term-job-script"><span class="xref std std-term">job script</span></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job.out</span></code></dt><dd><p>Job stdout.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job.err</span></code></dt><dd><p>Job stderr.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job.status</span></code></dt><dd><p>Job status data in case of lost contact with the scheduler.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job-activity.log</span></code></dt><dd><p>Job data logged by the scheduler, rather than
+the job itself, such as output from the job submission command.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">job.xtrace</span></code></dt><dd><p>Debugging information from Bash captured when Cylc is run in
+<code class="docutils literal notranslate"><span class="pre">--debug</span></code> mode.</p>
+</dd>
+</dl>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/log/job/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>/<span class="s">&lt;job-submit-num&gt;</span>
+</pre></div>
+</div>
+<p>You can print job logs at the terminal with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span>
+<span class="pre">&lt;workflow-name&gt;</span> <span class="pre">&lt;task-id&gt;</span></code>. By default this prints <code class="docutils literal notranslate"><span class="pre">job.out</span></code>.
+There are command options to select the other logs.</p>
+</dd>
+<dt id="term-job-runner">job runner<a class="headerlink" href="#term-job-runner" title="Link to this term"></a></dt><dd><p>A job runner is a system for submitting task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> to run on
+a <a class="reference internal" href="#term-platform"><span class="xref std std-term">job platform</span></a>.</p>
+<p>Cylc supports various job runners, from direct background process
+execution to HPC batch queueing systems like PBS and Slurm (these are
+also known as <em>job schedulers</em> and <em>resource managers</em>).</p>
+<p>Job runners are configured on a per-platform basis in <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]job runner" title="global.cylc[platforms][&lt;platform name&gt;]job runner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]job</span> <span class="pre">runner</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#term-directive"><span class="xref std std-term">directive</span></a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Job_scheduler">Wikipedia (job scheduler)</a></p></li>
+</ul>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Cylc 7</p>
+<p>In Cylc 7 and earlier, job runners were referred to as “batch systems”.</p>
+</div>
+</dd>
+<dt id="term-job-script">job script<a class="headerlink" href="#term-job-script" title="Link to this term"></a></dt><dd><p>A Cylc job script is a file containing bash code to implement a task
+definition in a workflow. It prepared and submitted to run by the
+<a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> when the task is ready to run.</p>
+<p>Job scripts can be found in the task <a class="reference internal" href="#term-job-log-directory"><span class="xref std std-term">job log directory</span></a>.</p>
+</dd>
+<dt id="term-job-submission-number">job submission number<a class="headerlink" href="#term-job-submission-number" title="Link to this term"></a></dt><dd><p>A single <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> may run multiple <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> as a result of
+automatic <a class="reference internal" href="#term-retry"><span class="xref std std-term">retries</span></a> or manually retriggering.
+The job submission number is incremented each time, starting from 1.</p>
+</dd>
+<dt id="term-message-trigger">message trigger<a class="headerlink" href="#term-message-trigger" title="Link to this term"></a></dt><dd><p>A message trigger is a <a class="reference internal" href="#term-trigger"><span class="xref std std-term">trigger</span></a> based on a
+<a class="reference internal" href="#term-custom-output"><span class="xref std std-term">custom task output</span></a>. The task <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> must
+send a user-defined message to the scheduler to complete the output.</p>
+<p>For brevity, the trigger in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> uses the output name, not
+the full message:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+           <span class="kd">foo</span><span class="c">:</span><span class="kd">out1</span> <span class="o">=&gt;</span> <span class="kd">proc</span><span class="c">-</span><span class="kd">out</span><span class="c">-</span><span class="kd">1</span>
+           <span class="kd">foo</span><span class="c">:</span><span class="kd">out2</span> <span class="o">=&gt;</span> <span class="kd">proc</span><span class="c">-</span><span class="kd">out</span><span class="c">-</span><span class="kd">2</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># ...</span>
+<span class="s2">            cylc message &quot;Output 1 completed&quot;</span>
+            <span class="c1"># ...</span>
+<span class="s2">            cylc message &quot;Output 2 completed&quot;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="nt">[[[outputs]]]</span>
+            <span class="c1"># output name = output message</span>
+            <span class="nv">out1 </span><span class="o">=</span><span class="s"> &quot;Output 1 completed&quot;</span>
+            <span class="nv">out2 </span><span class="o">=</span><span class="s"> &quot;Output 2 completed&quot;</span>
+</pre></div>
+</div>
+<p>However, if you don’t need a descriptive message for the workflow
+log, you can make the message the same as its name:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[[[outputs]]]</span>
+    <span class="nv">out1 </span><span class="o">=</span><span class="s"> out1</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-optional-output">optional output<a class="headerlink" href="#term-optional-output" title="Link to this term"></a></dt><dd><p>Optional <a class="reference internal" href="#term-task-output"><span class="xref std std-term">task outputs</span></a> are marked with a question
+mark in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">foo:x?</span></code>, or <code class="docutils literal notranslate"><span class="pre">foo:fail?</span></code>,  or
+<code class="docutils literal notranslate"><span class="pre">foo?</span></code> (short for <code class="docutils literal notranslate"><span class="pre">foo:succeed?</span></code>). The may or may not be completed at
+runtime. Optional outputs are primarily used for <a class="reference internal" href="#term-graph-branching"><span class="xref std std-term">graph branching</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-required-output"><span class="xref std std-term">required output</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#user-guide-optional-outputs"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-output">output<a class="headerlink" href="#term-output" title="Link to this term"></a></dt><dt id="term-task-output">task output<a class="headerlink" href="#term-task-output" title="Link to this term"></a></dt><dd><p>Task outputs mark the progression of a <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> from waiting (for
+<a class="reference internal" href="#term-prerequisite"><span class="xref std std-term">prerequisites</span></a> to be satisfied) through to success
+or failure at run time. Tasks can trigger off of upstream task outputs in
+the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>.</p>
+<p>Outputs are written as <code class="docutils literal notranslate"><span class="pre">task-name:output</span></code> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>, and can
+be <a class="reference internal" href="#term-required-output"><span class="xref std std-term">required</span></a> or <a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional</span></a>.</p>
+<p>Tasks may have <a class="reference internal" href="#term-custom-output"><span class="xref std std-term">custom outputs</span></a> as well as
+<a class="reference internal" href="#term-standard-output"><span class="xref std std-term">standard outputs</span></a>.</p>
+<p>Here the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> depends on the standard <code class="docutils literal notranslate"><span class="pre">:started</span></code> output of
+<code class="docutils literal notranslate"><span class="pre">foo</span></code>:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="c">:</span><span class="kd">started</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>The standard <code class="docutils literal notranslate"><span class="pre">:succeeded</span></code> output is usually implicit:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="kd">bar</span>  <span class="c1"># means foo:succeeded =&gt; bar</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-output-completion">output completion<a class="headerlink" href="#term-output-completion" title="Link to this term"></a></dt><dt id="term-output-completion-condition">output completion condition<a class="headerlink" href="#term-output-completion-condition" title="Link to this term"></a></dt><dd><p>A task’s outputs are <em>complete</em> if its <em>output completion condition</em>
+is satisfied.</p>
+<p>The completion condition can be defined by the user in
+<a class="reference internal" href="reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]completion" title="flow.cylc[runtime][&lt;namespace&gt;]completion"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]completion</span></code></a>,
+otherwise it is automatically generated according to the rules:</p>
+<ul class="simple">
+<li><p>All <a class="reference internal" href="#term-required-output"><span class="xref std std-term">required outputs</span></a> (referenced in the graph)
+must be completed.</p></li>
+<li><p>Or, if success is optional, then the outputs are complete if it fails.</p></li>
+<li><p>Or, if submission is optional, then the outputs are complete if it
+submit-fails.</p></li>
+<li><p>Or, if expiry is optional, then the outputs are complete if it expires.</p></li>
+</ul>
+<p>Tasks that achieve a <a class="reference internal" href="#term-final-status"><span class="xref std std-term">final status</span></a> with complete outputs have done
+their job, allowing the workflow to move on.</p>
+<p>Tasks that achieve a final status with incomplete outputs are retained in
+<a class="reference internal" href="#term-n-window"><span class="xref std std-term">n=0</span></a> pending user intervention, and will <a class="reference internal" href="#term-stall"><span class="xref std std-term">stall</span></a>
+the workflow.</p>
+</dd>
+<dt id="term-pause">pause<a class="headerlink" href="#term-pause" title="Link to this term"></a></dt><dd><p>When a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> is “paused” the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> is still
+running but it will not automatically submit new jobs.</p>
+<p>You can still manually <a class="reference internal" href="#term-trigger"><span class="xref std std-term">trigger</span></a> tasks in a paused workflow.</p>
+<p>This can be useful if you want to make a change to a running workflow.</p>
+<p>Pause a workflow with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> and resume it with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-play"><span class="xref std std-term">play</span></a></p></li>
+<li><p><a class="reference internal" href="#term-stop"><span class="xref std std-term">stop</span></a></p></li>
+<li><p><a class="reference internal" href="#term-hold"><span class="xref std std-term">hold</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-platform">platform<a class="headerlink" href="#term-platform" title="Link to this term"></a></dt><dt id="term-job-platform">job platform<a class="headerlink" href="#term-job-platform" title="Link to this term"></a></dt><dd><p>A platform for running Cylc task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> is primarily defined
+by the combination of a <a class="reference internal" href="#term-job-runner"><span class="xref std std-term">job runner</span></a> and a group of <a class="reference internal" href="#term-job-host"><span class="xref std std-term">hosts</span></a> that share a file system.</p>
+<p>For example <code class="docutils literal notranslate"><span class="pre">my_hpc</span></code> could be the platform for the task <code class="docutils literal notranslate"><span class="pre">solver</span></code>
+in the following workflow:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Global configuration (<code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>)</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[my_hpc]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> node_1, node_2</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Workflow configuration (<code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>)</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[solver]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> my_hpc</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-platform-group"><span class="xref std std-term">platform group</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-platform-group">platform group<a class="headerlink" href="#term-platform-group" title="Link to this term"></a></dt><dd><p>A set of <a class="reference internal" href="#term-platform"><span class="xref std std-term">platforms</span></a> grouped under a common name.</p>
+<p>Platforms are configured by <a class="reference internal" href="reference/config/global.html#global.cylc[platform groups]" title="global.cylc[platform groups]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platform</span> <span class="pre">groups]</span></code></a>.</p>
+</dd>
+<dt id="term-play">play<a class="headerlink" href="#term-play" title="Link to this term"></a></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command runs an instance of the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a>
+program to <a class="reference internal" href="#term-start"><span class="xref std std-term">start</span></a> or <a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a> a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>.</p>
+<p>You can <a class="reference internal" href="#term-play"><span class="xref std std-term">play</span></a>, <a class="reference internal" href="#term-pause"><span class="xref std std-term">pause</span></a> and <a class="reference internal" href="#term-stop"><span class="xref std std-term">stop</span></a> a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>,
+Cylc will always carry on where it left off.</p>
+</dd>
+<dt id="term-prerequisite">prerequisite<a class="headerlink" href="#term-prerequisite" title="Link to this term"></a></dt><dt id="term-dependence">dependence<a class="headerlink" href="#term-dependence" title="Link to this term"></a></dt><dt id="term-dependency">dependency<a class="headerlink" href="#term-dependency" title="Link to this term"></a></dt><dd><p>Dependencies in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> show how <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> depend on
+some combination of the <a class="reference internal" href="#term-task-output"><span class="xref std std-term">outputs</span></a> of other tasks.</p>
+<p>For example, in the following dependency the task <code class="docutils literal notranslate"><span class="pre">baz</span></code> depends on both
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> succeeding:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">&amp;</span> <span class="kd">bar</span> <span class="o">=&gt;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-task-trigger"><span class="xref std std-term">task trigger</span></a></p></li>
+<li><p><a class="reference internal" href="#term-conditional-dependence"><span class="xref std std-term">conditional dependence</span></a></p></li>
+<li><p><a class="reference internal" href="#term-intercycle-dependence"><span class="xref std std-term">intercycle dependence</span></a></p></li>
+</ul>
+</div>
+<p>Tasks can also depend on <a class="reference internal" href="#term-xtrigger"><span class="xref std std-term">external triggers</span></a>.</p>
+</dd>
+<dt id="term-qualifier">qualifier<a class="headerlink" href="#term-qualifier" title="Link to this term"></a></dt><dd><p>A qualifier is what follows <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> or family <a class="reference internal" href="#term-family"><span class="xref std std-term">family</span></a> names
+after a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> in <a class="reference internal" href="#term-trigger"><span class="xref std std-term">triggers</span></a>, in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>,
+to specify exactly which <a class="reference internal" href="#term-task-output"><span class="xref std std-term">task outputs</span></a> must be
+completed for the <a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependency</span></a> to be satisfied.</p>
+<p>For example, in <code class="docutils literal notranslate"><span class="pre">foo:start</span> <span class="pre">=&gt;</span> <span class="pre">bar</span></code>, the <code class="docutils literal notranslate"><span class="pre">:start</span></code> qualifier means that
+the <code class="docutils literal notranslate"><span class="pre">started</span></code> output of task <code class="docutils literal notranslate"><span class="pre">foo</span></code> must be completed to satisfy the
+dependency.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-task-trigger"><span class="xref std std-term">task triggers</span></a></p></li>
+<li><p><a class="reference internal" href="#term-family-trigger"><span class="xref std std-term">family triggers</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/scheduling/further-scheduling.html#tutorial-qualifiers"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-queue">queue<a class="headerlink" href="#term-queue" title="Link to this term"></a></dt><dt id="term-internal-queue">internal queue<a class="headerlink" href="#term-internal-queue" title="Link to this term"></a></dt><dd><p>Internal queues (so called to distinguish them from external batch
+queueing systems) limit how many <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> can be
+active at once, across defined groups of tasks.</p>
+<p>Use queues prevent large or busy workflows from swamping their
+<a class="reference internal" href="#term-job-platform"><span class="xref std std-term">job platforms</span></a> with too many jobs at once.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling][queues]" title="flow.cylc[scheduling][queues]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling][queues]</span></code></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#internalqueues"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-recurrence">recurrence<a class="headerlink" href="#term-recurrence" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling workflow</span></a> a recurrence determines the
+sequence of cycle points given to task instances that appear in the
+associated <a class="reference internal" href="#term-graph-string"><span class="xref std std-term">graph string</span></a>.</p>
+<p>Recurrences for <a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a> are based on the <a class="reference internal" href="#term-ISO8601"><span class="xref std std-term">ISO8601</span></a>
+standard. Those for <a class="reference internal" href="#term-integer-cycling"><span class="xref std std-term">integer cycling</span></a> are designed to have similar
+syntax, but are much simpler.</p>
+</dd>
+<dt id="term-reinstall">reinstall<a class="headerlink" href="#term-reinstall" title="Link to this term"></a></dt><dt id="term-reinstallation">reinstallation<a class="headerlink" href="#term-reinstallation" title="Link to this term"></a></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code> command reinstalls workflow <a class="reference internal" href="#term-source-directory"><span class="xref std std-term">source files</span></a> into an existing <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a> under the
+<a class="reference internal" href="#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-install"><span class="xref std std-term">install</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-release">release<a class="headerlink" href="#term-release" title="Link to this term"></a></dt><dd><p><a class="reference internal" href="#term-hold"><span class="xref std std-term">Held tasks</span></a> can be released with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span></code>,
+allowing submission of task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> once again.</p>
+<p>It is also possible to remove the “hold after cycle point” if set,
+using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">release</span> <span class="pre">--all</span></code>. This will also release all held tasks.</p>
+</dd>
+<dt id="term-reload">reload<a class="headerlink" href="#term-reload" title="Link to this term"></a></dt><dd><p><a class="reference internal" href="#term-scheduler"><span class="xref std std-term">Schedulers</span></a> can reload their <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>
+configuration from the <a class="reference internal" href="#term-install"><span class="xref std std-term">installed</span></a> <a class="reference internal" href="reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>
+file, to pick up changes made at runtime.</p>
+<p>We recommend that changes are <a class="reference internal" href="#term-reinstall"><span class="xref std std-term">reinstalled</span></a> from the
+workflow <a class="reference internal" href="#term-source-directory"><span class="xref std std-term">source directory</span></a> before reload, rather than made by
+editing the installed files directly.</p>
+<p><a class="reference internal" href="user-guide/running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">Remote Initialization</span></a> will be redone for each job platform, when the first job is submitted there after a reload.</p>
+<p>Any <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> that is <a class="reference internal" href="#term-active-task"><span class="xref std std-term">active</span></a> at reload
+will continue with its pre-reload configuration.
+The next instance of the task (at the next cycle point)
+will adopt the new configuration.</p>
+<p>Reloading changes is safe providing they don’t affect the
+<a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow’s</span></a> <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>. Changes to the graph have
+certain caveats attached, see the
+<a class="reference internal" href="user-guide/running-workflows/scheduler-start-up.html#reloading-the-workflow-configuration-at-runtime"><span class="std std-ref">Cylc User Guide</span></a>
+for details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-required-output">required output<a class="headerlink" href="#term-required-output" title="Link to this term"></a></dt><dt id="term-expected-output">expected output<a class="headerlink" href="#term-expected-output" title="Link to this term"></a></dt><dd><p>Task outputs that are not marked as <a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional</span></a>
+in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> must be completed at runtime. If a task
+achieves a <a class="reference internal" href="#term-final-status"><span class="xref std std-term">final status</span></a> without completing its required
+outputs, the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> will keep it in the
+<a class="reference internal" href="#term-n-window"><span class="xref std std-term">n=0 window</span></a> pending user intervention.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduling.html#required-outputs"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-restart">restart<a class="headerlink" href="#term-restart" title="Link to this term"></a></dt><dd><p>When a <a class="reference internal" href="#term-stop"><span class="xref std std-term">stopped</span></a> <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> is <a class="reference internal" href="#term-play"><span class="xref std std-term">played</span></a>
+again, the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> picks up where it left off rather than
+starting again from scratch. It also detects any orphaned <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> that changed state (e.g. succeeded) while the system was down.</p>
+<p>Changes made to the <a class="reference internal" href="#term-install"><span class="xref std std-term">installed</span></a> <a class="reference internal" href="reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a>
+file will be picked at restart. We recommend that changes are
+<a class="reference internal" href="#term-reinstall"><span class="xref std std-term">reinstalled</span></a> from the workflow <a class="reference internal" href="#term-source-directory"><span class="xref std std-term">source
+directory</span></a> before restart, rather than made by editing the installed
+files directly.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-start"><span class="xref std std-term">start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-stop"><span class="xref std std-term">stop</span></a></p></li>
+<li><p><a class="reference internal" href="#term-reload"><span class="xref std std-term">reload</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/runtime/runtime-configuration.html#tutorial-start-stop-restart"><span class="std std-ref">Tutorial</span></a>.</p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-retry">retry<a class="headerlink" href="#term-retry" title="Link to this term"></a></dt><dt id="term-task-retry">task retry<a class="headerlink" href="#term-task-retry" title="Link to this term"></a></dt><dt id="term-try-number">try number<a class="headerlink" href="#term-try-number" title="Link to this term"></a></dt><dd><p>Tasks can be configured to retry automatically on failure, one or more
+times. They return to the <code class="docutils literal notranslate"><span class="pre">waiting</span></code> state with a <a class="reference internal" href="#term-clock-trigger"><span class="xref std std-term">clock trigger</span></a>
+to delay the retry, and only go to the <code class="docutils literal notranslate"><span class="pre">failed</span></code> <a class="reference internal" href="#term-task-state"><span class="xref std std-term">state</span></a> once the final try fails.</p>
+<p>The task try number increments with every automatic retry, and is
+passed to the job environment as <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_TRY_NUMBER</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#taskretries"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-run-directory">run directory<a class="headerlink" href="#term-run-directory" title="Link to this term"></a></dt><dt id="term-workflow-run-directory">workflow run directory<a class="headerlink" href="#term-workflow-run-directory" title="Link to this term"></a></dt><dd><p>This is a location under the <a class="reference internal" href="#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a> that contains the
+<a class="reference internal" href="#term-install"><span class="xref std std-term">installed</span></a> configuration used to run a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>.</p>
+<p>At runtime, task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> can get their workflow run
+directory from the environment variable <code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_RUN_DIR</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-source-directory"><span class="xref std std-term">source directory</span></a></p></li>
+<li><p><a class="reference internal" href="#term-work-directory"><span class="xref std std-term">work directory</span></a></p></li>
+<li><p><a class="reference internal" href="#term-share-directory"><span class="xref std std-term">share directory</span></a></p></li>
+<li><p><a class="reference internal" href="#term-job-log-directory"><span class="xref std std-term">job log directory</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-runahead-limit">runahead limit<a class="headerlink" href="#term-runahead-limit" title="Link to this term"></a></dt><dt id="term-runahead">runahead<a class="headerlink" href="#term-runahead" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a>, the runahead limit determines how far
+ahead of the oldest <a class="reference internal" href="#term-active-cycle"><span class="xref std std-term">active cycle</span></a> the workflow is permitted
+to run.</p>
+<p>The “oldest active cycle point” is the first cycle in the workflow to contain
+any <a class="reference internal" href="#term-active-task"><span class="xref std std-term">active tasks</span></a> (e.g. running tasks).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/workflow.html#flow.cylc[scheduling]runahead limit" title="flow.cylc[scheduling]runahead limit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]runahead</span> <span class="pre">limit</span></code></a></p></li>
+<li><p><a class="reference internal" href="workflow-design-guide/general-principles.html#runahead-limiting"><span class="std std-ref">Runahead Limiting</span></a></p></li>
+<li><p><a class="reference internal" href="#term-active-cycle"><span class="xref std std-term">active cycle</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-runtime-inheritance">runtime inheritance<a class="headerlink" href="#term-runtime-inheritance" title="Link to this term"></a></dt><dt id="term-family-inheritance">family inheritance<a class="headerlink" href="#term-family-inheritance" title="Link to this term"></a></dt><dd><p>A <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> is a member of a <a class="reference internal" href="#term-family"><span class="xref std std-term">family</span></a> if it inherits the
+family configuration via <a class="reference internal" href="reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]inherit" title="flow.cylc[runtime][&lt;namespace&gt;]inherit"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]inherit</span></code></a>.</p>
+<p>For example the <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> <code class="docutils literal notranslate"><span class="pre">cheddar</span></code> “belongs” to the <a class="reference internal" href="#term-family"><span class="xref std std-term">family</span></a>
+<code class="docutils literal notranslate"><span class="pre">CHEESE</span></code> in the following snippet:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[CHEESE]]</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">COLOR </span><span class="o">=</span><span class="s"> yellow</span>
+    <span class="nt">[[cheddar]]</span>
+        <span class="nv">inherit </span><span class="o">=</span><span class="s"> FAMILY</span>
+</pre></div>
+</div>
+<p>Families can also inherit from other families. All tasks implicitly
+inherit from a special <code class="docutils literal notranslate"><span class="pre">root</span></code> family at the base of the inheritance
+hierarchy.</p>
+<p>Tasks can inherit from multiple families at once using a comma-separated
+list:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">inherit </span><span class="o">=</span><span class="s"> foo, bar, baz</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-family-trigger"><span class="xref std std-term">family trigger</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#user-guide-runtime"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/furthertopics/inheritance.html#tutorial-inheritance"><span class="std std-ref">Cylc Tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-scheduler">scheduler<a class="headerlink" href="#term-scheduler" title="Link to this term"></a></dt><dd><p>The Cylc scheduler is a program responsible for managing a single
+Cylc <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>. It determines when each <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> is
+ready to run, submits its <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> to selected job runners,
+tracks job status, maintains the workflow state, and listens for queries
+and commands from the user.</p>
+<p>By default, Cylc schedulers run as daemons (and potentially on a remote
+host) so they won’t be killed if you log out.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Daemon_(computing)">Wikipedia: daemon</a></p></li>
+</ul>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Cylc 7</p>
+<p>In Cylc 7 and earlier, schedulers were known as “suite daemons”.</p>
+</div>
+</dd>
+<dt id="term-service-directory">service directory<a class="headerlink" href="#term-service-directory" title="Link to this term"></a></dt><dd><p>The hidden service directory, under the workflow <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a>,
+stores information for internal use by Cylc. It is created at
+<a class="reference internal" href="#term-install"><span class="xref std std-term">install</span></a> time.</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/.service/
+</pre></div>
+</div>
+</dd>
+<dt id="term-share-directory">share directory<a class="headerlink" href="#term-share-directory" title="Link to this term"></a></dt><dd><p>Cylc automatically creates a share directory inside the workflow
+<a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a> as a place to store files that need to be
+shared between tasks.</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/share
+</pre></div>
+</div>
+<p>Tasks can get their own share directory path at runtime from
+the <code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_SHARE_DIR</span></code> environment variable.</p>
+<p>In cycling workflows files are typically stored in cycle point
+sub-directories of the share directory.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a></p></li>
+<li><p><a class="reference internal" href="#term-work-directory"><span class="xref std std-term">work directory</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-source-directory">source directory<a class="headerlink" href="#term-source-directory" title="Link to this term"></a></dt><dt id="term-source-workflow">source workflow<a class="headerlink" href="#term-source-workflow" title="Link to this term"></a></dt><dd><p>A source directory is any location where <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflows</span></a> are
+written and stored in preparation for installation with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>
+or reinstallation with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code>.</p>
+<p>These locations are configurable. The default is <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a></p></li>
+<li><p><a class="reference internal" href="reference/config/global.html#global.cylc[install]source dirs" title="global.cylc[install]source dirs"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install]source</span> <span class="pre">dirs</span></code></a></p></li>
+<li><p><a class="reference internal" href="user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">Installing Workflows</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-stall">stall<a class="headerlink" href="#term-stall" title="Link to this term"></a></dt><dt id="term-stalled-workflow">stalled workflow<a class="headerlink" href="#term-stalled-workflow" title="Link to this term"></a></dt><dd><p>A stalled workflow has not run to <a class="reference internal" href="#term-workflow-completion"><span class="xref std std-term">completion</span></a>
+but cannot continue without manual intervention.</p>
+<p>A stalled scheduler stays alive for a configurable timeout period
+pending manual intervention. If it shuts down (on the stall timeout
+or otherwise) it will remain in the stalled state on restart.</p>
+<p>Stalls are usually caused by unexpected task failures:</p>
+<div align="center" class="align-center"><div class="graphviz"><object data="_images/graphviz-8e0c9728aa86a233cf46544e68a49dea2fe207ab.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Example {
+foo [style=&quot;filled&quot; color=&quot;#ada5a5&quot;]
+bar [style=&quot;filled&quot; color=&quot;#ff0000&quot; fontcolor=&quot;white&quot;]
+baz [color=&quot;#88c6ff&quot;]
+
+foo -&gt; bar -&gt; baz
+}</p></object></div>
+</div>
+<p>In this example the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> has failed, so  that <code class="docutils literal notranslate"><span class="pre">baz</span></code> cannot
+run, but <code class="docutils literal notranslate"><span class="pre">bar:fail</span></code> was not marked as an <a class="reference internal" href="#term-optional-output"><span class="xref std std-term">optional output</span></a>.</p>
+<p>User intervention is required to fix a stall, e.g. by retriggering
+tasks after fixing the problems that caused them to fail.</p>
+</dd>
+<dt id="term-standard-output">standard output<a class="headerlink" href="#term-standard-output" title="Link to this term"></a></dt><dd><p>Every <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> has a set of standard <a class="reference internal" href="#term-task-output"><span class="xref std std-term">outputs</span></a>
+that trigger <a class="reference internal" href="#term-task-state"><span class="xref std std-term">task state</span></a> changes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">:expired`</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:submitted</span></code>, or <code class="docutils literal notranslate"><span class="pre">:submit-failed</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:started</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:succeeded</span></code>, or <code class="docutils literal notranslate"><span class="pre">:failed</span></code></p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt id="term-start">start<a class="headerlink" href="#term-start" title="Link to this term"></a></dt><dt id="term-startup">startup<a class="headerlink" href="#term-startup" title="Link to this term"></a></dt><dd><p>This refers to starting a new instance of the Cylc <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a>
+program to manage a particular <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>. This can be from
+scratch, for installed workflows that haven’t run previously, or to
+restart one that shut down prior to <a class="reference internal" href="#term-workflow-completion"><span class="xref std std-term">completion</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-cold-start"><span class="xref std std-term">cold start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-warm-start"><span class="xref std std-term">warm start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start-task"><span class="xref std std-term">start task</span></a></p></li>
+<li><p><a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a></p></li>
+<li><p><a class="reference internal" href="#term-reload"><span class="xref std std-term">reload</span></a></p></li>
+<li><p><a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shutdown</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-start-cycle-point">start cycle point<a class="headerlink" href="#term-start-cycle-point" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling"><span class="xref std std-term">cycling workflow</span></a> the start cycle point is the
+<a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a> where the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> <a class="reference internal" href="#term-start"><span class="xref std std-term">starts</span></a>
+running the workflow.</p>
+<p>This may be at or after the <a class="reference internal" href="#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-stop-cycle-point"><span class="xref std std-term">stop cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/running-workflows/scheduler-start-up.html#start-stop-cycle-point"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-start-task">start task<a class="headerlink" href="#term-start-task" title="Link to this term"></a></dt><dd><p>A start task is <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> in the <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a> from which the
+<a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> <a class="reference internal" href="#term-start"><span class="xref std std-term">starts</span></a> running a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> from
+scratch.</p>
+<p>Earlier tasks depended on by start tasks are treated as if they have
+succeeded.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-cold-start"><span class="xref std std-term">cold start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-warm-start"><span class="xref std std-term">warm start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shutdown</span></a></p></li>
+</ul>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Cylc 7</p>
+<p>Cylc 7 and earlier did not have the capability to start from any task
+in the graph.</p>
+</div>
+</dd>
+<dt id="term-stop">stop<a class="headerlink" href="#term-stop" title="Link to this term"></a></dt><dt id="term-shutdown">shutdown<a class="headerlink" href="#term-shutdown" title="Link to this term"></a></dt><dd><p>A <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> can shut down on request, or automatically on
+<a class="reference internal" href="#term-workflow-completion"><span class="xref std std-term">workflow completion</span></a>. The <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a> is then stopped and no
+further <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> will be submitted.</p>
+<p>By default, the scheduler waits for any submitted or running task
+<a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> to finish (either succeed or fail) before shutting
+down.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-play"><span class="xref std std-term">play</span></a></p></li>
+<li><p><a class="reference internal" href="#term-pause"><span class="xref std std-term">pause</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start"><span class="xref std std-term">start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a></p></li>
+<li><p><a class="reference internal" href="#term-reload"><span class="xref std std-term">reload</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/runtime/runtime-configuration.html#tutorial-start-stop-restart"><span class="std std-ref">Tutorial</span></a>.</p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-stop-cycle-point">stop cycle point<a class="headerlink" href="#term-stop-cycle-point" title="Link to this term"></a></dt><dd><p>The stop cycle point is the <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle point</span></a> where <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a>
+stops running the workflow and <a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shuts down</span></a>.</p>
+<p>This may be at or before the <a class="reference internal" href="#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/running-workflows/scheduler-start-up.html#start-stop-cycle-point"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-submit-number">submit number<a class="headerlink" href="#term-submit-number" title="Link to this term"></a></dt><dt id="term-task-submit-number">task submit number<a class="headerlink" href="#term-task-submit-number" title="Link to this term"></a></dt><dd><p>Every time a task re-runs, whether by automatic <a class="reference internal" href="#term-retry"><span class="xref std std-term">retry</span></a> or manual
+triggering, its submit number increments. It is passed to
+the job environment as <code class="docutils literal notranslate"><span class="pre">$CYLC_TASK_SUBMIT_NUMBER</span></code>.</p>
+<p>Submit number also appears in the job log path so that job log files
+don’t get overwritten.</p>
+</dd>
+<dt id="term-suicide-trigger">suicide trigger<a class="headerlink" href="#term-suicide-trigger" title="Link to this term"></a></dt><dd><p>Suicide triggers remove <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> from the
+<a class="reference internal" href="#term-n-window"><span class="xref std std-term">active window</span></a> at runtime.</p>
+<p>They are denoted by exclamation marks, and are triggered like normal
+dependencies. For instance, the following suicide trigger will remove the
+task <code class="docutils literal notranslate"><span class="pre">bar</span></code> if <code class="docutils literal notranslate"><span class="pre">foo</span></code> succeeds:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span> <span class="o">=&gt;</span> <span class="c">!</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Suicide triggers are not needed in Cylc 8 for <a class="reference internal" href="#term-graph-branching"><span class="xref std std-term">graph branching</span></a>.
+They are retained for backward compatibility and rare edge cases.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/suicide-triggers.html#suicidetriggers"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-task">task<a class="headerlink" href="#term-task" title="Link to this term"></a></dt><dd><p>A task represents an activity in a <a class="reference internal" href="#term-workflow"><span class="xref std std-term">workflow</span></a>. The workflow
+definition specifies how tasks depends on other tasks, what they
+should do, how and where to run them, and details of their
+runtime environment.</p>
+<p>Task definitions are used to create a <a class="reference internal" href="#term-job-script"><span class="xref std std-term">job script</span></a> that is
+executed as a <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> on behalf of the task.</p>
+<p>Tasks submit <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a>. Each <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> belongs to one task,
+but one task can submit multiple <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a>.</p>
+</dd>
+<dt id="term-task-parameters">task parameters<a class="headerlink" href="#term-task-parameters" title="Link to this term"></a></dt><dt id="term-parameterization">parameterization<a class="headerlink" href="#term-parameterization" title="Link to this term"></a></dt><dd><p>Task parameterization is one way of consolidating configuration in the
+<a class="reference internal" href="reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file. Cylc implicitly loops over ranges or lists
+of pre-defined parameters to automatically generate sets of similar
+tasks.</p>
+<p>Other ways of consolidating configuration include <a class="reference internal" href="#term-runtime-inheritance"><span class="xref std std-term">runtime
+inheritance</span></a> and templating with <a class="reference internal" href="user-guide/writing-workflows/jinja2.html#jinja"><span class="std std-ref">Jinja2</span></a>.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[task parameters]</span>
+    <span class="nv">m </span><span class="o">=</span><span class="s"> 1..3</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = bar&lt;m&gt; </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span>&lt;<span class="nb">m</span>&gt;
+</pre></div>
+</div>
+<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-58092692c3ae7bb689ec028fbdc7c50bbbb42dba.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph Mini_Cylc {
+baz_m2
+bar_m1 -&gt; baz_m1
+bar_m3 -&gt; baz_m3
+bar_m2 -&gt; baz_m2
+baz_m3
+baz_m1
+}</p></object></div>
+</div><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/writing-workflows/parameterized-tasks.html#user-guide-param"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/runtime/configuration-consolidation/parameters.html#tutorial-cylc-parameterization"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-task-state">task state<a class="headerlink" href="#term-task-state" title="Link to this term"></a></dt><dd><p>A <a class="reference internal" href="#term-task"><span class="xref std std-term">task</span></a> progresses through a series of states in its lifetime.
+These include the <code class="docutils literal notranslate"><span class="pre">submitted</span></code> state after <a class="reference internal" href="#term-job"><span class="xref std std-term">job</span></a> submission;
+<code class="docutils literal notranslate"><span class="pre">running</span></code> after execution commences, and <code class="docutils literal notranslate"><span class="pre">succeeded</span></code> after
+successful job execution.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/running-workflows/tasks-jobs-ui.html#task-job-states"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial/runtime/introduction.html#tutorial-tasks-and-jobs"><span class="std std-ref">Cylc tutorial</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-trigger">trigger<a class="headerlink" href="#term-trigger" title="Link to this term"></a></dt><dt id="term-task-trigger">task trigger<a class="headerlink" href="#term-task-trigger" title="Link to this term"></a></dt><dd><p>A trigger is the left-hand side of a <a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependency</span></a> in the
+<a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>. It defines the combination of <a class="reference internal" href="#term-task-output"><span class="xref std std-term">task outputs</span></a> that must be completed before downstream tasks can run.</p>
+<p>In this example, the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> can be said to trigger off of
+completion of the <code class="docutils literal notranslate"><span class="pre">foo:started</span></code> output:</p>
+<div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">foo</span><span class="c">:</span><span class="kd">started</span> <span class="o">=&gt;</span> <span class="kd">bar</span>
+</pre></div>
+</div>
+<p>Triggers can be based on <a class="reference internal" href="#term-standard-output"><span class="xref std std-term">standard</span></a> or
+<a class="reference internal" href="#term-custom-output"><span class="xref std std-term">custom</span></a> task outputs. In the latter case they
+are known as <a class="reference internal" href="#term-message-trigger"><span class="xref std std-term">message triggers</span></a>.</p>
+<p>The term “trigger” also refers the action of manually triggering
+a task to run, via the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">trigger</span></code> command or the GUI.</p>
+</dd>
+<dt id="term-validation">validation<a class="headerlink" href="#term-validation" title="Link to this term"></a></dt><dt id="term-workflow-validation">workflow validation<a class="headerlink" href="#term-workflow-validation" title="Link to this term"></a></dt><dd><p>Validation parses a <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file to report any illegal items,
+syntax errors, deprecation warnings, and other problems.</p>
+<p>It is done automatically at start up, and should be done manually with
+the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> command after making changes.</p>
+</dd>
+<dt id="term-wallclock-time">wallclock time<a class="headerlink" href="#term-wallclock-time" title="Link to this term"></a></dt><dd><p>The actual time (in the real world).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a></p></li>
+<li><p><a class="reference internal" href="#term-clock-trigger"><span class="xref std std-term">clock trigger</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-warm-start">warm start<a class="headerlink" href="#term-warm-start" title="Link to this term"></a></dt><dd><p>A warm start is when the <a class="reference internal" href="#term-scheduler"><span class="xref std std-term">scheduler</span></a> <a class="reference internal" href="#term-start"><span class="xref std std-term">starts</span></a> a
+<a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a> running from a <a class="reference internal" href="#term-start-cycle-point"><span class="xref std std-term">start cycle point</span></a> after
+the <a class="reference internal" href="#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>.</p>
+<p>To satisfy unbounded <a class="reference internal" href="#term-intercycle-dependence"><span class="xref std std-term">intercycle dependence</span></a> in the graph, tasks
+prior to the start cycle point are treated as if they have succeeded.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-cold-start"><span class="xref std std-term">cold start</span></a></p></li>
+<li><p><a class="reference internal" href="#term-start-task"><span class="xref std std-term">start task</span></a></p></li>
+<li><p><a class="reference internal" href="#term-restart"><span class="xref std std-term">restart</span></a></p></li>
+<li><p><a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shutdown</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-window">window<a class="headerlink" href="#term-window" title="Link to this term"></a></dt><dt id="term-n-window">n-window<a class="headerlink" href="#term-n-window" title="Link to this term"></a></dt><dt id="term-active-window">active window<a class="headerlink" href="#term-active-window" title="Link to this term"></a></dt><dd><p>The GUI provides a <a class="reference internal" href="#term-graph"><span class="xref std std-term">graph</span></a>-based window or view of the workflow at
+runtime, including tasks out to <code class="docutils literal notranslate"><span class="pre">n</span></code> graph edges from current
+<a class="reference internal" href="#term-active-task"><span class="xref std std-term">active tasks</span></a>.</p>
+<p>Active tasks form the <code class="docutils literal notranslate"><span class="pre">n=0</span></code> window.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user-guide/running-workflows/tasks-jobs-ui.html#n-window"><span class="std std-ref">Cylc User Guide</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-work-directory">work directory<a class="headerlink" href="#term-work-directory" title="Link to this term"></a></dt><dd><p>Cylc executes task <a class="reference internal" href="#term-job"><span class="xref std std-term">jobs</span></a> inside a job-specific working
+directory, automatically created under the workflow <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run
+directory</span></a>.</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/work/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>
+</pre></div>
+</div>
+<p>Tasks can get their own work directory path at runtime from
+the <code class="docutils literal notranslate"><span class="pre">CYLC_TASK_WORK_DIR</span></code> environment variable or the Posix <code class="docutils literal notranslate"><span class="pre">pwd</span></code>
+command.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a></p></li>
+<li><p><a class="reference internal" href="#term-share-directory"><span class="xref std std-term">share directory</span></a></p></li>
+</ul>
+</div>
+</dd>
+<dt id="term-workflow">workflow<a class="headerlink" href="#term-workflow" title="Link to this term"></a></dt><dt id="term-cylc-workflow">cylc workflow<a class="headerlink" href="#term-cylc-workflow" title="Link to this term"></a></dt><dd><p>A workflow is a collection of <a class="reference internal" href="#term-task"><span class="xref std std-term">tasks</span></a> with
+<a class="reference internal" href="#term-dependency"><span class="xref std std-term">dependencies</span></a> between them that govern the order in
+which they can run.</p>
+<p>Cylc workflows are defined in <a class="reference internal" href="reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> files.</p>
+<p>For example, the following workflow represents the beer brewing process:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">flow.cylc</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> integer</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 1</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># repeat this for each batch</span>
+        <span class="nv">P1 </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># the stages of brewing in the order they must occur in:</span>
+            <span class="kd">malt</span> <span class="o">=&gt;</span> <span class="kd">mash</span> <span class="o">=&gt;</span> <span class="kd">sparge</span> <span class="o">=&gt;</span> <span class="kd">boil</span> <span class="o">=&gt;</span> <span class="kd">chill</span> <span class="o">=&gt;</span> <span class="kd">ferment</span> <span class="o">=&gt;</span> <span class="kd">rack</span>
+            <span class="c1"># finish the sparge of one batch before starting the next:</span>
+            <span class="kd">sparge</span>[<span class="nb">-P1</span>] <span class="o">=&gt;</span> <span class="kd">mash</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Cylc 7</p>
+<p>In Cylc 7 and earlier, “workflows” were referred to as “suites”.</p>
+</div>
+</dd>
+<dt id="term-workflow-completion">workflow completion<a class="headerlink" href="#term-workflow-completion" title="Link to this term"></a></dt><dd><p>A workflow is complete, and the scheduler will automatically
+<a class="reference internal" href="#term-shutdown"><span class="xref std std-term">shut down</span></a>, if no tasks remain in the
+<a class="reference internal" href="#term-n-window"><span class="xref std std-term">n=0</span></a>.</p>
+<p>That is, all active tasks have finished, and no tasks remain waiting on
+<a class="reference internal" href="#term-prerequisite"><span class="xref std std-term">prerequisites</span></a> or “external” constraints (such as
+<a class="reference internal" href="#term-xtrigger"><span class="xref std std-term">xtriggers</span></a> or task <a class="reference internal" href="#term-hold"><span class="xref std std-term">hold</span></a>).</p>
+<p>If no active tasks remain and all external constraints are satisfied,
+but the n=0 window contains tasks waiting with partially satisfied
+<a class="reference internal" href="#term-prerequisite"><span class="xref std std-term">prerequisites</span></a>, or tasks with <a class="reference internal" href="#term-final-status"><span class="xref std std-term">final status</span></a> and
+<a class="reference internal" href="#term-output-completion"><span class="xref std std-term">incomplete outputs</span></a>, then the workflow is
+not complete and the scheduler will <a class="reference internal" href="#term-stall"><span class="xref std std-term">stall</span></a> pending manual intervention.</p>
+</dd>
+<dt id="term-workflow-id">workflow id<a class="headerlink" href="#term-workflow-id" title="Link to this term"></a></dt><dd><p>A workflow can be uniquely identified by the relative path between the <a class="reference internal" href="#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>
+(<code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>) and its <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
+<p>This ID is used on the command line and in the GUI, to target the right
+workflow.</p>
+<p>For example, the ID of the workflow in <code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/bar/run1</span></code>
+is <code class="docutils literal notranslate"><span class="pre">foo/bar/run1</span></code>.</p>
+<p>Unlike <a class="reference internal" href="#term-workflow-name"><span class="xref std std-term">workflow name</span></a> the ID is always a unique identifier. In the
+example below each run has a different ID despite sharing the same
+<a class="reference internal" href="#term-workflow-name"><span class="xref std std-term">workflow name</span></a> (<code class="docutils literal notranslate"><span class="pre">my_workflow</span></code>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="sb">`</span>-<span class="w"> </span>my_workflow
+<span class="w">  </span><span class="p">|</span>-<span class="w"> </span>runN
+<span class="w">  </span><span class="p">|</span>-<span class="w"> </span>run1<span class="w">      </span><span class="c1"># CYLC_WORKFLOW_ID = my_workflow/run1</span>
+<span class="w">  </span><span class="sb">`</span>-<span class="w"> </span>run2<span class="w">      </span><span class="c1"># CYLC_WORKFLOW_ID = my_workflow/run2</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-workflow-log">workflow log<a class="headerlink" href="#term-workflow-log" title="Link to this term"></a></dt><dt id="term-scheduler-log">scheduler log<a class="headerlink" href="#term-scheduler-log" title="Link to this term"></a></dt><dt id="term-workflow-log-directory">workflow log directory<a class="headerlink" href="#term-workflow-log-directory" title="Link to this term"></a></dt><dd><p>At runtime the scheduler logs timestamped events and other information to
+files under the workflow <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directory</span></a>. These logs take the format
+&lt;log-number&gt;-&lt;start/restart&gt;-&lt;start-number&gt;.log, with the latest log being
+automatically symlinked to <code class="docutils literal notranslate"><span class="pre">&lt;run-directory&gt;/log/scheduler/log</span></code></p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;run-directory&gt;</span>/log/scheduler/
+</pre></div>
+</div>
+<p>You can print the scheduler log at the terminal with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span>
+<span class="pre">&lt;workflow-name&gt;</span></code>.</p>
+</dd>
+<dt id="term-workflow-name">workflow name<a class="headerlink" href="#term-workflow-name" title="Link to this term"></a></dt><dd><p>The workflow name is a path relative to the cylc-run directory which
+contains one or more workflow <a class="reference internal" href="#term-run-directory"><span class="xref std std-term">run directories</span></a>.</p>
+<p>Tasks can get the workflow name from <code class="docutils literal notranslate"><span class="pre">$CYLC_WORKFLOW_NAME</span></code> in their
+runtime environment.</p>
+<p>Unlike <a class="reference internal" href="#term-workflow-id"><span class="xref std std-term">workflow id</span></a> the name is not always a unique identifier. In
+the example below <code class="docutils literal notranslate"><span class="pre">run1</span></code> and <code class="docutils literal notranslate"><span class="pre">run2</span></code> would both have the same name,
+<code class="docutils literal notranslate"><span class="pre">my_workflow</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="sb">`</span>-<span class="w"> </span>my_workflow
+<span class="w">  </span><span class="p">|</span>-<span class="w"> </span>runN
+<span class="w">  </span><span class="p">|</span>-<span class="w"> </span>run1
+<span class="w">  </span><span class="sb">`</span>-<span class="w"> </span>run2
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are not using named or numbered runs, the workflow name will be
+the same as <a class="reference internal" href="#term-workflow-id"><span class="xref std std-term">workflow id</span></a>.</p>
+</div>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reference/dev-history-major-changes.html" class="btn btn-neutral float-left" title="Cylc Development History - Major Changes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Feb 25, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "glossary";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
