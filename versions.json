@@ -6,6 +6,9 @@
         "html",
         "singlehtml"
     ],
+    "8.4.1": [
+        "html"
+    ],
     "8.3.4": [
         "html"
     ],
