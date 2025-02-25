@@ -142,6 +142,11 @@ nitpick_ignore = [
     ('py:class', 'SubFuncContext'),
     ('py:exc', 'ISO8601SyntaxError'),
     ('py:exc', 'StrftimeSyntaxError'),
+    ('py:class', 'ResponseDict'),
+]
+nitpick_ignore_regex = [
+    # intersphinx has trouble with pyzmq classes:
+    ('py:class', r'zmq\.asyncio\.\w+')
 ]
 
 # List of patterns, relative to source directory, that match files and
@@ -162,11 +167,6 @@ linkcheck_ignore = [
     # linkcheck has trouble handling GH anchors
     'https?://github.com/.*#.*',
     'https?://matrix.to/.*#.*',
-]
-
-nitpick_ignore_regex = [
-    # intersphinx has trouble with pyzmq classes:
-    ('py:class', r'zmq\.asyncio\.\w+')
 ]
 
 # -- Options for Slides output ----------------------------------------------
