@@ -27,7 +27,7 @@
 .. _SVN: https://subversion.apache.org/
 .. _Websocket: https://en.wikipedia.org/wiki/WebSocket
 .. _ZMQ: https://zeromq.org/
-.. _coreutils: https://www.gnu.org/software/coreutils/coreutils.html
+.. _coreutils: https://en.wikipedia.org/wiki/GNU_Core_Utilities
 .. _extglob pattern matching: https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
 .. _metomi-vms: https://github.com/metomi/metomi-vms
 
