@@ -317,7 +317,7 @@ Set a Switch Task
 
 :Solution:
    Set "succeeded" as well as the desired output(s) on the task and use the
-   ``-wait`` option. Cylc will follow the desired path when it gets there.
+   ``--wait`` option. Cylc will follow the desired path when it gets there.
 
    .. note::
 
