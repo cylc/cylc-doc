@@ -293,9 +293,9 @@ Why isn't my task running?
 To find out why a task is not being run, use the ``cylc show`` command.
 This will list the task's prerequisites and xtriggers.
 
-Note, at present ``cylc show`` can only display
-:term:`active tasks <active task>`. Waiting tasks beyond the
-:term:`n=0 window <n-window>` have no satisfied prerequisites.
+Note, at present ``cylc show`` can only display tasks in the
+:term:`active window` (however, waiting tasks beyond that, by
+definition, have no satisfied prerequisites).
 
 Note, tasks which are held |task-held| will not be run, use ``cylc release``
 to release a held task.

@@ -7,11 +7,11 @@ A workflow is complete, and the scheduler will automatically
 :term:`shut down <shutdown>`, if no tasks remain in the
 :term:`n=0 <n-window>`.
 
-That is, all active tasks have finished, and no tasks remain waiting on
+That is, all :term:`active tasks <active task>` have finished, and no tasks remain waiting on
 :term:`prerequisites <prerequisite>` or "external" constraints (such as
 :term:`xtriggers <xtrigger>` or task :term:`hold`).
 
-If no active tasks remain and all external constraints are satisfied,
+If no :term:`active tasks <active task>` remain and all external constraints are satisfied,
 but the n=0 window contains tasks waiting with partially satisfied
 :term:`prerequisites <prerequisite>`, or tasks with :term:`final status` and
 :term:`incomplete outputs <output completion>`, then the workflow is
