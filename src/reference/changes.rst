@@ -46,7 +46,7 @@ Cylc Tui
    :align: center
    :width: 65%
 
-Configure your ``$EDITOR``, `$GEDITOR`` and ``$PAGER`` environment variables
+Configure your ``$EDITOR``, ``$GEDITOR`` and ``$PAGER`` environment variables
 to change which tool is used.
 
 .. note::
