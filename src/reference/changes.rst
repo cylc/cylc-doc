@@ -54,6 +54,17 @@ to change which tool is used.
    Make sure your configured command waits for the tool to be closed before
    exiting, e.g. use ``GEDITOR=gvim -f`` rather than ``EDITOR=gvim``.
 
+Cylc Reload
+^^^^^^^^^^^
+
+``cylc reload`` now has a ``--global`` option to reload the global
+configuration while the server is running. This can be used to update platform
+settings for an in-progress workflow.
+
+.. seealso::
+
+    :ref:`global-configuration`
+
 
 Cylc 8.4
 --------
