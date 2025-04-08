@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Logs &mdash; Cylc 8.4.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=79c7ca1c"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc Broadcast" href="dynamic-behaviour.html" />
+    <link rel="prev" title="Workflow Run Modes" href="workflow-run-modes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Running Workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="scheduler-start-up.html">Start, Restart, Reload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tasks-jobs-ui.html">Tasks in the GUI/Tui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracking-task-state.html">Tracking Job Status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow-completion.html">Workflow Completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow-completion.html#scheduler-stall">Scheduler Stall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reflow.html">Concurrent Flows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow-run-modes.html">Workflow Run Modes</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Workflow Logs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#log-files">Log Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-scheduler-log-file">The Scheduler Log File</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic-behaviour.html">Cylc Broadcast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authentication-files.html">Client-Server Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="authentication-files.html#authentication-files">Authentication Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow-databases.html">Workflow Run Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advanced.html">Advanced</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Running Workflows</a></li>
+      <li class="breadcrumb-item active">Workflow Logs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/running-workflows/scheduler-log-files.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-logs">
+<span id="user-guide-log-files"></span><span id="scheduler-logs"></span><h1>Workflow Logs<a class="headerlink" href="#workflow-logs" title="Link to this heading"></a></h1>
+<p>Cylc produces log files which record information about how the workflow was
+installed, configured when started or changed, and about tasks that have run
+and their outcomes.</p>
+<section id="log-files">
+<h2>Log Files<a class="headerlink" href="#log-files" title="Link to this heading"></a></h2>
+<p>Cylc log files are located in the workflow <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>.</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/scheduler/</span></span></dt>
+<dd><p>Contains the scheduler log files, these detail everything that a workflow
+did whilst it ran and are key to debugging issues.</p>
+<p>Every time you start or restart a workflow a new log file is created in this
+location:</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/scheduler/&lt;start_number&gt;-&lt;type&gt;-&lt;file_number&gt;.log</span></span></dt>
+<dd><p>For more information on this file, see <a class="reference internal" href="#log-files-scheduler-log"><span class="std std-ref">The Scheduler Log File</span></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/config/</span></span></dt>
+<dd><p>Contains a record of the workflow configuration files:</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/config/&lt;start_number&gt;-&lt;type&gt;-&lt;file_number&gt;.cylc</span></span></dt>
+<dd><p>The parsed contents of the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> (or <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>) file from
+each start, restart or reload of the workflow.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/config/flow-processed.cylc</span></span></dt>
+<dd><p>The unparsed contents of the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> (or <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>) file that
+the workflow was most recently started or restarted from. This file has
+not been parsed by Cylc so is still in the definition order, however,
+Jinja2 process has been performed making it useful for debugging Jinja2
+issues.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/config/&lt;time&gt;-rose-suite.conf</span></span></dt>
+<dd><p>The parsed contents of the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file if present in the workflow.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/install/</span></span></dt>
+<dd><p>Contains the workflow installation log (i.e. the output of the
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command.</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/install/&lt;start_number&gt;-install.log</span></span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/remote-install/</span></span></dt>
+<dd><p>Contains a record of any remote platforms that the workflow has been
+installed onto.</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/remote-install/&lt;start_number&gt;-&lt;type&gt;-&lt;platform&gt;.log</span></span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/version/</span></span></dt>
+<dd><p>If the workflow <a class="reference internal" href="../../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a> is version controlled with Git or
+SVN, this directory will contain information extracted from the version
+control system at the time the workflow was installed:P</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/version/uncommitted.diff</span></span></dt>
+<dd><p>Any uncommitted diff in unified diff format.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">log/version/vcs.json</span></span></dt>
+<dd><p>Information including the commit hash / revision number.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">opt/rose-suite-cylc-install.conf</span></span></dt>
+<dd><p>If Rose is used, this file will contain any Rose options that were used
+with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command (i.e. any overrides which were applied
+when the workflow was installed).</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Where the <code class="docutils literal notranslate"><span class="pre">&lt;variables&gt;</span></code> in the above paths are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">start_number</span></code></dt><dd><p>Is <code class="docutils literal notranslate"><span class="pre">1</span></code> when you first start the workflow. This number increments with
+each restart.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>Is either <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">restart</span></code> or <code class="docutils literal notranslate"><span class="pre">reload</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">file_number</span></code></dt><dd><p>Is initially <code class="docutils literal notranslate"><span class="pre">1</span></code>, if the log file exceeds the <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][logging]maximum size in bytes" title="global.cylc[scheduler][logging]maximum size in bytes"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">maximum</span> <span class="pre">size</span> <span class="pre">in</span> <span class="pre">bytes</span></code></a>,
+it will “roll over” into a new log file and this number will increment.
+If the number of “roll over” log files exceeds the
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][logging]rolling archive length" title="global.cylc[scheduler][logging]rolling archive length"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">rolling</span> <span class="pre">archive</span> <span class="pre">length</span></code></a>, then Cylc will remove an old log file before
+creating a new one.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">time</span></code></dt><dd><p>Is a timestamp in ISO8601 format.</p>
+</dd>
+</dl>
+</div>
+</section>
+<section id="the-scheduler-log-file">
+<span id="log-files-scheduler-log"></span><h2>The Scheduler Log File<a class="headerlink" href="#the-scheduler-log-file" title="Link to this heading"></a></h2>
+<p>Each workflow maintains its own log of time-stamped events in the
+<a class="reference internal" href="../../glossary.html#term-workflow-log-directory"><span class="xref std std-term">workflow log directory</span></a> (<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/log/scheduler/</span></code>).</p>
+<p>The information logged here includes:</p>
+<ul class="simple">
+<li><p>Event timestamps, at the start of each line</p></li>
+<li><p>Workflow server host, port and process ID</p></li>
+<li><p>Workflow initial and final cycle points</p></li>
+<li><p>Workflow (re)start number (1 for the first play, 2 or more for restarts)</p></li>
+<li><p>Task events (task started, succeeded, failed, etc.)</p></li>
+<li><p>Workflow stalled warnings.</p></li>
+<li><p>Client commands (e.g. <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code>)</p></li>
+<li><p>Job IDs.</p></li>
+<li><p>Information relating to the remote file installation is contained in a
+separate log file, which can be found in
+<code class="docutils literal notranslate"><span class="pre">$HOME/cylc-run/&lt;workflow-id&gt;/log/remote-install/</span></code>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Workflow log files are primarily intended for human eyes. If you need
+to have an external system to monitor workflow events automatically, use:</p>
+<ul class="simple">
+<li><p>Event hooks (see <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]" title="flow.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][events]</span></code></a> and
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][events]" title="flow.cylc[runtime][&lt;namespace&gt;][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][events]</span></code></a>).</p></li>
+<li><p>The GraphQL interface (can be accessed via GraphiQL in the Cylc GUI).</p></li>
+<li><p>The sqlite <em>workflow run database</em>
+(see <a class="reference internal" href="workflow-databases.html#workflow-run-databases"><span class="std std-ref">Workflow Run Databases</span></a>)</p></li>
+</ul>
+<p>Rather than parse the log files.</p>
+</div>
+<section id="cylc-message">
+<span id="scheduler-logs-cylc-message"></span><h3>Cylc Message<a class="headerlink" href="#cylc-message" title="Link to this heading"></a></h3>
+<p>The Scheduler Log also records messages sent by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> allowing you
+to add custom messages to this log.</p>
+<p>For example, if your task contained the following code:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;ERROR:some_function failed.&quot;</span>
+</pre></div>
+</div>
+<p>Your log should produce output similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ERROR - [21491012T0410Z/mytask running job:01 flows:1] (received)some_function failed ERROR at 2023-04-14T11:36:35+01:00
+</pre></div>
+</div>
+<p>Severity levels are the same as those used by
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#logging-levels">Python’s logger</a>:</p>
+<ul class="simple">
+<li><p>CRITICAL</p></li>
+<li><p>ERROR</p></li>
+<li><p>WARNING</p></li>
+<li><p>INFO</p></li>
+<li><p>DEBUG</p></li>
+</ul>
+<p>Messages logged at “DEBUG” will only appear in the scheduler log if the
+workflow is played with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--debug</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="workflow-run-modes.html" class="btn btn-neutral float-left" title="Workflow Run Modes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="dynamic-behaviour.html" class="btn btn-neutral float-right" title="Cylc Broadcast" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Apr 08, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/running-workflows/scheduler-log-files";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
