@@ -55,6 +55,7 @@ Glossary
 
       .. seealso::
 
+         * :ref:`Tutorial <tutorial.retries>`
          * :ref:`Cylc User Guide <TaskRetries>`
 
 

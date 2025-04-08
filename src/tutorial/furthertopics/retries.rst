@@ -1,5 +1,11 @@
+.. _tutorial.retries:
+
 Retries
 =======
+
+.. seealso::
+
+   :ref:`Cylc User Guide <TaskRetries>`
 
 Retries allow us to automatically re-submit tasks which have failed due to
 failure in submission or execution.
@@ -102,13 +108,16 @@ This means that if the ``roll_doubles`` task fails, Cylc expects to
 retry running it 5 times before finally failing. Each retry will have
 a delay of 6 seconds.
 
-We can apply multiple retry periods with the ``execution retry delays`` setting
-by separating them with commas, for example the following line would tell Cylc
-to retry a task four times, once after 15 seconds, then once after 10 minutes,
-then once after one hour then once after three hours.
+We can apply multiple retry periods with the
+`execution retry delays <[runtime][<namespace>]execution retry delays>` setting
+by separating them with commas, e.g:
 
 .. code-block:: cylc
 
+   # If the task fails, wait 15 seconss, then retry it.
+   # If the retry fails, wait a further 10 minutes, then retry it again.
+   # If the second retry fails, wait a further 1 hour, then retry it again.
+   # If the third retry fails, wait a further 3 hours, then retry it again.
    execution retry delays = PT15S, PT10M, PT1H, PT3H
 
 
@@ -158,4 +167,6 @@ This time, the task should definitely succeed before the third retry.
 Further Reading
 ---------------
 
-For more information see the `Cylc User Guide`_.
+* :ref:`Cylc User Guide <TaskRetries>`
+* `[runtime][<namespace>]execution retry delays`.
+* `[runtime][<namespace>]submission retry delays`.

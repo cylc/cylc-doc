@@ -511,60 +511,138 @@ adding empty runtime placeholders instead of allowing implicit tasks:
 
 .. _TaskRetries:
 
-Task Retry On Failure
----------------------
+Automatically Retrying Tasks
+----------------------------
 
-.. seealso::
+.. tutorial:: tutorial.retries
 
-   :cylc:conf:`[runtime][<namespace>]execution retry delays`.
+Cylc can be configured to automatically resubmit (i.e, retry) jobs which failed
+or submit-failed using these task configurations:
 
-Tasks can have a list of :term:`ISO8601 durations <ISO8601 duration>` as retry
-intervals. If the job fails the task will return to the ``waiting`` state
-with a clock-trigger configured with the next retry delay.
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
 
+`execution retry delays`
+   Configure retries for jobs which failed during execution (failed jobs - |job-failed|).
+`submission retry delays`
+   Configure retries for jobs which failed during submission so never ran
+   (submit-failed jobs - |job-submit-failed|).
+
+Retry delays should be set to a list of
+:term:`ISO8601 durations <ISO8601 duration>` that specify how long to wait
+before retrying the task again, e.g:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[my-task]]
+           script = do-something
+
+           # If the job fails, wait 30 seconds, then try again
+           execution retry delays = PT30S
+
+           # If the job submit-fails, wait one minute then try again.
+           # If the retry submit-fails, wait a further 5 minutes, then try again.
+           # If the second retry submit-fails, wait a further 15 minutes, then try again.
+           submission retry delays = PT1M, PT5M, PT15M
+
+
+Details
+^^^^^^^
+
+For a task with execution / submission retries configured:
+
+* When a job fails or submit-fails, the task will change back into the
+  ``waiting`` state |task-waiting| and a retry will be scheduled.
+* The task will not enter the failed or submit-failed state until all retries
+  have been exhausted. This means that graph triggers
+  (e.g. ``foo:failed => bar``) and `task events <flow.cylc[runtime][<namespace>][events]>`
+  (e.g. `[events]failed handlers`) will not be run until the task runs out of
+  retries (rather than after the first failure / submission-failure) and will
+  not be run if the retry subsequently succeeds.
+* The :ref:`$CYLC_TASK_TRY_NUMBER <Task Job Script Variables>`
+  environment variable increments with each
+  automatic submission, allowing you to vary task behaviour between retries.
+
+.. cylc-scope::
+
+.. versionchanged:: 8.0.0
+
+   Tasks that fail but are configured to :term:`retry` return to the ``waiting``
+   state, with a new clock trigger to handle the configured retry delay.
 
 .. note::
 
-   Tasks only enter the ``submit-failed`` state if job submission fails with no
-   retries left. Otherwise they return to the waiting state, to wait on the
-   next try.
-
-   Tasks only enter the ``failed`` state if job execution fails with no retries
-   left. Otherwise they return to the waiting state, to wait on the next try.
+   A task that is waiting on a retry will already have one or more failed jobs
+   associated with it.
 
 
-
-In the following example, tasks ``bad`` and ``flaky`` each have 3 retries
-configured, with a 10 second delay between. On the final try, ``bad`` fails
-again and goes to the ``failed`` state, while ``flaky`` succeeds and triggers
-task ``whizz`` downstream. The scheduler will then stall because
-``bad`` failed (which is a :term:`final status`) with incomplete outputs.
+Advanced Example
+^^^^^^^^^^^^^^^^
 
 .. code-block:: cylc
 
    [scheduling]
        [[graph]]
            R1 = """
-               bad => cheese
-               flaky => whizz
-            """
+               # If task "a" succeeds in three attempts or fewer, then run the
+               # task "continue":
+               a:succeed? => continue
+
+               # If task "a" still fails after two retries, then run "recover":
+               a:fail? => recover
+           """
+
    [runtime]
-       [[bad]]
-           # retry 3 times then fail
+       [[a]]
            script = """
-               sleep 10
-               false
+              if [[ $CYLC_TASK_TRY_NUMBER -eq 1 ]]; then
+                  # this is not an automatic retry
+                  export DEBUG=false
+              else
+                  # this is a retry -> turn on some extra debugging
+                  export DEBUG=true
+              fi
+              do-something
            """
-           execution retry delays = 3*PT10S
-       [[flaky]]
-           # retry 3 times then succeed
-           script = """
-               sleep 10
-               test $CYLC_TASK_TRY_NUMBER -gt 3
-           """
-           execution retry delays = 3*PT10S
-       [[cheese, whizz]]
-           script = "sleep 10"
+
+           # Schedule two retries for this task:
+           # * The first retry will happen one minute after the task fails.
+           # * The second retry will happen two minutes after the first retry
+           #   fails.
+           execution retry delays = PT1M, PT3M
+
+           [[[events]]
+               # These "failed" task events will only be actioned if the task
+               # has exhausted all of its retries:
+               mail events = failed
+               failed handlers = my-task-event-handler
+
+
+Aborting a Retry Sequence
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To prevent a task from retrying, remove it from the scheduler's
+:term:`active window`, e.g:
+
+.. code-block:: console
+
+   $ cylc remove <workflow>//3/foo  # remove task 3//foo preventing it from retrying
+
+If you *kill* a running task that has more retries configured, it goes to the
+``held`` state |task-held| so you can decide whether to release it and continue
+the retry sequence, or remove it.
+
+.. code-block:: console
+
+   $ cylc kill brew//3/foo     # 3/foo goes to held state post kill
+   $ cylc release brew//3/foo  # release to continue retrying...
+   $ cylc remove brew//3/foo   # ... OR remove the task to stop retries
+
+If you want trigger downstream tasks despite ``3/foo`` being removed before it
+could succeed, use ``cylc set`` to artificially mark its
+:term:`required outputs <required output>`
+as complete (and with the ``--flow`` option, if needed to make a specific
+:term:`flow` continue on from there).
 
 
 .. _user_guide.runtime.task_event_handling:
