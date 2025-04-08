@@ -186,6 +186,11 @@ Jobs can fail for several reasons:
    left. Otherwise they return to the waiting state, to wait on the next try.
 
 
+.. seealso::
+
+   * :ref:`Tutorial <tutorial.retries>`.
+   * :ref:`User Guide <TaskRetries>`.
+
 
 .. _tutorial.start_stop_restart:
 
