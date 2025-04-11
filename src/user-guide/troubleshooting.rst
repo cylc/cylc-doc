@@ -123,6 +123,8 @@ Problems
 --------
 
 
+.. _troubleshooting.job_status_not_updating:
+
 Job Status Isn't Updating
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -287,21 +289,111 @@ be possible to restart it as you would normally using ``cylc play``. Cylc
 will pick up where it left off.
 
 
-Why isn't my task running?
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Why is my task stuck in the waiting state - |task-waiting|?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To find out why a task is not being run, use the ``cylc show`` command.
-This will list the task's prerequisites and xtriggers.
+Tasks in the "waiting" state are waiting for something to happen before Cylc
+will submit them.
 
-Note, at present ``cylc show`` can only display
-:term:`active tasks <active task>`. Waiting tasks beyond the
-:term:`n=0 window <n-window>` have no satisfied prerequisites.
+To find out what is holding the task back from running:
 
-Note, tasks which are held |task-held| will not be run, use ``cylc release``
-to release a held task.
+.. tab-set::
 
-Note, Cylc will not submit jobs if the scheduler is paused, use ``cylc play``
-to resume a paused workflow.
+   .. tab-item:: In the GUI
+      :sync: gui
+
+      Click on the task, then select "Info" from the menu.
+
+      This will open the "Info View" from which you can inspect the task's
+      state and prerequisites.
+
+      .. note::
+
+         At present, the GUI does not display xtriggers or ext-triggers.
+         This will change soon, until then, use ``cylc show`` via a command
+         line interface.
+
+   .. tab-item:: With the Tui
+      :sync: tui
+
+      Navigate to the task, press "Enter" to bring up the menu, select "show"
+      and press enter.
+
+      This will run the ``cylc show`` command on the given task and present
+      the output in the Tui.
+
+   .. tab-item:: On the CLI
+      :sync: cli
+
+      Run the ``cylc show`` command on the task, i.e
+      ``cylc show <workflow>//<cycle>/<task>``.
+
+      Note, at present ``cylc show`` can only display
+      :term:`active tasks <active task>`. Waiting tasks beyond the
+      :term:`n=0 window <n-window>` have no satisfied prerequisites.
+
+|
+
+There are several reasons why a task might be held back from running:
+
+It's waiting for upstream tasks to produce their required outputs:
+   E.g, the previous task hasn't run yet, or ran but didn't produce its
+   :term:`required outputs <required output>`.
+
+   Such tasks will be reported as having unsatisfied dependencies.
+It's waiting for external events:
+   :ref:`Xtriggers <Section External Triggers>` and
+   :ref:`ext-triggers <Old-Style External Triggers>`
+   can be used to make tasks wait for events
+   external to the workflow, such as the progress of task in other workflows
+   or the :ref:`real-world time <Built-in Clock Triggers>`.
+
+   Such tasks will be listed as having unsatisfied external triggers.
+It's waiting for older cycles to catch up:
+   Cylc controls how far ahead of the oldest cycle the workflow runs using the
+   :term:`runahead limit`. You can alter this limit to let cycles run further
+   ahead, or hold them back for longer.
+
+   Such tasks will be in the :ref:`runahead state <user_guide.task_modifiers>` -
+   |task-runahead|.
+It's waiting in an internal queue:
+   :ref:`Internal queues <InternalQueues>` limit how many tasks a workflow
+   will submit simultaneously.
+
+   Note, there is a
+   `default queue <flow.cylc[scheduling][queues][default]limit>` that applies
+   to all tasks.
+
+   You can adjust queue limits to alter the maximum number of tasks that
+   Cylc will submit in parallel.
+
+   Such tasks will be in the :ref:`queued state <user_guide.task_modifiers>` -
+   |task-queued|.
+It's held:
+   Cylc will not automatically submit tasks which have been put in the
+   :ref:`held state <user_guide.task_modifiers>` - |task-held|.
+
+   Either release the task (to allow it to run) or trigger the task (to force
+   it to run).
+The workflow is paused:
+   Cylc will not automatically submit tasks while the workflow is paused.
+
+   Unpause the workflow (e.g, with the ``cylc play`` command) to allow tasks
+   to run normally, or trigger the task to force it to run now.
+
+
+Why is my task stuck in the submitted state - |task-submitted|?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If a task is in the submitted state, then Cylc has submitted
+a job to the defined platform. It will wait in that platforms queue
+until the :term:`job runner` is able to run it.
+
+You can "poll" the job submission to check it's still there by using the
+``cylc poll`` command (or the poll option in the GUI / Tui). If the task
+changes state (e.g. to running, succeeded or failed) as the result of polling
+the job, then there may be a communication problem between the job and the
+Cylc scheduler. See :ref:`troubleshooting.job_status_not_updating` for info.
 
 
 Required files are not being installed on remote platforms
