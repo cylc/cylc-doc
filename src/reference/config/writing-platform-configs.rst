@@ -338,8 +338,10 @@ Platform with no ``$HOME`` directory
 
 .. admonition:: Scenario
 
-   You are trying to run jobs on a platform where the compute nodes don't
-   have a configured ``HOME`` directory, or share a common ``HOME`` directory.
+   You are trying to run jobs on a platform where either:
+   
+   * The compute nodes do not have a configured ``HOME`` directory.
+   * The compute nodes do not have a common ``HOME`` directory.
 
 So long as the login and compute nodes share a filesystem the workflow can be
 installed on the shared filesystem using
