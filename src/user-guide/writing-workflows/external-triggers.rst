@@ -1,47 +1,99 @@
 .. _Section External Triggers:
 
-External Triggers
-=================
+External Triggers (xtriggers)
+=============================
 
-External triggers allow tasks to trigger directly off of external events, which
-is often preferable to implementing long-running polling tasks in the workflow.
-The triggering mechanism described in this section is intended to replace the one
-one documented in :ref:`Old-Style External Triggers` (however, that one is a push
-mechanism, whereas this one involves regular polling by the scheduler).
+Xtriggers allow tasks to trigger off external conditions, by means of the
+scheduler periodically calling a Python function to check the condition.
 
-If you can write a Python function to check the status of an external
-condition or event, the :term:`scheduler` can call it at configurable
-intervals until it reports success, at which point dependent tasks can trigger
-and data returned by the function will be passed to the job environments of
-those tasks. Functions can be written for triggering off of almost anything,
-such as delivery of a new dataset, creation of a new entry in a database
-table, or appearance of new data availability notifications in a message
-broker.
+.. note::
+   Xtriggers should generally be preferred over the older push mechanism
+   described in :ref:`Old-Style External Triggers`. Xtriggers are more
+   transparent (they are exposed in the graph), easier to use (they don't
+   require modifying the external system), and efficient (only one call is
+   made, albeit repeatedly until success, for all dependent tasks).
 
-.. TODO - update this once we have static visualisation
+Cylc has several built-in xtriggers:
 
-   External triggers are visible in workflow visualizations as bare graph nodes (just
-   the trigger names). They are plotted against all dependent tasks, not in a
-   cycle point specific way like tasks. This is because external triggers may or
-   may not be cycle point (or even task name) specific - it depends on the
-   arguments passed to the corresponding trigger functions. For example, if an
-   external trigger does not depend on task name or cycle point it will only be
-   called once - albeit repeatedly until satisfied - for the entire workflow run,
-   after which the function result will be remembered for all dependent tasks
-   throughout the workflow run.
+- :ref:`Built-in Clock Triggers` - time trigger relative to cycle point
+- :ref:`Built-in Workflow State Triggers` - to trigger off tasks in other workflows
+- Several :ref:`Built-in Toy XTriggers` - to facilitate understanding of xtriggers
 
 .. TODO - auto-document these once we have a python endpoint for them
 
-Cylc has several built-in external trigger functions:
+Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
+by associating a short *label* with the function name and arguments to use
+in the workflow context. The label must be prefixed by the ``@`` character
+in graph triggers.
 
-- :ref:`Built-in Clock Triggers`
-- :ref:`Built-in Workflow State Triggers`
+Python function and installation requirements are described below in
+:ref:`Custom Trigger Functions`.
 
-Trigger functions are normal Python functions, with certain constraints as
-described below in :ref:`Custom Trigger Functions`.
+In the following example, the ``x1`` xtrigger represents the Python function
+``get_data``, with arguments as shown. The function will be called every 30
+seconds (the default interval is ``PT10S``). When it returns successs, the
+``process_data`` task will trigger.
 
-External triggers are configured in the
-:cylc:conf:`flow.cylc[scheduling][xtriggers]` section.
+.. code-block:: cylc
+
+   [scheduling]
+       [[xtriggers]]
+           x1 = get_data(loc="/path/to/data/source"):PT30S
+       [[graph]]
+           P1D = "@x1 => process_data => products"
+   [runtime]
+       [[get_data]]
+           # ...
+
+Xtrigger functions can return an arbitrary dictionary of information to be
+:term:`broadcast` to the job environment of dependent tasks. The environment
+variable names are constructed by prefixing the dictionary keys with the
+xtrigger label. For the example above:
+
+.. code-block:: python
+
+   # dictionary returned by get_data() on success:
+   {
+       "data_path": "/path/to/data",
+       "data_type": "netcdf"
+   }
+
+The job environment of the ``process_data`` task will then be given:
+
+.. code-block:: bash
+
+   # job environment of process_data:
+   x1_data_path="/path/to/data"
+   x1_data_type="netcdf"
+
+
+.. note::
+
+  You can manually satisfy xtriggers via the GUI or the command line (see
+  ``cylc set --help``) to allow dependent tasks to run even though the xtrigger
+  function did not return success.
+  For this to work without causing task failure, make sure you set default
+  values for xtrigger result variables in task scripting, e.g.:
+ 
+  .. code-block:: bash
+
+    # process_data task scripting
+    DATA="${x1_data_path:-}"
+    TYPE="${x1_data_type:-}"
+
+
+.. TODO - update this once we have static visualisation
+
+   External triggers are visible in workflow visualizations as bare graph nodes
+   (just the trigger names). They are plotted against all dependent tasks, not
+   in a cycle point specific way like tasks. This is because external triggers
+   may or may not be cycle point (or even task name) specific - it depends on
+   the arguments passed to the corresponding trigger functions. For example, if
+   an external trigger does not depend on task name or cycle point it will only
+   be called once - albeit repeatedly until satisfied - for the entire workflow
+   run, after which the function result will be remembered for all dependent
+   tasks throughout the workflow run.
+
 
 .. NOTE - from here on all references can start [xtriggers]
 
@@ -53,22 +105,24 @@ External triggers are configured in the
 Built-in Clock Triggers
 -----------------------
 
-These are more transparent (exposed in the graph) and efficient (shared among
-dependent tasks) than the older clock triggers described
-in :ref:`ClockTriggerTasks`.
+Clock xtriggers succeed when the real ("wall clock") time reaches some offset
+from the task's cycle point value.
 
-Clock triggers, unlike other trigger functions, are executed synchronously in
-the main process. The clock trigger function signature looks like this:
+.. note::
+
+   These should be used instead of the older task clock triggers documented in
+   :ref:`ClockTriggerTasks`.
+
+The clock xtrigger function signature looks like this:
 
 .. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
 
-The ``offset`` argument is a datetime duration (``PT1H`` is 1
-hour) relative to the dependent task's cycle point (automatically passed to the
-function via a second argument not shown above).
+The ``offset`` argument is a datetime duration (e.g., ``PT1H`` is 1 hour)
+relative to the dependent task's cycle point.
 
-In the following workflow, task ``foo`` has a daily cycle point sequence,
-and each task instance can trigger once the wallclock time has passed its
-cycle point value by one hour:
+In the following workflow, task ``foo`` has a daily cycle point sequence, and
+each task instance will trigger when the real time is one hour past its cycle
+point value.
 
 .. code-block:: cylc
 
@@ -82,8 +136,8 @@ cycle point value by one hour:
        [[foo]]
            script = run-foo.sh
 
-Notice that the short label ``clock_1`` is used to represent the
-trigger function in the graph.
+Notice that the short label ``clock_1`` represents the trigger function in the
+graph.
 
 Argument keywords can be omitted if called in the right order, so the
 ``clock_1`` trigger can also be declared like this:
@@ -93,8 +147,7 @@ Argument keywords can be omitted if called in the right order, so the
    [[xtriggers]]
        clock_1 = wall_clock(PT1H)
 
-A zero-offset clock trigger does not need to be declared under
-the :cylc:conf:`[xtriggers]` section:
+A zero-offset clock trigger does not need to be declared under :cylc:conf:`[xtriggers]`:
 
 .. code-block:: cylc
 
@@ -107,8 +160,7 @@ the :cylc:conf:`[xtriggers]` section:
        [[foo]]
            script = run-foo.sh
 
-However, when xtriggers are declared the name used must adhere to the following
-rules:
+However, xtrigger names must adhere to the following rules:
 
 .. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
 
@@ -118,9 +170,14 @@ rules:
 Built-in Workflow State Triggers
 --------------------------------
 
-These can be used instead of the older workflow state polling tasks described
-in :ref:`WorkflowStatePolling` for inter-workflow triggering - i.e. to trigger local
-tasks off of remote task statuses or messages in other workflows.
+Workflow-state xtriggers succeed when a target task in another workflow achieves
+a given state or output.
+
+.. note::
+
+   These should be used instead of the older workflow state polling tasks described
+   in :ref:`WorkflowStatePolling` for inter-workflow triggering - i.e. to trigger local
+   tasks off of remote task statuses or messages in other workflows.
 
 The workflow state trigger function signature looks like this:
 
@@ -142,26 +199,22 @@ It must be installed and run under the name *up*, as referenced in the
 .. literalinclude:: ../../workflows/xtrigger/workflow_state/downstream/flow.cylc
    :language: cylc
 
-Try starting the downstream workflow first, then the upstream, and
-watch what happens.
-In each cycle point the ``@upstream`` trigger in the downstream workflow
-waits on the task ``foo`` (with the same cycle point) in the upstream
-workflow to emit the *data ready* message.
+Try starting the downstream workflow first, then the upstream, and watch what
+happens. In each cycle point the ``@upstream`` trigger in the downstream workflow
+waits for the upstream task ``foo`` (with the same cycle point) workflow to generate
+the "data ready" message.
 
-Some important points to note about this:
+Some important points to note:
 
-- The function call interval, which determines how often the scheduler
-  checks the clock, is optional. Here it is
-  ``PT10S`` (i.e. 10 seconds, which is also the default value).
-- The ``workflow_state`` trigger function, like the
-  ``cylc workflow-state`` command, must have read-access to the upstream
-  workflow's public database.
-- The cycle point is supplied by a string template
-  ``%(point)s``. The string templates available to trigger functions
-  arguments are described in :ref:`Custom Trigger Functions`).
+- The optional interval ``PT10S`` (10 seconds) determines how often the scheduler
+  calls the xtrigger. 10 seconds is also the default value.
+- The ``workflow_state`` trigger function, like the ``cylc workflow-state`` command,
+  must have read-access to the upstream workflow's public database.
+- The task cycle point is supplied by a string template ``%(point)s``.
+  See :ref:`Custom Trigger Functions`) for other string templates available
+  to xtriggers.
 
-The return value of the ``workflow_state`` trigger function looks like
-this:
+The return value of the ``workflow_state`` trigger function looks like this:
 
 .. code-block:: python
 
