@@ -3,8 +3,8 @@
 External Triggers (xtriggers)
 =============================
 
-Xtriggers allow tasks to trigger off external conditions, by means of the
-scheduler periodically calling a Python function to check the condition.
+Xtriggers allow tasks to trigger off external conditions. The scheduler periodically calls a
+Python function to check the condition.
 
 .. note::
    Xtriggers should generally be preferred over the older push mechanism
@@ -23,8 +23,10 @@ Cylc has several built-in xtriggers:
 
 Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
 by associating a short *label* with the function name and arguments to use
-in the workflow context. The label must be prefixed by the ``@`` character
-in graph triggers.
+in the workflow context.
+
+This label can then be used in the :ref:`[scheduling][graph]` section
+prefixed by the ``@`` character.
 
 Python function and installation requirements are described below in
 :ref:`Custom Trigger Functions`.
@@ -136,8 +138,8 @@ point value.
        [[foo]]
            script = run-foo.sh
 
-Notice that the short label ``clock_1`` represents the trigger function in the
-graph.
+In the ``[xtriggers]`` section the trigger function is assigned the label ``clock_1``.
+``@`` plus this label is what is then used in the graph.
 
 Argument keywords can be omitted if called in the right order, so the
 ``clock_1`` trigger can also be declared like this:
