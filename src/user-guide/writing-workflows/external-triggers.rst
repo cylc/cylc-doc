@@ -7,34 +7,30 @@ Xtriggers allow tasks to trigger off external conditions. The scheduler periodic
 Python function to check the condition.
 
 .. note::
-   Xtriggers should generally be preferred over the older push mechanism
-   described in :ref:`Old-Style External Triggers`. Xtriggers are more
-   transparent (they are exposed in the graph), easier to use (they don't
-   require modifying the external system), and efficient (only one call is
-   made, albeit repeatedly until success, for all dependent tasks).
+   Xtriggers should generally be preferred over the older
+   :ref:`Old-Style External Triggers`. They are exposed in the graph,
+   they don't require modifying the external system, and only one
+   (repeating) call is made for all dependent tasks.
 
 Cylc has several built-in xtriggers:
 
-- :ref:`Built-in Clock Triggers` - time trigger relative to cycle point
-- :ref:`Built-in Workflow State Triggers` - to trigger off tasks in other workflows
+- :ref:`Built-in Clock Triggers` - real time trigger relative to task cycle point
+- :ref:`Built-in Workflow State Triggers` - trigger off tasks in other workflows
 - Several :ref:`Built-in Toy XTriggers` - to facilitate understanding of xtriggers
 
 .. TODO - auto-document these once we have a python endpoint for them
 
 Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
-by associating a short *label* with the function name and arguments to use
-in the workflow context.
+by associating a short name with the function signature - i.e., with the Python
+function name and the particular arguments values to use in the workflow context.
+The short name can be used in the graph, prefixed by the ``@`` character. It does
+not have to be the same as the function name, but it must conform to these rules:
 
-This label can then be used in the :ref:`[scheduling][graph]` section
-prefixed by the ``@`` character.
+.. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
 
-Python function and installation requirements are described below in
-:ref:`Custom Trigger Functions`.
-
-In the following example, the ``x1`` xtrigger represents the Python function
-``get_data``, with arguments as shown. The function will be called every 30
-seconds (the default interval is ``PT10S``). When it returns successs, the
-``process_data`` task will trigger.
+In the following example, the ``x1`` xtrigger represents a Python function
+``get_data()`` with arguments as shown.  When it returns success,
+the ``process_data`` task will trigger.
 
 .. code-block:: cylc
 
@@ -44,13 +40,34 @@ seconds (the default interval is ``PT10S``). When it returns successs, the
        [[graph]]
            P1D = "@x1 => process_data => products"
    [runtime]
-       [[get_data]]
+       [[process_data]]
+           # ...
+       [[products]]
            # ...
 
+
+Argument keywords can be omitted, so long as order is preserved:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[xtriggers]]
+           x1 = get_data("/path/to/data/source"):PT30S
+
+
+The function will be called every 30 seconds. The default interval is ``PT10S``.
+
+.. warning::
+
+   Each xtrigger function call is made via a new Python subprocess. If you have
+   a large number of xtriggers consider increasing the call interval to reduce
+   the associated sytem load. 
+
+
 Xtrigger functions can return an arbitrary dictionary of information to be
-:term:`broadcast` to the job environment of dependent tasks. The environment
-variable names are constructed by prefixing the dictionary keys with the
-xtrigger label. For the example above:
+:term:`broadcast` to the job environment of dependent tasks. The associated
+environment variable names are constructed by prefixing the dictionary keys
+with the xtrigger name. For the example above:
 
 .. code-block:: python
 
@@ -72,15 +89,15 @@ The job environment of the ``process_data`` task will then be given:
 .. note::
 
   You can manually satisfy xtriggers via the GUI or the command line (see
-  ``cylc set --help``) to allow dependent tasks to run even though the xtrigger
-  function did not return success.
+  ``cylc set --help``) to allow dependent tasks to run even if the xtrigger
+  function did not succeed yet.
   For this to work without causing task failure, make sure you set default
   values for xtrigger result variables in task scripting, e.g.:
  
   .. code-block:: bash
 
     # process_data task scripting
-    DATA="${x1_data_path:-}"
+    DATA="${x1_data_path:-}"  # default to empty strings
     TYPE="${x1_data_type:-}"
 
 
@@ -119,9 +136,6 @@ The clock xtrigger function signature looks like this:
 
 .. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
 
-The ``offset`` argument is a datetime duration (e.g., ``PT1H`` is 1 hour)
-relative to the dependent task's cycle point.
-
 In the following workflow, task ``foo`` has a daily cycle point sequence, and
 each task instance will trigger when the real time is one hour past its cycle
 point value.
@@ -138,18 +152,16 @@ point value.
        [[foo]]
            script = run-foo.sh
 
-In the ``[xtriggers]`` section the trigger function is assigned the label ``clock_1``.
-``@`` plus this label is what is then used in the graph.
-
-Argument keywords can be omitted if called in the right order, so the
-``clock_1`` trigger can also be declared like this:
+Argument keywords can be omitted if argument order is preserved, so clock xtriggers
+can also be declared like this:
 
 .. code-block:: cylc
 
-   [[xtriggers]]
-       clock_1 = wall_clock(PT1H)
+   [scheduling]
+       [[xtriggers]]
+           clock_1 = wall_clock(PT1H)
 
-A zero-offset clock trigger does not need to be declared under :cylc:conf:`[xtriggers]`:
+A zero-offset clock trigger does not need to be declared before use:
 
 .. code-block:: cylc
 
@@ -162,17 +174,13 @@ A zero-offset clock trigger does not need to be declared under :cylc:conf:`[xtri
        [[foo]]
            script = run-foo.sh
 
-However, xtrigger names must adhere to the following rules:
-
-.. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
-
 
 .. _Built-in Workflow State Triggers:
 
 Built-in Workflow State Triggers
 --------------------------------
 
-Workflow-state xtriggers succeed when a target task in another workflow achieves
+Workflow-state xtriggers succeed when a given task in another workflow achieves
 a given state or output.
 
 .. note::
@@ -206,15 +214,13 @@ happens. In each cycle point the ``@upstream`` trigger in the downstream workflo
 waits for the upstream task ``foo`` (with the same cycle point) workflow to generate
 the "data ready" message.
 
-Some important points to note:
+.. note::
 
-- The optional interval ``PT10S`` (10 seconds) determines how often the scheduler
-  calls the xtrigger. 10 seconds is also the default value.
-- The ``workflow_state`` trigger function, like the ``cylc workflow-state`` command,
-  must have read-access to the upstream workflow's public database.
-- The task cycle point is supplied by a string template ``%(point)s``.
-  See :ref:`Custom Trigger Functions`) for other string templates available
-  to xtriggers.
+  - The ``workflow_state`` trigger function, like the ``cylc workflow-state`` command,
+    must have read-access to the upstream workflow's public database.
+  - The task cycle point is supplied by a string template ``%(point)s``.
+    See :ref:`Custom Trigger Functions`) for other string templates available
+    to xtriggers.
 
 The return value of the ``workflow_state`` trigger function looks like this:
 
@@ -235,7 +241,7 @@ The ``satisfied`` variable is boolean (value True or False, depending
 on whether or not the trigger condition was found to be satisfied). The
 ``results`` dictionary contains the names and values of the
 target workflow state parameters. Each name gets qualified with the
-unique trigger label ("upstream" here) and passed to the environment of
+unique trigger name ("upstream" here) and passed to the environment of
 dependent tasks (the members of the ``FAM`` family in this case).
 To see this, take a look at the job script for one of the downstream tasks:
 
@@ -466,13 +472,13 @@ Current Limitations
 
 The following issues may be addressed in future Cylc releases:
 
-- trigger labels cannot currently be used in conditional (OR) expressions
+- trigger names cannot currently be used in conditional (OR) expressions
   in the graph; attempts to do so will fail validation.
 - aside from the predefined zero-offset ``wall_clock`` trigger, all
   unique trigger function calls must be declared *with all of
   their arguments* under the :cylc:conf:`[xtriggers]` section, and
-  referred to by label alone in the graph. It would be convenient (and less
-  verbose, although no more functional) if we could just declare a label
+  referred to by name alone in the graph. It would be convenient (and less
+  verbose, although no more functional) if we could just declare a name
   against the *common* arguments, and give remaining arguments (such as
   different wallclock offsets in clock triggers) as needed in the graph.
 - we may move away from the string templating method for providing workflow
