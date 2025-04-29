@@ -65,9 +65,9 @@ The function will be called every 30 seconds. The default interval is ``PT10S``.
 
 
 Xtrigger functions can return an arbitrary dictionary of information to be
-:term:`broadcast` to the job environment of dependent tasks. The associated
-environment variable names are constructed by prefixing the dictionary keys
-with the xtrigger name. For the example above:
+:ref:`broadcast <cylc-broadcast>` to the job environment of dependent tasks.
+The associated environment variable names are constructed by prefixing the
+dictionary keys with the xtrigger name. For the example above:
 
 .. code-block:: python
 
