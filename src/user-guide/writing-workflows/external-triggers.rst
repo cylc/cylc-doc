@@ -61,7 +61,7 @@ The function will be called every 30 seconds. The default interval is ``PT10S``.
 
    Each xtrigger function call is made via a new Python subprocess. If you have
    a large number of xtriggers consider increasing the call interval to reduce
-   the associated sytem load. 
+   the associated system load. 
 
 
 Xtrigger functions can return an arbitrary dictionary of information to be
