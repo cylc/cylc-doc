@@ -1693,6 +1693,16 @@ Glossary
       .. seealso::
          * :ref:`user-guide-reflow`
 
+   child
+   parent
+   parentless
+      The upstream and downstream tasks in a dependency pair may be referred
+      to, respectively, as parent and child tasks. Tasks that have parents are
+      spawned into the :term:`active window` of the workflow as soon as the
+      first of their task prerequisites is satisfied by a parent. Parentless
+      tasks don't have any task prerequisites, so they get spawned automatically
+      out to the :term:`runahead limit`.
+
 
    flow number
       Flow numbers are integers passed down from parent task to child task in

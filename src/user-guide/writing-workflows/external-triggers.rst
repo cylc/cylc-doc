@@ -1,104 +1,266 @@
 .. _Section External Triggers:
 
-External Triggers (xtriggers)
+External Triggers (Xtriggers)
 =============================
 
-Xtriggers allow tasks to trigger off external conditions. The scheduler periodically calls a
-Python function to check the condition.
+Overview
+--------
+
+Xtriggers allow tasks to trigger off of arbitrary external conditions. The
+:term:`scheduler` periodically calls a Python function, to check on the
+condition, until it returns success to satisfy dependent tasks.
+
 
 .. note::
-   Xtriggers should generally be preferred over the older
-   :ref:`Old-Style External Triggers`. They are exposed in the graph,
-   they don't require modifying the external system, and only one
-   (repeating) call is made for all dependent tasks.
-
-Cylc has several built-in xtriggers:
-
-- :ref:`Built-in Clock Triggers` - real time trigger relative to task cycle point
-- :ref:`Built-in Workflow State Triggers` - trigger off tasks in other workflows
-- Several :ref:`Built-in Toy XTriggers` - to facilitate understanding of xtriggers
-
-.. TODO - auto-document these once we have a python endpoint for them
-
-Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
-by associating a short name with the function signature - i.e., with the Python
-function name and the particular arguments values to use in the workflow context.
-The short name can be used in the graph, prefixed by the ``@`` character. It does
-not have to be the same as the function name, but it must conform to these rules:
-
-.. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
-
-In the following example, the ``x1`` xtrigger represents a Python function
-``get_data()`` with arguments as shown.  When it returns success,
-the ``process_data`` task will trigger.
-
-.. code-block:: cylc
-
-   [scheduling]
-       [[xtriggers]]
-           x1 = get_data(loc="/path/to/data/source"):PT30S
-       [[graph]]
-           P1D = "@x1 => process_data => products"
-   [runtime]
-       [[process_data]]
-           # ...
-       [[products]]
-           # ...
+   Compared to the older :ref:`Old-Style External Triggers`, xtriggers are
+   visible in the graph, they are shared efficiently by all dependent tasks,
+   and they are entirely contained within the workflow.
 
 
-Argument keywords can be omitted, so long as order is preserved:
+You can write :ref:`Custom Trigger Functions`, and Cylc has several built in:
 
-.. code-block:: cylc
-
-   [scheduling]
-       [[xtriggers]]
-           x1 = get_data("/path/to/data/source"):PT30S
+- :ref:`Clock xtriggers <Built-in Clock Triggers>` - real time trigger relative to task cycle point
+- :ref:`Workflow state xtriggers <Built-in Workflow State Triggers>` - trigger off tasks in other workflows
+- :ref:`Toy xtriggers <Built-in Toy Xtriggers>` - to facilitate understanding
 
 
-The function will be called every 30 seconds. The default interval is ``PT10S``.
+Periodic Checking
+-----------------
+
+Xtrigger calls commence when the first dependent task enters the
+:term:`active window`, repeating at configurable intervals
+until success is achieved. The default call interval is 10 seconds.
+
+Future tasks that depend on the same xtrigger will be satisfied immediately
+without calling the function again - see :ref:`xtrigger Specificity`.
+
+Xtriggers must return quickly, or they will be killed by
+:cylc:conf:`global.cylc[scheduler]process pool timeout`.
 
 .. warning::
 
-   Each xtrigger function call is made via a new Python subprocess. If you have
-   a large number of xtriggers consider increasing the call interval to reduce
-   the associated system load. 
+   Each xtrigger call is made in a new Python subprocess. Consider increasing the
+   call interval if you have many xtriggers, to reduce the associated system load.
 
 
-Xtrigger functions can return an arbitrary dictionary of information to be
-:ref:`broadcast <cylc-broadcast>` to the job environment of dependent tasks.
-The associated environment variable names are constructed by prefixing the
-dictionary keys with the xtrigger name. For the example above:
+Declaring Xtriggers
+-------------------
+
+Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
+by associating a short *label* with a function name, arguments, and optional
+custom check interval.
+
+The label must be prefixed by "@" for use in the graph, and must comply with
+basic naming rules: 
+
+.. autoclass:: cylc.flow.unicode_rules.XtriggerNameValidator
+
+
+The following workflow declares an xtrigger ``x1 = check_data``. The function
+has one argument, a file path, and will be called every 30 seconds until
+it succeeds - at which point ``process_data`` can trigger:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[xtriggers]]
+           x1 = check_data(loc="/path/to/data/source"):PT30S
+       [[graph]]
+           P1D = "@x1 => process_data"
+   [runtime]
+       [[process_data]]
+
+
+Argument keywords can be omitted, so long as argument order is preserved:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[xtriggers]]
+           x1 = check_data("/path/to/data/source"):PT30S
+
+
+.. _Xtrigger Results:
+
+Xtrigger Results
+----------------
+
+Xtrigger functions must return a flat *dictionary* of results to be
+:ref:`broadcast <cylc-broadcast>` to dependent tasks, via environment
+variables named as ``<xtrigger_label>_<dictionary_key>``.
+
+For example, if the ``x1`` xtrigger returns this dictionary:
 
 .. code-block:: python
 
-   # dictionary returned by get_data() on success:
+   # returned by check_data() on success:
    {
        "data_path": "/path/to/data",
        "data_type": "netcdf"
    }
 
-The job environment of the ``process_data`` task will then be given:
+Then the ``process_data`` task, which depends on ``x1``, will see the
+following environment variables:
 
-.. code-block:: bash
+.. code-block:: shell
 
    # job environment of process_data:
    x1_data_path="/path/to/data"
    x1_data_type="netcdf"
 
 
+The ``process_data`` task would likely run an application on the inputs
+revealed by the xtrigger but which would not know the xtrigger variable names. 
+If so, just translate from xtrigger to application in the workflow definition:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[process_data]]
+           script = run-process.py
+           [[[environment]]]
+               INPUT_DATA_LOCN = $x1_data_path
+               INPUT_DATA_TYPE = $x1_date_type
+
+
+.. _Xtrigger Specificity:
+
+Task and Cycle Specificity
+--------------------------
+
+Cylc makes a call sequence for each unique xtrigger with one or more dependent
+tasks in the :term:`active window`. Uniqueness is determined by the
+*function signature*, i.e. the function name and arguments.
+
+Depending on the argument list, an xtrigger can be universal - the same for
+all tasks that depend on it; or specific - to the name and/or cycle point of
+tasks that depend on it.
+
+Universal xtriggers
+^^^^^^^^^^^^^^^^^^^
+
+If an xtrigger has no arguments that vary as the workflow runs, a single call
+sequence will satisfy every dependent task in the entire graph.
+
+Below, every cycle point instance of ``process_data`` depends on the same
+xtrigger, which presumably checks data for the entire workflow. Once satisfied
+it allows every instance of the task to run:
+
+.. code-block:: cylc
+
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       final cycle point = 10
+       [[xtriggers]]
+           x = check_data("/path/to/data")
+       [[graph]]
+           P1 = "@x => process_data"
+   [runtime]
+       [[check_data]]
+
+
+Task and Cycle-Specific Xtriggers
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Xtrigger arguments can incorporate string templates as placeholders for certain
+workflow parameters - see :ref:`Custom Trigger Functions`. Several of these
+are specific to the cycle point or name of tasks that depend on the xtrigger:
+
+  - ``%(point)s`` - cycle point of the dependent task
+  - ``%(names)s`` - name of the dependent task
+  - ``%(id)s`` - identity (``point/name``) of the dependent task 
+
+If these are used, a new call sequence, with new arguments, will commence
+whenever a dependent task with a new name or cycle point enters the
+:term:`active window`.
+
+Below, every instance of ``process_data`` depends on a different, cycle
+point-specific xtrigger, which presumably checks data just for that instance.
+Each xtrigger, once satisfied, allows just one instance of the task to run:
+
+.. code-block:: cylc
+
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       final cycle point = 10
+       [[xtriggers]]
+           x = check_data(loc="/path/to/data", cycle="%(point)s")
+       [[graph]]
+           P1 = "@x => process_data"
+
+
 .. note::
 
-  You can manually satisfy xtriggers via the GUI or the command line (see
-  ``cylc set --help``) to allow dependent tasks to run even if the xtrigger
-  function did not succeed yet.
-  For this to work without causing task failure, make sure you set default
-  values for xtrigger result variables in task scripting, e.g.:
- 
-  .. code-block:: bash
+   You have to inspect the function signature to see the cycle
+   and task specificity of xtriggers.
 
-    # process_data task scripting
-    DATA="${x1_data_path:-}"  # default to empty strings
-    TYPE="${x1_data_type:-}"
+
+The following working example shows four xtriggers based on the
+:ref:`toy "echo" xtrigger <Built-in Toy Xtriggers>`,
+which takes an arbitrary list of arguments:
+
+.. code-block:: cylc
+
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       final cycle point = 2
+       [[xtriggers]]
+           w1 = echo(succeed=True)  # universal
+           x2 = echo(succeed=True, task="%(name)s")  # task name specific
+           y2 = echo(succeed=True, cycle="%(point)s")  # cycle point specific
+           z4 = echo(succeed=True, task="%(name)s", cycle="%(point)s")  # both
+       [[graph]]
+           P1 = "@w1 & @x1 & @y2 & @z4 => foo & bar"
+   [runtime]
+       [[foo, bar]]
+
+Run this with ``cylc play --no-detach`` and watch when each xtrigger is called:
+``w1`` will be called once, because it has only static arguments; ``x2`` will
+be called twice, once for each task name (regardless of cycle point); ``y2``
+will be called twice, once for each cycle point (regardless of task name); and
+``z4`` will be called four times, once for each task in each cycle point:
+
+.. code-block:: console
+
+   $ cylc cat-log xtr | grep 'xtrigger succeeded'
+   INFO - xtrigger succeeded: w1 = echo(succeed=True)
+   INFO - xtrigger succeeded: x2 = echo(succeed=True, task=bar)
+   INFO - xtrigger succeeded: y2 = echo(cycle=1, succeed=True)
+   INFO - xtrigger succeeded: z4 = echo(cycle=1, succeed=True, task=bar)
+   INFO - xtrigger succeeded: x2 = echo(succeed=True, task=foo)
+   INFO - xtrigger succeeded: z4 = echo(cycle=1, succeed=True, task=foo)
+   INFO - xtrigger succeeded: y2 = echo(cycle=2, succeed=True)
+   INFO - xtrigger succeeded: z4 = echo(cycle=2, succeed=True, task=bar)
+   INFO - xtrigger succeeded: z4 = echo(cycle=2, succeed=True, task=foo)
+
+
+.. _Sequential Xtriggers:
+
+Sequential Xtriggers
+--------------------
+
+:term:`Parentless tasks <parentless>`, which often depend on clock or other
+xtriggers, automatically spawn into the :term:`active window`, multiple
+cycles ahead (to the :term:`runahead limit`). If they depend on xtriggers
+that will only be satisfied in cycle point order, this causes
+unnecessary xtrigger checking and UI clutter.
+
+Sequential xtriggers prevent this by delaying the spawning of the next
+dependent task instance until the current one is satisfied. To do this
+(in reverse order of precedence):
+
+  - set
+    :cylc:conf:`[scheduling]sequential xtriggers = True <flow.cylc[scheduling]sequential xtriggers>`
+    for all xtriggers in the workflow
+  - add a ``sequential=True`` argument to function definitions (in Python source files)
+  - add a ``sequential=True`` argument to function declarations (in workflow configurations)
+
+.. note::
+
+   The built in ``wall_clock`` xtrigger is sequential by default.
 
 
 .. TODO - update this once we have static visualisation
@@ -112,6 +274,26 @@ The job environment of the ``process_data`` task will then be given:
    be called once - albeit repeatedly until satisfied - for the entire workflow
    run, after which the function result will be remembered for all dependent
    tasks throughout the workflow run.
+
+
+Forcing Xtriggers
+-----------------
+
+You can manually satisfy a task's xtrigger prerequisites via the GUI or
+command line, so the task can run even if the xtrigger has not yet succeeded.
+
+This will not affect other tasks that depend on the same xtrigger, but the
+scheduler will stop checking the xtrigger if no other active tasks depend on it.
+
+.. code-block:: console
+
+   # Satisfy @x1 => foo in cycle point 1
+   $ cylc set --pre=xtrigger/x1 my_workflow//1/foo
+   # See cylc set --help
+
+
+For this to work without causing task failure, set appropriate default values
+for :ref:`xtrigger results <Xtrigger Results>` in task scripting.
 
 
 .. NOTE - from here on all references can start [xtriggers]
@@ -136,6 +318,11 @@ The clock xtrigger function signature looks like this:
 
 .. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
 
+.. note::
+
+   Clock xtriggers are cycle-point specific by nature; you don't need
+   to :ref:`use function arguments <Xtrigger Specificity>` to achieve this.
+
 In the following workflow, task ``foo`` has a daily cycle point sequence, and
 each task instance will trigger when the real time is one hour past its cycle
 point value.
@@ -152,8 +339,7 @@ point value.
        [[foo]]
            script = run-foo.sh
 
-Argument keywords can be omitted if argument order is preserved, so clock xtriggers
-can also be declared like this:
+Or omitting the argument keyword:
 
 .. code-block:: cylc
 
@@ -186,8 +372,7 @@ a given state or output.
 .. note::
 
    These should be used instead of the older workflow state polling tasks described
-   in :ref:`WorkflowStatePolling` for inter-workflow triggering - i.e. to trigger local
-   tasks off of remote task statuses or messages in other workflows.
+   in :ref:`WorkflowStatePolling`.
 
 The workflow state trigger function signature looks like this:
 
@@ -237,9 +422,7 @@ The return value of the ``workflow_state`` trigger function looks like this:
    }
    return (satisfied, results)
 
-The ``satisfied`` variable is boolean (value True or False, depending
-on whether or not the trigger condition was found to be satisfied). The
-``results`` dictionary contains the names and values of the
+The ``results`` dictionary contains the names and values of the
 target workflow state parameters. Each name gets qualified with the
 unique trigger name ("upstream" here) and passed to the environment of
 dependent tasks (the members of the ``FAM`` family in this case).
@@ -268,87 +451,116 @@ To see this, take a look at the job script for one of the downstream tasks:
    configuration.
 
 
-.. _Sequential Xtriggers:
+.. _Built-in Toy Xtriggers:
 
-Sequential Xtriggers
----------------------------
+Built-in Toy Xtriggers
+----------------------
 
-Parentless tasks (which don't depend on other tasks upstream in the graph)
-naturally spawn out to the runahead limit. This may cause UI clutter, and
-unnecessary xtrigger checking if the xtriggers would only be satisfied in
-order.
+echo
+^^^^
 
-You can use *sequential* xtriggers to avoid this problem: the next instance
-of a task (i.e., at the next cycle point) that depends on a sequential xtrigger
-will not be spawned until the previous xtrigger is satisfied. The
-``wall_clock`` xtrigger is sequential by default.
+The toy ``echo`` trigger simply prints any arguments that you give it to stdout,
+and then fails (trigger condition not met) or succeeds (trigger condition met)
+according to the value of a ``succeed=True`` argument (which defaults to
+``False``). On success, it returns all arguments in the result dictionary.
 
-A trigger can be set as sequential in any or all of the following ways.
+.. autofunction:: cylc.flow.xtriggers.echo.echo
 
-By setting the workflow-wide :cylc:conf:`flow.cylc[scheduling]sequential xtriggers`
-(defaults to ``False``) and/or keyword argument ``sequential`` to ``True``/``False`` in
-the xtrigger declaration:
+.. code-block:: cylc
 
-.. literalinclude:: ../../workflows/xtrigger/sequential/flow.cylc
+   [scheduling]
+       initial cycle point = now
+       [[xtriggers]]
+           echo_1 = echo(succeeded=True, hello, 99, point=%(point)s, foo=10)
+       [[graph]]
+           PT1H = "@echo_1 => foo"
+   [runtime]
+       [[foo]]
+           script = "printenv | grep echo_1"
+
+Run this with ``cylc play --no-detach <workflow>`` and watch your terminal to see
+the xtrigger calls. View the task job log with ``cylc cat-log <workflow_id>//1/foo``
+to confirm that the dependent task received the xtrigger results.
+
+
+xrandom
+^^^^^^^
+
+The toy ``xrandom`` function sleeps for a configurable amount of time (useful for
+testing the effect of a long-running trigger function - which should be avoided)
+and has a configurable random chance of success. The function signature is:
+
+.. automodule:: cylc.flow.xtriggers.xrandom
+   :members: xrandom, validate
+   :member-order: bysource
+
+An example xrandom trigger workflow:
+
+.. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
    :language: cylc
-
-When implementing a :ref:`custom xtrigger <Custom Trigger Functions>`, you can
-set the default for the ``sequential`` keyword argument in the xtrigger function
-definition itself:
-
-.. code-block:: python
-
-   def my_xtrigger(my_in, my_out, sequential=True)
-
-Xtrigger declaration takes precedence over function, and function over workflow
-wide setting. So the above workflow definition would read:
-
-- ``foo`` spawns out to the runahead limit.
-- ``FAM`` spawns only when ``@upstream`` is satisfied.
-- All associated xtriggers are checked and, as expected, their satisfaction
-  is a prerequisite to task readiness.
 
 
 .. _Custom Trigger Functions:
 
-Custom Trigger Functions
-------------------------
+Custom Xtrigger Functions
+-------------------------
 
-Trigger functions are just normal Python functions, with a few special
-properties:
+Xtrigger functions are Python functions with some special requirements.
 
-- They must:
 
-  - Be defined in a module with the same name as the function, unless
-    provided using the ``cylc.xtriggers`` entry point;
-  - be compatible with the same Python version that runs the scheduler
-    (see :ref:`Requirements` for the latest version specification).
+Requirements
+^^^^^^^^^^^^
 
-- They can be located either:
+Xtrigger functions must be compatible with the Python version that runs the
+scheduler (see :ref:`Requirements` for the latest version specification).
 
-  - In ``<workflow-dir>/lib/python/``;
-  - Anywhere in your ``$CYLC_PYTHONPATH``;
-  - Defined using the ``cylc.xtriggers`` entry point for an installed
-    package - see :ref:`developing.xtrigger.plugins`
+They must return a Tuple of ``(Boolean, Dictionary)``:
 
-- They can take arbitrary positional and keyword arguments
-  (except ``sequential``, which is reserved - see :ref:`Sequential Xtriggers`)
-- Workflow and task identity, and cycle point, can be passed to trigger
-  functions by using string templates in function arguments (see below)
-- Integer, float, boolean, and string arguments will be recognized and
-  passed to the function as such
-- If a trigger function depends on files or directories (for example)
-  that might not exist when the function is first called, just return
-- The module can also provide a ``validate`` function for checking configured
-  arguments / keyword arguments, see
-  :ref:`user-guide.xtrigger-validation-functions` for details.
+  - ``(False, {})`` - failed: trigger condition not met
+  - ``(True, results)`` - succeeded: trigger condition met
 
-.. note::
+where ``results`` is a flat (non-nested) dictionary of information to be passed
+to dependent tasks - see :ref:`Xtrigger Results`. Each dictionary key must be
+valid as an
+`environment variable <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_
+name.
 
-   Trigger functions cannot store data Pythonically between invocations
-   because each call is executed in an independent process in the process
-   pool. If necessary the filesystem can be used for this purpose.
+They can take arbitrary positional and keyword arguments, except that the
+``sequential`` keyword is reserved for :ref:`sequential xtriggers <Sequential Xtriggers>`.
 
+They cannot store data Pythonically between invocations, because each call
+is executed via a wrapper in a new subprocess. If necessary the filesystem
+could be used for persistent data.
+
+If they depend on files (say) that might not exist when the function is first
+called, just return trigger condition not met (i.e., failed). 
+
+
+Installation
+^^^^^^^^^^^^
+
+We recommend using the ``cylc.xtriggers`` entry point to install the xtrigger
+as a Python package - see :ref:`developing.xtrigger.plugins`.
+
+Otherwise, e.g., for installing custom xtriggers under your own user account,
+xtrigger functions must be:
+
+  - defined in a module with the same name as the function
+  - located in:
+    - ``<workflow-dir>/lib/python/``;
+    - or anywhere in your ``$CYLC_PYTHONPATH``
+
+Custom xtrigger module can also provide a ``validate`` function for checking
+configured arguments, see
+:ref:`user-guide.xtrigger-validation-functions` for details.
+
+
+Passing Workflow Parameters to Xtrigger Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Workflow and task parameters can be passed to function arguments from the
+workflow configuration via the following string templates. Task parameters
+affect :ref:`xtrigger specificity <Xtrigger specificity>`.
 
 .. spelling:word-list::
 
@@ -356,49 +568,10 @@ properties:
 
 .. autoenumvalues:: cylc.flow.xtrigger_mgr.TemplateVariables
 
-Function return values should be as follows:
-
-- if the trigger condition is *not satisfied*:
-
-  - return ``(False, {})``
-
-- if the trigger condition is *satisfied*:
-
-  - return ``(True, results)``
-
-where ``results`` is an arbitrary dictionary of information to be passed to
-dependent tasks, which in terms of format must:
-
-- be *flat* (non-nested);
-- contain *only* keys which are
-  `valid <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_ as environment variable names.
-
-See :ref:`Built-in Workflow State Triggers` for an example of one such
-``results`` dictionary and how it gets processed by the workflow.
-
-The :term:`scheduler` manages trigger functions as follows:
-
-- they are called asynchronously in the process pool
-  - (except for clock triggers, which are called from the main process)
-- they are called repeatedly on a configurable interval, until satisfied
-  - the call interval defaults to ``PT10S`` (10 seconds)
-  - repeat calls are not made until the previous call has returned
-- they are subject to the normal process pool command time out - if they
-  take too long to return, the process will be killed
-- they are shared for efficiency: a single call will be made for all
-  triggers that share the same function signature - i.e.\ the same function
-  name and arguments
-- their return status and results are stored in the workflow DB and persist across
-  workflow restarts
-- their stdout, if any, is redirected to stderr and will be visible in
-  the workflow log in debug mode (stdout is needed to communicate return values
-  from the sub-process in which the function executes)
-
-
 .. _user-guide.xtrigger-validation-functions:
 
 Xtrigger Validation Functions
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The arguments you call the xtrigger function with are automatically validated
 against the function signature, however, you might wish to add extra validation
@@ -414,96 +587,43 @@ The :py:mod:`cylc.flow.xtriggers.xrandom` xtrigger module contains an example
 of an xtrigger validation function.
 
 
-.. _Built-in Toy Xtriggers:
-
-Toy Examples
-^^^^^^^^^^^^
-
-echo
-""""
-
-The trivial built-in ``echo`` function takes any number of positional
-and keyword arguments (from the workflow configuration) and simply prints
-them to stdout, and then returns False (i.e. trigger condition not
-satisfied).
-
-.. autofunction:: cylc.flow.xtriggers.echo.echo
-
-Here's an example echo trigger workflow:
-
-.. code-block:: cylc
-
-   [scheduling]
-       initial cycle point = now
-       [[xtriggers]]
-           echo_1 = echo(hello, 99, qux=True, point=%(point)s, foo=10)
-       [[graph]]
-           PT1H = "@echo_1 => foo"
-   [runtime]
-       [[foo]]
-           script = exit 1
-
-To see the result, run this workflow in debug mode and take a look at the
-workflow log (or run ``cylc play --debug --no-detach <workflow>`` and watch
-your terminal).
-
-
-xrandom
-"""""""
-
-The built-in ``xrandom`` function sleeps for a configurable amount of
-time (useful for testing the effect of a long-running trigger function
-- which should be avoided) and has a configurable random chance of
-success. The function signature is:
-
-.. automodule:: cylc.flow.xtriggers.xrandom
-   :members: xrandom, validate
-   :member-order: bysource
-
-An example xrandom trigger workflow:
-
-.. literalinclude:: ../../workflows/xtrigger/xrandom/flow.cylc
-   :language: cylc
-
-.. _Current Trigger Function Limitations:
-
-Current Limitations
--------------------
+Xtrigger Limitations
+--------------------
 
 The following issues may be addressed in future Cylc releases:
 
-- trigger names cannot currently be used in conditional (OR) expressions
-  in the graph; attempts to do so will fail validation.
-- aside from the predefined zero-offset ``wall_clock`` trigger, all
-  unique trigger function calls must be declared *with all of
-  their arguments* under the :cylc:conf:`[xtriggers]` section, and
-  referred to by name alone in the graph. It would be convenient (and less
-  verbose, although no more functional) if we could just declare a name
-  against the *common* arguments, and give remaining arguments (such as
-  different wallclock offsets in clock triggers) as needed in the graph.
-- we may move away from the string templating method for providing workflow
-  and task attributes to trigger function arguments.
+- Trigger names cannot be used in conditional (OR) expressions in the graph;
+  attempts to do so will fail validation.
+- Apart from the predefined zero-offset ``wall_clock`` trigger, all trigger
+  functions must be declared with all of their arguments under the
+  :cylc:conf:`[xtriggers]` section, and referred to by name alone in the
+  graph. It would be convenient (and less verbose, although no more
+  functional) if we could just declare a name against the common arguments
+  and give remaining arguments (such as different wallclock offsets in clock
+  triggers) as needed in the graph.
+- We may move away from the string templating method for providing workflow
+  and task attributes to trigger functions.
 
 
 Filesystem Events?
-------------------
+^^^^^^^^^^^^^^^^^^
 
 Cylc does not have built-in support for triggering off of filesystem events
 such as ``inotify`` on Linux. There is no cross-platform standard for
-this, and in any case filesystem events are not very useful in HPC cluster
-environments where events can only be detected at the specific node on which
-they were generated.
+filesystem events, and they can only be detected on the generating node in
+on HPC clusters.
 
 
-Continuous Event Watchers?
---------------------------
+Persistent Event Watchers?
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For some applications a persistent process that continually monitors the
-external world is better than discrete periodic checking. This would be more
-difficult to support as a plugin mechanism in Cylc, but we may decide to do it
-in the future. In the meantime, consider implementing a small daemon process as
-the watcher (e.g. to watch continuously for filesystem events) and have your
-Cylc trigger functions interact with it.
+For some applications a process that continually monitors an external condition
+might be preferred over periodic checking. This would be more difficult to
+support as a Cylc plugin, but we may decide to do it in the future. In the
+meantime, consider implementing a small daemon process as the watcher
+and have your Cylc xtrigger functions interact with that.
+
+
 
 
 .. _Old-Style External Triggers:
@@ -608,11 +728,11 @@ not the first because of the cycle-point matching.
 .. _WorkflowStatePolling:
 
 Triggering Off Of Tasks In Other Workflows
-------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note::
 
-   Please read :ref:`Section External Triggers` before using the older
+   Please read :ref:`Built-in Workflow State Triggers` before using the older
    inter-workflow triggering mechanism described in this section.
 
 The ``cylc workflow-state`` command interrogates workflow run databases. It
