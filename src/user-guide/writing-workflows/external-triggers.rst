@@ -525,15 +525,15 @@ valid as an
 `environment variable <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_
 name.
 
-They can take arbitrary positional and keyword arguments, except that the
-``sequential`` keyword is reserved for :ref:`sequential xtriggers <Sequential Xtriggers>`.
+They can take arbitrary positional and keyword arguments, except for the
+keyword ``sequential``, which is reserved for :ref:`sequential xtriggers <Sequential Xtriggers>`.
 
 They cannot store data Pythonically between invocations, because each call
 is executed via a wrapper in a new subprocess. If necessary the filesystem
 could be used for persistent data.
 
 If they depend on files (say) that might not exist when the function is first
-called, just return trigger condition not met (i.e., failed). 
+called, just return trigger condition not met (i.e., ``(False, {})``). 
 
 
 Installation
