@@ -42,10 +42,11 @@ is achieved. The default call interval is 10 seconds.
    :term:`active window`, will always show as unsatisfied because the
    associated xtrigger function has not been called yet.
 
-Future tasks that depend on the same xtrigger will be satisfied immediately
-without calling the function again - see :ref:`xtrigger Specificity`.
+The scheduler satisfies future tasks when they enter the active window, if
+they depend on the same xtrigger, without calling the function again - see
+:ref:`xtrigger Specificity`.
 
-Xtriggers must return quickly, or they will be killed by
+Xtriggers must return quickly, or be killed by the
 :cylc:conf:`global.cylc[scheduler]process pool timeout`.
 
 .. warning::
