@@ -28,8 +28,19 @@ Periodic Checking
 -----------------
 
 Xtrigger calls commence when the first dependent task enters the
-:term:`active window`, repeating at configurable intervals
-until success is achieved. The default call interval is 10 seconds.
+:term:`active window`, repeating at configurable intervals until success
+is achieved. The default call interval is 10 seconds.
+
+.. TODO - 
+
+   Adjust the following once we can distinguish "not called" from "not satisfied".
+   See https://github.com/cylc/cylc-flow/pull/6560.
+
+.. note::
+
+   The xtrigger prerequisites of future tasks that have yet to enter the
+   :term:`active window`, will always show as unsatisfied because the
+   associated xtrigger function has not been called yet.
 
 Future tasks that depend on the same xtrigger will be satisfied immediately
 without calling the function again - see :ref:`xtrigger Specificity`.
@@ -80,6 +91,12 @@ Argument keywords can be omitted, so long as argument order is preserved:
            x1 = check_data("/path/to/data/source"):PT30S
 
 
+.. note::
+
+   Trigger labels can be used with ``&`` (AND) operators in the graph, but
+   currently not with ``|`` (OR) - attempts to do that will fail validation.
+
+
 .. _Xtrigger Results:
 
 Xtrigger Results
@@ -109,9 +126,9 @@ following environment variables:
    x1_data_type="netcdf"
 
 
-The ``process_data`` task would likely run an application on the inputs
-revealed by the xtrigger but which would not know the xtrigger variable names. 
-If so, just translate from xtrigger to application in the workflow definition:
+The ``process_data`` task would likely run an application that needs this
+information in terms of its native configuration. You can translate from
+xtrigger to application in the workflow configuration:
 
 .. code-block:: cylc
 
@@ -514,7 +531,7 @@ Requirements
 Xtrigger functions must be compatible with the Python version that runs the
 scheduler (see :ref:`Requirements` for the latest version specification).
 
-They must return a Tuple of ``(Boolean, Dictionary)``:
+Xtrigger functions must return a Tuple of ``(Boolean, Dictionary)``:
 
   - ``(False, {})`` - failed: trigger condition not met
   - ``(True, results)`` - succeeded: trigger condition met
@@ -525,14 +542,15 @@ valid as an
 `environment variable <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html>`_
 name.
 
-They can take arbitrary positional and keyword arguments, except for the
-keyword ``sequential``, which is reserved for :ref:`sequential xtriggers <Sequential Xtriggers>`.
+Xtrigger functions can take arbitrary positional and keyword arguments, except
+for the keyword ``sequential``, which is
+reserved for :ref:`sequential xtriggers <Sequential Xtriggers>`.
 
-They cannot store data Pythonically between invocations, because each call
+Xtrigger functions cannot store data between invocations, because each call
 is executed via a wrapper in a new subprocess. If necessary the filesystem
 could be used for persistent data.
 
-If they depend on files (say) that might not exist when the function is first
+If xtriggers depend on files (say) that might not exist when the function is first
 called, just return trigger condition not met (i.e., ``(False, {})``). 
 
 
@@ -585,24 +603,6 @@ detected.
 
 The :py:mod:`cylc.flow.xtriggers.xrandom` xtrigger module contains an example
 of an xtrigger validation function.
-
-
-Xtrigger Limitations
---------------------
-
-The following issues may be addressed in future Cylc releases:
-
-- Trigger names cannot be used in conditional (OR) expressions in the graph;
-  attempts to do so will fail validation.
-- Apart from the predefined zero-offset ``wall_clock`` trigger, all trigger
-  functions must be declared with all of their arguments under the
-  :cylc:conf:`[xtriggers]` section, and referred to by name alone in the
-  graph. It would be convenient (and less verbose, although no more
-  functional) if we could just declare a name against the common arguments
-  and give remaining arguments (such as different wallclock offsets in clock
-  triggers) as needed in the graph.
-- We may move away from the string templating method for providing workflow
-  and task attributes to trigger functions.
 
 
 Filesystem Events?
