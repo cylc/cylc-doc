@@ -295,7 +295,11 @@ Why is my task stuck in the waiting state - |task-waiting|?
 Tasks in the "waiting" state are waiting for something to happen before Cylc
 will submit them.
 
-To find out what is holding the task back from running:
+To find out what is holding the task back from running use ``cylc show``.
+
+Note, at present ``cylc show`` can only display tasks in the current
+:term:`n-window`. However, waiting tasks beyond ``n=0``, by definition,
+have no satisfied prerequisites.
 
 .. tab-set::
 

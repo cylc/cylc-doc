@@ -16,8 +16,7 @@ Suicide Triggers
    a rare :ref:`edge case <remaining-use-cases>`.
 
 
-Suicide triggers remove waiting :term:`tasks <task>` from the
-:term:`scheduler's <scheduler>` active :term:`active window` at runtime.
+Suicide triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
 
 They are activated just like normal :term:`task triggers <task trigger>` but
 they remove the downstream task (prefixed with ``!``) instead of triggering it

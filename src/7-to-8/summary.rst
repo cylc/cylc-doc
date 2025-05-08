@@ -134,7 +134,7 @@ intervention, which will :term:`stall` the workflow.
 Alternatively, outputs can be marked as :term:`optional <optional output>`,
 which allows :term:`optional graph branching <graph branching>`.
 
-This allows the scheduler to correctly diagnose :term:`workflow completion`.
+This allows the scheduler to correctly diagnose :ref:`workflow completion`.
 
 
 Platform Awareness

@@ -245,17 +245,14 @@ N-Window selector in the GUI
 
 The :term:`n-window` determines how much of a workflow is visible in the GUI / Tui.
 
-The ``n=0`` window contains only the active tasks
-(i.e. queued, preparing, submitted or running tasks).
+You can change the n-window extent in the GUI with a toolbar button, to display
+more or less of the graph around current :term:`active tasks <active task>`.
+This affects all GUI views equally, not just the graph view.
 
-The ``n=1`` window, also contains tasks one "edge" out from active tasks
-(i.e. the tasks immediately upstream or downstream of active tasks).
+The ``n=0`` window contains only the active tasks.
 
-The ``n=2`` window, also contains tasks two "edges" out from active tasks,
-and so on.
-
-It is now possible to change the window extent in the GUI via a button in the
-toolbar allowing you to see tasks further back in the workflow's history.
+The ``n=1`` window displays tasks out to one graph edge around the active
+tasks; ``n=2`` out to two graph edges; and so on.
 
 .. image:: changes/gui-n-window-selector.gif
    :width: 100%
@@ -306,7 +303,7 @@ When a task achieves a final status, its outputs are validated against a "comple
 expression" to ensure that it has produced all of its
 :term:`required outputs <required output>`.
 If a task fails this validation check it is said to have "incomplete outputs"
-and will be retained in the :term:`active window` pending user intervention.
+and will be retained in the :term:`n=0 window <n-window>` pending user intervention.
 
 This completion expression is generated automatically from the graph.
 By default, tasks are expected to succeed, if you register any additional
