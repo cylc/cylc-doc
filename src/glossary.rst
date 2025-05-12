@@ -69,7 +69,7 @@ Glossary
       don't get overwritten.
 
    active task
-      Active tasks are those tasks currently held in working memory to feed
+      Active tasks are those tasks held in memory to feed
       the scheduling algorithm. They form the ``n=0`` :term:`n-window`,
       so are always visible in the GUI.
 

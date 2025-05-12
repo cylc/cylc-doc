@@ -109,7 +109,7 @@ extent for :term:`cycling workflows <cycling workflow>` with no
 :term:`final cycle point`.
 
 Consequently the GUI often can't display "all of the tasks" at once. Instead
-it displays all tasks a configurable :term:`n-window` around the current
+it displays all tasks in a configurable :term:`n-window` around the current
 :term:`active tasks <active task>`.
 
 .. image:: ../../img/n-window.png
@@ -118,7 +118,7 @@ it displays all tasks a configurable :term:`n-window` around the current
 
 n=0:
    The ``n=0`` window contains current :term:`active tasks <active task>`: those
-   that are near ready to run, running, or which require user intervention.
+   that are near ready to run, running, or which may require user intervention.
 n=1:
    The ``n=1`` window contains the ``n=0`` tasks plus those out
    to *one* graph edge around them in the graph.

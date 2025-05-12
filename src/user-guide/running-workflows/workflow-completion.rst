@@ -12,10 +12,13 @@ downstream activity - i.e., when :term:`n=0 window <n-window>` empties out.
 Scheduler Stall
 ===============
 
-If there are no tasks waiting on as yet unsatisfied external constraints
-such clock and xtriggers, and all activity has ceased but workflow has
-not :ref:`run to completion <workflow completion>`, then it
-has stalled and requires manual intervention to continue.
+A workflow has stalled if:
+
+* No tasks are waiting on unstatisfied external events, like clock triggers and xtriggers.
+* AND All activity has ceased.
+* AND The workflow has not run to completion.
+
+A workflow which has stalled requires manual intervention to continue.
 
 Stalls are caused by :term:`final status incomplete tasks <output completion>`
 and :term:`partially satisfied tasks <prerequisite>`.
