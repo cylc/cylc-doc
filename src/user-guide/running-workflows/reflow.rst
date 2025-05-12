@@ -122,7 +122,7 @@ Triggering with No Active Flows
    task in it. The task's flow number will be the same as if you
    had triggered it just before the workflow completed.
 
-Special Case: Triggering ``n=0`` (:term:`active tasks <active task`)
+Special Case: Triggering ``n=0`` (:term:`active tasks <active task>`)
    Active tasks already have flow membership assigned.
    Flow numbers are inherited, on entering the active wndow, from parent
    (upstream) tasks in the graph.

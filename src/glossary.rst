@@ -982,7 +982,8 @@ Glossary
       This refers to starting a new instance of the Cylc :term:`scheduler`
       program to manage a particular :term:`workflow`. This can be from
       scratch, for installed workflows that haven't run previously, or to
-      restart one that shut down prior to :ref:`completion <workflow completion>`.
+      restart one that shut down prior to
+      :ref:`completion <workflow completion>`.
 
       .. seealso::
 
@@ -1691,7 +1692,7 @@ Glossary
 
 
    flow front
-      :term:`Active tasks <active task>`` with a common :term:`flow number`
+      :term:`Active tasks <active task>` with a common :term:`flow number`
       comprise the active front of the flow.
 
 

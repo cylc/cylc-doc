@@ -1534,7 +1534,7 @@ So, in the cycle ``2000-01-01T00:00Z``:
 * ``foo`` would expire at ``2000-01-01T00:00Z``.
 * ``bar`` would expire at ``2000-01-01T01:00Z``.
 
-Only waiting tasks can expire, :term:`active tasks <active>` will not be
+Only waiting tasks can expire, :term:`active tasks <active task>` will not be
 killed if they pass their configured ``clock-expire`` time.
 
 When a task expires, it produces the ``expired`` :term:`output`.
@@ -2219,16 +2219,22 @@ executing, e.g:
 Runahead Limiting
 -----------------
 
-Runahead limiting prevents workflow activity from getting too far ahead of the
-earliest :term:`active cycle`, by holding back tasks in cycles beyond a
-configurable limit.
+Runahead limiting restricts workflow activity to a configurable number of
+cycles beyond the earliest :term:`active cycle`.
 
-Tasks in cycles beyond the runahead limit are called "runahead limited" and are
-displayed in the GUI/Tui with small circle above them:
+.. TODO - update this after https://github.com/cylc/cylc-flow/issues/5580:
+
+Tasks in the :term:`n=0 window <n-window>` at the runahead limit are actively
+held back, and are displayed in the GUI/Tui with a small circle above them.
 
 .. image:: ../../img/task-job-icons/task-isRunahead.png
    :width: 60px
    :height: 60px
+
+.. note::
+
+   Tasks in the :term:`n=1 window <n-window>` are not displayed as runahead
+   limited; they form the future graph and are not yet being actively limited.
 
 As the workflow advances and active cycles complete, the runahead limit moves
 forward allowing tasks in later cycles to run.

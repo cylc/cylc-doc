@@ -23,7 +23,8 @@ Cylc can manage infinite workflows of repeating tasks:
 
 Cylc 8 has a new scheduling algorithm that:
 
-- Is much more efficient because it only has to manage :term:`active tasks`.
+- Is much more efficient because it only has to manage
+  :term:`active tasks <active task>`.
 
   - Tasks are not loaded into memory before they are needed.
   - Tasks are not retained in memory once they complete.

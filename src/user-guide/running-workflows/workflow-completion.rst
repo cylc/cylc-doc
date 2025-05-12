@@ -5,7 +5,7 @@ Workflow Completion
 
 A workflow can :term:`shut down <shutdown>` once all
 :term:`active tasks <active task>` complete without spawning further
-downstream activity - i.e., when :term:`n=0 window` empties out.
+downstream activity - i.e., when :term:`n=0 window <n-window>` empties out.
 
 .. _scheduler stall:
 
