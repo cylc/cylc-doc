@@ -25,7 +25,7 @@ Cylc 8 has a new scheduling algorithm that:
 
 - Is much more efficient because it only has to manage :term:`active tasks`.
 
-  - Tasks are not "pre-spawned" before they are needed.
+  - Tasks are not loaded into memory before they are needed.
   - Tasks are not retained in memory once they complete.
   - There is no costly indiscriminate dependency matching.
 - Distinguishes between :term:`optional <optional output>` and

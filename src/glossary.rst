@@ -70,12 +70,12 @@ Glossary
 
    active task
       Active tasks are those tasks currently held in working memory to feed
-      the scheduling algorithm. They comprise ``n=0`` basis of the GUI
-      :term:`n-window`, so they are always visible in the GUI.
+      the scheduling algorithm. They form the ``n=0`` :term:`n-window`,
+      so are always visible in the GUI.
 
       Active tasks include:
 
-      - ``submitted`` and ``running``, with active jobs)
+      - ``submitted`` and ``running`` tasks (i.e, tasks with active jobs)
       - ``preparing`` tasks in the job submission pipeline
       - ``waiting`` tasks that are nearly ready to run but:
 
@@ -90,7 +90,7 @@ Glossary
 
    n-window
       The GUI provides a view of the workflow extending ``n`` graph edges out
-      from :term:`active tasks <active task>` - which comprise the ``n=0``
+      from :term:`active tasks <active task>` - which form the ``n=0``
       window. The default n-window extent is ``n=1``. 
 
    active cycle
