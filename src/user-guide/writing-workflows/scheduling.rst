@@ -2233,7 +2233,7 @@ held back, and are displayed in the GUI/Tui with a small circle above them.
 
 .. note::
 
-   Tasks in the :term:`n=1 window <n-window>` are not displayed as runahead
+   Tasks in the :term:`n>=1 window <n-window>` are not displayed as runahead
    limited; they form the future graph and are not yet being actively limited.
 
 As the workflow advances and active cycles complete, the runahead limit moves

@@ -344,7 +344,6 @@ Glossary
          "1/bar" -> "2/bar" -> "3/bar"
 
 
-
       .. seealso::
 
          * :ref:`tutorial-integer-cycling`
@@ -362,14 +361,14 @@ Glossary
 
 
    cycle point
-      The unique label given to tasks that belong to a particular :term:`cycle`.
+      The label given to tasks that belong to a particular :term:`cycle`.
       For :term:`integer cycling` these will be integers, e.g. ``1``, ``2``,
       ``3``, etc.
       For :term:`datetime cycling` they will be :term:`ISO 8601` datetimes,
       e.g. ``2000-01-01T00:00Z``.
 
-      Cylc has no global cycle loop, so each task instance has its own cycle
-      point label.
+      Cylc can run multiple cycles at once, dependencies allowing, so each
+      task instance has its own cycle point label.
 
       .. seealso::
 

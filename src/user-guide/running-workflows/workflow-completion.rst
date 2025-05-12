@@ -31,12 +31,12 @@ to allow you to intervene, e.g. by manually triggering an incomplete
 task after fixing the bug that caused it to fail.
 
 If a stalled workflow does eventually shut down, on the stall timeout
-or by stop command, it will immediately stall again on restart.
+or by stop command, it will immediately stall again on restart to await
+manual intervention.
 
 .. warning::
 
-   At present you have to look at the :term:`scheduler log` to see
-   which tasks caused a stall.
+   Look in the :term:`scheduler log` to see which tasks caused a stall.
 
 .. seealso::
 

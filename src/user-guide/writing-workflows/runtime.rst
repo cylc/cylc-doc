@@ -843,7 +843,7 @@ Late Events
   The scheduler can only check for lateness once a task becomes
   :term:`active <active task>`. In Cylc 8 this usually means the task
   is ready, or nearly ready, to run, which limits the usefulness of late
-  events as currently implemented.
+  events.
 
 If a real time (clock-triggered) workflow performs fairly consistently from one
 cycle to the next, you may want to be notified when certain tasks are running
