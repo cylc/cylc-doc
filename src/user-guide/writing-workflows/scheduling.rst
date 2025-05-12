@@ -1534,7 +1534,7 @@ So, in the cycle ``2000-01-01T00:00Z``:
 * ``foo`` would expire at ``2000-01-01T00:00Z``.
 * ``bar`` would expire at ``2000-01-01T01:00Z``.
 
-Only waiting tasks can expire, :term:`active tasks <active>` will not be
+Only waiting tasks can expire, :term:`active tasks <active task>` will not be
 killed if they pass their configured ``clock-expire`` time.
 
 When a task expires, it produces the ``expired`` :term:`output`.
@@ -1623,7 +1623,7 @@ Tasks are expected to complete required outputs at runtime, but
 they don't have to complete optional outputs.
 
 This allows the scheduler to correctly diagnose
-:term:`workflow completion`. [2]_
+:ref:`workflow completion`. [2]_
 
 Tasks that achieve a :term:`final status` without completing their
 outputs [3]_ are retained in the :term:`n=0 window <n-window>` pending user
@@ -2219,24 +2219,27 @@ executing, e.g:
 Runahead Limiting
 -----------------
 
-Runahead limiting prevents a workflow from getting too far ahead of the oldest
-active cycle point by holding back tasks in cycles beyond a specified limit.
+Runahead limiting restricts workflow activity to a configurable number of
+cycles beyond the earliest :term:`active cycle`.
 
-The runahead limit is defined as an interval measured from the oldest active cycle.
-A cycle is considered to be "active" if it contains any :term:`active` tasks
-(e.g. running tasks).
+.. TODO - update this after https://github.com/cylc/cylc-flow/issues/5580:
 
-Tasks in cycles which are beyond the limit are called :term:`runahead` tasks
-and are displayed in the GUI/Tui with small circle above them:
+Tasks in the :term:`n=0 window <n-window>` at the runahead limit are actively
+held back, and are displayed in the GUI/Tui with a small circle above them.
 
 .. image:: ../../img/task-job-icons/task-isRunahead.png
    :width: 60px
    :height: 60px
 
+.. note::
+
+   Tasks in the :term:`n>=1 window <n-window>` are not displayed as runahead
+   limited; they form the future graph and are not yet being actively limited.
+
 As the workflow advances and active cycles complete, the runahead limit moves
 forward allowing tasks in later cycles to run.
 
-There are two ways of defining the interval which defines the runahead limit,
+There are two ways of defining the interval which defines the runahead limit:
 as an integer number of cycles, or as a datetime interval.
 
 

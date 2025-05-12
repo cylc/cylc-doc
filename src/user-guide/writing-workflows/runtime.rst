@@ -527,6 +527,9 @@ or submit-failed using these task configurations:
    Configure retries for jobs which failed during submission so never ran
    (submit-failed jobs - |job-submit-failed|).
 
+Tasks that fail but are configured to :term:`retry` return to the ``waiting``
+state, with a new clock trigger to handle the configured retry delay.
+
 Retry delays should be set to a list of
 :term:`ISO8601 durations <ISO8601 duration>` that specify how long to wait
 before retrying the task again, e.g:
@@ -621,8 +624,8 @@ Advanced Example
 Aborting a Retry Sequence
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To prevent a task from retrying, remove it from the scheduler's
-:term:`active window`, e.g:
+To prevent a task from retrying, remove it from the
+:term:`n=0 window <n-window>`.
 
 .. code-block:: console
 
@@ -837,10 +840,10 @@ Late Events
 
 .. warning::
 
-  The scheduler can only check for lateness once a task has appeared in its
-  active task window. In Cylc 8 this is usually when the task is actually
-  ready to run, which severely limits the usefulness of late events as
-  currently implemented.
+  The scheduler can only check for lateness once a task becomes
+  :term:`active <active task>`. In Cylc 8 this usually means the task
+  is ready, or nearly ready, to run, which limits the usefulness of late
+  events.
 
 If a real time (clock-triggered) workflow performs fairly consistently from one
 cycle to the next, you may want to be notified when certain tasks are running
