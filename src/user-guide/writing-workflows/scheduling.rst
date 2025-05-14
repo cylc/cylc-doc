@@ -1888,8 +1888,8 @@ relies on :term:`optional outputs <optional output>` and is called *branching*.
 
    Cylc 8 does not need suicide triggers for branching.
 
-Basic Example
-^^^^^^^^^^^^^
+Basic Example (A Switch)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here Cylc will follow one of two "branches" depending on the outcome of task ``b``:
 
@@ -1938,6 +1938,18 @@ Note the last line of the graph ``c | r => d`` allows the graph to
 continue on to ``d`` regardless of the path taken. This is an :term:`artificial
 dependency`.
 
+This is a simple example of a "switch" pattern, the task ``b`` being the switch
+in this case, the ``succeeded`` / ``failed`` outputs deciding which pathway
+through the graph the workflow will follow. We can use outputs besides
+``succeeded`` / ``failed`` to achieve this and can have any number of branches,
+see the
+:ref:`three-way switch example <user_guide.graph_branching.three_way_switch>`
+for more details.
+
+
+Recovery Tasks
+^^^^^^^^^^^^^^
+
 Branching is often used for automatic failure recovery. Here's a simple
 example:
 
@@ -1975,6 +1987,108 @@ A more realistic example might have several tasks on each branch. The
 ``recover`` task could, via inheritance, run the same underlying code as
 ``bar``, but configured differently to avoid the failure.
 
+
+Flaky Pipelines
+^^^^^^^^^^^^^^^
+
+Another pattern for using optional outputs is to assemble chains (or pipelines)
+of tasks where the chain is terminated on task failure.
+
+Here's a simple example:
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+.. digraph:: Example
+   :align: center
+
+   a -> b [label="if a:succeeded", fontcolor="green"]
+   b -> c [label="if b:succeeded", fontcolor="green"]
+
+In Python, we might write this control flow like so:
+
+.. code-block:: python
+
+   if a():
+      if b():
+         c()
+
+Sometimes we might like to have a task at the end of the chain that runs no
+matter the outcome.
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+   a:fail? | b:fail? | c:finish => end
+
+Note, ``:finish`` is shorthand for ``:succeed? | :fail?``, so this can be
+re-written as:
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+   a:fail? | b:fail? | (c? | c:fail?) => end
+
+.. digraph:: Example
+   :align: center
+
+   a -> b -> c
+
+   a -> end [arrowhead="empty", style="dashed"]
+   b -> end [arrowhead="empty", style="dashed"]
+   c -> end [arrowhead="empty", style="dashed"]
+
+This arrangement may be useful for collating the results of parallel chains:
+
+.. code-block:: cylc-graph
+
+   a<x>? => b<x>? => c<x>?
+
+   a<x>:fail? | b<x>:fail? | (c<x>? | c<x>:fail?) => end<x>
+
+   end<x> => collate
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+       label = "x=1"
+       style = "dashed"
+
+       a_1 -> b_1 -> c_1
+
+       a_1 -> end_1 [arrowhead="empty", style="dashed"]
+       b_1 -> end_1 [arrowhead="empty", style="dashed"]
+       c_1 -> end_1 [arrowhead="empty", style="dashed"]
+   }
+   subgraph cluster_2 {
+       label = "x=2"
+       style = "dashed"
+
+       a_2 -> b_2 -> c_2
+
+       a_2 -> end_2 [arrowhead="empty", style="dashed"]
+       b_2 -> end_2 [arrowhead="empty", style="dashed"]
+       c_2 -> end_2 [arrowhead="empty", style="dashed"]
+
+   }
+   subgraph cluster_3 {
+       label = "x=3"
+       style = "dashed"
+
+       a_3 -> b_3 -> c_3
+
+       a_3 -> end_3 [arrowhead="empty", style="dashed"]
+       b_3 -> end_3 [arrowhead="empty", style="dashed"]
+       c_3 -> end_3 [arrowhead="empty", style="dashed"]
+   }
+
+   end_1 -> collate
+   end_2 -> collate
+   end_3 -> collate
 
 Dependencies With Multiple Optional Outputs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2077,6 +2191,8 @@ combination of success/failure for the two tasks:
 
 Try editing the ``script`` in this example to see which tasks are run.
 
+
+.. _user_guide.graph_branching.three_way_switch:
 
 Custom Outputs
 ^^^^^^^^^^^^^^
