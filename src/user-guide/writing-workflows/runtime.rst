@@ -865,5 +865,5 @@ triggers at 30 minutes after cycle point, a late event could be configured like 
 
 .. [1] The order of precedence for inheritance from multiple parents is
   determined by the `C3 algorithm
-  <https://en.wikipedia.org/wiki/C3_linearization>`_ used to find
+  <https://docs.python.org/3/howto/mro.html#python-2-3-mro>`_ used to find
   the linear method resolution order for multiple inheritance in Python.
