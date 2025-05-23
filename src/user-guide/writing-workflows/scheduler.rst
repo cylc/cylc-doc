@@ -305,6 +305,16 @@ Example:
 
    .. cylc-scope::
 
+.. tip::
+
+   If using Cylc's workflow migration functionality to implement routine
+   server reboots and you have configured timeouts, e.g, a
+   :cylc:conf:`workflow timeout <global.cylc[scheduler][events]workflow timeout>`
+   or
+   :cylc:conf:`stall timeout <global.cylc[scheduler][events]stall timeout>`,
+   make sure the period between reboots is greater than the timeout
+   as the timer will be reset when the workflow migrates.
+
 For more information see: :cylc:conf:`global.cylc[scheduler][run hosts]ranking`.
 
 .. _PlatformConfig:
