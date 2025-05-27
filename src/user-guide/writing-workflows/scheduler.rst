@@ -308,11 +308,15 @@ Example:
 .. tip::
 
    If using Cylc's workflow migration functionality to implement routine
-   server reboots and you have configured timeouts, e.g, a
-   :cylc:conf:`workflow timeout <global.cylc[scheduler][events]workflow timeout>`
-   or
-   :cylc:conf:`stall timeout <global.cylc[scheduler][events]stall timeout>`,
-   make sure the period between reboots is greater than the timeout
+   server reboots and you have
+   :ref:`configured workflows to shut down <global.cylc[scheduler][events]abort on stall timeout>`
+   after one of these timeouts:
+
+   * :cylc:conf:`workflow timeout <global.cylc[scheduler][events]workflow timeout>`,
+   * :cylc:conf:`stall timeout <global.cylc[scheduler][events]stall timeout>`,
+   * :cylc:conf:`inactivity timeout <global.cylc[scheduler][events]inactivity timeout>`.
+
+   Then make sure the period between reboots is greater than the timeout
    as the timer will be reset when the workflow migrates.
 
 For more information see: :cylc:conf:`global.cylc[scheduler][run hosts]ranking`.
