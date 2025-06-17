@@ -309,7 +309,7 @@ Example:
 
    If using Cylc's workflow migration functionality to implement routine
    server reboots and you have
-   :cylc.conf:`configured workflows to shut down <global.cylc[scheduler][events]abort on stall timeout>`
+   :cylc:conf:`configured workflows to shut down <global.cylc[scheduler][events]abort on stall timeout>`
    after one of these timeouts:
 
    * :cylc:conf:`workflow timeout <global.cylc[scheduler][events]workflow timeout>`,
