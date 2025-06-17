@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.xtriggers.xrandom &mdash; Cylc 8.4.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=ddbf4e05"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.xtriggers.xrandom</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.xtriggers.xrandom</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">random</span><span class="p">,</span> <span class="n">randint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowConfigError</span>
+
+
+<span class="n">COLORS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;indigo&quot;</span><span class="p">,</span> <span class="s2">&quot;violet&quot;</span><span class="p">]</span>
+<span class="n">SIZES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tiny&quot;</span><span class="p">,</span> <span class="s2">&quot;small&quot;</span><span class="p">,</span> <span class="s2">&quot;medium&quot;</span><span class="p">,</span> <span class="s2">&quot;large&quot;</span><span class="p">,</span> <span class="s2">&quot;huge&quot;</span><span class="p">,</span> <span class="s2">&quot;humongous&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="xrandom">
+<a class="viewcode-back" href="../../../../user-guide/writing-workflows/external-triggers.html#cylc.flow.xtriggers.xrandom.xrandom">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">xrandom</span><span class="p">(</span>
+    <span class="n">percent</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">secs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Random xtrigger, with configurable sleep and percent success.</span>
+
+<span class="sd">    Sleep for ``sec`` seconds, and report satisfied with ``percent``</span>
+<span class="sd">    likelihood.</span>
+
+<span class="sd">    The ``_`` argument is not used in the function code, but can be used to</span>
+<span class="sd">    specialize the function signature to cycle point or task.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        percent:</span>
+<span class="sd">            Percent likelihood of passing.</span>
+<span class="sd">        secs:</span>
+<span class="sd">            Seconds to sleep before starting the trigger.</span>
+<span class="sd">        _:</span>
+<span class="sd">            Used to allow users to specialize the trigger with extra</span>
+<span class="sd">            parameters.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (satisfied, results)</span>
+
+<span class="sd">        satisfied:</span>
+<span class="sd">            True if ``satisfied`` else ``False``.</span>
+<span class="sd">        results:</span>
+<span class="sd">            A dictionary containing the following keys:</span>
+
+<span class="sd">            ``COLOR``</span>
+<span class="sd">                A random colour (e.g. red, orange, ...).</span>
+<span class="sd">            ``SIZE``</span>
+<span class="sd">                A random size (e.g. small, medium, ...).</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        If the percent is zero, it returns that the trigger condition was</span>
+<span class="sd">        not satisfied, and an empty dictionary.</span>
+
+<span class="sd">        &gt;&gt;&gt; xrandom(0, 0)</span>
+<span class="sd">        (False, {})</span>
+
+<span class="sd">        If the percent is not zero, but the random percent success is not met,</span>
+<span class="sd">        then it also returns that the trigger condition was not satisfied,</span>
+<span class="sd">        and an empty dictionary.</span>
+
+<span class="sd">        &gt;&gt;&gt; import sys</span>
+<span class="sd">        &gt;&gt;&gt; mocked_random = lambda: 0.3</span>
+<span class="sd">        &gt;&gt;&gt; sys.modules[__name__].random = mocked_random</span>
+<span class="sd">        &gt;&gt;&gt; xrandom(15.5, 0)</span>
+<span class="sd">        (False, {})</span>
+
+<span class="sd">        Finally, if the percent is not zero, and the random percent success is</span>
+<span class="sd">        met, then it returns that the trigger condition was satisfied, and a</span>
+<span class="sd">        dictionary containing random colour and size as result.</span>
+
+<span class="sd">        &gt;&gt;&gt; import sys</span>
+<span class="sd">        &gt;&gt;&gt; mocked_random = lambda: 0.9</span>
+<span class="sd">        &gt;&gt;&gt; sys.modules[__name__].random = mocked_random</span>
+<span class="sd">        &gt;&gt;&gt; mocked_randint = lambda x, y: 1</span>
+<span class="sd">        &gt;&gt;&gt; sys.modules[__name__].randint = mocked_randint</span>
+<span class="sd">        &gt;&gt;&gt; xrandom(99.99, 0)</span>
+<span class="sd">        (True, {&#39;COLOR&#39;: &#39;orange&#39;, &#39;SIZE&#39;: &#39;small&#39;})</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">secs</span><span class="p">))</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">satisfied</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">percent</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>  <span class="c1"># nosec: B311</span>
+    <span class="k">if</span> <span class="n">satisfied</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;COLOR&#39;</span><span class="p">:</span> <span class="n">COLORS</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">COLORS</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)],</span>  <span class="c1"># nosec: B311</span>
+            <span class="s1">&#39;SIZE&#39;</span><span class="p">:</span> <span class="n">SIZES</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">SIZES</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>  <span class="c1"># nosec: B311</span>
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="n">satisfied</span><span class="p">,</span> <span class="n">results</span></div>
+
+
+
+<div class="viewcode-block" id="validate">
+<a class="viewcode-back" href="../../../../user-guide/writing-workflows/external-triggers.html#cylc.flow.xtriggers.xrandom.validate">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate the args that xrandom is called with.</span>
+
+<span class="sd">    Cylc calls this function automatically when parsing the workflow.</span>
+
+<span class="sd">    Here we specify the rules for args are:</span>
+
+<span class="sd">    * percent: Must be 0 ≤ x ≤ 100</span>
+<span class="sd">    * secs: Must be an integer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">percent</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;percent&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">percent</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="n">WorkflowConfigError</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;percent&#39; should be a float between 0 and 100&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">secs</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;secs&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">secs</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">WorkflowConfigError</span><span class="p">(</span><span class="s2">&quot;&#39;secs&#39; should be an integer&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jun 17, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.3";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/xtriggers/xrandom";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
