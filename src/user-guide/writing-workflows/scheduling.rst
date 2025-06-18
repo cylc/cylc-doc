@@ -2351,6 +2351,8 @@ held back, and are displayed in the GUI/Tui with a small circle above them.
 
    Tasks in the :term:`n>=1 window <n-window>` are not displayed as runahead
    limited; they form the future graph and are not yet being actively limited.
+   (Note this goes for all tasks downstream of actively limited ones, not just
+   those in future cycles).
 
 As the workflow advances and active cycles complete, the runahead limit moves
 forward allowing tasks in later cycles to run.
@@ -2385,13 +2387,19 @@ is four cycles after this (i.e. cycle 4). So the task ``foo`` will immediately
 submit in cycles 1, 2, 3 and 4, however, the tasks in cycles 5 onwards will
 wait until earlier cycles complete, and the runahead limit advances.
 
-* 1 |task-submitted| - **initial cycle point**
-* 2 |task-submitted|
-* 3 |task-submitted|
-* 4 |task-submitted| - **runahead limit**
-* 5 |task-runahead-super| (held back by runahead limit)
-* 6 |task-runahead-super| (held back by runahead limit)
-* X |task-runahead-super| (held back by runahead limit)
+* 1 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2 |task-submitted| - active task
+* 3 |task-submitted| - active task
+* 4 |task-submitted| - active task
+* 5 |task-runahead-super| - active task, held back by the **runahead limit**
+* 6 |task-waiting| - (future task, beyond the runahead limit)
+* ...
+
+.. note::
+
+   Depending on graph structure and :term:`n-window extent <n-window>` you
+   may see tasks beyond the runahead limit displayed as waiting. They form
+   the future graph and are not yet actively runahead limited.
 
 As the workflow advances and earlier cycles complete, the runahead limit
 moves on. E.G. Once the cycles 1 & 2 have completed, the runahead limit will
@@ -2412,13 +2420,13 @@ interval, so if we change the cycling interval from ``P1`` to ``P2Y``:
 Then, the task ``foo`` would submit immediately in the cycles 1, 3, 5 and 7.
 Cycles from 9 onwards will be held back.
 
-* 2000 |task-submitted| - **initial cycle point**
-* 2002 |task-submitted|
-* 2004 |task-submitted|
-* 2006 |task-submitted| - **runahead limit**
-* 2008 |task-runahead-super| (held back by runahead limit)
-* 2010 |task-runahead-super| (held back by runahead limit)
-* XXXX |task-runahead-super| (held back by runahead limit)
+* 2000 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2002 |task-submitted| - active task
+* 2004 |task-submitted| - active task
+* 2006 |task-submitted| - active task
+* 2008 |task-runahead-super| - active task, held back by the **runahead limit**
+* 2010 |task-waiting| - (future task, beyond the runahead limit)
+* ...
 
 
 Datetime Format
@@ -2438,12 +2446,12 @@ This approach *does* depend on the cycling intervals, e.g:
 
 When this workflow starts, the task foo in the first three cycles will run:
 
-* 2000 |task-submitted| - **initial cycle point**
-* 2002 |task-submitted|
-* 2004 |task-submitted| - **runahead limit**
-* 2006 |task-runahead-super| (held back by runahead limit)
-* 2008 |task-runahead-super| (held back by runahead limit)
-* XXXX |task-runahead-super| (held back by runahead limit)
+* 2000 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2002 |task-submitted| - active task
+* 2004 |task-submitted| - active task
+* 2006 |task-runahead-super| - active task, held back by the **runahead limit**
+* 2008 |task-waiting| - (future task, beyond the runahead limit)
+* ...
 
 
 Runahead Limit Notes
