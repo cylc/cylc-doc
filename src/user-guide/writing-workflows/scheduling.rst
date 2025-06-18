@@ -1935,8 +1935,7 @@ The ``?`` symbol denotes an :term:`optional output` which allows the graph to
 branch.
 
 Note the last line of the graph ``c | r => d`` allows the graph to
-continue on to ``d`` regardless of the path taken. This is an :term:`artificial
-dependency`.
+continue on to ``d`` regardless of the path taken.
 
 This is a simple example of a "switch" pattern, the task ``b`` being the switch
 in this case, the ``succeeded`` / ``failed`` outputs deciding which pathway
