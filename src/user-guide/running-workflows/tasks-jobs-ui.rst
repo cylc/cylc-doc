@@ -101,7 +101,7 @@ given "modifier" icons which appear to the top-left of the task icon:
    * - .. image:: ../../img/task-job-icons/task-isWallclock.png
           :width: 60px
           :height: 60px
-     - **Queued:** Task is waiting for a :term:`clock trigger`.
+     - **Wallclock:** Task is waiting for a :term:`clock trigger`.
    * - .. image:: ../../img/task-job-icons/task-isXtriggered.png
           :width: 60px
           :height: 60px
