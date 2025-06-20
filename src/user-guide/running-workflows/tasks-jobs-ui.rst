@@ -93,7 +93,7 @@ given "modifier" icons which appear to the top-left of the task icon:
    * - .. image:: ../../img/task-job-icons/task-isQueued.png
           :width: 60px
           :height: 60px
-     - **Queued:** Task is waiting to :term:`retry`.
+     - **Queued:** Task has been held back by an :term:`internal queue`.
    * - .. image:: ../../img/task-job-icons/task-isRetry.png
           :width: 60px
           :height: 60px
