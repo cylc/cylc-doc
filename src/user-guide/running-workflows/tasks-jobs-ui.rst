@@ -105,7 +105,7 @@ given "modifier" icons which appear to the top-left of the task icon:
    * - .. image:: ../../img/task-job-icons/task-isXtriggered.png
           :width: 60px
           :height: 60px
-     - **Queued:** Task is waiting for an :term:`xtrigger`.
+     - **Xtriggered:** Task is waiting for an :term:`xtrigger`.
 
 
 .. _n-window:
