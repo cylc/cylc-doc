@@ -142,7 +142,7 @@ Re-Run All Failed Tasks
 
       .. code-block:: console
 
-         $ cylc trigger <workflow>:failed
+         $ cylc trigger <workflow>//*:failed
 
 
 .. _interventions.set-task-outputs:
