@@ -17,7 +17,7 @@ Workflow Events
 
 There are two types of event in Cylc:
 
-* workflow events e.g. ``startup`` and ``shutdown``, which pertain to the :term:`scheduler` 
+* workflow events e.g. ``startup`` and ``shutdown``, which pertain to the :term:`scheduler`
 * task events e.g. ``submitted`` and ``failed``, which pertain to :term:`tasks <task>`.
 
 This section covers workflow events, for
@@ -66,7 +66,16 @@ Some workflow events have related configurations e.g. for setting the timeout.
    :Event Handler: `abort handlers`
 
    The scheduler shut down early with error status, due to a fatal error
-   condition or a configured timeout.
+   condition.
+
+   .. note::
+
+      Not to be confused with ``abort on <event>`` settings.
+      The ``abort`` event is not raised when any such configured event occurs.
+
+   .. versionchanged:: 8.0.0
+
+      This event was previously called ``aborted``.
 
 .. describe:: workflow timeout
 
@@ -79,7 +88,7 @@ Some workflow events have related configurations e.g. for setting the timeout.
    The timer starts counting down at scheduler startup. It resets on workflow
    restart.
 
-   Note, the ``abort`` event is not raised by "Abort On Event" handlers.
+   .. versionadded:: 8.0.0
 
 .. describe:: stall
 
@@ -90,6 +99,10 @@ Some workflow events have related configurations e.g. for setting the timeout.
 
    E.G. a task failure is blocking the pathway through the graph.
 
+   .. versionchanged:: 8.0.0
+
+      This event was previously called ``stalled``.
+
 .. describe:: stall timeout
 
    :Configuration: `stall timeout`
@@ -97,6 +110,10 @@ Some workflow events have related configurations e.g. for setting the timeout.
    :Abort On Event: `abort on stall timeout`
 
    The workflow timed out after stalling.
+
+   .. versionchanged:: 8.0.0
+
+      This event was previously called ``timeout``.
 
 .. describe:: inactivity timeout
 
@@ -110,6 +127,10 @@ Some workflow events have related configurations e.g. for setting the timeout.
    This can be useful for system administrators to help catch workflows which
    have become stalled on external conditions or system issues.
 
+   .. versionchanged:: 8.0.0
+
+      This event was previously called ``inactivity``.
+
 .. describe:: restart timeout
 
    :Configuration: `restart timeout`
@@ -117,6 +138,8 @@ Some workflow events have related configurations e.g. for setting the timeout.
    If a workflow that has run to completion is restarted, the scheduler will
    have nothing to do so will shut down. This timeout gives the user a grace
    period in which to trigger new tasks to continue the workflow run.
+
+   .. versionadded:: 8.2.0
 
 .. cylc-scope::
 
