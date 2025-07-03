@@ -94,7 +94,18 @@ given "modifier" icons which appear to the top-left of the task icon:
           :width: 60px
           :height: 60px
      - **Queued:** Task has been held back by an :term:`internal queue`.
-
+   * - .. image:: ../../img/task-job-icons/task-isRetry.png
+          :width: 60px
+          :height: 60px
+     - **Retry:** Task is waiting to :term:`retry`.
+   * - .. image:: ../../img/task-job-icons/task-isWallclock.png
+          :width: 60px
+          :height: 60px
+     - **Wallclock:** Task is waiting for a :term:`clock trigger`.
+   * - .. image:: ../../img/task-job-icons/task-isXtriggered.png
+          :width: 60px
+          :height: 60px
+     - **Xtriggered:** Task is waiting for an :term:`xtrigger`.
 
 
 .. _n-window:
