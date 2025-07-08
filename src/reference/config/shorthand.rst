@@ -1,4 +1,5 @@
-We often use a compact single-line notation to refer to nested config items:
+In the documentation, we often use a compact single-line notation to refer to
+nested config items, where we drop the additional brackets at each level:
 
 ``[section]``
    An entire section.
@@ -6,7 +7,8 @@ We often use a compact single-line notation to refer to nested config items:
    A setting within a section.
 ``[section]setting=value``
    The value of a setting within a section.
-``[section][sub-section]another-setting``
+``[section][sub section]another setting``
    A setting within a sub-section.
 
-In the file, however, section headings need additional brackets at each level.
+This is purely for making it easier to refer to items; they cannot be written
+this way in the ``flow.cylc`` file.
