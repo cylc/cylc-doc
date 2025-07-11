@@ -55,10 +55,10 @@ Example
                String
            """
 
-Shorthand
-^^^^^^^^^
+.. admonition:: Shorthand
+   :class: tip
 
-.. include:: ../../reference/config/shorthand.rst
+   .. include:: ../../reference/config/shorthand.rst
 
 Duplicate Items
 ^^^^^^^^^^^^^^^
