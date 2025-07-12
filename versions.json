@@ -3,6 +3,12 @@
         "slides",
         "html"
     ],
+    "8.4.3": [
+        "html"
+    ],
+    "8.4.2": [
+        "html"
+    ],
     "7.8.8": [
         "singlehtml",
         "html"
@@ -10,30 +16,27 @@
     "8.4.0": [
         "html"
     ],
-    "8.2.5": [
-        "html"
-    ],
     "7.9.3": [
         "singlehtml",
         "html"
     ],
-    "8.4.2": [
+    "8.3.4": [
+        "html"
+    ],
+    "8.2.5": [
         "html"
     ],
     "8.1.4": [
         "slides",
         "html"
     ],
-    "8.3.4": [
-        "html"
-    ],
-    "8.4.3": [
-        "html"
-    ],
     "stable": [
         "html"
     ],
     "latest": [
+        "html"
+    ],
+    "nightly_8.4": [
         "html"
     ],
     "nightly_8.5": [
