@@ -14,7 +14,7 @@ Scheduler Stall
 
 A workflow has stalled if:
 
-* No tasks are waiting on unstatisfied external events, like clock triggers and xtriggers.
+* No tasks are waiting on unsatisfied external events, like clock triggers and xtriggers.
 * AND All activity has ceased.
 * AND The workflow has not run to completion.
 
@@ -40,6 +40,6 @@ manual intervention.
 
 .. seealso::
 
-   * :cylc:conf:`[scheduler][events]stall timeout`  
-   * :cylc:conf:`[scheduler][events]abort on stall timeout`  
-   * :cylc:conf:`[scheduler][events]stall handlers`  
+   * :cylc:conf:`[scheduler][events]stall timeout`
+   * :cylc:conf:`[scheduler][events]abort on stall timeout`
+   * :cylc:conf:`[scheduler][events]stall handlers`

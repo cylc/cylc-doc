@@ -91,13 +91,13 @@ Glossary
    n-window
       The GUI provides a view of the workflow extending ``n`` graph edges out
       from :term:`active tasks <active task>` - which form the ``n=0``
-      window. The default n-window extent is ``n=1``. 
+      window. The default n-window extent is ``n=1``.
 
    active cycle
       A cycle point is considered to be active if it contains any
       :term:`active tasks <active task>`.
 
-     Active cycles count toward the :term:`runahead limit`.
+      Active cycles count toward the :term:`runahead limit`.
 
       .. seealso::
 
@@ -1408,7 +1408,7 @@ Glossary
 
    output completion
    output completion condition
-      A task's outputs are *complete* if its *output completion condition* 
+      A task's outputs are *complete* if its *output completion condition*
       is satisfied.
 
       The completion condition can be defined by the user in
@@ -1484,7 +1484,7 @@ Glossary
       are known as :term:`message triggers <message trigger>`.
 
       The term "trigger" also refers the action of manually triggering
-      a task to run, via the ``cylc trigger`` command or the GUI. 
+      a task to run, via the ``cylc trigger`` command or the GUI.
 
 
    message trigger
@@ -1578,7 +1578,7 @@ Glossary
    stall
    stalled workflow
       A stalled workflow has not :ref:`run to completion <workflow completion>`
-      but cannot continue without manual intervention. 
+      but cannot continue without manual intervention.
 
       A stalled scheduler stays alive for a configurable timeout period
       pending manual intervention. If it shuts down (on the stall timeout
@@ -1735,7 +1735,7 @@ Glossary
    runahead limit
    runahead
       In a :term:`cycling workflow` the runahead limit determines how
-      far ahead, in :term:`cycle points <cycle point>`, activity can 
+      far ahead, in :term:`cycle points <cycle point>`, activity can
       extend beyond the earliest submitted or running tasks.
 
       .. seealso::
