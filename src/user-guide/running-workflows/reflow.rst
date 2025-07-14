@@ -12,7 +12,7 @@ As a flow advances, upcoming tasks run only if they have not already run in
 the same flow.
 
 At start-up the :term:`scheduler` automatically triggers the first flow from
-the start of the graph. 
+the start of the graph.
 
 By default, manually triggered tasks "belong to" the existing flow(s), but you
 can also choose to start new flows by triggering tasks anywhere in the graph.
@@ -124,7 +124,7 @@ Triggering with No Active Flows
 
 Special Case: Triggering ``n=0`` (:term:`active tasks <active task>`)
    Active tasks already have flow membership assigned.
-   Flow numbers are inherited, on entering the active wndow, from parent
+   Flow numbers are inherited, on entering the active window, from parent
    (upstream) tasks in the graph.
 
    - Triggering a task with a submitted or running job has no effect
@@ -186,7 +186,7 @@ Regenerating Outputs Behind a Flow
    of the graph, and you do not want it to carry on indefinitely.
 
 Rewinding a Workflow
-   To rewind the workflow to an earlier point, perhaps to regenerate data and/or 
+   To rewind the workflow to an earlier point, perhaps to regenerate data and/or
    allow the workflow to evolve a new path into the future, trigger a new
    flow at the right place and then stop the original flow.
 
