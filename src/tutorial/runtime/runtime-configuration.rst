@@ -425,7 +425,7 @@ Start, Stop, Restart
 
       * The longitude of the weather station;
       * The latitude of the weather station;
-      * The wind direction (*the direction the wind is blowing towards*)
+      * The wind direction (*the direction the wind is coming from*)
         in degrees;
       * The wind speed in miles per hour.
 
