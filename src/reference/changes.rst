@@ -37,6 +37,17 @@ Cylc 8.5
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
 
+Compatibility Mode
+^^^^^^^^^^^^^^^^^^
+
+:ref:`Cylc 7 compatibility mode <cylc_7_compat_mode>` has been deprecated, it
+will be removed in Cylc 8.7.0 which is expected to be released some time in the
+first half of 2026.
+
+Any workflows that are still using ``suite.rc`` files will need to be upgraded
+to ``flow.cylc`` before they are able to run with 8.7.0.
+
+
 Cylc Tui
 ^^^^^^^^
 

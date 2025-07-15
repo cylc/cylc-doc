@@ -5,14 +5,6 @@ There are a few Cylc 7 features which do not yet have direct replacements in
 Cylc 8. These features will be re-implemented in future releases.
 
 
-Cylc Flow
----------
-
-Multiple Flows
-   The new :term:`scheduler` can manage multiple flows in the workflow graph.
-   Commands and options for interacting with flows are still being refined.
-
-
 Browser Based UI
 ----------------
 
@@ -39,14 +31,6 @@ Installing Workflows
    :term:`source workflows <source directory>` in the UI.
 Rose Edit
    Rose Edit is awaiting reimplementation.
-Xtrigger Visibility
-   Xtriggers are not yet visible in the UI.
-
-   * https://github.com/cylc/cylc-ui/issues/331
-Documentation / Orientation Guide
-   Some form of documentation will be provided within the UI itself.
-
-   * https://github.com/cylc/cylc-ui/issues/155
 
 
 UI Server
