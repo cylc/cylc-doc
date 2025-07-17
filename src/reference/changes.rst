@@ -37,6 +37,32 @@ Cylc 8.5
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
 
+Triggering Multiple Tasks
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc now respects the dependencies between tasks when triggering multiple
+tasks at the same time. This provides an easy way to re-run a group of tasks
+in order:
+
+.. image:: ../reference/changes/group-trigger.gif
+   :align: center
+   :width: 65%
+
+|
+
+This is generally easier than :ref:`using a new flow <interventions.reflow>`.
+
+Technical details:
+
+* Prerequisites on any tasks that are outside of the group of tasks being
+  triggered are automatically satisfied.
+* Any tasks which have already run within the group will be automatically
+  removed (i.e. ``cylc remove``) to allow them to be re-run without
+  intervention.
+* Any preparing, submitted or running tasks within the group will also be
+  removed if necessary to allow the tasks to re-run in order.
+
+
 Compatibility Mode
 ^^^^^^^^^^^^^^^^^^
 
@@ -64,6 +90,7 @@ to change which tool is used.
 
    Make sure your configured command waits for the tool to be closed before
    exiting, e.g. use ``GEDITOR=gvim -f`` rather than ``EDITOR=gvim``.
+
 
 Cylc Reload
 ^^^^^^^^^^^
