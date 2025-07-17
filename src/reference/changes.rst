@@ -63,6 +63,31 @@ Technical details:
   removed if necessary to allow the tasks to re-run in order.
 
 
+Warning Triangles
+^^^^^^^^^^^^^^^^^
+
+The GUI now has warning triangles, these illuminate whenever warnings occur in
+the workflow.
+
+* Cylc logs warnings for various things such as task failures, stalled
+  workflows, and command errors. You can see these in the workflow log files.
+* When warnings occur, the warning triangle will illuminate for the
+  corresponding workflow.
+* Hover over the icon to reveal the warning.
+* Click on the icon to dismiss the warning.
+* If workflows are installed hierarchically, (e.g. the "development" and
+  "live" groups in this example), warnings will trickle up the hierarchy
+  to make it easier to monitor groups of workflows.
+* A log of all warnings can be found on the Dashboard page (last 10 warnings
+  for each workflow).
+
+.. image:: ../reference/changes/warning-triangles.gif
+   :align: center
+   :width: 95%
+
+|
+
+
 "Ghost" Tasks
 ^^^^^^^^^^^^^
 
