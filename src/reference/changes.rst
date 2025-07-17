@@ -63,6 +63,38 @@ Technical details:
   removed if necessary to allow the tasks to re-run in order.
 
 
+"Ghost" Tasks
+^^^^^^^^^^^^^
+
+The GUI and Tui now present some tasks in grey:
+
+.. image:: ../reference/changes/ghost-tasks.png
+   :align: center
+   :width: 65%
+
+|
+
+These are "ghost" tasks, they indicate something is that isn't presently there:
+
+* Waiting tasks that the scheduler hasn't moved onto yet (i.e.
+  :term:`inactive tasks <active task>` that are waiting).
+* Tasks which have been removed (i.e. ``cylc remove``).
+* Tasks which have been triggered in the ``none`` flow, so don't influence
+  the evolution of the workflow.
+
+They appear in grey, if you click on these tasks, you will see the text
+"Flows: None".
+
+This helps to identify waiting :term:`active tasks <active task>`
+(which aren't ghosts).
+These are the tasks which Cylc is currently trying to schedule, but are waiting
+for something, typically:
+
+* A task prerequisite to be satisfied.
+* An xtrigger or ext-trigger to be satisfied.
+* Someone to :term:`resume <held task>` them.
+
+
 Compatibility Mode
 ^^^^^^^^^^^^^^^^^^
 
