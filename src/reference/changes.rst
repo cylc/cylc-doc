@@ -148,6 +148,23 @@ tab, the layout would be lost.
 With Cylc 8.5, the layout will always be restored.
 
 
+GUI Log View
+^^^^^^^^^^^^^
+
+The GUI now picks the default job log file to display based on the task state:
+
+* failed -> ``job.err``
+* submit-failed -> ``job-activity.log``
+* otherwise -> ``job.out``
+
+This speeds up the loading of the log file because the GUI doesn't have to
+wait for a listing of available log files before picking one to view.
+
+Additionally, the log view now has an auto scroll feature which follows the
+end of the file (useful for viewing the file whilst it is being written), and
+a scroll-to-top button.
+
+
 Cylc Tui
 ^^^^^^^^
 
