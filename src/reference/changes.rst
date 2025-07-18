@@ -199,6 +199,32 @@ This largely replicates the functionality of the Rose :envvar:`ROSE_DATAC`
 environment variable, but does not require the use of ``rose task-env``.
 
 
+Cylc UI Server
+^^^^^^^^^^^^^^
+
+The dependency stack of the Cylc UI Server (used to serve the Cylc GUI) has
+been overhauled.
+
+This allows the UI Server to be installed with newer versions of Python then
+the old dependency stack allowed.
+
+* Previously the UI Server worked with Python 3.8-3.9.
+* It now works with Python 3.9 or higher.
+
+This will likely bring efficiency improvements.
+
+Additionally, the Cylc UI Server has now been configured to send "heartbeat"
+pings down its open websocket connections. This helps to prevent web proxies
+from closing Cylc GUI connections when workflows are idle, preventing erroneous
+GUI disconnects.
+
+For more information see the
+`Cylc configuration <https://github.com/cylc/cylc-uiserver/blob/3ab99ecec09077132fa912d0752a06b14764f05d/cylc/uiserver/jupyter_config.py#L63-L66>`_
+and the docs for the ``websocket_ping_interval`` and ``websocket_ping_timeout``
+configurations in
+`tornado <https://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings>`_.
+
+
 Cylc 8.4
 --------
 
