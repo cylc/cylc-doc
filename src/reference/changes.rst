@@ -39,7 +39,7 @@ Cylc 8.5
 More task information in the GUI (and Tui)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Task now icons in the GUI and TUI have modifier badges for tasks waiting for:
+Task now icons in the GUI and TUI have badges for tasks waiting for:
 
 * retries |task-retry|
 * xtriggers |task-xtriggered|
