@@ -152,7 +152,7 @@ Re-Run A Task And Everything After It
 
 .. warning::
 
-   Be aware that tasks which have previously run, will not have run in the
+   Tasks which have run before your trigger command will not have run in the
    new flow. As a result, you may want to manually set task outputs to allow
    the new flow to continue.
 

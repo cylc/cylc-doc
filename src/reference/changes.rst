@@ -68,7 +68,7 @@ Technical details:
 Warning Triangles
 ^^^^^^^^^^^^^^^^^
 
-The GUI now has warning triangles, these illuminate whenever warnings occur in
+The GUI now has warning triangles, these "light up" whenever warnings occur in
 the workflow.
 
 * Cylc logs warnings for various things such as task failures, stalled
