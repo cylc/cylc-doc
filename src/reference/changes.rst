@@ -49,6 +49,8 @@ Xtrigger, wallclock trigger, retry trigger and task run mode are now
 shown in the information view:
 
 .. image:: ../img/info-view.xtriggers.png
+   :align: center
+   :width: 65%
 
 Cylc Tui
 ^^^^^^^^
