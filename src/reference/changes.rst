@@ -133,6 +133,21 @@ Any workflows that are still using ``suite.rc`` files will need to be upgraded
 to ``flow.cylc`` before they are able to run with 8.7.0.
 
 
+GUI Layout
+^^^^^^^^^^
+
+The Cylc GUI now preserves tab layout between sessions.
+
+When working on a workflow, we can open multiple tabs (tree, table, graph, etc)
+and tile them up in a layout. If you switch to another workflow, switch back,
+your layout will be restored.
+
+However, with Cylc 8.4, if you refreshed the browser or opened the GUI in a new
+tab, the layout would be lost.
+
+With Cylc 8.5, the layout will always be restored.
+
+
 Cylc Tui
 ^^^^^^^^
 
