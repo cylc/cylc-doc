@@ -45,7 +45,7 @@ Task now icons in the GUI and TUI have badges for tasks waiting for:
 * xtriggers |task-xtriggered|
 * wallclock |task-wallclock|
 
-Xtrigger, wallclock trigger, retry trigger and task run mode are now
+Xtriggers, wallclock triggers, retry triggers and task run mode are now
 shown in the information view:
 
 .. image:: ../img/info-view.xtriggers.png
