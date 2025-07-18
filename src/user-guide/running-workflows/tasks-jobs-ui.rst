@@ -81,20 +81,19 @@ given "modifier" icons which appear to the top-left of the task icon:
    :align: left
    :widths: 20, 80
 
-   * - .. image:: ../../img/task-job-icons/task-isHeld.png
-          :width: 60px
-          :height: 60px
+   * - |task-held-large|
      - **Held:** Task has been manually :term:`held <held task>` back from
        running.
-   * - .. image:: ../../img/task-job-icons/task-isRunahead.png
-          :width: 60px
-          :height: 60px
+   * - |task-runahead-large|
      - **Runahead:** Task is held back by the :term:`runahead limit`.
-   * - .. image:: ../../img/task-job-icons/task-isQueued.png
-          :width: 60px
-          :height: 60px
+   * - |task-queued-large|
      - **Queued:** Task has been held back by an :term:`internal queue`.
-
+   * - |task-retry-large|
+     - **Retry:** Task is waiting to :term:`retry`.
+   * - |task-wallclock-large|
+     - **Wallclock:** Task is waiting for a :term:`clock trigger`.
+   * - |task-xtriggered-large|
+     - **Xtriggered:** Task is waiting for an :term:`xtrigger`.
 
 
 .. _n-window:

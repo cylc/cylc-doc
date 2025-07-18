@@ -36,6 +36,21 @@ Cylc 8.5
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
+More task information in the GUI (and Tui)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Task now icons in the GUI and TUI have badges for tasks waiting for:
+
+* retries |task-retry|
+* xtriggers |task-xtriggered|
+* wallclock |task-wallclock|
+
+Xtriggers, wallclock triggers, retry triggers and task run mode are now
+shown in the information view:
+
+.. image:: ../img/info-view.xtriggers.png
+   :align: center
+   :width: 65%
 
 Compatibility Mode
 ^^^^^^^^^^^^^^^^^^
