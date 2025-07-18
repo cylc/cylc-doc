@@ -187,6 +187,18 @@ task success) which is more consistent with the behaviour for tasks where
 success is required.
 
 
+Cycle Share Directory
+^^^^^^^^^^^^^^^^^^^^^
+
+A new per-cycle share directory has been added, ``share/cycle/<cycle>``.
+
+This directory is now automatically created and provides a convenient location
+for tasks to share cycle-specific data. See also :ref:`Shared Task IO Paths`.
+
+This largely replicates the functionality of the Rose :envvar:`ROSE_DATAC`
+environment variable, but does not require the use of ``rose task-env``.
+
+
 Cylc 8.4
 --------
 
