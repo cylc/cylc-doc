@@ -63,6 +63,8 @@ Technical details:
   removed if necessary to allow the tasks to re-run in order.
 
 
+.. _changes.warning_triangles:
+
 Warning Triangles
 ^^^^^^^^^^^^^^^^^
 
