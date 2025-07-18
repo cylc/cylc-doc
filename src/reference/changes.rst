@@ -142,6 +142,8 @@ Cylc Tui
    :align: center
    :width: 65%
 
+|
+
 Configure your ``$EDITOR``, ``$GEDITOR`` and ``$PAGER`` environment variables
 to change which tool is used.
 
@@ -149,6 +151,9 @@ to change which tool is used.
 
    Make sure your configured command waits for the tool to be closed before
    exiting, e.g. use ``GEDITOR=gvim -f`` rather than ``EDITOR=gvim``.
+
+Additionally, Tui now displays task states and :term:`flow` numbers in
+context menus for improved clarity / accessibility.
 
 
 Cylc Reload
