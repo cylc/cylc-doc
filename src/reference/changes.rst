@@ -168,6 +168,25 @@ settings for an in-progress workflow.
     :ref:`global-configuration`
 
 
+Cylc Set
+^^^^^^^^
+
+The ``cylc set`` command can now be used to satisfy xtrigger prerequisites.
+For example if the task ``2026/get_data`` is
+:term:`clock triggered <clock trigger>`, you might satisfy this prerequisite
+like so:
+
+.. code-block:: console
+
+   $ cylc set myworkflow//2026/get_data --pre xtrigger/wall_clock
+
+The default behaviour of the ``cylc set`` command has also changed for tasks
+where success is :term:`optional <optional output>`, it will now set the
+``succeeded`` output (and any other outputs that are required in the event of
+task success) which is more consistent with the behaviour for tasks where
+success is required.
+
+
 Cylc 8.4
 --------
 
