@@ -88,12 +88,48 @@ Re-Run a Task
          $ cylc trigger <workflow>//<task>
 
 
+.. _interventions.re-run-multiple-tasks:
+
 Re-Run Multiple Tasks
 ---------------------
 
 :Example:
-   I need to make changes to a task, then re-run it and everything downstream
-   of it.
+   I need to re-run a few tasks in order.
+
+:Solution:
+   Determine the tasks you want to re-run and trigger all of them at the
+   same time.
+
+   We often want to
+   :ref:`edit the tasks configuration <interventions.edit-a-tasks-configuration>`
+   before doing this.
+
+.. tab-set::
+
+   .. tab-item:: GUI
+      :sync: gui
+
+      .. image:: ./../../reference/changes/group-trigger.gif
+         :width: 75%
+
+   .. tab-item:: CLI
+      :sync: gui
+
+      .. code-block:: console
+
+         $ cylc trigger <workflow>// \
+         >   //<cycle-1>/<task-2> \
+         >   //<cycle-2>/<task-2> \
+         >   ...
+
+
+.. _interventions.reflow:
+
+Re-Run A Task And Everything After It
+-------------------------------------
+
+:Example:
+   I want to reconfigure a task, then re-run it and all tasks downstream of it.
 
 :Solution:
    :ref:`Edit the tasks configuration <interventions.edit-a-tasks-configuration>`,
@@ -104,7 +140,7 @@ Re-Run Multiple Tasks
    .. tab-item:: GUI
       :sync: gui
 
-      .. image:: re-run-multiple-tasks.gui.gif
+      .. image:: reflow.gui.gif
          :width: 75%
 
    .. tab-item:: CLI
@@ -113,6 +149,17 @@ Re-Run Multiple Tasks
       .. code-block:: console
 
          $ cylc trigger --flow=new <workflow>//<cycle>/<task>
+
+.. warning::
+
+   Tasks which have run before your trigger command will not have run in the
+   new flow. As a result, you may want to manually set task outputs to allow
+   the new flow to continue.
+
+   You can achieve this by setting the
+   :ref:`outputs <interventions.set-task-outputs>` of these tasks, or
+   satisfying the :ref:`prerequisites <interventions.set-task-prerequisites>`
+   of the tasks in the new flow.
 
 
 Re-Run All Failed Tasks

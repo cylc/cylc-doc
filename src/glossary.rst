@@ -1373,7 +1373,7 @@ Glossary
      Every :term:`task` has a set of standard :term:`outputs <task output>`
      that trigger :term:`task state` changes:
 
-      - ``:expired```
+      - ``:expired``
       - ``:submitted``, or ``:submit-failed``
       - ``:started``
       - ``:succeeded``, or ``:failed``
@@ -1600,6 +1600,10 @@ Glossary
 
       User intervention is required to fix a stall, e.g. by retriggering
       tasks after fixing the problems that caused them to fail.
+
+      .. seealso:
+
+         * :ref:`Cylc User Guide <scheduler stall>`
 
 
    suicide trigger

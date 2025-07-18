@@ -92,6 +92,8 @@ Some workflow events have related configurations e.g. for setting the timeout.
 
 .. describe:: stall
 
+   .. _user_guide.workflow_events.stall:
+
    :Event Handler: `stall handlers`
 
    The workflow :term:`stalled <stall>` (i.e. the scheduler cannot make any
