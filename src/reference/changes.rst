@@ -52,6 +52,91 @@ shown in the information view:
    :align: center
    :width: 65%
 
+Triggering Multiple Tasks
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc now respects the dependencies between tasks when triggering multiple
+tasks at the same time. This provides an easy way to re-run a group of tasks
+in order:
+
+.. image:: ../reference/changes/group-trigger.gif
+   :align: center
+   :width: 65%
+
+|
+
+This is generally easier than :ref:`using a new flow <interventions.reflow>`.
+
+Technical details:
+
+* Prerequisites on any tasks that are outside of the group of tasks being
+  triggered are automatically satisfied.
+* Any tasks which have already run within the group will be automatically
+  removed (i.e. ``cylc remove``) to allow them to be re-run without
+  intervention.
+* Any preparing, submitted or running tasks within the group will also be
+  removed if necessary to allow the tasks to re-run in order.
+
+
+.. _changes.warning_triangles:
+
+Warning Triangles
+^^^^^^^^^^^^^^^^^
+
+The GUI now has warning triangles, these "light up" whenever warnings occur in
+the workflow.
+
+* Cylc logs warnings for various things such as task failures, stalled
+  workflows, and command errors. You can see these in the workflow log files.
+* When warnings occur, the warning triangle will illuminate for the
+  corresponding workflow.
+* Hover over the icon to reveal the warning.
+* Click on the icon to dismiss the warning.
+* If workflows are installed hierarchically, (e.g. the "development" and
+  "live" groups in this example), warnings will trickle up the hierarchy
+  to make it easier to monitor groups of workflows.
+* A log of all warnings can be found on the Dashboard page (last 10 warnings
+  for each workflow).
+
+.. image:: ../reference/changes/warning-triangles.gif
+   :align: center
+   :width: 95%
+
+|
+
+
+"Ghost" Tasks
+^^^^^^^^^^^^^
+
+The GUI and Tui now present some tasks in grey:
+
+.. image:: ../reference/changes/ghost-tasks.png
+   :align: center
+   :width: 65%
+
+|
+
+These are "ghost" tasks, they indicate something is that isn't presently there:
+
+* Waiting tasks that the scheduler hasn't moved onto yet (i.e.
+  :term:`inactive tasks <active task>` that are waiting).
+* Tasks which have been removed (i.e. ``cylc remove``).
+* Tasks which have been triggered in the ``none`` flow, so don't influence
+  the evolution of the workflow.
+
+They appear in grey, if you click on these tasks, you will see the text
+"Flows: None".
+
+This helps to identify waiting :term:`active tasks <active task>`
+(which aren't ghosts).
+These are the tasks which Cylc is currently trying to schedule, but are waiting
+for something, typically:
+
+* A task prerequisite to be satisfied.
+* An xtrigger or ext-trigger to be satisfied.
+* Someone to :term:`resume <held task>` them.
+
+
 Compatibility Mode
 ^^^^^^^^^^^^^^^^^^
 
@@ -63,6 +148,38 @@ Any workflows that are still using ``suite.rc`` files will need to be upgraded
 to ``flow.cylc`` before they are able to run with 8.7.0.
 
 
+GUI Layout
+^^^^^^^^^^
+
+The Cylc GUI now preserves tab layout between sessions.
+
+When working on a workflow, we can open multiple tabs (tree, table, graph, etc)
+and tile them up in a layout. If you switch to another workflow, switch back,
+your layout will be restored.
+
+However, with Cylc 8.4, if you refreshed the browser or opened the GUI in a new
+tab, the layout would be lost.
+
+With Cylc 8.5, the layout will always be restored.
+
+
+GUI Log View
+^^^^^^^^^^^^^
+
+The GUI now picks the default job log file to display based on the task state:
+
+* failed -> ``job.err``
+* submit-failed -> ``job-activity.log``
+* otherwise -> ``job.out``
+
+This speeds up the loading of the log file because the GUI doesn't have to
+wait for a listing of available log files before picking one to view.
+
+Additionally, the log view now has an auto scroll feature which follows the
+end of the file (useful for viewing the file whilst it is being written), and
+a scroll-to-top button.
+
+
 Cylc Tui
 ^^^^^^^^
 
@@ -72,6 +189,8 @@ Cylc Tui
    :align: center
    :width: 65%
 
+|
+
 Configure your ``$EDITOR``, ``$GEDITOR`` and ``$PAGER`` environment variables
 to change which tool is used.
 
@@ -79,6 +198,10 @@ to change which tool is used.
 
    Make sure your configured command waits for the tool to be closed before
    exiting, e.g. use ``GEDITOR=gvim -f`` rather than ``EDITOR=gvim``.
+
+Additionally, Tui now displays task states and :term:`flow` numbers in
+context menus for improved clarity / accessibility.
+
 
 Cylc Reload
 ^^^^^^^^^^^
@@ -90,6 +213,63 @@ settings for an in-progress workflow.
 .. seealso::
 
     :ref:`global-configuration`
+
+
+Cylc Set
+^^^^^^^^
+
+The ``cylc set`` command can now be used to satisfy xtrigger prerequisites.
+For example if the task ``2026/get_data`` is
+:term:`clock triggered <clock trigger>`, you might satisfy this prerequisite
+like so:
+
+.. code-block:: console
+
+   $ cylc set myworkflow//2026/get_data --pre xtrigger/wall_clock
+
+The default behaviour of the ``cylc set`` command has also changed for tasks
+where success is :term:`optional <optional output>`, it will now set the
+``succeeded`` output (and any other outputs that are required in the event of
+task success) which is more consistent with the behaviour for tasks where
+success is required.
+
+
+Cycle Share Directory
+^^^^^^^^^^^^^^^^^^^^^
+
+A new per-cycle share directory has been added, ``share/cycle/<cycle>``.
+
+This directory is now automatically created and provides a convenient location
+for tasks to share cycle-specific data. See also :ref:`Shared Task IO Paths`.
+
+This largely replicates the functionality of the Rose :envvar:`ROSE_DATAC`
+environment variable, but does not require the use of ``rose task-env``.
+
+
+Cylc UI Server
+^^^^^^^^^^^^^^
+
+The dependency stack of the Cylc UI Server (used to serve the Cylc GUI) has
+been overhauled.
+
+This allows the UI Server to be installed with newer versions of Python then
+the old dependency stack allowed.
+
+* Previously the UI Server worked with Python 3.8-3.9.
+* It now works with Python 3.9 or higher.
+
+This will likely bring efficiency improvements.
+
+Additionally, the Cylc UI Server has now been configured to send "heartbeat"
+pings down its open websocket connections. This helps to prevent web proxies
+from closing Cylc GUI connections when workflows are idle, preventing erroneous
+GUI disconnects.
+
+For more information see the
+`Cylc configuration <https://github.com/cylc/cylc-uiserver/blob/3ab99ecec09077132fa912d0752a06b14764f05d/cylc/uiserver/jupyter_config.py#L63-L66>`_
+and the docs for the ``websocket_ping_interval`` and ``websocket_ping_timeout``
+configurations in
+`tornado <https://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings>`_.
 
 
 Cylc 8.4
