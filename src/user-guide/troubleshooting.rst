@@ -342,8 +342,8 @@ It's waiting for upstream tasks to produce their required outputs:
 
    Such tasks will be reported as having unsatisfied dependencies.
 It's waiting for external events:
-   :ref:`Xtriggers <Section External Triggers>` and
-   :ref:`ext-triggers <Old-Style External Triggers>`
+   :ref:`Xtriggers <user_guide.xtriggers>` and
+   :ref:`ext-triggers <user_guide.ext-triggers>`
    can be used to make tasks wait for events
    external to the workflow, such as the progress of task in other workflows
    or the :ref:`real-world time <Built-in Clock Triggers>`.
