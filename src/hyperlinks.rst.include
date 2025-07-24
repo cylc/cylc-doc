@@ -72,37 +72,6 @@
    :height: 18px
    :align: middle
 
-
-.. Task Modifiers (inline)
-
-.. |task-held| image:: /img/task-job-icons/task-isHeld.png
-   :height: 18px
-   :align: middle
-
-.. |task-runahead| image:: /img/task-job-icons/task-isRunahead.png
-   :height: 18px
-   :align: middle
-
-.. |task-queued| image:: /img/task-job-icons/task-isQueued.png
-   :height: 18px
-   :align: middle
-
-
-.. Task Modifiers (inline with modifiers as superscript)
-
-.. |task-held-super| image:: /img/task-job-icons/task-isHeld.png
-   :height: 24px
-   :align: middle
-
-.. |task-runahead-super| image:: /img/task-job-icons/task-isRunahead.png
-   :height: 24px
-   :align: middle
-
-.. |task-queued-super| image:: /img/task-job-icons/task-isQueued.png
-   :height: 24px
-   :align: middle
-
-
 .. Job Icons (inline)
 
 .. |job-submitted| image:: /img/task-job-icons/job-submitted.png

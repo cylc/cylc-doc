@@ -1534,7 +1534,7 @@ So, in the cycle ``2000-01-01T00:00Z``:
 * ``foo`` would expire at ``2000-01-01T00:00Z``.
 * ``bar`` would expire at ``2000-01-01T01:00Z``.
 
-Only waiting tasks can expire, :term:`active tasks <active>` will not be
+Only waiting tasks can expire, :term:`active tasks <active task>` will not be
 killed if they pass their configured ``clock-expire`` time.
 
 When a task expires, it produces the ``expired`` :term:`output`.
@@ -1623,7 +1623,7 @@ Tasks are expected to complete required outputs at runtime, but
 they don't have to complete optional outputs.
 
 This allows the scheduler to correctly diagnose
-:term:`workflow completion`. [2]_
+:ref:`workflow completion`. [2]_
 
 Tasks that achieve a :term:`final status` without completing their
 outputs [3]_ are retained in the :term:`n=0 window <n-window>` pending user
@@ -1888,8 +1888,8 @@ relies on :term:`optional outputs <optional output>` and is called *branching*.
 
    Cylc 8 does not need suicide triggers for branching.
 
-Basic Example
-^^^^^^^^^^^^^
+Basic Example (A Switch)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here Cylc will follow one of two "branches" depending on the outcome of task ``b``:
 
@@ -1935,8 +1935,19 @@ The ``?`` symbol denotes an :term:`optional output` which allows the graph to
 branch.
 
 Note the last line of the graph ``c | r => d`` allows the graph to
-continue on to ``d`` regardless of the path taken. This is an :term:`artificial
-dependency`.
+continue on to ``d`` regardless of the path taken.
+
+This is a simple example of a "switch" pattern, the task ``b`` being the switch
+in this case, the ``succeeded`` / ``failed`` outputs deciding which pathway
+through the graph the workflow will follow. We can use outputs besides
+``succeeded`` / ``failed`` to achieve this and can have any number of branches,
+see the
+:ref:`three-way switch example <user_guide.graph_branching.three_way_switch>`
+for more details.
+
+
+Recovery Tasks
+^^^^^^^^^^^^^^
 
 Branching is often used for automatic failure recovery. Here's a simple
 example:
@@ -1975,6 +1986,108 @@ A more realistic example might have several tasks on each branch. The
 ``recover`` task could, via inheritance, run the same underlying code as
 ``bar``, but configured differently to avoid the failure.
 
+
+Flaky Pipelines
+^^^^^^^^^^^^^^^
+
+Another pattern for using optional outputs is to assemble chains (or pipelines)
+of tasks where the chain is terminated on task failure.
+
+Here's a simple example:
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+.. digraph:: Example
+   :align: center
+
+   a -> b [label="if a:succeeded", fontcolor="green"]
+   b -> c [label="if b:succeeded", fontcolor="green"]
+
+In Python, we might write this control flow like so:
+
+.. code-block:: python
+
+   if a():
+      if b():
+         c()
+
+Sometimes we might like to have a task at the end of the chain that runs no
+matter the outcome.
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+   a:fail? | b:fail? | c:finish => end
+
+Note, ``:finish`` is shorthand for ``:succeed? | :fail?``, so this can be
+re-written as:
+
+.. code-block:: cylc-graph
+
+   a? => b? => c?
+
+   a:fail? | b:fail? | (c? | c:fail?) => end
+
+.. digraph:: Example
+   :align: center
+
+   a -> b -> c
+
+   a -> end [arrowhead="empty", style="dashed"]
+   b -> end [arrowhead="empty", style="dashed"]
+   c -> end [arrowhead="empty", style="dashed"]
+
+This arrangement may be useful for collating the results of parallel chains:
+
+.. code-block:: cylc-graph
+
+   a<x>? => b<x>? => c<x>?
+
+   a<x>:fail? | b<x>:fail? | (c<x>? | c<x>:fail?) => end<x>
+
+   end<x> => collate
+
+.. digraph:: Example
+   :align: center
+
+   subgraph cluster_1 {
+       label = "x=1"
+       style = "dashed"
+
+       a_1 -> b_1 -> c_1
+
+       a_1 -> end_1 [arrowhead="empty", style="dashed"]
+       b_1 -> end_1 [arrowhead="empty", style="dashed"]
+       c_1 -> end_1 [arrowhead="empty", style="dashed"]
+   }
+   subgraph cluster_2 {
+       label = "x=2"
+       style = "dashed"
+
+       a_2 -> b_2 -> c_2
+
+       a_2 -> end_2 [arrowhead="empty", style="dashed"]
+       b_2 -> end_2 [arrowhead="empty", style="dashed"]
+       c_2 -> end_2 [arrowhead="empty", style="dashed"]
+
+   }
+   subgraph cluster_3 {
+       label = "x=3"
+       style = "dashed"
+
+       a_3 -> b_3 -> c_3
+
+       a_3 -> end_3 [arrowhead="empty", style="dashed"]
+       b_3 -> end_3 [arrowhead="empty", style="dashed"]
+       c_3 -> end_3 [arrowhead="empty", style="dashed"]
+   }
+
+   end_1 -> collate
+   end_2 -> collate
+   end_3 -> collate
 
 Dependencies With Multiple Optional Outputs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2077,6 +2190,8 @@ combination of success/failure for the two tasks:
 
 Try editing the ``script`` in this example to see which tasks are run.
 
+
+.. _user_guide.graph_branching.three_way_switch:
 
 Custom Outputs
 ^^^^^^^^^^^^^^
@@ -2219,24 +2334,29 @@ executing, e.g:
 Runahead Limiting
 -----------------
 
-Runahead limiting prevents a workflow from getting too far ahead of the oldest
-active cycle point by holding back tasks in cycles beyond a specified limit.
+Runahead limiting restricts workflow activity to a configurable number of
+cycles beyond the earliest :term:`active cycle`.
 
-The runahead limit is defined as an interval measured from the oldest active cycle.
-A cycle is considered to be "active" if it contains any :term:`active` tasks
-(e.g. running tasks).
+.. TODO - update this after https://github.com/cylc/cylc-flow/issues/5580:
 
-Tasks in cycles which are beyond the limit are called :term:`runahead` tasks
-and are displayed in the GUI/Tui with small circle above them:
+Tasks in the :term:`n=0 window <n-window>` at the runahead limit are actively
+held back, and are displayed in the GUI/Tui with a small circle above them.
 
 .. image:: ../../img/task-job-icons/task-isRunahead.png
    :width: 60px
    :height: 60px
 
+.. note::
+
+   Tasks in the :term:`n>=1 window <n-window>` are not displayed as runahead
+   limited; they form the future graph and are not yet being actively limited.
+   (Note this goes for all tasks downstream of actively limited ones, not just
+   those in future cycles).
+
 As the workflow advances and active cycles complete, the runahead limit moves
 forward allowing tasks in later cycles to run.
 
-There are two ways of defining the interval which defines the runahead limit,
+There are two ways of defining the interval which defines the runahead limit:
 as an integer number of cycles, or as a datetime interval.
 
 
@@ -2266,13 +2386,19 @@ is four cycles after this (i.e. cycle 4). So the task ``foo`` will immediately
 submit in cycles 1, 2, 3 and 4, however, the tasks in cycles 5 onwards will
 wait until earlier cycles complete, and the runahead limit advances.
 
-* 1 |task-submitted| - **initial cycle point**
-* 2 |task-submitted|
-* 3 |task-submitted|
-* 4 |task-submitted| - **runahead limit**
-* 5 |task-runahead-super| (held back by runahead limit)
-* 6 |task-runahead-super| (held back by runahead limit)
-* X |task-runahead-super| (held back by runahead limit)
+* 1 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2 |task-submitted| - active task
+* 3 |task-submitted| - active task
+* 4 |task-submitted| - active task
+* 5 |task-runahead-super| - active task, held back by the **runahead limit**
+* 6 |task-waiting| - (future task, beyond the runahead limit)
+* ...
+
+.. note::
+
+   Depending on graph structure and :term:`n-window extent <n-window>` you
+   may see tasks beyond the runahead limit displayed as waiting. They form
+   the future graph and are not yet actively runahead limited.
 
 As the workflow advances and earlier cycles complete, the runahead limit
 moves on. E.G. Once the cycles 1 & 2 have completed, the runahead limit will
@@ -2293,13 +2419,13 @@ interval, so if we change the cycling interval from ``P1`` to ``P2Y``:
 Then, the task ``foo`` would submit immediately in the cycles 1, 3, 5 and 7.
 Cycles from 9 onwards will be held back.
 
-* 2000 |task-submitted| - **initial cycle point**
-* 2002 |task-submitted|
-* 2004 |task-submitted|
-* 2006 |task-submitted| - **runahead limit**
-* 2008 |task-runahead-super| (held back by runahead limit)
-* 2010 |task-runahead-super| (held back by runahead limit)
-* XXXX |task-runahead-super| (held back by runahead limit)
+* 2000 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2002 |task-submitted| - active task
+* 2004 |task-submitted| - active task
+* 2006 |task-submitted| - active task
+* 2008 |task-runahead-super| - active task, held back by the **runahead limit**
+* 2010 |task-waiting| - (future task, beyond the runahead limit)
+* ...
 
 
 Datetime Format
@@ -2319,12 +2445,12 @@ This approach *does* depend on the cycling intervals, e.g:
 
 When this workflow starts, the task foo in the first three cycles will run:
 
-* 2000 |task-submitted| - **initial cycle point**
-* 2002 |task-submitted|
-* 2004 |task-submitted| - **runahead limit**
-* 2006 |task-runahead-super| (held back by runahead limit)
-* 2008 |task-runahead-super| (held back by runahead limit)
-* XXXX |task-runahead-super| (held back by runahead limit)
+* 2000 |task-submitted| - :term:`active task` at the **initial cycle point**
+* 2002 |task-submitted| - active task
+* 2004 |task-submitted| - active task
+* 2006 |task-runahead-super| - active task, held back by the **runahead limit**
+* 2008 |task-waiting| - (future task, beyond the runahead limit)
+* ...
 
 
 Runahead Limit Notes

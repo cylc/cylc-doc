@@ -3,6 +3,11 @@
 Cylc 7 Compatibility Mode
 =========================
 
+.. warning::
+
+   Cylc 7 compatibility mode will be removed in Cylc 8.7.0, please upgrade
+   any workflows with "suite.rc" files.
+
 .. admonition:: Does This Change Affect Me?
    :class: tip
 

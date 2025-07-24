@@ -12,7 +12,7 @@ As a flow advances, upcoming tasks run only if they have not already run in
 the same flow.
 
 At start-up the :term:`scheduler` automatically triggers the first flow from
-the start of the graph. 
+the start of the graph.
 
 By default, manually triggered tasks "belong to" the existing flow(s), but you
 can also choose to start new flows by triggering tasks anywhere in the graph.
@@ -26,8 +26,8 @@ See :ref:`below<flow-trigger-use-cases>` for uses, and an
 :ref:`example<new-flow-example>`, of concurrent flows.
 
 .. note::
-   Flows :ref:`merge<flow-merging>` where (and if) tasks collide in the ``n=0``
-   :term:`active window`. Downstream of a merge, tasks are considered to belong
+   Flows :ref:`merge<flow-merging>` where (and if) tasks collide in the
+   :term:`n=0 window <n-window>`. Downstream of a merge, tasks are considered to belong
    to all of their constituent flows.
 
 
@@ -92,7 +92,7 @@ Triggering in Specific Flows
 
    The result is like the default above, except that tasks in the new front
    belong only to the specified flow(s), regardless of which flows are
-   :term:`active` at triggering time.
+   active at triggering time.
 
 Triggering a New Flow
    ``cylc trigger --flow=new ID``
@@ -117,20 +117,21 @@ Triggering with No Active Flows
    ``cylc trigger [--wait] ID``
 
    By default, triggered tasks will be given the flow numbers of the most
-   recent active task. This can happen, for instance, if you restart a
-   completed workflow and then trigger a task in it. The result will be the
-   same as if you had triggered the task just before the workflow completed.
+   recent :term:`active tasks <active task>`. This can happen, for instance,
+   if you restart an already-completed workflow and then manually trigger a
+   task in it. The task's flow number will be the same as if you
+   had triggered it just before the workflow completed.
 
-Special Case: Triggering ``n=0`` Tasks
-   Tasks in the ``n=0`` window are :term:`active tasks <active task>`.
-   Their flow membership is already determined - that of
-   the parent tasks that spawned them.
+Special Case: Triggering ``n=0`` (:term:`active tasks <active task>`)
+   Active tasks already have flow membership assigned.
+   Flow numbers are inherited, on entering the active window, from parent
+   (upstream) tasks in the graph.
 
    - Triggering a task with a submitted or running job has no effect
      (it is already triggered).
-   - Triggering other :term:`n=0 tasks <n-window>`, including tasks with
-     :term:`incomplete outputs <output completion>` queues them to run in
-     the flow that they already belong to.
+   - Triggering other :term:`active tasks <active task>`, including those with
+     :term:`incomplete outputs <output completion>`, queues them to run with
+     their existing flow numbers.
 
 
 .. _flow-merging:
@@ -142,8 +143,9 @@ If a task spawning into the :term:`n=0 window <n-window>` finds another instance
 of itself (same task ID) already there, the two will merge and carry both
 (sets of) flow numbers forward. Downstream tasks will belong to both flows.
 
-Flow merging is necessary because :term:`active <active task>` task IDs
-must be unique.
+Flows merge because every :term:`active task` must have a unique ID. However,
+merging is also useful: it allows a simpler single flow to continue downstream of
+multi-flow interventions.
 
 If the original task instance has a :term:`final status` (and has been retained
 in the :term:`n=0 window <n-window>` with
@@ -157,9 +159,9 @@ Stopping Flows
 By default, ``cylc stop`` halts the workflow and shuts the scheduler down.
 
 It can also stop specific flows: ``cylc stop --flow=N`` removes the flow number
-``N`` from :term:`active tasks <active task>`. Tasks that have no flow
-numbers left as a result do not spawn children at all. If there are no active
-flows left, the scheduler shuts down.
+``N`` from :term:`active tasks <active task>`. Tasks with no remaining flow
+numbers will not spawn downstream activity. If there are
+no active flows left, the scheduler shuts down.
 
 .. TODO update this section post https://github.com/cylc/cylc-flow/issues/4741
 
@@ -184,7 +186,7 @@ Regenerating Outputs Behind a Flow
    of the graph, and you do not want it to carry on indefinitely.
 
 Rewinding a Workflow
-   To rewind the workflow to an earlier point, perhaps to regenerate data and/or 
+   To rewind the workflow to an earlier point, perhaps to regenerate data and/or
    allow the workflow to evolve a new path into the future, trigger a new
    flow at the right place and then stop the original flow.
 

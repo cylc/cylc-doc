@@ -30,6 +30,11 @@ workflow configurations out of the box, with
 :ref:`some caveats <compat_required_changes>`. However, to future-proof
 your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.
 
+.. warning::
+
+   Cylc 7 compatibility mode will be removed in Cylc 8.7.0.
+
+
 Upgrading To Cylc 8
 -------------------
 .. seealso::
@@ -134,7 +139,7 @@ intervention, which will :term:`stall` the workflow.
 Alternatively, outputs can be marked as :term:`optional <optional output>`,
 which allows :term:`optional graph branching <graph branching>`.
 
-This allows the scheduler to correctly diagnose :term:`workflow completion`.
+This allows the scheduler to correctly diagnose :ref:`workflow completion`.
 
 
 Platform Awareness

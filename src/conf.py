@@ -26,6 +26,31 @@ sys.path.append(os.path.abspath('lib'))  # path to lib.
 
 from cylc_release import CYLC_RELEASE
 
+
+def generate_task_icon_modifier_rst():
+    """Generate reStructuredText for task icon modifier shortcuts
+    of assorted sizes.
+
+    Makes available `|task-<modifier>-<size>|` where
+      * sizes are
+        * "large"
+        * "super" (superscript)
+        * empty (default size)
+      * Modifiers are defined by files in /img/task-job-icons/task-is*.png.
+    """
+    rst = []
+    for modifier in Path('img/task-job-icons').glob('task-is*.png'):
+        modifier_name = modifier.stem.replace('task-is', '').lower()
+        for size, height in {'-large': 60, '': 18, '-super': 24}.items():
+            rst.append(
+                f".. |task-{modifier_name}{size}| image:: /{str(modifier)}\n"
+                f"   :height: {height}px\n"
+                f"   :align: middle\n"
+                f"   :alt: {modifier_name} icon"
+            )
+    return '\n\n'.join(rst)
+
+
 # -- General configuration ------------------------------------------------
 
 # Sphinx extension module names.
@@ -63,7 +88,8 @@ extensions = [
 rst_prolog = f"""
 .. |reserved_filenames| replace:: ``{'``, ``'.join(WorkflowFiles.RESERVED_NAMES)}``
 """
-rst_epilog = open('hyperlinks.rst.include', 'r').read()
+
+rst_epilog = open('hyperlinks.rst.include', 'r').read() + generate_task_icon_modifier_rst()
 
 default_role = 'cylc:conf'
 
@@ -300,3 +326,5 @@ wordsfile.write_text('\n'.join(words) + '\n')
 # Create sentence case versions of wordlist:
 sentence_case = [word.capitalize() for word in words]
 sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
+
+

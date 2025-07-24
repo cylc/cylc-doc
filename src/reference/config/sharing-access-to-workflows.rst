@@ -197,36 +197,38 @@ commands are arranged into groups to avoid having to list them individually:
   A user with read permissions may view workflows, monitor tasks states and
   open log files, but they cannot interact with the workflows.
 
-  * ``Read``
+  * ``read``
 ``CONTROL`` (e.g. start & stop workflows)
   A user with control permissions may issue commands to interact with workflows
   and can start/stop workflows but cannot redefine the workflow configuration
   itself (without direct filesystem access).
 
-  * ``Clean``
-  * ``Ext-trigger``
-  * ``Hold``
-  * ``Kill``
-  * ``Message``
-  * ``Pause``
-  * ``Play``
-  * ``Poll``
-  * ``Release``
-  * ``ReleaseHoldPoint``
-  * ``Reload``
-  * ``Remove``
-  * ``Resume``
-  * ``SetGraphWindowExtent``
-  * ``SetHoldPoint``
-  * ``SetOutputs``
-  * ``SetVerbosity``
-  * ``Stop``
-  * ``Trigger``
+  * ``clean``
+  * ``ext_trigger``
+  * ``hold``
+  * ``kill``
+  * ``message``
+  * ``pause``
+  * ``play``
+  * ``poll``
+  * ``release``
+  * ``release_hold_point``
+  * ``reload``
+  * ``remove``
+  * ``resume``
+  * ``scan`` (for manually refreshing the workflow list)
+  * ``set``
+  * ``set_graph_window_extent``
+  * ``set_hold_point``
+  * ``set_verbosity``
+  * ``stop``
+  * ``trigger``
+
 ``ALL`` (i.e. full control)
   A user with all permissions may alter task configuration so may inject
   arbitrary code into the workflow.
 
-  * ``Broadcast``
+  * ``broadcast``
 
 .. note::
 

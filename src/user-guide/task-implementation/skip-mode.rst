@@ -14,8 +14,8 @@ Skip mode is designed as an aid to workflow control:
 * It allows skipping of tasks in a running workflow using either:
   * ``cylc broadcast -s 'run mode = skip'`` (for when it is ready to run).
   This will work with any future task or family.
-  * ``cylc set --out skip`` (to immediately skip). This only works with
-  globs for active tasks. Otherwise task names must be explicit.
+  * ``cylc set --out skip`` (to immediately skip). Note that globs only match
+  :term:`active tasks <active task>`. Otherwise task names must be explicit.
 
 .. note::
 
