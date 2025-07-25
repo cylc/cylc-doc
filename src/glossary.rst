@@ -69,9 +69,10 @@ Glossary
       don't get overwritten.
 
    active task
+   active window
       Active tasks are those tasks held in memory to feed
-      the scheduling algorithm. They form the ``n=0`` :term:`n-window`,
-      so are always visible in the GUI.
+      the scheduling algorithm. They form the ``n=0`` or *active*
+      :term:`window<n-window>`, so are always visible in the GUI.
 
       Active tasks include:
 
@@ -1685,6 +1686,16 @@ Glossary
 
       .. seealso::
          * :ref:`user-guide-reflow`
+
+   child
+   parent
+   parentless
+      The upstream and downstream tasks in a dependency pair may be referred
+      to, respectively, as parent and child tasks. Tasks that have parents are
+      spawned into the :term:`active window` of the workflow as soon as the
+      first of their task prerequisites is satisfied by a parent. Parentless
+      tasks don't have any task prerequisites, so they get spawned automatically
+      out to the :term:`runahead limit`.
 
 
    flow number
