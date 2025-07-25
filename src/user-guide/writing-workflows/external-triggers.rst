@@ -446,11 +446,11 @@ the "data ready" message.
 
 .. note::
 
-- The ``workflow_state`` trigger function, like the ``cylc workflow-state`` command,
-  must have read-access to the upstream workflow's public database.
-- The task cycle point is supplied by a string template ``%(point)s``.
-  See :ref:`Custom Trigger Functions`) for other string templates available
-  to xtriggers.
+   - The ``workflow_state`` trigger function, like the ``cylc workflow-state`` command,
+     must have read-access to the upstream workflow's public database.
+   - The task cycle point is supplied by a string template ``%(point)s``.
+     See :ref:`Custom Trigger Functions`) for other string templates available
+     to xtriggers.
 
 The return value of the ``workflow_state`` trigger function looks like this:
 
