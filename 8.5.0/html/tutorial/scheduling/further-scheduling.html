@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Further Scheduling &mdash; Cylc 8.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9b928e36"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Runtime" href="../runtime/index.html" />
+    <link rel="prev" title="Datetime Cycling" href="datetime-cycling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Scheduling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="graphing.html">The <code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code> File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer-cycling.html">Basic Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="datetime-cycling.html">Datetime Cycling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Further Scheduling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#qualifiers">Qualifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clock-triggers">Clock Triggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#alternative-calendars">Alternative Calendars</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../runtime/index.html">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../furthertopics/index.html">Further Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Tutorial</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Scheduling</a></li>
+      <li class="breadcrumb-item active">Further Scheduling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorial/scheduling/further-scheduling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="further-scheduling">
+<span id="tutorial-cylc-further-scheduling"></span><h1>Further Scheduling<a class="headerlink" href="#further-scheduling" title="Link to this heading"></a></h1>
+<div class="aims admonition">
+<p class="admonition-title">Aims</p>
+<div class="line-block">
+<div class="line">You should be aware of some more advanced scheduling features:</div>
+<div class="line">✅ Task state qualifiers.</div>
+<div class="line">✅ Clock triggers.</div>
+<div class="line">✅ Alternative calendars.</div>
+</div>
+</div>
+<section id="qualifiers">
+<span id="tutorial-qualifiers"></span><h2>Qualifiers<a class="headerlink" href="#qualifiers" title="Link to this heading"></a></h2>
+<p>So far we have written dependencies like <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">=&gt;</span> <span class="pre">bar</span></code>. This is, in fact,
+shorthand for <code class="docutils literal notranslate"><span class="pre">foo:succeed</span> <span class="pre">=&gt;</span> <span class="pre">bar</span></code>. It means that the task <code class="docutils literal notranslate"><span class="pre">bar</span></code> will run
+once <code class="docutils literal notranslate"><span class="pre">foo</span></code> has finished successfully. If <code class="docutils literal notranslate"><span class="pre">foo</span></code> were to fail then <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+would not run. We will talk more about these <a class="reference internal" href="../../glossary.html#term-task-state"><span class="xref std std-term">task states</span></a>
+in the <a class="reference internal" href="../runtime/introduction.html#tutorial-tasks-and-jobs"><span class="std std-ref">Runtime Section</span></a>.</p>
+<p>We refer to the <code class="docutils literal notranslate"><span class="pre">:succeed</span></code> descriptor as a <a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifier</span></a>.
+There are qualifiers for different <a class="reference internal" href="../../glossary.html#term-task-state"><span class="xref std std-term">task states</span></a> e.g:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">:start</span></code></dt><dd><p>When the task has started running.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">:fail</span></code></dt><dd><p>When the task finishes if it fails (produces non-zero return code).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">:finish</span></code></dt><dd><p>When the task has completed (either succeeded or failed).</p>
+</dd>
+</dl>
+<p>It is also possible to create your own <a class="reference internal" href="../../glossary.html#term-qualifier"><span class="xref std std-term">qualifiers</span></a>
+to handle events within your code (custom outputs).</p>
+<p><em>For more information see the</em> <a class="reference external" href="https://cylc.github.io/cylc-doc/latest/html/index.html">Cylc User Guide</a>.</p>
+</section>
+<section id="clock-triggers">
+<span id="tutorial-clock-triggers"></span><h2>Clock Triggers<a class="headerlink" href="#clock-triggers" title="Link to this heading"></a></h2>
+<p>In Cylc, <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle points</span></a> are just task labels. Tasks are
+triggered when their dependencies are met, regardless of cycle point.
+But <em>clock triggers</em> can be used to force tasks to wait for a particular
+real time, relative to their cycle point, before running.
+This is necessary for certain operational and monitoring systems, e.g. for
+tasks that process real-time data.</p>
+<p>For example in the following workflow the cycle <code class="docutils literal notranslate"><span class="pre">2000-01-01T12Z</span></code> will wait
+until 11:00 on the 1st of January 2000 before running:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2000-01-01T00Z</span>
+    <span class="nt">[[xtriggers]]</span>
+        <span class="nv">PT1H_trigger </span><span class="o">=</span><span class="s"> wall_clock(offset=-PT1H)</span>
+    <span class="nt">[[graph]]</span>
+        <span class="c1"># &quot;daily&quot; will run, at the earliest, one hour before midday.</span>
+        <span class="nv">T12 = @PT1H_trigger </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">daily</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>See the <a class="reference internal" href="../furthertopics/clock-triggered-tasks.html#tutorial-cylc-clock-trigger"><span class="std std-ref">Clock Triggered Tasks</span></a> tutorial for more information.</p>
+</div>
+</section>
+<section id="alternative-calendars">
+<h2>Alternative Calendars<a class="headerlink" href="#alternative-calendars" title="Link to this heading"></a></h2>
+<p>By default Cylc uses the Gregorian calendar for <a class="reference internal" href="../../glossary.html#term-datetime-cycling"><span class="xref std std-term">datetime cycling</span></a>,
+but it also supports:</p>
+<ul class="simple">
+<li><p>Integer cycling.</p></li>
+<li><p>360-day calendar (12 months of 30 days each in a year).</p></li>
+<li><p>365-day calendar (never a leap year).</p></li>
+<li><p>366-day calendar (always a leap year).</p></li>
+</ul>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">cycling mode </span><span class="o">=</span><span class="s"> 360day</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduling]cycling mode" title="flow.cylc[scheduling]cycling mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduling]cycling</span> <span class="pre">mode</span></code></a></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="datetime-cycling.html" class="btn btn-neutral float-left" title="Datetime Cycling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../runtime/index.html" class="btn btn-neutral float-right" title="Runtime" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jul 25, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/scheduling/further-scheduling";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

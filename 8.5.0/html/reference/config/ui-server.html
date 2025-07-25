@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Server Configuration &mdash; Cylc 8.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9b928e36"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Authorizing Others to Access Your Workflows" href="sharing-access-to-workflows.html" />
+    <link rel="prev" title="Global Configuration" href="global.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../changes.html">Changes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Configuration</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="file-format.html">The .cylc File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="workflow.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="global.html">Global Configuration</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">UI Server Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cylc.uiserver.app.CylcUIServer"><code class="docutils literal notranslate"><span class="pre">CylcUIServer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sharing-access-to-workflows.html">Authorizing Others to Access Your Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Cylc Configuration Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writing-platform-configs.html">Platform Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../job-script-vars/index.html">Job Script Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Configuration</a></li>
+      <li class="breadcrumb-item active">UI Server Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/config/ui-server.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ui-server-configuration">
+<span id="ui-server-config"></span><h1>UI Server Configuration<a class="headerlink" href="#ui-server-configuration" title="Link to this heading"></a></h1>
+<p>Cylc UI Server can be configured using a <code class="docutils literal notranslate"><span class="pre">jupyter_config.py</span></code>.</p>
+<p>Site level configuration, such as <code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.site_authorization</span></code> should
+be defined in <code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/jupyter_config.py</span></code>, or, alternatively, the
+environment variable <code class="docutils literal notranslate"><span class="pre">CYLC_SITE_CONF_PATH</span></code>.
+User level configuration should be located in <code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/jupyter_config.py</span></code>.</p>
+<p id="module-cylc.uiserver.app">Cylc UI Server can be configured using a <code class="docutils literal notranslate"><span class="pre">jupyter_config.py</span></code> file, loaded
+from a hierarchy of locations. This hierarchy includes the prepackaged
+configuration, the site directory (which defaults to <code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver</span></code> but
+can be set with the environment variable <code class="docutils literal notranslate"><span class="pre">$CYLC_SITE_CONF_PATH</span></code>) and
+the user directory (<code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver</span></code>).
+For example, at Cylc UI Server version 0.6.0, the hierarchy (highest priority
+at the bottom) would be:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylc/uiserver/jupyter_config.py</span></code> (pre-packaged default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/0/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/0.6/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/0.6.0/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/0/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/0.6/jupyter_config.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/0.6.0/jupyter_config.py</span></code></p></li>
+</ul>
+<p>An example configuration might look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># scan for workflows every 10 seconds</span>
+<span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">scan_interval</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>The Cylc UI Server is a <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> extension. For generic configuration
+options see the Jupyter Servers documentation:
+<a class="reference external" href="https://jupyter-server.readthedocs.io/en/latest/other/full-config.html#other-full-config" title="(in Jupyter Server v2.17)"><span>Config file and command line options</span></a>.
+Cylc specific configurations are documented here.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.site_authorization</span></code> should be defined in
+<code class="docutils literal notranslate"><span class="pre">/etc/cylc/uiserver/jupyter_config.py</span></code>, or, alternatively, via
+the environment variable <code class="docutils literal notranslate"><span class="pre">CYLC_SITE_CONF_PATH</span></code>.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.uiserver.app.</span></span><span class="sig-name descname"><span class="pre">CylcUIServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/uiserver/app.html#CylcUIServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.log_timeout">
+<span class="sig-name descname"><span class="pre">log_timeout</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.log_timeout</span> <span class="pre">=</span> <span class="pre">Float(14400)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.log_timeout" title="Link to this definition"></a></dt>
+<dd><p>The maximum length of time Cylc will stream a log file for in
+seconds.</p>
+<p>The “Log” view in the Cylc GUI streams log files allowing you to
+monitor the file while is grows.</p>
+<p>After the configured timeout, the stream will close. The log
+view in the GUI will display a “reconnect” button allowing you
+to restart the stream if desired.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.max_threads">
+<span class="sig-name descname"><span class="pre">max_threads</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.max_threads</span> <span class="pre">=</span> <span class="pre">Int(100)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.max_threads" title="Link to this definition"></a></dt>
+<dd><p>Set the maximum number of threads the Cylc UI Server can use.</p>
+<p>This determines the maximum number of active workflows that the
+server can track.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.max_workers">
+<span class="sig-name descname"><span class="pre">max_workers</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.max_workers</span> <span class="pre">=</span> <span class="pre">Int(1)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.max_workers" title="Link to this definition"></a></dt>
+<dd><p>Set the maximum number of workers for process pools.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.profile</span> <span class="pre">=</span> <span class="pre">Bool(False)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.profile" title="Link to this definition"></a></dt>
+<dd><p>Turn on Python profiling.</p>
+<p>The profile results will be saved to ~/.cylc/uiserver/profile.prof
+in cprofile format.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.scan_interval">
+<span class="sig-name descname"><span class="pre">scan_interval</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.scan_interval</span> <span class="pre">=</span> <span class="pre">Float(5.0)</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.scan_interval" title="Link to this definition"></a></dt>
+<dd><p>Set the interval between workflow scans in seconds.</p>
+<p>Workflow scans allow a UI server to detect workflows which have
+been started from the CLI since the last update.</p>
+<p>This involves a number of filesystem operations, to reduce
+system load set a higher value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.site_authorization">
+<span class="sig-name descname"><span class="pre">site_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.site_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.site_authorization" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing site limits and defaults for authorization.</p>
+<p>This configuration should be placed only in the site set
+configuration file and not the user configuration file (use
+<code class="docutils literal notranslate"><span class="pre">c.CylcUIServer.user_authorization</span></code> for user defined
+authorization).</p>
+<p>If this configuration is empty, site authorization defaults to no
+configurable authorization and users will be unable to set any
+authorization.</p>
+<p>Authorization can be granted at operation (mutation) level, i.e.
+specifically grant user access to execute Cylc commands, e.g.
+<code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">pause</span></code>, <code class="docutils literal notranslate"><span class="pre">edit</span></code>, <code class="docutils literal notranslate"><span class="pre">trigger</span></code> etc. For your
+convenience, these operations have been mapped to access groups
+<code class="docutils literal notranslate"><span class="pre">READ</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> and <code class="docutils literal notranslate"><span class="pre">ALL</span></code>.</p>
+<p>To remove permissions, prepend the access group or operation with
+<code class="docutils literal notranslate"><span class="pre">!</span></code>.</p>
+<p>Permissions are additive but negated permissions take precedence
+above additions e.g. <code class="docutils literal notranslate"><span class="pre">CONTROL,</span> <span class="pre">!stop</span></code> will permit all operations
+in the <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> group except for <code class="docutils literal notranslate"><span class="pre">stop</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any authorization permissions granted to a user will be
+applied to all workflows.</p>
+</div>
+<p>For more information, including the access group mappings, see
+<a class="reference internal" href="sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
+<p class="rubric">Example Configuration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">site_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># For all ui-server owners,</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Any authenticated user</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># Has default read access</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;user1&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># user1</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!ALL&quot;</span><span class="p">],</span>  <span class="c1"># No privileges for all</span>
+            <span class="c1"># ui-server owners.</span>
+        <span class="p">},</span>  <span class="c1"># No limit set, so all ui-server owners</span>
+    <span class="p">},</span>  <span class="c1"># limit is also &quot;!ALL&quot; for user1</span>
+    <span class="s2">&quot;server_owner_1&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># For specific UI Server owner,</span>
+        <span class="s2">&quot;group:group_a&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Any member of group_a</span>
+            <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># Will have default read access</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="s2">&quot;!play&quot;</span><span class="p">],</span>  <span class="c1"># server_owner_1 can</span>
+        <span class="p">},</span>  <span class="c1"># grant All privileges, except play.</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;group:grp_of_svr_owners&quot;</span><span class="p">:</span> <span class="p">{</span>  <span class="c1"># Group of UI Server owners</span>
+        <span class="s2">&quot;group:group_b&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="p">[</span>  <span class="c1"># can grant groupB users up to READ and</span>
+                <span class="s2">&quot;READ&quot;</span><span class="p">,</span>  <span class="c1"># CONTROL privileges, without stop and</span>
+                <span class="s2">&quot;CONTROL&quot;</span><span class="p">,</span>  <span class="c1"># kill</span>
+                <span class="s2">&quot;!stop&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;!kill&quot;</span><span class="p">,</span>  <span class="c1"># No default, so default is no access</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.ui_build_dir">
+<span class="sig-name descname"><span class="pre">ui_build_dir</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_build_dir</span> <span class="pre">=</span> <span class="pre">PathType()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_build_dir" title="Link to this definition"></a></dt>
+<dd><p>The directory containing the UI build.</p>
+<p>This can be a directory containing a single UI build e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="o">/</span>
+    <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>Or a tree of builds where each build has a version number e.g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="o">/</span>
+    <span class="mf">1.0</span><span class="o">/</span>
+        <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+    <span class="mf">2.0</span><span class="o">/</span>
+        <span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>By default this points at the UI build tree which was bundled with
+the UI Server. Change this if you want to pick up a different
+build e.g. for development or evaluation purposes.</p>
+<p>Takes effect on (re)start.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.ui_version">
+<span class="sig-name descname"><span class="pre">ui_version</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.ui_version</span> <span class="pre">=</span> <span class="pre">Unicode('')</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.ui_version" title="Link to this definition"></a></dt>
+<dd><p>Hardcodes the UI version to serve.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">ui_build_dir</span></code> is a tree of builds, this config can be
+used to determine which UI build is used.</p>
+<p>By default the highest version is chosen according to PEP440
+version sorting rules.</p>
+<p>Takes effect on (re)start.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.uiserver.app.CylcUIServer.user_authorization">
+<span class="sig-name descname"><span class="pre">user_authorization</span></span><em class="property"><span class="w"> </span><span class="pre">c.CylcUIServer.user_authorization</span> <span class="pre">=</span> <span class="pre">Dict()</span></em><a class="headerlink" href="#cylc.uiserver.app.CylcUIServer.user_authorization" title="Link to this definition"></a></dt>
+<dd><p>Dictionary containing authorized users and permission levels for
+authorization.</p>
+<p>Use this setting to share control of your workflows
+with other users.</p>
+<p>Note that you are only permitted to give away permissions up to
+your limit for each user, as defined in the site_authorization
+configuration.</p>
+<p>Authorization can be granted at operation (mutation) level, i.e.
+specifically grant user access to execute Cylc commands, e.g.
+<code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">pause</span></code>, <code class="docutils literal notranslate"><span class="pre">edit</span></code>, <code class="docutils literal notranslate"><span class="pre">trigger</span></code> etc. For your
+convenience, these operations have been mapped to access groups
+<code class="docutils literal notranslate"><span class="pre">READ</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> and <code class="docutils literal notranslate"><span class="pre">ALL</span></code>.</p>
+<p>To remove permissions, prepend the access group or operation with
+<code class="docutils literal notranslate"><span class="pre">!</span></code>.</p>
+<p>Permissions are additive but negated permissions take precedence
+above additions e.g. <code class="docutils literal notranslate"><span class="pre">CONTROL,</span> <span class="pre">!stop</span></code> will permit all operations
+in the <code class="docutils literal notranslate"><span class="pre">CONTROL</span></code> group except for <code class="docutils literal notranslate"><span class="pre">stop</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any authorization permissions granted to a user will be
+applied to all workflows.</p>
+</div>
+<p>For more information, including the access group mappings, see
+<a class="reference internal" href="sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
+<p>Example configuration, residing in
+<code class="docutils literal notranslate"><span class="pre">~/.cylc/uiserver/jupyter_config.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;READ&quot;</span><span class="p">],</span>  <span class="c1"># any authenticated user has READ access</span>
+    <span class="s2">&quot;group:group2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ALL&quot;</span><span class="p">],</span>  <span class="c1"># Any user in system group2 has</span>
+                              <span class="c1"># access to all operations</span>
+    <span class="s2">&quot;userA&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="s2">&quot;!stop&quot;</span><span class="p">],</span>  <span class="c1"># userA has ALL operations, not</span>
+                                <span class="c1"># stop</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="global.html" class="btn btn-neutral float-left" title="Global Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sharing-access-to-workflows.html" class="btn btn-neutral float-right" title="Authorizing Others to Access Your Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jul 25, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/config/ui-server";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

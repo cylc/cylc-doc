@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platforms &mdash; Cylc 8.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9b928e36"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Play Pause Stop" href="play-pause-stop.html" />
+    <link rel="prev" title="Parameters" href="parameters.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Platforms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-is-a-platform">What is a Platform?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-cylc-8-handles-host-to-platform-upgrades">How Cylc 8 handles host-to-platform upgrades</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.5 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Platforms</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/platforms.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="platforms">
+<span id="majorchangesplatforms"></span><h1>Platforms<a class="headerlink" href="#platforms" title="Link to this heading"></a></h1>
+<div class="tip admonition">
+<p class="admonition-title">Does This Change Affect Me?</p>
+<p>Cylc platforms are a new feature which replace the task <code class="docutils literal notranslate"><span class="pre">job</span></code> and
+<code class="docutils literal notranslate"><span class="pre">remote</span></code> configuration sections:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][job]" title="flow.cylc[runtime][&lt;namespace&gt;][job]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][job]</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]" title="flow.cylc[runtime][&lt;namespace&gt;][remote]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;][remote]</span></code></a></p></li>
+</ul>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The terms <a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> and job platform are equivalent.</p></li>
+<li><p>The terms <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> (in Cylc 8 configurations) and batch system
+(in Cylc 7 configurations) are equivalent.</p></li>
+</ul>
+</div>
+<p>Submitting a job to a <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> may require configuration.</p>
+<p>In Cylc 7 this configuration must be provided for each task in the workflow
+configuration (<code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>).</p>
+<p>In Cylc 8 “platforms” can be defined in the global configuration
+(<a class="reference internal" href="../../reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a>) so that this configuration doesn’t have to be
+repeated for each task in each workflow.</p>
+<p>There may be cases where sets of platforms (for example a group of
+standalone compute servers, or a pair of mirrored HPC’s) might be equally
+suitable for a task. Such platforms can be set up to be <code class="docutils literal notranslate"><span class="pre">platform</span> <span class="pre">groups</span></code></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../reference/config/writing-platform-configs.html#listingavailableplatforms"><span class="std std-ref">Listing available platforms</span></a> for details of how to list platforms
+already defined.</p>
+<p><a class="reference internal" href="../../reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">Platform Configuration</span></a> for detailed examples of platform
+configurations.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cylc 8 contains upgrade logic (<a class="reference internal" href="#host-to-platform-logic"><span class="std std-ref">see below</span></a>)
+which handles the deprecated Cylc 7 settings in most cases.
+Unless you are in <a class="reference internal" href="compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">backward compatibility mode</span></a>,
+you should upgrade to using platforms instead.
+Deprecated settings will be removed in a later release of Cylc.</p>
+</div>
+</section>
+<section id="what-is-a-platform">
+<h2>What is a Platform?<a class="headerlink" href="#what-is-a-platform" title="Link to this heading"></a></h2>
+<p>A “platform” represents one or more hosts from which jobs can be submitted to or
+polled from a common job submission system.</p>
+<p>If a platform has multiple hosts Cylc will automatically select a host when
+needed and will fallback to other hosts if it is not contactable.</p>
+<p>A “platform group” represents a collection of independent platforms. Cylc will
+automatically select a platform and will fallback to other platforms in the
+group (for appropriate operations) if the platform is not contactable.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a> has a detailed explanation of how
+platforms and platform groups are defined.</p>
+</div>
+<section id="simple-example">
+<h3>Simple example<a class="headerlink" href="#simple-example" title="Link to this heading"></a></h3>
+<p>Consider this Cylc 7 syntax in a <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask]]</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> login_node01</span>
+</pre></div>
+</div>
+<p>The Cylc 8 global config (<code class="docutils literal notranslate"><span class="pre">global.cylc</span></code>) might contain:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[our_cluster]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can view the platforms available at your site by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">config</span> <span class="o">--</span><span class="n">platforms</span>
+</pre></div>
+</div>
+</div>
+<p>The platform <code class="docutils literal notranslate"><span class="pre">our_cluster</span></code> matches the current configuration due to having
+the same job runner (batch system) and correct hosts. Thus we can replace the
+deprecated syntax:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[runtime]
+<span class="w"> </span>    [[mytask]]
+<span class="gd">-        [[[job]]]</span>
+<span class="gd">-            batch system = slurm</span>
+<span class="gd">-        [[[remote]]]</span>
+<span class="gd">-            host = login_node01</span>
+<span class="gi">+        platform = our_cluster</span>
+</pre></div>
+</div>
+</section>
+<section id="a-variety-of-other-examples">
+<h3>A variety of other examples<a class="headerlink" href="#a-variety-of-other-examples" title="Link to this heading"></a></h3>
+<p>Here are some example Cylc 7 task definitions:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[mytask_cylc_server]]</span>
+
+   <span class="nt">[[mytask_big_server]]</span>
+      <span class="nt">[[[remote]]]</span>
+         <span class="nv">host </span><span class="o">=</span><span class="s"> linuxbox42</span>
+
+   <span class="nt">[[mytask_submit_local_to_remote_computer]]</span>
+      <span class="nt">[[[job]]]</span>
+         <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+
+   <span class="nt">[[mytask_login_to_hpc_and_submit]]</span>
+      <span class="nt">[[[remote]]]</span>
+         <span class="c1"># e.g. rose host-select</span>
+         <span class="nv">host </span><span class="o">=</span><span class="s"> $(supercomputer_login_node_selector_script)</span>
+      <span class="nt">[[[job]]]</span>
+         <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+<p>This will result in Cylc running:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mytask_cylc_server</span></code> on the machine the workflow is running on.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mytask_big_server</span></code> on <code class="docutils literal notranslate"><span class="pre">linuxbox42</span></code>, using background.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mytask_submit_local_to_remote_computer</span></code> on a system where you can
+use PBS to submit from the workflow server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mytask_login_to_hpc_and_submit</span></code> on a host set by the subshelled
+script using Slurm.</p></li>
+</ul>
+<p>At Cylc 8 the equivalent might be:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[mytask_cylc_server]]</span>
+
+    <span class="nt">[[mytask_big_server]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> linuxbox42</span>
+
+    <span class="nt">[[mytask_submit_local_to_remote_computer]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> pbs_local</span>
+
+    <span class="nt">[[mytask_login_to_hpc_and_submit]]</span>
+        <span class="c1"># Recommended:</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> slurm_supercomputer</span>
+        <span class="c1"># ...but This is still legal:</span>
+        <span class="c1">#platform = $(selector-script)</span>
+</pre></div>
+</div>
+<p>And the platform settings for these examples might be:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[linuxbox\d\d]]</span>  <span class="c1"># Regex to allow any linuxboxNN to use this definition</span>
+        <span class="c1"># Without a hosts, platform name is used as a single host.</span>
+
+    <span class="nt">[[pbs_local]]</span>
+        <span class="c1"># A computer with PBS, that takes local job submissions</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
+        <span class="nv">install target </span><span class="o">=</span><span class="s"> localhost</span>
+
+    <span class="nt">[[slurm_supercomputer]]</span>
+        <span class="c1"># This computer with Slurm requires you to use a login node.</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> login_node01, login_node02</span>  <span class="c1"># Cylc will pick a host.</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+</pre></div>
+</div>
+<p>Note that in these examples, it is assumed that <code class="docutils literal notranslate"><span class="pre">linuxboxNN</span></code>, <code class="docutils literal notranslate"><span class="pre">pbs_local</span></code> and
+<code class="docutils literal notranslate"><span class="pre">slurm_supercomputer</span></code> have distinct file systems.
+Sets of platforms which share a file system must specify
+a single <a class="reference internal" href="../../reference/config/writing-platform-configs.html#install-targets"><span class="std std-ref">install target</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If an install target is not set, a platform will use its own platform name
+as the install target name. If multiple platforms share a file system
+but have separate <a class="reference internal" href="../../reference/config/writing-platform-configs.html#install-targets"><span class="std std-ref">install targets</span></a> task initialization
+will fail.</p>
+</div>
+</section>
+</section>
+<section id="how-cylc-8-handles-host-to-platform-upgrades">
+<span id="host-to-platform-logic"></span><h2>How Cylc 8 handles host-to-platform upgrades<a class="headerlink" href="#how-cylc-8-handles-host-to-platform-upgrades" title="Link to this heading"></a></h2>
+<p>If you are using the deprecated <code class="docutils literal notranslate"><span class="pre">[remote]</span></code> and <code class="docutils literal notranslate"><span class="pre">[job]</span></code> runtime sections,
+Cylc 8 will attempt to find a platform which matches the task specification.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Cylc 8 needs platforms matching the Cylc 7 job configuration to be
+available in <a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms]</span></code></a>.</p>
+</div>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<p>If, for example you have a <strong>Cylc 8</strong> <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> with the following
+platforms section:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[platforms]</span>
+    <span class="nt">[[supercomputer_A]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> localhost</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> slurm</span>
+        <span class="nv">install target </span><span class="o">=</span><span class="s"> localhost</span>
+    <span class="nt">[[supercomputer_B]]</span>
+        <span class="nv">hosts </span><span class="o">=</span><span class="s"> tigger, wol, eeyore</span>
+        <span class="nv">job runner </span><span class="o">=</span><span class="s"> pbs</span>
+</pre></div>
+</div>
+<p>And you have a workflow runtime configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[task1]]</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> slurm</span>
+    <span class="nt">[[task2]]</span>
+        <span class="nt">[[[remote]]]</span>
+            <span class="nv">host </span><span class="o">=</span><span class="s"> eeyore</span>
+        <span class="nt">[[[job]]]</span>
+            <span class="nv">batch system </span><span class="o">=</span><span class="s"> pbs</span>
+</pre></div>
+</div>
+<p>Then, <code class="docutils literal notranslate"><span class="pre">task1</span></code> will be assigned platform
+<code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> because the specified host (implicitly <code class="docutils literal notranslate"><span class="pre">localhost</span></code>)
+is in the list of hosts for <code class="docutils literal notranslate"><span class="pre">supercomputer_A</span></code> <strong>and</strong> the batch system is the same.
+Likewise, <code class="docutils literal notranslate"><span class="pre">task2</span></code> will run on <code class="docutils literal notranslate"><span class="pre">supercomputer_B</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For simplicity, and because the <code class="docutils literal notranslate"><span class="pre">host</span></code> key is a special case (it can
+match and host in <code class="docutils literal notranslate"><span class="pre">[platform]hosts</span></code>) we only show these two config keys
+here. In reality, <strong>Cylc 8 compares the whole of</strong>
+<code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][job]</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">[&lt;task&gt;][remote]</span></code>
+<strong>sections and all items must match to select a platform.</strong></p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parameters.html" class="btn btn-neutral float-left" title="Parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="play-pause-stop.html" class="btn btn-neutral float-right" title="Play Pause Stop" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jul 25, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/platforms";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
