@@ -742,8 +742,8 @@ not the first because of the cycle-point matching.
 .. _WorkflowStatePolling:
 .. _user_guide.workflow_state_polling:
 
-Worklflow State Polling (old style)
------------------------------------
+Workflow State Polling (old style)
+----------------------------------
 
 .. warning::
 
