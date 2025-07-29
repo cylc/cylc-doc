@@ -86,6 +86,8 @@ given "modifier" icons which appear to the top-left of the task icon:
        running.
    * - |task-runahead-large|
      - **Runahead:** Task is held back by the :term:`runahead limit`.
+   * - |task-skip-large|
+     - **Skip Mode:** Task has/will be run in :term:`skip mode`.
    * - |task-queued-large|
      - **Queued:** Task has been held back by an :term:`internal queue`.
    * - |task-retry-large|

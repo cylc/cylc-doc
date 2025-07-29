@@ -1759,12 +1759,14 @@ Glossary
          * :ref:`Runahead Limiting`
          * :term:`active cycle`
 
+   skip mode
+      A task run mode that allows setting tasks to run instantly.
+      See :ref:`task-run-modes.skip`.
 
    dummy task
       A task which runs a trivially simple script such as ``sleep 1``,
       ``exit 0`` or ``true``, or which uses :ref:`task-run-modes.skip`
       to avoid running a script at all.
-
 
    dummy mode
       A workflow run mode that replaces all tasks with :term:`dummy tasks <dummy task>`.
