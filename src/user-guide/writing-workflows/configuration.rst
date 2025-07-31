@@ -116,9 +116,10 @@ Cylc provides syntax plugins for the following editors:
 .. _Cylc.tmbundle: https://github.com/cylc/Cylc.tmbundle
 .. _vscode-cylc: https://marketplace.visualstudio.com/items?itemName=cylc.vscode-cylc
 .. _cylc.vim: https://github.com/cylc/cylc.vim
+.. _zed-cylc: https://github.com/elliotfontaine/zed-cylc
 
-Atom
-   install the `language-cylc`_ extension.
+Atom & Pulsar
+   Install the `language-cylc`_ extension.
 Emacs
    The syntax file can be obtained from the Cylc library by
    running the following command
@@ -129,10 +130,17 @@ Gedit
    running the following command
    ``cylc get-resources syntax/cylc.lang .``
    installation instructions are at the top of the file.
+Helix
+   Built-in support.
 Kate
    The syntax file can be obtained from the Cylc library by
    running the following command
    ``cylc get-resources syntax/cylc.xml .``
+   installation instructions are at the top of the file.
+Nano
+   The syntax file can be obtained from the Cylc library by
+   running the following command
+   ``cylc get-resources syntax/cylc.nanorc ~/.config/nano``
    installation instructions are at the top of the file.
 NeoVim
    Install the `cylc.vim`_ plugin.
@@ -148,11 +156,8 @@ TextMate
    Install the `Cylc.tmbundle`_.
 WebStorm
    Install the `Cylc.tmbundle`_.
-Nano
-   The syntax file can be obtained from the Cylc library by
-   running the following command
-   ``cylc get-resources syntax/cylc.nanorc ~/.config/nano``
-   installation instructions are at the top of the file.
+Zed
+   Install the `zed-cylc`_ extension.
 
 
 Gross File Structure
@@ -233,7 +238,7 @@ Within the ``[tool.cylc.lint]`` section you may define the following:
    A list of rulesets to use.
 
    Allowed values: ``'728'``, ``'style'``, ``'all'``.
-   
+
    (You can override this on the command line.)
 
 ``ignore``
