@@ -63,3 +63,6 @@ CYLC_TASK_NAMESPACE_HIERARCHY      # Linearised family namespace of the task,
 CYLC_TASK_COMMS_METHOD             # Set to "ssh" if communication method is "ssh"
 CYLC_TASK_SSH_LOGIN_SHELL          # With "ssh" communication, if set to "True",
                                    #   use login shell on workflow host
+
+CYLC_TASK_PARAM_<param>            # If this task is a parameterized task,
+                                   # the value of the parameter named <param>
