@@ -57,6 +57,7 @@ requests_).
  - Scott Wales
  - Elliot Fontaine
  - Mark Dawson
+ - James Frost
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
