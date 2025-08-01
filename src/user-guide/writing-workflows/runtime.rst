@@ -291,8 +291,7 @@ Job Script Variables
 These variables provided by the :term:`scheduler` are available to
 :term:`job scripts <job script>`:
 
-.. literalinclude:: ../../reference/job-script-vars/var-list.txt
-   :language: sub
+.. include:: ../../reference/job-script-vars/var-list.rst
 
 Some global shell variables are also defined in the job script, but not
 exported to subshells:
