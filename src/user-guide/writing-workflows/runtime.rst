@@ -653,14 +653,14 @@ as complete (and with the ``--flow`` option, if needed to make a specific
 Task Event Handling
 -------------------
 
-Task event handlers allow configured commands to run when task events occur.
+Task event handlers allow configured commands to run when task events occur,
+e.g. ``submitted`` and ``failed``.
 
-.. note::
+.. admonition:: Not to be confused with
+   :class: tip
 
-   Cylc supports workflow events e.g. ``startup`` and ``shutdown``
-   and task events e.g. ``submitted`` and ``failed``.
-
-   See also :ref:`user_guide.scheduler.workflow_event_handling`.
+   For *workflow* events, e.g. ``startup`` and ``shutdown``, see
+   :ref:`user_guide.scheduler.workflow_event_handling`.
 
 Event handlers can be used to send a message, raise an alarm, or whatever you
 like. They can even call ``cylc`` commands to intervene in the workflow.
@@ -679,6 +679,43 @@ Event handlers can be stored in the workflow ``bin`` directory, or anywhere in
 They should return quickly to avoid tying up the scheduler process pool -
 see :ref:`Managing External Command Execution`.
 
+.. _user_guide.runtime.task_event_handling.list:
+
+List Of Task Events
+^^^^^^^^^^^^^^^^^^^
+
+.. cylc-scope:: flow.cylc[runtime][<namespace>]
+
+.. |br| raw:: html
+
+     <br>
+
+.. table::
+
+   =========================================  ================================
+   Event                                      Description
+   =========================================  ================================
+   submitted                                  job submitted
+   submission retry                           job submission failed but will retry after the configured :cylc:conf:`submission retry delays`
+   submission failed                          job submission failed and no retries are configured or remaining
+   started                                    job started running
+   retry                                      job failed but will retry after the configured :cylc:conf:`execution retry delays`
+   failed                                     job failed and no retries are configured or remaining
+   succeeded                                  job succeeded
+   submission timeout                         job exceeded the :cylc:conf:`[events]submission timeout` while in the ``submitted`` state
+   execution timeout                          job exceeded the :cylc:conf:`[events]execution timeout` while in the ``running`` state
+   warning                                    scheduler received a message of severity WARNING from job
+   critical                                   scheduler received a message of severity CRITICAL from job
+   custom                                     scheduler received a message of severity CUSTOM from job |br| (note: literally, the word ``CUSTOM``)
+   expired                                    task expired and will not submit (too far behind)
+   late                                       task running later than expected
+   =========================================  ================================
+
+Any of a task's :term:`custom outputs <custom output>` are also valid event
+names.
+
+.. cylc-scope::
+
 
 .. _user_guide.runtime.task_event_handling.event_specific_handlers:
 
@@ -687,33 +724,7 @@ Event-Specific Handlers
 
 Event-specific handlers are configured by ``<event> handlers``
 under :cylc:conf:`[runtime][<namespace>][events]`, where ``<event>``
-can be:
-
-.. |br| raw:: html
-
-     <br>
-
-
-.. table::
-
-   =========================================  ================================
-   Event                                      Description
-   =========================================  ================================
-   submitted                                  job submitted
-   submission retry                           job submission failed but will retry later
-   submission failed                          job submission failed
-   started                                    job started running
-   retry                                      job failed but will retry later
-   failed                                     job failed
-   succeeded                                  job succeeded
-   submission timeout                         job timed out in the ``submitted`` state
-   execution timeout                          job timed out in the ``running`` state
-   warning                                    scheduler received a message of severity WARNING from job
-   critical                                   scheduler received a message of severity CRITICAL from job
-   custom                                     scheduler received a message of severity CUSTOM from job |br| (note: literally, the word ``CUSTOM``)
-   expired                                    task expired and will not submit (too far behind)
-   late                                       task running later than expected
-   =========================================  ================================
+can be any in the table above.
 
 Values should be a list of commands, command lines, or command line templates
 (see below) to call if the specified event is triggered.
@@ -730,8 +741,8 @@ Alternatively you can configure a list of generic event :cylc:conf:`handlers` to
 for configured :cylc:conf:`handler events`.
 
 :cylc:conf:`handler events`
-   A list of events which may include any of the above
-   events (e.g. ``submission failed`` or ``warning``) or
+   A list of events which may include any of the events in the table above
+   (e.g. ``submission failed`` or ``warning``) or
    any of a task's :term:`custom outputs <custom output>`.
 :cylc:conf:`handlers`
    A list of commands to be run for these events.
