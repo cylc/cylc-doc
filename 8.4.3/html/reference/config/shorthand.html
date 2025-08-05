@@ -90,7 +90,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <p>We often use a compact single-line notation to refer to nested config items:</p>
+  <p>In the documentation, we often use a compact single-line notation to refer to
+nested config items, where we drop the additional brackets at each level:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">[section]</span></code></dt><dd><p>An entire section.</p>
 </dd>
@@ -98,10 +99,11 @@
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[section]setting=value</span></code></dt><dd><p>The value of a setting within a section.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[section][sub-section]another-setting</span></code></dt><dd><p>A setting within a sub-section.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[section][sub</span> <span class="pre">section]another</span> <span class="pre">setting</span></code></dt><dd><p>A setting within a sub-section.</p>
 </dd>
 </dl>
-<p>In the file, however, section headings need additional brackets at each level.</p>
+<p>This is purely for making it easier to refer to items; they cannot be written
+this way in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file.</p>
 
 
            </div>
@@ -112,7 +114,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 17, 2025.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
       </span></p>
   </div>
 

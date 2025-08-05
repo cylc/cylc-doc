@@ -65,7 +65,6 @@
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Scheduling</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">The <code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code> File Format</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#shorthand">Shorthand</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#duplicate-items">Duplicate Items</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#indentation">Indentation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#the-dependency-graph">The Dependency Graph</a></li>
@@ -155,10 +154,10 @@ existing Cylc 7 <code class="docutils literal notranslate"><span class="pre">sui
 <span class="s2">        &quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</section>
-<section id="shorthand">
-<h2>Shorthand<a class="headerlink" href="#shorthand" title="Link to this heading"></a></h2>
-<p>We often use a compact single-line notation to refer to nested config items:</p>
+<div class="tip admonition">
+<p class="admonition-title">Shorthand</p>
+<p>In the documentation, we often use a compact single-line notation to refer to
+nested config items, where we drop the additional brackets at each level:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">[section]</span></code></dt><dd><p>An entire section.</p>
 </dd>
@@ -166,10 +165,12 @@ existing Cylc 7 <code class="docutils literal notranslate"><span class="pre">sui
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">[section]setting=value</span></code></dt><dd><p>The value of a setting within a section.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">[section][sub-section]another-setting</span></code></dt><dd><p>A setting within a sub-section.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">[section][sub</span> <span class="pre">section]another</span> <span class="pre">setting</span></code></dt><dd><p>A setting within a sub-section.</p>
 </dd>
 </dl>
-<p>In the file, however, section headings need additional brackets at each level.</p>
+<p>This is purely for making it easier to refer to items; they cannot be written
+this way in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file.</p>
+</div>
 </section>
 <section id="duplicate-items">
 <h2>Duplicate Items<a class="headerlink" href="#duplicate-items" title="Link to this heading"></a></h2>
@@ -301,12 +302,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-563a61c373d53e5db6f4e0115097d4fb7cea92df.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-e01d8ef2fe4bb77eae144c568ae38f16a0cdd8dc.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
-buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
 make_dough -&gt; bake_bread
+buy_ingredients -&gt; make_dough
+sell_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -315,16 +316,16 @@ make_dough -&gt; bake_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-43e6c1507c7d997f46f2a89cb1a26a9c1cf62098.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-4800df5b72cc2e91d4833178e8bb62b4418f4ea6.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-clean_oven
-pre_heat_oven -&gt; bake_bread
+bake_bread -&gt; sell_bread
 bake_bread -&gt; clean_oven
 bake_bread
-make_dough -&gt; bake_bread
-sell_bread
 buy_ingredients -&gt; make_dough
-bake_bread -&gt; sell_bread
+sell_bread
+pre_heat_oven -&gt; bake_bread
+clean_oven
+make_dough -&gt; bake_bread
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -493,7 +494,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 17, 2025.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
       </span></p>
   </div>
 

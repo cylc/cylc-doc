@@ -319,7 +319,7 @@ workflow (which we want to trigger off of):</p>
 <span class="nt">[scheduling]</span>
     <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2010</span>
     <span class="nt">[[xtriggers]]</span>
-         <span class="nv">upstream </span><span class="o">=</span><span class="s"> workflow_state(&quot;up//%(point)s/foo:x&quot;):PT10S</span>
+         <span class="nv">upstream </span><span class="o">=</span><span class="s"> workflow_state(&quot;up//%(point)s/foo:x&quot;, is_trigger=True):PT10S</span>
          <span class="nv">clock_0 </span><span class="o">=</span><span class="s"> wall_clock(offset=PT0H)</span>
    <span class="nt">[[graph]]</span>
         <span class="nv">P1Y </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -415,7 +415,7 @@ the xtrigger declaration:</p>
     <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2010</span>
     <span class="nv">sequential xtriggers </span><span class="o">=</span><span class="s"> True</span>
     <span class="nt">[[xtriggers]]</span>
-         <span class="nv">upstream </span><span class="o">=</span><span class="s"> workflow_state(&quot;up//%(point)s/foo:x&quot;):PT10S</span>
+         <span class="nv">upstream </span><span class="o">=</span><span class="s"> workflow_state(&quot;up//%(point)s/foo:x&quot;, is_trigger=True):PT10S</span>
          <span class="nv">clock_0 </span><span class="o">=</span><span class="s"> wall_clock(offset=PT0H, sequential=False)</span>
    <span class="nt">[[graph]]</span>
         <span class="nv">P1Y </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -1164,7 +1164,7 @@ polling fails after 10 tries at 10 second intervals:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 17, 2025.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
       </span></p>
   </div>
 

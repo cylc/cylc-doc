@@ -184,7 +184,15 @@ immediately with error status) on certain workflow events, using the
 </dd>
 </dl>
 <p>The scheduler shut down early with error status, due to a fatal error
-condition or a configured timeout.</p>
+condition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not to be confused with <code class="docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">&lt;event&gt;</span></code> settings.
+The <code class="docutils literal notranslate"><span class="pre">abort</span></code> event is not raised when any such configured event occurs.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">aborted</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="describe">
@@ -204,7 +212,9 @@ condition or a configured timeout.</p>
 <p>The workflow run timed out.</p>
 <p>The timer starts counting down at scheduler startup. It resets on workflow
 restart.</p>
-<p>Note, the <code class="docutils literal notranslate"><span class="pre">abort</span></code> event is not raised by “Abort On Event” handlers.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 8.0.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="describe">
@@ -218,6 +228,9 @@ restart.</p>
 <p>The workflow <a class="reference internal" href="../../glossary.html#term-stall"><span class="xref std std-term">stalled</span></a> (i.e. the scheduler cannot make any
 further progress due to runtime events).</p>
 <p>E.G. a task failure is blocking the pathway through the graph.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">stalled</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="describe">
@@ -235,6 +248,9 @@ further progress due to runtime events).</p>
 </dd>
 </dl>
 <p>The workflow timed out after stalling.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">timeout</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="describe">
@@ -255,6 +271,9 @@ further progress due to runtime events).</p>
 submissions or task messages).</p>
 <p>This can be useful for system administrators to help catch workflows which
 have become stalled on external conditions or system issues.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">inactivity</span></code>.</p>
+</div>
 </dd></dl>
 
 <dl class="describe">
@@ -268,6 +287,9 @@ have become stalled on external conditions or system issues.</p>
 <p>If a workflow that has run to completion is restarted, the scheduler will
 have nothing to do so will shut down. This timeout gives the user a grace
 period in which to trigger new tasks to continue the workflow run.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 8.2.0.</span></p>
+</div>
 </dd></dl>
 
 <section id="mail-events">
@@ -564,7 +586,7 @@ platform configured.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 17, 2025.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
       </span></p>
   </div>
 
