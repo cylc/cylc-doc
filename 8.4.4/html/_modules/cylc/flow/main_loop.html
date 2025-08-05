@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.main_loop &mdash; Cylc 8.4.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1636dec8"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.main_loop</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.main_loop</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;Plugins for running Python code inside of the Cylc scheduler.</span>
+
+<span class="sd">.. _BuiltInPlugins:</span>
+
+<span class="sd">Built In Plugins</span>
+<span class="sd">----------------</span>
+
+<span class="sd">Cylc Flow provides the following plugins:</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">   :toctree: built-in</span>
+<span class="sd">   :template: main_loop_plugin.rst</span>
+
+<span class="sd">   cylc.flow.main_loop.auto_restart</span>
+<span class="sd">   cylc.flow.main_loop.health_check</span>
+<span class="sd">   cylc.flow.main_loop.log_data_store</span>
+<span class="sd">   cylc.flow.main_loop.log_main_loop</span>
+<span class="sd">   cylc.flow.main_loop.log_memory</span>
+<span class="sd">   cylc.flow.main_loop.reset_bad_hosts</span>
+
+<span class="sd">.. Note: Autosummary generates files in this directory, these are cleaned</span>
+<span class="sd">         up by `make clean`.</span>
+
+
+<span class="sd">Configuring</span>
+<span class="sd">-----------</span>
+
+<span class="sd">Main loop plugins can be activated either by:</span>
+
+<span class="sd">* Using the ``--main-loop`` option with ``cylc play`` e.g:</span>
+
+<span class="sd">  .. code-block:: console</span>
+
+<span class="sd">     $ # run a workflow using the &quot;health check&quot; and &quot;auto restart&quot; plugins:</span>
+<span class="sd">     $ cylc play my-workflow --main-loop &#39;health check&#39; \</span>
+<span class="sd">--main-loop &#39;auto restart&#39;</span>
+
+<span class="sd">* Adding them to the default list of plugins in</span>
+<span class="sd">  :cylc:conf:`global.cylc[scheduler][main loop]plugins` e.g:</span>
+
+<span class="sd">  .. code-block:: cylc</span>
+
+<span class="sd">     [scheduler]</span>
+<span class="sd">         [[main loop]]</span>
+<span class="sd">             plugins = health check, auto restart</span>
+
+<span class="sd">Main loop plugins can be individually configured in their</span>
+<span class="sd">:cylc:conf:`global.cylc[scheduler][main loop][&lt;plugin name&gt;]` section e.g:</span>
+
+<span class="sd">.. code-block:: cylc</span>
+
+<span class="sd">   [scheduler]</span>
+<span class="sd">       [[main loop]]</span>
+<span class="sd">           [[[health check]]]</span>
+<span class="sd">               interval = PT5M  # perform check every 5 minutes</span>
+
+
+<span class="sd">Developing Main Loop Plugins</span>
+<span class="sd">----------------------------</span>
+
+<span class="sd">Main loop plugins are Python modules containing asynchronous function(s)</span>
+<span class="sd">(sometimes referred to as coroutines) which Cylc Flow executes within the</span>
+<span class="sd">scheduler.</span>
+
+<span class="sd">Hello World</span>
+<span class="sd">^^^^^^^^^^^</span>
+
+<span class="sd">Here is the &quot;hello world&quot; of main loop plugins:</span>
+
+<span class="sd">.. code-block:: python</span>
+<span class="sd">   :caption: my_plugin.py</span>
+
+<span class="sd">   from cylc.flow import LOG</span>
+<span class="sd">   from cylc.flow.main_loop import startup</span>
+
+<span class="sd">   @startup</span>
+<span class="sd">   async def my_startup_coroutine(schd, state):</span>
+<span class="sd">      # write Hello &lt;workflow name&gt; to the Cylc log.</span>
+<span class="sd">      LOG.info(f&#39;Hello {schd.workflow}&#39;)</span>
+
+<span class="sd">Plugins are registered by registering them with the ``cylc.main_loop``</span>
+<span class="sd">entry point:</span>
+
+<span class="sd">.. code-block:: python</span>
+<span class="sd">   :caption: setup.py</span>
+
+<span class="sd">   # plugins must be properly installed, in-place PYTHONPATH meddling will</span>
+<span class="sd">   # not work.</span>
+
+<span class="sd">   from setuptools import setup</span>
+
+<span class="sd">   setup(</span>
+<span class="sd">       name=&#39;my-plugin&#39;,</span>
+<span class="sd">       version=&#39;1.0&#39;,</span>
+<span class="sd">       py_modules=[&#39;my_plugin&#39;],</span>
+<span class="sd">       entry_points={</span>
+<span class="sd">          # register this plugin with Cylc</span>
+<span class="sd">          &#39;cylc.main_loop&#39;: [</span>
+<span class="sd">            # name = python.namespace.of.module</span>
+<span class="sd">            &#39;my_plugin=my_plugin.my_plugin&#39;</span>
+<span class="sd">          ]</span>
+<span class="sd">       }</span>
+<span class="sd">   )</span>
+
+<span class="sd">Examples</span>
+<span class="sd">^^^^^^^^</span>
+
+<span class="sd">For examples see the built-in plugins in the :py:mod:`cylc.flow.main_loop`</span>
+<span class="sd">module which are registered in the Cylc Flow ``setup.cfg`` file.</span>
+
+<span class="sd">Coroutines</span>
+<span class="sd">^^^^^^^^^^</span>
+
+<span class="sd">.. _coroutines: https://docs.python.org/3/library/asyncio-task.html#coroutines</span>
+
+<span class="sd">Plugins provide asynchronous functions (`coroutines`_) which Cylc will</span>
+<span class="sd">then run inside the scheduler.</span>
+
+<span class="sd">Coroutines should be fast running (read as gentle on the scheduler)</span>
+<span class="sd">and perform IO asynchronously.</span>
+
+<span class="sd">Coroutines shouldn&#39;t meddle with the state of the scheduler and should be</span>
+<span class="sd">parallel-safe with other plugins.</span>
+
+<span class="sd">Event Types</span>
+<span class="sd">^^^^^^^^^^^</span>
+
+<span class="sd">Coroutines must be decorated using one of the main loop decorators. The</span>
+<span class="sd">choice of decorator effects when the coroutine is called and what</span>
+<span class="sd">arguments are provided to it.</span>
+
+<span class="sd">The available event types are:</span>
+
+<span class="sd">.. autofunction:: cylc.flow.main_loop.startup</span>
+
+<span class="sd">.. autofunction:: cylc.flow.main_loop.shutdown</span>
+
+<span class="sd">.. autofunction:: cylc.flow.main_loop.periodic</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">getmembers</span><span class="p">,</span>
+    <span class="n">isfunction</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">textwrap</span><span class="w"> </span><span class="kn">import</span> <span class="n">indent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG</span><span class="p">,</span> <span class="n">iter_entry_points</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">CylcError</span><span class="p">,</span> <span class="n">InputError</span><span class="p">,</span> <span class="n">PluginError</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MainLoopPluginException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised in-place of CylcError exceptions.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        * Not an instace of CylcError as that is used for controlled</span>
+<span class="sd">          shutdown e.g. SchedulerStop.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_wrapper</span><span class="p">(</span><span class="n">fcn</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">timings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper for all plugin functions.</span>
+
+<span class="sd">    * Logs the function&#39;s execution.</span>
+<span class="sd">    * Times the function.</span>
+<span class="sd">    * Catches any exceptions which aren&#39;t subclasses of CylcError.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fcn</span><span class="o">.</span><span class="vm">__module__</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">fcn</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;main_loop [run] </span><span class="si">{</span><span class="n">sig</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">fcn</span><span class="p">(</span><span class="n">scheduler</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">CylcError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="c1"># allow CylcErrors through (e.g. SchedulerStop)</span>
+        <span class="c1"># NOTE: the `from None` bit gets rid of this gunk:</span>
+        <span class="c1"># &gt; During handling of the above exception another exception</span>
+        <span class="k">raise</span> <span class="n">MainLoopPluginException</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error in main loop plugin </span><span class="si">{</span><span class="n">sig</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;main_loop [end] </span><span class="si">{</span><span class="n">sig</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">s)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">timings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timings</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start_time</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_debounce</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">timings</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rate limiter, returns True if the interval has elapsed.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        interval (float):</span>
+<span class="sd">            Time interval in seconds as a float-type object.</span>
+<span class="sd">        timings (list):</span>
+<span class="sd">            List-list object of the timings of previous runs in the form</span>
+<span class="sd">            ``(completion_wallclock_time, run_duration)``.</span>
+<span class="sd">            Wallclock times are unix epoch times in seconds.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from time import time</span>
+
+<span class="sd">        No previous run (should always return True):</span>
+<span class="sd">        &gt;&gt;&gt; _debounce(1., [(0, 0)])</span>
+<span class="sd">        True</span>
+
+<span class="sd">        Interval not yet elapsed since previous run:</span>
+<span class="sd">        &gt;&gt;&gt; _debounce(1., [(time(), 0)])</span>
+<span class="sd">        False</span>
+
+<span class="sd">        Interval has elapsed since previous run:</span>
+<span class="sd">        &gt;&gt;&gt; _debounce(1., [(time() - 2, 0)])</span>
+<span class="sd">        True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interval</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">last_run_at</span> <span class="o">=</span> <span class="n">timings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="n">last_run_at</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_run_at</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">interval</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="startup">
+<a class="viewcode-back" href="../../../plugins/main-loop/index.html#cylc.flow.main_loop.startup">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">startup</span><span class="p">(</span><span class="n">fcn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorates a coroutine which is run at workflow startup.</span>
+
+<span class="sd">    The decorated coroutine should have the signature:</span>
+
+<span class="sd">        ``async coroutine(scheduler, plugin_state) -&gt; None``</span>
+
+<span class="sd">    Exceptions:</span>
+
+<span class="sd">        * Regular Exceptions are caught and logged.</span>
+<span class="sd">        * Exceptions which subclass CylcError are re-raised as</span>
+<span class="sd">          MainLoopPluginException</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fcn</span><span class="o">.</span><span class="n">main_loop</span> <span class="o">=</span> <span class="n">CoroTypes</span><span class="o">.</span><span class="n">StartUp</span>
+    <span class="k">return</span> <span class="n">fcn</span></div>
+
+
+
+<div class="viewcode-block" id="shutdown">
+<a class="viewcode-back" href="../../../plugins/main-loop/index.html#cylc.flow.main_loop.shutdown">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="n">fcn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorates a coroutine which is run at workflow shutdown.</span>
+
+<span class="sd">    Note shutdown refers to &quot;clean&quot; shutdown as opposed to workflow abort.</span>
+
+<span class="sd">    The decorated coroutine should have the signature:</span>
+
+<span class="sd">        ``async coroutine(scheduler, plugin_state) -&gt; None``</span>
+
+<span class="sd">    Exceptions:</span>
+
+<span class="sd">        * Regular Exceptions are caught and logged.</span>
+<span class="sd">        * Exceptions which subclass CylcError are re-raised as</span>
+<span class="sd">          MainLoopPluginException</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fcn</span><span class="o">.</span><span class="n">main_loop</span> <span class="o">=</span> <span class="n">CoroTypes</span><span class="o">.</span><span class="n">ShutDown</span>
+    <span class="k">return</span> <span class="n">fcn</span></div>
+
+
+
+<div class="viewcode-block" id="periodic">
+<a class="viewcode-back" href="../../../plugins/main-loop/index.html#cylc.flow.main_loop.periodic">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">periodic</span><span class="p">(</span><span class="n">fcn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorates a coroutine which is run at a set interval.</span>
+
+<span class="sd">    The decorated coroutine should have the signature:</span>
+
+<span class="sd">        ``async coroutine(scheduler, plugin_state) -&gt; None``</span>
+
+<span class="sd">    Exceptions:</span>
+
+<span class="sd">        * Regular Exceptions are caught and logged.</span>
+<span class="sd">        * Exceptions which subclass CylcError are re-raised as</span>
+<span class="sd">          MainLoopPluginException</span>
+
+<span class="sd">    Configuration:</span>
+
+<span class="sd">        * The interval of execution can be altered using</span>
+<span class="sd">          :cylc:conf:`global.cylc[scheduler][main loop][&lt;plugin name&gt;]interval`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fcn</span><span class="o">.</span><span class="n">main_loop</span> <span class="o">=</span> <span class="n">CoroTypes</span><span class="o">.</span><span class="n">Periodic</span>
+    <span class="k">return</span> <span class="n">fcn</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CoroTypes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Different types of coroutine which can be used with the main loop.&quot;&quot;&quot;</span>
+
+    <span class="n">StartUp</span> <span class="o">=</span> <span class="n">startup</span>
+    <span class="n">ShutDown</span> <span class="o">=</span> <span class="n">shutdown</span>
+    <span class="n">Periodic</span> <span class="o">=</span> <span class="n">periodic</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">additional_plugins</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">additional_plugins</span> <span class="o">=</span> <span class="n">additional_plugins</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">entry_point</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">entry_point</span>
+        <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span>
+        <span class="n">iter_entry_points</span><span class="p">(</span><span class="s1">&#39;cylc.main_loop&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">plugins</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s1">&#39;timings&#39;</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">plugin_name</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;plugins&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">additional_plugins</span><span class="p">):</span>
+        <span class="c1"># get plugin</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">entry_point</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">[</span><span class="n">plugin_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InputError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;No main-loop plugin: &quot;</span><span class="si">{</span><span class="n">plugin_name</span><span class="si">}</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39;    Available plugins:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="n">indent</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">entry_points</span><span class="p">)),</span> <span class="s1">&#39;        &#39;</span><span class="p">)</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+        <span class="c1"># load plugin</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PluginError</span><span class="p">(</span>
+                <span class="s1">&#39;cylc.main_loop&#39;</span><span class="p">,</span> <span class="n">entry_point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">exc</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+        <span class="c1"># load coroutines</span>
+        <span class="n">log</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">coro_name</span><span class="p">,</span> <span class="n">coro</span> <span class="ow">in</span> <span class="n">getmembers</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">isfunction</span><span class="p">(</span><span class="n">coro</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">coro</span><span class="p">,</span> <span class="s1">&#39;main_loop&#39;</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coro_name</span><span class="p">)</span>
+                <span class="n">plugins</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+                    <span class="n">coro</span><span class="o">.</span><span class="n">main_loop</span><span class="p">,</span> <span class="p">{}</span>
+                <span class="p">)[(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">coro_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">coro</span>
+                <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">coro_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s1">&#39;Loaded main loop plugin &quot;</span><span class="si">%s</span><span class="s1">&quot;:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">plugin_name</span><span class="p">,</span>
+            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;* </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">log</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># set the initial state of the plugin</span>
+        <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">][</span><span class="n">plugin_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># make a note of the config here for ease of reference</span>
+    <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+    <span class="k">return</span> <span class="n">plugins</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_runners</span><span class="p">(</span><span class="n">plugins</span><span class="p">,</span> <span class="n">coro_type</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">_wrapper</span><span class="p">(</span>
+            <span class="n">coro</span><span class="p">,</span>
+            <span class="n">scheduler</span><span class="p">,</span>
+            <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">][</span><span class="n">plugin_name</span><span class="p">],</span>
+            <span class="n">timings</span><span class="o">=</span><span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">coro_name</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">coro_name</span><span class="p">),</span> <span class="n">coro</span>
+        <span class="ow">in</span> <span class="n">plugins</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">coro_type</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">coro_type</span> <span class="o">!=</span> <span class="n">CoroTypes</span><span class="o">.</span><span class="n">Periodic</span>
+        <span class="ow">or</span> <span class="n">_debounce</span><span class="p">(</span>
+            <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;interval&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">plugins</span><span class="p">[</span><span class="s1">&#39;timings&#39;</span><span class="p">][(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">coro_name</span><span class="p">)]</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/main_loop";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

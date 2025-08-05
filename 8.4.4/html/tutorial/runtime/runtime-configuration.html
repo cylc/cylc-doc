@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Runtime Configuration &mdash; Cylc 8.4.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=1636dec8"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Consolidating Configuration" href="configuration-consolidation/index.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../scheduling/index.html">Scheduling</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Runtime</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Runtime Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#job-submission">Job Submission</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#time-limits">Time Limits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#retries">Retries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-stop-restart">Start, Stop, Restart</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configuration-consolidation/index.html">Consolidating Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="summary.html">Tutorial Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../furthertopics/index.html">Further Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Tutorial</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Runtime</a></li>
+      <li class="breadcrumb-item active">Runtime Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/tutorial/runtime/runtime-configuration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="runtime-configuration">
+<span id="tutorial-cylc-runtime-configuration"></span><h1>Runtime Configuration<a class="headerlink" href="#runtime-configuration" title="Link to this heading"></a></h1>
+<p>In the last section we associated tasks with scripts and ran a simple workflow. In
+this section we will look at how to configure these tasks.</p>
+<section id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h2>
+<p>We can define environment variables in task <code class="docutils literal notranslate"><span class="pre">[environment]</span></code> sections,
+to be provided to task <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a> at runtime.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[countdown]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> seq $START_NUMBER</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">START_NUMBER </span><span class="o">=</span><span class="s"> 5</span>
+</pre></div>
+</div>
+<p>Each job is also provided with some standard environment variables e.g:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_RUN_DIR</span></code></dt><dd><p>The path to the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>
+<em>(e.g. ~/cylc-run/workflow)</em>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_TASK_WORK_DIR</span></code></dt><dd><p>The path to the associated task’s <a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a>
+<em>(e.g. run-directory/work/cycle/task)</em>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">CYLC_TASK_CYCLE_POINT</span></code></dt><dd><p>The <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a> for the associated task
+<em>(e.g. 20171009T0950)</em>.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>There are many more environment variables - see
+<a class="reference internal" href="../../user-guide/writing-workflows/runtime.html#task-job-script-variables"><span class="std std-ref">Job Script Variables</span></a> for more information.</p>
+</div>
+</section>
+<section id="job-submission">
+<span id="tutorial-job-runner"></span><h2>Job Submission<a class="headerlink" href="#job-submission" title="Link to this heading"></a></h2>
+<p>By default Cylc runs <a class="reference internal" href="../../glossary.html#term-job"><span class="xref std std-term">jobs</span></a> on the same machine as
+the scheduler. It can run them on other machines too if we set the
+<a class="reference internal" href="../../glossary.html#term-platform"><span class="xref std std-term">platform</span></a> like this:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[hello_computehost]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;Hello Compute Host&quot;</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> powerful_computer</span>
+</pre></div>
+</div>
+<p>By default Cylc also executes jobs as <a class="reference external" href="https://en.wikipedia.org/wiki/Background_process">background processes</a>.
+We often want to submit jobs to a <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> instead,
+particularly on shared compute resources. Cylc supports the following
+job runners:</p>
+<ul class="simple">
+<li><p>at</p></li>
+<li><p>loadleveler</p></li>
+<li><p>lsf</p></li>
+<li><p>pbs</p></li>
+<li><p>sge</p></li>
+<li><p>slurm</p></li>
+<li><p>moab</p></li>
+</ul>
+<p><a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">Job runners</span></a> typically require
+<a class="reference internal" href="../../glossary.html#term-directive"><span class="xref std std-term">directives</span></a> in some form, to specify
+job requirements such as memory use and number of CPUs to run on. For
+example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[big_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> big-executable</span>
+
+        <span class="c1"># Submit to the host &quot;big-computer&quot;.</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> slurm_platform</span>
+
+        <span class="c1"># job requires 500MB of RAM &amp; 4 CPUs</span>
+        <span class="nt">[[[directives]]]</span>
+            <span class="nv">--mem </span><span class="o">=</span><span class="s"> 500</span>
+            <span class="nv">--ntasks </span><span class="o">=</span><span class="s"> 4</span>
+</pre></div>
+</div>
+</section>
+<section id="time-limits">
+<h2>Time Limits<a class="headerlink" href="#time-limits" title="Link to this heading"></a></h2>
+<p>We can specify an execution time limit, as an <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 duration</span></a>, after
+which a job will be terminated. Cylc automatically translates this to
+the correct <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> directives.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[some_task]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> some-executable</span>
+        <span class="nv">execution time limit </span><span class="o">=</span><span class="s"> PT15M</span>  <span class="c1"># 15 minutes.</span>
+</pre></div>
+</div>
+</section>
+<section id="retries">
+<h2>Retries<a class="headerlink" href="#retries" title="Link to this heading"></a></h2>
+<p>Jobs can fail for several reasons:</p>
+<ul class="simple">
+<li><p>Something went wrong with job submission, e.g:</p>
+<ul>
+<li><p>A network problem;</p></li>
+<li><p>The <a class="reference internal" href="../../glossary.html#term-job-host"><span class="xref std std-term">job host</span></a> became unavailable or overloaded;</p></li>
+<li><p>The job runner rejected your job directives.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>Something went wrong with job execution, e.g:</p>
+<ul>
+<li><p>A bug;</p></li>
+<li><p>A system error;</p></li>
+<li><p>The job hitting the <code class="docutils literal notranslate"><span class="pre">execution</span> <span class="pre">time</span> <span class="pre">limit</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p>We can configure Cylc to automatically retry tasks that fail,
+by setting <code class="docutils literal notranslate"><span class="pre">submission</span> <span class="pre">retry</span> <span class="pre">delays</span></code> and/or <code class="docutils literal notranslate"><span class="pre">execution</span> <span class="pre">retry</span> <span class="pre">delays</span></code>
+to a list of <a class="reference internal" href="../../glossary.html#term-ISO8601-duration"><span class="xref std std-term">ISO8601 durations</span></a>.
+For example, setting <code class="docutils literal notranslate"><span class="pre">execution</span> <span class="pre">retry</span> <span class="pre">delays</span> <span class="pre">=</span> <span class="pre">PT10M</span></code>
+will cause the job to retry every 10 minutes on execution failure.</p>
+<p>Use a multiplier to limit the number of retries:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+   <span class="nt">[[some-task]]</span>
+      <span class="nv">script </span><span class="o">=</span><span class="s"> some-script</span>
+
+      <span class="c1"># On execution failure</span>
+      <span class="c1">#   retry up to 3 times every 15 minutes.</span>
+      <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 3*PT15M</span>
+      <span class="c1"># On submission failure</span>
+      <span class="c1">#   retry up to 2 times every 10 min,</span>
+      <span class="c1">#   then every 30 mins thereafter.</span>
+      <span class="nv">submission retry delays </span><span class="o">=</span><span class="s"> 2*PT10M, PT30M</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tasks only enter the <code class="docutils literal notranslate"><span class="pre">submit-failed</span></code> state if job submission fails with no
+retries left. Otherwise they return to the waiting state, to wait on the
+next try.</p>
+<p>Tasks only enter the <code class="docutils literal notranslate"><span class="pre">failed</span></code> state if job execution fails with no retries
+left. Otherwise they return to the waiting state, to wait on the next try.</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../furthertopics/retries.html#tutorial-retries"><span class="std std-ref">Tutorial</span></a>.</p></li>
+<li><p><a class="reference internal" href="../../user-guide/writing-workflows/runtime.html#taskretries"><span class="std std-ref">User Guide</span></a>.</p></li>
+</ul>
+</div>
+</section>
+<section id="start-stop-restart">
+<span id="tutorial-start-stop-restart"></span><h2>Start, Stop, Restart<a class="headerlink" href="#start-stop-restart" title="Link to this heading"></a></h2>
+<p>We have seen how to start and stop Cylc workflows with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code>. By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code> causes the scheduler to wait
+for running jobs to finish before it shuts down. There are several
+other stop options, however. For example:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span> <span class="pre">--kill</span></code></dt><dd><p>Kill all running jobs before stopping. (Cylc can kill jobs on remote
+hosts, via the configured <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a>).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span> <span class="pre">--now</span> <span class="pre">--now</span></code></dt><dd><p>stop right now, leaving any jobs running.</p>
+</dd>
+</dl>
+<p>Once a workflow has stopped you can restart it with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.
+The scheduler will pick up where it left off, and carry on as normal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the workflow &quot;name&quot;.</span>
+cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
+<span class="c1"># Stop the workflow &quot;name&quot;, killing any running tasks.</span>
+cylc<span class="w"> </span>stop<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--kill
+<span class="c1"># Restart the workflow &quot;name&quot;, picking up where it left off.</span>
+cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
+</pre></div>
+</div>
+<div class="note admonition" id="tutorial-cylc-runtime-forecasting-workflow">
+<p class="admonition-title">Practical</p>
+<p class="rubric">In this practical we will add runtime configuration to the
+<a class="reference internal" href="../scheduling/datetime-cycling.html#tutorial-datetime-cycling-practical"><span class="std std-ref">weather-forecasting workflow</span></a>
+from the <a class="reference internal" href="../scheduling/index.html#tutorial-scheduling"><span class="std std-ref">scheduling tutorial</span></a>.</p>
+<ol class="arabic">
+<li><p><strong>Create A New Workflow.</strong></p>
+<p>Create a new workflow by running the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>get-resources<span class="w"> </span>tutorial/runtime-tutorial
+<span class="nb">cd</span><span class="w"> </span>~/cylc-src/runtime-tutorial
+</pre></div>
+</div>
+<p>You will now have a copy of the weather-forecasting workflow along with some
+executables and python modules.</p>
+</li>
+<li><p><strong>Set The Initial And Final Cycle Points.</strong></p>
+<p>We want the workflow to run for 6 hours, starting at least 7 hours ago, on
+the hour.</p>
+<p>We could work out the dates and times manually, or we could let Cylc do
+the maths for us.</p>
+<p>Set the <a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T-00) - PT7H</span>
+</pre></div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">previous(T-00)</span></code> returns the current time ignoring minutes and
+seconds.</p>
+<p><em>e.g. if the current time is 12:34 this will return 12:00</em></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-PT7H</span></code> subtracts 7 hours from this value.</p></li>
+</ul>
+<p>Set the <a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a>:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nv">final cycle point </span><span class="o">=</span><span class="s"> +PT6H</span>
+</pre></div>
+</div>
+<p>This sets the <a class="reference internal" href="../../glossary.html#term-final-cycle-point"><span class="xref std std-term">final cycle point</span></a> six hours after the
+<a class="reference internal" href="../../glossary.html#term-initial-cycle-point"><span class="xref std std-term">initial cycle point</span></a>.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> to check for any errors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">validate</span> <span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Add Runtime Configuration For The</strong> <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> <strong>Tasks.</strong></p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory is a script called <code class="docutils literal notranslate"><span class="pre">get-observations</span></code>. This
+script gets weather data from the MetOffice <a class="reference external" href="https://www.metoffice.gov.uk/services/data/datapoint">DataPoint</a> service.
+It requires two environment variables:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">SITE_ID</span></code>:</dt><dd><p>A four digit numerical code which is used to identify a
+weather station, e.g. <code class="docutils literal notranslate"><span class="pre">3772</span></code> is Heathrow Airport.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">API_KEY</span></code>:</dt><dd><p>An authentication key required for access to the service.</p>
+</dd>
+</dl>
+<p>Generate a Datapoint API key:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">get</span><span class="o">-</span><span class="n">resources</span> <span class="n">api</span><span class="o">-</span><span class="n">key</span>
+</pre></div>
+</div>
+<p>Add the following lines to the bottom of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file replacing
+<code class="docutils literal notranslate"><span class="pre">xxx...</span></code> with your API key:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[get_observations_heathrow]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+</pre></div>
+</div>
+<p>Add three more <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks for each of the remaining
+weather stations.</p>
+<p>You will need the codes for the other three weather stations, which are:</p>
+<ul class="simple">
+<li><p>Camborne - <code class="docutils literal notranslate"><span class="pre">3808</span></code></p></li>
+<li><p>Shetland - <code class="docutils literal notranslate"><span class="pre">3005</span></code></p></li>
+<li><p>Aldergrove - <code class="docutils literal notranslate"><span class="pre">3917</span></code></p></li>
+</ul>
+<div class="spoiler warning admonition">
+<p class="admonition-title">Solution</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[get_observations_heathrow]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+    <span class="nt">[[get_observations_camborne]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3808</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+    <span class="nt">[[get_observations_shetland]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3005</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+    <span class="nt">[[get_observations_aldergrove]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3917</span>
+            <span class="nv">API_KEY </span><span class="o">=</span><span class="s"> xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+</pre></div>
+</div>
+</div>
+<p>Check the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is valid by running the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p><strong>Test the</strong> <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> <strong>tasks.</strong></p>
+<p>Next we will test the <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks.</p>
+<p>Install the workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Open a user interface (<a class="reference internal" href="introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a> or <a class="reference internal" href="introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a>) to view
+your workflow. Run the workflow either from the UI or command line.</p>
+<div class="spoiler hint admonition">
+<p class="admonition-title">Hint</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>tui<span class="w"> </span>runtime-tutorial
+<span class="c1"># or</span>
+cylc<span class="w"> </span>gui<span class="w">  </span><span class="c1"># If you haven&#39;t already got an instance running.</span>
+</pre></div>
+</div>
+<p>Run the workflow either by:</p>
+<ul class="simple">
+<li><p>GUI: selecting the runtime-tutorial workflow in the sidebar and
+pressing the play button.</p></li>
+<li><p>Tui: pressing enter on the workflow and selecting “play”.</p></li>
+<li><p>Command line: running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">runtime-tutorial</span></code>.</p></li>
+</ul>
+</div>
+<p>If all goes well the workflow will startup and the tasks will run and
+succeed. Note that the tasks which do not have a <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> section
+will still run though they will not do anything as they do not call any
+scripts.</p>
+<p>Once the workflow has reached the final cycle point and all tasks have
+succeeded the scheduler will shut down automatically.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get-observations</span></code> script produces a file called <code class="docutils literal notranslate"><span class="pre">wind.csv</span></code> which
+specifies the wind speed and direction. This file is written in the task’s
+<a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a>.</p>
+<p>Try and open one of the <code class="docutils literal notranslate"><span class="pre">wind.csv</span></code> files. Note that the path to the
+<a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a> is:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>work/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>
+</pre></div>
+</div>
+<p>You should find a file containing four numbers:</p>
+<ul class="simple">
+<li><p>The longitude of the weather station;</p></li>
+<li><p>The latitude of the weather station;</p></li>
+<li><p>The wind direction (<em>the direction the wind is blowing towards</em>)
+in degrees;</p></li>
+<li><p>The wind speed in miles per hour.</p></li>
+</ul>
+<div class="spoiler hint admonition">
+<p class="admonition-title">Hint</p>
+<p>If you run <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">work</span></code> you should see a
+list of cycles. Pick one of them and open the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">work</span><span class="o">/&lt;</span><span class="n">cycle</span><span class="o">-</span><span class="n">point</span><span class="o">&gt;/</span><span class="n">get_observations_heathrow</span><span class="o">/</span><span class="n">wind</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+</li>
+<li><p><strong>Add runtime configuration for the other tasks.</strong></p>
+<p>The runtime configuration for the remaining tasks has been written out
+for you in the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> file which you will find in the
+<a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>. Copy the code in the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> file to the
+bottom of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>Now that all the tasks have runtime sections, remove
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]allow implicit tasks" title="flow.cylc[scheduler]allow implicit tasks"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[scheduler]allow</span> <span class="pre">implicit</span> <span class="pre">tasks</span></code></a>:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>[scheduler]
+<span class="gd">-    allow implicit tasks = True  # TODO: remove at end of exercise</span>
+</pre></div>
+</div>
+<p>Removing this ensures that any tasks in the graph without a corresponding
+runtime section will cause validation to fail (e.g. due to a typo).</p>
+<p>Check the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is valid by running the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+</pre></div>
+</div>
+<p>Now install a new run of the workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>install
+</pre></div>
+</div>
+</li>
+<li><p><strong>Run The Workflow.</strong></p>
+<p>Open a user interface (<a class="reference internal" href="introduction.html#tutorial-tui"><span class="std std-ref">The Cylc TUI</span></a> or <a class="reference internal" href="introduction.html#tutorial-gui"><span class="std std-ref">The Cylc GUI</span></a>) and
+run the workflow.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Make sure you play the latest run that was newly installed.</p>
+</div>
+</li>
+<li><p><strong>View The Forecast Summary.</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">post_process_exeter</span></code> task will produce a one-line summary of the
+weather in Exeter, as forecast two hours ahead of time. This summary can
+be found in the <code class="docutils literal notranslate"><span class="pre">summary.txt</span></code> file in the <a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a>.</p>
+<p>Try opening the summary file - it will be in the last cycle. The path to
+the <a class="reference internal" href="../../glossary.html#term-work-directory"><span class="xref std std-term">work directory</span></a> is:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>work/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>
+</pre></div>
+</div>
+<div class="spoiler hint admonition">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cycle-point</span></code> - this will be the last cycle of the workflow,
+i.e. the final cycle point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task-name</span></code> - set this to “post_process_exeter”.</p></li>
+</ul>
+</div>
+</li>
+<li><p><strong>View The Rainfall Data.</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">forecast</span></code> task will produce a html page where the rainfall
+data is rendered on a map. This html file is called <code class="docutils literal notranslate"><span class="pre">job-map.html</span></code> and
+is saved alongside the <a class="reference internal" href="../../glossary.html#term-job-log"><span class="xref std std-term">job log</span></a>.</p>
+<p>Try opening this file in a web browser, e.g via:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>firefox <span class="s">&lt;filename&gt;</span> &amp;
+</pre></div>
+</div>
+<p>The path to the <a class="reference internal" href="../../glossary.html#term-job-log-directory"><span class="xref std std-term">job log directory</span></a> is:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>log/job/<span class="s">&lt;cycle-point&gt;</span>/<span class="s">&lt;task-name&gt;</span>/<span class="s">&lt;submission-number&gt;</span>
+</pre></div>
+</div>
+<div class="spoiler hint admonition">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cycle-point</span></code> - this will be the last cycle of the workflow,
+i.e. the final cycle point.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task-name</span></code> - set this to “forecast”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">submission-number</span></code> - set this to “01”.</p></li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration-consolidation/index.html" class="btn btn-neutral float-right" title="Consolidating Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "tutorial/runtime/runtime-configuration";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

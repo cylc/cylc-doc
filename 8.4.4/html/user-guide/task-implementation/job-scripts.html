@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Implementation &mdash; Cylc 8.4.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=1636dec8"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Job Submission and Management" href="job-submission.html" />
+    <link rel="prev" title="Task Implementation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Task Implementation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Task Implementation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#job-scripts">Job Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inlined-tasks">Inlined Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interpreter">Interpreter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#task-messages">Task Messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aborting-job-scripts-on-error">Aborting Job Scripts on Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#avoid-detaching-processes">Avoid Detaching Processes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-of-pipes-in-job-scripts">Use of Pipes in Job Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="job-submission.html">Job Submission and Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssh-job-management.html">Remote Job Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skip-mode.html">Skip Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Task Implementation</a></li>
+      <li class="breadcrumb-item active">Task Implementation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/task-implementation/job-scripts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="task-implementation">
+<span id="taskimplementation"></span><h1>Task Implementation<a class="headerlink" href="#task-implementation" title="Link to this heading"></a></h1>
+<p>Existing scripts and executables can be used as Cylc tasks without
+modification so long as they return standard exit status - zero on success,
+non-zero for failure - and do not spawn detaching processes internally (see
+<a class="reference internal" href="#detachingjobs"><span class="std std-ref">Avoid Detaching Processes</span></a>).</p>
+<section id="job-scripts">
+<span id="jobscripts"></span><h2>Job Scripts<a class="headerlink" href="#job-scripts" title="Link to this heading"></a></h2>
+<p>When the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> determines that a task is ready to run it
+generates a <em>job script</em> for the task, and submits it to run (see
+<a class="reference internal" href="job-submission.html#taskjobsubmission"><span class="std std-ref">Job Submission and Management</span></a>).</p>
+<p><a class="reference internal" href="../../glossary.html#term-job-script"><span class="xref std std-term">Job scripts</span></a> encapsulate configured task runtime settings:
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]script" title="flow.cylc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a> and <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][environment]" title="flow.cylc[runtime][&lt;namespace&gt;][environment]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[environment]</span></code></a> items, if defined, are just
+concatenated in the order shown below, to make the job script.</p>
+<p>The job script is separated into two parts. User scripts and environment
+(<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]env-script" title="flow.cylc[runtime][&lt;namespace&gt;]env-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">env-script</span></code></a>, <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][environment]" title="flow.cylc[runtime][&lt;namespace&gt;][environment]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[environment]</span></code></a>, <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]pre-script" title="flow.cylc[runtime][&lt;namespace&gt;]pre-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">pre-script</span></code></a>,
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]script" title="flow.cylc[runtime][&lt;namespace&gt;]script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">script</span></code></a> and <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]post-script" title="flow.cylc[runtime][&lt;namespace&gt;]post-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">post-script</span></code></a>) are isolated and executed in
+a separate subshell process. Any changes to environment, traps, etc., done in
+any of them are visible in subsequent parts, but will not interfere with the
+parent shell process. This parent shell executes and shares environment with
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]init-script" title="flow.cylc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a>, <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]exit-script" title="flow.cylc[runtime][&lt;namespace&gt;]exit-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">exit-script</span></code></a> and <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]err-script" title="flow.cylc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a>.
+In particular, any environment changes in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]init-script" title="flow.cylc[runtime][&lt;namespace&gt;]init-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">init-script</span></code></a> will be
+visible in the parent shell, as well as in the subshell hosting user scripts.</p>
+<p>The parent shell sets trap handlers for some signals (the exact list depends on
+a particular batch system being used) and typically resends any received signal
+to the subshell and its children (the whole process group, to be precise), unless
+the batch system doesn’t execute the job script as process leader, in which case
+the signal is resent to the subshell process only. Immediately after that
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]err-script" title="flow.cylc[runtime][&lt;namespace&gt;]err-script"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">err-script</span></code></a> is executed without waiting for the subshell process to
+finish, unless you start it with the <code class="docutils literal notranslate"><span class="pre">wait</span></code> command to prevent that.</p>
+<div class="graphviz"><object data="../../_images/graphviz-309a6f1074f1f753764c56c9f6c29577d957299a.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph example {
+rankdir=&quot;TB&quot;
+packmode=&quot;array_u&quot;;
+
+subgraph cluster_legend {
+    style=&quot;dashed&quot;
+    label=&quot;Legend&quot;
+
+    &quot;user defined script&quot;
+    &quot;cylc defined script&quot; [shape=&quot;rect&quot;]
+
+    &quot;user defined script&quot; -&gt; &quot;cylc defined script&quot; [style=&quot;invis&quot;]
+}
+
+subgraph cluster_diagram {
+    style=&quot;invis&quot;
+    margin=20
+
+    &quot;cylc-env&quot; [shape=&quot;rect&quot;]
+    &quot;user-env&quot; [shape=&quot;rect&quot;]
+
+    &quot;init-script&quot; -&gt;
+    &quot;cylc-env&quot; -&gt;
+    &quot;env-script&quot;
+
+    subgraph cluster_subshell {
+        style=&quot;dashed&quot;
+        label=&quot;Subshell process&quot;
+
+        &quot;env-script&quot; -&gt;
+        &quot;user-env&quot; -&gt;
+        &quot;pre-script&quot; -&gt;
+        &quot;script&quot; -&gt;
+        &quot;post-script&quot;
+    }
+
+    &quot;post-script&quot; -&gt; &quot;err-script&quot;
+    &quot;post-script&quot; -&gt; &quot;exit-script&quot;
+}
+}</p></object></div>
+<p>The two “Cylc defined scripts” are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-env</span></code></dt><dd><p>Which provides default <code class="docutils literal notranslate"><span class="pre">CYLC_*</span></code> environment variables e.g.
+<code class="docutils literal notranslate"><span class="pre">CYLC_TASK_NAME</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">user-env</span></code></dt><dd><p>Which is the contents of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][environment]" title="flow.cylc[runtime][&lt;namespace&gt;][environment]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[environment]</span></code></a> section.</p>
+</dd>
+</dl>
+<p>Job scripts are written to the workflow’s job log directory. They can be
+printed with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">cat-log</span></code>.</p>
+</section>
+<section id="inlined-tasks">
+<h2>Inlined Tasks<a class="headerlink" href="#inlined-tasks" title="Link to this heading"></a></h2>
+<p>Task <em>script</em> items can be multi-line strings of <code class="docutils literal notranslate"><span class="pre">bash</span></code>  code, so many tasks
+can be entirely inlined in the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.</p>
+<p>For anything more than a few lines of code, however, we recommend using
+external shell scripts to allow independent testing, re-use, and shell mode
+editing.</p>
+</section>
+<section id="interpreter">
+<h2>Interpreter<a class="headerlink" href="#interpreter" title="Link to this heading"></a></h2>
+<p>The job script (which incorporates the <code class="docutils literal notranslate"><span class="pre">*-script</span></code> items) runs in the
+<code class="docutils literal notranslate"><span class="pre">bash</span></code> interpreter.</p>
+<p>Cylc searches for <code class="docutils literal notranslate"><span class="pre">bash</span></code> in the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> by first running a login bash
+shell which means you can choose the bash interpreter used by modifying
+the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in your bash configuration files (e.g. <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>).</p>
+</section>
+<section id="task-messages">
+<h2>Task Messages<a class="headerlink" href="#task-messages" title="Link to this heading"></a></h2>
+<p>Jobs send status messages back to the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> to report that
+execution has started, succeeded, or failed. Custom messages can also be sent
+by the same mechanism, with various severity levels. These can be used to
+trigger other tasks off specific task outputs (see <a class="reference internal" href="../writing-workflows/scheduling.html#messagetriggers"><span class="std std-ref">Message Triggers</span></a>), or
+to trigger execution of event handlers by the scheduler (see
+<a class="reference internal" href="../writing-workflows/runtime.html#user-guide-runtime-task-event-handling"><span class="std std-ref">Task Event Handling</span></a>)
+or just to write information to the scheduler log.</p>
+<p>(If polling is configured as the <a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">communication</span> <span class="pre">method</span></code></a> for a
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms]" title="global.cylc[platforms]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">platform</span></code></a>, the messaging system just writes messages to the
+local job status file for recovery by the scheduler at the next poll).</p>
+<p>Normal severity messages are printed to <code class="docutils literal notranslate"><span class="pre">job.out</span></code> and logged by the scheduler:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_WORKFLOW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_TASK_JOB</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;Hello from </span><span class="si">${</span><span class="nv">CYLC_TASK_ID</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>“CUSTOM” severity messages are printed to <code class="docutils literal notranslate"><span class="pre">job.out</span></code>, logged by the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, and can be used to trigger <em>custom</em>
+event handlers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_WORKFLOW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_TASK_JOB</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;CUSTOM:data available for </span><span class="si">${</span><span class="nv">CYLC_TASK_CYCLE_POINT</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>These can be used to signal special events that are neither routine
+information nor an error condition, such as production of a particular data
+file (a “data availability” event).</p>
+<p>“WARNING” severity messages are printed to <code class="docutils literal notranslate"><span class="pre">job.err</span></code>, logged by the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, and can be passed to <em>warning</em> event handlers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_WORKFLOW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_TASK_JOB</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;WARNING:Uh-oh, something&#39;s not right here.&quot;</span>
+</pre></div>
+</div>
+<p>“CRITICAL” severity messages are printed to <code class="docutils literal notranslate"><span class="pre">job.err</span></code>, logged by the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, and can be passed to <em>critical</em> event handlers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_WORKFLOW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_TASK_JOB</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;CRITICAL:ERROR occurred in process X!&quot;</span>
+</pre></div>
+</div>
+<p>Jobs no longer (since Cylc 8) attempt to resend messages if the server
+cannot be reached. Send failures normally imply a network or Cylc
+configuration problem that will not recover by itself, in which case a series
+of messaging retries just holds up job completion unnecessarily. If a job
+status message does not get through, the server will recover the correct task
+status by polling on job timeout (or earlier if regular polling is
+configured).</p>
+<p>Task messages are validated by:</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.flow.unicode_rules.</span></span><span class="sig-name descname"><span class="pre">TaskMessageValidator</span></span><a class="reference internal" href="../../_modules/cylc/flow/unicode_rules.html#TaskMessageValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>The rules for valid task messages:</p>
+<ul class="simple">
+<li><p>cannot contain <code class="docutils literal notranslate"><span class="pre">:</span></code> unless it occurs at the end of the first word</p></li>
+<li><p>cannot be: <code class="docutils literal notranslate"><span class="pre">expired</span></code>, <code class="docutils literal notranslate"><span class="pre">submitted</span></code>, <code class="docutils literal notranslate"><span class="pre">submit-failed</span></code>, <code class="docutils literal notranslate"><span class="pre">started</span></code>, <code class="docutils literal notranslate"><span class="pre">succeeded</span></code>, <code class="docutils literal notranslate"><span class="pre">failed</span></code>, <code class="docutils literal notranslate"><span class="pre">finished</span></code>, <code class="docutils literal notranslate"><span class="pre">expire</span></code>, <code class="docutils literal notranslate"><span class="pre">submit</span></code>, <code class="docutils literal notranslate"><span class="pre">submit-fail</span></code>, <code class="docutils literal notranslate"><span class="pre">start</span></code>, <code class="docutils literal notranslate"><span class="pre">succeed</span></code>, <code class="docutils literal notranslate"><span class="pre">fail</span></code>, <code class="docutils literal notranslate"><span class="pre">finish</span></code>, <code class="docutils literal notranslate"><span class="pre">succeed-all</span></code>, <code class="docutils literal notranslate"><span class="pre">succeed-any</span></code>, <code class="docutils literal notranslate"><span class="pre">fail-all</span></code>, <code class="docutils literal notranslate"><span class="pre">fail-any</span></code>, <code class="docutils literal notranslate"><span class="pre">finish-all</span></code>, <code class="docutils literal notranslate"><span class="pre">finish-any</span></code>, <code class="docutils literal notranslate"><span class="pre">start-all</span></code>, <code class="docutils literal notranslate"><span class="pre">start-any</span></code>, <code class="docutils literal notranslate"><span class="pre">submit-all</span></code>, <code class="docutils literal notranslate"><span class="pre">submit-any</span></code>, <code class="docutils literal notranslate"><span class="pre">submit-fail-all</span></code> or <code class="docutils literal notranslate"><span class="pre">submit-fail-any</span></code></p></li>
+<li><p>cannot start with: <code class="docutils literal notranslate"><span class="pre">_cylc</span></code></p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="aborting-job-scripts-on-error">
+<span id="job-scripts-aborting-on-error"></span><h2>Aborting Job Scripts on Error<a class="headerlink" href="#aborting-job-scripts-on-error" title="Link to this heading"></a></h2>
+<p>Job scripts use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-e</span></code> to abort on any error, and trap ERR, EXIT, and
+SIGTERM to send task failed messages back to the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> before
+aborting. Other scripts called from job scripts should therefore abort with
+standard non-zero exit status on error, to trigger the job script error trap.</p>
+<p>To prevent a command that is expected to generate a non-zero exit status from
+triggering the exit trap, protect it with a control statement such as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>cmp<span class="w"> </span>FILE1<span class="w"> </span>FILE2<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>:<span class="w">  </span><span class="c1"># success: do stuff</span>
+<span class="k">else</span>
+<span class="w">    </span>:<span class="w">  </span><span class="c1"># failure: do other stuff</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+<p>Job scripts also use <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-u</span></code> to abort on referencing any
+undefined variable (useful for picking up typos); and <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-o</span> <span class="pre">pipefail</span></code>
+to abort if any part of a pipe fails (by default the shell only returns the
+exit status of the final command in a pipeline).</p>
+<section id="custom-failure-messages">
+<h3>Custom Failure Messages<a class="headerlink" href="#custom-failure-messages" title="Link to this heading"></a></h3>
+<p>Critical events normally warrant aborting a job script rather than just
+sending a message. As described just above, <code class="docutils literal notranslate"><span class="pre">exit</span> <span class="pre">1</span></code> or any failing command
+not protected by the surrounding scripting will cause a job script to abort
+and report failure to the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>, potentially triggering a
+<em>failed</em> task event handler.</p>
+<p>For failures detected by the scripting you could send a critical message back
+before aborting, potentially triggering a <em>critical</em> task event handler:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>/bin/false<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>cylc<span class="w"> </span>message<span class="w"> </span>--<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_WORKFLOW_ID</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CYLC_TASK_JOB</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">&quot;CRITICAL:ERROR: /bin/false failed!&quot;</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+<p>To abort a job script with a custom message that can be passed to a
+<em>failed</em> task event handler, use the built-in <code class="docutils literal notranslate"><span class="pre">cylc__job_abort</span></code> shell
+function:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>/bin/false<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>cylc__job_abort<span class="w"> </span><span class="s2">&quot;ERROR: /bin/false failed!&quot;</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="avoid-detaching-processes">
+<span id="detachingjobs"></span><h2>Avoid Detaching Processes<a class="headerlink" href="#avoid-detaching-processes" title="Link to this heading"></a></h2>
+<p>If a task script starts background sub-processes and does not wait on them, or
+internally submits jobs to a <a class="reference internal" href="../../glossary.html#term-job-runner"><span class="xref std std-term">job runner</span></a> and then exits immediately, the
+detached processes will not be visible to Cylc and the task will appear to
+finish when the top-level script finishes. You will need to modify scripts
+like this to make them execute all sub-processes in the foreground (or use the
+shell <code class="docutils literal notranslate"><span class="pre">wait</span></code> command to wait on them before exiting) and to prevent job
+submission commands from returning before the job completes (e.g.
+<code class="docutils literal notranslate"><span class="pre">llsubmit</span> <span class="pre">-s</span></code> for Loadleveler,
+<code class="docutils literal notranslate"><span class="pre">qsub</span> <span class="pre">-sync</span> <span class="pre">yes</span></code> for Sun Grid Engine, and
+<code class="docutils literal notranslate"><span class="pre">qsub</span> <span class="pre">-W</span> <span class="pre">block=true</span></code> for PBS).</p>
+<p>If this is not possible - perhaps you don’t have control over the script
+or can’t work out how to fix it - one alternative approach is to use another
+task to repeatedly poll for the results of the detached processes:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = &quot;model =&gt; checker </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">post</span><span class="c">-</span><span class="kd">proc</span><span class="c">&quot;</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model]]</span>
+        <span class="c1"># Uh-oh, this script does an internal job submission to run model.exe:</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;run-model.sh&quot;</span>
+    <span class="nt">[[checker]]</span>
+        <span class="c1"># Fail and retry every minute (for 10 tries at the most) if model&#39;s</span>
+        <span class="c1"># job.done indicator file does not exist yet.</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> &quot;[[ ! -f $RUN_DIR/job.done ]] &amp;&amp; exit 1&quot;</span>
+        <span class="nv">execution retry delays </span><span class="o">=</span><span class="s"> 10 * PT1M</span>
+</pre></div>
+</div>
+</section>
+<section id="use-of-pipes-in-job-scripts">
+<span id="pipeinjobscripts"></span><h2>Use of Pipes in Job Scripts<a class="headerlink" href="#use-of-pipes-in-job-scripts" title="Link to this heading"></a></h2>
+<p>In bash, the return status of a pipeline is normally the exit status of the
+last command. This is unsafe, because if any command in the pipeline fails, the
+script will continue nevertheless.</p>
+<p>For safety, a Cylc job script running in bash will have the
+<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-o</span> <span class="pre">pipefail</span></code> option turned on automatically. If a pipeline
+exists in a task’s <code class="docutils literal notranslate"><span class="pre">script</span></code>, etc section, the failure of any part of
+a pipeline will cause the command to return a non-zero code at the end, which
+will be reported as a job failure. Due to the unique nature of a pipeline,
+the job file will trap the failure of the individual commands, as well as the
+whole pipeline, and will attempt to report a failure back to the workflow twice.
+The second message is ignored by the workflow, and so the behaviour can be safely
+ignored. (You should probably still investigate the failure, however!)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Task Implementation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="job-submission.html" class="btn btn-neutral float-right" title="Job Submission and Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/task-implementation/job-scripts";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

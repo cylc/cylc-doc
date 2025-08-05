@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.job_runner_handlers.documentation &mdash; Cylc 8.4.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=1636dec8"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.job_runner_handlers.documentation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.job_runner_handlers.documentation</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file is used to auto-generate some reference documentation for the</span>
+<span class="sd">job runner plugin interface.</span>
+
+<span class="sd">Note the class contained here is just for documentation purposes and is</span>
+<span class="sd">not intended to be subclassed.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+
+<div class="viewcode-block" id="ExampleHandler">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleHandler</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Documentation for writing job runner handlers.</span>
+
+<span class="sd">    Cylc can submit jobs to a number of different job runners</span>
+<span class="sd">    (aka batch systems) e.g. Slurm and PBS. For a list of built-in integrations</span>
+<span class="sd">    see :ref:`AvailableMethods`.</span>
+
+<span class="sd">    If the job runner you require is not on this list, Cylc provides a generic</span>
+<span class="sd">    interface for writing your own integration.</span>
+
+<span class="sd">    Defining a new job runner handler requires a little Python programming. Use</span>
+<span class="sd">    the built-in handlers</span>
+<span class="sd">    (e.g. :py:mod:`cylc.flow.job_runner_handlers.background`) as examples.</span>
+
+<span class="sd">    .. _where to put job runner handler modules:</span>
+
+<span class="sd">    .. rubric:: Installation</span>
+
+<span class="sd">    Custom job runner handlers must be installed on workflow and job</span>
+<span class="sd">    hosts in one of these locations:</span>
+
+<span class="sd">    - under ``WORKFLOW-RUN-DIR/lib/python/``</span>
+<span class="sd">    - under ``CYLC-PATH/cylc/flow/job_runner_handlers/``</span>
+<span class="sd">    - or anywhere in ``$PYTHONPATH``</span>
+
+<span class="sd">    Each module should export the symbol ``JOB_RUNNER_HANDLER`` for the</span>
+<span class="sd">    singleton instance that implements the job system handler logic e.g:</span>
+
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">       :caption: my_handler.py</span>
+
+<span class="sd">       class MyHandler():</span>
+<span class="sd">           pass</span>
+
+<span class="sd">       JOB_RUNNER_HANDLER = MyHandler()</span>
+
+<span class="sd">    Each job runner handler class should instantiate with no argument.</span>
+
+
+<span class="sd">    .. rubric:: Usage</span>
+
+<span class="sd">    You can then define a Cylc platform using the handler:</span>
+
+<span class="sd">    .. code-block:: cylc</span>
+<span class="sd">       :caption: global.cylc</span>
+
+<span class="sd">       [platforms]</span>
+<span class="sd">           [[my_platform]]</span>
+<span class="sd">               job runner = my_handler  # note matches Python module name</span>
+<span class="sd">               hosts = localhost</span>
+
+<span class="sd">    And configure tasks to submit to it:</span>
+
+<span class="sd">    .. code-block:: cylc</span>
+<span class="sd">       :caption: flow.cylc</span>
+
+<span class="sd">       [runtime]</span>
+<span class="sd">           [[my_task]]</span>
+<span class="sd">               script = echo &quot;Hello World!&quot;</span>
+<span class="sd">               platform = my_platform</span>
+
+
+<span class="sd">    .. rubric:: Common Arguments</span>
+
+<span class="sd">    ``job_conf: dict``</span>
+<span class="sd">       The Cylc job configuration as a dictionary with the following fields:</span>
+
+<span class="sd">       * ``dependencies``</span>
+<span class="sd">       * ``directives``</span>
+<span class="sd">       * ``env-script``</span>
+<span class="sd">       * ``environment``</span>
+<span class="sd">       * ``err-script``</span>
+<span class="sd">       * ``execution_time_limit``</span>
+<span class="sd">       * ``exit-script``</span>
+<span class="sd">       * ``flow_nums``</span>
+<span class="sd">       * ``init-script``</span>
+<span class="sd">       * ``job_d``</span>
+<span class="sd">       * ``job_file_path``</span>
+<span class="sd">       * ``job_runner_command_template``</span>
+<span class="sd">       * ``job_runner_name``</span>
+<span class="sd">       * ``namespace_hierarchy``</span>
+<span class="sd">       * ``param_var``</span>
+<span class="sd">       * ``platform``</span>
+<span class="sd">       * ``post-script``</span>
+<span class="sd">       * ``pre-script``</span>
+<span class="sd">       * ``script``</span>
+<span class="sd">       * ``submit_num``</span>
+<span class="sd">       * ``task_id``</span>
+<span class="sd">       * ``try_num``</span>
+<span class="sd">       * ``uuid_str``</span>
+<span class="sd">       * ``work_d``</span>
+<span class="sd">       * ``workflow_name``</span>
+
+<span class="sd">    ``submit_opts: dict``</span>
+<span class="sd">       The Cylc job submission options as a dictionary which may contain</span>
+<span class="sd">       the following fields:</span>
+
+<span class="sd">       * ``env``</span>
+<span class="sd">       * ``execution_time_limit``</span>
+<span class="sd">       * ``execution_time_limit``</span>
+<span class="sd">       * ``job_runner_cmd_tmpl``</span>
+<span class="sd">       * ``job_runner_cmd_tmpl``</span>
+
+
+<span class="sd">    .. rubric:: An Example</span>
+
+<span class="sd">    The following ``qsub.py`` module overrides the built-in *pbs*</span>
+<span class="sd">    job runner handler to change the directive prefix from ``#PBS`` to</span>
+<span class="sd">    ``#QSUB``:</span>
+
+<span class="sd">    .. TODO - double check that this still works, it&#39;s been a while</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">       #!/usr/bin/env python3</span>
+
+<span class="sd">       from cylc.flow.job_runner_handlers.pbs import PBSHandler</span>
+
+<span class="sd">       class QSUBHandler(PBSHandler):</span>
+<span class="sd">           DIRECTIVE_PREFIX = &quot;#QSUB &quot;</span>
+
+<span class="sd">       JOB_RUNNER_HANDLER = QSUBHandler()</span>
+
+<span class="sd">    If this is in the Python search path (see</span>
+<span class="sd">    :ref:`Where To Put Job Runner Handler Modules` above) you can use it by</span>
+<span class="sd">    name in your global configuration:</span>
+
+<span class="sd">    .. code-block:: cylc</span>
+
+<span class="sd">       [platforms]</span>
+<span class="sd">           [[my_platform]]</span>
+<span class="sd">               hosts = myhostA, myhostB</span>
+<span class="sd">               job runner = qsub  # &lt;---!</span>
+
+<span class="sd">    Then in your ``flow.cylc`` file you can use this platform:</span>
+
+<span class="sd">    .. code-block:: cylc</span>
+
+<span class="sd">       # Note, this workflow will fail at run time because we only changed the</span>
+<span class="sd">       # directive format, and PBS does not accept ``#QSUB`` directives in</span>
+<span class="sd">       # reality.</span>
+
+<span class="sd">       [scheduling]</span>
+<span class="sd">           [[graph]]</span>
+<span class="sd">               R1 = &quot;a&quot;</span>
+<span class="sd">       [runtime]</span>
+<span class="sd">           [[root]]</span>
+<span class="sd">               execution time limit = PT1M</span>
+<span class="sd">               platform = my_platform</span>
+<span class="sd">               [[[directives]]]</span>
+<span class="sd">                   -l nodes = 1</span>
+<span class="sd">                   -q = long</span>
+<span class="sd">                   -V =</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">       Don&#39;t subclass this class as it provides optional interfaces which</span>
+<span class="sd">       you may not want to inherit.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">FAIL_SIGNALS</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A tuple containing the names of signals to trap for reporting errors.</span>
+
+<span class="sd">    The default is ``(&quot;EXIT&quot;, &quot;ERR&quot;, &quot;TERM&quot;, &quot;XCPU&quot;)``.</span>
+
+<span class="sd">    ``ERR`` and ``EXIT`` are always recommended.</span>
+<span class="sd">    ``EXIT`` is used to report premature stopping of the job</span>
+<span class="sd">    script, and its trap is unset at the end of the script.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">KILL_CMD_TMPL</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command template for killing a job submission.</span>
+
+<span class="sd">    A Python string template for getting the job runner command to remove</span>
+<span class="sd">    and terminate a job ID. The command is formed using the logic:</span>
+<span class="sd">    ``job_runner.KILL_CMD_TMPL % {&quot;job_id&quot;: job_id}``.</span>
+
+<span class="sd">    For info on Python string template format see:</span>
+<span class="sd">    https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">POLL_CMD</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for checking job submissions.</span>
+
+<span class="sd">    A list of job IDs to poll will be provided as arguments.</span>
+
+<span class="sd">    The command should write valid submitted/running job IDs to stdout.</span>
+
+<span class="sd">    * To filter out invalid/failed jobs use</span>
+<span class="sd">      :py:meth:`ExampleHandler.filter_poll_many_output`.</span>
+<span class="sd">    * To build a more advanced command than is possible with this configuration</span>
+<span class="sd">      use :py:meth:`ExampleHandler.get_poll_many_cmd`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">POLL_CANT_CONNECT_ERR</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;String for detecting communication errors in poll command output.</span>
+
+<span class="sd">    A string containing an error message. If this is defined, when a poll</span>
+<span class="sd">    command returns a non-zero return code and its STDERR contains this</span>
+<span class="sd">    string, then the poll result will not be trusted, because it is assumed</span>
+<span class="sd">    that the job runner is currently unavailable. Jobs submitted to the</span>
+<span class="sd">    job runner will be assumed OK until we are able to connect to the</span>
+<span class="sd">    job runner again.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SHOULD_KILL_PROC_GROUP</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Kill jobs by killing the process group.</span>
+
+<span class="sd">     A boolean to indicate whether it is necessary to kill a job by sending</span>
+<span class="sd">     a signal to its Unix process group. This boolean also indicates that</span>
+<span class="sd">     a job submitted via this job runner will physically run on the same</span>
+<span class="sd">     host it is submitted to.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SHOULD_POLL_PROC_GROUP</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Poll jobs by PID.</span>
+
+<span class="sd">    A boolean to indicate whether it is necessary to poll a job by its PID</span>
+<span class="sd">    as well as the job ID.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">REC_ID_FROM_SUBMIT_OUT</span><span class="p">:</span> <span class="s1">&#39;re.Pattern&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regular expression to extract job IDs from submission stderr.</span>
+
+<span class="sd">    A regular expression (compiled) to extract the job &quot;id&quot; from the standard</span>
+<span class="sd">    output or standard error of the job submission command.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">REC_ID_FROM_SUBMIT_ERR</span><span class="p">:</span> <span class="s1">&#39;re.Pattern&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Regular expression to extract job IDs from submission stderr.</span>
+
+<span class="sd">    See :py:attr:`ExampleHandler.REC_ID_FROM_SUBMIT_OUT`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SUBMIT_CMD_ENV</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extra environment variables for the job runner command.</span>
+
+<span class="sd">       A Python dict (or an iterable that can be used to update a dict)</span>
+<span class="sd">       containing extra environment variables for getting the job runner</span>
+<span class="sd">       command to submit a job file.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SUBMIT_CMD_TMPL</span><span class="p">:</span> <span class="nb">str</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command template for job submission.</span>
+
+<span class="sd">    A Python string template for getting the job runner command to submit a</span>
+<span class="sd">    job file. The command is formed using the logic:</span>
+<span class="sd">    ``job_runner.SUBMIT_CMD_TMPL % {&quot;job&quot;: job_file_path}``</span>
+
+<span class="sd">    For info on Python string template format see:</span>
+<span class="sd">    https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExampleHandler.filter_poll_many_output">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_poll_many_output">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_poll_many_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter job ides out of poll output.</span>
+
+<span class="sd">        Called after the job runner&#39;s poll command. The method should read</span>
+<span class="sd">        the output and return a list of job IDs that are still in the</span>
+<span class="sd">        job runner.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            out: Job poll stdout.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of job IDs</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.filter_submit_output">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.filter_submit_output">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_submit_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter job submission stdout/err.</span>
+
+<span class="sd">        Filter the standard output and standard error of the job submission</span>
+<span class="sd">        command. This is useful if the job submission command returns</span>
+<span class="sd">        information that should just be ignored.</span>
+
+<span class="sd">        See also :py:meth:`ExampleHandler.SUBMIT_CMD_TMPL`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            out: Job submit stdout.</span>
+<span class="sd">            err: Job submit stderr.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (new_out, new_err)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.format_directives">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.format_directives">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">format_directives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_conf</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns lines to be appended to the job script.</span>
+
+<span class="sd">        This method formats the job directives for a job file, if</span>
+<span class="sd">        job file directives are relevant for the job runner. The argument</span>
+<span class="sd">        &quot;job_conf&quot; is a dict containing the job configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_conf: The Cylc configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            lines</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.get_poll_many_cmd">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_poll_many_cmd">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_poll_many_cmd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a command to poll the specified jobs.</span>
+
+<span class="sd">        If specified, this will be called instead of</span>
+<span class="sd">        :py:attr:`ExampleHandler.POLL_CMD`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_id_list: The list of job IDs to poll.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            command e.g. [&#39;foo&#39;, &#39;--bar&#39;, &#39;baz&#39;]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.get_submit_stdin">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_submit_stdin">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_submit_stdin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">submit_opts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Return a 2-element tuple ``(proc_stdin_arg, proc_stdin_value)``.</span>
+
+<span class="sd">        * Element 1 is suitable for the ``stdin=...`` argument of</span>
+<span class="sd">          ``subprocess.Popen`` so it can be a file handle, ``subprocess.PIPE``</span>
+<span class="sd">          or ``None``.</span>
+<span class="sd">        * Element 2 is the string content to pipe to stdin of the submit</span>
+<span class="sd">          command (relevant only if ``proc_stdin_arg`` is ``subprocess.PIPE``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_file_path: The path to the job file for this submission.</span>
+<span class="sd">            submit_opts: Job submission options.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (proc_stdin_arg, proc_stdin_value)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.get_vacation_signal">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.get_vacation_signal">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_vacation_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_conf</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the vacation signal.</span>
+
+<span class="sd">        If relevant, return a string containing the name of the signal that</span>
+<span class="sd">        indicates the job has been vacated by the job runner.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_conf: The Cylc configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            signal</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.submit">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.submit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">submit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">job_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">submit_opts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Submit a job.</span>
+
+<span class="sd">        Submit a job and return an instance of the Popen object for the</span>
+<span class="sd">        submission. This method is useful if the job submission requires logic</span>
+<span class="sd">        beyond just running a system or shell command.</span>
+
+<span class="sd">        See also :py:attr:`ExampleHandler.SUBMIT_CMD_TMPL`.</span>
+
+<span class="sd">        You must pass &quot;env=submit_opts.get(&#39;env&#39;)&quot; to Popen - see</span>
+<span class="sd">        :py:mod:`cylc.flow.job_runner_handlers.background`</span>
+<span class="sd">        for an example.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_file_path: The job file for this submission.</span>
+<span class="sd">            submit_opts: Job submission options.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (ret_code, out, err)</span>
+
+<span class="sd">            ret_code:</span>
+<span class="sd">                Subprocess return code.</span>
+<span class="sd">            out:</span>
+<span class="sd">                Subprocess standard output.</span>
+<span class="sd">            err:</span>
+<span class="sd">                Subprocess standard error.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ExampleHandler.manip_job_id">
+<a class="viewcode-back" href="../../../../plugins/job-runners/index.html#cylc.flow.job_runner_handlers.documentation.ExampleHandler.manip_job_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">manip_job_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Modify the job ID that is returned by the job submit command.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_id: The job ID returned by the submit command.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            job_id</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/job_runner_handlers/documentation";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

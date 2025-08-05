@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.xtriggers.wall_clock &mdash; Cylc 8.4.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=1636dec8"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.xtriggers.wall_clock</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.xtriggers.wall_clock</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;xtrigger function to trigger off of a wall clock time.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.cycling.iso8601</span><span class="w"> </span><span class="kn">import</span> <span class="n">interval_parse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowConfigError</span>
+
+
+<div class="viewcode-block" id="wall_clock">
+<a class="viewcode-back" href="../../../../user-guide/writing-workflows/external-triggers.html#cylc.flow.xtriggers.wall_clock.wall_clock">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wall_clock</span><span class="p">(</span><span class="n">offset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;PT0S&#39;</span><span class="p">,</span> <span class="n">sequential</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Trigger at a specific real &quot;wall clock&quot; time relative to the cycle point</span>
+<span class="sd">    in the graph.</span>
+
+<span class="sd">    Clock triggers, unlike other trigger functions, are executed synchronously</span>
+<span class="sd">    in the main process.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        offset:</span>
+<span class="sd">            ISO 8601 interval to wait after the cycle point is reached in real</span>
+<span class="sd">            time before triggering. May be negative, in which case it will</span>
+<span class="sd">            trigger before the real time reaches the cycle point.</span>
+<span class="sd">        sequential:</span>
+<span class="sd">            Wall-clock xtriggers are run sequentially by default.</span>
+<span class="sd">            See :ref:`Sequential Xtriggers` for more details.</span>
+
+<span class="sd">    .. versionchanged:: 8.3.0</span>
+
+<span class="sd">       The ``sequential`` argument was added.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># NOTE: This is just a placeholder for the actual implementation.</span>
+    <span class="c1"># This is only used for validating the signature and for autodocs.</span>
+    <span class="o">...</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_wall_clock</span><span class="p">(</span><span class="n">trigger_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Actual implementation of wall_clock.</span>
+
+<span class="sd">    Return True after the desired wall clock time, or False before.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        trigger_time:</span>
+<span class="sd">            Trigger time as seconds since Unix epoch.</span>
+<span class="sd">        sequential (bool):</span>
+<span class="sd">            Used by the workflow to flag corresponding xtriggers as sequential.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">trigger_time</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate and manipulate args parsed from the workflow config.</span>
+
+<span class="sd">    NOTE: the xtrigger signature is different to the function signature above</span>
+
+<span class="sd">    wall_clock()  # infer zero interval</span>
+<span class="sd">    wall_clock(PT1H)</span>
+<span class="sd">    wall_clock(offset=PT1H)</span>
+
+<span class="sd">    The offset must be a valid ISO 8601 interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">interval_parse</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">])</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">WorkflowConfigError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Invalid offset: </span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Aug 05, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.4.4";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/xtriggers/wall_clock";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
