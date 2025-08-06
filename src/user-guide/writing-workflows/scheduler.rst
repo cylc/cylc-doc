@@ -15,13 +15,14 @@ workflows.
 Workflow Events
 ---------------
 
-There are two types of event in Cylc:
+Workflow events, e.g. ``startup`` and ``shutdown``, pertain to the
+:term:`scheduler`.
 
-* workflow events e.g. ``startup`` and ``shutdown``, which pertain to the :term:`scheduler`
-* task events e.g. ``submitted`` and ``failed``, which pertain to :term:`tasks <task>`.
+.. admonition:: Not to be confused with
+   :class: tip
 
-This section covers workflow events, for
-task events see :ref:`user_guide.runtime.task_event_handling`.
+   For :term:`task` events, e.g. ``submitted`` and ``failed``, see
+   :ref:`user_guide.runtime.task_event_handling`.
 
 .. rubric:: Event Handlers
 
@@ -33,15 +34,19 @@ run when workflow events occur. These can be configured by:
 
 .. rubric:: Abort On Event
 
-As well as event handlers, you can tell the scheduler to abort (i.e., shut down
-immediately with error status) on certain workflow events, using the
+As well as event handlers, you can tell the scheduler to shut down
+immediately (with error status) on certain workflow events, using the
 ``abort on ...`` configurations.
 
 .. rubric:: Configuration
 
 Some workflow events have related configurations e.g. for setting the timeout.
 
-.. rubric:: List of workflow events:
+
+.. _user_guide.scheduler.workflow_events.list:
+
+List of workflow events
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. cylc-scope:: global.cylc[scheduler][events]
 
