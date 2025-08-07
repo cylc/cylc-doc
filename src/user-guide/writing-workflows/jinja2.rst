@@ -159,7 +159,7 @@ installed workflow at run time:
 .. table::
 
    =======================    ==============
-   CYLC_WORKFLOW_LOG_DIR      Workflow log sub-directory
+   CYLC_WORKFLOW_LOG_DIR      Workflow scheduler's log directory
    CYLC_WORKFLOW_SHARE_DIR    Workflow share sub-directory
    CYLC_WORKFLOW_WORK_DIR     Workflow work sub-directory
    =======================    ==============

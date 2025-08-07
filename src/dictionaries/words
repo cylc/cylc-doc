@@ -8,6 +8,7 @@ auth
 authenticator
 authoriser
 backticks
+basename
 baz
 boolean
 booleans
@@ -51,6 +52,7 @@ freeform
 fullmatch
 globals
 graining
+gregorian
 gscan
 hardcodes
 hardwired
@@ -81,6 +83,7 @@ kwarg
 kwargs
 latin
 lifecycle
+linearised
 linearization
 linter
 linting
@@ -100,6 +103,7 @@ obs
 offline
 onwards
 packjob
+param
 parameterization
 parameterize
 parameterized
@@ -108,10 +112,12 @@ passX
 passphrase
 passwordless
 performant
+pings
 placeholder
 placeholders
 plugin
 plugins
+postproc
 postprocessing
 pre
 predated
