@@ -175,6 +175,12 @@ nitpick_ignore_regex = [
     ('py:class', r'zmq\.asyncio\.\w+')
 ]
 
+suppress_warnings = [
+    # Workaround https://github.com/sphinx-doc/sphinx/issues/12589
+    # and https://github.com/sphinx-doc/sphinx/issues/12660:
+    'autosummary.import_cycle',
+]
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['user-guide/examples/**README.rst']
@@ -326,5 +332,3 @@ wordsfile.write_text('\n'.join(words) + '\n')
 # Create sentence case versions of wordlist:
 sentence_case = [word.capitalize() for word in words]
 sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
-
-
