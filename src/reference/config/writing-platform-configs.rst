@@ -182,6 +182,9 @@ Scheduler host using this default ``localhost`` platform.
 Neither platforms will require remote initialization as the ``install target``
 is set to ``localhost``.
 
+
+.. _config.platforms.cluster_with_multiple_login_nodes:
+
 Cluster with Multiple Login Nodes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
