@@ -22,6 +22,9 @@ For more detail see the component changelogs:
 
 ----------
 
+Cylc 8.6
+--------
+
 .. TODO: Modify these URL's and uncomment this block before release
 
    .. admonition:: Cylc Components
@@ -33,6 +36,13 @@ For more detail see the component changelogs:
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
+Supported Python versions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The minimum supported Python version is now 3.12.
+
+
+----------
 
 Cylc 8.5
 --------
@@ -282,6 +292,8 @@ configurations in
 `tornado <https://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings>`_.
 
 
+----------
+
 Cylc 8.4
 --------
 
@@ -390,6 +402,8 @@ An info view has been added, displaying
 .. image:: changes/cylc-gui-info-view.gif
    :width: 80%
 
+
+----------
 
 Cylc 8.3
 --------

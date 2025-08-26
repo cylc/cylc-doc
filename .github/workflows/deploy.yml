@@ -67,7 +67,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
       - name: configure git
         uses: cylc/release-actions/configure-git@v1
@@ -105,7 +105,7 @@ jobs:
         uses: ./docs/.github/actions/create-conda-envs
         if: ${{ ! inputs.skip_conda_environment_check }}
         with:
-          python_version: '3.9'
+          python_version: '3.x'
           working_directory: ./docs
 
       - name: checkout gh-pages
