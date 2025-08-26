@@ -12,13 +12,12 @@ Quick Installation
 
 Cylc runs on Unix-like systems including Linux and Mac OS.
 
-Via Conda (recommended)
-^^^^^^^^^^^^^^^^^^^^^^^
-
 .. admonition:: Supported Python versions
 
-   * cylc-flow supports Python 3.8+.
-   * cylc-uiserver supports Python 3.9+.
+   Cylc supports Python 3.12+.
+
+Via Conda (recommended)
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. tip::
 
@@ -45,11 +44,6 @@ Via Conda (recommended)
 
 Via Pip (+npm)
 ^^^^^^^^^^^^^^
-
-.. admonition:: Supported Python versions
-
-   * cylc-flow supports Python 3.7+.
-   * cylc-uiserver supports Python 3.9+.
 
 .. important::
 
