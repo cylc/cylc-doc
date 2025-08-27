@@ -1760,7 +1760,7 @@ Glossary
          * :term:`active cycle`
 
    skip mode
-      A task run mode that allows setting tasks to run instantly.
+      A task run mode that skips execution but completes outputs as if the task had run.
       See :ref:`task-run-modes.skip`.
 
    dummy task
