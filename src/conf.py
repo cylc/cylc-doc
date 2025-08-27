@@ -57,6 +57,7 @@ def generate_task_icon_modifier_rst():
 sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
     # sphinx built-in extensions
+    'sphinx_copybutton',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.graphviz',
