@@ -22,9 +22,6 @@ For more detail see the component changelogs:
 
 ----------
 
-Cylc 8.5
---------
-
 .. TODO: Modify these URL's and uncomment this block before release
 
    .. admonition:: Cylc Components
@@ -35,6 +32,19 @@ Cylc 8.5
    :cylc-uiserver: `1.6 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+
+
+Cylc 8.5
+--------
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   :cylc-flow: `8.5 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
+   :cylc-ui: `2.8 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.7 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
+   :cylc-rose: `1.6 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
+   :rose: `2.5 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
 More task information in the GUI (and Tui)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
