@@ -36,6 +36,77 @@ Cylc 8.6
    :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
+
+Task Matching
+^^^^^^^^^^^^^
+
+Various Cylc commands (e.g. ``cylc trigger``, ``cylc set`` and ``cylc hold``)
+allow us to select the tasks we want to operate on using cycle points,
+family names or globs, e.g:
+
+.. code-block:: bash
+
+   # trigger active tasks in cycle "2000"
+   cylc trigger workflow//2000
+
+   # trigger active tasks in "FAMILY" in cycle "2000"
+   cylc trigger workflow//2000/FAMILY
+
+   # trigger all tasks in cycle "2000" with names starting with "foo"
+   cylc trigger workflow//2000/foo*
+
+However, prior to 8.6 family names and globs would only match :term:`active tasks <active task>`.
+So, if you attempted to hold a family of tasks, Cylc would only hold the
+members of the family which were active at the time.
+
+As of Cylc 8.6.0, this restriction has been lifted, so for example, holding a
+family will now hold all tasks within the family, irrespective of whether they
+are active or not.
+
+.. code-block:: bash
+
+   # hold all tasks in "FAMILY" at cycle "2000"
+   cylc hold workflow//2000/FAMILY
+
+   # re-run all tasks in cycle "2000" (in order)
+   cylc trigger workflow//2000
+
+   # mark all tasks beginning with "foo" in cycle "2000" as "succeeded"
+   cylc set workflow//2000/foo* --out=succeeded
+
+Because Cylc workflows can be infinite, if a cycle includes a "glob" pattern
+(e.g. ``*``), this will only match :term:`active cycles <active cycle>`
+(any cycle which contains at least one :term:`active task`), e.g:
+
+.. code-block:: bash
+
+   # remove the task "foo" from all active cycles of the workflow
+   cylc remove workflow//*/foo
+
+   # release all tasks in "FAMILY" in all active cycles of the workflow
+   cylc release workflow//*/FAMILY
+
+This (combined with :ref:`changes.8.5.0.triggering_multiple_tasks`)
+makes Cylc 7 "reset to waiting" use cases much easier:
+
+.. list-table::
+   :class: grid-table
+
+   * - **Cylc 7**
+     - **Cylc 8**
+   * - ::
+
+          cylc insert workflow FAMILY.cycle
+          cylc reset workflow FAMILY.cycle --state=waiting
+          # Trigger the task(s) that start the FAMILY sub-graph
+          cylc trigger workflow member1.cycle 
+     - ::
+
+          cylc trigger workflow//cycle/FAMILY
+
+For more information on Cylc IDs, run ``cylc help id``.
+
+
 Supported Python versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -71,6 +142,8 @@ shown in the information view:
 .. image:: ../img/info-view.xtriggers.png
    :align: center
    :width: 65%
+
+.. _changes.8.5.0.triggering_multiple_tasks:
 
 Triggering Multiple Tasks
 ^^^^^^^^^^^^^^^^^^^^^^^^^
