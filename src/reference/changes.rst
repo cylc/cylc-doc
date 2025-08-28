@@ -55,7 +55,7 @@ family names or globs, e.g:
    # trigger all tasks in cycle "2000" with names starting with "foo"
    cylc trigger workflow//2000/foo*
 
-However, Cylc would only operate on :term:`active tasks <active task>`.
+However, prior to 8.6 family names and globs would only match :term:`active tasks <active task>`.
 So, if you attempted to hold a family of tasks, Cylc would only hold the
 members of the family which were active at the time.
 
@@ -98,6 +98,8 @@ makes Cylc 7 "reset to waiting" use cases much easier:
 
           cylc insert workflow FAMILY.cycle
           cylc reset workflow FAMILY.cycle --state=waiting
+          # Trigger the task(s) that start the FAMILY sub-graph
+          cylc trigger workflow member1.cycle 
      - ::
 
           cylc trigger workflow//cycle/FAMILY
