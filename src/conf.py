@@ -333,3 +333,6 @@ wordsfile.write_text('\n'.join(words) + '\n')
 # Create sentence case versions of wordlist:
 sentence_case = [word.capitalize() for word in words]
 sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
+
+# Turn off copybutton for diffs
+copybutton_selector = "div:not(.highlight-diff) > div.highlight > pre"
