@@ -57,6 +57,7 @@ def generate_task_icon_modifier_rst():
 sys.path.append(os.path.abspath('ext'))  # path to custom extensions.
 extensions = [
     # sphinx built-in extensions
+    'sphinx_copybutton',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.graphviz',
@@ -332,3 +333,6 @@ wordsfile.write_text('\n'.join(words) + '\n')
 # Create sentence case versions of wordlist:
 sentence_case = [word.capitalize() for word in words]
 sentence_case_file.write_text('\n'.join(sentence_case) + '\n')
+
+# Turn off copybutton for diffs
+copybutton_selector = "div:not(.highlight-diff) > div.highlight > pre"
