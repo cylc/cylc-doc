@@ -41,7 +41,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
       - name: configure git
         uses: cylc/release-actions/configure-git@v1
