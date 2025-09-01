@@ -18,11 +18,14 @@ concurrency:
 
 jobs:
   test_conda_install:
+    # Workflow is currently broken
+    # https://github.com/cylc/cylc-doc/pull/788#issuecomment-2573610197
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       matrix:
-        python: [3.7, 3.8, 3.9]
+        python: ['3.9']
     steps:
       - name: checkout cylc-doc
         uses: actions/checkout@v5
@@ -30,7 +33,7 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: ${{ matrix.python }}
 
       - name: install setuptools
         run: |

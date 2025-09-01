@@ -18,7 +18,7 @@ Via Conda (recommended)
 .. admonition:: Supported Python versions
 
    * cylc-flow supports Python 3.8+.
-   * cylc-uiserver currently only supports Python 3.8-3.9.
+   * cylc-uiserver supports Python 3.9+.
 
 .. tip::
 
@@ -49,7 +49,7 @@ Via Pip (+npm)
 .. admonition:: Supported Python versions
 
    * cylc-flow supports Python 3.7+.
-   * cylc-uiserver currently only supports Python 3.8-3.9.
+   * cylc-uiserver supports Python 3.9+.
 
 .. important::
 

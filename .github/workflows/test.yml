@@ -2,7 +2,9 @@ name: test
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+      - '8.*.x'
   pull_request:
   workflow_dispatch:
     inputs:
