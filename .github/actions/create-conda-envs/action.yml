@@ -29,14 +29,10 @@ runs:
         fi
         echo "CYLC_RELEASE=$CYLC_RELEASE" >> "${GITHUB_ENV}"
 
-    - shell: bash
-      working-directory: ${{ inputs.working_directory }}
-      run: |
-        # use mamba (much faster)
-        # use this when released: https://github.com/mamba-org/setup-mamba
-        conda install -n base -c conda-forge -y mamba
+    - name: setup micromamba
+      uses: mamba-org/setup-micromamba@v2
 
-    - shell: bash
+    - shell: bash -el {0}
       working-directory: ${{ inputs.working_directory }}
       run: |
         for env_file in $(echo src/reference/environments/envs/*.yml); do
@@ -50,8 +46,8 @@ runs:
             "${env_file}" \
             > "${new_env_file}"
           # create the env
-          conda run -n base mamba env create -f "${new_env_file}" -n cylc-env
+          micromamba env create -f "${new_env_file}" -n cylc-env
           # test the env
-          conda run -n cylc-env cylc version
-          conda env remove -n cylc-env
+          micromamba run -n cylc-env cylc version
+          micromamba env remove -n cylc-env
         done

@@ -6,6 +6,8 @@ on:
       - '.github/workflows/create-conda-envs.yml'
       - '.github/actions/create-conda-envs/*'
       - 'src/reference/environments/env/*.ya?ml'
+  schedule:
+    - cron: '35 0 * * *'
   workflow_dispatch:
     inputs:
       cylc_flow_version:
@@ -22,7 +24,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        python: [3.7, 3.8, 3.9]
+        python: [3.8, 3.9]
     steps:
       - name: checkout cylc-doc
         uses: actions/checkout@v5
