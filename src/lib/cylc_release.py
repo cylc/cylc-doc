@@ -2,7 +2,7 @@
 
 from cylc.flow import __version__
 
-from pkg_resources import parse_version
+from packaging.version import Version
 
 
 def pinned_version(version):
@@ -31,7 +31,7 @@ def pinned_version(version):
         '8.0rc1'
 
     """
-    ver = parse_version(version)
+    ver = Version(version)
     if ver.pre and ver.minor == 0 and ver.micro == 0:
         # special handling of major version pre-releases
         ret = (ver.major, str(ver.minor) + ''.join(map(str, ver.pre)))
