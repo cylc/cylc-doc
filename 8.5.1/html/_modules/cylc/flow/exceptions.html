@@ -1,0 +1,794 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.exceptions &mdash; Cylc 8.5.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=3fea0a2f"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.exceptions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;Exceptions for &quot;expected&quot; errors.&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">textwrap</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Set</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">CYLC_VERSION</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">format_cmd</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.subprocctx</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubFuncContext</span>
+
+
+<div class="viewcode-block" id="CylcError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic exception for Cylc errors.</span>
+
+<span class="sd">    This exception is raised in-place of &quot;expected&quot; errors where a short</span>
+<span class="sd">    message to the user is more appropriate than traceback.</span>
+
+<span class="sd">    CLI commands will catch this exception and exit with str(exception).</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="PluginError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.PluginError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PluginError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an error arising from a Cylc plugin.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        entry_point:</span>
+<span class="sd">            The plugin entry point as defined in setup.cfg</span>
+<span class="sd">            (e.g. &#39;cylc.main_loop&#39;)</span>
+<span class="sd">        plugin_name:</span>
+<span class="sd">            Name of the plugin</span>
+<span class="sd">        exc:</span>
+<span class="sd">            Original exception caught when trying to run the plugin</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry_point</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">plugin_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exc</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_point</span> <span class="o">=</span> <span class="n">entry_point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugin_name</span> <span class="o">=</span> <span class="n">plugin_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc</span> <span class="o">=</span> <span class="n">exc</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Error in plugin </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">entry_point</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">plugin_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exc</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="InputError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.InputError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InputError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception covering erroneous user input to a Cylc interface.</span>
+
+<span class="sd">    Ideally this would be handled in the interface (e.g. argument parser).</span>
+<span class="sd">    If this isn&#39;t possible raise InputError.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CylcConfigError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcConfigError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic exception to handle an error in a Cylc configuration file.&quot;&quot;&quot;</span></div>
+
+    <span class="c1"># TODO: reference the configuration element causing the problem</span>
+
+
+<div class="viewcode-block" id="WorkflowConfigError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.WorkflowConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowConfigError</span><span class="p">(</span><span class="n">CylcConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for configuration errors in a Cylc workflow configuration.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="GlobalConfigError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.GlobalConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GlobalConfigError</span><span class="p">(</span><span class="n">CylcConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for configuration errors in a Cylc global configuration.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="GraphParseError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.GraphParseError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphParseError</span><span class="p">(</span><span class="n">WorkflowConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors in Cylc workflow graphing.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TriggerExpressionError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.TriggerExpressionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TriggerExpressionError</span><span class="p">(</span><span class="n">GraphParseError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Trigger expression syntax issue.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="TaskProxySequenceBoundsError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.TaskProxySequenceBoundsError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskProxySequenceBoundsError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error on TaskProxy.__init__ with out of sequence bounds start point.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">CylcError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Not loading </span><span class="si">%s</span><span class="s1"> (out of sequence bounds)&#39;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ParamExpandError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.ParamExpandError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParamExpandError</span><span class="p">(</span><span class="n">WorkflowConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors in Cylc parameter expansion.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="WorkflowEventError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.WorkflowEventError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowEventError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors in Cylc event handlers.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CommandFailedError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CommandFailedError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CommandFailedError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for when scheduler commands fail.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+
+
+
+<div class="viewcode-block" id="ServiceFileError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.ServiceFileError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceFileError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors related to workflow service files.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="WorkflowFilesError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.WorkflowFilesError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowFilesError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors related to workflow files/directories.&quot;&quot;&quot;</span>
+    <span class="n">bullet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    -&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ContactFileExists">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.ContactFileExists">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactFileExists</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Workflow contact file exists.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="FileRemovalError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.FileRemovalError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileRemovalError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception for errors during deletion of files/directories, which are</span>
+<span class="sd">    probably the filesystem&#39;s fault, not Cylc&#39;s.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">CylcError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">. This is probably a temporary issue with the filesystem, &quot;</span>
+            <span class="s2">&quot;not a problem with Cylc.&quot;</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PlatformError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.PlatformError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlatformError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error in the management of a remote platform.</span>
+
+<span class="sd">    If the exception represents a command failure, provide either the ctx OR</span>
+<span class="sd">    manually populate the remaining kwargs. Otherwise leave the kwargs blank.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        message:</span>
+<span class="sd">            Short description.</span>
+<span class="sd">        platform_name:</span>
+<span class="sd">            Name of the platform.</span>
+<span class="sd">        ctx:</span>
+<span class="sd">            SubFuncContext object if available.</span>
+<span class="sd">            The other kwargs are derived from this.</span>
+<span class="sd">        cmd:</span>
+<span class="sd">            The remote command.</span>
+<span class="sd">        ret_code:</span>
+<span class="sd">            The command&#39;s return code.</span>
+<span class="sd">        out:</span>
+<span class="sd">            The command&#39;s stdout.</span>
+<span class="sd">        err:</span>
+<span class="sd">            The command&#39;s stderr.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">MSG_INIT</span> <span class="o">=</span> <span class="s2">&quot;initialisation did not complete&quot;</span>
+    <span class="n">MSG_SELECT</span> <span class="o">=</span> <span class="s2">&quot;host selection failed&quot;</span>
+    <span class="n">MSG_TIDY</span> <span class="o">=</span> <span class="s2">&quot;clean up did not complete&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">platform_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">ctx</span><span class="p">:</span> <span class="s1">&#39;Optional[SubFuncContext]&#39;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">cmd</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ret_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">err</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_name</span> <span class="o">=</span> <span class="n">platform_name</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">cmd</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ret_code</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ret_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">out</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">err</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">err</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ret_code</span> <span class="o">=</span> <span class="n">ret_code</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">out</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">err</span> <span class="o">=</span> <span class="n">err</span>
+        <span class="c1"># convert the cmd object to a str if needed</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">format_cmd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># matches cylc.flow.platforms.log_platform_event format</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_name</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;platform: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">platform_name</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s1">&#39;COMMAND&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;RETURN CODE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ret_code</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;STDOUT&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;STDERR&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+        <span class="p">]:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">:&#39;</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># keep newline chars</span>
+                    <span class="n">ret</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+
+<div class="viewcode-block" id="TaskDefError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.TaskDefError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TaskDefError</span><span class="p">(</span><span class="n">WorkflowConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception raise for errors in TaskDef initialization.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="XtriggerConfigError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.XtriggerConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">XtriggerConfigError</span><span class="p">(</span><span class="n">WorkflowConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error in an xtrigger.</span>
+
+<span class="sd">    For example:</span>
+
+<span class="sd">    * If the function module was not found.</span>
+<span class="sd">    * If the function was not found in the xtrigger module.</span>
+<span class="sd">    * If the function is not callable.</span>
+<span class="sd">    * If any string template in the function context</span>
+<span class="sd">      arguments are not present in the expected template values.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;[@</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s1">] </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="ClientError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.ClientError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClientError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for errors raised by Cylc client instances.</span>
+
+<span class="sd">    For example, the workflow you are trying to connect to is stopped.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        message:</span>
+<span class="sd">            The exception message.</span>
+<span class="sd">        traceback:</span>
+<span class="sd">            The underlying exception instance if available.</span>
+<span class="sd">        workflow:</span>
+<span class="sd">            The workflow ID if available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">traceback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">workflow</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span> <span class="o">=</span> <span class="n">traceback</span>
+        <span class="c1"># Workflow not included in string representation but useful bit of</span>
+        <span class="c1"># info to attach to the exception object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">workflow</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span><span class="p">:</span>
+            <span class="c1"># append server-side traceback</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+
+<div class="viewcode-block" id="RequestError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.RequestError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RequestError</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an error handling a request, returned by the server.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">workflow_cylc_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="n">ClientError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">message</span><span class="p">,</span>
+            <span class="n">traceback</span><span class="o">=</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;(Workflow is running in Cylc </span><span class="si">{</span><span class="n">workflow_cylc_version</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="k">if</span> <span class="n">workflow_cylc_version</span>
+                <span class="ow">and</span> <span class="n">workflow_cylc_version</span> <span class="o">!=</span> <span class="n">CYLC_VERSION</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="WorkflowStopped">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.WorkflowStopped">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowStopped</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The Cylc scheduler you attempted to connect to is stopped.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">workflow</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">workflow</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="si">}</span><span class="s1"> is not running&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="ClientTimeout">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.ClientTimeout">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClientTimeout</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The scheduler did not respond within the timeout.</span>
+
+<span class="sd">    This could be due to:</span>
+<span class="sd">    * Network issues.</span>
+<span class="sd">    * Scheduler issues.</span>
+<span class="sd">    * Insufficient timeout.</span>
+
+<span class="sd">    To increase the timeout, use the ``--comms-timeout`` option.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">workflow</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">workflow</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span></div>
+
+
+
+<div class="viewcode-block" id="CyclingError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CyclingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CyclingError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for errors in cycling configuration.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CyclerTypeError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CyclerTypeError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CyclerTypeError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error raised when incompatible cycling types are wrongly mixed.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">CyclingError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="s1">&#39;Incompatible cycling types: </span><span class="si">{0}</span><span class="s1"> (</span><span class="si">{1}</span><span class="s1">), </span><span class="si">{2}</span><span class="s1"> (</span><span class="si">{3}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="PointParsingError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.PointParsingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PointParsingError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error raised when a point has an incorrect value.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">CyclingError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Incompatible value for </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">: </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="IntervalParsingError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.IntervalParsingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntervalParsingError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error raised when an interval has an incorrect value.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">CyclingError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Incompatible value for </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="SequenceParsingError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.SequenceParsingError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SequenceParsingError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error on parsing an invalid sequence.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="SequenceDegenerateError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.SequenceDegenerateError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SequenceDegenerateError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error raised when adjacent points on a sequence are equal.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">CyclingError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">, point format </span><span class="si">{1}</span><span class="s1">: equal adjacent points:&#39;</span>
+                <span class="s1">&#39; </span><span class="si">{2}</span><span class="s1"> =&gt; </span><span class="si">{3}</span><span class="s1">.&#39;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="CylcTimeSyntaxError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcTimeSyntaxError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcTimeSyntaxError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error denoting invalid ISO/Cylc input syntax.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CylcMissingContextPointError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcMissingContextPointError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcMissingContextPointError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error denoting a missing (but required) context cycle point.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="CylcMissingFinalCyclePointError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcMissingFinalCyclePointError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcMissingFinalCyclePointError</span><span class="p">(</span><span class="n">CyclingError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An error denoting a missing (but required) final cycle point.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="PlatformLookupError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.PlatformLookupError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlatformLookupError</span><span class="p">(</span><span class="n">CylcConfigError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unable to determine the correct job platform from the information</span>
+<span class="sd">    given&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="HostSelectException">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.HostSelectException">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HostSelectException</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;No hosts could be selected from the provided configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Mapping of hostnames to error info.</span>
+<span class="sd">        ranking: The ranking expression used to select the host.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="n">ranking</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranking</span> <span class="o">=</span> <span class="n">ranking</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s1">&#39;Could not select host from:&#39;</span>
+        <span class="k">for</span> <span class="n">host</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">    </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s1">:&#39;</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">ret</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">        </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">hint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hint</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hint</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="si">{</span><span class="n">hint</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="HostSelectException.get_hint">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.HostSelectException.get_hint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_hint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a hint to explain this error for certain cases.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="c1"># all procs came back with special SSH error code 255</span>
+            <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;returncode&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">255</span>
+            <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="c1"># likely SSH issues</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="s1">&#39;Cylc could not establish SSH connection to the run hosts.&#39;</span>
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Ensure you can SSH to these hosts without having to&#39;</span>
+                <span class="s1">&#39; answer any prompts.&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="c1"># a ranking expression was used</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranking</span>
+            <span class="c1"># and all procs came back with special &#39;cylc psutil&#39; error code 2</span>
+            <span class="c1"># (which is used for errors relating to the extraction of metrics)</span>
+            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;returncode&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+                <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="c1"># likely an issue with the ranking expression</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">wrap</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ranking</span><span class="p">,</span>
+                <span class="n">initial_indent</span><span class="o">=</span><span class="s1">&#39;    &#39;</span><span class="p">,</span>
+                <span class="n">subsequent_indent</span><span class="o">=</span><span class="s1">&#39;    &#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">ranking</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="s1">&#39;This is likely an error in the ranking expression:&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="n">ranking</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">Configured by:&#39;</span>
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">    global.cylc[scheduler][run hosts]ranking&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NoHostsError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.NoHostsError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoHostsError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;None of the hosts of a given platform were reachable.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platform</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_name</span> <span class="o">=</span> <span class="n">platform</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Unable to find valid host for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">platform_name</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="NoPlatformsError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.NoPlatformsError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NoPlatformsError</span><span class="p">(</span><span class="n">PlatformLookupError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;None of the platforms of a given set were reachable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        identity:</span>
+<span class="sd">            The name of the platform group or install target.</span>
+<span class="sd">        set_type:</span>
+<span class="sd">            Whether the set of platforms is a platform group or an install</span>
+<span class="sd">            target.</span>
+<span class="sd">        place:</span>
+<span class="sd">            Where the attempt to get the platform failed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">identity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">hosts_consumed</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">set_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span>
+        <span class="n">place</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">identity</span> <span class="o">=</span> <span class="n">identity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">set_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hosts_consumed</span> <span class="o">=</span> <span class="n">hosts_consumed</span>
+        <span class="k">if</span> <span class="n">place</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; during </span><span class="si">{</span><span class="n">place</span><span class="si">}</span><span class="s1">.&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">place</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Unable to find a platform from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identity</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">place</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CylcVersionError">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.CylcVersionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcVersionError</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Contact file is for a Cylc Version not supported by this script.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Installed Cylc </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s1"> workflow is not &#39;</span>
+                <span class="s1">&#39;compatible with Cylc 8.&#39;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Installed workflow is not compatible with Cylc 8.&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidCompletionExpression">
+<a class="viewcode-back" href="../../../reference/api/exceptions.html#cylc.flow.exceptions.InvalidCompletionExpression">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidCompletionExpression</span><span class="p">(</span><span class="n">CylcError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;For the [runtime][&lt;namespace&gt;]completion configuration.</span>
+
+<span class="sd">    Raised when non-whitelisted syntax is present.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">message</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/exceptions";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

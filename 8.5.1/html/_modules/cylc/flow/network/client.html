@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.network.client &mdash; Cylc 8.5.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=3fea0a2f"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.network.client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.network.client</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;Client for workflow runtime API.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ABCMeta</span><span class="p">,</span>
+    <span class="n">abstractmethod</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">which</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">zmq</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zmq.asyncio</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LOG</span><span class="p">,</span>
+    <span class="n">__version__</span> <span class="k">as</span> <span class="n">CYLC_VERSION</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClientTimeout</span><span class="p">,</span>
+    <span class="n">ContactFileExists</span><span class="p">,</span>
+    <span class="n">CylcError</span><span class="p">,</span>
+    <span class="n">RequestError</span><span class="p">,</span>
+    <span class="n">WorkflowStopped</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.hostuserutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_fqdn_by_host</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ZMQSocketBase</span><span class="p">,</span>
+    <span class="n">deserialize</span><span class="p">,</span>
+    <span class="n">get_location</span><span class="p">,</span>
+    <span class="n">serialize</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network.client_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">CommsMeth</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">PB_METHOD_MAP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.workflow_files</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_old_contact_file</span>
+
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponseDict</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowRuntimeClientBase</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for WorkflowRuntimeClients.</span>
+
+<span class="sd">    WorkflowRuntimeClients that inherit from this must implement an async</span>
+<span class="sd">    method ``async_request()``. This base class provides a ``serial_request()``</span>
+<span class="sd">    method based on the ``async_request()`` method, callable by ``__call__``.</span>
+<span class="sd">    It also provides a comms timeout handler method.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        workflow: Workflow ID as a string.</span>
+<span class="sd">        host: Scheduler host.</span>
+<span class="sd">        port: The port being used by this client.</span>
+<span class="sd">        timeout: Round trip call-response timeout in seconds.</span>
+<span class="sd">        scheduler_version: The Cylc version used by the scheduler.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT_TIMEOUT</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># seconds</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">workflow</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scheduler_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">workflow</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">host</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">port</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">scheduler_version</span><span class="p">:</span>
+            <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">scheduler_version</span> <span class="o">=</span> <span class="n">get_location</span><span class="p">(</span><span class="n">workflow</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># optimisation: don&#39;t need to load the contact file if we</span>
+            <span class="c1"># already know all the required information</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler_version</span> <span class="o">=</span> <span class="n">scheduler_version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span> <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_TIMEOUT</span>
+        <span class="p">)</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">req_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an asynchronous request.&quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">serial_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">req_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send a request.</span>
+
+<span class="sd">        For convenience use ``__call__`` to call this method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            command: The name of the endpoint to call.</span>
+<span class="sd">            args: Arguments to pass to the endpoint function.</span>
+<span class="sd">            timeout: Override the default timeout (seconds).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ClientTimeout: If a response takes longer than timeout to arrive.</span>
+<span class="sd">            ClientError: Coverall for all other issues including failed auth.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            object: The data exactly as returned from the endpoint function,</span>
+<span class="sd">                nothing more, nothing less.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;loop&#39;</span><span class="p">,</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">())</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">async_request</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">req_meta</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;loop&#39;</span><span class="p">):</span>
+            <span class="c1"># (If inheriting class does have an event loop, don&#39;t mess with it)</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="fm">__call__</span> <span class="o">=</span> <span class="n">serial_request</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">timeout_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the eventuality of a communication timeout with the workflow.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            WorkflowStopped: if the workflow has already stopped.</span>
+<span class="sd">            CyclError: if the workflow has moved to different host/port.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">contact_host</span><span class="p">,</span> <span class="n">contact_port</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">get_location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">contact_host</span> <span class="o">!=</span> <span class="n">get_fqdn_by_host</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_orig_host</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">contact_port</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_port</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CylcError</span><span class="p">(</span>
+                <span class="s1">&#39;The workflow is no longer running at &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_orig_host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_orig_port</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;It has moved to </span><span class="si">{</span><span class="n">contact_host</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">contact_port</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;CYLC_TASK_COMMS_METHOD&#39;</span><span class="p">):</span>
+            <span class="c1"># don&#39;t attempt to clean up old contact files in task messages</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Cannot connect, perhaps workflow is no longer running and is leaving</span>
+        <span class="c1"># behind a contact file?</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">detect_old_contact_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ContactFileExists</span><span class="p">:</span>
+            <span class="c1"># old contact file exists and the workflow process still alive</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># the workflow has stopped</span>
+            <span class="k">raise</span> <span class="n">WorkflowStopped</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WorkflowRuntimeClient">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.client.WorkflowRuntimeClient">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WorkflowRuntimeClient</span><span class="p">(</span>  <span class="c1"># type: ignore[misc]</span>
+    <span class="n">ZMQSocketBase</span><span class="p">,</span> <span class="n">WorkflowRuntimeClientBase</span>
+<span class="p">):</span>
+    <span class="c1"># (Ignoring mypy &#39;definition of &quot;host&quot; in base class &quot;ZMQSocketBase&quot; is</span>
+    <span class="c1"># incompatible with definition in base class &quot;WorkflowRuntimeClientBase&quot;&#39;)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initiate a client to the scheduler API.</span>
+
+<span class="sd">    Initiates the REQ part of a ZMQ REQ-REP pair.</span>
+
+<span class="sd">    This class contains the logic for the ZMQ message interface and client -</span>
+<span class="sd">    server communication.</span>
+
+<span class="sd">    Determine host and port from the contact file unless provided.</span>
+
+<span class="sd">    If there is no socket bound to the specified host/port the client will</span>
+<span class="sd">    bail after ``timeout`` seconds.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        workflow:</span>
+<span class="sd">            Name of the workflow to connect to.</span>
+<span class="sd">        timeout:</span>
+<span class="sd">            Set the default timeout in seconds. The default is</span>
+<span class="sd">            ``ZMQClient.DEFAULT_TIMEOUT``.</span>
+<span class="sd">            Note the default timeout can be overridden for individual requests.</span>
+<span class="sd">        host:</span>
+<span class="sd">            The host where the flow is running if known.</span>
+
+<span class="sd">            If both host and port are provided it is not necessary to load</span>
+<span class="sd">            the contact file.</span>
+<span class="sd">        port:</span>
+<span class="sd">            The port on which the REQ-REP TCP server is listening.</span>
+
+<span class="sd">            If both host and port are provided it is not necessary to load</span>
+<span class="sd">            the contact file.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        host:</span>
+<span class="sd">            Workflow host name.</span>
+<span class="sd">        port:</span>
+<span class="sd">            Workflow host port.</span>
+<span class="sd">        timeout_handler:</span>
+<span class="sd">            Optional function which runs before ClientTimeout is raised.</span>
+<span class="sd">            This provides an interface for raising more specific exceptions in</span>
+<span class="sd">            the event of a communication timeout.</span>
+<span class="sd">        header:</span>
+<span class="sd">            Request &quot;header&quot; data to attach to each request.</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        Call endpoints using ``ZMQClient.__call__``.</span>
+
+<span class="sd">    Message interface:</span>
+<span class="sd">        * Accepts responses of the format: {&quot;data&quot;: {...}}</span>
+<span class="sd">        * Accepts error in the format: {&quot;error&quot;: {&quot;message&quot;: MSG}}</span>
+<span class="sd">        * Returns requests of the format: {&quot;command&quot;: CMD,</span>
+<span class="sd">          &quot;args&quot;: {...}}</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        WorkflowStopped: if the workflow is not running.</span>
+
+<span class="sd">    Call server &quot;endpoints&quot; using:</span>
+<span class="sd">        ``__call__``, ``serial_request``</span>
+<span class="sd">            .. automethod::</span>
+<span class="sd">                cylc.flow.network.client.WorkflowRuntimeClient.serial_request</span>
+
+<span class="sd">        ``async_request``</span>
+<span class="sd">            .. automethod::</span>
+<span class="sd">                cylc.flow.network.client.WorkflowRuntimeClient.async_request</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># socket &amp; event loop not None - get assigned on init by self.start():</span>
+    <span class="n">socket</span><span class="p">:</span> <span class="n">zmq</span><span class="o">.</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Socket</span>
+    <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">workflow</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scheduler_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">zmq</span><span class="o">.</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Context</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">srv_public_key_loc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="n">ZMQSocketBase</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">REQ</span><span class="p">,</span> <span class="n">workflow</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">WorkflowRuntimeClientBase</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">workflow</span><span class="p">,</span>
+            <span class="n">host</span><span class="p">,</span>
+            <span class="n">port</span><span class="p">,</span>
+            <span class="n">scheduler_version</span><span class="p">,</span>
+            <span class="n">timeout</span>
+        <span class="p">)</span>
+        <span class="c1"># convert to milliseconds:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">*=</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poller</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Connect the ZMQ socket on instantiation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">srv_public_key_loc</span><span class="p">)</span>
+        <span class="c1"># gather header info post start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_header</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_socket_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set socket options after socket instantiation before connect.</span>
+
+<span class="sd">        Overwrites Base method.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if there is no server don&#39;t keep the client hanging around</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">LINGER</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">))</span>
+
+        <span class="c1"># create a poller to handle timeouts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poller</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Poller</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poller</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">zmq</span><span class="o">.</span><span class="n">POLLIN</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WorkflowRuntimeClient.async_request">
+<a class="viewcode-back" href="../../../../reference/api/zmq.html#cylc.flow.network.client.WorkflowRuntimeClient.async_request">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">req_meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send an asynchronous request using asyncio.</span>
+
+<span class="sd">        Has the same arguments and return values as ``serial_request``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span> <span class="k">if</span> <span class="n">timeout</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Note: we are using CurveZMQ to secure the messages (see</span>
+        <span class="c1"># self.curve_auth, self.socket.curve_...key etc.). We have set up</span>
+        <span class="c1"># public-key cryptography on the ZMQ messaging and sockets, so</span>
+        <span class="c1"># there is no need to encrypt messages ourselves before sending.</span>
+
+        <span class="c1"># send message</span>
+        <span class="n">msg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;command&#39;</span><span class="p">:</span> <span class="n">command</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">}</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+        <span class="c1"># add the request metadata</span>
+        <span class="k">if</span> <span class="n">req_meta</span><span class="p">:</span>
+            <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">req_meta</span><span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;zmq:send </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># receive response</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">poller</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">timeout</span><span class="p">):</span>
+            <span class="n">res</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout_handler</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">ClientTimeout</span><span class="p">(</span>
+                <span class="s1">&#39;Timeout waiting for server response.&#39;</span>
+                <span class="s1">&#39; This could be due to network or server issues.&#39;</span>
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* You might want to increase the timeout using the&#39;</span>
+                <span class="s1">&#39; --comms-timeout option;&#39;</span>
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">* or check the workflow log.&#39;</span>
+            <span class="p">)</span>
+        <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;zmq:recv </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">PB_METHOD_MAP</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+        <span class="n">response</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">=</span> <span class="n">deserialize</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">:</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Received invalid response for Cylc </span><span class="si">{</span><span class="n">CYLC_VERSION</span><span class="si">}</span><span class="s2">: &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">RequestError</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cylc_version&#39;</span><span class="p">)</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="kc">None</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return &quot;header&quot; data to attach to each request for traceability.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: dictionary with the header information, such as</span>
+<span class="sd">                program and hostname.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">cylc_executable_location</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="s2">&quot;cylc&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cylc_executable_location</span><span class="p">:</span>
+            <span class="n">cylc_bin_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cylc_executable_location</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cylc_bin_dir</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="n">cylc_bin_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cylc_bin_dir</span><span class="si">}</span><span class="s2">/&quot;</span>
+
+            <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">cylc_bin_dir</span><span class="p">):</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">cylc_bin_dir</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;meta&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;prog&#39;</span><span class="p">:</span> <span class="n">cmd</span><span class="p">,</span>
+                <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span>
+                <span class="s1">&#39;comms_method&#39;</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
+                        <span class="s2">&quot;CLIENT_COMMS_METH&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">CommsMeth</span><span class="o">.</span><span class="n">ZMQ</span><span class="o">.</span><span class="n">value</span>
+                    <span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/network/client";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
