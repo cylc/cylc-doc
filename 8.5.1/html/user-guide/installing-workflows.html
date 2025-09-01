@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installing Workflows &mdash; Cylc 8.5.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=3fea0a2f"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Running Workflows" href="running-workflows/index.html" />
+    <link rel="prev" title="Scheduler Configuration" href="writing-workflows/scheduler.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing Workflows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-cylc-install-command">The Cylc Install Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-cylc-install">Using Cylc Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#options">Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configurable-source-directories">Configurable Source Directories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numbered-runs">Numbered Runs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#named-runs">Named Runs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#symlink-directories">Symlink Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-cylc-install-process">The Cylc Install Process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#file-installation">1. File Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#symlinking-of-directories">2. Symlinking of Directories</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#automatically-generated-directories-and-files">Automatically Generated Directories and Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reinstalling-a-workflow">Reinstalling a Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expected-errors">Expected Errors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cylc.flow.unicode_rules.WorkflowNameValidator"><code class="docutils literal notranslate"><span class="pre">WorkflowNameValidator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compound-commands">Compound Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-vip-validate-install-and-play"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> (Validate, Install and Play)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-vr-validate-reinstall-and-reload-or-play"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> (Validate, Reinstall and Reload or Play)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Installing Workflows</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/installing-workflows.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installing-workflows">
+<span id="id1"></span><h1>Installing Workflows<a class="headerlink" href="#installing-workflows" title="Link to this heading"></a></h1>
+<p>Cylc commands identify workflows via their names, which are relative path names
+under the <a class="reference internal" href="../glossary.html#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>, <code class="docutils literal notranslate"><span class="pre">~/cylc-run/</span></code> by default.</p>
+<p>Workflows can be grouped together under sub-directories. E.g. there are three
+workflows in the example below: <code class="docutils literal notranslate"><span class="pre">nwp/oper/region1</span></code>, <code class="docutils literal notranslate"><span class="pre">nwp/oper/region2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">nwp/test/region1</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>scan<span class="w"> </span>--state<span class="o">=</span>all<span class="w"> </span>--name<span class="w"> </span>nwp<span class="w"> </span>--format<span class="o">=</span>tree
+<span class="go">nwp</span>
+<span class="go">├─oper</span>
+<span class="go">│ ├─ region1</span>
+<span class="go">│ └─ region2</span>
+<span class="go">└─test</span>
+<span class="go">   └─ region1</span>
+</pre></div>
+</div>
+<p>This chapter will demonstrate how to install a workflow from an arbitrary
+location, called a <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>.
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> will create a new run directory in the <a class="reference internal" href="../glossary.html#term-cylc-run-directory"><span class="xref std std-term">cylc-run directory</span></a>
+for each installation of a workflow.</p>
+<nav class="contents local" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-cylc-install-command" id="id7">The Cylc Install Command</a></p></li>
+<li><p><a class="reference internal" href="#using-cylc-install" id="id8">Using Cylc Install</a></p>
+<ul>
+<li><p><a class="reference internal" href="#options" id="id9">Options</a></p></li>
+<li><p><a class="reference internal" href="#configurable-source-directories" id="id10">Configurable Source Directories</a></p></li>
+<li><p><a class="reference internal" href="#numbered-runs" id="id11">Numbered Runs</a></p></li>
+<li><p><a class="reference internal" href="#named-runs" id="id12">Named Runs</a></p></li>
+<li><p><a class="reference internal" href="#symlink-directories" id="id13">Symlink Directories</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#the-cylc-install-process" id="id14">The Cylc Install Process</a></p>
+<ul>
+<li><p><a class="reference internal" href="#file-installation" id="id15">1. File Installation</a></p></li>
+<li><p><a class="reference internal" href="#symlinking-of-directories" id="id16">2. Symlinking of Directories</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#automatically-generated-directories-and-files" id="id17">Automatically Generated Directories and Files</a></p></li>
+<li><p><a class="reference internal" href="#reinstalling-a-workflow" id="id18">Reinstalling a Workflow</a></p></li>
+<li><p><a class="reference internal" href="#expected-errors" id="id19">Expected Errors</a></p></li>
+<li><p><a class="reference internal" href="#compound-commands" id="id20">Compound Commands</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cylc-vip-validate-install-and-play" id="id21"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> (Validate, Install and Play)</a></p></li>
+<li><p><a class="reference internal" href="#cylc-vr-validate-reinstall-and-reload-or-play" id="id22"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> (Validate, Reinstall and Reload or Play)</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="the-cylc-install-command">
+<span id="install-workflow"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">The Cylc Install Command</a><a class="headerlink" href="#the-cylc-install-command" title="Link to this heading"></a></h2>
+<p>Workflows can be installed with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command, which creates
+the <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> structure and some service files underneath it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is possible to run a workflow without installation by writing it
+directly in the run directory.
+However, we recommend that you write your workflow in a source
+directory and use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> to create a fresh run directory.</p>
+</div>
+</section>
+<section id="using-cylc-install">
+<span id="id2"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Using Cylc Install</a><a class="headerlink" href="#using-cylc-install" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> accepts as its only argument either:</p>
+<ul class="simple">
+<li><p>a workflow source name (see <a class="reference internal" href="#configurable-source-dirs"><span class="std std-ref">Configurable Source Directories</span></a> below) e.g.
+<code class="docutils literal notranslate"><span class="pre">foo/bar</span></code></p></li>
+<li><p>a path to the source directory e.g. <code class="docutils literal notranslate"><span class="pre">./foo/bar</span></code> or <code class="docutils literal notranslate"><span class="pre">/path/to/foo/bar</span></code>
+(note that relative paths must begin with <code class="docutils literal notranslate"><span class="pre">./</span></code> to distinguish them from
+workflow source names)</p></li>
+</ul>
+<p>If no argument is supplied, the current working directory is used as the
+source directory.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To avoid confusion, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> does not permit any of the following
+reserved directory names: <code class="docutils literal notranslate"><span class="pre">work</span></code>, <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, <code class="docutils literal notranslate"><span class="pre">_cylc-install</span></code>, <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>, <code class="docutils literal notranslate"><span class="pre">share</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">.service</span></code>, <code class="docutils literal notranslate"><span class="pre">runN</span></code></p>
+</div>
+<section id="options">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Options</a><a class="headerlink" href="#options" title="Link to this heading"></a></h3>
+<p>The table below illustrates several command line options that control naming
+of run directories for installed workflows (the current working directory in
+these examples is <code class="docutils literal notranslate"><span class="pre">~/cylc-src/my-flow</span></code>):</p>
+<table class="docutils align-left">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Results in Installation in Directory</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/cylc-run/my-flow/run1</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--no-run-name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/cylc-run/my-flow</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--run-name=new-run</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/cylc-run/my-flow/new-run</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">--workflow-name=new-name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/cylc-run/new-name/run1</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="configurable-source-directories">
+<span id="configurable-source-dirs"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Configurable Source Directories</a><a class="headerlink" href="#configurable-source-directories" title="Link to this heading"></a></h3>
+<p>You can configure a list of directories that <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">SOURCE_NAME</span></code>
+and the GUI will search for source directories inside, using
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install]source dirs" title="global.cylc[install]source dirs"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install]source</span> <span class="pre">dirs</span></code></a>. For example, if you have</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># global.cylc</span>
+<span class="nt">[install]</span>
+    <span class="nv">source dirs </span><span class="o">=</span><span class="s"> ~/cylc-src, ~/roses</span>
+</pre></div>
+</div>
+<p>then <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span> <span class="pre">dogs/fido</span></code> will search for a workflow source directory
+<code class="docutils literal notranslate"><span class="pre">~/cylc-src/dogs/fido</span></code>, or, failing that, <code class="docutils literal notranslate"><span class="pre">~/roses/dogs/fido</span></code>, and install
+the first match (into <code class="docutils literal notranslate"><span class="pre">~/cylc-run/dogs/fido/run1</span></code>).</p>
+</section>
+<section id="numbered-runs">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Numbered Runs</a><a class="headerlink" href="#numbered-runs" title="Link to this heading"></a></h3>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> creates numbered run directories, i.e.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/&lt;workflow-name&gt;/run&lt;number&gt;</span></code>, provided the options
+<code class="docutils literal notranslate"><span class="pre">--run-name</span></code> or <code class="docutils literal notranslate"><span class="pre">--no-run-name</span></code> are not used. The run number automatically
+increments each time <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> is run, and a symlink <code class="docutils literal notranslate"><span class="pre">runN</span></code> is
+created/updated to point to the run.</p>
+<p>Example: A typical run directory structure, after three executions of
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> will look as follows.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>├── _cylc-install
+│   └── source -&gt; /home/cylc-src/test-flow
+├── run1
+│   ├── flow.cylc
+│   └── log
+│       └── install
+│           └── &lt;time-stamp&gt;-install.log
+├── run2
+│   ├── flow.cylc
+│   └── log
+│       └── install
+│           └── &lt;time-stamp&gt;-install.log
+├── run3
+│   ├── flow.cylc
+│   └── log
+│       └── install
+│           └── &lt;time-stamp&gt;-install.log
+└── runN -&gt; /home/cylc-run/test-flow/run3
+</pre></div>
+</div>
+<p>The numbered runs option may be overridden, using either the <code class="docutils literal notranslate"><span class="pre">--no-run-name</span></code>
+or the <code class="docutils literal notranslate"><span class="pre">--run-name</span></code> options.</p>
+</section>
+<section id="named-runs">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Named Runs</a><a class="headerlink" href="#named-runs" title="Link to this heading"></a></h3>
+<p>As an alternative to numbered runs, it is possible to name the runs, using the
+<code class="docutils literal notranslate"><span class="pre">--run-name</span></code> option.
+In this case, the <code class="docutils literal notranslate"><span class="pre">runN</span></code> symlink will not be created.
+This option cannot be used if numbered runs are already present. Likewise,
+numbered runs cannot be used if named runs are already present.</p>
+</section>
+<section id="symlink-directories">
+<span id="symlinkdirs"></span><h3><a class="toc-backref" href="#id13" role="doc-backlink">Symlink Directories</a><a class="headerlink" href="#symlink-directories" title="Link to this heading"></a></h3>
+<p>You can configure workflow <a class="reference internal" href="../glossary.html#term-run-directory"><span class="xref std std-term">run directories</span></a> and certain
+sub-directories as symlinks to other locations. This is a useful way of
+offloading data onto other drives to limit the disk space taken up by
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>.</p>
+<p>The symlink targets are configured per install target in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>. For more information see
+<a class="reference internal" href="../reference/config/writing-platform-configs.html#symlinkdirssetup"><span class="std std-ref">Symlinking Directories</span></a></p>
+</section>
+</section>
+<section id="the-cylc-install-process">
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">The Cylc Install Process</a><a class="headerlink" href="#the-cylc-install-process" title="Link to this heading"></a></h2>
+<p>There are two main parts of the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> process.</p>
+<ol class="arabic simple">
+<li><p>File Installation</p></li>
+<li><p>Symlinking of Directories</p></li>
+</ol>
+<section id="file-installation">
+<span id="id3"></span><h3><a class="toc-backref" href="#id15" role="doc-backlink">1. File Installation</a><a class="headerlink" href="#file-installation" title="Link to this heading"></a></h3>
+<p>Installation will involve copying the files found in the source directory into
+a new run directory. If you wish to install files into an existing run
+directory, use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code>, see <a class="reference internal" href="#reinstalling-a-workflow"><span class="std std-ref">Reinstalling a Workflow</span></a>.</p>
+<section id="excluding-items-from-installation">
+<h4>Excluding Items From Installation<a class="headerlink" href="#excluding-items-from-installation" title="Link to this heading"></a></h4>
+<p>By default, cylc install will exclude <code class="docutils literal notranslate"><span class="pre">.git</span></code>, <code class="docutils literal notranslate"><span class="pre">.svn</span></code> directories.
+To configure excluded files and directories from the file installation,
+create a <code class="docutils literal notranslate"><span class="pre">.cylcignore</span></code> file in your source directory, this supports
+pattern matching.</p>
+<p>The following example will detail how to install a workflow, including
+configuring files to be excluded from the installation.</p>
+</section>
+<section id="example-installation">
+<span id="id4"></span><h4>Example Installation<a class="headerlink" href="#example-installation" title="Link to this heading"></a></h4>
+<p>For example:
+We will look at running the cylc install command inside the directory
+<code class="docutils literal notranslate"><span class="pre">~/cylc-src/test-flow</span></code> with the following directory structure:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">pwd</span>
+<span class="go">/home/cylc-src/test-flow</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tree<span class="w"> </span>-all
+<span class="go">├── .cylcignore</span>
+<span class="go">├── dir1</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── dir2</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── file1</span>
+<span class="go">├── file2</span>
+<span class="go">├── file3</span>
+<span class="go">├── flow.cylc</span>
+<span class="go">├── textfile1.txt</span>
+<span class="go">└── textfile2.txt</span>
+</pre></div>
+</div>
+<p>We wish to omit any files matching the pattern <code class="docutils literal notranslate"><span class="pre">*.txt</span></code>,  the file
+<code class="docutils literal notranslate"><span class="pre">file1</span></code>, the contents of <code class="docutils literal notranslate"><span class="pre">dir1</span></code> and the contents of <code class="docutils literal notranslate"><span class="pre">dir2</span></code> including the
+directory itself.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>.cylcignore
+<span class="go">*.txt</span>
+<span class="go">file1</span>
+<span class="go">dir1/*</span>
+<span class="go">dir2</span>
+</pre></div>
+</div>
+<p>Now we are ready to install our workflow.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>install
+<span class="go">INSTALLED test-flow from home/cylc-src/test-flow -&gt; home/cylc-run/test-flow/run1</span>
+</pre></div>
+</div>
+<p>Looking at the directory structure that has been created</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tree<span class="w"> </span>-all<span class="w"> </span>home/cylc-run/test-flow/run1
+<span class="go">├── dir1</span>
+<span class="go">├── file2</span>
+<span class="go">├── file3</span>
+<span class="go">├── flow.cylc</span>
+<span class="go">├── log</span>
+<span class="go">│   └── install</span>
+<span class="go">│       └── &lt;time-stamp&gt;-install.log</span>
+<span class="go">└── .service</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="symlinking-of-directories">
+<span id="id5"></span><h3><a class="toc-backref" href="#id16" role="doc-backlink">2. Symlinking of Directories</a><a class="headerlink" href="#symlinking-of-directories" title="Link to this heading"></a></h3>
+<p>If symlink directories are configured in the <code class="docutils literal notranslate"><span class="pre">[[[localhost]]]</span></code> section in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a>,
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> will create these symlinks and their target locations
+(symlinks for remote install targets do not get created until
+<a class="reference internal" href="../glossary.html#term-start"><span class="xref std std-term">starting</span></a> the workflow).</p>
+<section id="override-default-symlink-locations">
+<h4>Override default symlink locations<a class="headerlink" href="#override-default-symlink-locations" title="Link to this heading"></a></h4>
+<p>You can override the default locations set in
+<a class="reference internal" href="../reference/config/global.html#global.cylc[install][symlink dirs]" title="global.cylc[install][symlink dirs]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install][symlink</span> <span class="pre">dirs]</span></code></a> by using the <code class="docutils literal notranslate"><span class="pre">--symlink-dirs</span></code>
+option with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</p>
+<p>For example, using the command line option
+<code class="docutils literal notranslate"><span class="pre">--symlink-dirs=&quot;log=$DIR,</span> <span class="pre">run=/path/to/dir,...&quot;</span></code> will symlink:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$DIR</span> <span class="pre">-&gt;</span> <span class="pre">~/cylc-run/workflow/log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/path/to/dir</span> <span class="pre">-&gt;</span> <span class="pre">~/cylc-run/workflow/run</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If configuring symlink dirs on the command line, the global configured
+symlink dirs will not be used to source directories not included in
+the command line list.</p>
+</div>
+</section>
+<section id="to-skip-making-localhost-symlinks">
+<h4>To skip making localhost symlinks<a class="headerlink" href="#to-skip-making-localhost-symlinks" title="Link to this heading"></a></h4>
+<p>Use <code class="docutils literal notranslate"><span class="pre">--symlink-dirs=&quot;&quot;</span></code> with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command.</p>
+</section>
+</section>
+</section>
+<section id="automatically-generated-directories-and-files">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Automatically Generated Directories and Files</a><a class="headerlink" href="#automatically-generated-directories-and-files" title="Link to this heading"></a></h2>
+<p>Running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> will generate some extra files in your workflow run
+directory.</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="../glossary.html#term-service-directory"><span class="xref std std-term">service directory</span></a> will be created in preparation for running the
+workflow. This is needed to store essential files used by Cylc.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">_cylc-install</span></code> directory containing a <code class="docutils literal notranslate"><span class="pre">source</span></code> symlink to the
+<a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>.
+This is needed to enable Cylc to determine the original workflow source
+for <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code>.</p></li>
+<li><p>A new <code class="docutils literal notranslate"><span class="pre">install</span></code> directory in the workflow’s log directory, with a
+time-stamped install log file containing information about the installation.</p></li>
+</ul>
+<p>Cylc plugins (such as <a class="reference internal" href="../plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a>) may generate additional files.</p>
+</section>
+<section id="reinstalling-a-workflow">
+<span id="id6"></span><h2><a class="toc-backref" href="#id18" role="doc-backlink">Reinstalling a Workflow</a><a class="headerlink" href="#reinstalling-a-workflow" title="Link to this heading"></a></h2>
+<p>To apply changes from your source directory to the installed run directory,
+use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code>.  Changes made will be recorded in the workflow log
+directory.</p>
+<p>For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>reinstall<span class="w"> </span>myflow/run1
+</pre></div>
+</div>
+<p>Cylc will determine the source directory and update your workflow.</p>
+<p>Returning to the example from above (see <a class="reference internal" href="#example-installation"><span class="std std-ref">Example Installation</span></a>).</p>
+<p>The source directory, <code class="docutils literal notranslate"><span class="pre">~/cylc-src/test-flow</span></code> has been altered as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tree<span class="w"> </span>-all<span class="w"> </span>~/cylc-src/test-flow
+<span class="go">├── .cylcignore</span>
+<span class="go">├── dir1</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── dir2</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── dir3</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── file1</span>
+<span class="go">├── file2</span>
+<span class="go">├── file3</span>
+<span class="go">├── flow.cylc</span>
+<span class="go">├── textfile1.txt</span>
+<span class="go">└── textfile2.txt</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>.cylcignore
+<span class="go">*.txt</span>
+<span class="go">file1</span>
+<span class="go">dir2</span>
+</pre></div>
+</div>
+<p>We wish to update our <code class="docutils literal notranslate"><span class="pre">~/cylc-run/test-flow/run1</span></code> with the directories <code class="docutils literal notranslate"><span class="pre">dir1</span></code>
+and <code class="docutils literal notranslate"><span class="pre">dir3</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>reinstall<span class="w"> </span>test-flow/run1
+</pre></div>
+</div>
+<p>The run directory now looks as follows:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tree<span class="w"> </span>-all<span class="w"> </span>home/cylc-run/test-flow/run1
+<span class="go">├── dir1</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── dir3</span>
+<span class="go">│   ├── another-file</span>
+<span class="go">│   └── file</span>
+<span class="go">├── file2</span>
+<span class="go">├── file3</span>
+<span class="go">├── flow.cylc</span>
+<span class="go">├── log</span>
+<span class="go">│   └── install</span>
+<span class="go">│       └── &lt;time-stamp&gt;-install.log</span>
+<span class="go">│       └── &lt;time-stamp&gt;-reinstall.log</span>
+<span class="go">└── .service</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your workflow needs to create or install scripts or executables at runtime
+and you don’t want Cylc to delete them on re-installation, you can use
+<code class="docutils literal notranslate"><span class="pre">bin</span></code> and <code class="docutils literal notranslate"><span class="pre">lib/python</span></code> directories in the
+<a class="reference internal" href="writing-workflows/runtime.html#workflow-share-directories"><span class="std std-ref">workflow share directory</span></a>.</p>
+</div>
+</section>
+<section id="expected-errors">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Expected Errors</a><a class="headerlink" href="#expected-errors" title="Link to this heading"></a></h2>
+<p>There are some occasions when installation is expected to fail:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">share</span></code>, <code class="docutils literal notranslate"><span class="pre">work</span></code> or <code class="docutils literal notranslate"><span class="pre">_cylc-install</span></code> directories exist in the
+<a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a></p></li>
+<li><p>Neither <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> nor the deprecated <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> are found in
+the <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a></p></li>
+<li><p>Both <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> and the deprecated <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> are found in
+the <a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>. Only one should be present.</p></li>
+<li><p>The workflow name is an absolute path or invalid</p>
+<p>Workflow names are validated by
+<a class="reference internal" href="#cylc.flow.unicode_rules.WorkflowNameValidator" title="cylc.flow.unicode_rules.WorkflowNameValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.unicode_rules.WorkflowNameValidator</span></code></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.unicode_rules.WorkflowNameValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylc.flow.unicode_rules.</span></span><span class="sig-name descname"><span class="pre">WorkflowNameValidator</span></span><a class="reference internal" href="../_modules/cylc/flow/unicode_rules.html#WorkflowNameValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.unicode_rules.WorkflowNameValidator" title="Link to this definition"></a></dt>
+<dd><p>The rules for valid workflow names:</p>
+<ul class="simple">
+<li><p>must be between 1 and 254 characters long</p></li>
+<li><p>cannot start with: <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, numbers</p></li>
+<li><p>can only contain: alphanumeric (regex word characters - <code class="docutils literal notranslate"><span class="pre">\w</span></code>), <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;</span></code></p></li>
+</ul>
+</dd></dl>
+
+</li>
+<li><p>The workflow name contains a directory name that is any of these reserved
+filenames: <code class="docutils literal notranslate"><span class="pre">work</span></code>, <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>, <code class="docutils literal notranslate"><span class="pre">_cylc-install</span></code>, <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>, <code class="docutils literal notranslate"><span class="pre">share</span></code>, <code class="docutils literal notranslate"><span class="pre">log</span></code>, <code class="docutils literal notranslate"><span class="pre">.service</span></code>, <code class="docutils literal notranslate"><span class="pre">runN</span></code></p></li>
+<li><p>The install would create nested install directories. Neither a new
+installation in a subdirectory of an existing one, nor a directory containing
+an existing installation are permitted. For example, having installed a
+workflow in <code class="docutils literal notranslate"><span class="pre">bar</span></code> you would be unable to install one in <code class="docutils literal notranslate"><span class="pre">foo</span></code>
+or <code class="docutils literal notranslate"><span class="pre">foo/bar/baz</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>foo
+└── bar
+    ├── _cylc-install
+    ├── baz
+    ├── run1
+    └── runN
+</pre></div>
+</div>
+<p>This means you cannot install using <code class="docutils literal notranslate"><span class="pre">--no-run-name</span></code> for a workflow that
+has installed numbered/named runs, nor can you install numbered/named runs
+for a workflow where <code class="docutils literal notranslate"><span class="pre">--no-run-name</span></code> was used.</p>
+</li>
+<li><p>Trying to install a workflow into an already existing run directory.
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">reinstall</span></code> should be used for this, see
+<a class="reference internal" href="#reinstalling-a-workflow"><span class="std std-ref">Reinstalling a Workflow</span></a>.</p></li>
+<li><p>The source directory path does not match the source directory path of a
+previous installation. i.e. running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> in
+<code class="docutils literal notranslate"><span class="pre">~/cylc-src/my-flow</span></code>, followed by running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> from
+<code class="docutils literal notranslate"><span class="pre">~/different/my-flow</span></code>.</p></li>
+</ul>
+</section>
+<section id="compound-commands">
+<span id="installing-workflows-compound-commands"></span><h2><a class="toc-backref" href="#id20" role="doc-backlink">Compound Commands</a><a class="headerlink" href="#compound-commands" title="Link to this heading"></a></h2>
+<p>Cylc provides compound commands which carry out multiple operations.</p>
+<p>For example Cylc provides a command to validate, install and play a workflow.</p>
+<p>Compound commands make common ways of working easier.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">command</span> <span class="pre">--help</span></code> to get help for each compound command,
+including a full list of available options.</p>
+</div>
+<section id="cylc-vip-validate-install-and-play">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> (Validate, Install and Play)</a><a class="headerlink" href="#cylc-vip-validate-install-and-play" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span> <span class="pre">/home/me/cylc-src/my-workflow</span></code> is the same as running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cylc<span class="w"> </span>validate<span class="w"> </span>/home/me/cylc-src/my-workflow
+$<span class="w"> </span>cylc<span class="w"> </span>install<span class="w"> </span>/home/me/cylc-src/my-workflow
+INSTALLED<span class="w"> </span>my-workflow/run1<span class="w"> </span>from<span class="w"> </span>/home/me/cylc-src/my-workflow
+$<span class="w"> </span>cylc<span class="w"> </span>play<span class="w"> </span>my-workflow
+</pre></div>
+</div>
+</section>
+<section id="cylc-vr-validate-reinstall-and-reload-or-play">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> (Validate, Reinstall and Reload or Play)</a><a class="headerlink" href="#cylc-vr-validate-reinstall-and-reload-or-play" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span> <span class="pre">my-workflow</span></code> is the same as running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check that the changes you want to</span>
+<span class="c1"># make will be valid after installation:</span>
+$<span class="w"> </span>cylc<span class="w"> </span>validate<span class="w"> </span>my-workflow<span class="w"> </span>--against-source
+$<span class="w"> </span>cylc<span class="w"> </span>reinstall<span class="w"> </span>my-workflow
+
+<span class="c1"># If workflow is running:</span>
+$<span class="w"> </span>cylc<span class="w"> </span>reload<span class="w"> </span>my-workflow
+
+<span class="c1"># If workflow is stopped:</span>
+$<span class="w"> </span>cylc<span class="w"> </span>play<span class="w"> </span>my-workflow
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="writing-workflows/scheduler.html" class="btn btn-neutral float-left" title="Scheduler Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="running-workflows/index.html" class="btn btn-neutral float-right" title="Running Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.5.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/installing-workflows";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
