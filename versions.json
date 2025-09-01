@@ -1,7 +1,4 @@
 {
-    "8.5.1": [
-        "html"
-    ],
     "8.0.3": [
         "html",
         "slides"
@@ -34,12 +31,6 @@
         "html"
     ],
     "8.2.5": [
-        "html"
-    ],
-    "stable": [
-        "html"
-    ],
-    "latest": [
         "html"
     ],
     "nightly_8.5": [

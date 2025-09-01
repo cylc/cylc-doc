@@ -1,4 +1,0 @@
-﻿cylc.flow.install\_plugins.log\_vc\_info
-========================================
-
-.. automodule:: cylc.flow.install_plugins.log_vc_info
