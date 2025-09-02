@@ -21,7 +21,7 @@ import json
 import pathlib
 import sys
 
-from pkg_resources import parse_version
+from packaging.version import Version
 
 
 DUMMY_FORMATS = [
@@ -66,10 +66,7 @@ def ls(args):
 
 def tidy(args):
     # get list of documented versions
-    versions = [
-        parse_version(version)
-        for version in get_formats(args.builddir)
-    ]
+    versions = [Version(version) for version in get_formats(args.builddir)]
 
     # build dictionary of minor versions
     # versions = [<Version('1.0.1')>, <Version('1.0.2')>]
@@ -78,17 +75,14 @@ def tidy(args):
     # }
     minor_versions = {}
     for version in versions:
-        release = version._version.release
-        if len(release) > 2:
-            major_minor = release[:2]
-            if major_minor not in minor_versions:
-                minor_versions[major_minor] = []
-            minor_versions[major_minor].append(version)
+        if len(version.release) > 2:
+            major_minor = version.release[:2]
+            minor_versions.setdefault(major_minor, []).append(version)
 
     # pull out the versions we don't want any more
     # e.g from ['1.0.1', '1.0.2', '1.0.3'] pull out ['1.0.1', '1.0.2']
     tidy = []
-    for major_minor, versions in minor_versions.items():
+    for _major_minor, versions in minor_versions.items():
         if len(versions) > 1:
             versions.sort()
             tidy.extend(versions[:-1])

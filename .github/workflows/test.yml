@@ -37,12 +37,12 @@ jobs:
       - name: configure python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
       - name: configure node
         uses: actions/setup-node@v4
         with:
-            node-version: '16'
+            node-version: 'lts/*'
 
       - name: checkout cylc-doc
         uses: actions/checkout@v5
@@ -80,8 +80,9 @@ jobs:
           print(enchant.list_dicts())
 
       - name: build & test
+        # TODO: re-enable spelling when https://github.com/sphinx-contrib/spelling/issues/234 fixed
         run: |
-          make html spelling linkcheck \
+          make html linkcheck \
             SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
 
       - name: debug sphinx failure
