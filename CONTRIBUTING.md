@@ -9,8 +9,8 @@ recipe to reproduce the problem.
 
 ## Request Enhancements
 
-Request enhancements by opening an issue at [Github
-](https://github.com/cylc/cylc-doc/issues). Describe your use case in
+Request enhancements by opening an issue at
+[Github](https://github.com/cylc/cylc-doc/issues). Describe your use case in
 detail.
 
 ## Contribute Code
