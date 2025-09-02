@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.spawn import find_executable as which
 import os
 from pathlib import Path
+from shutil import which
 import sys
 
 from cylc.flow import __version__ as CYLC_VERSION
