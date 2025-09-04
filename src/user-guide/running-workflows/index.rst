@@ -13,7 +13,7 @@ Running Workflows
    reflow
    workflow-run-modes
    scheduler-log-files
-   dynamic-behaviour
+   cylc-broadcast
    authentication-files
    workflow-databases
    advanced
