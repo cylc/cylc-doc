@@ -12,14 +12,14 @@ Broadcasts can be helpful for:
 
 * Quickly developing tasks without having to
   :ref:`edit and reload the workflow configuration <interventions.edit-the-workflow-configuration>`.
-* Sending small amounts of data from task to another (e.g. file paths).
+* Sending small amounts of data from a running task to other upcoming tasks (e.g. file paths).
 * Orchestrating production workflows from an external system.
 
-Once issued, broadcasts last for the life of the workflow and will persist if
-the workflow is shutdown and restarted (unless manually "cleared").
-
-However, broadcasts which target specific cycles will eventually be
+Broadcasts which target specific cycles will eventually be
 :ref:`expired <user_guide.broadcast.expiry>` when no longer needed.
+
+Otherwise, broadcasts last for the life of the workflow and will persist if
+the workflow is shutdown and restarted (unless manually "cleared").
 
 .. seealso::
 
