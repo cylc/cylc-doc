@@ -135,3 +135,14 @@ e.g::
 Stop the workflow::
 
    cylc stop tutorial-broadcast
+
+
+Further Reading
+---------------
+
+The :ref:`cylc-broadcast` section in the user guide contains more detail
+on broadcasts.
+
+The GUI contains an "Edit Runtime" utility which loads the task's configuration
+into a form. Any changes you make are then broadcasted to the task.
+See :ref:`interventions.edit-a-tasks-configuration`.
