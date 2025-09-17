@@ -13,7 +13,7 @@ Broadcasts can be helpful for:
 * Quickly developing tasks without having to
   :ref:`edit and reload the workflow configuration <interventions.edit-the-workflow-configuration>`.
 * Sending small amounts of data from a running task to other upcoming tasks (e.g. file paths).
-* Orchestrating production workflows from an external system.
+* Reconfiguring production workflows while they are running.
 
 Broadcasts which target specific cycles will eventually be
 :ref:`expired <user_guide.broadcast.expiry>` when no longer needed.
@@ -57,8 +57,8 @@ For more information, run ``cylc broadcast --help``.
 GUI
 ^^^
 
-Broadcasts can also be issued from the GUI in a similar way using the
-"Broadcast" command.
+Broadcasts can also be issued from the GUI in a similar way by choosing
+"Broadcast" from the task menu.
 
 Additionally, the GUI provides a utility called "Edit Runtime" which loads
 the tasks configuration into a form. Any changes you make are then broadcasted
@@ -77,22 +77,21 @@ Expiry
 ------
 
 Broadcasts which target specific cycles will eventually expire (i.e. be
-deleted) as the workflow moves on. Otherwise they would gradually accumulate 
-over the life of the workflow (note broadcasts are persisted when the workflow
-restarts).
+deleted) as the workflow moves on, to avoid gradual accumulation
+(note broadcasts are persisted when the workflow restarts).
 
 
 Expiry Point
 ^^^^^^^^^^^^
 
-Broadcasts are only expired after they are no longer required by tasks.
+Broadcasts expire once are they are no longer required by upcoming tasks.
 The exact point at which a broadcast is expired depends on two things:
 
 * The oldest cycle in the workflow to contain
   :term:`active tasks <active task>`.
 * The longest cycling :term:`recurrence` in the workflow.
 
-Broadcasts which are older than the oldest cycle point to contain active tasks
+Broadcasts which are older than the oldest :term:`active cycle point`
 *minus* the duration of the longest recurrence will be cleared.
 
 For example, for the following workflow:
@@ -110,8 +109,8 @@ The longest cycling recurrence is ``P3Y``.
 If there were no more tasks left running in the cycle ``2000``, then broadcasts
 for cycles earlier than ``1997`` (``2000 - P3Y``) would be expired.
 
-This arrangement has been designed such that broadcasts should always be
-present for the previous instance of a task in case you want to re-run it.
+This is designed to keep broadcasts as far back as the previous instance
+of each task, in case you want to re-run it.
 
 
 Broadcasting To Historical Cycles
@@ -120,9 +119,9 @@ Broadcasting To Historical Cycles
 Broadcasts targeting historical cycles may be expired as soon as they are
 issued as the result of broadcast expiry.
 
-Broadcast expiry does not occur while the workflow is paused. If you want to
-broadcast to a historical cycle before re-running it, first pause the workflow,
-then trigger the tasks, then resume the workflow, e.g:
+However, broadcast expiry does not occur while the workflow is paused, so
+you can pause the workflow, do the broadcast, trigger the tasks, and then
+resume the workflow, e.g:
 
 .. code-block:: bash
 
