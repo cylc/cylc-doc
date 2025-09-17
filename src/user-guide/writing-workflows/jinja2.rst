@@ -139,6 +139,7 @@ Jinja2 CYLC variables available when parsing any workflow (source or installed):
    ======================    ==============
    CYLC_VERSION              Version of Cylc parsing the configuration
    CYLC_WORKFLOW_NAME        Workflow name (source, or run ID minus run name)
+   CYLC_WORKFLOW_SRC_DIR     Path of the source directory.
    CYLC_TEMPLATE_VARS        Variables set by '--set' CLI options or plugins
    ======================    ==============
 
