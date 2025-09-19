@@ -3,7 +3,7 @@
 Cylc Broadcast
 ==============
 
-Cylc "Broadcasts" allow us to override task's :cylc:conf:`[runtime]`
+Cylc "Broadcasts" allow us to override the :cylc:conf:`[runtime]` settings of tasks.
 settings within a running workflow.
 
 Broadcasts can target specific cycles, families or tasks.
@@ -84,8 +84,8 @@ deleted) as the workflow moves on, to avoid gradual accumulation
 Expiry Point
 ^^^^^^^^^^^^
 
-Broadcasts expire once are they are no longer required by upcoming tasks.
-The exact point at which a broadcast is expired depends on two things:
+Broadcasts expire once they are no longer required by upcoming tasks.
+The exact point at which a broadcast is expired depends on:
 
 * The oldest cycle in the workflow to contain
   :term:`active tasks <active task>`.
