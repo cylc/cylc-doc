@@ -4,7 +4,6 @@ Cylc Broadcast
 ==============
 
 Cylc "Broadcasts" allow us to override the :cylc:conf:`[runtime]` settings of tasks.
-settings within a running workflow.
 
 Broadcasts can target specific cycles, families or tasks.
 
