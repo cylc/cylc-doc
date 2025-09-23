@@ -107,6 +107,18 @@ makes Cylc 7 "reset to waiting" use cases much easier:
 For more information on Cylc IDs, run ``cylc help id``.
 
 
+Triggering tasks at initial and final cycle point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``^`` and ``$`` short-cuts allow referencing initial and final
+cycle points in ``cylc trigger`` commands.
+
+```shell
+$ cylc trigger myworkflow//^/mytask
+$ cylc trigger myworkflow//$/mytask
+```
+
+
 Supported Python versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
