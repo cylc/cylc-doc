@@ -90,7 +90,7 @@ The exact point at which a broadcast is expired depends on:
   :term:`active tasks <active task>`.
 * The longest cycling :term:`recurrence` in the workflow.
 
-Broadcasts which are older than the oldest :term:`active cycle point`
+Broadcasts which are older than the oldest :term:`active cycle`
 *minus* the duration of the longest recurrence will be cleared.
 
 For example, for the following workflow:
