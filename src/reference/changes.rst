@@ -107,7 +107,7 @@ makes Cylc 7 "reset to waiting" use cases much easier:
 For more information on Cylc IDs, run ``cylc help id``.
 
 
-Triggering tasks at initial and final cycle point
+Selecting tasks at initial and final cycle point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The initial and final cycle points in a workflow can now be referenced in
