@@ -113,10 +113,15 @@ Triggering tasks at initial and final cycle point
 The initial and final cycle points in a workflow can now be referenced in
 commands using the ``^`` and ``$`` symbols, e.g:
 
-```shell
-$ cylc trigger myworkflow//^/mytask
-$ cylc trigger myworkflow//$/mytask
-```
+```bash
+# trigger "mytask" at the initial cycle point
+cylc trigger myworkflow//^/mytask
+
+# set required outputs for "mytask" at the final cycle point
+cylc set myworkflow//$/mytask
+
+# remove all tasks at the final cycle point
+cylc remove myworkflow//$
 
 
 Supported Python versions
