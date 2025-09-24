@@ -110,8 +110,8 @@ For more information on Cylc IDs, run ``cylc help id``.
 Triggering tasks at initial and final cycle point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``^`` and ``$`` short-cuts allow referencing initial and final
-cycle points in ``cylc trigger`` commands.
+The initial and final cycle points in a workflow can now be referenced in
+commands using the ``^`` and ``$`` symbols, e.g:
 
 ```shell
 $ cylc trigger myworkflow//^/mytask
