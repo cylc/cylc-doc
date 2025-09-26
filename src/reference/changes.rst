@@ -107,6 +107,24 @@ makes Cylc 7 "reset to waiting" use cases much easier:
 For more information on Cylc IDs, run ``cylc help id``.
 
 
+Selecting tasks at initial and final cycle point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The initial and final cycle points in a workflow can now be referenced in
+commands using the ``^`` and ``$`` symbols, e.g:
+
+.. code-block:: console
+
+   # trigger "mytask" at the initial cycle point
+   cylc trigger myworkflow//^/mytask
+
+   # set required outputs for "mytask" at the final cycle point
+   cylc set myworkflow//$/mytask
+
+   # remove all tasks at the final cycle point
+   cylc remove myworkflow//$
+
+
 Supported Python versions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
