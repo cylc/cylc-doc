@@ -50,13 +50,13 @@ Start the GUI server and open the web app in your browser by running
 ``cylc gui``.
 
 .. figure:: ../../img/cylc-ui-dash.png
-   :figwidth: 80%
+   :figwidth: 100%
    :align: center
 
    The GUI homepage.
 
 .. figure:: ../../img/cylc-ui-tree.png
-   :figwidth: 80%
+   :figwidth: 100%
    :align: center
 
    The GUI displaying a workflow using the "tree" view.
