@@ -131,6 +131,43 @@ Supported Python versions
 The minimum supported Python version is now 3.12.
 
 
+Automatic Broadcast Expiry
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Broadcasts automatically expire (i.e, are deleted) once they are no longer
+required by upcoming tasks.
+
+This means that if you try to re-run a task from the previous cycle, its
+broadcasts will likely have been expired. In Cylc 8.6.0, we have pushed back
+the broadcast expiry limit to make it easier to re-run tasks from the previous
+cycle. For more information, see
+:ref:`the user guide <user_guide.broadcast.expiry>`.
+
+Another consequence of broadcast expiry is that broadcasts made to historical
+cycles (behind the broadcast expiry point) will expire instantly.
+The ``cylc trigger --on-resume`` option was added to allow us to broadcast to
+a cycle before triggering the task:
+
+* Pause the workflow.
+* Trigger the task using the ``--on-resume`` option
+  (the task will not run until the workflow is resumed).
+* Issue the broadcast.
+* Resume the workflow (the task will now run).
+
+At Cylc 8.6.0, automatic broadcast expiry is suspended while the workflow is
+paused which simplifies this process:
+
+* Pause the workflow.
+* Issue the broadcast.
+* Trigger the task (no special option required).
+* Resume the workflow.
+
+Note the order of the broadcast and trigger operations has swapped to the
+logical order.
+
+The ``--on-resume`` option has been removed.
+
+
 ----------
 
 Cylc 8.5
