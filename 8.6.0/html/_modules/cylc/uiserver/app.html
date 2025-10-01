@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.uiserver.app &mdash; Cylc 8.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=09ed50dd"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.uiserver.app</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.uiserver.app</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Cylc UI Server can be configured using a ``jupyter_config.py`` file, loaded</span>
+<span class="sd">from a hierarchy of locations. This hierarchy includes the prepackaged</span>
+<span class="sd">configuration, the site directory (which defaults to ``/etc/cylc/uiserver`` but</span>
+<span class="sd">can be set with the environment variable ``$CYLC_SITE_CONF_PATH``) and</span>
+<span class="sd">the user directory (``~/.cylc/uiserver``).</span>
+<span class="sd">For example, at Cylc UI Server version 0.6.0, the hierarchy (highest priority</span>
+<span class="sd">at the bottom) would be:</span>
+
+<span class="sd">* ``cylc/uiserver/jupyter_config.py`` (pre-packaged default)</span>
+<span class="sd">* ``/etc/cylc/uiserver/jupyter_config.py``</span>
+<span class="sd">* ``/etc/cylc/uiserver/0/jupyter_config.py``</span>
+<span class="sd">* ``/etc/cylc/uiserver/0.6/jupyter_config.py``</span>
+<span class="sd">* ``/etc/cylc/uiserver/0.6.0/jupyter_config.py``</span>
+<span class="sd">* ``~/.cylc/uiserver/jupyter_config.py``</span>
+<span class="sd">* ``~/.cylc/uiserver/0/jupyter_config.py``</span>
+<span class="sd">* ``~/.cylc/uiserver/0.6/jupyter_config.py``</span>
+<span class="sd">* ``~/.cylc/uiserver/0.6.0/jupyter_config.py``</span>
+
+
+<span class="sd">An example configuration might look like this:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">   # scan for workflows every 10 seconds</span>
+<span class="sd">   c.CylcUIServer.scan_interval = 10</span>
+
+<span class="sd">The Cylc UI Server is a `Jupyter Server`_ extension. For generic configuration</span>
+<span class="sd">options see the Jupyter Servers documentation:</span>
+<span class="sd">:external+jupyter_server:ref:`other-full-config`.</span>
+<span class="sd">Cylc specific configurations are documented here.</span>
+
+<span class="sd">.. note::</span>
+
+<span class="sd">   ``c.CylcUIServer.site_authorization`` should be defined in</span>
+<span class="sd">   ``/etc/cylc/uiserver/jupyter_config.py``, or, alternatively, via</span>
+<span class="sd">   the environment variable ``CYLC_SITE_CONF_PATH``.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">getpass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Path</span><span class="p">,</span>
+    <span class="n">PurePath</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">textwrap</span><span class="w"> </span><span class="kn">import</span> <span class="n">dedent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleNamespace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jupyter_server.extension.application</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExtensionApp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">packaging.version</span><span class="w"> </span><span class="kn">import</span> <span class="n">Version</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tornado</span><span class="w"> </span><span class="kn">import</span> <span class="n">ioloop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tornado.web</span><span class="w"> </span><span class="kn">import</span> <span class="n">RedirectHandler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">traitlets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Bool</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Float</span><span class="p">,</span>
+    <span class="n">Int</span><span class="p">,</span>
+    <span class="n">TraitError</span><span class="p">,</span>
+    <span class="n">TraitType</span><span class="p">,</span>
+    <span class="n">Undefined</span><span class="p">,</span>
+    <span class="n">Unicode</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">,</span>
+    <span class="n">validate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">traitlets.config.loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">LazyConfigValue</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network.graphql</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CylcExecutionContext</span><span class="p">,</span> <span class="n">IgnoreFieldMiddleware</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.profiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Profiler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver</span><span class="w"> </span><span class="kn">import</span> <span class="vm">__file__</span> <span class="k">as</span> <span class="n">uis_pkg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.authorise</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Authorization</span><span class="p">,</span>
+    <span class="n">AuthorizationMiddleware</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.config_util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SITE_CONF_ROOT</span><span class="p">,</span>
+    <span class="n">USER_CONF_ROOT</span><span class="p">,</span>
+    <span class="n">get_conf_dir_hierarchy</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.data_store_mgr</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataStoreMgr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.handlers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CylcStaticHandler</span><span class="p">,</span>
+    <span class="n">CylcVersionHandler</span><span class="p">,</span>
+    <span class="n">SubscriptionHandler</span><span class="p">,</span>
+    <span class="n">UIServerGraphQLHandler</span><span class="p">,</span>
+    <span class="n">UserProfileHandler</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.resolvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Resolvers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">schema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.graphql.tornado_ws</span><span class="w"> </span><span class="kn">import</span> <span class="n">TornadoSubscriptionServer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.uiserver.workflows_mgr</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowsManager</span>
+
+
+<span class="n">INFO_FILES_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">USER_CONF_ROOT</span> <span class="o">/</span> <span class="s2">&quot;info_files&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PathType</span><span class="p">(</span><span class="n">TraitType</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A pathlib traitlet type which allows string and undefined values.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;a pathlib.PurePath object&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">PurePath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="n">Undefined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CylcUIServer">
+<a class="viewcode-back" href="../../../reference/config/ui-server.html#cylc.uiserver.app.CylcUIServer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CylcUIServer</span><span class="p">(</span><span class="n">ExtensionApp</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;cylc&#39;</span>
+    <span class="n">app_name</span> <span class="o">=</span> <span class="s1">&#39;cylc-gui&#39;</span>
+    <span class="n">load_other_extensions</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Cylc gui - A user interface for monitoring and controlling Cylc workflows.</span>
+<span class="s1">    &#39;&#39;&#39;</span>  <span class="c1"># type: ignore[assignment]</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    cylc gui                  # Start the Cylc GUI (at the dashboard page)</span>
+<span class="s1">    cylc gui [workflow]       # Start the Cylc GUI (at the workflow page)</span>
+<span class="s1">    cylc gui --new [workflow] # Start a new Cylc server instance if an old one</span>
+<span class="s1">                              # has become unresponsive, or, if the GUI has</span>
+<span class="s1">                              # been configured to launch via a centralised</span>
+<span class="s1">                              # hub.</span>
+<span class="s1">    cylc gui --no-browser     # Start the server but don&#39;t open the browser</span>
+
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>  <span class="c1"># type: ignore[assignment]</span>
+    <span class="c1"># TODO: Add a link to the access group table mappings in cylc documentation</span>
+    <span class="c1"># https://github.com/cylc/cylc-uiserver/issues/466</span>
+    <span class="n">AUTH_DESCRIPTION</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Authorization can be granted at operation (mutation) level, i.e.</span>
+<span class="s1">            specifically grant user access to execute Cylc commands, e.g.</span>
+<span class="s1">            ``play``, ``pause``, ``edit``, ``trigger`` etc. For your</span>
+<span class="s1">            convenience, these operations have been mapped to access groups</span>
+<span class="s1">            ``READ``, ``CONTROL`` and ``ALL``.</span>
+
+<span class="s1">            To remove permissions, prepend the access group or operation with</span>
+<span class="s1">            ``!``.</span>
+
+<span class="s1">            Permissions are additive but negated permissions take precedence</span>
+<span class="s1">            above additions e.g. ``CONTROL, !stop`` will permit all operations</span>
+<span class="s1">            in the ``CONTROL`` group except for ``stop``.</span>
+
+<span class="s1">            .. note::</span>
+
+<span class="s1">               Any authorization permissions granted to a user will be</span>
+<span class="s1">               applied to all workflows.</span>
+
+<span class="s1">            For more information, including the access group mappings, see</span>
+<span class="s1">            :ref:`cylc.uiserver.multi-user`.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">site_authorization</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Dictionary containing site limits and defaults for authorization.</span>
+
+<span class="s1">            This configuration should be placed only in the site set</span>
+<span class="s1">            configuration file and not the user configuration file (use</span>
+<span class="s1">            ``c.CylcUIServer.user_authorization`` for user defined</span>
+<span class="s1">            authorization).</span>
+
+<span class="s1">            If this configuration is empty, site authorization defaults to no</span>
+<span class="s1">            configurable authorization and users will be unable to set any</span>
+<span class="s1">            authorization.</span>
+
+<span class="s1">            &#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">AUTH_DESCRIPTION</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;</span>
+
+<span class="s1">            .. rubric:: Example Configuration:</span>
+
+<span class="s1">            .. code-block:: python</span>
+
+<span class="s1">               c.CylcUIServer.site_authorization = {</span>
+<span class="s1">                   &quot;*&quot;: {  # For all ui-server owners,</span>
+<span class="s1">                       &quot;*&quot;: {  # Any authenticated user</span>
+<span class="s1">                           &quot;default&quot;: &quot;READ&quot;,  # Has default read access</span>
+<span class="s1">                       },</span>
+<span class="s1">                       &quot;user1&quot;: {  # user1</span>
+<span class="s1">                           &quot;default&quot;: [&quot;!ALL&quot;],  # No privileges for all</span>
+<span class="s1">                           # ui-server owners.</span>
+<span class="s1">                       },  # No limit set, so all ui-server owners</span>
+<span class="s1">                   },  # limit is also &quot;!ALL&quot; for user1</span>
+<span class="s1">                   &quot;server_owner_1&quot;: {  # For specific UI Server owner,</span>
+<span class="s1">                       &quot;group:group_a&quot;: {  # Any member of group_a</span>
+<span class="s1">                           &quot;default&quot;: &quot;READ&quot;,  # Will have default read access</span>
+<span class="s1">                           &quot;limit&quot;: [&quot;ALL&quot;, &quot;!play&quot;],  # server_owner_1 can</span>
+<span class="s1">                       },  # grant All privileges, except play.</span>
+<span class="s1">                   },</span>
+<span class="s1">                   &quot;group:grp_of_svr_owners&quot;: {  # Group of UI Server owners</span>
+<span class="s1">                       &quot;group:group_b&quot;: {</span>
+<span class="s1">                           &quot;limit&quot;: [  # can grant groupB users up to READ and</span>
+<span class="s1">                               &quot;READ&quot;,  # CONTROL privileges, without stop and</span>
+<span class="s1">                               &quot;CONTROL&quot;,  # kill</span>
+<span class="s1">                               &quot;!stop&quot;,</span>
+<span class="s1">                               &quot;!kill&quot;,  # No default, so default is no access</span>
+<span class="s1">                           ],</span>
+<span class="s1">                       },</span>
+<span class="s1">                   },</span>
+<span class="s1">               }</span>
+
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">user_authorization</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Dictionary containing authorized users and permission levels for</span>
+<span class="s1">            authorization.</span>
+
+<span class="s1">            Use this setting to share control of your workflows</span>
+<span class="s1">            with other users.</span>
+
+<span class="s1">            Note that you are only permitted to give away permissions up to</span>
+<span class="s1">            your limit for each user, as defined in the site_authorization</span>
+<span class="s1">            configuration.</span>
+
+<span class="s1">            &#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">AUTH_DESCRIPTION</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;</span>
+
+<span class="s1">            Example configuration, residing in</span>
+<span class="s1">            ``~/.cylc/uiserver/jupyter_config.py``:</span>
+
+<span class="s1">            .. code-block:: python</span>
+
+<span class="s1">               c.CylcUIServer.user_authorization = {</span>
+<span class="s1">                   &quot;*&quot;: [&quot;READ&quot;],  # any authenticated user has READ access</span>
+<span class="s1">                   &quot;group:group2&quot;: [&quot;ALL&quot;],  # Any user in system group2 has</span>
+<span class="s1">                                             # access to all operations</span>
+<span class="s1">                   &quot;userA&quot;: [&quot;ALL&quot;, &quot;!stop&quot;],  # userA has ALL operations, not</span>
+<span class="s1">                                               # stop</span>
+<span class="s1">               }</span>
+
+<span class="s1">        &#39;&#39;&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">ui_path</span> <span class="o">=</span> <span class="n">PathType</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Path to the UI build to serve.</span>
+
+<span class="s1">            Internal config derived from ui_build_dir and ui_version.</span>
+<span class="s1">        &#39;&#39;&#39;</span>
+    <span class="p">)</span>
+    <span class="n">ui_build_dir</span> <span class="o">=</span> <span class="n">PathType</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            The directory containing the UI build.</span>
+
+<span class="s1">            This can be a directory containing a single UI build e.g::</span>
+
+<span class="s1">               dir/</span>
+<span class="s1">                   index.html</span>
+
+<span class="s1">            Or a tree of builds where each build has a version number e.g::</span>
+
+<span class="s1">               dir/</span>
+<span class="s1">                   1.0/</span>
+<span class="s1">                       index.html</span>
+<span class="s1">                   2.0/</span>
+<span class="s1">                       index.html</span>
+
+<span class="s1">            By default this points at the UI build tree which was bundled with</span>
+<span class="s1">            the UI Server. Change this if you want to pick up a different</span>
+<span class="s1">            build e.g. for development or evaluation purposes.</span>
+
+<span class="s1">            Takes effect on (re)start.</span>
+<span class="s1">        &#39;&#39;&#39;</span>
+    <span class="p">)</span>
+    <span class="n">ui_version</span> <span class="o">=</span> <span class="n">Unicode</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Hardcodes the UI version to serve.</span>
+
+<span class="s1">            If the ``ui_build_dir`` is a tree of builds, this config can be</span>
+<span class="s1">            used to determine which UI build is used.</span>
+
+<span class="s1">            By default the highest version is chosen according to PEP440</span>
+<span class="s1">            version sorting rules.</span>
+
+<span class="s1">            Takes effect on (re)start.</span>
+<span class="s1">        &#39;&#39;&#39;</span>
+    <span class="p">)</span>
+    <span class="n">scan_interval</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Set the interval between workflow scans in seconds.</span>
+
+<span class="s1">            Workflow scans allow a UI server to detect workflows which have</span>
+<span class="s1">            been started from the CLI since the last update.</span>
+
+<span class="s1">            This involves a number of filesystem operations, to reduce</span>
+<span class="s1">            system load set a higher value.</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_value</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># default values as kwargs correctly display in docs</span>
+    <span class="p">)</span>
+    <span class="n">max_workers</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Set the maximum number of workers for process pools.</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_value</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">max_threads</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Set the maximum number of threads the Cylc UI Server can use.</span>
+
+<span class="s1">            This determines the maximum number of active workflows that the</span>
+<span class="s1">            server can track.</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_value</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">profile</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            Turn on Python profiling.</span>
+
+<span class="s1">            The profile results will be saved to ~/.cylc/uiserver/profile.prof</span>
+<span class="s1">            in cprofile format.</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">log_timeout</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span>
+        <span class="c1"># Note: This timeout it intended to clean up log streams that are no</span>
+        <span class="c1"># longer being actively monitored and prevent the associated &quot;cat-log&quot;</span>
+        <span class="c1"># processes from persisting in situations where they should not be</span>
+        <span class="c1"># (e.g. if the websocket connection unexpectedly closes)</span>
+        <span class="n">config</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            The maximum length of time Cylc will stream a log file for in</span>
+<span class="s1">            seconds.</span>
+
+<span class="s1">            The &quot;Log&quot; view in the Cylc GUI streams log files allowing you to</span>
+<span class="s1">            monitor the file while is grows.</span>
+
+<span class="s1">            After the configured timeout, the stream will close. The log</span>
+<span class="s1">            view in the GUI will display a &quot;reconnect&quot; button allowing you</span>
+<span class="s1">            to restart the stream if desired.</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span>
+        <span class="n">default_value</span><span class="o">=</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># 4 hours</span>
+    <span class="p">)</span>
+
+    <span class="nd">@validate</span><span class="p">(</span><span class="s1">&#39;ui_build_dir&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_ui_build_dir_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proposed</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">proposed</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">proposed</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ui_build_dir does not exist: </span><span class="si">{</span><span class="n">proposed</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nd">@validate</span><span class="p">(</span><span class="s1">&#39;site_authorization&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_site_auth_dict_correct_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proposed</span><span class="p">):</span>
+        <span class="c1"># TODO: More advanced auth dict validating</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">proposed</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">proposed</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="n">TraitError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;Error in site authorization config: </span><span class="si">{</span><span class="n">proposed</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_list_ui_versions</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of UI build versions detected in self.ui_path.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">version</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;[0-9][0-9.]*&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">version</span>
+            <span class="p">),</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">Version</span>
+        <span class="p">)</span>
+
+    <span class="nd">@default</span><span class="p">(</span><span class="s1">&#39;ui_path&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ui_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">build_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui_build_dir</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ui_version</span>
+
+        <span class="k">if</span> <span class="n">build_dir</span> <span class="ow">and</span> <span class="n">build_dir</span> <span class="o">!=</span> <span class="n">Undefined</span><span class="p">:</span>
+            <span class="c1"># ui path has been configured, check if the path is a build</span>
+            <span class="c1"># (rather than a dir of builds e.g. development build)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">build_dir</span> <span class="o">/</span> <span class="s1">&#39;index.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">build_dir</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># default UI build base directory</span>
+            <span class="n">build_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">uis_pkg</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;ui&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">version</span><span class="p">:</span>
+            <span class="c1"># pick the highest installed version by default</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_ui_versions</span><span class="p">(</span><span class="n">build_dir</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Could not find any UI builds in </span><span class="si">{</span><span class="n">build_dir</span><span class="si">}</span><span class="s1">.&#39;</span>
+                <span class="p">)</span>
+
+        <span class="n">ui_path</span> <span class="o">=</span> <span class="n">build_dir</span> <span class="o">/</span> <span class="n">version</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ui_path</span> <span class="o">/</span> <span class="s1">&#39;index.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">ui_path</span>
+
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not find UI build in </span><span class="si">{</span><span class="n">ui_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config_file_paths</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span> <span class="o">=</span> <span class="n">WorkflowsManager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_store_mgr</span> <span class="o">=</span> <span class="n">DataStoreMgr</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># sub_status dictionary storing status of subscriptions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_statuses</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span> <span class="o">=</span> <span class="n">Resolvers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="p">,</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">executor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="p">,</span>
+            <span class="n">workflows_mgr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">config_file_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_file_paths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">get_conf_dir_hierarchy</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">SITE_CONF_ROOT</span><span class="p">,</span>  <span class="c1"># site configuration</span>
+                    <span class="n">USER_CONF_ROOT</span><span class="p">,</span>  <span class="c1"># user configuration</span>
+                <span class="p">],</span> <span class="n">filename</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="c1"># Next include currently needed for directory making</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">uis_pkg</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">))</span>  <span class="c1"># packaged config</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config_file_paths</span> <span class="o">=</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_file_paths</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update extension settings.</span>
+
+<span class="sd">        Update the self.settings trait to pass extra settings to the underlying</span>
+<span class="sd">        Tornado Web Application.</span>
+
+<span class="sd">        self.settings.update({&#39;&lt;trait&gt;&#39;:...})</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize_settings</span><span class="p">()</span>
+
+        <span class="c1"># startup messages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting Cylc UI Server&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Serving UI from: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ui_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s1">&#39;CylcUIServer config:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;  * </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;CylcUIServer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># start profiling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span> <span class="o">=</span> <span class="n">Profiler</span><span class="p">(</span>
+            <span class="c1"># the profiler is designed to attach to a Cylc scheduler</span>
+            <span class="n">schd</span><span class="o">=</span><span class="n">SimpleNamespace</span><span class="p">(</span><span class="n">workflow_log_dir</span><span class="o">=</span><span class="n">USER_CONF_ROOT</span><span class="p">),</span>
+            <span class="c1"># profiling is turned on via the &quot;profile&quot; traitlet</span>
+            <span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="c1"># start the async scan task running (do this on server start not init)</span>
+        <span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">current</span><span class="p">()</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="o">.</span><span class="n">run</span>
+        <span class="p">)</span>
+        <span class="c1"># configure the scan interval</span>
+        <span class="n">ioloop</span><span class="o">.</span><span class="n">PeriodicCallback</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="o">.</span><span class="n">scan</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scan_interval</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_handlers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">authobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_auth</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_server</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/version&#39;</span><span class="p">,</span>
+                <span class="n">CylcVersionHandler</span><span class="p">,</span>
+                <span class="p">{</span><span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">authobj</span><span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/graphql&#39;</span><span class="p">,</span>
+                <span class="n">UIServerGraphQLHandler</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="n">schema</span><span class="p">,</span>
+                    <span class="s1">&#39;resolvers&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">,</span>
+                    <span class="s1">&#39;middleware&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">AuthorizationMiddleware</span><span class="p">,</span>
+                        <span class="n">IgnoreFieldMiddleware</span>
+                    <span class="p">],</span>
+                    <span class="s1">&#39;execution_context_class&#39;</span><span class="p">:</span> <span class="n">CylcExecutionContext</span><span class="p">,</span>
+                    <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">authobj</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/graphql/batch&#39;</span><span class="p">,</span>
+                <span class="n">UIServerGraphQLHandler</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="n">schema</span><span class="p">,</span>
+                    <span class="s1">&#39;resolvers&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">,</span>
+                    <span class="s1">&#39;middleware&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">AuthorizationMiddleware</span><span class="p">,</span>
+                        <span class="n">IgnoreFieldMiddleware</span>
+                    <span class="p">],</span>
+                    <span class="s1">&#39;execution_context_class&#39;</span><span class="p">:</span> <span class="n">CylcExecutionContext</span><span class="p">,</span>
+                    <span class="s1">&#39;batch&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">authobj</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/subscriptions&#39;</span><span class="p">,</span>
+                <span class="n">SubscriptionHandler</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;sub_server&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscription_server</span><span class="p">,</span>
+                    <span class="s1">&#39;resolvers&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span><span class="p">,</span>
+                    <span class="s1">&#39;sub_statuses&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_statuses</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/userprofile&#39;</span><span class="p">,</span>
+                <span class="n">UserProfileHandler</span><span class="p">,</span>
+                <span class="p">{</span><span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">authobj</span><span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="s1">&#39;cylc/(.*)?&#39;</span><span class="p">,</span>
+                <span class="n">CylcStaticHandler</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui_path</span><span class="p">),</span>
+                    <span class="s1">&#39;default_filename&#39;</span><span class="p">:</span> <span class="s1">&#39;index.html&#39;</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="p">(</span>
+                <span class="c1"># redirect &#39;/cylc&#39; to &#39;/cylc/&#39;</span>
+                <span class="s1">&#39;cylc&#39;</span><span class="p">,</span>
+                <span class="n">RedirectHandler</span><span class="p">,</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;cylc/&#39;</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_sub_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscription_server</span> <span class="o">=</span> <span class="n">TornadoSubscriptionServer</span><span class="p">(</span>
+            <span class="n">schema</span><span class="p">,</span>
+            <span class="n">middleware</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">IgnoreFieldMiddleware</span><span class="p">,</span>
+                <span class="n">AuthorizationMiddleware</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">execution_context_class</span><span class="o">=</span><span class="n">CylcExecutionContext</span><span class="p">,</span>
+            <span class="n">auth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">authobj</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Authorization</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create authorization object.</span>
+<span class="sd">        One for the lifetime of the UIServer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user_auth</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LazyConfigValue</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">user_authorization</span>
+        <span class="p">)</span>
+        <span class="n">site_auth</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LazyConfigValue</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">CylcUIServer</span><span class="o">.</span><span class="n">site_authorization</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">user_auth</span><span class="p">,</span> <span class="n">LazyConfigValue</span><span class="p">):</span>
+            <span class="n">user_auth</span> <span class="o">=</span> <span class="n">user_auth</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">site_auth</span><span class="p">,</span> <span class="n">LazyConfigValue</span><span class="p">):</span>
+            <span class="n">site_auth</span> <span class="o">=</span> <span class="n">site_auth</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Authorization</span><span class="p">(</span>
+            <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">(),</span>
+            <span class="n">user_auth</span><span class="p">,</span>
+            <span class="n">site_auth</span><span class="p">,</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Change the jinja templating environment.&quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">launch_instance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">workflow_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">workflow_id</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">default_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/cylc/#/workspace/</span><span class="si">{</span><span class="n">workflow_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">default_url</span> <span class="o">=</span> <span class="s2">&quot;/cylc&quot;</span>
+        <span class="k">if</span> <span class="n">argv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># jupyter server isn&#39;t expecting to be launched by a Cylc command</span>
+            <span class="c1"># this patches some internal logic</span>
+            <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;JUPYTER_RUNTIME_DIR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">INFO_FILES_DIR</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">launch_instance</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="n">argv</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;JUPYTER_RUNTIME_DIR&quot;</span><span class="p">]</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">stop_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># stop the async scan task</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="c1"># stop active subscriptions</span>
+        <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="o">.</span><span class="n">w_subs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">sub</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="c1"># Shutdown the thread pool executor (used for subscription processing)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_store_mgr</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># stop the process pool (used for background commands)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+        <span class="c1"># Destroy ZeroMQ context of all sockets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflows_mgr</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/uiserver/app";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cylc Install &mdash; Cylc 8.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=09ed50dd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Excluding Tasks at Start-up is Not Supported" href="excluding-tasks.html" />
+    <link rel="prev" title="Continuing a Cylc 7 Workflow with Cylc 8" href="continuing-c7-c8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cylc Install</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remote-installation">Remote Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#migrating-from-rose-suite-run">Migrating From <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.6 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Cylc Install</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/cylc-install.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cylc-install">
+<span id="majorchangesinstall"></span><h1>Cylc Install<a class="headerlink" href="#cylc-install" title="Link to this heading"></a></h1>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../user-guide/installing-workflows.html#installing-workflows"><span class="std std-ref">User Guide: Installing Workflows</span></a></p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Does This Change Affect Me?</p>
+<p><strong>Almost certainly.</strong></p>
+<p>This change will affect you:</p>
+<ul class="simple">
+<li><p>If you use <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> to install and run Cylc workflows.</p></li>
+<li><p>If you usually develop Cylc workflows in the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> directory.</p></li>
+<li><p>If you develop Cylc workflows outside of the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> directory and
+manually copy the files to <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code>.</p></li>
+</ul>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Cylc 7 ran workflows in <code class="docutils literal notranslate"><span class="pre">~/cylc-run/</span></code>. You could develop your
+workflow in <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> or copy it after developing it elsewhere.
+If you developed in the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> directory there was a risk that
+Cylc might alter your files. If you developed elsewhere you needed to
+install your workflows manually with another tool.</p>
+<p>We designed Cylc 8 to help you keep your development and
+running copies separate. By default you can now develop workflows in the
+<code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code> directory. As a result, you will not change your development
+copy by running a workflow. You will, however, need to install your workflow
+from <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code> to <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have previously used Rose, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> functions in a
+similar way to <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span> <span class="pre">--install-only</span></code>.</p>
+</div>
+<p>Examples:</p>
+<ul>
+<li><p>You can install a workflow from inside the source directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/cylc-src/my-workflow
+<span class="gp">$ </span>cylc<span class="w"> </span>install
+<span class="go">INSTALLED my-workflow/run1 from /home/me/cylc-src/my-workflow</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can install a workflow by providing the workflow source name
+(if the source directory is located in any of the
+<a class="reference internal" href="../../user-guide/installing-workflows.html#configurable-source-dirs"><span class="std std-ref">Configurable Source Directories</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code>):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>install<span class="w"> </span>my-workflow
+<span class="go">INSTALLED my-workflow/run2 from /home/me/cylc-src/my-workflow</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can install a workflow by providing the path to the source directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>install<span class="w"> </span>~/cylc-src/my-workflow
+<span class="go">INSTALLED my-workflow/run3 from /home/me/cylc-src/my-workflow</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each time you run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> for a particular workflow, a new copy of
+the workflow is installed to a new run directory. In the example above, we
+created three run directories inside <code class="docutils literal notranslate"><span class="pre">~/cylc-run/my-workflow</span></code>.</p>
+</div>
+<p>Once you have installed a workflow you can use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> to run it - see
+<a class="reference internal" href="../../user-guide/running-workflows/index.html#runningworkflows"><span class="std std-ref">Running Workflows</span></a>.</p>
+<p>You can delete installed workflows using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code> - see
+<a class="reference internal" href="../../user-guide/removing-workflows.html#removing-workflows"><span class="std std-ref">Removing Workflows</span></a>.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">.cylcignore</span></code> file can be used to control which files <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>
+transfers to the installed workflow, see <a class="reference internal" href="../../user-guide/installing-workflows.html#file-installation"><span class="std std-ref">1. File Installation</span></a> for details.</p>
+</section>
+<section id="remote-installation">
+<span id="remote-install"></span><h2>Remote Installation<a class="headerlink" href="#remote-installation" title="Link to this heading"></a></h2>
+<p>Remote file installation does not occur until running the workflow.
+When the first task runs on a remote platform, Cylc will transfer files from
+the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> to the <a class="reference internal" href="../../glossary.html#term-install-target"><span class="xref std std-term">install target</span></a>.</p>
+<p>If you have used Rose 2019, you may be used to all files and directories in
+the run directory being included.
+However, Cylc 8 will only copy the <code class="docutils literal notranslate"><span class="pre">ana</span></code>, <code class="docutils literal notranslate"><span class="pre">app</span></code>, <code class="docutils literal notranslate"><span class="pre">bin</span></code>, <code class="docutils literal notranslate"><span class="pre">etc</span></code> and
+<code class="docutils literal notranslate"><span class="pre">lib</span></code> directories by default (in addition to authentication files in
+<code class="docutils literal notranslate"><span class="pre">.service</span></code>).
+If you want to include custom files and directories in remote installation,
+use <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]install" title="flow.cylc[scheduler]install"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]install</span></code></a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you need to ensure your workflow is still
+<a class="reference internal" href="compatibility-mode.html#cylc-7-compat-mode"><span class="std std-ref">interoperable</span></a> with Cylc 7, wrap it in a
+Jinja2 check like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% if CYLC_VERSION is defined and CYLC_VERSION[0] == &#39;8&#39; %}</span>
+<span class="nt">[scheduler]</span>
+    <span class="nv">install </span><span class="o">=</span><span class="s"> my-dir/, my-file</span>
+<span class="cp">{% endif %}</span>
+</pre></div>
+</div>
+</div>
+<p>See <a class="reference internal" href="../../user-guide/running-workflows/scheduler-start-up.html#remoteinit"><span class="std std-ref">the user guide</span></a> for more details.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you have tasks that mirror/copy the run directory to a remote platform
+(such as <a class="reference external" href="https://metomi.github.io/fcm/doc/">FCM make</a> tasks), this can cause conflicts with
+<a class="reference internal" href="../../user-guide/installing-workflows.html#symlinkdirs"><span class="std std-ref">symlink directory setup</span></a>.</p>
+<p>You can find out if symlink directories are configured for the platform by
+running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cylc</span> <span class="n">config</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;[install][symlink dirs][&lt;platform-name&gt;]&#39;</span>
+</pre></div>
+</div>
+<p>The recommended workaround is to use a <a class="reference internal" href="../../glossary.html#term-dummy-task"><span class="xref std std-term">dummy task</span></a> that runs on the
+particular platform before any such mirror tasks in order to setup symlink
+directories, but without running anything.</p>
+<p>For example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 = hpc_init </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">fcm_make</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[hpc_init]]</span>
+        <span class="nv">platform </span><span class="o">=</span><span class="s"> &lt;platform-name&gt;</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> true</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="migrating-from-rose-suite-run">
+<h2>Migrating From <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code><a class="headerlink" href="#migrating-from-rose-suite-run" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> command has been replaced by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># rose 2019 / Cylc 7</span>
+$<span class="w"> </span>rose<span class="w"> </span>suite-run
+
+<span class="c1"># rose 2 / Cylc 8</span>
+$<span class="w"> </span>cylc<span class="w"> </span>install
+$<span class="w"> </span>cylc<span class="w"> </span>play<span class="w"> </span>&lt;id&gt;
+</pre></div>
+</div>
+<p>Support for the <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file is provided by the <a class="reference internal" href="../../plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a>
+plugin which must be installed for Rose integration.</p>
+<div class="spoiler admonition">
+<p class="admonition-title">Installation</p>
+<p>See the <a class="reference internal" href="../../installation.html#installation"><span class="std std-ref">Installation</span></a> section for instructions.</p>
+<p>If Cylc Rose is installed it should appear in the list of installed
+Cylc plugins:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>version<span class="w"> </span>--long
+<span class="go">8.0 (/path/to/cylc-8)</span>
+
+<span class="go">Plugins:</span>
+<span class="go">    cylc-rose       0.1.1   /path/to/cylc-rose</span>
+</pre></div>
+</div>
+</div>
+<section id="notable-differences-to-rose-suite-run">
+<h3>Notable differences to <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code><a class="headerlink" href="#notable-differences-to-rose-suite-run" title="Link to this heading"></a></h3>
+<dl>
+<dt>Command line options:</dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> command remembers any options specified on the command
+line including Rose optional configurations and template variables and
+automatically applies them with future re-installations.</p>
+</dd>
+<dt>Rose Stem:</dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">stem</span></code> command is provided by Cylc Rose. Like <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>,
+<code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">stem</span></code> used to install and run workflows. It now only
+installs the workflow which can then be run with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>.</p>
+<p>See the <a class="reference external" href="https://metomi.github.io/rose/2.4.0/html/tutorial/rose/furthertopics/rose-stem.html#rose-stem" title="(in Rose Documentation v2.4.0)"><span>Rose Stem</span></a> documentation for more information.</p>
+</dd>
+<dt>Roses directory:</dt><dd><p>By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> looks for workflows in <code class="docutils literal notranslate"><span class="pre">~/cylc-src</span></code>, you
+you may want to add <code class="docutils literal notranslate"><span class="pre">~/roses</span></code> to the list of
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[install]source dirs" title="global.cylc[install]source dirs"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[install]source</span> <span class="pre">dirs</span></code></a>.</p>
+</dd>
+<dt>Remote Installation:</dt><dd><p>With Rose 2019 / <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code>, files were installed on remote platforms
+before the <em>workflow</em> started running.</p>
+<p>With Rose 2 / <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>, files are installed on remote platforms just
+before the <em>first task</em> runs on that platform.</p>
+<p>Rose used to install the entire workflow <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a> to remote
+platforms. It now only installs configured directories for efficiency.
+See <a class="reference internal" href="#remote-installation">Remote Installation</a> above for details.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="continuing-c7-c8.html" class="btn btn-neutral float-left" title="Continuing a Cylc 7 Workflow with Cylc 8" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="excluding-tasks.html" class="btn btn-neutral float-right" title="Excluding Tasks at Start-up is Not Supported" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/cylc-install";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

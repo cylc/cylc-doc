@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scheduler Configuration &mdash; Cylc 8.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=09ed50dd"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Installing Workflows" href="../installing-workflows.html" />
+    <link rel="prev" title="Suicide Triggers" href="suicide-triggers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Writing Workflows</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuration.html">Workflow Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runtime.html">Task Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameterized-tasks.html">Task Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jinja2.html">Jinja2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-triggers.html">External Triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Suicide Triggers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Scheduler Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#workflow-events">Workflow Events</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#external-command-execution">External Command Execution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-workflows-to-a-pool-of-hosts">Submitting Workflows To a Pool Of Hosts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Writing Workflows</a></li>
+      <li class="breadcrumb-item active">Scheduler Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/user-guide/writing-workflows/scheduler.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scheduler-configuration">
+<h1>Scheduler Configuration<a class="headerlink" href="#scheduler-configuration" title="Link to this heading"></a></h1>
+<p>The <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler]" title="flow.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]</span></code></a> section configures certain aspects of
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> behaviour at the workflow level.</p>
+<p>Many of these configurations can also be defined at the site or user level in
+the <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler]" title="global.cylc[scheduler]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]</span></code></a> section where it applies to all
+workflows.</p>
+<section id="workflow-events">
+<span id="user-guide-scheduler-workflow-events"></span><span id="user-guide-scheduler-workflow-event-handling"></span><h2>Workflow Events<a class="headerlink" href="#workflow-events" title="Link to this heading"></a></h2>
+<p>Workflow events, e.g. <code class="docutils literal notranslate"><span class="pre">startup</span></code> and <code class="docutils literal notranslate"><span class="pre">shutdown</span></code>, pertain to the
+<a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Not to be confused with</p>
+<p>For <a class="reference internal" href="../../glossary.html#term-task"><span class="xref std std-term">task</span></a> events, e.g. <code class="docutils literal notranslate"><span class="pre">submitted</span></code> and <code class="docutils literal notranslate"><span class="pre">failed</span></code>, see
+<a class="reference internal" href="runtime.html#user-guide-runtime-task-event-handling"><span class="std std-ref">Task Event Handling</span></a>.</p>
+</div>
+<p class="rubric">Event Handlers</p>
+<p>Workflow events have “handlers” (i.e. hooks) which allow configured commands to
+run when workflow events occur. These can be configured by:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]" title="flow.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][events]</span></code></a> (per workflow)</p></li>
+<li><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]" title="global.cylc[scheduler][events]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][events]</span></code></a> (user/site defaults)</p></li>
+</ul>
+<p class="rubric">Abort On Event</p>
+<p>As well as event handlers, you can tell the scheduler to shut down
+immediately (with error status) on certain workflow events, using the
+<code class="docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">...</span></code> configurations.</p>
+<p class="rubric">Configuration</p>
+<p>Some workflow events have related configurations e.g. for setting the timeout.</p>
+<section id="list-of-workflow-events">
+<span id="user-guide-scheduler-workflow-events-list"></span><h3>List of workflow events<a class="headerlink" href="#list-of-workflow-events" title="Link to this heading"></a></h3>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">startup</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Event Handler<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]startup handlers" title="global.cylc[scheduler][events]startup handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">startup</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+</dl>
+<p>The scheduler was started or restarted.</p>
+<p>E.G. using one of these commands <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> or <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">shutdown</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Event Handler<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]shutdown handlers" title="global.cylc[scheduler][events]shutdown handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">shutdown</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+</dl>
+<p>The scheduler was shut down.</p>
+<p>E.G. using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code> command.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">abort</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Event Handler<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]abort handlers" title="global.cylc[scheduler][events]abort handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">abort</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+</dl>
+<p>The scheduler shut down early with error status, due to a fatal error
+condition.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not to be confused with <code class="docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">&lt;event&gt;</span></code> settings.
+The <code class="docutils literal notranslate"><span class="pre">abort</span></code> event is not raised when any such configured event occurs.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">aborted</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow</span> <span class="pre">timeout</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Configuration<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]workflow timeout" title="global.cylc[scheduler][events]workflow timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">workflow</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+<dt class="field-even">Event Handler<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]workflow timeout handlers" title="global.cylc[scheduler][events]workflow timeout handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">workflow</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+<dt class="field-odd">Abort On Event<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]abort on workflow timeout" title="global.cylc[scheduler][events]abort on workflow timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">workflow</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+</dl>
+<p>The workflow run timed out.</p>
+<p>The timer starts counting down at scheduler startup. It resets on workflow
+restart.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 8.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">stall</span></span></dt>
+<dd><dl class="field-list simple" id="user-guide-workflow-events-stall">
+<dt class="field-odd">Event Handler<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]stall handlers" title="global.cylc[scheduler][events]stall handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">stall</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+</dl>
+<p>The workflow <a class="reference internal" href="../../glossary.html#term-stall"><span class="xref std std-term">stalled</span></a> (i.e. the scheduler cannot make any
+further progress due to runtime events).</p>
+<p>E.G. a task failure is blocking the pathway through the graph.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">stalled</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">stall</span> <span class="pre">timeout</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Configuration<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]stall timeout" title="global.cylc[scheduler][events]stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">stall</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+<dt class="field-even">Event Handler<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]stall timeout handlers" title="global.cylc[scheduler][events]stall timeout handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">stall</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+<dt class="field-odd">Abort On Event<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]abort on stall timeout" title="global.cylc[scheduler][events]abort on stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">stall</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+</dl>
+<p>The workflow timed out after stalling.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">timeout</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">inactivity</span> <span class="pre">timeout</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Configuration<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]inactivity timeout" title="global.cylc[scheduler][events]inactivity timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">inactivity</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+<dt class="field-even">Event Handler<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]inactivity timeout handlers" title="global.cylc[scheduler][events]inactivity timeout handlers"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">inactivity</span> <span class="pre">timeout</span> <span class="pre">handlers</span></code></a></p>
+</dd>
+<dt class="field-odd">Abort On Event<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]abort on inactivity timeout" title="global.cylc[scheduler][events]abort on inactivity timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">abort</span> <span class="pre">on</span> <span class="pre">inactivity</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+</dl>
+<p>The workflow timed out with no activity (i.e. a period with no job
+submissions or task messages).</p>
+<p>This can be useful for system administrators to help catch workflows which
+have become stalled on external conditions or system issues.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 8.0.0: </span>This event was previously called <code class="docutils literal notranslate"><span class="pre">inactivity</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">restart</span> <span class="pre">timeout</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Configuration<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]restart timeout" title="global.cylc[scheduler][events]restart timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">restart</span> <span class="pre">timeout</span></code></a></p>
+</dd>
+</dl>
+<p>If a workflow that has run to completion is restarted, the scheduler will
+have nothing to do so will shut down. This timeout gives the user a grace
+period in which to trigger new tasks to continue the workflow run.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 8.2.0.</span></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="mail-events">
+<h3>Mail Events<a class="headerlink" href="#mail-events" title="Link to this heading"></a></h3>
+<p>Cylc can send emails for workflow events, these are configured by
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][events]mail events" title="flow.cylc[scheduler][events]mail events"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][events]mail</span> <span class="pre">events</span></code></a>.</p>
+<p>For example with the following configuration, emails will be sent if a
+scheduler stalls or shuts down for an unexpected reason.</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[events]]</span>
+        <span class="nv">mail events </span><span class="o">=</span><span class="s"> stall, abort</span>
+</pre></div>
+</div>
+<p>Email addresses and servers are configured by
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][mail]" title="global.cylc[scheduler][mail]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][mail]</span></code></a>.</p>
+<p>Workflow event emails can be customised using
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[scheduler][mail]footer" title="flow.cylc[scheduler][mail]footer"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler][mail]footer</span></code></a>,
+<a class="reference internal" href="#workflow-event-template-variables"><span class="std std-ref">Workflow Event Template Variables</span></a> can be used.</p>
+<p>For example to integrate with the Cylc 7 web interface (Cylc Review) the mail
+footer could be configured with a URL:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[events]]</span>
+        <span class="nv">mail footer </span><span class="o">=</span><span class="s"> http://cylc-review/taskjobs/%(owner)s/?suite=%(workflow)s</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-event-handlers">
+<h3>Custom Event Handlers<a class="headerlink" href="#custom-event-handlers" title="Link to this heading"></a></h3>
+<p>Cylc can also be configured to invoke scripts on workflow events.</p>
+<p>Event handler scripts can be stored in the workflow <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory, or
+anywhere in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> in the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> environment.</p>
+<p>They should return quickly to avoid tying up the scheduler process pool -
+see <a class="reference internal" href="#managing-external-command-execution"><span class="std std-ref">External Command Execution</span></a>.</p>
+<p>Contextual information can be passed to the event handler via
+<a class="reference internal" href="#workflow-event-template-variables"><span class="std std-ref">Workflow Event Template Variables</span></a>.</p>
+<p>For example the following configuration will write some information to a file
+when a workflow is started:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">~/cylc-run/&lt;workflow-id&gt;/bin/my-handler</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Workflow </span><span class="nv">$1</span><span class="s2"> is running on </span><span class="nv">$2</span><span class="s2">:</span><span class="nv">$3</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>info
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">flow.cylc or global.cylc</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[events]]</span>
+        <span class="nv">startup handlers </span><span class="o">=</span><span class="s"> my-handler %(workflow)s %(host) %(port)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you wish to use custom Python Libraries in an event handler you
+need to add these to <code class="docutils literal notranslate"><span class="pre">CYLC_PYTHONPATH</span></code> rather than <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.</p>
+</div>
+</section>
+<section id="workflow-event-template-variables">
+<span id="id1"></span><h3>Workflow Event Template Variables<a class="headerlink" href="#workflow-event-template-variables" title="Link to this heading"></a></h3>
+<dl>
+<p>The following variables are available to workflow event handlers.</p>
+<p>They can be templated into event handlers with Python percent style string
+formatting e.g:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%(workflow)s is running on %(host)s
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Substitution patterns should not be quoted in the template strings.
+This is done automatically where required.</p>
+</div>
+<p>For an explanation of the substitution syntax, see
+<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">String Formatting Operations in the Python documentation</a>.</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">event</span></span></dt>
+<dd><p>The type of workflow event that has occurred e.g. <code class="docutils literal notranslate"><span class="pre">stall</span></code>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">message</span></span></dt>
+<dd><p>Additional information about the event.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow</span></span></dt>
+<dd><p>The workflow ID</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">host</span></span></dt>
+<dd><p>The host where the workflow is running.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">port</span></span></dt>
+<dd><p>The port where the workflow is running.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">owner</span></span></dt>
+<dd><p>The user account under which the workflow is running.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">uuid</span></span></dt>
+<dd><p>The unique identification string for this workflow run.</p>
+<p>This string is preserved for the lifetime of the scheduler and is restored
+from the database on restart.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">workflow_url</span></span></dt>
+<dd><p>The URL defined in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[meta]URL" title="flow.cylc[meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[meta]URL</span></code></a>.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">suite</span></span></dt>
+<dd><p>The workflow ID</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “workflow”.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">suite_uuid</span></span></dt>
+<dd><p>The unique identification string for this workflow run.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “uuid”.</p>
+</div>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">suite_url</span></span></dt>
+<dd><p>The URL defined in <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[meta]URL" title="flow.cylc[meta]URL"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[meta]URL</span></code></a>.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 8.0.0: </span>Use “workflow_url”.</p>
+</div>
+</dd></dl>
+
+</dl>
+
+</section>
+</section>
+<section id="external-command-execution">
+<span id="managing-external-command-execution"></span><h2>External Command Execution<a class="headerlink" href="#external-command-execution" title="Link to this heading"></a></h2>
+<p>Job submission commands, event handlers, and job poll and kill commands, are
+executed by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> in a subprocess pool. The pool is size can
+be configured with <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler]process pool size" title="global.cylc[scheduler]process pool size"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]process</span> <span class="pre">pool</span> <span class="pre">size</span></code></a>.</p>
+<p>Event handlers should be lightweight and quick-running because they tie up
+a process pool member until complete, and the workflow will appear to stall if
+the pool is saturated with long-running processes.</p>
+<p>To protect the scheduler, processes are killed on a timeout
+(<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler]process pool timeout" title="global.cylc[scheduler]process pool timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler]process</span> <span class="pre">pool</span> <span class="pre">timeout</span></code></a>). This will be
+logged by the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a>. If a job submission gets killed, the
+associated task goes to the <code class="docutils literal notranslate"><span class="pre">submit-failed</span></code> state.</p>
+</section>
+<section id="submitting-workflows-to-a-pool-of-hosts">
+<span id="id2"></span><h2>Submitting Workflows To a Pool Of Hosts<a class="headerlink" href="#submitting-workflows-to-a-pool-of-hosts" title="Link to this heading"></a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">Configured by<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]" title="global.cylc[scheduler][run hosts]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]</span></code></a>.</p>
+</dd>
+</dl>
+<p>By default <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> will run workflows on the machine where the command
+was invoked.</p>
+<p>Cylc supports configuring a pool of hosts for workflows to run on,
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> will automatically pick a host and submit the workflow to it.</p>
+<section id="host-pool">
+<h3>Host Pool<a class="headerlink" href="#host-pool" title="Link to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Configured by<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]available</span></code></a>.</p>
+</dd>
+</dl>
+<p>The hosts must:</p>
+<ol class="arabic simple">
+<li><p>Share a common <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory and therefore a common file system
+(with each other and anywhere the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> command is run).</p></li>
+<li><p>Share a common Cylc global config (<a class="reference internal" href="../../reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a>).</p></li>
+<li><p>Be set up to allow passwordless SSH between them.</p></li>
+</ol>
+<p>Example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[run hosts]]</span>
+        <span class="nv">available </span><span class="o">=</span><span class="s"> host_1, host_2, host_3</span>
+</pre></div>
+</div>
+</section>
+<section id="load-balancing">
+<h3>Load Balancing<a class="headerlink" href="#load-balancing" title="Link to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Configured by<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]ranking" title="global.cylc[scheduler][run hosts]ranking"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]ranking</span></code></a>.</p>
+</dd>
+</dl>
+<p>Cylc can balance the load on the configured “run hosts” by ranking them in
+order of available resource or by excluding hosts which fail to meet certain
+criterion.</p>
+<p>Example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[run hosts]]</span>
+        <span class="nv">available </span><span class="o">=</span><span class="s"> host_1, host_2, host_3</span>
+        <span class="nv">ranking </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># filter out hosts with high server load</span>
+<span class="s2">            getloadavg()[2] &lt; 5</span>
+
+            <span class="c1"># pick the host with the most available memory</span>
+<span class="s2">            virtual_memory().available</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>For more information see <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]ranking" title="global.cylc[scheduler][run hosts]ranking"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]ranking</span></code></a>.</p>
+</section>
+<section id="workflow-migration">
+<span id="auto-stop-restart"></span><h3>Workflow Migration<a class="headerlink" href="#workflow-migration" title="Link to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Configured by<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]condemned" title="global.cylc[scheduler][run hosts]condemned"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]condemned</span></code></a>.</p>
+</dd>
+</dl>
+<p>Cylc has the ability to automatically stop workflows running on a particular
+host and optionally, restart them on a different host. This can be useful if a
+host needs to be taken off-line, e.g. for scheduled maintenance.</p>
+<p>Example:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduler]</span>
+    <span class="nt">[[run hosts]]</span>
+        <span class="nv">available </span><span class="o">=</span><span class="s"> host_1, host_2, host_3</span>
+        <span class="c1"># tell workflows on host_1 to move to another available host</span>
+        <span class="nv">condemned </span><span class="o">=</span><span class="s"> host_1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature requires the <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][main loop][auto restart]" title="global.cylc[scheduler][main loop][auto restart]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[auto</span> <span class="pre">restart]</span></code></a>
+plugin to be enabled, e.g. in the configured list of
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][main loop]plugins" title="global.cylc[scheduler][main loop]plugins"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">plugins</span></code></a>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If using Cylc’s workflow migration functionality to implement routine
+server reboots and you have
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]abort on stall timeout" title="global.cylc[scheduler][events]abort on stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">configured</span> <span class="pre">workflows</span> <span class="pre">to</span> <span class="pre">shut</span> <span class="pre">down</span></code></a>
+after one of these timeouts:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]workflow timeout" title="global.cylc[scheduler][events]workflow timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">workflow</span> <span class="pre">timeout</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]stall timeout" title="global.cylc[scheduler][events]stall timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">stall</span> <span class="pre">timeout</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][events]inactivity timeout" title="global.cylc[scheduler][events]inactivity timeout"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">inactivity</span> <span class="pre">timeout</span></code></a>.</p></li>
+</ul>
+<p>Then make sure the period between reboots is greater than the timeout
+as the timer will be reset when the workflow migrates.</p>
+</div>
+<p>For more information see: <a class="reference internal" href="../../reference/config/global.html#global.cylc[scheduler][run hosts]ranking" title="global.cylc[scheduler][run hosts]ranking"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]ranking</span></code></a>.</p>
+</section>
+<section id="platform-configuration">
+<span id="platformconfig"></span><h3>Platform Configuration<a class="headerlink" href="#platform-configuration" title="Link to this heading"></a></h3>
+<p>From the perspective of a running <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> <code class="docutils literal notranslate"><span class="pre">localhost</span></code> is the
+scheduler host.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">localhost</span></code> platform is configured by
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][localhost]" title="global.cylc[platforms][localhost]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][localhost]</span></code></a>.</p>
+<p>It configures:</p>
+<ul class="simple">
+<li><p>Jobs that run on the <code class="docutils literal notranslate"><span class="pre">localhost</span></code> platform, i.e. any jobs which have
+<a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]platform" title="flow.cylc[runtime][&lt;namespace&gt;]platform"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">[runtime][&lt;namespace&gt;]platform=localhost</span></code></a> or which don’t have a
+platform configured.</p></li>
+<li><p>Connections to the scheduler hosts (e.g. the
+<a class="reference internal" href="../../reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]ssh command" title="global.cylc[platforms][&lt;platform name&gt;]ssh command"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">command</span></code></a>).</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="suicide-triggers.html" class="btn btn-neutral float-left" title="Suicide Triggers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../installing-workflows.html" class="btn btn-neutral float-right" title="Installing Workflows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Oct 01, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.0";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/writing-workflows/scheduler";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
