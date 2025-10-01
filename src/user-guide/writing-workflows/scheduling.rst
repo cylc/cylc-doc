@@ -28,27 +28,30 @@ string>` which use a special syntax to define the dependencies between tasks:
   :term:`conditional dependencies <conditional dependency>`.
 
 The left side of a dependency arrow shows a logical combination of one or more task
-outputs, and the right side shows which tasks to trigger when those outputs get
-completed:
+outputs. The right side shows which tasks to trigger when those outputs are complete:
 
 For example:
 
 .. code-block:: cylc-graph
 
-   # run baz when both foo and bar have succeeded
+   # if foo AND bar succeed, run baz
    foo:succeeded & bar:succeeded => baz
 
-However, the ``:succeeded`` output is so important that Cylc allows a plain task name on
-the left as shorthand:
+However, ``:succeeded`` is so often required that it is automatically added to plain
+task names on the left side of dependencies, as a convenience:
 
 .. code-block:: cylc-graph
 
-   # run baz when both foo and bar have succeeded
+   # short for "foo:succeeded & bar:succeeded => baz"
    foo & bar => baz
 
 
-(Task outputs can appear on the right of a dependency as well, in which case the
-expression declares task optionality as well as triggering - see below for more).
+.. seealso::
+
+   Task outputs in dependency expressions also determine whether the outputs are
+   "required" (by default) or "optional" (with a '?' appended) - see
+   :ref:`required and optional outputs`.
+
 
 Graph strings are configured under the :cylc:conf:`[scheduling][graph]` section
 of the :cylc:conf:`flow.cylc` file:
@@ -1625,14 +1628,16 @@ in :ref:`Section External Triggers`.
 .. _required outputs:
 .. _User Guide Optional Outputs:
 .. _optional outputs:
+.. _required and optional outputs:
 
 Required and Optional Outputs
 -----------------------------
 
 .. versionadded:: 8.0.0
 
-:term:`Task outputs <task output>` can be :term:`required <required output>`,
-by default; or :term:`optional <optional output>`, if marked with ``?``.
+:term:`Task outputs <task output>` are :term:`required <required output>`
+by default; but they can be made :term:`optional <optional output>` by
+appending a "?" character.
 
 Here, ``foo:succeed``, ``bar:x``, and ``baz:fail`` are all required outputs:
 
@@ -1697,8 +1702,8 @@ the ``:succeeded`` output for plain task names on the left:
    # This implies that foo:succeeded is optional:
    foo? => ...  # short for foo:succeeded? => ...
 
-The right side shows *tasks* to trigger, not outputs, so we do not infer
-the ``:succeeded`` output for plain task names on the right (however, see
+The right side shows *tasks* to trigger, not outputs, so Cylc does *not* infer
+the ``:succeeded`` output for plain task names on the right. (However, see
 :ref:`Explicit Outputs on the Right`):
 
 .. code-block:: cylc-graph
@@ -1719,25 +1724,22 @@ validation because ``foo:x`` can't be both required and optional:
 
 .. note::
 
-   Optional outputs do not alter triggering behaviour, they just tell the
-   scheduler what to do with the task if it does not complete the output
-   at runtime.
-
-   This dependency triggers ``bar`` only if ``foo:x`` is completed at runtime:
+   Required outputs on the left make the dependency "required" too:
 
    .. code-block:: cylc-graph
 
-      foo:x => bar  # foo:x is required
+      # we expect foo:x to be completed, and thus bar to trigger:
+      # (if not, foo will be retained in n=0 pending intervention)
+      foo:x => bar
 
-   This dependency also triggers ``bar`` only if ``foo:x`` is completed at runtime:
+
+   And optional outputs on the left make the dependency "optional":
 
    .. code-block:: cylc-graph
 
-      foo:x? => bar  # foo:x is optional
-
-   The only difference is that in the first case ``foo`` will be retained as an
-   incomplete task if it does not complete ``:x`` at runtime; and in the second
-   case, it will not.
+      # foo:x may be completed or not, and thus bar may trigger or not:
+      # (either way is OK)
+      foo:x? => bar
 
 
 Success and Failure Outputs
@@ -1781,31 +1783,30 @@ either one or the other can be required or they must both be optional:
 Custom Outputs
 ^^^^^^^^^^^^^^
 
-If a task generates multiple related custom outputs they should all be required
-if you expect them all to be completed every time the task runs, or all optional
-if you do not expect them to be completed every time:
+If a task generates custom outputs, those you expect to be completed every
+time it runs should be required; and those that you do not expect to be
+completed every time should be optional.
 
-Here,
-``:file1``, ``:file2``, and ``:file3`` are all required outputs of ``model``:
-
-.. code-block:: cylc-graph
-
-   model:file1 => proc1
-   model:file2 => proc2
-   model:file3 => proc3
-
-
-And here ``:x``, ``:y``, and ``:z`` are all optional outputs:
+Suppose task ``model`` generates three output files every time it runs.
+We can use three required outputs to trigger tasks to process each file:
 
 .. code-block:: cylc-graph
 
-   model:x? => proc-x
-   model:y? => proc-y
-   model:z? => proc-z
+   model:file1 => process-1 => ...  # we expect all three branches to run
+   model:file2 => process-2 => ...
+   model:file3 => process-3 => ...
 
-This is an example of :ref:`Graph Branching` from optional outputs. Whether a
-particular branch is taken or not depends on which optional outputs are
-completed at runtime.
+
+Now suppose ``model`` *sometimes* generates files "x" or "y" as well, depending
+on runtime events. We can use optional outputs to trigger processing tasks for them:
+
+.. code-block:: cylc-graph
+
+   model:x? => proc-x => products-x  # this branch only runs if :x gets completed
+   model:y? => proc-y => products-y  # this branch only runs if :y gets completed
+
+
+This is an example of :ref:`Graph Branching` from optional outputs.
 
 
 .. _explicit outputs on the right:
