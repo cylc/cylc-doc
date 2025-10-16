@@ -20,6 +20,8 @@ on:
       metomi-rose-tag:
         description: 'metomi-rose ref (for cylc-rose install)'
         required: true
+  repository_dispatch:
+    types: [updated_config]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
