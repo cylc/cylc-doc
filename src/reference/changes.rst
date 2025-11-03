@@ -37,6 +37,21 @@ Cylc 8.6
    :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
 
 
+UI sidebar improvements
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.8.1
+
+The display of task states in the sidebar has been decluttered and numbers
+have been added to indicate how many tasks are in each state. The tooltips now
+have a short delay to avoid many popping up while moving the mouse around.
+
+.. image:: ../img/cylc-ui-dash.png
+   :width: 100%
+   :align: center
+
+|
+
 Task Matching
 ^^^^^^^^^^^^^
 
