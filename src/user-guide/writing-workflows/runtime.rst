@@ -288,10 +288,13 @@ parent variable:
 Job Script Variables
 ^^^^^^^^^^^^^^^^^^^^
 
-These variables provided by the :term:`scheduler` are available to
-:term:`job scripts <job script>`:
+The :term:`scheduler` provides a standard set of variables to
+:term:`job scripts <job script>`.
 
-.. include:: ../../reference/job-script-vars/var-list.txt
+.. seealso::
+
+    :ref:`job-script-environment-variables`
+       List of variables provided for job scripts.
 
 Some global shell variables are also defined in the job script, but not
 exported to subshells:
