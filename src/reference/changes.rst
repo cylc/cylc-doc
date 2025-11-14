@@ -759,13 +759,15 @@ from that workflow. Note that this only applies per browser session.
 .. image:: changes/ui-workspace-tabs.gif
    :width: 100%
 
+.. _changes.CYLC_PYTHONPATH:
+
 Cylc ignores ``$PYTHONPATH``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
 environments which set this value. If you want to add to the Cylc
 environment itself, e.g. to install a Cylc extension,
-use a custom xtrigger, or event handler use ``$CYLC_PYTHONPATH``.
+use a custom xtrigger, or event handler use :envvar:`CYLC_PYTHONPATH`.
 
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
