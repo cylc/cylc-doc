@@ -158,7 +158,6 @@ This would result in:
            script = get-observations
            [[[environment]]]
                SITE_ID = {{ id }}
-               API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
    {% endfor %}
 
@@ -181,57 +180,43 @@ This would result in:
 
    3. **Use Jinja2 To Avoid Duplication.**
 
-      The ``API_KEY`` environment variable is used by both the
-      ``get_observations`` and ``get_rainfall`` tasks. Rather than writing it
-      out multiple times we will use Jinja2 to centralise this configuration.
+      The ``RESOLUTION`` environment variable is used by multiple tasks.
+      Rather than writing it out multiple times we will use Jinja2
+      to centralise this configuration.
 
       At the top of the :cylc:conf:`flow.cylc` file add the Jinja2 shebang line. Then
-      copy the value of the ``API_KEY`` environment variable and use it to
-      define an ``API_KEY`` Jinja2 variable:
+      copy the value of the ``RESOLUTION`` environment variable and use it to
+      define an ``RESOLUTION`` Jinja2 variable:
 
       .. code-block:: cylc
 
          #!Jinja2
 
-         {% set API_KEY = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' %}
+         {% set RESOLUTION = 0.2 %}
 
       Next replace the key, where it appears in the workflow, with
-      ``{{ API_KEY }}``:
+      ``{{ RESOLUTION }}``:
 
       .. code-block:: diff
 
-          [runtime]
-              [[get_observations_heathrow]]
-                  script = get-observations
-                  [[[environment]]]
-                      SITE_ID = 3772
-         -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-         +            API_KEY = {{ API_KEY }}
-              [[get_observations_camborne]]
-                  script = get-observations
-                  [[[environment]]]
-                      SITE_ID = 3808
-         -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-         +            API_KEY = {{ API_KEY }}
-              [[get_observations_shetland]]
-                  script = get-observations
-                  [[[environment]]]
-                     SITE_ID = 3005
-         -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-         +            API_KEY = {{ API_KEY }}
-              [[get_observations_aldergrove]]
-                  script = get-observations
-                  [[[environment]]]
-                      SITE_ID = 3917
-         -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-         +            API_KEY = {{ API_KEY }}
-             [[get_rainfall]]
-                 script = get-rainfall
-                 [[[environment]]]
-                     # The key required to get weather data from the DataPoint service.
-                     # To use archived data comment this line out.
-         -            API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-         +            API_KEY = {{ API_KEY }}
+         [[get_rainfall]]
+            script = get-rainfall
+            [[[environment]]]
+         -          RESOLUTION = 0.2
+         +          RESOLUTION = {{ RESOLUTION }}
+
+         [[forecast]]
+            script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
+            [[[environment]]]
+         -          RESOLUTION = 0.2
+         +          RESOLUTION = {{ RESOLUTION }}
+
+         [[post_process_exeter]]
+            # Generate a forecast for Exeter 60 minutes in the future.
+            script = post-process exeter 60
+            [[[environment]]]
+         -          RESOLUTION = 0.2
+         +          RESOLUTION = {{ RESOLUTION }}
 
       Check the result with ``cylc config``. The Jinja2 will be processed
       so you should not see any difference after making these changes.

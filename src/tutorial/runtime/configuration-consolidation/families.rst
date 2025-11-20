@@ -6,6 +6,7 @@ Families
 :term:`Families <family>` provide a way of grouping tasks together so they can
 be treated as one.
 
+This example adds a new environment variable to the configuration. ``GET_NEARBY`` shows how families can make workflows simpler. We are going to add it to the ``get_observations`` script. If the script cannot get data from the named site this setting will allow it to try nearby sites.
 
 Runtime
 -------
@@ -19,7 +20,7 @@ Runtime
 
       script = get-observations
       [[[environment]]]
-          API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+          GET_NEARBY = true
 
    We define a family as a new task consisting of the common configuration. By
    convention families are named in upper case:
@@ -29,7 +30,7 @@ Runtime
    [[GET_OBSERVATIONS]]
        script = get-observations
        [[[environment]]]
-           API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+           GET_NEARBY = true
 
 .. ifnotslides::
 
@@ -53,16 +54,16 @@ Runtime
    [[get_observations_heathrow]]
        script = get-observations
        [[[environment]]]
-           API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
            SITE_ID = 3772
+           GET_NEARBY = true
 
 .. nextslide::
 
 .. ifnotslides::
 
    It is possible to override inherited configuration within the task. For
-   example if we wanted the ``get_observations_heathrow`` task to use a
-   different API key we could write:
+   example if we wanted the ``get_observations_heathrow`` task to fail rather
+   than use a nearby alternative:
 
 .. code-block:: cylc
    :emphasize-lines: 4
@@ -70,39 +71,45 @@ Runtime
    [[get_observations_heathrow]]
        inherit = GET_OBSERVATIONS
        [[[environment]]]
-           API_KEY = special-api-key
            SITE_ID = 3772
+           GET_NEARBY = false
 
 .. nextslide::
 
 .. ifnotslides::
 
-   Using families the ``get_observations`` tasks could be written like so:
+   Using families the ``get_observations`` tasks could be written in a
+   shorter form:
 
-.. code-block:: cylc
+.. code-block:: diff
 
    [runtime]
        [[GET_OBSERVATIONS]]
            script = get-observations
-           [[[environment]]]
-               API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+   +         [[[environment]]]
+   +             GET_NEARBY = true
 
        [[get_observations_heathrow]]
            inherit = GET_OBSERVATIONS
+           script = get_metar_observation
            [[[environment]]]
-               SITE_ID = 3772
+               SITE_ID = EGLL
+   -           GET_NEARBY = true
        [[get_observations_camborne]]
            inherit = GET_OBSERVATIONS
            [[[environment]]]
                SITE_ID = 3808
+   -           GET_NEARBY = true
        [[get_observations_shetland]]
            inherit = GET_OBSERVATIONS
            [[[environment]]]
+   -           GET_NEARBY = true
                SITE_ID = 3005
        [[get_observations_aldergrove]]
            inherit = GET_OBSERVATIONS
            [[[environment]]]
                SITE_ID = 3917
+   -           GET_NEARBY = true
 
 
 Graphing
@@ -246,7 +253,7 @@ The ``root`` Family
       .. code-block:: none
 
          RESOLUTION = 0.2
-         DOMAIN = -12,48,5,61  # Do not change!
+         DOMAIN = -12,46,12,61  # Do not change!
 
       Rather than manually adding them to each task individually we could put
       them in the ``root`` family, making them accessible to all tasks.
@@ -262,7 +269,7 @@ The ``root`` Family
          +            # The dimensions of each grid cell in degrees.
          +            RESOLUTION = 0.2
          +            # The area to generate forecasts for (lng1, lat1, lng2, lat2).
-         +            DOMAIN = -12,48,5,61  # Do not change!
+         +            DOMAIN = -12,46,12,61  # Do not change!
 
       .. code-block:: diff
 
@@ -272,18 +279,15 @@ The ``root`` Family
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
-         -        DOMAIN = -12,48,5,61  # Do not change!
+         -        DOMAIN = -12,46,12,61  # Do not change!
 
           [[get_rainfall]]
               script = get-rainfall
               [[[environment]]]
-                  # The key required to get weather data from the DataPoint service.
-                  # To use archived data comment this line out.
-                  API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
-         -        DOMAIN = -12,48,5,61  # Do not change!
+         -        DOMAIN = -12,46,12,61  # Do not change!
 
           [[forecast]]
               script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
@@ -291,7 +295,7 @@ The ``root`` Family
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2)
-         -        DOMAIN = -12,48,5,61  # Do not change!
+         -        DOMAIN = -12,46,12,61  # Do not change!
                   # The path to the files containing wind data (the {variables} will
                   # get substituted in the forecast script).
                   WIND_FILE_TEMPLATE = $CYLC_WORKFLOW_WORK_DIR/{cycle}/consolidate_observations/wind_{xy}.csv
@@ -312,7 +316,7 @@ The ``root`` Family
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
-         -        DOMAIN = -12,48,5,61  # Do not change!
+         -        DOMAIN = -12,46,12,61  # Do not change!
 
       To ensure that the environment variables are being inherited correctly
       by the tasks, inspect the ``[runtime]`` section using ``cylc config``

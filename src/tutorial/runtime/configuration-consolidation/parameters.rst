@@ -159,8 +159,6 @@ Parameters can be either strings or integers:
    [runtime]
        [[get_observations<station>]]
            script = get-observations
-           [[[environment]]]
-               API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
        [[get_observations<station=aldergrove>]]
            [[[environment]]]
@@ -216,8 +214,6 @@ Parameters can be either strings or integers:
 
          [[get_observations<station>]]
              script = get-observations
-             [[[environment]]]
-                 API_KEY = {{ API_KEY }}
 
       Using ``cylc config`` you should see that Cylc replaces the
       ``<station>`` with each of the stations in turn, creating a new task for
@@ -264,7 +260,7 @@ Parameters can be either strings or integers:
                     SITE_ID = 3005
 
       Using ``cylc config`` you should now see four ``get_observations``
-      tasks, each with a ``script``, an ``API_KEY`` and a ``SITE_ID``:
+      tasks, each with a ``script`` and a ``SITE_ID``:
 
       .. code-block:: bash
 
