@@ -87,7 +87,7 @@ The two "Cylc defined scripts" are:
 
 ``cylc-env``
    Which provides default ``CYLC_*`` environment variables e.g.
-   ``CYLC_TASK_NAME``.
+   :envvar:`CYLC_TASK_NAME`.
 ``user-env``
    Which is the contents of the :cylc:conf:`[environment]` section.
 

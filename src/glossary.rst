@@ -51,7 +51,7 @@ Glossary
       state>` once the final try fails.
 
       The task try number increments with every automatic retry, and is
-      passed to the job environment as ``$CYLC_TASK_TRY_NUMBER``.
+      passed to the job environment as :envvar:`CYLC_TASK_TRY_NUMBER`.
 
       .. seealso::
 
@@ -63,7 +63,7 @@ Glossary
    task submit number
       Every time a task re-runs, whether by automatic :term:`retry` or manual
       triggering, its submit number increments. It is passed to
-      the job environment as ``$CYLC_TASK_SUBMIT_NUMBER``.
+      the job environment as :envvar:`CYLC_TASK_SUBMIT_NUMBER`.
 
       Submit number also appears in the job log path so that job log files
       don't get overwritten.
@@ -159,8 +159,8 @@ Glossary
       The workflow name is a path relative to the cylc-run directory which
       contains one or more workflow :term:`run directories <run directory>`.
 
-      Tasks can get the workflow name from ``$CYLC_WORKFLOW_NAME`` in their
-      runtime environment.
+      Tasks can get the workflow name from :envvar:`CYLC_WORKFLOW_NAME` in
+      their runtime environment.
 
       Unlike :term:`workflow id` the name is not always a unique identifier. In
       the example below ``run1`` and ``run2`` would both have the same name,
@@ -742,8 +742,8 @@ Glossary
          <run-directory>/work/<cycle-point>/<task-name>
 
       Tasks can get their own work directory path at runtime from
-      the ``CYLC_TASK_WORK_DIR`` environment variable or the Posix ``pwd``
-      command.
+      the :envvar:`CYLC_TASK_WORK_DIR` environment variable or the Posix
+      ``pwd`` command.
 
       .. seealso::
 
@@ -761,7 +761,7 @@ Glossary
          <run-directory>/share
 
       Tasks can get their own share directory path at runtime from
-      the ``CYLC_WORKFLOW_SHARE_DIR`` environment variable.
+      the :envvar:`CYLC_WORKFLOW_SHARE_DIR` environment variable.
 
       In cycling workflows files are typically stored in cycle point
       sub-directories of the share directory.
@@ -1122,7 +1122,7 @@ Glossary
       :term:`installed <install>` configuration used to run a :term:`workflow`.
 
       At runtime, task :term:`jobs <job>` can get their workflow run
-      directory from the environment variable ``CYLC_WORKFLOW_RUN_DIR``.
+      directory from the environment variable :envvar:`CYLC_WORKFLOW_RUN_DIR`.
 
       .. seealso::
 
@@ -1702,7 +1702,7 @@ Glossary
       Flow numbers are integers passed down from parent task to child task in
       the :term:`graph` as a flow progresses, to identify which :term:`flow`
       (or flows) the tasks belong to. They are passed to job environments as
-      ``$CYLC_TASK_FLOW_NUMBERS``.
+      :envvar:`CYLC_TASK_FLOW_NUMBERS`.
 
 
    flow front

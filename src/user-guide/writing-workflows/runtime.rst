@@ -28,7 +28,7 @@ applications wrapped by the tasks.
 .. note::
 
    At runtime, tasks can access their own workflow task name as
-   ``$CYLC_TASK_NAME`` in the job environment :ref:`job environment
+   :envvar:`CYLC_TASK_NAME` in the job environment :ref:`job environment
    <TaskExecutionEnvironment>` if needed.
 
 
@@ -315,7 +315,7 @@ Workflow Share Directories
 
 The workflow :term:`share directory` is created automatically under the
 workflow run directory as a convenient shared space for tasks. The location is
-available to tasks as ``$CYLC_WORKFLOW_SHARE_DIR``. In a cycling workflow,
+available to tasks as :envvar:`CYLC_WORKFLOW_SHARE_DIR`. In a cycling workflow,
 output files are typically held in cycle point sub-directories of this.
 
 The top level share directory location can be changed, e.g. to a large data
@@ -343,10 +343,10 @@ Task Work Directories
 
 Job scripts are executed from within :term:`work directories <work
 directory>` created automatically under the workflow run directory. A task can
-access its own work directory via ``$CYLC_TASK_WORK_DIR`` (or simply ``$PWD``
-if it does not change to another location at runtime). By default the location
-contains task name and cycle point, to provide a unique workspace for every
-instance of every task.
+access its own work directory via :envvar:`CYLC_TASK_WORK_DIR` (or simply
+``$PWD`` if it does not change to another location at runtime). By default the
+location contains task name and cycle point, to provide a unique workspace for
+every instance of every task.
 
 The top level work directory location can be changed, e.g. to a large data
 area, by global config settings under :cylc:conf:`global.cylc[install][symlink dirs]`.

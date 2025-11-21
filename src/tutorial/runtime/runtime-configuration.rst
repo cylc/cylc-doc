@@ -27,13 +27,13 @@ Environment Variables
 
    Each job is also provided with some standard environment variables e.g:
 
-   ``CYLC_WORKFLOW_RUN_DIR``
+   :envvar:`CYLC_WORKFLOW_RUN_DIR`
        The path to the :term:`run directory`
        *(e.g. ~/cylc-run/workflow)*.
-   ``CYLC_TASK_WORK_DIR``
+   :envvar:`CYLC_TASK_WORK_DIR`
        The path to the associated task's :term:`work directory`
        *(e.g. run-directory/work/cycle/task)*.
-   ``CYLC_TASK_CYCLE_POINT``
+   :envvar:`CYLC_TASK_CYCLE_POINT`
        The :term:`cycle point` for the associated task
        *(e.g. 20171009T0950)*.
 
@@ -44,9 +44,9 @@ Environment Variables
 
 .. ifslides::
 
-   * ``CYLC_WORKFLOW_RUN_DIR``
-   * ``CYLC_TASK_WORK_DIR``
-   * ``CYLC_TASK_CYCLE_POINT``
+   * :envvar:`CYLC_WORKFLOW_RUN_DIR`
+   * :envvar:`CYLC_TASK_WORK_DIR`
+   * :envvar:`CYLC_TASK_CYCLE_POINT`
 
 
 .. _tutorial-job-runner:

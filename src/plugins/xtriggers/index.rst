@@ -5,7 +5,7 @@ Xtrigger Plugins
 
    Xtrigger plugins allow you to install and use
    :ref:`xtriggers <Section External Triggers>` without them being
-   in ``<workflow-dir>/lib/python/`` or ``$CYLC_PYTHONPATH``.
+   in ``<workflow-dir>/lib/python/`` or :envvar:`CYLC_PYTHONPATH`.
 
 .. seealso::
 

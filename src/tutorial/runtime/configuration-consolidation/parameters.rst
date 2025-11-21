@@ -79,7 +79,7 @@ Environment Variables
 .. ifnotslides::
 
    The name of the parameter is provided to the job as an environment variable
-   called ``CYLC_TASK_PARAM_<parameter>`` where ``<parameter>`` is the name of
+   called :envvar:`CYLC_TASK_PARAM_\<param\>` where ``<param>`` is the name of
    the parameter (in the present case ``world``):
 
 .. code-block:: cylc

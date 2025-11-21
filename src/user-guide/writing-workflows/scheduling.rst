@@ -623,10 +623,10 @@ The Environment Variable CYLC\_WORKFLOW\_INITIAL\_CYCLE\_POINT
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 At start up the initial cycle point is passed to job environments
-as ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` and stored in the workflow
+as :envvar:`CYLC_WORKFLOW_INITIAL_CYCLE_POINT` and stored in the workflow
 database to persist across restarts.
 
-The ``$CYLC_WORKFLOW_INITIAL_CYCLE_POINT`` variable allows tasks to
+The :envvar:`CYLC_WORKFLOW_INITIAL_CYCLE_POINT` variable allows tasks to
 check if they are running in the initial cycle point, when different behaviour
 may be required. Note however that an initial ``R1`` graph section is the
 preferred way to get different behaviour at workflow start-up.
