@@ -165,18 +165,17 @@ This would result in:
 
 .. ifslides::
 
-   .. rubric:: This practical continues on from the
-      :ref:`families practical <cylc-tutorial-families-practical>`.
+   Next section: :ref:`tutorial-cylc-families`
 
-   Next section: :ref:`tutorial-cylc-parameterization`
 
 
 .. _cylc-tutorial-jinja2-practical:
 
 .. practical::
 
-   .. rubric:: This practical continues on from the
-      :ref:`families practical <cylc-tutorial-families-practical>`.
+   .. rubric:: In this practical we will consolidate the configuration of the
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
+      from the previous section.
 
    3. **Use Jinja2 To Avoid Duplication.**
 

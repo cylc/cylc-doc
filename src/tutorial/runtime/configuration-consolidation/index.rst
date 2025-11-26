@@ -73,8 +73,8 @@ structure of a workflow and avoid duplication.
 .. toctree::
    :maxdepth: 1
 
-   families
    jinja2
+   families
    parameters
 
 

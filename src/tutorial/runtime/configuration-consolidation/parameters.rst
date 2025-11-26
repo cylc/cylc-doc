@@ -182,7 +182,7 @@ Parameters can be either strings or integers:
 .. ifslides::
 
    .. rubric:: This practical continues on from the
-      :ref:`Jinja2 practical <cylc-tutorial-jinja2-practical>`.
+      :ref:`Families practical <cylc-tutorial-families-practical>`.
 
    Next section: :ref:`Which approach to use
    <cylc-tutorial-consolidation-conclusion>`
