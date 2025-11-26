@@ -19,26 +19,22 @@ Consolidating Configuration
               script = get-observations
               [[[environment]]]
                   SITE_ID = 3772
-                  API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
           [[get_observations_camborne]]
               script = get-observations
               [[[environment]]]
                   SITE_ID = 3808
-                  API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
           [[get_observations_shetland]]
               script = get-observations
               [[[environment]]]
                   SITE_ID = 3005
-                  API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
           [[get_observations_aldergrove]]
               script = get-observations
               [[[environment]]]
                   SITE_ID = 3917
-                  API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
 .. ifnotslides::
 
-   In this code the ``script`` item and the ``API_KEY`` environment variable have
+   In this code the ``script`` item has
    been repeated for each task. This is bad practice as it makes the
    configuration lengthy and harder to maintain.
 
@@ -53,7 +49,6 @@ Consolidating Configuration
       Repetition
 
       * ``script``
-      * ``API_KEY``
 
 .. slide:: Weather Forecasting Workflow
    :level: 2
@@ -78,8 +73,8 @@ structure of a workflow and avoid duplication.
 .. toctree::
    :maxdepth: 1
 
-   families
    jinja2
+   families
    parameters
 
 
