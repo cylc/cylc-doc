@@ -301,33 +301,18 @@ Start, Stop, Restart
    #. **Add Runtime Configuration For The** ``get_observations`` **Tasks.**
 
       In the ``bin`` directory is a script called ``get-observations``. This
-      script gets weather data from the MetOffice `DataPoint`_ service.
-      It requires two environment variables:
+      script gets wind observations publically disseminated by the WMO
+      (World Meteorological Organization).
 
-      ``SITE_ID``:
-          A four digit numerical code which is used to identify a
-          weather station, e.g. ``3772`` is Heathrow Airport.
-      ``API_KEY``:
-          An authentication key required for access to the service.
+      Rainfall data is `Met Office data hosted by Amazon
+      <https://www.metoffice.gov.uk/services/data/external-data-channels#ASDI>`_.
+
+      The ``get-observations`` script requires an environment variable called
+      ``SITE_ID``. This is a four digit numerical code which is used to
+      identify a weather station. For example; ``3772`` is the code for
+      Heathrow Airport.
 
       .. TODO: Add instructions for offline configuration
-
-      Generate a Datapoint API key::
-
-         cylc get-resources api-key
-
-      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file replacing
-      ``xxx...`` with your API key:
-
-      .. code-block:: cylc
-
-         [runtime]
-             [[get_observations_heathrow]]
-                 script = get-observations
-                 [[[environment]]]
-                     SITE_ID = 3772
-                     API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-
 
       Add three more ``get_observations`` tasks for each of the remaining
       weather stations.
@@ -347,22 +332,18 @@ Start, Stop, Restart
                     script = get-observations
                     [[[environment]]]
                         SITE_ID = 3772
-                        API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 [[get_observations_camborne]]
                     script = get-observations
                     [[[environment]]]
                         SITE_ID = 3808
-                        API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 [[get_observations_shetland]]
                     script = get-observations
                     [[[environment]]]
                         SITE_ID = 3005
-                        API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 [[get_observations_aldergrove]]
                     script = get-observations
                     [[[environment]]]
                         SITE_ID = 3917
-                        API_KEY = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
       Check the :cylc:conf:`flow.cylc` file is valid by running the command:
 
@@ -460,15 +441,20 @@ Start, Stop, Restart
 
          cylc validate .
 
-      Now install a new run of the workflow:
+   #. **Install and Play The Workflow.**
+
+      So far we have validated, installed and played the workflow as three
+      separate steps. Cylc provides a shortcut to do all three steps with
+      one command:
 
       .. code-block:: bash
 
-         cylc install
+         cylc validate-install-play
+         # or
+         cylc vip   # much shorter!
 
       .. TODO: Add advice on what to do if the command fails.
 
-   #. **Run The Workflow.**
 
       Open a user interface (:ref:`tutorial.tui` or :ref:`tutorial.gui`) and
       run the workflow.
