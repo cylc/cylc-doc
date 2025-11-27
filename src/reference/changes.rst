@@ -25,16 +25,15 @@ For more detail see the component changelogs:
 Cylc 8.6
 --------
 
-.. TODO: Modify these URL's and uncomment this block before release
 
-   .. admonition:: Cylc Components
+.. admonition:: Cylc Components
    :class: hint
 
-   :cylc-flow: `8.4 <https://github.com/cylc/cylc-flow/blob/master/CHANGES.md>`__
-   :cylc-ui: `2.7 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
-   :cylc-uiserver: `1.6 <https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md>`__
-   :cylc-rose: `1.5 <https://github.com/cylc/cylc-rose/blob/master/CHANGES.md>`__
-   :rose: `2.4 <https://github.com/metomi/rose/blob/master/CHANGES.md>`__
+   :cylc-flow: `8.6 <https://github.com/cylc/cylc-flow/blob/8.6.x/CHANGES.md>`__
+   :cylc-ui: `2.11 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md#cylc-ui-2110-released-2025-11-27>`__
+   :cylc-uiserver: `1.8 <https://github.com/cylc/cylc-uiserver/blob/1.8.x/CHANGES.md>`__
+   :cylc-rose: `1.7 <https://github.com/cylc/cylc-rose/blob/1.7.x/CHANGES.md>`__
+   :rose: `2.6 <https://github.com/metomi/rose/blob/2.6.x/CHANGES.md>`__
 
 
 UI sidebar improvements
@@ -114,7 +113,7 @@ makes Cylc 7 "reset to waiting" use cases much easier:
           cylc insert workflow FAMILY.cycle
           cylc reset workflow FAMILY.cycle --state=waiting
           # Trigger the task(s) that start the FAMILY sub-graph
-          cylc trigger workflow member1.cycle 
+          cylc trigger workflow member1.cycle
      - ::
 
           cylc trigger workflow//cycle/FAMILY
