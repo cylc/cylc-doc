@@ -1306,7 +1306,7 @@ number of members of ``FAM1`` and ``M`` is the number of members of ``FAM2``.
 This can result in high memory use as the number of family members grows.
 
 You can greatly reduce the number of dependencies generated here by putting
-:term:`dummy tasks<dummy task>` in the graph to represent the state of the 
+:term:`dummy tasks<dummy task>` in the graph to represent the state of the
 upstream family. For example, if ``FAM2`` should trigger off any member of
 ``FAM1`` succeeding you can use a :term:`dummy tasks<dummy task>`
 ``FAM1_done`` like this:
@@ -1854,7 +1854,7 @@ For example you don't need ``:y?`` on the right here:
 
    foo:x => bar:y?
 
-If ``bar:y?`` appears on the left elsewere in the graph:
+If ``bar:y?`` appears on the left elsewhere in the graph:
 
 .. code-block:: cylc-graph
 

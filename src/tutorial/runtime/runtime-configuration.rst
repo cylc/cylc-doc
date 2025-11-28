@@ -301,7 +301,7 @@ Start, Stop, Restart
    #. **Add Runtime Configuration For The** ``get_observations`` **Tasks.**
 
       In the ``bin`` directory is a script called ``get-observations``. This
-      script gets wind observations publically disseminated by the WMO
+      script gets wind observations publicly disseminated by the WMO
       (World Meteorological Organization).
 
       Rainfall data is `Met Office data hosted by Amazon
