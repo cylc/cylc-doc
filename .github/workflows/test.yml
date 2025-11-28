@@ -45,7 +45,7 @@ jobs:
             node-version: 'lts/*'
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: install dependencies
         uses: ./.github/actions/install-dependencies
