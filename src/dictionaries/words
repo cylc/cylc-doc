@@ -29,6 +29,7 @@ dataset
 datasets
 datetime
 datetimes
+decluttered
 deprecations
 dev
 dict
@@ -103,6 +104,7 @@ namespaces
 obs
 offline
 onwards
+optionality
 packjob
 param
 parameterization
@@ -142,9 +144,11 @@ queueing
 qux
 randint
 rc
+reconfiguring
 refactor
 regex
 reimplement
+reimplements
 reimplementation
 reimplemented
 reinstallation
@@ -173,6 +177,7 @@ secs
 setup
 setups
 shebang
+shortcut
 shutdown
 shutil
 situ
@@ -213,6 +218,8 @@ timestep
 timezone
 timezones
 toolbar
+tooltip
+tooltips
 tuple
 uiserver
 unparsed
