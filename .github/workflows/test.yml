@@ -80,9 +80,8 @@ jobs:
           print(enchant.list_dicts())
 
       - name: build & test
-        # TODO: re-enable spelling when https://github.com/sphinx-contrib/spelling/issues/234 fixed
         run: |
-          make html linkcheck \
+          make html spelling linkcheck \
             SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
 
       - name: debug sphinx failure
