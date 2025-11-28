@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheat Sheet &mdash; Cylc 8.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=ad95d4c4"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="examples/index.html" />
+    <link rel="prev" title="Removing Workflows" href="removing-workflows.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cheat Sheet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-workflows">Working with Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-and-stopping-workflows">Starting and Stopping Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-workflows">List Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#opening-the-gui-tui">Opening the GUI/Tui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-changes-to-running-workflows">Making Changes To Running Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inspecting-workflows">Inspecting Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-rose-stem-workflows">Running Rose Stem Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interventions">Interventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-workflows-in-debug-mode">Running Workflows in Debug Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#managing-multiple-workflows">Managing Multiple Workflows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-cylc-ids">Working With Cylc IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/index.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Cheat Sheet</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/cheat-sheet.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cheat-sheet">
+<span id="user-guide-cheat-sheet"></span><h1>Cheat Sheet<a class="headerlink" href="#cheat-sheet" title="Link to this heading"></a></h1>
+<p>A cheat sheet covering most of the major Cylc commands. For a full list see
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">help</span> <span class="pre">all</span></code>.</p>
+<p>See also the <a class="reference internal" href="../7-to-8/cheat-sheet.html#cheat-sheet"><span class="std std-ref">Cylc 7 to 8 migration cheat sheet</span></a>.</p>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#working-with-workflows" id="id1">Working with Workflows</a></p></li>
+<li><p><a class="reference internal" href="#starting-and-stopping-workflows" id="id2">Starting and Stopping Workflows</a></p></li>
+<li><p><a class="reference internal" href="#list-workflows" id="id3">List Workflows</a></p></li>
+<li><p><a class="reference internal" href="#opening-the-gui-tui" id="id4">Opening the GUI/Tui</a></p></li>
+<li><p><a class="reference internal" href="#making-changes-to-running-workflows" id="id5">Making Changes To Running Workflows</a></p></li>
+<li><p><a class="reference internal" href="#inspecting-workflows" id="id6">Inspecting Workflows</a></p></li>
+<li><p><a class="reference internal" href="#running-rose-stem-workflows" id="id7">Running Rose Stem Workflows</a></p></li>
+<li><p><a class="reference internal" href="#interventions" id="id8">Interventions</a></p></li>
+<li><p><a class="reference internal" href="#running-workflows-in-debug-mode" id="id9">Running Workflows in Debug Mode</a></p></li>
+<li><p><a class="reference internal" href="#managing-multiple-workflows" id="id10">Managing Multiple Workflows</a></p></li>
+<li><p><a class="reference internal" href="#working-with-cylc-ids" id="id11">Working With Cylc IDs</a></p></li>
+</ul>
+</nav>
+<section id="working-with-workflows">
+<h2>Working with Workflows<a class="headerlink" href="#working-with-workflows" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code></dt><dd><p>Validates the workflow configuration (will tell you if there are any problems).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code></dt><dd><p>Install a workflow (i.e. copy its files into the <code class="docutils literal notranslate"><span class="pre">~/cylc-run</span></code> directory).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code></dt><dd><p>Start a workflow running.</p>
+</dd>
+</dl>
+<p>Install and start a workflow:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># validate a workflow</span>
+cylc validate <span class="s">&lt;name|path&gt;</span>
+
+<span class="c"># install a workflow</span>
+cylc install <span class="s">&lt;name|path&gt;</span>
+
+<span class="c"># start a workflow</span>
+cylc play <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>For convenience, these three operations can be combined with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code> command
+(vip = validate + install + play):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># validate, install and play a workflow</span>
+cylc vip <span class="s">&lt;name|path&gt;</span>
+</pre></div>
+</div>
+<p>When you’re done with a workflow run, remove it with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">clean</span></code>:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># delete a workflow installation</span>
+cylc clean <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="starting-and-stopping-workflows">
+<h2>Starting and Stopping Workflows<a class="headerlink" href="#starting-and-stopping-workflows" title="Link to this heading"></a></h2>
+<p>Start workflows with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code>, stop them with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code>.</p>
+<p>Workflows can be started or stopped multiple times, Cylc will always continue
+where it left off:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># start a workflow</span>
+cylc play <span class="s">&lt;id&gt;</span>
+
+<span class="c"># stop a workflow</span>
+cylc stop <span class="s">&lt;id&gt;</span>
+
+<span class="c"># restart a workflow</span>
+cylc play <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>You can also “pause” a workflow. A paused workflow will not submit any new
+jobs. Pausing workflows can be handy if you need to perform
+<a class="reference internal" href="interventions/index.html#user-guide-interventions"><span class="std std-ref">interventions</span></a> on them. Use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span></code> to
+resume a workflow:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># pause a workflow</span>
+cylc pause <span class="s">&lt;id&gt;</span>
+
+<span class="c"># resume a workflow</span>
+cylc play <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>The Cylc play, pause and stop commands work similarly to the play, pause and
+stop buttons on an old tape player. You can play, pause or stop a workflow as
+many times as you like; Cylc will never lose its place in the workflow.</p>
+</section>
+<section id="list-workflows">
+<h2>List Workflows<a class="headerlink" href="#list-workflows" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">scan</span></code> command can list your installed workflows:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># list all running workflows</span>
+cylc scan
+
+<span class="c"># get information about running workflows</span>
+cylc scan --format=rich
+
+<span class="c"># list all installed workflows</span>
+cylc scan --states=all
+</pre></div>
+</div>
+<p>You can also view your workflows in the GUI or Tui.</p>
+</section>
+<section id="opening-the-gui-tui">
+<h2>Opening the GUI/Tui<a class="headerlink" href="#opening-the-gui-tui" title="Link to this heading"></a></h2>
+<p>Cylc has an in-terminal utility for monitoring and controlling workflows:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># view all workflows</span>
+cylc tui
+
+<span class="c"># open a specific workflow</span>
+cylc tui <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>There is also a GUI which opens in a web browser:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># open the GUI to the homepage</span>
+cylc gui
+
+<span class="c"># open the GUI to a specific workflow</span>
+cylc gui <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="making-changes-to-running-workflows">
+<h2>Making Changes To Running Workflows<a class="headerlink" href="#making-changes-to-running-workflows" title="Link to this heading"></a></h2>
+<p>You can make changes to a workflow without having to shut it down and restart it.</p>
+<p>First, make your required changes to the files in the workflow’s
+<a class="reference internal" href="../glossary.html#term-source-directory"><span class="xref std std-term">source directory</span></a>, then run the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vr</span></code> command
+(<a class="reference internal" href="interventions/index.html#interventions-edit-the-workflow-configuration"><span class="std std-ref">more information</span></a>):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># validate, reinstall and reload the workflow</span>
+cylc vr <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>If you want to quickly edit a task’s configuration, e.g. while developing a
+workflow or testing changes, the
+<a class="reference internal" href="interventions/index.html#interventions-edit-a-tasks-configuration"><span class="std std-ref">“Edit Runtime” feature</span></a>
+in the GUI can be convenient.</p>
+</section>
+<section id="inspecting-workflows">
+<h2>Inspecting Workflows<a class="headerlink" href="#inspecting-workflows" title="Link to this heading"></a></h2>
+<p>Validate the workflow configuration (good for spotting errors):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc validate <span class="s">&lt;path|id&gt;</span>
+</pre></div>
+</div>
+<p>Check the workflow for common problems and code style:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc lint <span class="s">&lt;path|id&gt;</span>
+</pre></div>
+</div>
+<p>View the workflow configuration <em>before</em> Cylc has parsed it
+(but after pre-processing - good for debugging Jinja2 errors):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc view -p <span class="s">&lt;path|id&gt;</span>
+</pre></div>
+</div>
+<p>View the workflow configuration <em>after</em> Cylc has parsed it
+(good for debugging family inheritance):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc config <span class="s">&lt;path|id&gt;</span>
+
+<span class="c"># view a specific task&#39;s configuration</span>
+cylc config <span class="s">&lt;path|id&gt;</span> -i &#39;[runtime][<span class="s">&lt;task&gt;</span>]&#39;
+
+<span class="c"># view the workflow configuration with defaults applied</span>
+cylc config <span class="s">&lt;path|id&gt;</span> --defaults
+</pre></div>
+</div>
+<p>Generate a graphical representation of the workflow’s <a class="reference internal" href="../glossary.html#term-graph"><span class="xref std std-term">graph</span></a>
+(a useful tool for developing workflow graphs):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc graph <span class="s">&lt;path|id&gt;</span>
+
+<span class="c"># render the graph between two cycle points</span>
+cylc graph <span class="s">&lt;path|id&gt;</span> <span class="s">&lt;cycle1&gt;</span> <span class="s">&lt;cycle2&gt;</span>
+
+<span class="c"># render the graph transposed (can make it easier to read)</span>
+cylc graph <span class="s">&lt;path|id&gt;</span> --transpose
+
+<span class="c"># group tasks by cycle point</span>
+cylc graph <span class="s">&lt;path|id&gt;</span> --cycles
+
+<span class="c"># collapse tasks within a family (can reduce the number of tasks displayed)</span>
+cylc graph <span class="s">&lt;path|id&gt;</span> --group=<span class="s">&lt;family&gt;</span>
+</pre></div>
+</div>
+<p>List all tasks and families defined in a workflow:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc list <span class="s">&lt;path|id&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="running-rose-stem-workflows">
+<h2>Running Rose Stem Workflows<a class="headerlink" href="#running-rose-stem-workflows" title="Link to this heading"></a></h2>
+<p>Currently, Rose stem workflows are installed using a different command to
+regular workflows:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># install a rose-stem workflow</span>
+rose stem
+
+<span class="c"># start a rose-stem workflow</span>
+cylc play <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>Once a workflow is installed you can run regular Cylc commands against it, e.g
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">stop</span></code>.</p>
+<p>We may be able to automatically activate <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">stem</span></code> functionality as part
+of <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> in the future which would allow you to install and start
+a Rose Stem workflow with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">vip</span></code>.</p>
+</section>
+<section id="interventions">
+<h2>Interventions<a class="headerlink" href="#interventions" title="Link to this heading"></a></h2>
+<p>You can intervene in the running a workflow, e.g. to re-run a task.</p>
+<p>Interventions are written up in <a class="reference internal" href="interventions/index.html#user-guide-interventions"><span class="std std-ref">Interventions</span></a>. Here is a
+quick summary:</p>
+<p>Run or re-run a task (<a class="reference internal" href="interventions/index.html#interventions-re-run-a-task"><span class="std std-ref">more info</span></a>):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc trigger <span class="s">&lt;id&gt;</span>//<span class="s">&lt;cycle&gt;</span>/<span class="s">&lt;task&gt;</span>
+</pre></div>
+</div>
+<p>Mark a task as complete
+(<a class="reference internal" href="interventions/index.html#interventions-set-task-outputs"><span class="std std-ref">more info</span></a>):</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc set <span class="s">&lt;id&gt;</span>//<span class="s">&lt;cycle&gt;</span>/<span class="s">&lt;task&gt;</span>
+</pre></div>
+</div>
+<p>Kill a running job:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc kill <span class="s">&lt;id&gt;</span>//<span class="s">&lt;cycle&gt;</span>/<span class="s">&lt;task&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="running-workflows-in-debug-mode">
+<h2>Running Workflows in Debug Mode<a class="headerlink" href="#running-workflows-in-debug-mode" title="Link to this heading"></a></h2>
+<p>When a workflow is in debug mode, more information gets written to the
+workflow’s <a class="reference internal" href="troubleshooting.html#troubleshooting-log-files"><span class="std std-ref">log file</span></a>.
+Jobs also get run in Bash “xtrace” mode (<code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-x</span></code>) which can help to diagnose
+the line in a task’s script that caused the error.</p>
+<p>Start a workflow in debug mode:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>$ cylc vip --debug <span class="s">&lt;name|path&gt;</span>
+
+<span class="c"># OR</span>
+$ cylc play --debug <span class="s">&lt;id&gt;</span>
+</pre></div>
+</div>
+<p>Switch an already running workflow into debug mode:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc verbosity DEBUG <span class="s">&lt;workflow-id&gt;</span>
+</pre></div>
+</div>
+<p>For more information, see <a class="reference internal" href="troubleshooting.html#troubleshooting"><span class="std std-ref">Troubleshooting</span></a>.</p>
+</section>
+<section id="managing-multiple-workflows">
+<h2>Managing Multiple Workflows<a class="headerlink" href="#managing-multiple-workflows" title="Link to this heading"></a></h2>
+<p>Many Cylc commands can operate over multiple workflows:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># stop all workflows</span>
+cylc stop &#39;*&#39;
+
+<span class="c"># pause all workflows</span>
+cylc pause &#39;*&#39;
+
+<span class="c"># re-run all failed tasks in all workflows</span>
+cylc trigger &quot;*//*/*:failed&quot;
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">*</span></code> characters in these examples are “globs”. Make sure you put quotes
+around them to prevent the shell from trying to expand them.</p>
+<p>For more information on globs or the Cylc ID format, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">help</span> <span class="pre">id</span></code>.</p>
+</section>
+<section id="working-with-cylc-ids">
+<h2>Working With Cylc IDs<a class="headerlink" href="#working-with-cylc-ids" title="Link to this heading"></a></h2>
+<p>Everything in a Cylc workflow has an ID. We use these IDs on the command line
+and in the GUI.</p>
+<p>Cylc Ids take the format:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="s">&lt;workflow-id&gt;</span>//<span class="s">&lt;cycle&gt;</span>/<span class="s">&lt;task&gt;</span>/<span class="s">&lt;job&gt;</span>
+</pre></div>
+</div>
+<p>E.G:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span><span class="c"># a workflow</span>
+my-workflow
+
+<span class="c"># a cycle within a workflow</span>
+my-workflow//20000101T00Z
+
+<span class="c"># a task instance</span>
+my-workflow//20000101T00Z/mytask
+
+<span class="c"># a job submission</span>
+my-workflow//20000101T00Z/mytask/01
+</pre></div>
+</div>
+<p>For more information on the Cylc ID format, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">help</span> <span class="pre">id</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="removing-workflows.html" class="btn btn-neutral float-left" title="Removing Workflows" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples/index.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Nov 28, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/cheat-sheet";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

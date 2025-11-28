@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expiring Tasks / Cycles &mdash; Cylc 8.6.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=ad95d4c4"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Extending Workflow" href="../extending-workflow/index.html" />
+    <link rel="prev" title="Event Driven Cycling" href="../event-driven-cycling/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../1-hello-world/index.html">Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-integer-cycling/index.html">Integer Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-datetime-cycling/index.html">Datetime Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../converging-workflow/index.html">Converging Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cycle-over-irregular-dates/index.html">Irregular Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../event-driven-cycling/index.html">Event Driven Cycling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Expiring Tasks / Cycles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-1-skip-a-whole-cycle-of-tasks">Example 1: Skip a whole cycle of tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-2-skip-the-remainder-of-a-cycle-of-tasks">Example 2: Skip the remainder of a cycle of tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-3-skip-selected-tasks-in-a-cycle">Example 3: Skip selected tasks in a cycle</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../extending-workflow/index.html">Extending Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external-data-files/index.html">Using Data To Define Your Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inter-workflow-triggers/index.html">Inter-Workflow Triggering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Expiring Tasks / Cycles</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/user-guide/examples/expiry/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="expiring-tasks-cycles">
+<span id="examples-expiry"></span><h1>Expiring Tasks / Cycles<a class="headerlink" href="#expiring-tasks-cycles" title="Link to this heading"></a></h1>
+<p>Cylc is often used to write workflows which monitor real-world events.</p>
+<p>For example, this workflow will run the task <code class="docutils literal notranslate"><span class="pre">foo</span></code> every day at 00:00am:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+   <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T00)</span>
+   <span class="nt">[[graph]]</span>
+       <span class="nv">P1D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+           <span class="cp">@wall_clock</span> <span class="o">=&gt;</span> <span class="kd">foo</span>
+       <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Sometimes such workflows might get behind, e.g. due to failures or slow task
+execution. In this situation, it might be necessary to skip a few tasks in
+order for the workflow to catch up with the real-world time.</p>
+<p>Cylc has a concept called <a class="reference internal" href="../../writing-workflows/scheduling.html#clockexpiretasks"><span class="std std-ref">expiry</span></a> which allows tasks
+to be automatically “expired” if they are running behind schedule. The expiry
+can be configured as an offset from the cycle time.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../writing-workflows/scheduling.html#clockexpiretasks"><span class="std std-ref">Clock-Expire Triggers</span></a>.</p>
+</div>
+<section id="example-1-skip-a-whole-cycle-of-tasks">
+<h2>Example 1: Skip a whole cycle of tasks<a class="headerlink" href="#example-1-skip-a-whole-cycle-of-tasks" title="Link to this heading"></a></h2>
+<p>If the workflow gets behind, skip whole cycles of tasks until it catches up.</p>
+<div class="hint admonition">
+<p class="admonition-title">Get a copy of this example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>get-resources<span class="w"> </span>examples/expiry/one
+</pre></div>
+</div>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        If the workflow runs slowly and the cycle time gets behind the real</span>
+<span class="s2">        world (wallclock) time, then it will skip cycles until it catches up.</span>
+
+<span class="s2">        Either a cycle runs or it is skipped.</span>
+
+<span class="s2">        When you start this workflow, the first cycle will be at 00:00am this</span>
+<span class="s2">        morning so will immediately expire causing the workflow to move onto</span>
+<span class="s2">        tomorrow&#39;s cycle.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="c1"># start the workflow at 00:00am this morning</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T00)</span>
+
+    <span class="c1"># the &quot;start&quot; task will &quot;expire&quot; if the cycle time falls behind</span>
+    <span class="c1"># the wallclock time</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">clock-expire </span><span class="o">=</span><span class="s"> start</span>
+
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># the chain of tasks we want to run</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">housekeep</span>
+
+            <span class="c1"># wait for the previous cycle to either complete or expire before</span>
+            <span class="c1"># continuing onto the next cycle</span>
+            <span class="kd">housekeep</span>[<span class="nb">-P1D</span>] <span class="o">|</span> <span class="kd">start</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">start</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="example-2-skip-the-remainder-of-a-cycle-of-tasks">
+<h2>Example 2: Skip the remainder of a cycle of tasks<a class="headerlink" href="#example-2-skip-the-remainder-of-a-cycle-of-tasks" title="Link to this heading"></a></h2>
+<p>If the workflow gets behind, skip the remainder of the tasks in the cycle,
+then skip whole cycles of tasks until it catches up.</p>
+<div class="hint admonition">
+<p class="admonition-title">Get a copy of this example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>get-resources<span class="w"> </span>examples/expiry/two
+</pre></div>
+</div>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        If the workflow runs slowly and the cycle time gets behind the real</span>
+<span class="s2">        world (wallclock) time, then it will skip tasks until it catches up.</span>
+
+<span class="s2">        A cycle may be skipped part way through to allow the workflow to catch</span>
+<span class="s2">        up faster.</span>
+
+<span class="s2">        When this workflow starts up, the first cycle will be one minute ahead</span>
+<span class="s2">        of the wallclock time. At some point in the cycle, the wallclock time</span>
+<span class="s2">        will overtake the cycle time and the next task in the chain will</span>
+<span class="s2">        expire. The workflow will then move onto the next cycle.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="c1"># start the workflow at 00:00am this morning</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> PT1M</span>
+
+    <span class="c1"># any task in the workflow will &quot;expire&quot; rather than run if the cycle</span>
+    <span class="c1"># time falls behind the wallclock time</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">clock-expire </span><span class="o">=</span><span class="s"> start, a, b, c, d, housekeep</span>
+
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># the chain of tasks we want to run</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">housekeep</span>
+
+            <span class="c1"># start the next cycle as soon as the previous cycle has finished</span>
+            <span class="c1"># OR and task in the previous cycle has expired</span>
+            <span class="kd">housekeep</span>[<span class="nb">-P1D</span>]
+                <span class="o">|</span> <span class="kd">start</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expire</span><span class="kt">?</span>
+                <span class="o">|</span> <span class="kd">a</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span>
+                <span class="o">|</span> <span class="kd">b</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span>
+                <span class="o">|</span> <span class="kd">c</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span>
+                <span class="o">|</span> <span class="kd">d</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span>
+                <span class="o">|</span> <span class="kd">housekeep</span>[<span class="nb">-P1D</span>]<span class="c">:</span><span class="kd">expired</span><span class="kt">?</span>
+            <span class="o">=&gt;</span> <span class="kd">start</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[root]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> sleep 12</span>
+</pre></div>
+</div>
+</section>
+<section id="example-3-skip-selected-tasks-in-a-cycle">
+<h2>Example 3: Skip selected tasks in a cycle<a class="headerlink" href="#example-3-skip-selected-tasks-in-a-cycle" title="Link to this heading"></a></h2>
+<p>If the workflow gets behind, turn off selected tasks to allow it to catch up
+more quickly.</p>
+<div class="hint admonition">
+<p class="admonition-title">Get a copy of this example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>get-resources<span class="w"> </span>examples/expiry/three
+</pre></div>
+</div>
+</div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        If the workflow runs slowly and the cycle time gets behind the real</span>
+<span class="s2">        world (wallclock) time, then it will skip selected tasks until it</span>
+<span class="s2">        catches up.</span>
+
+<span class="s2">        In this case, the tasks &quot;b&quot;, &quot;c&quot; and &quot;d&quot; will be skipped to help the</span>
+<span class="s2">        workflow to catch up more quickly.</span>
+
+<span class="s2">        When this workflow starts up, the first cycle will be at 00:00am today</span>
+<span class="s2">        so the &quot;start&quot; task will immediately expire. This will cause tasks</span>
+<span class="s2">        &quot;b&quot;, &quot;c&quot; and &quot;d&quot; to be configured to &quot;skip&quot; rather than run.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduler]</span>
+    <span class="nv">allow implicit tasks </span><span class="o">=</span><span class="s"> True</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="c1"># start the workflow at 00:00am this morning</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T00)</span>
+    <span class="nv">final cycle point </span><span class="o">=</span><span class="s"> +P0D</span>
+
+    <span class="c1"># the &quot;start&quot; task will &quot;expire&quot; if the cycle time falls behind</span>
+    <span class="c1"># the wallclock time</span>
+    <span class="nt">[[special tasks]]</span>
+        <span class="nv">clock-expire </span><span class="o">=</span><span class="s"> start</span>
+
+    <span class="nt">[[graph]]</span>
+        <span class="nv">P1D </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># the chain of tasks we want to run</span>
+            <span class="kd">start</span> <span class="o">|</span> <span class="kd">start</span><span class="c">:</span><span class="kd">expired</span><span class="kt">?</span> <span class="o">=&gt;</span> <span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span> <span class="o">=&gt;</span> <span class="kd">c</span> <span class="o">=&gt;</span> <span class="kd">d</span> <span class="o">=&gt;</span> <span class="kd">housekeep</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[start]]</span>
+        <span class="c1"># if this task expires, configure the tasks &quot;b&quot;, &quot;c&quot; and &quot;d&quot; to</span>
+        <span class="c1"># &quot;skip&quot; rather than run</span>
+        <span class="c1"># Note: This task will also be &quot;skipped&quot; if it expires</span>
+        <span class="nt">[[[events]]]</span>
+            <span class="nv">expired handlers </span><span class="o">=</span><span class="s"> cylc broadcast &quot;%(workflow)s&quot; -p &quot;%(point)s&quot; -n b -n c -n d -s &quot;run mode = skip&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../event-driven-cycling/index.html" class="btn btn-neutral float-left" title="Event Driven Cycling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../extending-workflow/index.html" class="btn btn-neutral float-right" title="Extending Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Nov 28, 2025.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.1";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/examples/expiry/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
