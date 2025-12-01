@@ -294,10 +294,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9a94149249249659013f83847a6ab5fbdf22bd20.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9dea420ff1135d24aebf23add8fc0e27cb750fba.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-buy_ingredients -&gt; make_dough
 make_dough
+buy_ingredients -&gt; make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -305,12 +305,12 @@ make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-cae06bded5f72a7626b99ff5d4df1d8c493dc546.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-a4cd56d7de496363991507cc3a4e454bed342205.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-buy_ingredients -&gt; make_dough
-sell_bread
 bake_bread -&gt; sell_bread
 make_dough -&gt; bake_bread
+buy_ingredients -&gt; make_dough
+sell_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -319,14 +319,14 @@ make_dough -&gt; bake_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-a264b3520da88bdc97cd9ddc11fc262f00316179.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-414e4b27a2e3cd9658e5dcb67c46baecac4a0bea.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-bake_bread
-pre_heat_oven -&gt; bake_bread
-sell_bread
 clean_oven
+sell_bread
+pre_heat_oven -&gt; bake_bread
 bake_bread -&gt; sell_bread
 buy_ingredients -&gt; make_dough
+bake_bread
 bake_bread -&gt; clean_oven
 make_dough -&gt; bake_bread
 }</p></object></div>
@@ -498,7 +498,7 @@ correct solution.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2025 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Nov 28, 2025.
+      <span class="lastupdated">Last updated on Dec 01, 2025.
       </span></p>
   </div>
 
