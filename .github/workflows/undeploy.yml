@@ -43,6 +43,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: install deps
+        run: pip install packaging
+
       - name: configure git
         uses: cylc/release-actions/configure-git@v1
 
