@@ -608,14 +608,14 @@ point will be done from midnight of the current day.
    :widths: auto
 
    Syntax, Description, Interpretation
-   ``next(-00)``,                     Any century; next year 00,                  2100-01-01
-   ``previous(--01)``,                Any year; next month 01,                    2018-01-01
-   ``next(---01)``,                   Any year; any month; next 1st of month,     2018-04-01
-   ``previous(--1225)``,              Any year; previous Dec 25,                  2017-12-25
-   ``next(-2006)``,                   Any century; next June in a year ending 20, 2020-06-01
-   ``previous(-W101)``,               Any century; previous week 10 day 1,        2018-03-05
-   ``next(-W-1; -W-3; -W-5)``,        "Any year; any week; next day 1, 3 or 5",   2018-03-14
-   ``next(-001; -091; -181; -271)``,  "Any year; day 1, 91, 181 or 271",          2018-04-01
+   ``next(-00)``,                     Any century; next year ending 00,           2100-01-01T00:00Z
+   ``previous(--01)``,                Any year; previous month 01,                2018-01-01T00:00Z
+   ``next(---01)``,                   Any year; any month; next 1st of month,     2018-04-01T00:00Z
+   ``previous(--1225)``,              Any year; previous Dec 25,                  2017-12-25T00:00Z
+   ``next(-2006)``,                   Any century; next June in a year ending 20, 2020-06-01T00:00Z
+   ``previous(-W101)``,               Any century; previous week 10 day 1,        2018-03-05T00:00Z
+   ``next(-W-1; -W-3; -W-5)``,        "Any year; any week; next day 1, 3 or 5",   2018-03-16T00:00Z
+   ``next(-001; -091; -181; -271)``,  "Any year; day 1, 91, 181 or 271",          2018-04-01T00:00Z
    ``previous(-365T12Z)``,            Any year; previous day 356 at 12Z,          2017-12-31T12:00Z
 
 
