@@ -90,7 +90,7 @@ Glossary
 
       .. seealso::
 
-         * :ref: `n-window`
+         * :ref:`n-window`
 
 
    n-window
@@ -100,7 +100,7 @@ Glossary
 
       .. seealso::
 
-         * :ref: `n-window`
+         * :ref:`n-window`
 
 
    active cycle
