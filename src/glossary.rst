@@ -88,11 +88,20 @@ Glossary
         :term:`required outputs <required output>`
         (e.g. a task failed where success was required).
 
+      .. seealso::
+
+         * :ref: `n-window`
+
 
    n-window
       The GUI provides a view of the workflow extending ``n`` graph edges out
       from :term:`active tasks <active task>` - which form the ``n=0``
       window. The default n-window extent is ``n=1``.
+
+      .. seealso::
+
+         * :ref: `n-window`
+
 
    active cycle
       A cycle point is considered to be active if it contains any
