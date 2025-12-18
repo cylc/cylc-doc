@@ -122,6 +122,13 @@ Re-Run Multiple Tasks
          >   //<cycle-2>/<task-2> \
          >   ...
 
+.. admonition:: Workflow design tip
+   :class: tip
+
+   If there is a group of tasks that might often need to be re-run together,
+   consider grouping them into a :term:`family` so that you can easily trigger them
+   all at once using the family name.
+
 
 .. _interventions.reflow:
 
@@ -615,3 +622,35 @@ Remove Tasks
       .. code-block:: console
 
          cylc remove <workflow>//<cycle>/<id>
+
+
+Run tasks at the initial cycle point after a warm start
+-------------------------------------------------------
+
+.. versionchanged:: 8.6.2
+
+   This did not work properly in prior versions of Cylc 8.
+
+:Example:
+   I started the workflow using a :term:`start cycle point` greater than
+   the :term:`initial cycle point` (a.k.a. a :term:`warm start`).
+   Now I want to run some tasks at a cycle before the start cycle point.
+   e.g. a family of setup tasks that only exist at the initial cycle point.
+
+:Solution:
+   Trigger the desired tasks at the earlier cycle point.
+   See :ref:`interventions.re-run-multiple-tasks`.
+   All other tasks at cycles before the start cycle point are treated as already complete
+   (in :term:`flow` 1), so only the triggered tasks will run.
+
+.. tip::
+
+   The ``^`` character can be used as a shorthand for the initial cycle point
+   in the GUI and CLI.
+
+.. warning::
+
+   If the workflow shuts down while the group of tasks that you triggered
+   is still in progress, then on restart, Cylc will not remember what tasks
+   were still left to run in that group. You will need to trigger the remaining
+   tasks again.

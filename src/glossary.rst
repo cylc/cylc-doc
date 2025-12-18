@@ -1030,7 +1030,8 @@ Glossary
       the :term:`initial cycle point`.
 
       To satisfy unbounded :term:`intercycle dependence` in the graph, tasks
-      prior to the start cycle point are treated as if they have succeeded.
+      prior to the start cycle point are treated as if they have succeeded
+      (in :term:`flow` 1).
 
       .. seealso::
 
