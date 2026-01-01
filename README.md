@@ -239,7 +239,7 @@ preserved and does not require housekeeping.
 
 [![License](https://img.shields.io/github/license/cylc/cylc-doc.svg?color=lightgrey)](https://github.com/cylc/cylc-doc/blob/master/LICENSE)
 
-Copyright (C) 2008-<span actions:bind='current-year'>2025</span> NIWA & British Crown (Met Office) & Contributors.
+Copyright (C) 2008-<span actions:bind='current-year'>2026</span> NIWA & British Crown (Met Office) & Contributors.
 
 Cylc is free software: you can redistribute it and/or modify it under the terms
 of the GNU General Public License as published by the Free Software Foundation,
