@@ -82,7 +82,7 @@ beginning with ``foo`` and ``*foo`` matches all tasks ending in ``foo``.
 It is now possible to filter by
 :ref:`task modifiers <user_guide.task_modifiers>` as well as
 :ref:`task states <task-job-states>`. So, for example, we can now filter for
-tasks which are :ref:`held <held task>` or awaiting :ref:`retry`.
+tasks which are :term:`held <held task>` or awaiting :term:`retry`.
 
 .. image:: ../reference/changes/task-modifier-filtering.png
    :width: 55%
