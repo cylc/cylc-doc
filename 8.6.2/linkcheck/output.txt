@@ -1,0 +1,5 @@
+glossary.rst:489: [redirected with Found] http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html to https://www.cl.cam.ac.uk/~mgk25/iso-time.html
+tutorial/runtime/configuration-consolidation/index.rst:160: [redirected with Found] https://jinja.palletsprojects.com/en/3.0.x/ to https://jinja.palletsprojects.com/en/stable/
+user-guide/examples/cycle-over-irregular-dates/index.rst:52: [redirected with Found] https://jinja.palletsprojects.com/en/3.0.x/templates/#list-of-control-structures to https://jinja.palletsprojects.com/en/stable/templates/
+user-guide/writing-workflows/jinja2.rst:473: [redirected with Found] https://jinja.palletsprojects.com/en/3.0.x/templates/#assignments to https://jinja.palletsprojects.com/en/stable/templates/
+reference/architecture/data-flow.rst:53: [redirected with Found] https://jupyter-server.readthedocs.io to https://jupyter-server.readthedocs.io/en/latest/

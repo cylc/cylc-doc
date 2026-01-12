@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.parsec.exceptions &mdash; Cylc 8.6.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=9a6d5eae"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.parsec.exceptions</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.parsec.exceptions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">t</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.parsec.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">itemstr</span>
+
+
+<span class="n">TRACEBACK_WRAPPER</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">TextWrapper</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ParsecError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.ParsecError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParsecError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic exception for Parsec errors.&quot;&quot;&quot;</span>
+
+    <span class="n">schd_expected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set this flag to True on the exception if it is anticipated during</span>
+<span class="sd">    Cylc Scheduler run (apart from loading of config we do not expect</span>
+<span class="sd">    ParsecErrors during runtime).&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ItemNotFoundError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.ItemNotFoundError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ItemNotFoundError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised for missing configuration items.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">item</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;You have not set </span><span class="se">\&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="si">}</span><span class="se">\&quot;</span><span class="s1"> in this config.&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="InvalidConfigError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.InvalidConfigError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidConfigError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised for missing configuration items.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">specname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">specname</span> <span class="o">=</span> <span class="n">specname</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="si">}</span><span class="s1">&quot; is not a valid &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;configuration for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">specname</span><span class="si">}</span><span class="s1">.&#39;</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NotSingleItemError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.NotSingleItemError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotSingleItemError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised if an iterable is given where an item is expected.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">item</span> <span class="o">=</span> <span class="n">item</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;not a singular item: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="FileParseError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.FileParseError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileParseError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised when attempting to read in the config file(s).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reason:</span>
+<span class="sd">            Description of error.</span>
+<span class="sd">        err_type:</span>
+<span class="sd">            Classification of error (e.g. Jinja2Error).</span>
+<span class="sd">        help_lines:</span>
+<span class="sd">            Additional info to include in the exception.</span>
+<span class="sd">        lines:</span>
+<span class="sd">            (preferred) Dictionary in the format</span>
+<span class="sd">            {filename: [context_line, ..., error_line]}</span>
+<span class="sd">        index:</span>
+<span class="sd">            The line number of the error in the config (counting from the</span>
+<span class="sd">            shebang line *not* the first line).</span>
+<span class="sd">        line:</span>
+<span class="sd">            The line of the error in the config.</span>
+<span class="sd">        fpath:</span>
+<span class="sd">            The path to the file containing the error.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">index</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">line</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lines</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">err_type</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fpath</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">help_lines</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reason</span> <span class="o">=</span> <span class="n">reason</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_num</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">err_type</span> <span class="o">=</span> <span class="n">err_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fpath</span> <span class="o">=</span> <span class="n">fpath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_lines</span> <span class="o">=</span> <span class="n">help_lines</span> <span class="ow">or</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reason</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpath</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fpath</span><span class="p">:</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fpath</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_num</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;line </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line_num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">   &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">File </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="se">\n</span><span class="s1">  &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&lt;--&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">err_type</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">err_type</span>
+        <span class="n">help_lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">help_lines</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_num</span><span class="p">:</span>
+            <span class="c1"># TODO - make &#39;view&#39; function independent of cylc:</span>
+            <span class="n">help_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;line numbers match &#39;cylc view -p&#39;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">help_line</span> <span class="ow">in</span> <span class="n">help_lines</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">(</span><span class="si">{</span><span class="n">help_line</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+
+
+<div class="viewcode-block" id="TemplateVarLanguageClash">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.TemplateVarLanguageClash">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TemplateVarLanguageClash</span><span class="p">(</span><span class="n">FileParseError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Multiple workflow configuration templating engines configured.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Jinja2Error">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.Jinja2Error">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Jinja2Error</span><span class="p">(</span><span class="n">FileParseError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper class for Jinja2 exceptions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        exception:</span>
+<span class="sd">            The exception being re-raised</span>
+<span class="sd">        lines:</span>
+<span class="sd">            Dictionary in the format</span>
+<span class="sd">            {filename: [context_line, ..., error_line]}</span>
+<span class="sd">        filename:</span>
+<span class="sd">            Alternative to &quot;lines&quot; where less detail is available.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span>
+        <span class="n">lines</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># extract the first sentence of exception</span>
+        <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">msg</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;. &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">tail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;.&#39;</span>
+            <span class="n">tail</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># append the filename e.g. for a Jinja2 template</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Error in file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+
+        <span class="c1"># append the rest of the exception</span>
+        <span class="k">if</span> <span class="n">tail</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">TRACEBACK_WRAPPER</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">tail</span><span class="p">))</span>
+
+        <span class="n">FileParseError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">msg</span><span class="p">,</span>
+            <span class="n">lines</span><span class="o">=</span><span class="n">lines</span><span class="p">,</span>
+            <span class="n">err_type</span><span class="o">=</span><span class="n">exception</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="IncludeFileNotFoundError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.IncludeFileNotFoundError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IncludeFileNotFoundError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised for missing include files.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flist</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Missing include file error.</span>
+
+<span class="sd">        E.g. for [DIR/top.cylc, DIR/inc/sub.cylc, DIR/inc/gone.cylc]</span>
+<span class="sd">        &quot;Include-file not found: inc/gone.cylc via inc/sub.cylc from</span>
+<span class="sd">        DIR/top.cylc&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rflist</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">flist</span><span class="p">)</span>
+        <span class="n">top_file</span> <span class="o">=</span> <span class="n">rflist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">top_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">top_file</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">rflist</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">rflist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">top_dir</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rflist</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39; via </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">f</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">top_dir</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39; from </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">top_file</span>
+        <span class="n">ParsecError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="UpgradeError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.UpgradeError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UpgradeError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Error raised upon fault in an upgrade operation.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="ValidationError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.ValidationError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationError</span><span class="p">(</span><span class="n">ParsecError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic exception for invalid configurations.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="n">keys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc</span> <span class="o">=</span> <span class="n">exc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vtype</span> <span class="o">=</span> <span class="n">vtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vtype</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;(type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vtype</span><span class="si">}</span><span class="s1">) &#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="n">itemstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="n">itemstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39; - (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">exc</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;: &quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exc</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+
+
+<div class="viewcode-block" id="IllegalValueError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.IllegalValueError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IllegalValueError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bad setting value.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vtype</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ValidationError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">vtype</span><span class="o">=</span><span class="n">vtype</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="n">exc</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ListValueError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.ListValueError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ListValueError</span><span class="p">(</span><span class="n">IllegalValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bad setting value, for a comma separated list.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">IllegalValueError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="n">exc</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="IllegalItemError">
+<a class="viewcode-back" href="../../../../reference/api/exceptions.html#cylc.flow.parsec.exceptions.IllegalItemError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IllegalItemError</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bad setting section or option name.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">ValidationError</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">exc</span><span class="o">=</span><span class="n">exc</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 12, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "8.6.2";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/parsec/exceptions";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
