@@ -1,26 +1,9 @@
 Changes
 =======
 
-.. _cylc-flow-changelog: https://github.com/cylc/cylc-flow/blob/master/CHANGES.md
-.. _cylc-uiserver-changelog: https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md
-.. _cylc-ui-changelog: https://github.com/cylc/cylc-ui/blob/master/CHANGES.md
-.. _cylc-rose-changelog: https://github.com/cylc/cylc-rose/blob/master/CHANGES.md
-.. _metomi-rose-changelog: https://github.com/metomi/rose/blob/master/CHANGES.md
-.. _metomi-isodatetime-changelog: https://github.com/metomi/isodatetime/blob/master/CHANGES.md
-
 This page contains a summary of significant changes across all Cylc components for each
 release.
 
-For more detail see the component changelogs:
-
-* `cylc-flow-changelog`_
-* `cylc-uiserver-changelog`_
-* `cylc-ui-changelog`_
-* `cylc-rose-changelog`_
-* `metomi-rose-changelog`_
-* `metomi-isodatetime-changelog`_
-
-----------
 
 Cylc 8.6
 --------
@@ -46,7 +29,46 @@ have been added to indicate how many tasks are in each state. The tooltips now
 have a short delay to avoid many popping up while moving the mouse around.
 
 .. image:: ../img/cylc-ui-dash.png
-   :width: 100%
+   :width: 90%
+   :align: center
+
+|
+
+.. versionadded:: cylc-uiserver 1.8.2, cylc-flow=8.6.2
+
+Additionally, for workflows running with Cylc 8.6.2 or later, there is now a
+top level icon which indicates whether there are any held or retrying tasks in
+the :term:`active window`.
+
+.. image:: ../reference/changes/workflows-view-held-and-retry-indicators.png
+   :width: 45%
+   :align: center
+
+|
+
+UI Searching & Filtering
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.8.2
+
+The task filtering controls in the "Tree" and "Table" views have been overhauled.
+
+Task name searching now supports globs, e.g ``foo*`` matches all tasks
+beginning with ``foo`` and ``*foo`` matches all tasks ending in ``foo``.
+
+.. image:: ../reference/changes/task-id-glob-filtering.png
+   :width: 55%
+   :align: center
+
+|
+
+It is now possible to filter by
+:ref:`task modifiers <user_guide.task_modifiers>` as well as
+:ref:`task states <task-job-states>`. So, for example, we can now filter for
+tasks which are :term:`held <held task>` or awaiting :term:`retry`.
+
+.. image:: ../reference/changes/task-modifier-filtering.png
+   :width: 55%
    :align: center
 
 |
@@ -182,6 +204,27 @@ logical order.
 The ``--on-resume`` option has been removed.
 
 
+UI Command Editor
+^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-uiserver 1.8.2
+
+The "command editor" allows us to edit the options for a command before we
+issue it, it is opened from the context menu by pressing the pencil icon.
+
+There is now an option to open the editor in a new tab so we can continue to
+use the UI while preparing a command to submit.
+
+.. list-table::
+   :class: grid-table
+
+   -
+     * .. image:: ../reference/changes/command-editor-open-in-new-tab.png
+          :width: 100%
+     * .. image:: ../reference/changes/command-editor-opened-in-tab.png
+          :width: 100%
+
+
 ----------
 
 Cylc 8.5
@@ -211,6 +254,8 @@ shown in the information view:
 .. image:: ../img/info-view.xtriggers.png
    :align: center
    :width: 65%
+
+|
 
 .. _changes.8.5.0.triggering_multiple_tasks:
 
