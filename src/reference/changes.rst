@@ -1,26 +1,9 @@
 Changes
 =======
 
-.. _cylc-flow-changelog: https://github.com/cylc/cylc-flow/blob/master/CHANGES.md
-.. _cylc-uiserver-changelog: https://github.com/cylc/cylc-uiserver/blob/master/CHANGES.md
-.. _cylc-ui-changelog: https://github.com/cylc/cylc-ui/blob/master/CHANGES.md
-.. _cylc-rose-changelog: https://github.com/cylc/cylc-rose/blob/master/CHANGES.md
-.. _metomi-rose-changelog: https://github.com/metomi/rose/blob/master/CHANGES.md
-.. _metomi-isodatetime-changelog: https://github.com/metomi/isodatetime/blob/master/CHANGES.md
-
 This page contains a summary of significant changes across all Cylc components for each
 release.
 
-For more detail see the component changelogs:
-
-* `cylc-flow-changelog`_
-* `cylc-uiserver-changelog`_
-* `cylc-ui-changelog`_
-* `cylc-rose-changelog`_
-* `metomi-rose-changelog`_
-* `metomi-isodatetime-changelog`_
-
-----------
 
 Cylc 8.6
 --------
