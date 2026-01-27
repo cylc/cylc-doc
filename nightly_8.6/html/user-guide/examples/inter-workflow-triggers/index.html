@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inter-Workflow Triggering &mdash; Cylc 8.6.3.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/cylc-favicon.ico"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=29653c3b"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Troubleshooting" href="../../troubleshooting.html" />
+    <link rel="prev" title="Using Data To Define Your Workflow" href="../external-data-files/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../writing-workflows/index.html">Writing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing-workflows.html">Installing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../running-workflows/index.html">Running Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../task-implementation/index.html">Task Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../interventions/index.html">Interventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../removing-workflows.html">Removing Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Examples</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../1-hello-world/index.html">Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../2-integer-cycling/index.html">Integer Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../3-datetime-cycling/index.html">Datetime Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../converging-workflow/index.html">Converging Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cycle-over-irregular-dates/index.html">Irregular Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../event-driven-cycling/index.html">Event Driven Cycling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../expiry/index.html">Expiring Tasks / Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extending-workflow/index.html">Extending Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external-data-files/index.html">Using Data To Define Your Workflow</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Inter-Workflow Triggering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">User Guide</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Examples</a></li>
+      <li class="breadcrumb-item active">Inter-Workflow Triggering</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/user-guide/examples/inter-workflow-triggers/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inter-workflow-triggering">
+<h1>Inter-Workflow Triggering<a class="headerlink" href="#inter-workflow-triggering" title="Link to this heading"></a></h1>
+<div class="hint admonition">
+<p class="admonition-title">Get a copy of this example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>get-resources<span class="w"> </span>examples/inter-workflow-triggers
+</pre></div>
+</div>
+</div>
+<p>This example shows how one workflow can “trigger off” of tasks in another
+workflow.</p>
+<p>In this example, there are two workflows:</p>
+<ul class="simple">
+<li><p>“upstream” writes a file.</p></li>
+<li><p>“downstream” reads this file.</p></li>
+</ul>
+<p>Run both workflows simultaneously to see this in action:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>vip<span class="w"> </span>inter-workflow-triggers/upstream
+<span class="gp">$ </span>cylc<span class="w"> </span>vip<span class="w"> </span>inter-workflow-triggers/downstream
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Upstream Workflow</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> Upstream Workflow</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        This is the workflow which is providing the data that the downstream</span>
+<span class="s2">        workflow wants to use.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="c1"># start two hours before the current time on the whole hour</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T-00) - PT2H</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">PT1H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="c1"># wait for the &quot;real world&quot; time before running &quot;a&quot;:</span>
+            <span class="cp">@wall_clock</span> <span class="o">=&gt;</span> <span class="kd">a</span>
+
+            <span class="c1"># then run task &quot;b&quot;</span>
+            <span class="kd">a</span> <span class="o">=&gt;</span> <span class="kd">b</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[a]]</span>
+    <span class="nt">[[b]]</span>
+        <span class="c1"># write a random number to ~/cylc-run/&lt;workflow-id&gt;/share/&lt;cycle&gt;</span>
+        <span class="c1"># for the downstream workflow to use</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;$RANDOM&quot; &gt; &quot;$file&quot;</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">file </span><span class="o">=</span><span class="s"> ${CYLC_WORKFLOW_SHARE_DIR}/${CYLC_TASK_CYCLE_POINT}</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Downstream Workflow</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[meta]</span>
+    <span class="nv">title </span><span class="o">=</span><span class="s"> Downstream Workflow</span>
+    <span class="nv">description </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        This workflow uses the data provided by the upstream workflow.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+<span class="nt">[scheduling]</span>
+    <span class="c1"># start two hours before the current hour</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> previous(T-00) - PT2H</span>
+    <span class="nt">[[xtriggers]]</span>
+        <span class="c1"># this is an &quot;xtrigger&quot; - it will wait for the task &quot;b&quot; in the same</span>
+        <span class="c1"># cycle from the workflow &quot;upstream&quot;</span>
+        <span class="nv">upstream </span><span class="o">=</span><span class="s"> workflow_state(workflow_task_id=&quot;inter-workflow-triggers/upstream//%(point)s/b&quot;)</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">PT1H </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+            <span class="cp">@upstream</span> <span class="o">=&gt;</span> <span class="kd">process</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[process]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> echo &quot;The random number is: $(cat &quot;$file&quot;)&quot;</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="c1"># this is where the data should be written to in the upstream workflow</span>
+            <span class="c1"># Note: &quot;runN&quot; will point to the most recent run of a workflow</span>
+            <span class="nv">file </span><span class="o">=</span><span class="s"> $HOME/cylc-run/upstream/runN/share/$CYLC_TASK_CYCLE_POINT</span>
+</pre></div>
+</div>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Example - Decoupled workflows</p>
+<p>This pattern is useful where you have workflows that you want to keep decoupled
+from one another, but still need to exchange data. E.G. in operational
+meteorology we might have a global model (covering the whole Earth) and a
+regional model (just covering a little bit of it) where the regional model
+obtains its boundary condition from the global model.</p>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../external-data-files/index.html" class="btn btn-neutral float-left" title="Using Data To Define Your Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.6.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "user-guide/examples/inter-workflow-triggers/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

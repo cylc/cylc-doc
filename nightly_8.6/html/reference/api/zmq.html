@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Runtime Interface &mdash; Cylc 8.6.3.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=29653c3b"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exceptions" href="exceptions.html" />
+    <link rel="prev" title="Scan API" href="scan.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../changes.html">Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../job-script-vars/index.html">Job Script Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Cylc API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="scan.html">Scan API</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Workflow Runtime Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#client">Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#server">Server</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Reference</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Cylc API</a></li>
+      <li class="breadcrumb-item active">Workflow Runtime Interface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/reference/api/zmq.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workflow-runtime-interface">
+<h1>Workflow Runtime Interface<a class="headerlink" href="#workflow-runtime-interface" title="Link to this heading"></a></h1>
+<p>Cylc workflows are TCP servers which use the ZeroMQ protocol to communicate with
+clients and jobs.</p>
+<p>Cylc provides a Python client to communicate with this server
+<a class="reference internal" href="#cylc.flow.network.client.WorkflowRuntimeClient" title="cylc.flow.network.client.WorkflowRuntimeClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.client.WorkflowRuntimeClient</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow.network.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowRuntimeClient</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">WorkflowRuntimeClient</span><span class="p">(</span><span class="s1">&#39;my-workflow&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ping_workflow&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Cylc also provides sub-command called <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">client</span></code> which is a simple
+wrapper of the Python client.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>client<span class="w"> </span>generic<span class="w"> </span>ping_workflow<span class="w"> </span>-n
+<span class="go">true</span>
+</pre></div>
+</div>
+<p>The available “commands” or (“endpoints”) are contained in
+<a class="reference internal" href="#cylc.flow.network.server.WorkflowRuntimeServer" title="cylc.flow.network.server.WorkflowRuntimeServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">cylc.flow.network.server.WorkflowRuntimeServer</span></code></a> class.</p>
+<section id="client">
+<h2>Client<a class="headerlink" href="#client" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">cylc.flow.network.client.</span></span><span class="sig-name descname"><span class="pre">WorkflowRuntimeClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workflow</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srv_public_key_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/client.html#WorkflowRuntimeClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient" title="Link to this definition"></a></dt>
+<dd><p>Initiate a client to the scheduler API.</p>
+<p>Initiates the REQ part of a ZMQ REQ-REP pair.</p>
+<p>This class contains the logic for the ZMQ message interface and client -
+server communication.</p>
+<p>Determine host and port from the contact file unless provided.</p>
+<p>If there is no socket bound to the specified host/port the client will
+bail after <code class="docutils literal notranslate"><span class="pre">timeout</span></code> seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>workflow</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of the workflow to connect to.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – Set the default timeout in seconds. The default is
+<code class="docutils literal notranslate"><span class="pre">ZMQClient.DEFAULT_TIMEOUT</span></code>.
+Note the default timeout can be overridden for individual requests.</p></li>
+<li><p><strong>host</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – <p>The host where the flow is running if known.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – <p>The port on which the REQ-REP TCP server is listening.</p>
+<p>If both host and port are provided it is not necessary to load
+the contact file.</p>
+</p></li>
+<li><p><strong>scheduler_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>context</strong> (<em>Context</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>srv_public_key_loc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.host">
+<span class="sig-name descname"><span class="pre">host</span></span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.host" title="Link to this definition"></a></dt>
+<dd><p>Workflow host name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.port">
+<span class="sig-name descname"><span class="pre">port</span></span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.port" title="Link to this definition"></a></dt>
+<dd><p>Workflow host port.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.timeout_handler">
+<span class="sig-name descname"><span class="pre">timeout_handler</span></span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.timeout_handler" title="Link to this definition"></a></dt>
+<dd><p>Optional function which runs before ClientTimeout is raised.
+This provides an interface for raising more specific exceptions in
+the event of a communication timeout.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.header">
+<span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.header" title="Link to this definition"></a></dt>
+<dd><p>Request “header” data to attach to each request.</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Usage:</dt><dd><p>Call endpoints using <code class="docutils literal notranslate"><span class="pre">ZMQClient.__call__</span></code>.</p>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts responses of the format: {“data”: {…}}</p></li>
+<li><p>Accepts error in the format: {“error”: {“message”: MSG}}</p></li>
+<li><p>Returns requests of the format: {“command”: CMD,
+“args”: {…}}</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#cylc.flow.exceptions.WorkflowStopped" title="cylc.flow.exceptions.WorkflowStopped"><strong>WorkflowStopped</strong></a> – if the workflow is not running.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>workflow</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>host</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>scheduler_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>context</strong> (<em>Context</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>srv_public_key_loc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Call server “endpoints” using:</dt><dd><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">__call__</span></code>, <code class="docutils literal notranslate"><span class="pre">serial_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.serial_request">
+<span class="sig-name descname"><span class="pre">serial_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.serial_request" title="Link to this definition"></a></dt>
+<dd><p>Send a request.</p>
+<p>For convenience use <code class="docutils literal notranslate"><span class="pre">__call__</span></code> to call this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The name of the endpoint to call.</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>) – Arguments to pass to the endpoint function.</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>) – Override the default timeout (seconds).</p></li>
+<li><p><strong>req_meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="exceptions.html#cylc.flow.exceptions.ClientTimeout" title="cylc.flow.exceptions.ClientTimeout"><strong>ClientTimeout</strong></a> – If a response takes longer than timeout to arrive.</p></li>
+<li><p><a class="reference internal" href="exceptions.html#cylc.flow.exceptions.ClientError" title="cylc.flow.exceptions.ClientError"><strong>ClientError</strong></a> – Coverall for all other issues including failed auth.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The data exactly as returned from the endpoint function,</dt><dd><p>nothing more, nothing less.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)">object</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">async_request</span></code></dt><dd><dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.client.WorkflowRuntimeClient.async_request">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">async_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/client.html#WorkflowRuntimeClient.async_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.client.WorkflowRuntimeClient.async_request" title="Link to this definition"></a></dt>
+<dd><p>Send an asynchronous request using asyncio.</p>
+<p>Has the same arguments and return values as <code class="docutils literal notranslate"><span class="pre">serial_request</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>req_meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)">object</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="server">
+<h2>Server<a class="headerlink" href="#server" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">cylc.flow.network.server.</span></span><span class="sig-name descname"><span class="pre">WorkflowRuntimeServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer" title="Link to this definition"></a></dt>
+<dd><p>Workflow runtime service API facade exposed via zmq.</p>
+<p>This class starts and coordinates the publisher and replier, and
+contains the Cylc endpoints invoked by the receiver to provide a response
+to incoming messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schd</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>) – The parent object instantiating the server. In
+this case, the workflow scheduler.</p>
+</dd>
+</dl>
+<dl>
+<dt>Usage:</dt><dd><ul class="simple">
+<li><p>Define endpoints using the <code class="docutils literal notranslate"><span class="pre">expose</span></code> decorator.</p></li>
+<li><p>Endpoints are called via the receiver using the function name.</p></li>
+</ul>
+</dd>
+<dt>Message interface:</dt><dd><ul class="simple">
+<li><p>Accepts messages of the format: {“command”: CMD, “args”: {…}}</p></li>
+<li><p>Returns responses of the format: {“data”: {…}}</p></li>
+<li><p>Returns error in the format: {“error”: {“message”: MSG}}</p></li>
+</ul>
+</dd>
+<dt>Common Arguments:</dt><dd><p>Arguments which are shared between multiple commands.</p>
+<dl class="simple">
+<dt>task identifier (str):</dt><dd><p>A task identifier in the format <code class="docutils literal notranslate"><span class="pre">cycle-point/task-name</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">1/foo</span></code> or <code class="docutils literal notranslate"><span class="pre">20000101T0000Z/bar</span></code>.</p>
+</dd>
+</dl>
+<dl id="task-globs">
+<dt>task globs (list):</dt><dd><p>A list of Cylc IDs relative to the workflow.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code> - The cycle point “1”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1/foo</span></code> - The task “foo” in the cycle “1”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1/foo/01</span></code> - The first job of the task “foo” from the cycle
+“1”.</p></li>
+</ul>
+<p>Glob-like patterns may be used to match multiple items e.g.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">*</span></code></dt><dd><p>Matches everything.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">1/*</span></code></dt><dd><p>Matches everything in cycle <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">*/*:failed</span></code></dt><dd><p>Matches all failed tasks.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.api">
+<span class="sig-name descname"><span class="pre">api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.api"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.api" title="Link to this definition"></a></dt>
+<dd><p>Return information about this API.</p>
+<p>Returns a list of callable endpoints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>endpoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – If specified the documentation for the endpoint
+will be returned instead.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of endpoints or string documentation of the
+requested endpoint.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><em>List</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.client_pub_key_dir">
+<span class="sig-name descname"><span class="pre">client_pub_key_dir</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.client_pub_key_dir" title="Link to this definition"></a></dt>
+<dd><p>Client public key directory, used by the ZMQ authenticator.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.curve_auth">
+<span class="sig-name descname"><span class="pre">curve_auth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ThreadAuthenticator</span></span><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.curve_auth" title="Link to this definition"></a></dt>
+<dd><p>The ZMQ authenticator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.graphql">
+<span class="sig-name descname"><span class="pre">graphql</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.graphql"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.graphql" title="Link to this definition"></a></dt>
+<dd><p>Return the data field of the GraphQL schema execution result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request_string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – GraphQL request passed to Graphene.</p></li>
+<li><p><strong>variables</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>) – Dict of variables passed to Graphene.</p></li>
+<li><p><strong>meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><em>Dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>) – Dict containing auth user etc.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Execution result, or a list with errors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)">object</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.operate">
+<span class="sig-name descname"><span class="pre">operate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.operate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.operate" title="Link to this definition"></a></dt>
+<dd><p>Orchestrate the receive, send, publish of messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements">
+<span class="sig-name descname"><span class="pre">pb_data_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.pb_data_elements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.pb_data_elements" title="Link to this definition"></a></dt>
+<dd><p>Send the specified data elements in delta form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Key from DELTAS_MAP dictionary.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)">bytes</a></p>
+</dd>
+</dl>
+<p>Returns serialised Protobuf message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow">
+<span class="sig-name descname"><span class="pre">pb_entire_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.pb_entire_workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.pb_entire_workflow" title="Link to this definition"></a></dt>
+<dd><p>Send the entire data-store in a single Protobuf message.</p>
+<p>Returns serialised Protobuf message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.14)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.publish_queued_items">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">publish_queued_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.publish_queued_items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.publish_queued_items" title="Link to this definition"></a></dt>
+<dd><p>Publish all queued items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.receiver">
+<span class="sig-name descname"><span class="pre">receiver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.receiver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.receiver" title="Link to this definition"></a></dt>
+<dd><p>Process incoming messages and coordinate response.</p>
+<p>Wrap incoming messages, dispatch them to exposed methods and/or
+coordinate a publishing stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – message contents</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ResponseDict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints">
+<span class="sig-name descname"><span class="pre">register_endpoints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.register_endpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.register_endpoints" title="Link to this definition"></a></dt>
+<dd><p>Register all exposed methods.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barrier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.start" title="Link to this definition"></a></dt>
+<dd><p>Start the TCP servers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylc.flow.network.server.WorkflowRuntimeServer.stop">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cylc/flow/network/server.html#WorkflowRuntimeServer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cylc.flow.network.server.WorkflowRuntimeServer.stop" title="Link to this definition"></a></dt>
+<dd><p>Stop the TCP servers, and clean up authentication.</p>
+<p>This method must be called/awaited from a different thread to the
+server’s self.thread in order to interrupt the self.operate() loop
+and wait for self.thread to terminate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reason</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#BaseException" title="(in Python v3.14)"><em>BaseException</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scan.html" class="btn btn-neutral float-left" title="Scan API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exceptions.html" class="btn btn-neutral float-right" title="Exceptions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.6.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/api/zmq";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
