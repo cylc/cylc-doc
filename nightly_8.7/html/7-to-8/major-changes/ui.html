@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cylc 8 UIs &mdash; Cylc 8.7.0.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=e5c1437e"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cylc 8.7 Caveats" href="../caveats.html" />
+    <link rel="prev" title="Template Variables" href="template-vars.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compatibility-mode.html">Cylc 7 Compatibility Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cylc 8 UIs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-tui">Cylc Tui</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-web-gui">Cylc Web GUI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-hub">Cylc Hub</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.7 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Cylc 8 UIs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/ui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cylc-8-uis">
+<span id="ui"></span><h1>Cylc 8 UIs<a class="headerlink" href="#cylc-8-uis" title="Link to this heading"></a></h1>
+<p>There are two UI options available to monitor and control workflows at Cylc 8.</p>
+<section id="cylc-tui">
+<h2>Cylc Tui<a class="headerlink" href="#cylc-tui" title="Link to this heading"></a></h2>
+<p>Cylc Tui (TUI = Terminal User Interface) is a command line version of the GUI
+which comes packaged with the Cylc scheduler.</p>
+<p>It can be used to monitor and control any workflows running under your user
+account, trigger tasks, access log files and perform other common activities.</p>
+<p>Start Tui by running the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> command.</p>
+<figure class="align-center" id="id3" style="width: 80%">
+<img alt="../../_images/tui-1.png" src="../../_images/tui-1.png" />
+<figcaption>
+<p><span class="caption-text">Tui showing the details of a failed job.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4" style="width: 80%">
+<img alt="../../_images/tui-2.png" src="../../_images/tui-2.png" />
+<figcaption>
+<p><span class="caption-text">A list of actions that can be performed on the selected task.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id5" style="width: 80%">
+<img alt="../../_images/tui-3.png" src="../../_images/tui-3.png" />
+<figcaption>
+<p><span class="caption-text">Tui displaying the workflow configuration. It can also show scheduler and
+job log files.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Tui replaces the Cylc 7 <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">monitor</span></code> command.</p>
+</section>
+<section id="cylc-web-gui">
+<h2>Cylc Web GUI<a class="headerlink" href="#cylc-web-gui" title="Link to this heading"></a></h2>
+<p>The Cylc GUI application is a monitoring and control application which runs in
+a web browser, it is distributed in the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> package which comes
+separately from the core scheduler.</p>
+<p>Start the GUI server and open the web app in your browser by running
+<code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">gui</span></code>.</p>
+<figure class="align-center" id="id6" style="width: 100%">
+<img alt="../../_images/cylc-ui-dash.png" src="../../_images/cylc-ui-dash.png" />
+<figcaption>
+<p><span class="caption-text">The GUI homepage.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id7" style="width: 100%">
+<img alt="../../_images/cylc-ui-tree.png" src="../../_images/cylc-ui-tree.png" />
+<figcaption>
+<p><span class="caption-text">The GUI displaying a workflow using the “tree” view.</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>See <a class="reference internal" href="../../reference/config/ui-server.html#ui-server-config"><span class="std std-ref">UI Server Configuration</span></a> for how to configure the GUI.</p>
+<p>As some workflows can be very large, or even infinite, the GUI uses a “window”
+system to determine what to display. For more information, see <a class="reference internal" href="../../user-guide/running-workflows/tasks-jobs-ui.html#n-window"><span class="std std-ref">The “n” Window</span></a>.</p>
+</section>
+<section id="cylc-hub">
+<span id="id1"></span><h2>Cylc Hub<a class="headerlink" href="#cylc-hub" title="Link to this heading"></a></h2>
+<p>The Cylc 8 GUI can be deployed with Jupyter Hub to support multi-user access
+where it is possible to grant users the permission to view and interact with
+workflows running under other user accounts. In these deployments, users
+authenticate when they open the GUI in the browser.</p>
+<p>The central server is started by the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hub</span></code> command.</p>
+<figure class="align-center" id="id8" style="width: 80%">
+<img alt="../../_images/hub.png" src="../../_images/hub.png" />
+<figcaption>
+<p><span class="caption-text">The Jupyter Hub authentication page in a multi-user setup.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Multi-user setups need to be configured by site administrators, for more
+information see <a class="reference internal" href="../../reference/config/sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="template-vars.html" class="btn btn-neutral float-left" title="Template Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../caveats.html" class="btn btn-neutral float-right" title="Cylc 8.7 Caveats" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.7.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/ui";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

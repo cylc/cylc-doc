@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pre-Configure And Post-Install Plugins &mdash; Cylc 8.7.0.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=e5c1437e"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="cylc.flow.install_plugins.log_vc_info" href="built-in/cylc.flow.install_plugins.log_vc_info.html" />
+    <link rel="prev" title="cylc.flow.main_loop.reset_bad_hosts" href="../main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Plugins</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../cylc-rose.html">Cylc Rose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main-loop/index.html">Main Loop Plugins</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Pre-Configure And Post-Install Plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#built-in-plugins">Built In Plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="built-in/cylc.flow.install_plugins.log_vc_info.html">cylc.flow.install_plugins.log_vc_info</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#developing-pre-configure-and-post-install-plugins">Developing <code class="docutils literal notranslate"><span class="pre">pre_configure</span></code> and <code class="docutils literal notranslate"><span class="pre">post_install</span></code> plugins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hello-world">Hello World</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api-reference">API Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#more-advanced-example">More advanced example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../job-runners/index.html">Custom Job Submission Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xtriggers/index.html">Xtrigger Plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Plugins</a></li>
+      <li class="breadcrumb-item active">Pre-Configure And Post-Install Plugins</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/plugins/install/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pre-configure-and-post-install-plugins">
+<h1>Pre-Configure And Post-Install Plugins<a class="headerlink" href="#pre-configure-and-post-install-plugins" title="Link to this heading"></a></h1>
+<p>Pre-configure plugins allow Cylc to take additional actions before running
+Cylc utilities such as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">config</span></code>.</p>
+<p>Post-install plugins allow Cylc to take additional actions after
+running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code>.</p>
+<section id="built-in-plugins">
+<h2>Built In Plugins<a class="headerlink" href="#built-in-plugins" title="Link to this heading"></a></h2>
+<p>Cylc Flow provides the following pre-configure and post-install plugins:</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="built-in/cylc.flow.install_plugins.log_vc_info.html#module-cylc.flow.install_plugins.log_vc_info" title="cylc.flow.install_plugins.log_vc_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cylc.flow.install_plugins.log_vc_info</span></code></a></p></td>
+<td><p>Record version control information to the workflow log directory on installation.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="developing-pre-configure-and-post-install-plugins">
+<h2>Developing <code class="docutils literal notranslate"><span class="pre">pre_configure</span></code> and <code class="docutils literal notranslate"><span class="pre">post_install</span></code> plugins<a class="headerlink" href="#developing-pre-configure-and-post-install-plugins" title="Link to this heading"></a></h2>
+<p>Cylc uses entry points registered by setuptools to search for pre-configure
+and post-install plugins.</p>
+<section id="hello-world">
+<h3>Hello World<a class="headerlink" href="#hello-world" title="Link to this heading"></a></h3>
+<p>In this example a pre-configure plugin which logs a “Hello World” message
+and, after installation, logs some info about the installation:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">my_plugin.py</span></code></span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cylc.flow</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOG</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pre_configure</span><span class="p">(</span><span class="n">srcdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rundir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># write Hello to the Cylc log.</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">post_install</span><span class="p">(</span><span class="n">srcdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rundir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;installed from </span><span class="si">{</span><span class="n">srcdir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;installed to </span><span class="si">{</span><span class="n">rundir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;installation options were </span><span class="si">{</span><span class="n">options</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+<p>Plugins are registered by registering them with the <code class="docutils literal notranslate"><span class="pre">cylc.pre_configure</span></code>
+and <code class="docutils literal notranslate"><span class="pre">cylc.post_install</span></code> entry points:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">setup.py</span></code></span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plugins must be properly installed, in-place PYTHONPATH meddling will</span>
+<span class="c1"># not work.</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">setuptools</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-plugin&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+    <span class="n">py_modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;my_plugin&#39;</span><span class="p">],</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="c1"># register this plugin with Cylc</span>
+        <span class="s1">&#39;cylc.pre_configure&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="c1"># name = python.namespace.of.module</span>
+        <span class="s1">&#39;my_plugin=my_plugin.my_plugin:pre_configure&#39;</span>
+        <span class="p">]</span>
+        <span class="s1">&#39;cylc.post_install&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="c1"># name = python.namespace.of.module</span>
+        <span class="s1">&#39;my_plugin=my_plugin.my_plugin:post_install&#39;</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="api-reference">
+<h3>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h3>
+<p>Cylc will pass following arguments to pre-configure and post-install plugins:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">srcdir</span></code> (Path or string)</dt><dd><p>The directory from which <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> is installing a workflow,
+or the directory passed to <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> and other
+CLI commands which work without installing a workflow.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">opts</span></code> (<code class="docutils literal notranslate"><span class="pre">optparse.Values</span></code>)</dt><dd><p>CLI options set for a Cylc script.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rundir</span></code> (Path or string)</dt><dd><p>The destination of a <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">install</span></code> or <code class="docutils literal notranslate"><span class="pre">reinstall</span></code> command.</p>
+</dd>
+</dl>
+<p>The pre-configure plugin should return a dictionary which may contain the
+following keys:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">env</span></code></dt><dd><p>A dictionary of environment variables to be exported to the scheduler
+environment.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">template_variables</span></code></dt><dd><p>A dictionary of template variables to be used by Jinja2 when
+templating the workflow configuration files.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">templating_detected</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">jinja2</span></code> to be used when templating. N.b: This will result in
+failure if the templating language set does not match the shebang line of
+the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file.</p>
+</dd>
+</dl>
+<p>The post-install entry point does not return any data used by Cylc.</p>
+</section>
+<section id="more-advanced-example">
+<h3>More advanced example<a class="headerlink" href="#more-advanced-example" title="Link to this heading"></a></h3>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For the implementation of a more fully featured “real-world” example see
+<a class="reference internal" href="../cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a>.</p>
+</div>
+<p>The example below looks for a file in the workflow source directory called
+<code class="docutils literal notranslate"><span class="pre">template.json</span></code> and activates if it exists.</p>
+<p>At <code class="docutils literal notranslate"><span class="pre">pre_configure</span></code> template variables are extracted from a <code class="docutils literal notranslate"><span class="pre">template.json</span></code>
+file and provided to Cylc as both template and environment variables.</p>
+<p>At <code class="docutils literal notranslate"><span class="pre">post_install</span></code> an additional log file is provided recording the version
+of this plugin used.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">An example json reading plugin</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">VERSION</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pre_configure</span><span class="p">(</span><span class="n">srcdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rundir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Look for a &#39;template.json&#39; file in the srcdir and make template</span>
+    <span class="c1"># variables from it available as jinja2.</span>
+    <span class="n">template_file</span> <span class="o">=</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">srcdir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;template.json&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Trigger the plugin if some condition is met:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">template_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="c1"># You could retrieve info from a file:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">template_file</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+
+        <span class="c1"># You can add variables programmatically:</span>
+        <span class="n">template</span><span class="p">[</span><span class="s1">&#39;plugin_set_var&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+        <span class="c1"># Return a dict:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;env&#39;</span><span class="p">:</span> <span class="n">template</span><span class="p">,</span>
+            <span class="s1">&#39;template_variables&#39;</span><span class="p">:</span> <span class="n">template</span><span class="p">,</span>
+            <span class="s1">&#39;templating_detected&#39;</span><span class="p">:</span> <span class="s1">&#39;jinja2&#39;</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">post_install</span><span class="p">(</span><span class="n">srcdir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rundir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># record plugin version in a file</span>
+    <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rundir</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;log/json-plugin.info&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Installed with Simple JSON reader plugin version </span><span class="si">{</span><span class="n">VERSION</span><span class="si">}</span><span class="se">\\</span><span class="s2">n&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../main-loop/built-in/cylc.flow.main_loop.reset_bad_hosts.html" class="btn btn-neutral float-left" title="cylc.flow.main_loop.reset_bad_hosts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="built-in/cylc.flow.install_plugins.log_vc_info.html" class="btn btn-neutral float-right" title="cylc.flow.install_plugins.log_vc_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.7.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "plugins/install/index";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

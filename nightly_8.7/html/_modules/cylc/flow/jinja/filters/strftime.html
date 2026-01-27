@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cylc.flow.jinja.filters.strftime &mdash; Cylc 8.7.0.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../../../../_static/cylc-favicon.ico"/>
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=e5c1437e"></script>
+      <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../../../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../../../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../../../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../../../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html">
+            
+              <img src="../../../../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">cylc.flow.jinja.filters.strftime</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for cylc.flow.jinja.filters.strftime</h1><div class="highlight"><pre>
+<span></span><span class="c1"># THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.</span>
+<span class="c1"># Copyright (C) NIWA &amp; British Crown (Met Office) &amp; Contributors.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;Filter for formatting ISO8601 datetime strings.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">metomi.isodatetime.parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimePointParser</span>
+
+
+<div class="viewcode-block" id="strftime">
+<a class="viewcode-back" href="../../../../../user-guide/writing-workflows/jinja2.html#cylc.flow.jinja.filters.strftime.strftime">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">strftime</span><span class="p">(</span>
+    <span class="n">iso8601_datetime</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">strftime_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">strptime_str</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Format an :term:`ISO8601 datetime` string using an strftime string.</span>
+
+<span class="sd">    .. code-block:: cylc</span>
+
+<span class="sd">       {{ &#39;10661004T08+01&#39; | strftime(&#39;%H&#39;) }}  # 00</span>
+
+<span class="sd">    It is also possible to parse non-standard date-time strings by passing a</span>
+<span class="sd">    strptime string as the second argument.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        iso8601_datetime:</span>
+<span class="sd">            Any valid ISO8601 datetime as a string.</span>
+<span class="sd">        strftime_str:</span>
+<span class="sd">            A valid strftime string to format the output datetime.</span>
+<span class="sd">        strptime_str:</span>
+<span class="sd">            A valid strptime string defining the format of the provided</span>
+<span class="sd">            iso8601_datetime.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        The result of applying the strftime to the iso8601_datetime as parsed</span>
+<span class="sd">        by the strptime string if provided.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ISO8601SyntaxError: In the event of an invalid datetime string.</span>
+<span class="sd">        StrftimeSyntaxError: In the event of an invalid strftime string.</span>
+
+<span class="sd">    Python Examples:</span>
+<span class="sd">        &gt;&gt;&gt; # Basic usage.</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;2000-01-01T00Z&#39;, &#39;%H&#39;)</span>
+<span class="sd">        &#39;00&#39;</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%H&#39;)</span>
+<span class="sd">        &#39;00&#39;</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%Y/%m/%d %H:%M:%S&#39;)</span>
+<span class="sd">        &#39;2000/01/01 00:00:00&#39;</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;10661014T08+01&#39;, &#39;%z&#39;)  # Timezone offset.</span>
+<span class="sd">        &#39;+0100&#39;</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;10661014T08+01&#39;, &#39;%j&#39;)  # Day of the year</span>
+<span class="sd">        &#39;287&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; # Strptime.</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;12,30,2000&#39;, &#39;%m&#39;, &#39;%m,%d,%Y&#39;)</span>
+<span class="sd">        &#39;12&#39;</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;1066/10/14 08:00:00&#39;, &#39;%Y%m%dT%H&#39;, &#39;%Y/%m/%d %H:%M:%S&#39;)</span>
+<span class="sd">        &#39;10661014T08&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; # Exceptions.</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;invalid&#39;, &#39;%H&#39;)  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        &lt;class &#39;metomi.isodatetime.exceptions.ISO8601SyntaxError&#39;&gt;</span>
+<span class="sd">        metomi.isodatetime.exceptions.ISO8601SyntaxError: Invalid ISO 8601 \</span>
+<span class="sd">        date representation: invalid</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%invalid&#39;)  # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        metomi.isodatetime.exceptions.StrftimeSyntaxError: Invalid \</span>
+<span class="sd">        strftime/strptime representation: %i</span>
+<span class="sd">        &gt;&gt;&gt; strftime(&#39;2000&#39;, &#39;%Y&#39;, &#39;%invalid&#39;)</span>
+<span class="sd">        ... # doctest: +NORMALIZE_WHITESPACE</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        metomi.isodatetime.exceptions.StrftimeSyntaxError: Invalid \</span>
+<span class="sd">        strftime/strptime representation: %i</span>
+
+<span class="sd">    Jinja2 Examples:</span>
+<span class="sd">        .. code-block:: cylc</span>
+
+<span class="sd">           {% set START_CYCLE = &#39;10661004T08+01&#39; %}</span>
+
+<span class="sd">           {{START_CYCLE | strftime(&#39;%Y&#39;)}}  # 1066</span>
+<span class="sd">           {{START_CYCLE | strftime(&#39;%m&#39;)}}  # 10</span>
+<span class="sd">           {{START_CYCLE | strftime(&#39;%d&#39;)}}  # 14</span>
+<span class="sd">           {{START_CYCLE | strftime(&#39;%H:%M:%S %z&#39;)}}  # 08:00:00 +01</span>
+<span class="sd">           {{&#39;12,30,2000&#39; | strftime(&#39;%m&#39;, &#39;%m,%d,%Y&#39;)}}  # 12</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">strptime_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">TimePointParser</span><span class="p">()</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">iso8601_datetime</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">strftime_str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">TimePointParser</span><span class="p">()</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">iso8601_datetime</span><span class="p">,</span> <span class="n">strptime_str</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+        <span class="n">strftime_str</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.7.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "_modules/cylc/flow/jinja/filters/strftime";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

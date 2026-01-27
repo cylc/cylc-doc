@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Environment Variables &mdash; Cylc 8.7.0.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../_static/cylc-favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=e5c1437e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Architecture" href="architecture/index.html" />
+    <link rel="prev" title="Platform Configuration" href="config/writing-platform-configs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="changes.html">Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/index.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Environment Variables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wrapper-script-environment-variables">Wrapper Script Environment Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#job-script-environment-variables">Job Script Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/index.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html">Cylc API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments/conda.html">Conda Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev-history-major-changes.html">Cylc Development History - Major Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Reference</a></li>
+      <li class="breadcrumb-item active">Environment Variables</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/reference/env-vars.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="environment-variables">
+<span id="reference-environment-variables"></span><h1>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h1>
+<p>This section documents the environment variables that Cylc provides or uses in
+different contexts.</p>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_PYTHONPATH">
+<span class="sig-name descname"><span class="pre">CYLC_PYTHONPATH</span></span><a class="headerlink" href="#envvar-CYLC_PYTHONPATH" title="Link to this definition"></a></dt>
+<dd><p>Cylc has been configured to ignore the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> environment variable.</p>
+<p>This means that <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> can safely be used in Cylc job scripts
+without corrupting the installation of Cylc itself.</p>
+<p>There are some niche cases in which you might want to add a package into the
+Cylc environment itself. For these purposes, use <code class="docutils literal notranslate"><span class="pre">CYLC_PYTHONPATH</span></code> as you
+would use <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> normally.</p>
+<p>For more information see, <a class="reference internal" href="changes.html#changes-cylc-pythonpath"><span class="std std-ref">Cylc ignores $PYTHONPATH</span></a>.</p>
+</dd></dl>
+
+<section id="wrapper-script-environment-variables">
+<span id="reference-wrapper-script-environment-variables"></span><h2>Wrapper Script Environment Variables<a class="headerlink" href="#wrapper-script-environment-variables" title="Link to this heading"></a></h2>
+<p>The recommended way to manage Cylc deployments is via a “wrapper script”.</p>
+<p>Cylc provides a wrapper script which can be used to manage multiple parallel
+deployments of different versions of Cylc and a mechanism for switching between
+them. For more information on the wrapper scrip, see <a class="reference internal" href="../installation.html#managing-environments"><span class="std std-ref">Managing Environments</span></a>.</p>
+<p>The Cylc wrapper script uses / defines the following environment variables:</p>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_VERSION">
+<span class="sig-name descname"><span class="pre">CYLC_VERSION</span></span><a class="headerlink" href="#envvar-CYLC_VERSION" title="Link to this definition"></a></dt>
+<dd><p>Can be set by users (e.g. in <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>) in order to select a
+specific Cylc environment.</p>
+<p>If set this wrapper will look for an installed environment called
+<code class="docutils literal notranslate"><span class="pre">cylc-$CYLC_VERSION</span></code> in the ROOT locations (if not set it will
+look for an installed environment called <code class="docutils literal notranslate"><span class="pre">cylc</span></code>).
+e.g, <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">CYLC_VERSION=8.0.0-1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_HOME_ROOT">
+<span class="sig-name descname"><span class="pre">CYLC_HOME_ROOT</span></span><a class="headerlink" href="#envvar-CYLC_HOME_ROOT" title="Link to this definition"></a></dt>
+<dd><p>The location of installed Cylc environments.</p>
+<p>Usually defined in this wrapper script.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_HOME_ROOT_ALT">
+<span class="sig-name descname"><span class="pre">CYLC_HOME_ROOT_ALT</span></span><a class="headerlink" href="#envvar-CYLC_HOME_ROOT_ALT" title="Link to this definition"></a></dt>
+<dd><p>An alternate location of installed Cylc environments.</p>
+<p>Can be set by users for use with their own Cylc environments, typically for
+development purposes. If used it must be set on workflow and job hosts, e.g.
+in <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code>.
+e.g, <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">CYLC_HOME_ROOT_ALT=$HOME/miniconda3/envs</span></code></p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_ENV_NAME">
+<span class="sig-name descname"><span class="pre">CYLC_ENV_NAME</span></span><a class="headerlink" href="#envvar-CYLC_ENV_NAME" title="Link to this definition"></a></dt>
+<dd><p>Is set to the basename of the selected environment.</p>
+<p>If set this defines the environment name rather than <span class="target" id="index-0"></span><a class="reference internal" href="#envvar-CYLC_VERSION"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></a>.
+The scheduler sets <code class="docutils literal notranslate"><span class="pre">CYLC_ENV_NAME</span></code> for all remote commands to ensure the
+same environment is used on all platforms. Users should not set
+<code class="docutils literal notranslate"><span class="pre">CYLC_ENV_NAME</span></code> (use <span class="target" id="index-1"></span><a class="reference internal" href="#envvar-CYLC_VERSION"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></a>).</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_HOME">
+<span class="sig-name descname"><span class="pre">CYLC_HOME</span></span><a class="headerlink" href="#envvar-CYLC_HOME" title="Link to this definition"></a></dt>
+<dd><p>Full path to the Cylc environment.</p>
+<p>Can be set by users in order to use an environment outside of the ROOT
+locations. However, it is not passed by the scheduler to remote platforms so
+use of <span class="target" id="index-2"></span><a class="reference internal" href="#envvar-CYLC_VERSION"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></a> &amp; <span class="target" id="index-3"></span><a class="reference internal" href="#envvar-CYLC_HOME_ROOT_ALT"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_HOME_ROOT_ALT</span></code></a> is preferred.</p>
+</dd></dl>
+
+</section>
+<section id="job-script-environment-variables">
+<span id="id1"></span><h2>Job Script Environment Variables<a class="headerlink" href="#job-script-environment-variables" title="Link to this heading"></a></h2>
+<p>These environment variables provided by the <a class="reference internal" href="../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> are available
+to <a class="reference internal" href="../user-guide/writing-workflows/runtime.html#task-job-script-variables"><span class="std std-ref">Cylc job scripts</span></a> at run time:</p>
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">CYLC_VERSION</span></span></dt>
+<dd><p>The version of cylc this workflow is running with.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_VERBOSE">
+<span class="sig-name descname"><span class="pre">CYLC_VERBOSE</span></span><a class="headerlink" href="#envvar-CYLC_VERBOSE" title="Link to this definition"></a></dt>
+<dd><p>Verbose mode, <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Cylc workflows can be run in verbose mode using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">-v</span></code>
+option.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_DEBUG">
+<span class="sig-name descname"><span class="pre">CYLC_DEBUG</span></span><a class="headerlink" href="#envvar-CYLC_DEBUG" title="Link to this definition"></a></dt>
+<dd><p>Debug mode (even more verbose), true or false</p>
+<p>Cylc workflows can be run in debug mode using the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">play</span> <span class="pre">--debug</span></code>
+option (note, <code class="docutils literal notranslate"><span class="pre">--debug</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">-vv</span></code>).</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_CYCLING_MODE">
+<span class="sig-name descname"><span class="pre">CYLC_CYCLING_MODE</span></span><a class="headerlink" href="#envvar-CYLC_CYCLING_MODE" title="Link to this definition"></a></dt>
+<dd><p>Cycling mode, e.g. <code class="docutils literal notranslate"><span class="pre">gregorian</span></code> or <code class="docutils literal notranslate"><span class="pre">integer</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-ISODATETIMECALENDAR">
+<span class="sig-name descname"><span class="pre">ISODATETIMECALENDAR</span></span><a class="headerlink" href="#envvar-ISODATETIMECALENDAR" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Calendar mode for the <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> command, defined with the value of</dt><dd><p><span class="target" id="index-4"></span><a class="reference internal" href="#envvar-CYLC_CYCLING_MODE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_CYCLING_MODE</span></code></a> when in any datetime cycling mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_UTC">
+<span class="sig-name descname"><span class="pre">CYLC_UTC</span></span><a class="headerlink" href="#envvar-CYLC_UTC" title="Link to this definition"></a></dt>
+<dd><p>UTC mode, <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>See <a class="reference internal" href="config/workflow.html#flow.cylc[scheduler]UTC mode" title="flow.cylc[scheduler]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[scheduler]UTC</span> <span class="pre">mode</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-TZ">
+<span class="sig-name descname"><span class="pre">TZ</span></span><a class="headerlink" href="#envvar-TZ" title="Link to this definition"></a></dt>
+<dd><p>Set to “UTC” in <a class="reference internal" href="config/workflow.html#flow.cylc[scheduler]UTC mode" title="flow.cylc[scheduler]UTC mode"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">UTC</span> <span class="pre">mode</span></code></a> or not
+defined</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_INITIAL_CYCLE_POINT">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_INITIAL_CYCLE_POINT</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_INITIAL_CYCLE_POINT" title="Link to this definition"></a></dt>
+<dd><p>The workflow’s
+<a class="reference internal" href="config/workflow.html#flow.cylc[scheduling]initial cycle point" title="flow.cylc[scheduling]initial cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">initial</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_FINAL_CYCLE_POINT">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_FINAL_CYCLE_POINT</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_FINAL_CYCLE_POINT" title="Link to this definition"></a></dt>
+<dd><p>The workflow’s
+<a class="reference internal" href="config/workflow.html#flow.cylc[scheduling]final cycle point" title="flow.cylc[scheduling]final cycle point"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">final</span> <span class="pre">cycle</span> <span class="pre">point</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_ID">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_ID</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_ID" title="Link to this definition"></a></dt>
+<dd><p>Workflow ID e.g. <code class="docutils literal notranslate"><span class="pre">foo/run1</span></code> or <code class="docutils literal notranslate"><span class="pre">a/b/c/run1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_NAME">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_NAME</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_NAME" title="Link to this definition"></a></dt>
+<dd><p>Workflow ID with the run name removed (use <span class="target" id="index-5"></span><a class="reference internal" href="#envvar-CYLC_WORKFLOW_ID"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_ID</span></code></a> for
+most purposes) e.g. <code class="docutils literal notranslate"><span class="pre">foo</span></code> or <code class="docutils literal notranslate"><span class="pre">a/b/c</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_NAME_BASE">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_NAME_BASE</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_NAME_BASE" title="Link to this definition"></a></dt>
+<dd><p>The basename of the workflow name (use <span class="target" id="index-6"></span><a class="reference internal" href="#envvar-CYLC_WORKFLOW_ID"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_ID</span></code></a> for most
+purposes) e.g. <code class="docutils literal notranslate"><span class="pre">foo</span></code> or <code class="docutils literal notranslate"><span class="pre">c</span></code></p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_UUID">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_UUID</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_UUID" title="Link to this definition"></a></dt>
+<dd><p>Workflow UUID string.</p>
+<p>Every workflow run is assigned a UUID string to identify it. This is
+preserved when the workflow is restarted.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_HOST">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_HOST</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_HOST" title="Link to this definition"></a></dt>
+<dd><p>The host running the workflow process.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_OWNER">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_OWNER</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_OWNER" title="Link to this definition"></a></dt>
+<dd><p>The user ID running the workflow process.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_RUN_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_RUN_DIR</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_RUN_DIR" title="Link to this definition"></a></dt>
+<dd><p>Location of the run directory in job host, e.g. <code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_LOG_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_LOG_DIR</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_LOG_DIR" title="Link to this definition"></a></dt>
+<dd><p>Location of the scheduler’s log files, e.g.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/log/scheduler</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_SHARE_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_SHARE_DIR</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_SHARE_DIR" title="Link to this definition"></a></dt>
+<dd><p>Workflow (or task!) shared directory e.g. <code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/share</span></code></p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_WORKFLOW_WORK_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_WORKFLOW_WORK_DIR</span></span><a class="headerlink" href="#envvar-CYLC_WORKFLOW_WORK_DIR" title="Link to this definition"></a></dt>
+<dd><p>Workflow work directory, e.g. ~/cylc-run/foo/run1/work</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_JOB">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_JOB</span></span><a class="headerlink" href="#envvar-CYLC_TASK_JOB" title="Link to this definition"></a></dt>
+<dd><p>Job identifier expressed as <code class="docutils literal notranslate"><span class="pre">CYCLE-POINT/TASK-NAME/SUBMIT-NUMBER</span></code> e.g.
+<code class="docutils literal notranslate"><span class="pre">20110511T1800Z/t1/01</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_ID">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_ID</span></span><a class="headerlink" href="#envvar-CYLC_TASK_ID" title="Link to this definition"></a></dt>
+<dd><p>Task instance identifier <code class="docutils literal notranslate"><span class="pre">CYCLE-POINT/TASK-NAME</span></code> e.g.
+<code class="docutils literal notranslate"><span class="pre">20110511T1800Z/t1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_NAME">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_NAME</span></span><a class="headerlink" href="#envvar-CYLC_TASK_NAME" title="Link to this definition"></a></dt>
+<dd><p>The name of the <a class="reference internal" href="../glossary.html#term-task"><span class="xref std std-term">task</span></a> which submitted this <a class="reference internal" href="../glossary.html#term-job"><span class="xref std std-term">job</span></a>, e.g. <code class="docutils literal notranslate"><span class="pre">t1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_CYCLE_POINT">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_CYCLE_POINT</span></span><a class="headerlink" href="#envvar-CYLC_TASK_CYCLE_POINT" title="Link to this definition"></a></dt>
+<dd><p>Cycle point, e.g. <code class="docutils literal notranslate"><span class="pre">20110511T1800Z</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-ISODATETIMEREF">
+<span class="sig-name descname"><span class="pre">ISODATETIMEREF</span></span><a class="headerlink" href="#envvar-ISODATETIMEREF" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Reference time for the <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> command, defined with the value of</dt><dd><p><span class="target" id="index-7"></span><a class="reference internal" href="#envvar-CYLC_TASK_CYCLE_POINT"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_TASK_CYCLE_POINT</span></code></a> when in any datetime cycling mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_SUBMIT_NUMBER">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_SUBMIT_NUMBER</span></span><a class="headerlink" href="#envvar-CYLC_TASK_SUBMIT_NUMBER" title="Link to this definition"></a></dt>
+<dd><p>Job’s submit number, e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code>, this increments with every submit.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_TRY_NUMBER">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_TRY_NUMBER</span></span><a class="headerlink" href="#envvar-CYLC_TASK_TRY_NUMBER" title="Link to this definition"></a></dt>
+<dd><p>This job’s (re)try number.</p>
+<p>The try number starts at <code class="docutils literal notranslate"><span class="pre">1</span></code> with the first submission and is incremented
+for each automated execution retry (but not for manual resubmissions).</p>
+<p>Execution retries can be configured using
+<a class="reference internal" href="config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;]execution retry delays" title="flow.cylc[runtime][&lt;namespace&gt;]execution retry delays"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;]execution</span> <span class="pre">retry</span> <span class="pre">delays</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_FLOW_NUMBERS">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_FLOW_NUMBERS</span></span><a class="headerlink" href="#envvar-CYLC_TASK_FLOW_NUMBERS" title="Link to this definition"></a></dt>
+<dd><p>The <a class="reference internal" href="../glossary.html#term-flow"><span class="xref std std-term">flows</span></a> this task belongs to, e.g. <code class="docutils literal notranslate"><span class="pre">1,2</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_LOG_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_LOG_DIR</span></span><a class="headerlink" href="#envvar-CYLC_TASK_LOG_DIR" title="Link to this definition"></a></dt>
+<dd><p>Location of the job log directory e.g.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/log/job/20110511T1800Z/t1/01/</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_LOG_ROOT">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_LOG_ROOT</span></span><a class="headerlink" href="#envvar-CYLC_TASK_LOG_ROOT" title="Link to this definition"></a></dt>
+<dd><p>The job script path e.g.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/log/job/20110511T1800Z/t1/01/job</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_SHARE_CYCLE_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_SHARE_CYCLE_DIR</span></span><a class="headerlink" href="#envvar-CYLC_TASK_SHARE_CYCLE_DIR" title="Link to this definition"></a></dt>
+<dd><p>Cycle point-specific shared directory for this task. e.g.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/share/cycle/20110511T1800Z</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_WORK_DIR">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_WORK_DIR</span></span><a class="headerlink" href="#envvar-CYLC_TASK_WORK_DIR" title="Link to this definition"></a></dt>
+<dd><p>Location of task work directory (see below) e.g.
+<code class="docutils literal notranslate"><span class="pre">~/cylc-run/foo/run1/work/20110511T1800Z/t1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_NAMESPACE_HIERARCHY">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_NAMESPACE_HIERARCHY</span></span><a class="headerlink" href="#envvar-CYLC_TASK_NAMESPACE_HIERARCHY" title="Link to this definition"></a></dt>
+<dd><p>Linearised family namespace of the task, e.g. <code class="docutils literal notranslate"><span class="pre">root</span> <span class="pre">postproc</span> <span class="pre">t1</span></code>.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_COMMS_METHOD">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_COMMS_METHOD</span></span><a class="headerlink" href="#envvar-CYLC_TASK_COMMS_METHOD" title="Link to this definition"></a></dt>
+<dd><p>Set to “ssh” if
+<a class="reference internal" href="config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">communication</span> <span class="pre">method</span></code></a>,
+is “ssh”.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_SSH_LOGIN_SHELL">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_SSH_LOGIN_SHELL</span></span><a class="headerlink" href="#envvar-CYLC_TASK_SSH_LOGIN_SHELL" title="Link to this definition"></a></dt>
+<dd><p>For use with
+<a class="reference internal" href="config/global.html#global.cylc[platforms][&lt;platform name&gt;]communication method" title="global.cylc[platforms][&lt;platform name&gt;]communication method"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">SSH</span> <span class="pre">communication</span></code></a>,
+if set to “True”, use login shell on workflow host.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-CYLC_TASK_PARAM_-param">
+<span class="sig-name descname"><span class="pre">CYLC_TASK_PARAM_&lt;param&gt;</span></span><a class="headerlink" href="#envvar-CYLC_TASK_PARAM_-param" title="Link to this definition"></a></dt>
+<dd><p>If this task is a parameterized task, the value of the parameter named
+<code class="docutils literal notranslate"><span class="pre">&lt;param&gt;</span></code>.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="config/writing-platform-configs.html" class="btn btn-neutral float-left" title="Platform Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="architecture/index.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.7.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "reference/env-vars";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

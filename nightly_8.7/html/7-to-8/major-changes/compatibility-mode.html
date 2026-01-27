@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cylc 7 Compatibility Mode &mdash; Cylc 8.7.0.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/hieroglyph_theme_addons.css?v=814c2015" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=0fad80e6" />
+
+  
+    <link rel="shortcut icon" href="../../_static/cylc-favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=e5c1437e"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=7c20c939"></script>
+      <script src="../../_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="../../_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="../../_static/js/spoiler.js?v=12631137"></script>
+      <script src="../../_static/js/addons.js?v=39bd7dee"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Configuration Changes at Cylc 8" href="config-changes.html" />
+    <link rel="prev" title="Command Line Interface" href="cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Cylc 8 Migration Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Summary Of Major Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cheat-sheet.html">Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Detailed Description of Major Changes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cylc 7 Compatibility Mode</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#required-changes">Required Changes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#renaming-to-flow-cylc">Renaming to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="config-changes.html">Configuration Changes at Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="continuing-c7-c8.html">Continuing a Cylc 7 Workflow with Cylc 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylc-install.html">Cylc Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="excluding-tasks.html">Excluding Tasks at Start-up is Not Supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platforms.html">Platforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="play-pause-stop.html">Play Pause Stop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-2-3.html">Python 2 =&gt; 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="remote-owner.html">Remote Usernames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scheduling.html">Scheduling Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="suicide-triggers.html">Graph branching, optional outputs and suicide triggers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task-job-states.html">Task/Job States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="template-vars.html">Template Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui.html">Cylc 8 UIs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../caveats.html">Cylc 8.7 Caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Cylc 8 Migration Guide</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Detailed Description of Major Changes</a></li>
+      <li class="breadcrumb-item active">Cylc 7 Compatibility Mode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/7-to-8/major-changes/compatibility-mode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cylc-7-compatibility-mode">
+<span id="cylc-7-compat-mode"></span><h1>Cylc 7 Compatibility Mode<a class="headerlink" href="#cylc-7-compatibility-mode" title="Link to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Cylc 7 compatibility mode will be removed in Cylc 8.7.0, please upgrade
+any workflows with “suite.rc” files.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Does This Change Affect Me?</p>
+<p>This will affect you if you want to run Cylc 7 (<code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>) workflows
+using Cylc 8.</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Cylc 8 can run most Cylc 7 workflows “as is”.
+The <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> filename triggers a backward compatibility mode in which:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../glossary.html#term-implicit-task"><span class="xref std std-term">implicit tasks</span></a> are allowed by default</p>
+<ul>
+<li><p>(unless a <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code> file is found in the <a class="reference internal" href="../../glossary.html#term-run-directory"><span class="xref std std-term">run directory</span></a>
+for consistency with <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">suite-run</span></code> behaviour)</p></li>
+<li><p>(Cylc 8 does not allow implicit tasks by default)</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="../../glossary.html#term-cycle-point-time-zone"><span class="xref std std-term">cycle point time zone</span></a> defaults to the local time zone</p>
+<ul>
+<li><p>(Cylc 8 defaults to UTC)</p></li>
+</ul>
+</li>
+<li><p>waiting tasks are pre-spawned to mimic the Cylc 7 scheduling algorithm and
+stall behaviour, and these require
+<a class="reference internal" href="../../glossary.html#term-suicide-trigger"><span class="xref std std-term">suicide triggers</span></a>
+for alternate <a class="reference internal" href="../../glossary.html#term-graph-branching"><span class="xref std std-term">graph branching</span></a></p>
+<ul>
+<li><p>(Cylc 8 spawns tasks on demand, and suicide triggers are not needed for
+branching)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">succeeded</span></code> task outputs are <a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-required-outputs"><span class="std std-ref">required</span></a>,
+so in the absence of suicide triggers the scheduler will retain other
+<a class="reference internal" href="../../glossary.html#term-final-status"><span class="xref std std-term">final status</span></a> tasks in the <a class="reference internal" href="../../glossary.html#term-n-window"><span class="xref std std-term">n=0 window</span></a> to stall the
+workflow.</p>
+<ul>
+<li><p>(in Cylc 8, <strong>all</strong> outputs are <em>required</em> unless marked as
+<a class="reference internal" href="../../user-guide/writing-workflows/scheduling.html#user-guide-optional-outputs"><span class="std std-ref">*optional*</span></a> by the new <code class="docutils literal notranslate"><span class="pre">?</span></code> syntax)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="required-changes">
+<span id="compat-required-changes"></span><h2>Required Changes<a class="headerlink" href="#required-changes" title="Link to this heading"></a></h2>
+<p>Providing your Cylc 7 workflow does not use syntax that was deprecated at Cylc 7,
+you may be able to run it using Cylc 8 without any modifications while in
+compatibility mode.</p>
+<p>First, run <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> <strong>with Cylc 7</strong> on your <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> workflow
+to check for deprecation warnings and fix those before validating with Cylc 8.
+See <a class="reference internal" href="#compat-eg-c7val"><span class="std std-ref">below</span></a> for an example.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> operates on the processed <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code>, which
+means it will not detect any deprecated syntax that is inside a
+currently-unused Jinja2 <code class="docutils literal notranslate"><span class="pre">if...else</span></code> branch.</p>
+</div>
+<p>Some workflows may require modifications to either upgrade to Cylc 8 or make
+interoperable with Cylc 8 backward compatibility mode. Read on for more details.</p>
+<section id="cylc-commands-in-task-scripts">
+<h3>Cylc commands in task scripts<a class="headerlink" href="#cylc-commands-in-task-scripts" title="Link to this heading"></a></h3>
+<p>Check for any use of Cylc commands in task scripting. Some Cylc 7 commands
+have been removed and some others now behave differently.
+However, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">message</span></code> and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">broadcast</span></code> have <em>not</em> changed.
+See the <a class="reference internal" href="cli.html#majorchangescli"><span class="std std-ref">full list of command line interface changes</span></a>
+and see <a class="reference internal" href="#compat-eg-cylc-commands"><span class="std std-ref">below</span></a> for an example.</p>
+</section>
+<section id="python-2-to-3">
+<h3>Python 2 to 3<a class="headerlink" href="#python-2-to-3" title="Link to this heading"></a></h3>
+<p>Whereas Cylc 7 runs using Python 2, Cylc 8 runs using Python 3. This affects:
+- modules imported in Jinja2
+- Jinja2 filters, tests and globals
+- custom xtrigger functions</p>
+<p>Note that task scripts are not affected - they run in an independent
+environment.</p>
+<p>See <a class="reference internal" href="python-2-3.html#py23"><span class="std std-ref">Python 2 =&gt; 3</span></a> for more information and examples of how to implement
+interoperability if your workflows extend Cylc or Jinja2 with custom Python scripts.</p>
+</section>
+<section id="other-caveats">
+<h3>Other caveats<a class="headerlink" href="#other-caveats" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Cylc 8 cannot <em>restart</em> a partially completed Cylc 7 workflow in-place. If
+possible, complete the run with Cylc 7. Otherwise, see
+<a class="reference internal" href="continuing-c7-c8.html#compat-continuing-c7-with-c8"><span class="std std-ref">Continuing a Cylc 7 Workflow with Cylc 8</span></a>.</p></li>
+<li><p>Cylc 8 only transfers certain files and directories by default during
+remote installation. See <a class="reference internal" href="cylc-install.html#remote-install"><span class="std std-ref">Remote Installation</span></a> for more information.</p></li>
+<li><p>Cylc 8 does not support
+<a class="reference internal" href="excluding-tasks.html#majorchangesexcludingtasksatstartup"><span class="std std-ref">excluding/including tasks at start-up</span></a>.
+If your workflow used this old functionality, it may have been used in
+combination with the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">insert</span></code> command (which has been removed from
+Cylc 8) and <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">remove</span></code> (which still exists but is much less needed).</p></li>
+<li><p>Cylc 8 does not support <a class="reference internal" href="remote-owner.html#remote-owner"><span class="std std-ref">specifying remote usernames</span></a>
+using <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc[runtime][&lt;namespace&gt;][remote]owner" title="flow.cylc[runtime][&lt;namespace&gt;][remote]owner"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc[runtime][&lt;namespace&gt;][remote]owner</span></code></a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="validating-with-cylc-7">
+<span id="compat-eg-c7val"></span><h3>Validating with Cylc 7<a class="headerlink" href="#validating-with-cylc-7" title="Link to this heading"></a></h3>
+<p>Consider this configuration:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">suite.rc</span></code></span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 11000101T00</span>
+    <span class="nt">[[dependencies]]</span>
+        <span class="nt">[[[R1]]]</span>
+            <span class="nv">graph </span><span class="o">=</span><span class="s"> task</span>
+
+<span class="nt">[runtime]</span>
+    <span class="nt">[[task]]</span>
+        <span class="nv">pre-command scripting </span><span class="o">=</span><span class="s"> echo &quot;Hello World&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>Running <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code> at <strong>Cylc 7</strong> we see that the
+workflow is valid, but we are warned that <code class="docutils literal notranslate"><span class="pre">pre-command</span> <span class="pre">scripting</span></code>
+was replaced by <code class="docutils literal notranslate"><span class="pre">pre-script</span></code> at 6.4.0:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Cylc 7 validation</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+<span class="go">WARNING - deprecated items were automatically upgraded in &#39;suite definition&#39;:</span>
+<span class="go">WARNING -  * (6.4.0) [runtime][task][pre-command scripting] -&gt; [runtime][task][pre-script] - value unchanged</span>
+<span class="go">Valid for cylc-7.8.7</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Cylc 7</strong> has handled this deprecation for us, but at <strong>Cylc 8</strong> this
+workflow will fail validation.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Cylc 8 validation</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cylc<span class="w"> </span>validate<span class="w"> </span>.
+<span class="go">IllegalItemError: [runtime][task]pre-command scripting</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You must change the configuration yourself. In this case:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-     pre-command scripting = echo &quot;Hello World&quot;</span>
+<span class="gi">+     pre-script = echo &quot;Hello World&quot;</span>
+</pre></div>
+</div>
+<p>Validation will now succeed.</p>
+</section>
+<section id="compat-eg-cylc-commands">
+<span id="id1"></span><h3>Cylc commands in task scripts<a class="headerlink" href="#compat-eg-cylc-commands" title="Link to this heading"></a></h3>
+<p>You might have a task script that calls a Cylc command like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hold</span></code> command has changed in Cylc 8. It is now used for holding
+tasks only; use <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">pause</span></code> for entire workflows.
+(Additionally, <code class="docutils literal notranslate"><span class="pre">$CYLC_SUITE_NAME</span></code> is deprecated in favour of
+<span class="target" id="index-0"></span><a class="reference internal" href="../../reference/env-vars.html#envvar-CYLC_WORKFLOW_ID"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_WORKFLOW_ID</span></code></a>, though still supported.)</p>
+<p>In order to make this interoperable, so that you can run it with both Cylc 7
+and Cylc 8 backward compatibility mode, you could do something like this
+in the bash script:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="nv">script </span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            if [[ &quot;${CYLC_VERSION:0:1}&quot; == 7 ]]; then</span>
+<span class="s2">                cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
+<span class="s2">            else</span>
+<span class="s2">                cylc pause &quot;$CYLC_WORKFLOW_ID&quot;</span>
+<span class="s2">            fi</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Note this logic (and the <span class="target" id="index-1"></span><a class="reference internal" href="../../reference/env-vars.html#envvar-CYLC_VERSION"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></a> environment variable) is
+executed at runtime on the <a class="reference internal" href="../../glossary.html#term-job-host"><span class="xref std std-term">job host</span></a>.</p>
+<p>Alternatively, you could use <a class="reference internal" href="../../user-guide/writing-workflows/jinja2.html#jinja"><span class="std std-ref">Jinja2</span></a> like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[foo]]</span>
+        <span class="cp">{% if CYLC_VERSION is defined and CYLC_VERSION[0] == &#39;8&#39; %}</span>
+            <span class="nv">script </span><span class="o">=</span><span class="s"> cylc pause &quot;$CYLC_WORKFLOW_ID&quot;</span>
+        <span class="cp">{% else %}</span>
+            <span class="nv">script </span><span class="o">=</span><span class="s"> cylc hold &quot;$CYLC_SUITE_NAME&quot;</span>
+        <span class="cp">{% endif %}</span>
+</pre></div>
+</div>
+<p>Note this logic (and the <span class="target" id="index-2"></span><a class="reference internal" href="../../reference/env-vars.html#envvar-CYLC_VERSION"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CYLC_VERSION</span></code></a> Jinja2 variable) is executed
+locally prior to Cylc parsing the workflow configuration.</p>
+</section>
+</section>
+<section id="renaming-to-flow-cylc">
+<h2>Renaming to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code><a class="headerlink" href="#renaming-to-flow-cylc" title="Link to this heading"></a></h2>
+<p>When your workflow runs successfully in backward compatibility mode, it is
+ready for renaming <code class="docutils literal notranslate"><span class="pre">suite.rc</span></code> to <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code>. Doing this will turn off
+backward compatibility mode, and validation in Cylc 8 will show
+deprecation warnings.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="config-changes.html#configuration-changes"><span class="std std-ref">Configuration Changes at Cylc 8</span></a></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>More complex workflows (e.g. those with suicide triggers) may
+fail validation once backward compatibility is off - see
+<a class="reference internal" href="suicide-triggers.html#optional-outputs"><span class="std std-ref">Graph branching, optional outputs and suicide triggers</span></a></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cli.html" class="btn btn-neutral float-left" title="Command Line Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config-changes.html" class="btn btn-neutral float-right" title="Configuration Changes at Cylc 8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Jan 27, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.7.2026-01-27";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "7-to-8/major-changes/compatibility-mode";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../../../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
