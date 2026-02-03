@@ -23,17 +23,13 @@ The :cylc:conf:`flow.cylc` File Format
 
 .. ifnotslides::
 
-   * Sections are written inside square brackets i.e. ``[section-name]``.
-
-        * In this tutorial you will see; ``[scheduler]`` and ``[scheduling]``, 
-        a later tutorial will introduce ``[runtime]``.
-
-   * Sections can be nested, by adding an extra square bracket with each level,
-     so a sub-section would be written ``[[sub-section]]``, a sub-sub-section
-     ``[[[sub-sub-section]]]``, and so on.
-   * Settings are written as ``key = value`` pairs.
-   * Settings can be contained within sections.
-   * Cylc uses a special language to describe task recurrence and dependencies.
+   * :cylc:conf:`flow.cylc` files are divided into sections, written inside square
+     brackets, i.e. ``[section-name]``.
+   * In this tutorial you will see ``[scheduler]`` and ``[scheduling]``. 
+   * Sections are nested by adding extra brackets: ``[[sub-section]]``, 
+     ``[[[sub-sub-section]]]``, etc.
+   * Settings are written as ``key = value`` pairs within any section.
+   * Cylc uses a dedicated syntax to describe task recurrence and dependencies.
    * Comments start with a ``#`` character.
 
    .. note::
