@@ -93,6 +93,25 @@ User Interface), web GUI, and ``cylc scan`` (bottom left) are shown below.
 .. image:: /tutorial/img/cylc-tools.png
    :alt: A screenshot of several Cylc tools.
 
+.. tab-set::
+
+   .. tab-item:: GUI - Placeholders
+
+      .. image:: re-run-a-task.gui.gif
+         :width: 75%
+
+   .. tab-item:: Tui - Placeholders
+
+      .. image:: re-run-a-task.tui.gif
+         :width: 75%
+
+   .. tab-item:: CLI - Placeholders
+
+      .. code-block:: console
+
+         $ cylc trigger <workflow>//<task>
+
+
 .. nextslide::
 
 .. ifslides::
