@@ -88,28 +88,38 @@ Cylc can automatically:
 
 Cylc provides a variety of command line and GUI tools for visualising,
 monitoring, and controlling workflows. The Cylc TUI (Terminal
-User Interface), web GUI, and ``cylc scan`` (bottom left) are shown below.
+User Interface), web GUI, and ``cylc scan`` are shown below.
 
-.. image:: /tutorial/img/cylc-tools.png
-   :alt: A screenshot of several Cylc tools.
+**Placeholder Images Currently Used**
 
 .. tab-set::
 
-   .. tab-item:: GUI - Placeholders
+   .. tab-item:: GUI
 
-      .. image:: re-run-a-task.gui.gif
+      .. image:: ../../src/img/cylc-ui-dash.png
+         :alt: A screenshot of the Cylc GUI dashboard.
          :width: 75%
 
-   .. tab-item:: Tui - Placeholders
+   .. tab-item:: Tui
 
-      .. image:: re-run-a-task.tui.gif
+      .. image:: ../../src/img/tui-1.png
+         :alt: A screenshot of the Cylc TUI.
          :width: 75%
 
-   .. tab-item:: CLI - Placeholders
+   .. tab-item:: Cylc Scan
+
+      .. image:: /tutorial/img/cylc-tools.png
+         :alt: A screenshot of the Cylc TUI.
+         :width: 75%
+
+   .. tab-item:: CLI
 
       .. code-block:: console
 
-         $ cylc trigger <workflow>//<task>
+         $ cylc trigger <workflow>// \
+         >   //<cycle-1>/<task-2> \
+         >   //<cycle-2>/<task-2> \
+         >   ...
 
 
 .. nextslide::
