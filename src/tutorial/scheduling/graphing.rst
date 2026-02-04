@@ -29,7 +29,6 @@ The :cylc:conf:`flow.cylc` File Format
    * Sections are nested by adding extra brackets: ``[[sub-section]]``, 
      ``[[[sub-sub-section]]]``, etc.
    * Settings are written as ``key = value`` pairs within any section.
-   * Cylc uses a dedicated syntax to describe task recurrence and dependencies.
    * Comments start with a ``#`` character.
 
    .. note::
