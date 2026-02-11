@@ -84,7 +84,7 @@ We can also call other scripts or executables in this way, e.g:
    the system, helps isolate the workflow from external changes.
 
    To help with this, Cylc automatically adds a ``bin/`` sub-directory of the
-   workflow :term:`source directory` to the executable search path (``$PATH``)
+   workflow :term:`run directory` to the executable search path (``$PATH``)
    in task environments.
 
 .. code-block:: bash
