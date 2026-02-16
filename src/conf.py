@@ -200,6 +200,8 @@ linkcheck_ignore = [
     # linkcheck has trouble handling GH anchors
     'https?://github.com/.*#.*',
     'https?://matrix.to/.*#.*',
+    # Blocked by bot protection:
+    'https?://www.iso.org',
 ]
 
 # -- Options for Slides output ----------------------------------------------
