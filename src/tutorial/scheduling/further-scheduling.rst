@@ -50,7 +50,8 @@ to handle events within your code (custom outputs).
 
 .. ifnotslides::
 
-   *For more information see the* `Cylc User Guide`_.
+   For more information see the :ref:`Cylc User Guide <TriggerTypes>`.
+
 
 
 .. _tutorial-clock-triggers:
