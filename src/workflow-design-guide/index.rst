@@ -22,8 +22,8 @@ workflows), and end with some pointers to future developments.
 
    A good working knowledge of Cylc and Rose is assumed. For further details,
    please consult the:
- 
-   - `Cylc User Guide`_
+
+   - :ref:`Cylc User Guide <user guide>`
    - `Rose Documentation`_
 
 .. note::

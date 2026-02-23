@@ -232,9 +232,8 @@ cycle point by:
 
 * Using an `inferred recurrence`_ instead (i.e. ``T00``).
 * Overriding the recurrence start point (i.e. ``T00/P1D``)
-* Using ``[scheduling]initial cycle point constraints`` to
-  constrain the initial cycle point (e.g. to a particular time of day). See
-  the `Cylc User Guide`_ for details.
+* Using :cylc:conf:`[scheduling]initial cycle point constraints` to
+  constrain the initial cycle point (e.g. to a particular time of day).
 
 The Initial and Final Cycle Points
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
