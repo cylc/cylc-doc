@@ -177,7 +177,7 @@ Parameters can be either strings or integers:
 
 .. ifnotslides::
 
-   For more information see the `Cylc User Guide`_.
+   For more information see the :ref:`Cylc User Guide <User Guide Param>`.
 
 .. ifslides::
 

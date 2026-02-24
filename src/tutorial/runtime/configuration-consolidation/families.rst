@@ -151,7 +151,7 @@ Graphing
       Run as soon as all of the family members have completed (i.e. have each
       either succeeded or failed).
 
-   For more information on family triggers see the `Cylc User Guide`_.
+   For more information on family triggers see the :ref:`Cylc User Guide <FamilyTriggers>`.
 
 .. ifslides::
 

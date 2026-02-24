@@ -116,4 +116,4 @@ The customers will obviously have to wait!
 Further Reading
 ---------------
 
-For more information, see the `Cylc User Guide`_.
+For more information, see the :ref:`Cylc User Guide <InternalQueues>`.

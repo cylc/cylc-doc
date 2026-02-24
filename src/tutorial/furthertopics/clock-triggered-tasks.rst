@@ -172,4 +172,4 @@ Summary
 * Clock triggers are a built in example of :ref:`Section External Triggers`.
 * Clock triggers can only be used in datetime cycling workflows.
 
-For more information see the `Cylc User Guide`_.
+For more information see the :ref:`Cylc User Guide <Built-in Clock Triggers>`.
