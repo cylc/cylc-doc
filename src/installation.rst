@@ -19,19 +19,6 @@ Cylc runs on Unix-like systems including Linux and Mac OS.
 Via Conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. tip::
-
-   We recommend using Mamba to install Cylc.
-   Mamba (or Micromamba) can be used as
-   `a faster, drop-in replacement for the conda command
-   <https://mamba.readthedocs.io/en/latest/index.html>`_.
-   If using Conda, make sure to use the libmamba-solver by updating to
-   Conda 23.10 or using the `conda-libmamba-solver plugin for conda
-   <https://conda.github.io/conda-libmamba-solver/getting-started/>`_.
-   The classic conda environment solver may be too slow for a complex package
-   like Cylc.
-
-
 .. code-block:: sub
 
    $ conda install -c conda-forge cylc-flow
@@ -290,8 +277,8 @@ can be found: :ref:`UI_Server_config`.
 Bash Profile
 ^^^^^^^^^^^^
 
-Cylc :term:`job scripts <job script>` are bash scripts, which is good for
-manipulating files and processes, They invoke ``bash -l`` to allow environment
+Cylc :term:`job scripts <job script>` are bash scripts, which are good for
+manipulating files and processes. They invoke ``bash -l`` to allow environment
 configuration in login scripts.
 
 .. warning::
