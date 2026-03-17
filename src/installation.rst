@@ -54,7 +54,7 @@ Via Pip (+npm)
    $ pip install cylc-rose metomi-rose
 
 There are also certain optional extra requirements which you may choose to
-install:
+install (already included if installing via Conda):
 
 .. code-block:: sub
 
@@ -87,7 +87,7 @@ These dependencies are not installed by Conda or pip:
 * ``rsync``
 * ``mail`` (optional - for automated email functionality)
 
-These dependencies are installed by Conda but not by pip:
+The following dependencies are installed automatically by Conda but not by pip:
 
 * `Graphviz`_ (optional - used by ``cylc graph`` for displaying workflow
   graphs)

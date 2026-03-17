@@ -60,7 +60,7 @@ Paste the following code into a ``flow.cylc`` file:
            [[[events]]]
                mail events = failed
        [[bell]]
-           script = printf 'bong%.02d\n' $(seq 1 $(cylc cyclepoint --print-hour))
+           script = printf 'bong%.02d\n' $(seq 1 $(cylc cyclepoint --print-hour)); sleep 5
 
 Change the initial cycle point to 00:00 this morning (e.g. if it was
 the first of January 2000 we would write ``2000-01-01T00Z``).
@@ -77,7 +77,11 @@ Run your workflow using::
 Stop the workflow after a few cycles using ``cylc stop --now --now clock-trigger``.
 Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.
-
+If we didn't have the ``sleep 5`` in the task script,
+the tasks would run so quickly that we would not be able to see this behaviour.
+In some scenarios, such as climate modelling, this is the desired behaviour as
+it allows the workflow to run faster than real-time, what you might call simulation time.
+However, below we describe how to make the workflow run in real-time using clock triggers.
 
 Clock-Triggering Tasks
 ----------------------
