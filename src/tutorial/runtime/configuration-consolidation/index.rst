@@ -156,12 +156,12 @@ Which Approach To Use
    Each approach has its uses. Cylc permits mixing approaches, allowing us to
    use what works best for us. As a rule of thumb:
 
-   * :term:`Families <family>` work best consolidating runtime configuration by
-     collecting tasks into broad groups, e.g. groups of tasks which run on a
-     particular machine or groups of tasks belonging to a particular system.
    * `Jinja2`_ is good at configuring settings which apply to the entire workflow
      rather than just a single task, as we can define variables then use them
      throughout the workflow.
+   * :term:`Families <family>` work best consolidating runtime configuration by
+     collecting tasks into broad groups, e.g. groups of tasks which run on a
+     particular machine or groups of tasks belonging to a particular system.
    * :term:`Parameterization <parameterization>` works best for describing tasks
      which are very similar but which have subtly different configurations
      (e.g. different arguments or environment variables).
@@ -170,10 +170,10 @@ Which Approach To Use
 
    As a rule of thumb each method works best for:
 
-   Families
-      Collecting tasks into broad groups.
    Jinja2
       Configuration settings which apply to the entire workflow.
+   Families
+      Collecting tasks into broad groups.
    Parameterization
       Tasks which are similar.
 
