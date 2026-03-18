@@ -106,21 +106,11 @@ User Interface), web GUI, and ``cylc scan`` are shown below.
          :alt: A screenshot of the Cylc TUI.
          :width: 75%
 
-   .. tab-item:: Cylc Scan
-
-      .. image:: /tutorial/img/cylc-tools.png
-         :alt: A screenshot of the Cylc TUI.
-         :width: 75%
-
    .. tab-item:: CLI
 
-      .. code-block:: console
-
-         $ cylc trigger <workflow>// \
-         >   //<cycle-1>/<task-2> \
-         >   //<cycle-2>/<task-2> \
-         >   ...
-
+      .. image:: ../../src/img/cylc-cli.png
+         :alt: A screenshot of the Cylc CLI.
+         :width: 75%
 
 .. nextslide::
 
