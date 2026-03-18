@@ -79,7 +79,8 @@ Non-Python Requirements
 .. _Graphviz: https://graphviz.org/download/
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
 
-These dependencies are not installed by Conda or pip:
+These dependencies are not installed by Conda or pip and may not be available on your
+system by default:
 
 * ``bash``
 * GNU `coreutils`_
