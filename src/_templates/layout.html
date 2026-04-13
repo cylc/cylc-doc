@@ -1,1 +1,14 @@
+<script type="text/javascript">
+    /*
+        Adds target=_blank to external links so they open in a new tab:
+        - noopener: prevents the new page accessing window.opener (tabnabbing protection)
+        - noreferrer: removes referrer info and adds extra safety
+    */
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('a.external').forEach(link => {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        });
+    });
+</script>
 {% extends "!layout.html" %}
