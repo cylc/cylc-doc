@@ -22,7 +22,8 @@
 
 /* Add an icon to external links */
 a.external::after {
-  content: "🔗 ↗ ⧉";
+  font-size: small;
+  font-weight: bolder;
+  content: "↗";
   margin-left: 0.3em;
-  color: black;
 }
