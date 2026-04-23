@@ -20,10 +20,12 @@
   height: 7em !important;
 }
 
-/* Add an icon to external links */
-a.external::after {
-  font-size: small;
+/* Add an icon to external links, excluding those with the "image-reference" class */
+a.external:not(.image-reference)::after {
+  font-size: 0.7em;
   font-weight: bolder;
-  content: "↗";
   margin-left: 0.3em;
+  vertical-align: super;
+  opacity: 0.5;
+  content: "↗";
 }
