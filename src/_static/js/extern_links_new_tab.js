@@ -19,6 +19,7 @@
     Adds target=_blank to external links so they open in a new tab:
     - noopener: prevents the new page accessing window.opener (tabnabbing protection)
     - noreferrer: removes referrer info and adds extra safety
+    - title and aria-label: provide context for screen readers and tooltips
 */
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('a.external').forEach(link => {
