@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('a.external').forEach(link => {
         link.setAttribute('target', '_blank');
         link.setAttribute('rel', 'noopener noreferrer');
-        link.setAttribute('title', 'This link will open in a new tab and take you to an external site.');
+        link.setAttribute('title', 'Opens in a new tab.');
         link.setAttribute('aria-label', 'External link: opens in a new tab');
     });
 });
