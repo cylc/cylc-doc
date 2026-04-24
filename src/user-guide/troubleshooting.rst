@@ -583,6 +583,27 @@ environments. If you encounter this issue in combination with containers,
 please let us know.
 
 
+``ERR_JOB_FILES_REMOVED``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This error may appear in in the workflow log, it will also be visible in the
+GUI and Cylc Review. It indicates that the job log files were deleted before
+Cylc had determined that the task had finished.
+
+The most likely cause of this is another task in the workflow has purposefully
+deleted these files. Workflows often have so-called "housekeep" tasks which
+delete job log files that are past a certain date in order to free up
+disk space.
+
+The :ref:`rose_prune <builtin.rose_prune>` application is often used to do
+this. The ``job.out`` files of ``rose_prune`` tasks will list any files
+deleted.
+
+To fix the problem, add dependencies into the workflow to ensure the housekeep
+task waits for tasks in earlier cycles to finish before attempting to delete
+their files.
+
+
 Debugging Workflow Configurations
 ---------------------------------
 
