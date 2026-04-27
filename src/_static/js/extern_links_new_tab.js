@@ -15,17 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ------------------------------------------------------------------------- */
 
-/* Fix zero height auto size of svg */
-.logo {
-  height: 7em !important;
-}
-
-/* Add an icon to external links, excluding those with the "image-reference" class */
-a.external:not(.image-reference)::after {
-  font-size: 0.7em;
-  font-weight: bolder;
-  margin-left: 0.3em;
-  vertical-align: super;
-  opacity: 0.5;
-  content: "↗";
-}
+/*
+    Adds target=_blank to external links so they open in a new tab:
+    - noopener: prevents the new page accessing window.opener (tabnabbing protection)
+    - noreferrer: removes referrer info and adds extra safety
+    - title and aria-label: provide context for screen readers and tooltips
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('a.external').forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.setAttribute('title', 'Opens in a new tab.');
+        link.setAttribute('aria-label', 'External link: opens in a new tab');
+    });
+});
