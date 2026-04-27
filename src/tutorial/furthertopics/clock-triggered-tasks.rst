@@ -77,11 +77,6 @@ Run your workflow using::
 Stop the workflow after a few cycles using ``cylc stop --now --now clock-trigger``.
 Notice how the tasks run as soon as possible rather than
 waiting for the actual time to be equal to the cycle point.
-If we didn't have the ``sleep 5`` in the task script,
-the tasks would run so quickly that we would not be able to see this behaviour.
-In some scenarios, such as climate modelling, this is the desired behaviour as
-it allows the workflow to run faster than real-time, what you might call simulation time.
-However, below we describe how to make the workflow run in real-time using clock triggers.
 
 Clock-Triggering Tasks
 ----------------------
