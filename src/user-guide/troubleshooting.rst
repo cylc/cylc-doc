@@ -586,7 +586,7 @@ please let us know.
 ``ERR_JOB_FILES_REMOVED``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This error may appear in in the workflow log, it will also be visible in the
+This error may appear in the workflow log, it will also be visible in the
 GUI and Cylc Review. It indicates that the job log files were deleted before
 Cylc had determined that the task had finished.
 
