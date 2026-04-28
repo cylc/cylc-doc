@@ -233,8 +233,9 @@ The ``root`` Family
 
 .. practical::
 
-   .. rubric:: This practical continues on from the
-      :ref:`jinja2 practical <cylc-tutorial-jinja2-practical>`.
+   .. rubric:: In this practical we will consolidate the configuration of the
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
+      from the previous section.
 
    1. **Create A New Workflow.**
 
@@ -251,7 +252,7 @@ The ``root`` Family
 
       .. code-block:: none
 
-         RESOLUTION = {{ RESOLUTION }}
+         RESOLUTION = 0.2
          DOMAIN = -12,46,12,61  # Do not change!
 
       Rather than manually adding them to each task individually we could put
@@ -266,7 +267,7 @@ The ``root`` Family
          +    [[root]]
          +        [[[environment]]]
          +            # The dimensions of each grid cell in degrees.
-         +            RESOLUTION = {{ RESOLUTION }}
+         +            RESOLUTION = 0.2
          +            # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          +            DOMAIN = -12,46,12,61  # Do not change!
 
@@ -276,7 +277,7 @@ The ``root`` Family
               script = consolidate-observations
          -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
@@ -284,7 +285,7 @@ The ``root`` Family
               script = get-rainfall
               [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
@@ -292,7 +293,7 @@ The ``root`` Family
               script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
               [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2)
          -        DOMAIN = -12,46,12,61  # Do not change!
                   # The path to the files containing wind data (the {variables} will
@@ -313,7 +314,7 @@ The ``root`` Family
               script = post-process exeter 60
          -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
