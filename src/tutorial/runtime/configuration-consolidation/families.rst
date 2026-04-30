@@ -283,7 +283,7 @@ The ``root`` Family
 
           [[get_rainfall]]
               script = get-rainfall
-              [[[environment]]]
+         -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).

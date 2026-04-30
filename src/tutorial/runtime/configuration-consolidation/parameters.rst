@@ -314,7 +314,7 @@ Parameters can be either strings or integers:
 
              [task parameters]
                  station = aldergrove, camborne, heathrow, shetland
-            +        site = exeter, edinburgh
+            +    site = exeter, edinburgh
 
          Next we parameterize the task in the graph:
 
