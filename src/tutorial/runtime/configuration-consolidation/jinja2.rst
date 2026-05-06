@@ -182,8 +182,9 @@ This would result in:
       Rather than writing it out multiple times we will use Jinja2
       to centralise this configuration.
 
-      At the top of the :cylc:conf:`flow.cylc` file add the Jinja2 shebang line. Then
-      copy the value of the ``RESOLUTION`` environment variable and use it to
+      At the top of the :cylc:conf:`flow.cylc` file you should see the Jinja2
+      shebang line has been included for you.
+      Copy the value of the ``RESOLUTION`` environment variable and use it to
       define an ``RESOLUTION`` Jinja2 variable:
 
       .. code-block:: cylc
