@@ -214,4 +214,5 @@ This would result in:
          +  MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map-{{ RESOLUTION }}-resolution.html"
 
       Check the result with ``cylc config``. The Jinja2 will be processed
-      so you should not see any difference after making these changes.
+      so you should not see any difference after making these changes, other than
+      the MAP_FILE filename now including the resolution.
