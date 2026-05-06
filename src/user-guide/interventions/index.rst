@@ -113,7 +113,7 @@ Re-Run Multiple Tasks
          :width: 75%
 
    .. tab-item:: CLI
-      :sync: gui
+      :sync: cli
 
       .. code-block:: console
 

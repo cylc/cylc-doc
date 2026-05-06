@@ -182,7 +182,7 @@ Parameters can be either strings or integers:
 .. ifslides::
 
    .. rubric:: This practical continues on from the
-      :ref:`Families practical <cylc-tutorial-families-practical>`.
+      :ref:`Jinja2 practical <cylc-tutorial-jinja2-practical>`.
 
    Next section: :ref:`Which approach to use
    <cylc-tutorial-consolidation-conclusion>`
@@ -314,7 +314,7 @@ Parameters can be either strings or integers:
 
              [task parameters]
                  station = aldergrove, camborne, heathrow, shetland
-            +        site = exeter, edinburgh
+            +    site = exeter, edinburgh
 
          Next we parameterize the task in the graph:
 

@@ -19,19 +19,6 @@ Cylc runs on Unix-like systems including Linux and Mac OS.
 Via Conda (recommended)
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. tip::
-
-   We recommend using Mamba to install Cylc.
-   Mamba (or Micromamba) can be used as
-   `a faster, drop-in replacement for the conda command
-   <https://mamba.readthedocs.io/en/latest/index.html>`_.
-   If using Conda, make sure to use the libmamba-solver by updating to
-   Conda 23.10 or using the `conda-libmamba-solver plugin for conda
-   <https://conda.github.io/conda-libmamba-solver/getting-started/>`_.
-   The classic conda environment solver may be too slow for a complex package
-   like Cylc.
-
-
 .. code-block:: sub
 
    $ conda install -c conda-forge cylc-flow
@@ -67,7 +54,7 @@ Via Pip (+npm)
    $ pip install cylc-rose metomi-rose
 
 There are also certain optional extra requirements which you may choose to
-install:
+install (already included if installing via Conda):
 
 .. code-block:: sub
 
@@ -92,7 +79,8 @@ Non-Python Requirements
 .. _Graphviz: https://graphviz.org/download/
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
 
-These dependencies are not installed by Conda or pip:
+These dependencies are not installed by Conda or pip and may not be available on your
+system by default:
 
 * ``bash``
 * GNU `coreutils`_
@@ -100,7 +88,7 @@ These dependencies are not installed by Conda or pip:
 * ``rsync``
 * ``mail`` (optional - for automated email functionality)
 
-These dependencies are installed by Conda but not by pip:
+The following dependencies are installed automatically by Conda but not by pip:
 
 * `Graphviz`_ (optional - used by ``cylc graph`` for displaying workflow
   graphs)
@@ -290,8 +278,8 @@ can be found: :ref:`UI_Server_config`.
 Bash Profile
 ^^^^^^^^^^^^
 
-Cylc :term:`job scripts <job script>` are bash scripts, which is good for
-manipulating files and processes, They invoke ``bash -l`` to allow environment
+Cylc :term:`job scripts <job script>` are bash scripts, which are good for
+manipulating files and processes. They invoke ``bash -l`` to allow environment
 configuration in login scripts.
 
 .. warning::

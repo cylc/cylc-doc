@@ -73,8 +73,8 @@ structure of a workflow and avoid duplication.
 .. toctree::
    :maxdepth: 1
 
-   jinja2
    families
+   jinja2
    parameters
 
 
@@ -139,10 +139,12 @@ The Three Approaches
    could use them to simplify the workflow from the previous tutorial. *Work
    through them in order!*
 
-* :ref:`families <tutorial-cylc-families>`
-* :ref:`jinja2 <tutorial-cylc-jinja2>`
-* :ref:`parameters <tutorial-cylc-parameterization>`
+.. toctree::
+   :maxdepth: 1
 
+   families
+   jinja2
+   parameters
 
 .. _cylc-tutorial-consolidation-conclusion:
 
