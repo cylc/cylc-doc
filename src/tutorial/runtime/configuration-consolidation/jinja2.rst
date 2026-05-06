@@ -178,14 +178,16 @@ This would result in:
 
    3. **Use Jinja2 To Avoid Duplication.**
 
-      The ``RESOLUTION`` environment variable is used by multiple tasks.
-      Rather than writing it out multiple times we will use Jinja2
-      to centralise this configuration.
+      We have already consolidated the ``RESOLUTION`` environment variable
+      in the previous tutorial.  However, lets say we want to reference
+      the resolution elsewhere in the workflow, not just as an
+      environment variable.  For example, we might want to include the
+      resolution in a filename.  To achieve this, we can define a Jinja2
+      variable for the resolution, which can be used anywhere in the workflow.
 
       At the top of the :cylc:conf:`flow.cylc` file you should see the Jinja2
-      shebang line has been included for you.
-      Copy the value of the ``RESOLUTION`` environment variable and use it to
-      define an ``RESOLUTION`` Jinja2 variable:
+      shebang line has been included for you.  Copy the value of the
+      ``RESOLUTION`` environment variable and use it to define a Jinja2 variable:
 
       .. code-block:: cylc
 
@@ -193,7 +195,7 @@ This would result in:
 
          {% set RESOLUTION = 0.2 %}
 
-      Next replace the key, where it appears in the workflow, with
+      Next replace the key within the root definition with
       ``{{ RESOLUTION }}``:
 
       .. code-block:: diff
@@ -202,6 +204,14 @@ This would result in:
             [[[environment]]]
          -          RESOLUTION = 0.2
          +          RESOLUTION = {{ RESOLUTION }}
+
+      And add a reference to the resolution in the MAP_FILE filename of the
+      ``forcast`` task:
+
+      .. code-block:: diff
+
+         -  MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map.html"
+         +  MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map-{{ RESOLUTION }}-resolution.html"
 
       Check the result with ``cylc config``. The Jinja2 will be processed
       so you should not see any difference after making these changes.
