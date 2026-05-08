@@ -58,6 +58,7 @@ requests_).
  - Elliot Fontaine
  - Mark Dawson
  - James Frost
+ - Samuel Denton
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
