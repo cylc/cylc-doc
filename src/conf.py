@@ -239,18 +239,29 @@ html_context = {
     'sidebar_version_name': None,  # override name in version picker
 }
 
-html_static_path = ['_static']
-
-# These paths are either relative to html_static_path
-# or fully qualified paths (eg. https://...)
-html_css_files = ['css/custom.css']
-
 # Disable timestamp otherwise inserted at bottom of every page.
 html_last_updated_fmt = ''
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'cylcdoc'
 
+# -- Static file locations -----------------------------------------------
+html_static_path = ['_static']
+
+# These paths are either relative to html_static_path
+# or fully qualified paths (eg. https://...)
+# NOTE: these are added to the end of the default/theme static files, so
+# will override them if there are any conflicts.
+
+# Custom CSS
+html_css_files = [
+    'css/custom.css',
+]
+
+# Custom JS
+html_js_files = [
+    'js/extern_links_new_tab.js',
+]
 
 # -- Options for LaTeX output ---------------------------------------------
 
