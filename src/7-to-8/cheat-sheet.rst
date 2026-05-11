@@ -287,6 +287,7 @@ Datetime operations in task scripts:
          # equivalent to:
          isodatetime "$CYLC_TASK_CYCLE_POINT"
 
+
 Rose Stem
 ---------
 

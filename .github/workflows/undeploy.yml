@@ -43,16 +43,19 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: install deps
+        run: pip install packaging
+
       - name: configure git
         uses: cylc/release-actions/configure-git@v1
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: docs
 
       - name: checkout gh-pages
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: gh-pages

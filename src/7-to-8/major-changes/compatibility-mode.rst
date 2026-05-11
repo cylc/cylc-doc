@@ -187,7 +187,7 @@ You might have a task script that calls a Cylc command like so:
 The ``cylc hold`` command has changed in Cylc 8. It is now used for holding
 tasks only; use ``cylc pause`` for entire workflows.
 (Additionally, ``$CYLC_SUITE_NAME`` is deprecated in favour of
-``$CYLC_WORKFLOW_ID``, though still supported.)
+:envvar:`CYLC_WORKFLOW_ID`, though still supported.)
 
 In order to make this interoperable, so that you can run it with both Cylc 7
 and Cylc 8 backward compatibility mode, you could do something like this
@@ -205,8 +205,8 @@ in the bash script:
                fi
            """
 
-Note this logic (and the ``$CYLC_VERSION`` environment variable) is executed
-at runtime on the :term:`job host`.
+Note this logic (and the :envvar:`CYLC_VERSION` environment variable) is
+executed at runtime on the :term:`job host`.
 
 Alternatively, you could use :ref:`Jinja` like so:
 
@@ -220,8 +220,8 @@ Alternatively, you could use :ref:`Jinja` like so:
                script = cylc hold "$CYLC_SUITE_NAME"
            {% endif %}
 
-Note this logic (and the ``CYLC_VERSION`` Jinja2 variable) is executed locally
-prior to Cylc parsing the workflow configuration.
+Note this logic (and the :envvar:`CYLC_VERSION` Jinja2 variable) is executed
+locally prior to Cylc parsing the workflow configuration.
 
 
 Renaming to ``flow.cylc``

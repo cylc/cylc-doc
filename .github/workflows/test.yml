@@ -40,12 +40,12 @@ jobs:
           python-version: '3.x'
 
       - name: configure node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
             node-version: 'lts/*'
 
       - name: checkout cylc-doc
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: install dependencies
         uses: ./.github/actions/install-dependencies

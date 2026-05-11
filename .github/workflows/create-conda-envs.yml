@@ -28,7 +28,7 @@ jobs:
         python: ['3.x']
     steps:
       - name: checkout cylc-doc
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: configure python
         uses: actions/setup-python@v6

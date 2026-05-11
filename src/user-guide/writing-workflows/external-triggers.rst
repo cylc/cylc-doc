@@ -591,7 +591,7 @@ xtrigger functions must be:
 - defined in a module with the same name as the function
 - located in:
   - ``<workflow-dir>/lib/python/``;
-  - or anywhere in your ``$CYLC_PYTHONPATH``
+  - or anywhere in your :envvar:`CYLC_PYTHONPATH`
 
 Custom xtrigger module can also provide a ``validate`` function for checking
 configured arguments, see
