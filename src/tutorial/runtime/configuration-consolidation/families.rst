@@ -310,8 +310,8 @@ The ``root`` Family
                   MAP_TEMPLATE = "$CYLC_WORKFLOW_RUN_DIR/lib/template/map.html"
 
           [[post_process_exeter]]
-              # Generate a forecast for Exeter 60 minutes into the future.
-              script = post-process exeter 60
+              # Generate a forecast for Exeter 300 minutes into the future.
+              script = post-process exeter 300
          -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
          -        RESOLUTION = 0.2

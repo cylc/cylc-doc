@@ -178,40 +178,43 @@ This would result in:
 
    3. **Use Jinja2 To Avoid Duplication.**
 
-      We have already consolidated the ``RESOLUTION`` environment variable
-      in the previous tutorial.  However, lets say we want to reference
-      the resolution elsewhere in the workflow, not just as an
-      environment variable.  For example, we might want to include the
-      resolution in a filename.  To achieve this, we can define a Jinja2
-      variable for the resolution, which can be used anywhere in the workflow.
+      We have seen how families can be used to avoid duplication in task definitions.
+      They are, however, limited to definitions, and only where properties exactly match.
+      In contrast, Jinja2 can be used in any part of a workflow, and can be used
+      for simple programmatic logic.  Here, we will make use of Jinja2 for some
+      maths and string manipulation.
 
       At the top of the :cylc:conf:`flow.cylc` file you should see the Jinja2
-      shebang line has been included for you.  Copy the value of the
-      ``RESOLUTION`` environment variable and use it to define a Jinja2 variable:
+      shebang line has been included for you.  Create some new Jinja2 variables
+      for ``FORECAST_LENGTH`` and ``FORECAST_COUNT```:
 
       .. code-block:: cylc
 
-         #!Jinja2
+        #!Jinja2
 
-         {% set RESOLUTION = 0.2 %}
+        {% set FORECAST_LENGTH = 60 %}
+        {% set FORECAST_COUNT = 5 %}
 
-      Next replace the key within the root definition with
-      ``{{ RESOLUTION }}``:
-
-      .. code-block:: diff
-
-         [[root]]
-            [[[environment]]]
-         -          RESOLUTION = 0.2
-         +          RESOLUTION = {{ RESOLUTION }}
-
-      And add a reference to the resolution in the MAP_FILE filename of the
-      ``forcast`` task:
+      Next replace the parameters for the forecast script within the ``forecast``
+      task with these variables:
 
       .. code-block:: diff
 
-         -  MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map.html"
-         +  MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map-{{ RESOLUTION }}-resolution.html"
+        [[forecast]]
+        -   script = forecast 60 5
+        +   script = forecast {{ FORECAST_LENGTH }} {{ FORECAST_COUNT }}
+
+      Then, in the ``post-processing`` task, replace the timestep parameter for the
+      post-processing script with the a simple multiplication of the two variables.
+      You can also use Jinja2 within a comment allowing it to match the dynamic value:
+
+      .. code-block:: diff
+
+        [[post_process_exeter]]
+        -   # Generate a forecast for Exeter 300 minutes in the future.
+        -   script = post-process exeter 300
+        +   # Generate a forecast {{ FORECAST_LENGTH * FORECAST_COUNT }} minutes in the future.
+        +   script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
 
       Check the result with ``cylc config``. The Jinja2 will be processed
       so you should not see any difference after making these changes, other than
