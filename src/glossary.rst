@@ -1438,7 +1438,17 @@ Glossary
 
       Tasks that achieve a final status with incomplete outputs are retained in
       :term:`n=0 <n-window>` pending user intervention, and will :term:`stall`
-      the workflow.
+      the workflow. See also :term:`incomplete task`.
+
+
+   final status incomplete task
+   incomplete task
+
+      Technically any task that has not achieved a final status is *incomplete*,
+      but the term normally refers to final status tasks with
+      :term:`incomplete outputs <output completion>`.
+      These are retained in :term:`n=0 <n-window>` pending user intervention and
+      will :term:`stall` the workflow if not attended to.
 
 
    prerequisite
@@ -1685,9 +1695,32 @@ Glossary
          * :ref:`Cylc User Guide <Graph Branching>`
 
 
+   terminal branch
+      A terminal branch is a path in the graph that silently dead-ends without
+      leading on to the rest of the graph.
+
+      Normally this is nothing to worry about - any "leaf" task (i.e. a task
+      with nothing downstream of it) is technically the end of a terminal
+      branch. The workflow shuts down as complete when the last terminal branch
+      ends.
+
+      However, watch out for implicit zero-length (invisble) terminal branches
+      created by mistaken use of optional outputs. For example, making
+      ``:succeeded`` :term:`optional <optional output>` implicitly makes
+      ``:failed`` optional as well, so the flow will silently dead-end
+      on failure if nothing triggers from it. And if there are no other
+      active branches, the workflow will shut down as complete.
+
+      Optional success should normally only be used with an explicit failure branch.
+      If ``:succeeded`` is not optional, failure is an error condition that will
+      :term:`stall` the workflow.
+
    flow
-      A flow is a self-propagating run through the a Cylc :term:`workflow`
-      :term:`graph` starting from some initial task or tasks.
+      Activity propagating throught the graph at runtime can be referred to
+      in a general sense as *the flow*.
+
+      A specific, numbered, flow is a self-propagating run through the a Cylc
+      workflow :term:`graph` starting from some initial task or tasks.
 
       Cylc :term:`schedulers <scheduler>` can manage multiple flows at once.
 
