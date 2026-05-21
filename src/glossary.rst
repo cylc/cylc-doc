@@ -1444,12 +1444,14 @@ Glossary
    final status incomplete task
    incomplete task
 
-      Technically any task that has not achieved a final status is *incomplete*,
-      but the term normally refers to final status tasks with
-      :term:`incomplete outputs <output completion>`.
-      These are retained in :term:`n=0 <n-window>` pending user intervention and
-      will :term:`stall` the workflow if not attended to.
+      A task with a :term:`final status` and
+      :term:`incomplete outputs <output completion>` represents an unexpected
+      error that the workflow was not designed to handle. Such tasks are retained
+      in the :term:`n=0 <n-window>` and will :term:`stall` the workflow unless
+      or until you intervene to fix the problem.
 
+     *Incomplete task* usually refers to this concept, although technically
+     any task that has not yet completed its outputs is incomplete.
 
    prerequisite
    dependence
