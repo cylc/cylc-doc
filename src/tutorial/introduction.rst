@@ -96,19 +96,16 @@ User Interface), web GUI, and ``cylc scan`` are shown below.
 
       .. image:: ../../src/img/cylc-ui-dash.png
          :alt: A screenshot of the Cylc GUI dashboard.
-         :width: 75%
 
    .. tab-item:: Tui
 
       .. image:: ../../src/img/tui-1.png
          :alt: A screenshot of the Cylc TUI.
-         :width: 75%
 
    .. tab-item:: CLI
 
       .. image:: ../../src/img/cylc-cli.png
          :alt: A screenshot of the Cylc CLI.
-         :width: 75%
 
 .. nextslide::
 
