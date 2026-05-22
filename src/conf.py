@@ -201,6 +201,8 @@ linkcheck_ignore = [
     'https?://matrix.to/.*#.*',
     # Blocked by bot protection:
     'https?://www.iso.org',
+    # Frequently rate-limited:
+    'https?://upload.wikimedia.org/wikipedia/commons/.*',
 ]
 
 # -- Options for Slides output ----------------------------------------------
