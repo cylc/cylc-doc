@@ -25,10 +25,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  SPHINXOPTS: '-Wn --keep-going'
+  FORCE_COLOR: 'true'
+  PIP_PROGRESS_BAR: 'off'
+
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      matrix:
+        type: [build, linkcheck]
     defaults:
       run:
         # use login shell for conda activation
@@ -66,23 +74,20 @@ jobs:
           metomi_rose_opts: ''
 
       - name: lint
+        if: matrix.type == 'build'
         run: |
           flake8
           npx eslint@v8 .
 
-      - name: (debug only) list language dictionaries
-        if: runner.debug
-        shell: python
-        env:
-          PYENCHANT_VERBOSE_FIND: true
-        run: |
-          import enchant
-          print(enchant.list_dicts())
-
       - name: build & test
+        if: matrix.type == 'build'
         run: |
-          make html spelling linkcheck \
-            SPHINXOPTS='-Wn --keep-going' FORCE_COLOR=true
+          make html spelling
+
+      - name: linkcheck
+        if: matrix.type == 'linkcheck'
+        run: |
+          make linkcheck
 
       - name: debug sphinx failure
         if: failure()
@@ -90,5 +95,14 @@ jobs:
           cat /tmp/sphinx-err* || true  # sphinx traceback
 
       - name: debug - pip list
-        if: failure()
+        if: failure() || runner.debug
         run: pip list
+
+      - name: debug - list language dictionaries
+        if: failure() || runner.debug
+        shell: python
+        env:
+          PYENCHANT_VERBOSE_FIND: true
+        run: |
+          import enchant
+          print(enchant.list_dicts())
