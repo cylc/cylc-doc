@@ -25,14 +25,14 @@ more task level concurrency and quicker failure recovery - you can rerun just
 what failed without repeating anything unnecessarily.
 
 
-rose bunch
+Rose Bunch
 ^^^^^^^^^^
 
 One caveat to our fine-graining advice is that submitting a large number of
 small tasks at once may be a problem on some platforms. If you have many
-similar concurrent jobs you can use ``rose bunch`` to pack them into a
-single task with incremental rerun capability: retriggering the task will rerun
-just the component jobs that did not successfully complete earlier.
+similar concurrent jobs you can use :ref:`builtin.rose_bunch` to pack them into
+a single task with incremental rerun capability: retriggering the task will
+rerun just the component jobs that did not successfully complete earlier.
 
 
 .. _Monolithic Or Interdependent Workflows:
@@ -305,7 +305,8 @@ Runahead Limiting
 ^^^^^^^^^^^^^^^^^
 
 By default Cylc allows a maximum of five cycle points to be active at the same
-time, but this value is configurable:
+time, but this value can be configured by
+:cylc:conf:`[scheduling]runahead limit`:
 
 .. code-block:: cylc
 
@@ -318,7 +319,8 @@ time, but this value is configurable:
 Internal Queues
 ^^^^^^^^^^^^^^^
 
-Tasks can be assigned to named internal queues that limit the number of members
+Tasks can be assigned to named internal
+:cylc:conf`queues <[scheduling][queues]>` that limit the number of members
 that can be active (i.e. submitted or running) at the same time:
 
 .. code-block:: cylc
@@ -349,7 +351,7 @@ typically the last tasks in each cycle, should be included to archive selected
 important files and then delete everything at some offset from the current
 cycle point.
 
-The Rose built-in apps ``rose_arch`` and ``rose_prune``
+The Rose built-in apps :ref:`rose_arch` and :ref:`builtin.rose_prune`
 provide an easy way to do this. They can be configured easily with
 file-matching patterns and cycle point offsets to perform various housekeeping
 operations on matched files.
@@ -401,8 +403,8 @@ that need it:
 Inheritance
 ^^^^^^^^^^^
 
-Sharing by inheritance of task families is recommended when more than a few
-configuration items are involved.
+Sharing by inheritance of task :term:`families` is recommended when more than a
+few configuration items are involved.
 
 The simplest application of inheritance is to set global defaults in the
 ``[runtime][root]`` namespace that is inherited by all tasks.
