@@ -6,7 +6,8 @@ Families
 :term:`Families <family>` provide a way of grouping tasks together so they can
 be treated as one.
 
-This example adds a new environment variable to the configuration. ``GET_NEARBY`` shows how families can make workflows simpler. We are going to add it to the ``get_observations`` script. If the script cannot get data from the named site this setting will allow it to try nearby sites.
+They can be used to consolidate tasks runtime configuration and environment variables,
+as well as to simplify the workflow's :term:`graph` by grouping together related tasks.
 
 Runtime
 -------
@@ -14,23 +15,22 @@ Runtime
 .. ifnotslides::
 
    :term:`Families <family>` are groups of tasks which share a common
-   configuration. In the present example the common configuration is:
+   configuration. In this example we have multiple tasks sharing this configuration:
 
    .. code-block:: cylc
 
-      script = get-observations
-      [[[environment]]]
-          GET_NEARBY = true
+      [[consolidate_observations]]
+          [[[environment]]]
+              DOMAIN = -12,46,12,61
 
    We define a family as a new task consisting of the common configuration. By
    convention families are named in upper case:
 
 .. code-block:: cylc
 
-   [[GET_OBSERVATIONS]]
-       script = get-observations
+   [[PROCESS_DATA]]
        [[[environment]]]
-           GET_NEARBY = true
+           DOMAIN = -12,46,12,61
 
 .. ifnotslides::
 
@@ -38,10 +38,8 @@ Runtime
 
 .. code-block:: cylc
 
-   [[get_observations_heathrow]]
-       inherit = GET_OBSERVATIONS
-       [[[environment]]]
-           SITE_ID = 3772
+   [[consolidate_observations]]
+       inherit = PROCESS_DATA
 
 .. ifnotslides::
 
@@ -51,65 +49,69 @@ Runtime
 
 .. code-block:: cylc
 
-   [[get_observations_heathrow]]
-       script = get-observations
+   [[consolidate_observations]]
        [[[environment]]]
-           SITE_ID = 3772
-           GET_NEARBY = true
+           DOMAIN = -12,46,12,61
 
 .. nextslide::
 
 .. ifnotslides::
 
    It is possible to override inherited configuration within the task. For
-   example if we wanted the ``get_observations_heathrow`` task to fail rather
-   than use a nearby alternative:
+   example if we wanted the ``consolidate_observations`` task to use a different
+   domain compared to the other members of the family we could do:
 
 .. code-block:: cylc
    :emphasize-lines: 4
 
-   [[get_observations_heathrow]]
-       inherit = GET_OBSERVATIONS
+   [[consolidate_observations]]
+       inherit = PROCESS_DATA
        [[[environment]]]
-           SITE_ID = 3772
-           GET_NEARBY = false
+           DOMAIN = -10,40,10,60
 
 .. nextslide::
 
 .. ifnotslides::
 
-   Using families the ``get_observations`` tasks could be written in a
+   Using families these processing tasks could be written in a
    shorter form:
 
 .. code-block:: diff
 
    [runtime]
-       [[GET_OBSERVATIONS]]
-           script = get-observations
+       [[PROCESS_DATA]]
    +         [[[environment]]]
-   +             GET_NEARBY = true
+   +             RESOLUTION = {{ RESOLUTION }}
+   +             DOMAIN = -12,46,12,61
 
-       [[get_observations_heathrow]]
-           inherit = GET_OBSERVATIONS
-           script = get_metar_observation
+       [[consolidate_observations]]
+           inherit = PROCESS_DATA
+           script = consolidate-observations
+   -       [[[environment]]]
+   -           RESOLUTION = {{ RESOLUTION }}
+   -           DOMAIN = -12,46,12,61
+       [[get_rainfall]]
+           inherit = PROCESS_DATA
+           script = get-rainfall
+   -       [[[environment]]]
+   -           RESOLUTION = {{ RESOLUTION }}
+   -           DOMAIN = -12,46,12,61
+       [[forecast]]
+           inherit = PROCESS_DATA
+           script = forecast 60 5
            [[[environment]]]
-               SITE_ID = EGLL
-   -           GET_NEARBY = true
-       [[get_observations_camborne]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-               SITE_ID = 3808
-   -           GET_NEARBY = true
-       [[get_observations_shetland]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-   -           GET_NEARBY = true
-               SITE_ID = 3005
-       [[get_observations_aldergrove]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-               SITE_ID = 3917
-   -           GET_NEARBY = true
+               WIND_FILE_TEMPLATE = $CYLC_WORKFLOW_WORK_DIR/{cycle}/consolidate_observations/wind_{xy}.csv
+               WIND_CYCLES = 0, -3, -6
+               RAINFALL_FILE = $CYLC_WORKFLOW_WORK_DIR/$CYLC_TASK_CYCLE_POINT/get_rainfall/rainfall.csv
+               MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map.html"
+               MAP_TEMPLATE = "$CYLC_WORKFLOW_RUN_DIR/lib/template/map.html"
+   -           RESOLUTION = {{ RESOLUTION }}
+   -           DOMAIN = -12,46,12,61
+       [[post_process_exeter]]
+           script = post-process exeter 300
+   -       [[[environment]]]
+   -           RESOLUTION = {{ RESOLUTION }}
+   -           DOMAIN = -12,46,12,61
 
 
 Graphing
