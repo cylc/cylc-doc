@@ -217,5 +217,4 @@ This would result in:
         +   script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
 
       Check the result with ``cylc config``. The Jinja2 will be processed
-      so you should not see any difference after making these changes, other than
-      the MAP_FILE filename now including the resolution.
+      so you should not see any difference after making these changes.
