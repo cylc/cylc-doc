@@ -186,7 +186,7 @@ This would result in:
 
       At the top of the :cylc:conf:`flow.cylc` file you should see the Jinja2
       shebang line has been included for you.  Create some new Jinja2 variables
-      for ``FORECAST_LENGTH`` and ``FORECAST_COUNT```:
+      for ``FORECAST_LENGTH`` and ``FORECAST_COUNT``:
 
       .. code-block:: cylc
 
