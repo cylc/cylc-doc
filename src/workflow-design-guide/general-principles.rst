@@ -403,7 +403,7 @@ that need it:
 Inheritance
 ^^^^^^^^^^^
 
-Sharing by inheritance of task :term:`families` is recommended when more than a
+Sharing by inheritance of task :term:`families <family>` is recommended when more than a
 few configuration items are involved.
 
 The simplest application of inheritance is to set global defaults in the
