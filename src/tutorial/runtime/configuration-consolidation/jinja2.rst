@@ -201,7 +201,7 @@ This would result in:
       .. code-block:: diff
 
         [[forecast]]
-        -   script = forecast 60 5
+        -   script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
         +   script = forecast {{ FORECAST_LENGTH }} {{ FORECAST_COUNT }}
 
       Then, in the ``post-processing`` task, replace the timestep parameter for the
