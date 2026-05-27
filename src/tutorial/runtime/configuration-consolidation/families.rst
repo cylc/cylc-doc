@@ -71,49 +71,6 @@ Runtime
 
 .. nextslide::
 
-.. ifnotslides::
-
-   Using families these processing tasks could be written in a
-   shorter form:
-
-.. code-block:: diff
-
-   [runtime]
-       [[PROCESS_DATA]]
-   +         [[[environment]]]
-   +             RESOLUTION = {{ RESOLUTION }}
-   +             DOMAIN = -12,46,12,61
-
-       [[consolidate_observations]]
-           inherit = PROCESS_DATA
-           script = consolidate-observations
-   -       [[[environment]]]
-   -           RESOLUTION = {{ RESOLUTION }}
-   -           DOMAIN = -12,46,12,61
-       [[get_rainfall]]
-           inherit = PROCESS_DATA
-           script = get-rainfall
-   -       [[[environment]]]
-   -           RESOLUTION = {{ RESOLUTION }}
-   -           DOMAIN = -12,46,12,61
-       [[forecast]]
-           inherit = PROCESS_DATA
-           script = forecast 60 5
-           [[[environment]]]
-               WIND_FILE_TEMPLATE = $CYLC_WORKFLOW_WORK_DIR/{cycle}/consolidate_observations/wind_{xy}.csv
-               WIND_CYCLES = 0, -3, -6
-               RAINFALL_FILE = $CYLC_WORKFLOW_WORK_DIR/$CYLC_TASK_CYCLE_POINT/get_rainfall/rainfall.csv
-               MAP_FILE = "${CYLC_TASK_LOG_ROOT}-map.html"
-               MAP_TEMPLATE = "$CYLC_WORKFLOW_RUN_DIR/lib/template/map.html"
-   -           RESOLUTION = {{ RESOLUTION }}
-   -           DOMAIN = -12,46,12,61
-       [[post_process_exeter]]
-           script = post-process exeter 300
-   -       [[[environment]]]
-   -           RESOLUTION = {{ RESOLUTION }}
-   -           DOMAIN = -12,46,12,61
-
-
 Graphing
 --------
 
