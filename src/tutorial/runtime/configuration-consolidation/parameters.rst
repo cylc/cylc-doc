@@ -330,6 +330,6 @@ Parameters can be either strings or integers:
 
             -[[post_process_exeter]]
             +[[post_process<site>]]
-                 # Generate a forecast {{ FORECAST_LENGTH * FORECAST_COUNT }} minutes in the future.
+                 # Generate a forecast [length * count] minutes in the future.
             -    script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
             +    script = post-process "$CYLC_TASK_PARAM_site" {{ FORECAST_LENGTH * FORECAST_COUNT }}

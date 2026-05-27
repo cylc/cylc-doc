@@ -213,7 +213,7 @@ This would result in:
         [[post_process_exeter]]
         -   # Generate a forecast for Exeter 300 minutes in the future.
         -   script = post-process exeter 300
-        +   # Generate a forecast {{ FORECAST_LENGTH * FORECAST_COUNT }} minutes in the future.
+        +   # Generate a forecast [length * count] minutes in the future.
         +   script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
 
       Check the result with ``cylc config``. The Jinja2 will be processed
