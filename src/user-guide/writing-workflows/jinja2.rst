@@ -587,6 +587,63 @@ For better clarity and disambiguation Python modules can be prefixed with
    or the ``lib/python`` directory.
 
 
+Macros
+------
+
+`Jinja2 macros <https://jinja.palletsprojects.com/en/stable/templates/#macros>`_
+can be used to automatically construct parts of your workflow based on input parameters (macro arguments).
+
+Here's an example macro that adds a task to print a given word (default "hello"), after a given task in your graph:
+
+.. code-block:: cylc
+
+   {% macro say_it(
+       after_task,
+       word = "hello"
+   ) %}
+   [scheduling]
+       [[graph]]
+           R1 = {{ after_task }} => say_{{ word }}
+   [runtime]
+       [[say_{{ word }}]]
+           script = "echo {{ word }}"
+   {% endmacro %}
+
+If we have written this to a file in the source directory called ``macros.cylc``,
+it can be used in ``flow.cylc`` like so:
+
+.. code-block:: cylc
+
+   #!Jinja2
+   {% from "macros.cylc" import say_it %}
+
+   {{ say_it(after_task="b") }}
+   {{ say_it(after_task="c", word="goodbye") }}
+   [scheduling]
+       [[graph]]
+           R1 = a => b => c
+   [runtime]
+       [[a, b, c]]
+
+Here's the result after template processing and config parsing:
+
+.. code-block:: cylc
+
+   [scheduling]
+       [[graph]]
+           R1 = """
+               b => say_hello
+               c => say_goodbye
+               a => b => c
+           """
+   [runtime]
+       [[say_hello]]
+           script = echo hello
+       [[say_goodbye]]
+           script = echo goodbye
+       [[a, b, c]]
+
+
 Logging
 -------
 
