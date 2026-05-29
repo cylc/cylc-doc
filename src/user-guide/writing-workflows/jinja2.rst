@@ -168,15 +168,19 @@ installed workflow at run time:
 .. note::
 
    Set default values for CYLC variables that are only defined for installed or
-   running workflows, to allow successful parsing in other contexts as well:
-   ``{{CYLC_WORKFLOW_RUN_DIR | default("not-defined")}}``.
+   running workflows, to allow successful parsing in other contexts as well.
+   For example:
+
+   .. code-block:: cylc
+
+      {{ CYLC_WORKFLOW_RUN_DIR | default("not-defined") }}
 
 
 Environment Variables
 ---------------------
 
 Cylc automatically imports the parse-time environment to the template
-processor's global namespace (see :ref:`CustomJinja2Filters`),
+processor's global namespace (see :ref:`Jinja2Filters`),
 in a dictionary called ``environ``:
 
 .. code-block:: cylc
@@ -188,45 +192,72 @@ in a dictionary called ``environ``:
            [[[environment]]]
                HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
 
-.. warning::
+.. important::
 
    The environment is read during configuration parsing. It is not the run time
    job environment.
 
+.. _Jinja2Filters:
+
+Jinja2 Filters, Tests and Globals
+---------------------------------
+
+Jinja2 has three namespaces that separate "globals", "filters" and "tests".
+
+ - Globals are template-wide variables and functions. Cylc extends this namespace
+   with the ``environ`` dictionary above, and
+   :ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
+   functions for raising exceptions to abort Cylc config parsing.
+
+ - Filters can be used to modify variable values and are applied using pipe
+   notation. For example, the built-in ``trim`` filter strips leading
+   and trailing white space from a string:
+
+   .. code-block:: cylc
+
+      {% set MyString = "   dog   " %}
+      {{ MyString | trim() }}  # "dog"
+
+ - Variable values can be tested using the ``is`` keyword followed by
+   the name of the test, e.g. ``{% if VARIABLE is defined %}``.
+
+See `Jinja2 documentation <https://jinja.palletsprojects.com/en/stable/templates/>`_
+for available built-in globals, filters and tests.
 
 .. _CustomJinja2Filters:
 
-Custom Jinja2 Filters, Tests and Globals
-----------------------------------------
+Custom Filters, Tests and Globals
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Jinja2 has three namespaces that separate "globals", "filters" and "tests".
-Globals are template-wide variables and functions. Cylc extends this namespace
-with the ``environ`` dictionary above, and
-:ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
-functions for raising exceptions to abort Cylc config parsing.
-
-Filters can be used to modify variable values and are applied using pipe
-notation. For example, the built-in ``trim`` filter strips leading
-and trailing white space from a string:
-
-.. code-block:: cylc
-
-   {% set MyString = "   dog   " %}
-   {{ MyString | trim() }}  # "dog"
-
-Variable values can be tested using the ``is`` keyword followed by
-the name of the test, e.g. ``{% if VARIABLE is defined %}``. See Jinja2
-documentation for available built-in globals, filters and tests.
-
-Cylc also supports custom Jinja2 globals, filters and tests. A custom global,
-filter or test is a single Python function in a source file with the same name
-as the function (plus ``.py`` extension). These must be located in a
-subdirectory of the :term:`run directory` called
-``Jinja2Filters``, ``Jinja2Globals`` or ``Jinja2Tests`` respectively.
+Cylc also supports custom Jinja2 filters, tests and globals.
+A custom filter or test is a single Python function in a source file
+with the same name as the function (plus ``.py`` extension).
+Likewise, a custom global is a single Python variable or function.
+These must be located in a subdirectory of the :term:`source directory` called
+``Jinja2Filters``, ``Jinja2Tests``, or ``Jinja2Globals`` respectively.
 
 In the argument list of a filter or test function, the first argument is
 the variable value to be filtered or tested, and subsequent arguments can be
-whatever is needed. Currently three custom filters are supplied:
+whatever is needed.
+
+.. seealso::
+
+   Jinja2 documentation:
+
+   - `Custom Filters <https://jinja.palletsprojects.com/en/stable/api/#custom-filters>`_
+   - `Custom Tests <https://jinja.palletsprojects.com/en/stable/api/#custom-tests>`_
+
+.. _stdlib-imports-notice:
+
+.. important::
+
+   Only Python modules that are available in the environment used to run Cylc,
+   or the ``lib/python`` directory, can be imported inside custom globals, filters and tests.
+   You should avoid importing external modules that are not available in either
+   the standard library, Jinja2, Cylc, or Isodatetime,
+   as this could break between Cylc versions or when running on different systems.
+
+Cylc provides several custom filters of its own:
 
 .. autosummary::
    :nosignatures:
@@ -523,11 +554,13 @@ Importing Python modules
 
 Jinja2 allows to gather variable and macro definitions in a separate template
 that can be imported into (and thus shared among) other templates.
+For example, if we have a file in the source directory called ``utils.cylc``,
+we can use it in ``flow.cylc`` in a couple of ways:
 
 .. code-block:: cylc
 
-   {% import "flow-utils.cylc" as utils %}
-   {% from "flow-utils.cylc" import VARIABLE as ALIAS %}
+   {% import "utils.cylc" as utils %}
+   {% from "utils.cylc" import VARIABLE as ALIAS %}
    {{ utils.VARIABLE is equalto(ALIAS)) }}
 
 Cylc extends this functionality to allow import of arbitrary Python modules.
@@ -546,6 +579,12 @@ For better clarity and disambiguation Python modules can be prefixed with
 .. code-block:: cylc
 
    {% from "__python__.itertools" import product %}
+
+.. important::
+
+   As :ref:`before <stdlib-imports-notice>`,
+   you can only import modules that are available in the environment used to run Cylc,
+   or the ``lib/python`` directory.
 
 
 Logging
