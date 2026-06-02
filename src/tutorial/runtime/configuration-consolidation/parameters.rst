@@ -182,7 +182,7 @@ Parameters can be either strings or integers:
 .. ifslides::
 
    .. rubric:: This practical continues on from the
-      :ref:`Families practical <cylc-tutorial-families-practical>`.
+      :ref:`Jinja2 practical <cylc-tutorial-jinja2-practical>`.
 
    Next section: :ref:`Which approach to use
    <cylc-tutorial-consolidation-conclusion>`
@@ -314,7 +314,7 @@ Parameters can be either strings or integers:
 
              [task parameters]
                  station = aldergrove, camborne, heathrow, shetland
-            +        site = exeter, edinburgh
+            +    site = exeter, edinburgh
 
          Next we parameterize the task in the graph:
 
@@ -330,6 +330,6 @@ Parameters can be either strings or integers:
 
             -[[post_process_exeter]]
             +[[post_process<site>]]
-                 # Generate a forecast for Exeter 60 minutes in the future.
-            -    script = post-process exeter 60
-            +    script = post-process $CYLC_TASK_PARAM_site 60
+                 # Generate a forecast [length * count] minutes in the future.
+            -    script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
+            +    script = post-process "$CYLC_TASK_PARAM_site" {{ FORECAST_LENGTH * FORECAST_COUNT }}

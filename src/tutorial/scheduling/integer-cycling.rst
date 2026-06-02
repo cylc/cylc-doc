@@ -70,8 +70,9 @@ To make a workflow repeat we must tell Cylc three things:
      <cycle point>` integer labels.
    * ``initial cycle point = 1`` tells Cylc to start counting cycle points
      from 1.
-   * ``P1`` is the :term:`recurrence`; a ``P1`` :term:`graph string`
-     repeats at every integer :term:`cycle point`.
+   * ``P1`` is the :term:`recurrence`. The tasks in a ``P1``
+     :term:`graph string` repeat at every integer :term:`cycle point`
+     (whereas ``R1`` means "run once").
 
    The first three :term:`cycles<cycle>` look like this, with the entire
    workflow repeated at each cycle point:

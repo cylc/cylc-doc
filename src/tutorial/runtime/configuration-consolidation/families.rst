@@ -6,7 +6,8 @@ Families
 :term:`Families <family>` provide a way of grouping tasks together so they can
 be treated as one.
 
-This example adds a new environment variable to the configuration. ``GET_NEARBY`` shows how families can make workflows simpler. We are going to add it to the ``get_observations`` script. If the script cannot get data from the named site this setting will allow it to try nearby sites.
+They can be used to consolidate tasks runtime configuration and environment variables,
+as well as to simplify the workflow's :term:`graph` by grouping together related tasks.
 
 Runtime
 -------
@@ -14,23 +15,22 @@ Runtime
 .. ifnotslides::
 
    :term:`Families <family>` are groups of tasks which share a common
-   configuration. In the present example the common configuration is:
+   configuration. In this example we have multiple tasks sharing this configuration:
 
    .. code-block:: cylc
 
-      script = get-observations
-      [[[environment]]]
-          GET_NEARBY = true
+      [[consolidate_observations]]
+          [[[environment]]]
+              DOMAIN = -12,46,12,61
 
    We define a family as a new task consisting of the common configuration. By
    convention families are named in upper case:
 
 .. code-block:: cylc
 
-   [[GET_OBSERVATIONS]]
-       script = get-observations
+   [[PROCESS_DATA]]
        [[[environment]]]
-           GET_NEARBY = true
+           DOMAIN = -12,46,12,61
 
 .. ifnotslides::
 
@@ -38,10 +38,8 @@ Runtime
 
 .. code-block:: cylc
 
-   [[get_observations_heathrow]]
-       inherit = GET_OBSERVATIONS
-       [[[environment]]]
-           SITE_ID = 3772
+   [[consolidate_observations]]
+       inherit = PROCESS_DATA
 
 .. ifnotslides::
 
@@ -51,66 +49,27 @@ Runtime
 
 .. code-block:: cylc
 
-   [[get_observations_heathrow]]
-       script = get-observations
+   [[consolidate_observations]]
        [[[environment]]]
-           SITE_ID = 3772
-           GET_NEARBY = true
+           DOMAIN = -12,46,12,61
 
 .. nextslide::
 
 .. ifnotslides::
 
    It is possible to override inherited configuration within the task. For
-   example if we wanted the ``get_observations_heathrow`` task to fail rather
-   than use a nearby alternative:
+   example if we wanted the ``consolidate_observations`` task to use a different
+   domain compared to the other members of the family we could do:
 
 .. code-block:: cylc
    :emphasize-lines: 4
 
-   [[get_observations_heathrow]]
-       inherit = GET_OBSERVATIONS
+   [[consolidate_observations]]
+       inherit = PROCESS_DATA
        [[[environment]]]
-           SITE_ID = 3772
-           GET_NEARBY = false
+           DOMAIN = -10,40,10,60
 
 .. nextslide::
-
-.. ifnotslides::
-
-   Using families the ``get_observations`` tasks could be written in a
-   shorter form:
-
-.. code-block:: diff
-
-   [runtime]
-       [[GET_OBSERVATIONS]]
-           script = get-observations
-   +         [[[environment]]]
-   +             GET_NEARBY = true
-
-       [[get_observations_heathrow]]
-           inherit = GET_OBSERVATIONS
-           script = get_metar_observation
-           [[[environment]]]
-               SITE_ID = EGLL
-   -           GET_NEARBY = true
-       [[get_observations_camborne]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-               SITE_ID = 3808
-   -           GET_NEARBY = true
-       [[get_observations_shetland]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-   -           GET_NEARBY = true
-               SITE_ID = 3005
-       [[get_observations_aldergrove]]
-           inherit = GET_OBSERVATIONS
-           [[[environment]]]
-               SITE_ID = 3917
-   -           GET_NEARBY = true
-
 
 Graphing
 --------
@@ -233,8 +192,9 @@ The ``root`` Family
 
 .. practical::
 
-   .. rubric:: This practical continues on from the
-      :ref:`jinja2 practical <cylc-tutorial-jinja2-practical>`.
+   .. rubric:: In this practical we will consolidate the configuration of the
+      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
+      from the previous section.
 
    1. **Create A New Workflow.**
 
@@ -251,7 +211,7 @@ The ``root`` Family
 
       .. code-block:: none
 
-         RESOLUTION = {{ RESOLUTION }}
+         RESOLUTION = 0.2
          DOMAIN = -12,46,12,61  # Do not change!
 
       Rather than manually adding them to each task individually we could put
@@ -266,7 +226,7 @@ The ``root`` Family
          +    [[root]]
          +        [[[environment]]]
          +            # The dimensions of each grid cell in degrees.
-         +            RESOLUTION = {{ RESOLUTION }}
+         +            RESOLUTION = 0.2
          +            # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          +            DOMAIN = -12,46,12,61  # Do not change!
 
@@ -276,15 +236,15 @@ The ``root`` Family
               script = consolidate-observations
          -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
           [[get_rainfall]]
               script = get-rainfall
-              [[[environment]]]
+         -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
@@ -292,7 +252,7 @@ The ``root`` Family
               script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
               [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2)
          -        DOMAIN = -12,46,12,61  # Do not change!
                   # The path to the files containing wind data (the {variables} will
@@ -309,11 +269,11 @@ The ``root`` Family
                   MAP_TEMPLATE = "$CYLC_WORKFLOW_RUN_DIR/lib/template/map.html"
 
           [[post_process_exeter]]
-              # Generate a forecast for Exeter 60 minutes into the future.
-              script = post-process exeter 60
+              # Generate a forecast for Exeter 300 minutes into the future.
+              script = post-process exeter 300
          -    [[[environment]]]
          -        # The dimensions of each grid cell in degrees.
-         -        RESOLUTION = {{ RESOLUTION }}
+         -        RESOLUTION = 0.2
          -        # The area to generate forecasts for (lng1, lat1, lng2, lat2).
          -        DOMAIN = -12,46,12,61  # Do not change!
 
