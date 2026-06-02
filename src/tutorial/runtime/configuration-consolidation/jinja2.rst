@@ -165,7 +165,7 @@ This would result in:
 
 .. ifslides::
 
-   Next section: :ref:`tutorial-cylc-families`
+   Next section: :ref:`tutorial-cylc-parameters`
 
 
 
@@ -173,49 +173,48 @@ This would result in:
 
 .. practical::
 
-   .. rubric:: In this practical we will consolidate the configuration of the
-      :ref:`weather-forecasting workflow <tutorial-cylc-runtime-forecasting-workflow>`
-      from the previous section.
+   .. rubric:: This practical continues on from the
+      :ref:`Families practical <cylc-tutorial-families-practical>`.
 
    3. **Use Jinja2 To Avoid Duplication.**
 
-      The ``RESOLUTION`` environment variable is used by multiple tasks.
-      Rather than writing it out multiple times we will use Jinja2
-      to centralise this configuration.
+      We have seen how families can be used to avoid duplication in task definitions.
+      They are, however, limited to definitions, and only where properties exactly match.
+      In contrast, Jinja2 can be used in any part of a workflow, and can be used
+      for simple programmatic logic.  Here, we will make use of Jinja2 for some
+      maths and string manipulation.
 
-      At the top of the :cylc:conf:`flow.cylc` file add the Jinja2 shebang line. Then
-      copy the value of the ``RESOLUTION`` environment variable and use it to
-      define an ``RESOLUTION`` Jinja2 variable:
+      At the top of the :cylc:conf:`flow.cylc` file you should see the Jinja2
+      shebang line has been included for you.  Create some new Jinja2 variables
+      for ``FORECAST_LENGTH`` and ``FORECAST_COUNT``:
 
       .. code-block:: cylc
 
-         #!Jinja2
+        #!Jinja2
 
-         {% set RESOLUTION = 0.2 %}
+        {% set FORECAST_LENGTH = 60 %}
+        {% set FORECAST_COUNT = 5 %}
 
-      Next replace the key, where it appears in the workflow, with
-      ``{{ RESOLUTION }}``:
+      Next replace the parameters for the forecast script within the ``forecast``
+      task with these variables:
 
       .. code-block:: diff
 
-         [[get_rainfall]]
-            script = get-rainfall
-            [[[environment]]]
-         -          RESOLUTION = 0.2
-         +          RESOLUTION = {{ RESOLUTION }}
+        [[forecast]]
+        -   script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
+        +   script = forecast {{ FORECAST_LENGTH }} {{ FORECAST_COUNT }}
 
-         [[forecast]]
-            script = forecast 60 5  # Generate 5 forecasts at 60 minute intervals.
-            [[[environment]]]
-         -          RESOLUTION = 0.2
-         +          RESOLUTION = {{ RESOLUTION }}
+      Then, in the ``post-processing`` task, replace the timestep parameter for the
+      post-processing script with the a simple multiplication of the two variables.
+      You can also use Jinja2 within a comment allowing it to match the dynamic value:
 
-         [[post_process_exeter]]
-            # Generate a forecast for Exeter 60 minutes in the future.
-            script = post-process exeter 60
-            [[[environment]]]
-         -          RESOLUTION = 0.2
-         +          RESOLUTION = {{ RESOLUTION }}
+      .. code-block:: diff
+
+        [[post_process_exeter]]
+        -   # Generate a forecast for Exeter 300 minutes in the future.
+        -   script = post-process exeter 300
+        +   # Generate a forecast [length * count] minutes in the future.
+        +   script = post-process exeter {{ FORECAST_LENGTH * FORECAST_COUNT }}
 
       Check the result with ``cylc config``. The Jinja2 will be processed
       so you should not see any difference after making these changes.

@@ -181,7 +181,7 @@ The default directories included in the remote install are:
 ``etc/``
    For miscellaneous resources.
 ``lib/``
-   For shared libraries e.g. :ref:`CustomJinja2Filters`.
+   For shared libraries e.g. ``lib/python/my_lib.py``.
 
 These will be transferred from the workflow run directory on the
 :term:`scheduler` host to the remote host.
