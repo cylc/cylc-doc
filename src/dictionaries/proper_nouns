@@ -7,7 +7,6 @@ conda
 Conda
 Cylc
 cylc
-Datapoint
 Empy
 Exeter
 Gantt
@@ -19,6 +18,8 @@ GScan
 Heathrow
 Hoverwork
 IDL
+Isodatetime
+isodatetime
 Jinja
 jinja
 Jupyter
