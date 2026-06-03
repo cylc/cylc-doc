@@ -99,19 +99,6 @@ However, Cylc 8 will only copy the ``ana``, ``app``, ``bin``, ``etc`` and
 If you want to include custom files and directories in remote installation,
 use :cylc:conf:`flow.cylc[scheduler]install`.
 
-.. tip::
-
-   If you need to ensure your workflow is still
-   :ref:`interoperable <cylc_7_compat_mode>` with Cylc 7, wrap it in a
-   Jinja2 check like so:
-
-   .. code-block:: cylc
-
-      {% if CYLC_VERSION is defined and CYLC_VERSION[0] == '8' %}
-      [scheduler]
-          install = my-dir/, my-file
-      {% endif %}
-
 See :ref:`the user guide <RemoteInit>` for more details.
 
 .. warning::
