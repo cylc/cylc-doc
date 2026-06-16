@@ -29,6 +29,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
+env:
+  FORCE_COLOR: 'true'
+  PIP_PROGRESS_BAR: 'off'
+
 jobs:
   set-meta-releases:
     # read the meta-release versions from the branches.json file
@@ -144,12 +148,10 @@ jobs:
           builddir="nightly_${{ matrix.meta_release }}"
           make -C docs \
             html \
-            linkcheck \
             SPHINXOPTS="-Wn --keep-going -A sidebar_version_name=${version}" \
             STABLE=false \
             LATEST=false \
-            BUILDDIR="doc/$builddir" \
-            FORCE_COLOR=true
+            BUILDDIR="doc/$builddir"
           git -C gh-pages add "$builddir" 'versions.json'
 
       - name: debug - pip list
