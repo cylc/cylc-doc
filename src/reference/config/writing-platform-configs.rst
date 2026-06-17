@@ -57,7 +57,7 @@ Why Were Platforms Introduced?
 What Are Install Targets?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-An install target is an arbitrary label that represents a file system. All
+An install target is an arbitrary label to identify a distinct file system. All
 platforms that see the same filesystem should specify the same install target
 so that Cylc knows where it needs to install workflow files.
 
