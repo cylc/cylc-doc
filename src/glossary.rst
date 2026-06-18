@@ -1698,24 +1698,21 @@ Glossary
 
 
    terminal branch
-      A terminal branch is a path in the graph that silently dead-ends without
-      leading on to the rest of the graph.
+      A terminal branch is a path in the graph that does not lead on to other
+      parts of the graph.
 
-      Normally this is nothing to worry about - any "leaf" task (i.e. a task
+      Normally this is nothing to worry about - any "leaf" task (i.e., a task
       with nothing downstream of it) is technically the end of a terminal
-      branch. The workflow shuts down as complete when the last terminal branch
-      ends.
+      branch.
 
-      However, watch out for implicit zero-length (invisble) terminal branches
+      However, watch out for implicit zero-length (invisible) terminal branches
       created by mistaken use of optional outputs. For example, making
       ``:succeeded`` :term:`optional <optional output>` implicitly makes
       ``:failed`` optional as well, so the flow will silently dead-end
-      on failure if nothing triggers from it. And if there are no other
-      active branches, the workflow will shut down as complete.
+      there if nothing triggers from the failure. And then, if there are no
+      other active branches, the workflow will shut down as complete.
 
       Optional success should normally only be used with an explicit failure branch.
-      If ``:succeeded`` is not optional, failure is an error condition that will
-      :term:`stall` the workflow.
 
    flow
       Activity propagating throught the graph at runtime can be referred to
