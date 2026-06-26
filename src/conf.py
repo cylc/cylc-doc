@@ -218,7 +218,8 @@ slide_theme_options = {'custom_css': 'css/slides-custom.css'}
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     'logo_only': True,
-    'navigation_depth': 4
+    'navigation_depth': 4,
+    'vcs_pageview_mode': 'edit',
 }
 html_logo = "img/cylc-logo-white.svg"
 html_favicon = "img/cylc-favicon.ico"  # sphinx specifies .ico format
@@ -239,6 +240,11 @@ html_sidebars = {
 # sphinx-build opt `-A name=value` (add to SPHINXOPTS if using make).
 html_context = {
     'sidebar_version_name': None,  # override name in version picker
+    'display_github': True,
+    'github_user': 'cylc',
+    'github_repo': 'cylc-doc',
+    'github_version': 'master',
+    'conf_py_path': '/src/',
 }
 
 # Disable timestamp otherwise inserted at bottom of every page.
