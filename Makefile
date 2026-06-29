@@ -2,7 +2,7 @@
 
 # You can set these variables from the command line:
 # e.g. $ make html SPHINXOPTS=-W
-SPHINXOPTS = -n
+SPHINXOPTS ?= -n
 SPHINXBUILD = sphinx-build
 SOURCEDIR = src
 BUILDDIR = doc/$(shell cylc version)
