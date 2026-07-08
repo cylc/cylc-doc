@@ -48,7 +48,7 @@ line:
    Are you sure you want to upgrade from 8.5.1 to 8.6.4?: y,n? y
 
     ▪ ■  Cylc Workflow Engine 8.6.4
-    ██   Copyright (C) 2008-2026 NIWA
+    ██   Copyright (C) 2008-2026 Earth Sciences New Zealand
    ▝▘    & British Crown (Met Office) & Contributors
 
 ``cylc version``
@@ -106,10 +106,10 @@ You would need to make a change like this to the workflow's configuration:
 
    - [cylc]
    -     [[parameters]]
-   -         site = ukmo, esnz, bom
+   -         site = ukmo, niwa, bom
 
    + [task parameters]
-   +     site = ukmo, esnz, bom
+   +     site = ukmo, niwa, bom
 
 .. note::
 
