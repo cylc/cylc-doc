@@ -479,7 +479,7 @@ E.G. the following error:
 
 Means that ``ssh`` is not installed or not in your ``$PATH``.
 
-See :ref:`non-python-requirements` for details on system requirements.
+See :ref:`installation` for details on system requirements.
 
 
 .. _troubleshooting.remote_init_did_not_complete:
