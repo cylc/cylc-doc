@@ -508,7 +508,7 @@ when playing workflows in the GUI on :ref:`Cylc Hub`.
 
 .. seealso::
 
-   :ref:`managing environments`
+   :ref:`installation.setting-up-the-cylc-wrapper-script`
 
 Cylc Remove
 ^^^^^^^^^^^

@@ -82,6 +82,24 @@ stop buttons on an old tape player. You can play, pause or stop a workflow as
 many times as you like; Cylc will never lose its place in the workflow.
 
 
+.. _cheat_sheet.upgrading_workflows:
+
+Upgrading Workflows
+-------------------
+
+When a new version of Cylc is deployed, workflows can be upgraded by restarting
+them::
+
+   # stop the workflow
+   cylc stop <id>
+
+   # restart the workflow
+   # (you will be prompted if the version would be changed)
+   cylc play <id>
+   # (or skipping interactive prompts)
+   cylc play <id> --upgrade
+
+
 List Workflows
 --------------
 
