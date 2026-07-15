@@ -30,6 +30,59 @@ As part of this change, the version of Jinja2 that Cylc uses has increased From
 break with this Cylc release.
 
 
+"Global" Template Variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Template variables, aka Jinja2 variables for use in the ``flow.cylc`` file,
+may now be configured in the ``global.cylc`` file for automatic use in all
+workflows.
+
+The intention of this feature is to allow site-specific variables to be
+configured to facilitate workflow portability.
+
+This has overlap with the
+:rose:conf:`rose.conf[rose-stem]automatic-options=SITE` Rose configuration
+which sets a template variable called ``SITE`` for use in rose-stem test
+suites. We would encourage all sites using this configuration to copy it
+over to the ``global.cylc`` file to facilitate rose-stem migration.
+
+I.e, if you currently configure this:
+
+.. code-block:: ini
+
+   # rose.conf
+
+   [rose-stem]
+   automatic-options=SITE=my-site
+
+Then additionally configure this:
+
+.. code-block:: cylc
+
+   # global.cylc
+
+   [template variables]
+       SITE = my-site
+
+The Cylc configuration is more generic as it can be used in all workflows
+(not just rose-stem suites). The Rose configuration remains supported and may
+be left in place for back-compatibility with rose-stem workflows running under
+Cylc 8.6.
+
+.. warning::
+
+   The `global.cylc[template variables]` configuration was only added in
+   Cylc 8.7.0 and was not present in earlier versions of Cylc where it would
+   cause errors if defined.
+
+   To configure this only for Cylc 8.7 (to avoid errors with older versions of
+   Cylc) place the config in ``<site-conf-path>/flow/8.7/global.cylc``
+   (you may want to do the same for 8.8, etc, until 8.6 is retired).
+
+   For more information, see `global.cylc` and
+   ``cylc config --print-hierarchy``.
+
+
 Cylc 8.6
 --------
 
