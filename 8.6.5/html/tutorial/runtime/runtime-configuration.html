@@ -333,6 +333,14 @@ script gets wind observations publicly disseminated by the WMO
 <code class="docutils literal notranslate"><span class="pre">SITE_ID</span></code>. This is a four digit numerical code which is used to
 identify a weather station. For example; <code class="docutils literal notranslate"><span class="pre">3772</span></code> is the code for
 Heathrow Airport.</p>
+<p>Add the following lines to the bottom of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[get_observations_heathrow]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> get-observations</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">SITE_ID </span><span class="o">=</span><span class="s"> 3772</span>
+</pre></div>
+</div>
 <p>Add three more <code class="docutils literal notranslate"><span class="pre">get_observations</span></code> tasks for each of the remaining
 weather stations.</p>
 <p>You will need the codes for the other three weather stations, which are:</p>
@@ -513,7 +521,7 @@ i.e. the final cycle point.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
-      <span class="lastupdated">Last updated on Jun 18, 2026.
+      <span class="lastupdated">Last updated on Jul 16, 2026.
       </span></p>
   </div>
 
