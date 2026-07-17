@@ -19,6 +19,23 @@ Cylc 8.6
    :rose: `2.6 <https://github.com/metomi/rose/blob/2.6.x/CHANGES.md>`__
 
 
+Warnings during Jinja2 preprocessing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-flow 8.6.6
+
+Python warnings raised during Jinja2 preprocessing are now logged when running
+relevant Cylc commands (e.g. ``cylc validate`` and ``cylc play``).
+
+.. warning::
+
+   Cylc 8.7.0 will move from Jinja2 3.0 to 3.1, which removes a number of
+   deprecated features.
+   This should only affect you if you use :ref:`CustomJinja2Filters`.
+   Warnings for these deprecations are now logged, but were not previously.
+   See the `Jinja 3.1 release notes <https://jinja.palletsprojects.com/en/stable/changes/#version-3-1-0>`_.
+
+
 UI sidebar improvements
 ^^^^^^^^^^^^^^^^^^^^^^^
 
