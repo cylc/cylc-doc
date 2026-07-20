@@ -312,6 +312,16 @@ Start, Stop, Restart
       identify a weather station. For example; ``3772`` is the code for
       Heathrow Airport.
 
+      Add the following lines to the bottom of the :cylc:conf:`flow.cylc` file:
+
+      .. code-block:: cylc
+
+         [runtime]
+             [[get_observations_heathrow]]
+                 script = get-observations
+                 [[[environment]]]
+                     SITE_ID = 3772
+
       .. TODO: Add instructions for offline configuration
 
       Add three more ``get_observations`` tasks for each of the remaining
