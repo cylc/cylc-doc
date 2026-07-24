@@ -176,69 +176,206 @@ installed workflow at run time:
       {{ CYLC_WORKFLOW_RUN_DIR | default("not-defined") }}
 
 
-Environment Variables
----------------------
-
-Cylc automatically imports the parse-time environment to the template
-processor's global namespace (see :ref:`Jinja2Filters`),
-in a dictionary called ``environ``:
-
-.. code-block:: cylc
-
-   #!Jinja2
-   #...
-   [runtime]
-       [[root]]
-           [[[environment]]]
-               HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
-
-.. important::
-
-   The environment is read during configuration parsing. It is not the run time
-   job environment.
-
 .. _Jinja2Filters:
 
 Jinja2 Filters, Tests and Globals
 ---------------------------------
 
-Jinja2 has three namespaces that separate "globals", "filters" and "tests".
+.. _Jinja2 Built-in Globals: https://jinja.palletsprojects.com/en/stable/templates/#list-of-global-functions
+.. _Jinja2 Built-in Filters: https://jinja.palletsprojects.com/en/stable/templates/#list-of-builtin-filters
+.. _Jinja2 Built-in Tests: https://jinja.palletsprojects.com/en/stable/templates/#builtin-tests
 
- - Globals are template-wide variables and functions. Cylc extends this namespace
-   with the ``environ`` dictionary above, and
-   :ref:`raise <jinja2-raise>` and :ref:`assert <jinja2-assert>`
-   functions for raising exceptions to abort Cylc config parsing.
+Jinja2 provides "globals", "filters" and "tests" which can be helpful in
+workflow writing.
 
- - Filters can be used to modify variable values and are applied using pipe
-   notation. For example, the built-in ``trim`` filter strips leading
-   and trailing white space from a string:
+Globals
+   Regular Python functions.
 
-   .. code-block:: cylc
+   :Jinja2 builtins: `Jinja2 Built-in Globals`_
+   :Cylc builtins: :ref:`user-guide.jinja2.cylc-builtin-globals`
+   :Custom directory: :ref:`Jinja2Globals <user-guide.jinja2.custom-extensions>`
+Filters
+   Special functions which "chain" using the pipe character (``|``).
 
-      {% set MyString = "   dog   " %}
-      {{ MyString | trim() }}  # "dog"
+   :Jinja2 builtins: `Jinja2 Built-in Filters`_
+   :Cylc builtins: :ref:`user-guide.jinja2.cylc-builtin-filters`
+   :Custom directory: :ref:`Jinja2Filters <user-guide.jinja2.custom-extensions>`
+Tests
+   Special functions which work with the ``is`` operator.
 
- - Variable values can be tested using the ``is`` keyword followed by
-   the name of the test, e.g. ``{% if VARIABLE is defined %}``.
+   :Jinja2 builtins: `Jinja2 Built-in Tests`_
+   :Custom directory: :ref:`Jinja2Tests <user-guide.jinja2.custom-extensions>`
 
-See `Jinja2 documentation <https://jinja.palletsprojects.com/en/stable/templates/>`_
-for available built-in globals, filters and tests.
+For example, this :cylc:conf:`flow.cylc` file uses the
+:py:func:`pad <cylc.flow.jinja.filters.pad.pad>` filter to help write out
+task definitions:
+
+.. code-block:: cylc
+
+   [runtime]
+   {% for x in range(3) %}
+       [[task_{{ x | pad(3) }}]]
+           script = sleep {{ x }}
+   {% endfor %}
+
+The Jinja2 would be expanded like so:
+
+.. code-block:: cylc
+
+   [runtime]
+       [[x_001]]
+           script = sleep 1
+       [[x_002]]
+           script = sleep 2
+       [[x_003]]
+           script = sleep 3
+
+In addition to the built-in's that Jinja2 and Cylc provide, we can also define
+our own custom filters (see :ref:`user-guide.jinja2.custom-extensions`).
+
+
+.. _user-guide.jinja2.cylc-builtin-globals:
+
+Cylc Built-in Globals
+^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+
+   * - :py:data:`environ`
+     - Access environment variables.
+   * - :py:func:`raise`
+     - Raise an error.
+   * - :py:func:`assert`
+     - Raise an error if a condition is not met.
+
+.. _jinja2-environ:
+
+.. py:data:: environ
+
+   Provides access to environment variables.
+
+   Note, these are the "parse-time" environment variables - i.e, the environment
+   that is set when the workflow's :cylc:conf`flow.cylc` file is processed.
+   This happens when a workflow is validated or started, not when jobs are
+   submitted. Jinja2 does not have access to dynamic environment variables
+   available to jobs.
+
+   .. describe:: Jinja2 Examples:
+
+      .. code-block:: cylc
+
+         [runtime]
+             [[root]]
+                 [[[environment]]]
+                     HOME_DIR_ON_WORKFLOW_HOST = {{environ['HOME']}}
+
+.. _jinja2-raise:
+
+.. py:function:: raise(error_message)
+
+   The ``raise`` function will result in an error containing the provided text.
+
+   Calling this will cause ``cylc validate`` to fail with the provided error
+   message and will prevent the workflow from being started. It's useful for
+   validating input template variables.
+
+   .. describe:: Jinja2 Examples:
+
+      .. code-block:: cylc
+
+         {% if not VARIABLE is defined %}
+             {{ raise('VARIABLE must be defined for this workflow.') }}
+         {% endif %}
+
+.. _jinja2-assert:
+
+.. py:function:: assert(codition, error_message)
+
+   The ``assert`` function will raise an exception containing the text provided
+   in the second argument providing that the first argument evaluates as False.
+   The following example is equivalent to the "raise" example above.
+
+   Assertion errors will ``cylc validate`` to fail with the provided error
+   message and will prevent the workflow from being started. It's useful for
+   validating input template variables.
+
+   .. describe:: Jinja2 Examples:
+
+      .. code-block:: cylc
+
+         {{ assert(VARIABLE is defined, 'VARIABLE must be defined for this workflow.') }}
+
+
+.. _user-guide.jinja2.cylc-builtin-filters:
+
+Cylc Built-in Filters
+^^^^^^^^^^^^^^^^^^^^^
+
+.. autosummary::
+   :nosignatures:
+
+   cylc.flow.jinja.filters.pad.pad
+   cylc.flow.jinja.filters.strftime.strftime
+   cylc.flow.jinja.filters.duration_as.duration_as
+
+.. autofunction:: cylc.flow.jinja.filters.pad.pad
+
+.. autofunction:: cylc.flow.jinja.filters.strftime.strftime
+
+.. autofunction:: cylc.flow.jinja.filters.duration_as.duration_as
+
 
 .. _CustomJinja2Filters:
+.. _user-guide.jinja2.custom-extensions:
 
-Custom Filters, Tests and Globals
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Custom Jinja2 Extensions
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-Cylc also supports custom Jinja2 filters, tests and globals.
-A custom filter or test is a single Python function in a source file
-with the same name as the function (plus ``.py`` extension).
-Likewise, a custom global is a single Python variable or function.
-These must be located in a subdirectory of the :term:`source directory` called
-``Jinja2Filters``, ``Jinja2Tests``, or ``Jinja2Globals`` respectively.
+Custom Jinja2 globals, filters and tests can be defined within workflows.
 
-In the argument list of a filter or test function, the first argument is
-the variable value to be filtered or tested, and subsequent arguments can be
-whatever is needed.
+These extensions are Python modules containing a function with the same name
+as the module (e.g, a module called ``foo.py`` should contain a function called
+``foo``).
+
+Jinja2 globals, go in the workflow :term:`source directory` in a subdirectory
+called ``Jinja2Globals``, filters into ``Jinja2Filters`` and tests into
+``Jinja2Tests``.
+
+This example defines one of each and demonstrates how to use them:
+
+.. code-block:: cylc
+   :caption: flow.cylc
+
+   #!Jinja2
+
+   # "globals" are regular Python functions
+   {{ square(5) }}
+
+   # filters are special functions which chain using the pipe character
+   {{ ('run', 1) | display_name }}
+
+   # tests are special functions which work with the "is" operator
+   {{ 42 is even }}
+
+.. code-block:: python
+   :caption: Jinja2Filters/display_name.py
+
+   def display_name(argument):
+       name, number = argument
+       return f'{name}_x{number:03d}'
+
+.. code-block:: python
+   :caption: Jinja2Globals/square.py
+
+   def square(number):
+       return number ** 2
+
+.. code-block:: python
+   :caption: Jinja2Tests/even.py
+
+   def even(number):
+       return number % 2 == 0
+
 
 .. seealso::
 
@@ -256,21 +393,6 @@ whatever is needed.
    You should avoid importing external modules that are not available in either
    the standard library, Jinja2, Cylc, or Isodatetime,
    as this could break between Cylc versions or when running on different systems.
-
-Cylc provides several custom filters of its own:
-
-.. autosummary::
-   :nosignatures:
-
-   cylc.flow.jinja.filters.pad.pad
-   cylc.flow.jinja.filters.strftime.strftime
-   cylc.flow.jinja.filters.duration_as.duration_as
-
-.. autofunction:: cylc.flow.jinja.filters.pad.pad
-
-.. autofunction:: cylc.flow.jinja.filters.strftime.strftime
-
-.. autofunction:: cylc.flow.jinja.filters.duration_as.duration_as
 
 
 Associative Arrays In Jinja2
@@ -504,47 +626,6 @@ handled using ``namespace`` objects that allow propagating of changes across sco
 For detail, see
 `Jinja2 Template Designer Documentation - Assignments
 <https://jinja.palletsprojects.com/en/3.0.x/templates/#assignments>`_
-
-
-.. _Jinja2RaisingExceptions:
-
-Raising Exceptions
-------------------
-
-Cylc provides two functions for raising exceptions in Jinja2 code. These
-exceptions are raised when the :cylc:conf:`flow.cylc` file is loaded and will
-prevent a workflow from running.
-
-.. note::
-
-   These functions must be contained within ``{{`` Jinja2 print statements, not
-   ``{%`` code blocks.
-
-.. _jinja2-raise:
-
-Raise
-^^^^^
-
-The ``raise`` function will result in an error containing the provided text.
-
-.. code-block:: cylc
-
-   {% if not VARIABLE is defined %}
-       {{ raise('VARIABLE must be defined for this workflow.') }}
-   {% endif %}
-
-.. _jinja2-assert:
-
-Assert
-^^^^^^
-
-The ``assert`` function will raise an exception containing the text provided in
-the second argument providing that the first argument evaluates as False. The
-following example is equivalent to the "raise" example above.
-
-.. code-block:: cylc
-
-   {{ assert(VARIABLE is defined, 'VARIABLE must be defined for this workflow.') }}
 
 
 .. _jinja2.importing_python_modules:
