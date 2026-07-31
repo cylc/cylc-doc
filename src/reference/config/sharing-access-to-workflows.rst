@@ -160,7 +160,7 @@ Authorization is configured by these two configurations:
        "user1": ["READ"],
 
        # allow "user2" to monitor and trigger tasks in my workflows
-       "user2": ["READ", "Trigger"],
+       "user2": ["READ", "trigger"],
    }
 
 
