@@ -17,7 +17,7 @@ Cylc Flow provides the following pre-configure and post-install plugins:
    :toctree: built-in
    :template: docstring_only.rst
 
-   cylc.flow.install_plugins.log_vc_info
+   cylc.flow.plugins.log_vc_info
 
 .. Note: Autosummary generates files in this directory, these are cleaned
          up by `make clean`.
