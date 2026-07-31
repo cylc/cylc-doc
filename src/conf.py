@@ -1,5 +1,5 @@
 # THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
-# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+# Copyright (C) Earth Sciences New Zealand & British Crown (Met Office) & Contributors.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ master_doc = 'index'
 project = 'Cylc'
 __copyright_year = 2026  # NOTE: this is automatically set by GH Actions
 copyright = (
-    f'2008-{__copyright_year} NIWA & British Crown (Met Office) & Contributors'
+    f'2008-{__copyright_year} Earth Sciences New Zealand & British Crown (Met Office) & Contributors'
 )
 
 # Versioning information.

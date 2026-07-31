@@ -50,9 +50,11 @@ A Cylc :term:`source directory` contains:
    - Custom :ref:`job runners <CustomJobSubmissionMethods>`
    - Custom :ref:`Jinja2 Filters<CustomJinja2Filters>`
 
-Other files and folders may be placed in the :term:`source directory` too:
-documentation, configuration files, etc. When the workflow is :ref:`installed
-<Installing-workflows>` these will be copied over to the :term:`run directory`.
+Other files and folders
+   Such as documentation, configuration files, etc.
+
+When the workflow is :ref:`installed <Installing-workflows>`
+these will be copied over to the :term:`run directory`.
 
 .. note::
 
