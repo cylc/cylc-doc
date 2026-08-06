@@ -230,8 +230,8 @@ The Jinja2 would be expanded like so:
        [[x_003]]
            script = sleep 3
 
-In addition to the built-in's that Jinja2 and Cylc provide, we can also define
-our own custom filters (see :ref:`user-guide.jinja2.custom-extensions`).
+In addition to the built-ins that Jinja2 and Cylc provide, you can also define
+your own custom filters (see :ref:`user-guide.jinja2.custom-extensions`).
 
 
 .. _user-guide.jinja2.cylc-builtin-globals:
@@ -255,7 +255,7 @@ Cylc Built-in Globals
    Provides access to environment variables.
 
    Note, these are the "parse-time" environment variables - i.e, the environment
-   that is set when the workflow's :cylc:conf`flow.cylc` file is processed.
+   that is set when the workflow's :cylc:conf:`flow.cylc` file is processed.
    This happens when a workflow is validated or started, not when jobs are
    submitted. Jinja2 does not have access to dynamic environment variables
    available to jobs.
@@ -283,13 +283,13 @@ Cylc Built-in Globals
 
       .. code-block:: cylc
 
-         {% if not VARIABLE is defined %}
+         {% if VARIABLE is not defined %}
              {{ raise('VARIABLE must be defined for this workflow.') }}
          {% endif %}
 
 .. _jinja2-assert:
 
-.. py:function:: assert(codition, error_message)
+.. py:function:: assert(condition, error_message)
 
    The ``assert`` function will raise an exception containing the text provided
    in the second argument providing that the first argument evaluates as False.
@@ -337,8 +337,8 @@ These extensions are Python modules containing a function with the same name
 as the module (e.g, a module called ``foo.py`` should contain a function called
 ``foo``).
 
-Jinja2 globals, go in the workflow :term:`source directory` in a subdirectory
-called ``Jinja2Globals``, filters into ``Jinja2Filters`` and tests into
+Jinja2 globals go in the workflow :term:`source directory` in a subdirectory
+called ``Jinja2Globals``, filters in ``Jinja2Filters`` and tests in
 ``Jinja2Tests``.
 
 This example defines one of each and demonstrates how to use them:
