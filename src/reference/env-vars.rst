@@ -29,8 +29,8 @@ The recommended way to manage Cylc deployments is via a "wrapper script".
 
 Cylc provides a wrapper script which can be used to manage multiple parallel
 deployments of different versions of Cylc and a mechanism for switching between
-them. For more information on the wrapper scrip, see :Ref:`managing
-environments`.
+them. For more information on the wrapper script, see 
+:ref:`installation.distributed-installation`.
 
 The Cylc wrapper script uses / defines the following environment variables:
 
