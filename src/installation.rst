@@ -6,7 +6,7 @@ Installation
 .. _Graphviz: https://graphviz.org/download/
 .. _configurable-http-proxy: https://anaconda.org/conda-forge/configurable-http-proxy
 
-Cylc runs on Linux and :ref:`macOS <installing.macos>`, we recommend installing
+Cylc runs on Linux and :ref:`macOS <installing.macos>`. We recommend installing it
 from `conda-forge <https://conda-forge.org/>`_.
 
 
