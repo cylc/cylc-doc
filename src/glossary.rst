@@ -186,6 +186,12 @@ Glossary
          If you are not using named or numbered runs, the workflow name will be
          the same as :term:`workflow id`.
 
+   wrapper script
+      A simple shell script which redirects a command to an environment or
+      executable.
+
+      See :ref:`installation.what-are-wrapper-scripts` and
+      :ref:`installation.setting-up-the-cylc-wrapper-script`.
 
    external trigger
    xtrigger
