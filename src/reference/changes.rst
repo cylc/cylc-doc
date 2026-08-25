@@ -13,10 +13,10 @@ Cylc 8.6
    :class: hint
 
    :cylc-flow: `8.6 <https://github.com/cylc/cylc-flow/blob/8.6.x/CHANGES.md>`__
-   :cylc-ui: `2.11 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md#cylc-ui-2110-released-2025-11-27>`__
-   :cylc-uiserver: `1.8 <https://github.com/cylc/cylc-uiserver/blob/1.8.x/CHANGES.md>`__
+   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.9 <https://github.com/cylc/cylc-uiserver/blob/1.9.x/CHANGES.md>`__
    :cylc-rose: `1.7 <https://github.com/cylc/cylc-rose/blob/1.7.x/CHANGES.md>`__
-   :rose: `2.6 <https://github.com/metomi/rose/blob/2.6.x/CHANGES.md>`__
+   :rose: `2.7 <https://github.com/metomi/rose/blob/2.7.x/CHANGES.md>`__
 
 
 Warnings during Jinja2 preprocessing
