@@ -8,6 +8,7 @@ Running Workflows
 
    scheduler-start-up
    tasks-jobs-ui
+   log-viewer
    tracking-task-state
    workflow-completion
    reflow
