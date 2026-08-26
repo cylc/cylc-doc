@@ -21,20 +21,6 @@ Cylc now uses more widely understood terms for several core concepts.
 
 Note the configuration filename is now ``flow.cylc``, not ``suite.rc``.
 
-Cylc 7 Compatibility Mode
--------------------------
-
-Continuing to use the old ``suite.rc`` filename triggers a :ref:`backward
-compatibility mode<cylc_7_compat_mode>` in Cylc 8 which supports Cylc 7
-workflow configurations out of the box, with
-:ref:`some caveats <compat_required_changes>`. However, to future-proof
-your workflow and take full advantage of Cylc 8 you should upgrade to Cylc 8 syntax.
-
-.. warning::
-
-   Cylc 7 compatibility mode will be removed in Cylc 8.7.0.
-
-
 Upgrading To Cylc 8
 -------------------
 .. seealso::
@@ -47,9 +33,6 @@ To upgrade your Cylc 7 suite to a Cylc 8 workflow:
 
 #. Using Cylc 7, make sure the configuration validates (``cylc validate``)
    without any warnings.
-#. Using Cylc 8 check that you can run the workflow. Running Cylc 8 with a
-   workflow configured with a ``suite.rc`` turns on
-   :ref:`compatibility mode <cylc_7_compat_mode>`.
 #. Rename the workflow configuration file from ``suite.rc`` to  ``flow.cylc``.
 #. Using Cylc 8 run ``cylc lint --ruleset 728`` and ``cylc validate``. Make
    sure that you deal with any warnings produced by these scripts.
@@ -290,8 +273,7 @@ Queues
    we now recommend using queues to restrict the number of running tasks in
    situations where graphing may have been used previously.
 Time Zones
-   :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC, unless you
-   are working in :ref:`cylc_7_compat_mode`.
+   :cylc:conf:`[scheduler]cycle point time zone` now defaults to UTC.
 Job Scripts
    All user-defined task scripting now runs in a subshell, so you can safely
    switch Python environments inside tasks without affecting Cylc.

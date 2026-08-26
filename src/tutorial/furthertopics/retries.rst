@@ -22,8 +22,8 @@ Tasks that fail because of temporary hardware or network outages may succeed if
 simply resubmitted after a delay. Others might succeed if configured differently
 on the retry.
 
-A job environment variable ``$CYLC_TASK_TRY_NUMBER`` increments with each try,
-to allow try-dependent behaviour in the task script.
+A job environment variable :envvar:`CYLC_TASK_TRY_NUMBER` increments with each
+try, to allow try-dependent behaviour in the task script.
 
 .. note::
 
@@ -141,7 +141,7 @@ Altering Behaviour
 ------------------
 
 We can alter the behaviour of the task based on the number of retries, using
-``$CYLC_TASK_TRY_NUMBER``.
+:envvar:`CYLC_TASK_TRY_NUMBER`.
 
 Change the ``script`` setting for the ``roll_doubles`` task to this::
 

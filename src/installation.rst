@@ -192,15 +192,19 @@ The wrapper script assumes your Cylc environments follow the naming pattern:
 
 .. note::
 
-   Developers can set ``$CYLC_HOME_ROOT_ALT`` to point
+   Developers can set :envvar:`CYLC_HOME_ROOT_ALT` to point
    to their development environments. For example:
 
    .. code-block:: bash
 
       CYLC_HOME_ROOT_ALT=${HOME}/.conda/envs
 
-You may wish to use the same approach for the ``isodatetime`` command, and, if using
-`Rose`_ for the ``rose`` and ``rosie`` commands.
+.. seealso::
+
+   :ref:`reference.wrapper_script_environment_variables`
+
+You may wish to use the same approach for the ``isodatetime`` command, and, if
+using `Rose`_ for the ``rose`` and ``rosie`` commands.
 
 To do so create a symbolic link to the wrapper, for each of these commands:
 
