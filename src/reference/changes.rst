@@ -93,10 +93,27 @@ Cylc 8.6
    :class: hint
 
    :cylc-flow: `8.6 <https://github.com/cylc/cylc-flow/blob/8.6.x/CHANGES.md>`__
-   :cylc-ui: `2.11 <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md#cylc-ui-2110-released-2025-11-27>`__
-   :cylc-uiserver: `1.8 <https://github.com/cylc/cylc-uiserver/blob/1.8.x/CHANGES.md>`__
+   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.9 <https://github.com/cylc/cylc-uiserver/blob/1.9.x/CHANGES.md>`__
    :cylc-rose: `1.7 <https://github.com/cylc/cylc-rose/blob/1.7.x/CHANGES.md>`__
-   :rose: `2.6 <https://github.com/metomi/rose/blob/2.6.x/CHANGES.md>`__
+   :rose: `2.7 <https://github.com/metomi/rose/blob/2.7.x/CHANGES.md>`__
+
+
+Warnings during Jinja2 preprocessing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: cylc-flow 8.6.6
+
+Python warnings raised during Jinja2 preprocessing are now logged when running
+relevant Cylc commands (e.g. ``cylc validate`` and ``cylc play``).
+
+.. warning::
+
+   Cylc 8.7.0 will move from Jinja2 3.0 to 3.1, which removes a number of
+   deprecated features.
+   This should only affect you if you use :ref:`user-guide.jinja2.custom-extensions`.
+   Warnings for these deprecations are now logged, but were not previously.
+   See the `Jinja 3.1 release notes <https://jinja.palletsprojects.com/en/stable/changes/#version-3-1-0>`_.
 
 
 UI sidebar improvements
