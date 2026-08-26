@@ -7,9 +7,9 @@ Running Workflows
    :maxdepth: 2
 
    scheduler-start-up
+   workflow-completion
    tasks-jobs-ui
    tracking-task-state
-   workflow-completion
    reflow
    workflow-run-modes
    scheduler-log-files
