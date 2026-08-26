@@ -33,6 +33,8 @@ break with this Cylc release.
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. _rose.conf[rose-stem]automatic-options=SITE: https://metomi.github.io/rose/doc/html/api/configuration/site-and-user.html#rose:conf:rose.conf[rose-stem]automatic-options
+
 Template variables, aka Jinja2 variables for use in the ``flow.cylc`` file,
 may now be configured in the ``global.cylc`` file for automatic use in all
 workflows.
@@ -41,7 +43,7 @@ The intention of this feature is to allow site-specific variables to be
 configured to facilitate workflow portability.
 
 This has overlap with the
-:rose:conf:`rose.conf[rose-stem]automatic-options=SITE` Rose configuration
+`rose.conf[rose-stem]automatic-options=SITE`_ Rose configuration
 which sets a template variable called ``SITE`` for use in rose-stem test
 suites. We would encourage all sites using this configuration to copy it
 over to the ``global.cylc`` file to facilitate rose-stem migration.
