@@ -1,0 +1,28 @@
+﻿cylc.flow.main\_loop.reset\_bad\_hosts
+======================================
+
+.. automodule:: cylc.flow.main_loop.reset_bad_hosts
+   :members: reset_bad_hosts
+
+   .. set members so that we only document what is actually defined
+      otherwise you can end up with imported modules and mess like that
+
+   
+
+   Python API
+   ----------
+
+   
+   .. rubric:: Coroutines
+
+   .. write out a table of functions (coroutines in this context)
+      for quick reference
+       
+   .. autosummary::
+      :nosignatures:
+
+   
+      reset_bad_hosts
+
+   
+   
