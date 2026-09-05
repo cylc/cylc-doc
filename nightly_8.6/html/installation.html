@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; Cylc 8.6.6.dev documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=47202671" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/css/diff_selector.css?v=9704a72b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/grid_table.css?v=0285b42e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/tutorial.css?v=b869d33c" />
+      <link rel="stylesheet" type="text/css" href="_static/css/addons.css?v=d1f804c3" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=7d836aa2" />
+
+  
+    <link rel="shortcut icon" href="_static/cylc-favicon.ico"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9737f2e7"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=7c20c939"></script>
+      <script src="_static/js/diff_selector.js?v=3109bfa4"></script>
+      <script src="_static/js/minicylc.js?v=ddc882fd"></script>
+      <script src="_static/js/spoiler.js?v=12631137"></script>
+      <script src="_static/js/addons.js?v=39bd7dee"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script src="_static/js/extern_links_new_tab.js?v=3100c678"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial/index.html" />
+    <link rel="prev" title="Cylc 8.6 Caveats" href="7-to-8/caveats.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/cylc-logo-white.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="7-to-8/index.html">Cylc 8 Migration Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-installation-for-standalone-machines">Quick Installation (for standalone machines)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distributed-installation-for-networks-hpc-and-cloud-environments">Distributed Installation (for networks, HPC and cloud environments)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-are-wrapper-scripts">What Are Wrapper Scripts?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-cylc-wrapper-script">Setting Up The Cylc Wrapper Script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cylc-packages">Cylc Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-on-macos">Installing On macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-flow">Cylc Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cylc-ui-server">Cylc UI Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bash-profile">Bash Profile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shell-auto-completion">Shell Auto-Completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#text-editors">Text Editors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/index.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugins/index.html">Plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow-design-guide/index.html">Workflow Design Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cylc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>Cylc runs on Linux and <a class="reference internal" href="#installing-macos"><span class="std std-ref">macOS</span></a>. We recommend installing it
+from <a class="reference external" href="https://conda-forge.org/">conda-forge</a>.</p>
+<section id="quick-installation-for-standalone-machines">
+<h2>Quick Installation (for standalone machines)<a class="headerlink" href="#quick-installation-for-standalone-machines" title="Link to this heading"></a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="conda" for="sd-tab-item-0">
+Conda (recommended)</label><div class="sd-tab-content docutils">
+<p>Use either conda, miniconda, mamba or micromamba:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cylc-flow
+</pre></div>
+</div>
+<p>And optionally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># install cylc-uiserver (provides the Cylc GUI)</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cylc-uiserver
+
+<span class="c1"># install Rose support</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cylc-rose<span class="w"> </span>metomi-rose
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">System Dependencies</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Cylc requires the following packages (not installed by <code class="docutils literal notranslate"><span class="pre">conda</span></code>):</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">bash</span></code></p></li>
+<li><p class="sd-card-text">GNU <a class="reference external" href="https://en.wikipedia.org/wiki/GNU_Core_Utilities">coreutils</a></p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">ssh</span></code></p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">rsync</span></code></p></li>
+</ul>
+<p class="sd-card-text">And optionally:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">mail</span></code> (for automated email functionality)</p></li>
+</ul>
+</div>
+</details></div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-1">
+Pip</label><div class="sd-tab-content docutils">
+<p>Use either pip or uv:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>cylc-flow
+</pre></div>
+</div>
+<p>And optionally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># install cylc-uiserver (provides the Cylc GUI)</span>
+pip<span class="w"> </span>install<span class="w"> </span>cylc-uiserver
+
+<span class="c1"># install Rose support</span>
+pip<span class="w"> </span>install<span class="w"> </span>cylc-rose<span class="w"> </span>metomi-rose
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-primary sd-bg-text-primary">
+<span class="sd-summary-text">We recommend using a virtual environment</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">We recommend installing Cylc in a virtual environment. This
+avoids software dependency conflicts and allows you to create new
+installations of Cylc on a system without breaking old ones
+(see <a class="reference internal" href="#installation-what-are-wrapper-scripts"><span class="std std-ref">What Are Wrapper Scripts?</span></a>).</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-warning sd-bg-text-warning">
+<span class="sd-summary-text">System Dependencies</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Cylc requires the following packages (not installed by <code class="docutils literal notranslate"><span class="pre">pip</span></code>):</p>
+<ul class="simple">
+<li><p class="sd-card-text">Python 3.12+</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">bash</span></code></p></li>
+<li><p class="sd-card-text">GNU <a class="reference external" href="https://en.wikipedia.org/wiki/GNU_Core_Utilities">coreutils</a></p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">ssh</span></code></p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">rsync</span></code></p></li>
+</ul>
+<p class="sd-card-text">And optionally:</p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">mail</span></code> (for automated email functionality)</p></li>
+<li><p class="sd-card-text"><a class="reference external" href="https://graphviz.org/download/">Graphviz</a> (used by <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> for displaying workflow graphs)</p></li>
+<li><p class="sd-card-text"><a class="reference external" href="https://anaconda.org/conda-forge/configurable-http-proxy">configurable-http-proxy</a> (for multi-user setups; can also be
+installed using npm)</p></li>
+</ul>
+</div>
+</details></div>
+</div>
+<p>Once installed, you might want to configure:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#installation-shell-auto-completion"><span class="std std-ref">Shell auto-completion</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/configuration.html#syntaxhighlighting"><span class="std std-ref">Text editor support</span></a></p></li>
+</ul>
+</section>
+<section id="distributed-installation-for-networks-hpc-and-cloud-environments">
+<span id="installation-distributed-installation"></span><h2>Distributed Installation (for networks, HPC and cloud environments)<a class="headerlink" href="#distributed-installation-for-networks-hpc-and-cloud-environments" title="Link to this heading"></a></h2>
+<p>Cylc is a distributed system. Cylc <a class="reference internal" href="glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> can either
+submit jobs locally, or to external <a class="reference internal" href="glossary.html#term-job-runner"><span class="xref std std-term">job runners</span></a> such as
+PBS or Slurm.</p>
+<p>With local job submission, it is sufficient to activate your Cylc environment
+and run the workflow <a class="footnote-reference brackets" href="#id9" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. However, when using external job runners or distributing
+schedulers over multiple nodes on a network, you will need a mechanism to
+intercept <code class="docutils literal notranslate"><span class="pre">cylc</span></code> commands and direct them to the environment where Cylc is
+installed (because environments do not persist with remote system calls and may
+not persist with job submission <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>).</p>
+<p>To do this, we use a “wrapper script”, a simple shell script which you locate
+somewhere in the default <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p>
+<section id="what-are-wrapper-scripts">
+<span id="installation-what-are-wrapper-scripts"></span><h3>What Are Wrapper Scripts?<a class="headerlink" href="#what-are-wrapper-scripts" title="Link to this heading"></a></h3>
+<p>A bare-bones wrapper script might look like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -l</span>
+
+<span class="c1"># NOTE: intercept "cylc" calls and direct them to the</span>
+<span class="c1"># "cylc-environment-name" conda environment</span>
+<span class="nb">exec</span><span class="w"> </span>conda<span class="w"> </span>run<span class="w"> </span>-n<span class="w"> </span>cylc-environment-name<span class="w"> </span>cylc<span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</pre></div>
+</div>
+<p>Name this script <code class="docutils literal notranslate"><span class="pre">cylc</span></code> and insert it somewhere in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> and all
+<code class="docutils literal notranslate"><span class="pre">cylc</span></code> command calls will be routed via this environment without the need to
+manually activate it first.</p>
+<p>Cylc provides a more advanced wrapper script which:</p>
+<ul class="simple">
+<li><p>Supports multiple parallel deployments of Cylc at different versions <a class="footnote-reference brackets" href="#id7" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>Works with Conda, Mamba and Python virtual environments.</p></li>
+<li><p><strong>Doesn’t</strong> activate the environment (ensures background jobs submitted by
+Cylc consistently run in the system environment, not the Cylc environment <a class="footnote-reference brackets" href="#id8" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>).</p></li>
+</ul>
+</section>
+<section id="setting-up-the-cylc-wrapper-script">
+<span id="installation-setting-up-the-cylc-wrapper-script"></span><h3>Setting Up The Cylc Wrapper Script<a class="headerlink" href="#setting-up-the-cylc-wrapper-script" title="Link to this heading"></a></h3>
+<p>Extract the Cylc wrapper script to a directory within <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc get-resources cylc <span class="s">&lt;directory&gt;</span>/cylc
+chmod +x <span class="s">&lt;directory&gt;</span>/cylc
+</pre></div>
+</div>
+<p>Then edit the script and adjust <code class="docutils literal notranslate"><span class="pre">CYLC_HOME_ROOT</span></code> to the directory which contains your Cylc
+environment(s).</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-muted sd-bg-text-muted">
+<span class="sd-summary-text">How to locate my environments?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Activate your environment and run <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">cylc</span></code>.</p>
+<p class="sd-card-text">For example, if you get this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>which<span class="w"> </span>cylc
+<span class="go">8.6.4 (/site/apps/cylc-8.6.4/bin/cylc)</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Then your environment is named <code class="docutils literal notranslate"><span class="pre">cylc-8.6.4</span></code>) and located in
+<code class="docutils literal notranslate"><span class="pre">/site/apps/</span></code>, you should edit the wrapper script like so:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- CYLC_HOME_ROOT="${CYLC_HOME_ROOT:-/opt}"</span>
+<span class="gi">+ CYLC_HOME_ROOT="${CYLC_HOME_ROOT:-/site/apps/}"</span>
+</pre></div>
+</div>
+</div>
+</details><p>The wrapper script assumes your Cylc environments follow the naming pattern:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc-<span class="s">&lt;version&gt;</span>
+<span class="c"># OR</span>
+cylc-<span class="s">&lt;version&gt;</span>-<span class="s">&lt;arbitrary-id&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Developers can set <code class="docutils literal notranslate"><span class="pre">$CYLC_HOME_ROOT_ALT</span></code> to point
+to their development environments. For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">CYLC_HOME_ROOT_ALT</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.conda/envs
+</pre></div>
+</div>
+</div>
+<p>You may wish to use the same approach for the <code class="docutils literal notranslate"><span class="pre">isodatetime</span></code> command, and, if using
+<a class="reference external" href="https://github.com/metomi/rose">Rose</a> for the <code class="docutils literal notranslate"><span class="pre">rose</span></code> and <code class="docutils literal notranslate"><span class="pre">rosie</span></code> commands.</p>
+<p>To do so create a symbolic link to the wrapper, for each of these commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/directory<span class="w">  </span><span class="c1"># the path where you installed the wrapper script</span>
+ln<span class="w"> </span>-s<span class="w"> </span>cylc<span class="w"> </span>rose
+ln<span class="w"> </span>-s<span class="w"> </span>cylc<span class="w"> </span>rosie
+ln<span class="w"> </span>-s<span class="w"> </span>cylc<span class="w"> </span>isodatetime
+</pre></div>
+</div>
+<p>Further information on wrapper script functionality and interface can be found
+in the header of the script itself.</p>
+</section>
+</section>
+<section id="cylc-packages">
+<h2>Cylc Packages<a class="headerlink" href="#cylc-packages" title="Link to this heading"></a></h2>
+<p>Cylc is split into a number of components providing different functionality:</p>
+<dl>
+<dt><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a></dt><dd><p>Provides the scheduler “kernel” of Cylc along with the command line
+interface.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-primary sd-bg-text-primary">
+<span class="sd-summary-text">Packages and optional extras:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="conda" for="sd-tab-item-2">
+Conda</label><div class="sd-tab-content docutils">
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-flow</span></code></dt><dd><p class="sd-card-text">The full installation, recommended for most uses.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-flow-base</span></code></dt><dd><p class="sd-card-text">A minimal package, recommended for installation on job hosts where the
+full range of user-facing commands is not required.</p>
+</dd>
+</dl>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-3">
+Pip</label><div class="sd-tab-content docutils">
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-flow[graph]</span></code></dt><dd><p class="sd-card-text">Provides the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> command for workflow graph
+visualisation.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-flow[report-timings]</span></code></dt><dd><p class="sd-card-text">Provides the <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">report-timings</span></code> command for analysing
+job timing information.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-flow[tutorials]</span></code></dt><dd><p class="sd-card-text">Provides the dependencies required for the <a class="reference internal" href="tutorial/index.html#cylc-tutorial"><span class="std std-ref">Tutorial</span></a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-muted sd-bg-text-muted">
+<span class="sd-summary-text">Distributed installations:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Cylc Flow must be installed on all nodes where:</p>
+<ul class="simple">
+<li><p class="sd-card-text">The CLI is used.</p></li>
+<li><p class="sd-card-text">Schedulers are run.</p></li>
+<li><p class="sd-card-text">The GUI is run.</p></li>
+<li><p class="sd-card-text">Cylc jobs are submitted to (including HPC compute nodes).</p></li>
+</ul>
+</div>
+</details></dd>
+<dt><a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a></dt><dd><p>Provides the “Cylc Hub” and the browser-based “Cylc GUI”.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-primary sd-bg-text-primary">
+<span class="sd-summary-text">Packages and optional extras:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="conda" for="sd-tab-item-4">
+Conda</label><div class="sd-tab-content docutils">
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-uiserver</span></code></dt><dd><p class="sd-card-text">The full installation, including <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>, recommended for
+most uses.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-uiserver-base</span></code></dt><dd><p class="sd-card-text">The base package without <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-uiserver-hub-base</span></code></dt><dd><p class="sd-card-text">The base package with <code class="docutils literal notranslate"><span class="pre">jupyterhub-base</span></code> (a cut-down version
+of <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>). This may be useful if you want to install
+<a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> with an alternative reverse proxy.</p>
+</dd>
+</dl>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-5">
+Pip</label><div class="sd-tab-content docutils">
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-uiserver</span></code></dt><dd><p class="sd-card-text">The base package without <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">cylc-uiserver[hub]</span></code></dt><dd><p class="sd-card-text">The full installation, including <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>, recommended for
+most uses.</p>
+<p class="sd-card-text">You will additionally need to install the <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> dependency
+<code class="docutils literal notranslate"><span class="pre">configurable-http-proxy</span></code> (e.g, via <code class="docutils literal notranslate"><span class="pre">npm</span></code>).</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="sd-card-text">For more information on the role of <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> see
+<a class="reference internal" href="reference/architecture/ui-server.html#cylcuiserver-architecture"><span class="std std-ref">Cylc UI Server</span></a>.</p>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-muted sd-bg-text-muted">
+<span class="sd-summary-text">Distributed installations:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Cylc UI Server must be installed on the node(s) where the Cylc GUI
+is run.</p>
+</div>
+</details></dd>
+<dt><a class="reference internal" href="plugins/cylc-rose.html#cylc-rose"><span class="std std-ref">Cylc Rose</span></a></dt><dd><p>Provides support for <a class="reference external" href="https://github.com/metomi/rose">Rose</a> suite configurations in
+Cylc workflows.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-muted sd-bg-text-muted">
+<span class="sd-summary-text">Distributed installations:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Cylc Rose must be installed in all of the locations Cylc Flow is
+installed (if Rose support is required).</p>
+</div>
+</details></dd>
+<dt><a class="reference external" href="https://metomi.github.io/rose">Rose</a></dt><dd><p>The Rose toolkit for writing, editing and running application configurations.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-primary sd-bg-text-primary">
+<span class="sd-summary-text">Packages and optional extras:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">See the Rose installation page: <a class="reference external" href="https://metomi.github.io/rose/doc/html/index.html">https://metomi.github.io/rose/doc/html/index.html</a></p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="conda" for="sd-tab-item-6">
+Conda</label><div class="sd-tab-content docutils">
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose</span></code>:</dt><dd><p class="sd-card-text">The full installation, recommended for most uses.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose-base</span></code>:</dt><dd><p class="sd-card-text">A minimal package, recommended for installation on job hosts
+where the full range of user-facing commands is not required.</p>
+</dd>
+</dl>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="tab" data-sync-id="pip" for="sd-tab-item-7">
+Pip</label><div class="sd-tab-content docutils">
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose</span></code></dt><dd><p class="sd-card-text">The base package.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose[edit]</span></code></dt><dd><p class="sd-card-text">Provides the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">edit</span></code> GUI. Extra dependencies are required
+for this, see the Rose installation instructions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose[graph]</span></code></dt><dd><p class="sd-card-text">Provides the <code class="docutils literal notranslate"><span class="pre">rose</span> <span class="pre">metadata-graph</span></code> command.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose[tutorials]</span></code></dt><dd><p class="sd-card-text">Provides the dependencies for the <a class="reference external" href="https://metomi.github.io/rose/2.4.0/html/tutorial/rose/index.html#rose-tutorial" title="(in Rose Documentation v2.4.0)"><span>Rose Tutorial</span></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">metomi-rose[disco]</span></code></dt><dd><p class="sd-card-text">Provides the Rosie Disco web service.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-muted sd-bg-text-muted">
+<span class="sd-summary-text">Distributed installations:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Rose must be installed in all of the locations Cylc Flow is
+installed (if Rose support is required).</p>
+</div>
+</details></dd>
+</dl>
+</section>
+<section id="installing-on-macos">
+<span id="installing-macos"></span><h2>Installing On macOS<a class="headerlink" href="#installing-on-macos" title="Link to this heading"></a></h2>
+<p>We recommend using the <a class="reference external" href="https://formulae.brew.sh/">Homebrew</a> package manager to install the Bash,
+coreutils and gnu-sed system dependencies:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>brew<span class="w"> </span>install<span class="w"> </span>bash<span class="w"> </span>coreutils<span class="w"> </span>gnu-sed
+</pre></div>
+</div>
+<p>You will need to prepend the <code class="docutils literal notranslate"><span class="pre">coreutils</span></code> and <code class="docutils literal notranslate"><span class="pre">gnu-sed</span></code> installations to
+your <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>, follow the instructions in the <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span></code> output.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference external" href="https://man.freebsd.org/cgi/man.cgi?query=atrun&amp;sektion=8&amp;format=html">atrun</a> (the <code class="docutils literal notranslate"><span class="pre">at</span></code> command) does not run out-of-the-box on macOS
+for security reasons and must be manually enabled if you want Cylc to
+submit jobs using <code class="docutils literal notranslate"><span class="pre">at</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The macOS default shell is <code class="docutils literal notranslate"><span class="pre">zsh</span></code> (not <code class="docutils literal notranslate"><span class="pre">bash</span></code>). You do not need to change
+this but be aware that Cylc uses <code class="docutils literal notranslate"><span class="pre">bash</span></code> (for job scripts) which has a
+subtly different syntax.</p>
+<p>If you do not install <code class="docutils literal notranslate"><span class="pre">bash</span></code> (e.g, via Homebrew as mentioned above) you
+will get the ancient version Bash (3.2) that comes pre-installed with
+macOS.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>SSH is disabled by default on macOS. It is required for
+<a class="reference internal" href="#installation-distributed-installation"><span class="std std-ref">distributed installations</span></a>.</p>
+<p>See the <a class="reference external" href="https://support.apple.com/en-gb/guide/mac-help/mchlp1066/mac">Apple support page</a>
+for instructions on enabling SSH.</p>
+</div>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>Cylc uses “safe and sane” defaults and is suitable for use “out of the box”,
+if all you need to do is run jobs locally in the background.
+However, many things may need to be configured, e.g:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/config/writing-platform-configs.html#adminguide-platformconfigs"><span class="std std-ref">Platform Configuration</span></a> (jobs hosts, runners, etc)</p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/scheduler.html#submitting-workflows-to-a-pool-of-hosts"><span class="std std-ref">Scheduler Hosts</span></a></p></li>
+<li><p><a class="reference internal" href="user-guide/writing-workflows/runtime.html#user-guide-runtime-task-event-handling-general-event-handlers"><span class="std std-ref">Default Event Handlers</span></a>.</p></li>
+</ul>
+<section id="cylc-flow">
+<h3>Cylc Flow<a class="headerlink" href="#cylc-flow" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://github.com/cylc/cylc-flow">Cylc Flow</a> is configured by the <a class="reference internal" href="reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a> file which supports
+configuration of the system on both a site and user basis.</p>
+<p>The <a class="reference internal" href="reference/config/global.html#global.cylc" title="global.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc</span></code></a> file should be present on user machines (where
+users interact with Cylc on the command line) and on cylc servers
+(<a class="reference internal" href="reference/config/global.html#global.cylc[scheduler][run hosts]available" title="global.cylc[scheduler][run hosts]available"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">hosts</span></code></a> where Cylc
+<a class="reference internal" href="glossary.html#term-scheduler"><span class="xref std std-term">schedulers</span></a> run). It is not required on job hosts.</p>
+<p>More information about supported configuration items and defaults can be found:
+<a class="reference internal" href="reference/config/global.html#global-configuration"><span class="std std-ref">Global Configuration</span></a>.</p>
+</section>
+<section id="cylc-ui-server">
+<h3>Cylc UI Server<a class="headerlink" href="#cylc-ui-server" title="Link to this heading"></a></h3>
+<p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">Cylc UI Server</a> can be configured on a site and user basis.
+Guidance for configuration file storage, configuration variables and defaults
+can be found: <a class="reference internal" href="reference/config/ui-server.html#ui-server-config"><span class="std std-ref">UI Server Configuration</span></a>.</p>
+</section>
+<section id="bash-profile">
+<h3>Bash Profile<a class="headerlink" href="#bash-profile" title="Link to this heading"></a></h3>
+<p>Cylc <a class="reference internal" href="glossary.html#term-job-script"><span class="xref std std-term">job scripts</span></a> are bash scripts, which are good for
+manipulating files and processes. They invoke <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-l</span></code> to allow environment
+configuration in login scripts.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Sites and users should ensure their bash login scripts configure the
+environment correctly for Cylc and <em>do not write anything to stdout</em>.</p>
+</div>
+</section>
+<section id="shell-auto-completion">
+<span id="installation-shell-auto-completion"></span><h3>Shell Auto-Completion<a class="headerlink" href="#shell-auto-completion" title="Link to this heading"></a></h3>
+<p>Cylc provides auto-completion for the Bash shell which can save you typing:</p>
+<ul class="simple">
+<li><p>Cylc commands</p></li>
+<li><p>Workflow IDs</p></li>
+<li><p>Cycle points</p></li>
+<li><p>Task names</p></li>
+</ul>
+<p>To extract the auto-completion file run the following command:</p>
+<div class="highlight-sub notranslate"><div class="highlight"><pre><span></span>cylc get-resources cylc-completion.bash <span class="s">&lt;path-to-copy-file&gt;</span>
+</pre></div>
+</div>
+<p>Then follow the comments in the file to install it.</p>
+</section>
+<section id="text-editors">
+<h3>Text Editors<a class="headerlink" href="#text-editors" title="Link to this heading"></a></h3>
+<p>There is support for the <code class="docutils literal notranslate"><span class="pre">.cylc</span></code> file format in various text editors.</p>
+<p>See <a class="reference internal" href="user-guide/writing-workflows/configuration.html#syntaxhighlighting"><span class="std std-ref">syntax highlighting</span></a> for more details.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<p>Some job runners may attempt to run the job using the environment it was
+submitted in, configuration depending.</p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<p>Software environments cannot be upgraded while running processes are
+using them. As Cylc workflows are often long-lived parallel installation
+makes it easier to install updates and manage
+<a class="reference internal" href="user-guide/cheat-sheet.html#cheat-sheet-upgrading-workflows"><span class="std std-ref">scheduler upgrades</span></a>.</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<p>Cylc can be configured to run job submission in a “clean” environment using
+<a class="reference internal" href="reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]clean job submission environment" title="global.cylc[platforms][&lt;platform name&gt;]clean job submission environment"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]clean</span> <span class="pre">job</span> <span class="pre">submission</span> <span class="pre">environment</span></code></a>.</p>
+</aside>
+<aside class="footnote brackets" id="id9" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">4</a><span class="fn-bracket">]</span></span>
+<p>Assuming <a class="reference internal" href="reference/config/global.html#global.cylc[platforms][&lt;platform name&gt;]clean job submission environment" title="global.cylc[platforms][&lt;platform name&gt;]clean job submission environment"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[platforms][&lt;platform</span> <span class="pre">name&gt;]clean</span> <span class="pre">job</span> <span class="pre">submission</span> <span class="pre">environment</span></code></a>
+has not been configured for the <code class="docutils literal notranslate"><span class="pre">localhost</span></code> platform.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="7-to-8/caveats.html" class="btn btn-neutral float-left" title="Cylc 8.6 Caveats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial/index.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2008-2026 NIWA &amp; British Crown (Met Office) &amp; Contributors.
+      <span class="lastupdated">Last updated on Sep 05, 2026.
+      </span></p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--
+  element which gets populated with the list of available versions and
+  formats for the documentation by versions.js
+-->
+<div
+  class="rst-versions"
+  data-toggle="rst-versions"
+  id='versions-and-formats'
+></div>
+
+
+
+
+<script type="text/javascript">
+    const CUR_FORMAT = "html";
+    const CUR_VERSION = "nightly:8.6.2026-09-05";
+    // name of page (in URL), for singlepage builds this will be `index`
+    const PAGE_NAME = "installation";
+    // URL path to the base docs dir i.e. ROOT_DIR/version/format
+    const ROOT_DIR = "../..";
+</script>
+
+<script
+  type="text/javascript"
+  src="../../versions.js"
+></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
