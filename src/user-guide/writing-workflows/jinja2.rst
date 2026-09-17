@@ -331,9 +331,9 @@ Cylc Built-in Filters
 Custom Jinja2 Extensions
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Custom Jinja2 globals, filters and tests can be defined within workflows.
+You can define your own custom Jinja2 globals, filters and tests within workflows.
 
-These extensions are Python modules containing a function with the same name
+These extensions must be Python modules containing a function with the same name
 as the module (e.g, a module called ``foo.py`` should contain a function called
 ``foo``).
 
