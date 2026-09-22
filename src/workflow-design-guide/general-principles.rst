@@ -121,7 +121,7 @@ standards such as:
 
 - `PEP8 for Python <https://peps.python.org/pep-0008/>`_
 - `Google Shell Style Guide for
-  Bash <https://google.github.io/styleguide/shell.xml>`_
+  Bash <https://google.github.io/styleguide/shellguide.html>`_
 
 
 Basic Functionality
