@@ -21,7 +21,7 @@ Cylc UI
 - In-browser web UI, includes:
 - A dashboard with summary information and documentation links
 - Integrated gscan (multi-workflow) side-panel
-- Responsive web design (from desktop to table to mobile)
+- Responsive web design (from desktop to tablet to mobile)
 - Tabbed interface to display multiple workflow views
 - Command integration for interacting with task, jobs, and schedulers
 
