@@ -105,7 +105,7 @@ jobs:
         uses: ./docs/.github/actions/create-conda-envs
         if: ${{ ! inputs.skip_conda_environment_check }}
         with:
-          python_version: '3.x'
+          python_version: '3'
           working_directory: ./docs
 
       - name: checkout gh-pages
