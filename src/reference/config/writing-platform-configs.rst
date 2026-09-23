@@ -41,7 +41,8 @@ Platforms define settings, most importantly:
 
  - A set of ``hosts``.
  - A ``job runner`` (formerly a ``batch system``) where Cylc can submit a job.
- - An ``install target`` for Cylc to install job files on.
+ - An ``install target``, representing each distinct filesystem that Cylc might
+   need to install workflow files on.
 
 Why Were Platforms Introduced?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -56,9 +57,12 @@ Why Were Platforms Introduced?
 What Are Install Targets?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install targets represent file systems. More than one platform can use the
-same file system. Cylc relies on the site configuration file ``global.cylc`` to determine
-which platforms share install targets.
+An install target is an arbitrary label to identify a distinct file system. All
+platforms that see the same filesystem should specify the same install target
+so that Cylc knows where it needs to install workflow files.
+
+If you log into one system and see the same files as on another, then these two
+platforms will require the same install target in ``global.cylc`` config file.
 
 Cylc will setup each remote install target once. During setup it will:
 
@@ -66,12 +70,9 @@ Cylc will setup each remote install target once. During setup it will:
   - Symlink directories
   - Copy authentication keys (to allow secure communication)
 
-Note, if missing from configuration, the install target will default to the
-platform name. If incorrectly configured, this will cause errors in
-:ref:`RemoteInit`.
-
-If you log into one system and see the same files as on another, then these two
-platforms will require the same install target in ``global.cylc`` config file.
+Note, if missing from the configuration, the install target will default to
+the platform name. If incorrectly configured, this will cause errors in
+:ref:`RemoteInit` due to Cylc finding files there already during setup.
 
 Example Platform Configurations
 -------------------------------
