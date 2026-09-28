@@ -41,13 +41,13 @@ How to create a message trigger
 
 In order to get our workflow to trigger messages, we need to:
 
-* specify our custom message in a section called ``[[outputs]]`` within the
-     ``[runtime]`` section of our workflow,
+* specify our custom message in a section called ``[[[outputs]]]`` within the
+  ``[runtime][<namespace>]`` section of our workflow,
 
 * add ``cylc message -- "${CYLC_WORKFLOW_ID}" "${CYLC_TASK_JOB}" "YOUR CHOSEN TRIGGER MESSAGE"``
-     to the ``script`` section of ``[runtime]``, your chosen trigger message
-     should be unique and should exactly match the message defined in
-     ``[[outputs]]``.
+  to the ``script`` section of ``[runtime]``, your chosen trigger message
+  should be unique and should exactly match the message defined in
+  ``[[outputs]]``.
 
 * Refer to these messages in the ``[dependencies]`` section of our workflow.
 
