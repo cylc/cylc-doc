@@ -29,6 +29,9 @@ As part of this change, the version of Jinja2 that Cylc uses has increased From
 3.0 to 3.1+. As a result, any use of deprecated Jinja2 interfaces will likely
 break with this Cylc release.
 
+Deprecated Cylc 7 syntax remains supported, deprecation messages have been
+updated to annouce the intended removal of support in Cylc 8.9.
+
 
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
