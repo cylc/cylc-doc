@@ -152,8 +152,8 @@ changes to the :cylc:conf:`[scheduling][graph]` section).
 
 .. rubric:: Added Tasks:
 
-Any tasks which have been added to the graph will begin to appear in the
-workflow as their upstream outputs are produced.
+Tasks added to the graph will begin to appear in the
+workflow as their prerequisites get satisfied.
 
 :term:`Parentless` tasks will not be inserted into the workflow automatically
 as there is no upstream task to spawn them, so must be inserted manually.
@@ -162,9 +162,9 @@ instances will spawn naturally.
 
 .. rubric:: Removed Tasks:
 
-If there are any active instances of tasks that have been removed from the
-graph, they will be removed (by ``cylc remove``) from the workflow. If these
-task instances had any active jobs, they will be killed.
+Active instances of tasks removed from the
+graph will be removed (by ``cylc remove``) from the workflow.
+Their active jobs, if they have any, will be killed.
 
 .. rubric:: Example
 
@@ -179,12 +179,12 @@ This diff represents a graph change:
     +          a & d => b & e
             """
 
-* ``c`` has been removed - if it had a job active at the time of reload, it
-  would have been killed.
-* ``d`` has been added - however, is parentless, so the first instance will
-  have to be manually triggered in order to be inserted into the workflow.
-* ``e`` has been added - it will be inserted into the workflow the first time
-  that either of its upstream dependencies (``a`` or ``d``) succeeds.
+* ``c`` was removed - if it has a job active at the time of reload, it
+  will be killed.
+* ``d`` was added - however, it is parentless, so the first instance will
+  have to be manually triggered.
+* ``e`` was added - it will be appear in the workflow when the first
+ of its upstream dependencies (``a`` or ``d``) succeeds.
 
 .. _RemoteInit:
 
