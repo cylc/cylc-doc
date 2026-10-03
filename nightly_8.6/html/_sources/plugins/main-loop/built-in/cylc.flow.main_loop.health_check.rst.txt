@@ -1,0 +1,28 @@
+﻿cylc.flow.main\_loop.health\_check
+==================================
+
+.. automodule:: cylc.flow.main_loop.health_check
+   :members: health_check
+
+   .. set members so that we only document what is actually defined
+      otherwise you can end up with imported modules and mess like that
+
+   
+
+   Python API
+   ----------
+
+   
+   .. rubric:: Coroutines
+
+   .. write out a table of functions (coroutines in this context)
+      for quick reference
+       
+   .. autosummary::
+      :nosignatures:
+
+   
+      health_check
+
+   
+   
