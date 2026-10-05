@@ -85,6 +85,26 @@ Cylc 8.6.
    ``cylc config --print-hierarchy``.
 
 
+Tasks outside of the active window are dimmed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionchanged:: cylc-ui 2.15.0
+
+The GUI dims (greys out) tasks to show that they are not presently being
+managed by the scheduler.
+
+Previously, only tasks in the ``none`` :term:`flow` (so called "ghost" tasks)
+were dimmed. Now, the **tree**, **table** and **graph** views dim every task
+and family that is outside of the ``n=0`` window, i.e. everything that is not
+an :term:`active task`.
+
+This means that the tasks displayed at full opacity are exactly the tasks that
+Cylc is currently working on; past and future tasks pulled into the view for
+context are dimmed.
+
+See :ref:`n-window.dimming` for more information.
+
+
 Cylc 8.6
 --------
 
@@ -439,6 +459,12 @@ for something, typically:
 * A task prerequisite to be satisfied.
 * An xtrigger or ext-trigger to be satisfied.
 * Someone to :term:`resume <held task>` them.
+
+.. note::
+
+   From Cylc 8.7 (``cylc-ui`` 2.15.0) this was extended so that *all* tasks
+   outside of the ``n=0`` window are dimmed, not just those in the ``none``
+   flow. See :ref:`n-window.dimming`.
 
 
 Compatibility Mode
