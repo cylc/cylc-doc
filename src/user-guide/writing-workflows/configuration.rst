@@ -169,7 +169,7 @@ Here's an example of (good and bad) use of a shell environment variable:
                 OWNER = "${USER}-the-wizard"  # OK
 
 
-Jinja2 code can read the local environment or filesytem during
+Jinja2 code can read the local environment or filesystem during
 template processing (i.e., when the file is parsed). Like Python,
 Jinja2 has its own syntax for reading environment variables:
 
@@ -181,7 +181,7 @@ Jinja2 has its own syntax for reading environment variables:
         # OK: generates a valid task name "bob-the-wizard":
         [[{{OWNER}}]]
 
-Note Jinja2 code is always evaluated at file parsing time regardless
+Note that Jinja2 code is always evaluated at file parsing time regardless
 of its location in the file, so embedding code under a task definition
 section does not mean it will execute when the task runs.
 
