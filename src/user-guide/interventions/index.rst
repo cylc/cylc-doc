@@ -430,9 +430,6 @@ Edit a Task's Configuration and Re-Run It
          $ cylc broadcast <workflow> -p <cycle> -n <task> -s 'script=true'
          $ cylc trigger <workflow>//<cycle>/<task>
 
-.. the "|" character adds some vertical whitespace
-
-|
 
 .. _interventions.edit-the-workflow-configuration:
 
