@@ -33,6 +33,20 @@ Deprecated Cylc 7 configuration syntax remains supported, though deprecation mes
 updated to announce the intended removal of support in Cylc 8.9.
 
 
+Reinstall Workflows From The GUI
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Cylc GUI now supports reinstalling workflows (and either reloading or
+restarting them as appropriate), matching the functionality of the ``cylc vr``
+command.
+
+.. image:: ../reference/changes/ui-cylc-vr.png
+   :width: 65%
+   :align: center
+
+|
+
+
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
