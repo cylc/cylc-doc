@@ -74,8 +74,6 @@ A screenshot of the Cylc GUI displaying a stalled workflow:
    :align: center
    :width: 90%
 
-|
-
 In the above screenshot:
 
 * The stall was caused by the failure of the task ``2/a``.
