@@ -1,33 +1,177 @@
+
+.. _workflow stop:
+
+Workflow Stop
+=============
+
+If a scheduler shuts down, the workflow is *stopped* (see :ref:`workflow run states`).
+Reasons for the scheduler to shut down include:
+
+* It ran the workflow to :ref:`completion <workflow completion>`,
+
+  - by reaching the :term:`final cycle point`
+  - or by following a :term:`terminal branch` when there are no other active branches
+* It received a ``stop`` command. (See ``cylc stop --help``)
+* It reached a :term:`stop cycle point` prior to the :term:`final cycle point`.
+* It :ref:`stalled <scheduler stall>` and the shutdown timer expired.
+* The scheduler program was killed.
+
+Restarting a stopped workflow resumes its pre-shutdown state.
+
+
 .. _workflow completion:
 
 Workflow Completion
 ===================
 
-Once Cylc has run all of the tasks in the :term:`graph` (i.e. once it has
-reached the end of the workflow and there are no tasks left), the workflow
-will shut down automatically.
+A scheduler shuts down automatically if it there are no more tasks to run. This can
+happen after the :term:`final cycle point` which, if defined, marks the end of the
+graph. In the following example, the final cycle point is ``2`` so
+the workflow will stop after tasks ``2/b`` and ``2/c`` succeed:
 
-A workflow with no tasks left is said to have "completed".
+.. code-block:: cylc
 
-When you restart a workflow, it will restart in the same state it shut down in.
-So if you restart a completed workflow (one with no remaining tasks), it will
-come back with no tasks. Having no more tasks to run, the workflow will
-automatically shut down after the configured
-:cylc:conf:`restart timeout <[scheduler][events]restart timeout>`.
+   [scheduling]
+       cycling mode = integer
+       initial cycle point = 1
+       final cycle point = 2
+       [[graph]]
+           P1 = "a[-P1] => a => b & c"
 
-If you want to re-run some tasks in a completed workflow, restart the workflow
-then
-:ref:`re-trigger the selected tasks <interventions.re-run-multiple-tasks>`
-or :ref:`trigger a new flow <interventions.reflow>` to run through the graph
-(before the restart timeout passes).
 
-A common pattern is to restart a completed workflow and extend it for a few
-cycles. The easiest way to achieve this is to use the
-:cylc:conf:`stop after cycle point <[scheduling]stop after cycle point>`
-rather than the
-:cylc:conf:`final cycle point <[scheduling]final cycle point>`, this prevents
-the workflow from completing, making it easier to restart it from where it
-left off. For a worked example, see :ref:`examples.extending-workflow`.
+.. digraph:: example
+   :align: center
+
+   "a\n1" -> "b\n1"
+   "a\n1" -> "c\n1"
+   "a\n1" -> "a\n2"
+   "a\n2" -> "b\n2"
+   "a\n2" -> "c\n2"
+
+
+A workflow can also stop automatically as complete without running the whole of
+the graph, if the flow follows a :term:`terminal branch` at runtime and there
+are no other active branches. In the following example, if task ``a`` succeeds
+the flow will continue on to the next cycle, but on failure it will shut down
+as complete after running the ``end`` task - which does not lead on to the rest
+of the graph.
+
+.. code-block:: cylc-graph
+
+   a[-P1]? => a => b & c
+   a:failed? => end
+
+
+.. digraph:: example
+   :align: center
+
+   subgraph cluster_success {
+      label = ":succeeded"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+
+      "a\n2"
+   }
+
+   subgraph cluster_failure {
+      label = ":failed"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      "end\n1"
+   }
+
+   subgraph cluster_success_2 {
+      label = ":succeeded"
+      color = "green"
+      fontcolor = "green"
+      style = "dashed"
+
+      "a\n3"
+   }
+
+   subgraph cluster_failure_2 {
+      label = ":failed"
+      color = "red"
+      fontcolor = "red"
+      style = "dashed"
+
+      "end\n2"
+   }
+
+   "a\n1" -> "b\n1"
+   "a\n1" -> "c\n1"
+   "a\n1" -> "end\n1"
+   "a\n1" -> "a\n2"
+
+   "a\n2" -> "b\n2"
+   "a\n2" -> "c\n2"
+   "a\n2" -> "end\n2"
+   "a\n2" -> "a\n3"
+
+   "a\n3" -> "b\n3"
+   "a\n3" -> "c\n3"
+   "a\n3" -> "end\n3"
+
+.. warning::
+
+   An :term:`optional <optional output>` task ``:succeeded`` output (which implies
+   optional ``:failed`` too) makes an implicit zero-length (invisible!)
+   :term:`terminal branch` if nothing triggers from the task failure - e.g. if we
+   remove ``a:failed? => end`` from the example above. Be careful not to do this
+   by mistake. Optional success should normally be used with an explicit failure branch.
+
+
+Continuing After Shutdown
+-------------------------
+
+Restarting a stopped workflow resumes its pre-shutdown state.
+
+If the workflow did not run to completion already, it can simply continue on
+from where it stopped.
+
+If it did run to completion, it will resume as completed but the scheduler will
+stay up on a :cylc:conf:`restart timeout <[scheduler][events]restart timeout>`
+to allow you to
+:ref:`re-trigger past tasks <interventions.re-run-multiple-tasks>`
+or :ref:`trigger a new flow <interventions.reflow>` in the graph.
+
+.. _extend-stop-point:
+
+Extending Beyond a Stop Cycle Point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is easy to run more cycles after shutting down at a :term:`stop cycle point`
+because that is not the end of the graph. Simply restart with a later stop point.
+The workflow will continue on automatically from the original stop point.
+
+For a worked example, see :ref:`examples.extending-workflow`.
+
+.. _extend-fcp:
+
+Extending Beyond a Final Cycle Point
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Running more cycles after :ref:`workflow completion` at a :term:`final cycle point`
+can be difficult because it means extending the graph itself by adding *new
+dependence* on *past events*. You will need to manually trigger the extended graph
+after restart, because Cylc does not automatically revisit past events to see if the
+graph changed around them.
+
+.. note::
+
+   If you don't need to use a :term:`final cycle point` it is much easier to extend
+   a run past a :term:`stop cycle point`, which is not the end of the graph.
+   See :ref:`extend-stop-point`.
+
+Triggering the extended graph requires a good understanding of your workflow structure.
+Identify the subgraph containing initial tasks that lead into the extended graph and
+later tasks (if any) that also depend on the old graph, and manually trigger all of
+them as a group with a single ``cylc trigger`` command (this satisfies any off-group
+prerequisites to prevent a stall). As a short cut, you may be able to trigger the
+first extended cycle with ``cylc trigger <workflow>//<cycle>/*``
 
 
 .. _scheduler stall:
@@ -35,35 +179,27 @@ left off. For a worked example, see :ref:`examples.extending-workflow`.
 Scheduler Stall
 ===============
 
-If Cylc is unable to make progress through the :term:`graph` (i.e, if the path
-through the graph is "blocked"), then the workflow is considered
-:term:`stalled <stall>`.
-
-Stalls are usually caused by unexpected task failures.
-
-A stalled workflow has not run to completion but cannot continue without manual
-intervention. Typically this involves
-:ref:`fixing and rerunning a failed task <interventions.edit-a-tasks-configuration>`.
-
-
-Stall Conditions
-----------------
-
+If a workflow has not run to :ref:`completion <workflow completion>` but Cylc cannot
+continue without manual intervention, the workflow is :term:`stalled <stall>`.
 A workflow has stalled if:
 
-* The workflow has not run to completion (i.e, there are still tasks left
-  for Cylc to run).
+* It has not run to completion (i.e, there are still tasks left to run).
 * AND no tasks are waiting on unsatisfied
   :ref:`external events <Section External Triggers>` (e.g, clock triggers
   and xtriggers).
-* AND All activity has ceased (i.e, no preparing, submitted or running tasks).
+* AND all activity has ceased (i.e, no preparing, submitted or running tasks).
 
-Stalls are caused by :term:`final status incomplete tasks <output completion>`
-and :term:`partially satisfied tasks <prerequisite>`.
-
-These most often result from task failures that the workflow does not
+Stalls are caused by :term:`incomplete tasks <incomplete task>`
+and :term:`partially satisfied tasks <prerequisite>`. The exact reason will
+be logged by the scheduler - see :ref:`diagnosing stalls` below.
+These usually result from task failures that the workflow does not
 handle automatically by :term:`retries <retry>` or :term:`graph branching`.
 
+Continuing typically involves
+:ref:`fixing and rerunning a failed task <interventions.edit-a-tasks-configuration>`.
+
+
+.. _diagnosing stalls:
 
 Diagnosing Stalls
 -----------------

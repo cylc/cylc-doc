@@ -1,11 +1,30 @@
+
+.. _workflow run states:
+
+Workflow Run States
+===================
+
+The ``cylc play`` command starts a new instance of the Cylc scheduler program
+to manage a workflow, for the duration of the run. The states that a running
+workflow can attain are:
+
+* **Running:** a scheduler is up and running this workflow.
+
+  - **Paused:** running, but told not to submit tasks
+    until resumed by ``cylc play``.
+  - **Stalled:** running, but cannot continue without manual
+    intervention - see :term:`stall`.
+
+* **Stopped:** the workflow either ran to :ref:`completion <workflow completion>`, or
+  encountered a :ref:`stop condition <workflow stop>`, or the scheduler was killed.
+
+  - A stopped workflow can always be restarted, to resume its pre-shutdown state.
+
+
 .. _WorkflowStartUp:
 
 Start, Restart, Reload
 ======================
-
-The ``cylc play`` command starts a new instance of the Cylc scheduler program
-to manage a workflow, for the duration of the run. It also resumes paused
-workflows.
 
 There are several ways to start a workflow that is not running:
 
@@ -61,12 +80,17 @@ There are several ways to start a workflow that is not running:
 Start and Stop vs Initial and Final Cycle Points
 ------------------------------------------------
 
-All workflows have an :term:`initial cycle point` and some may have a
-:term:`final cycle point`. These define extent of the graph of tasks that Cylc
-can schedule to run.
+All workflows have an :term:`initial cycle point`, which defines the start of
+the graph of tasks that Cylc can schedule to run. Some workflows may also have
+a :term:`final cycle point`, which defines the end of the task graph. With no
+final cycle point the workflow will run indefinitely or until it
+reaches some other :ref:`stop condition <workflow stop>`.
 
-Start and stop cycle points, if used, define a sub-section of the graph that
-the scheduler actually does run. For example:
+Start (``--start-cycle-point``) and stop (``--stop-cycle-point`` or
+:cylc:conf:`[scheduling]stop after cycle point`)
+cycle points, if used, tell the scheduler to run just a part of the full graph.
+
+For example:
 
 .. code-block:: cylc
 
