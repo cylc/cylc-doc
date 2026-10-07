@@ -228,6 +228,10 @@ names can't be generated that way (because shell variables won't
 be evaluated in that context) but task scripting can be. If in doubt,
 view the processed result with ``cylc view -p``.
 
+.. seealso::
+
+   :ref:`Jinja`
+
 
 .. _SyntaxHighlighting:
 
