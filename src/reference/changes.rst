@@ -47,6 +47,18 @@ command.
 |
 
 
+Tasks Removed By Reload/Restart
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Active instances of tasks removed from the
+:term:`graph` by restart or reload will now be removed from the workflow
+(i.e, ``cylc remove``). If they have active jobs, they will be
+killed.
+
+This automates the cleanup of unwanted tasks, and avoids some of the issues
+that tasks removed by graph changes could cause in running workflows.
+
+
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

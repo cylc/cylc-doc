@@ -147,18 +147,44 @@ job is submitted there after a reload.
 Restarting or Reloading after Graph Changes
 -------------------------------------------
 
-If dependencies have changed, tasks that were already active will spawn
-children according to their original outputs. Subsequent instances will have
-the new settings.
+Restarts and reloads will pick up any :term:`graph` changes (i.e,
+changes to the :cylc:conf:`[scheduling][graph]` section).
 
-If tasks were removed from the graph, any active instances will be left to
-finish, but they will not spawn children. They can be removed manually if
-necessary, with ``cylc remove``.
+.. rubric:: Added Tasks:
 
-If new tasks were added to the graph, instances will be spawned automatically
-as upstream tasks complete the outputs that they depend on. If they have no
-parents to do that, you can trigger the first ones manually with ``cylc trigger``.
+Tasks added to the graph will begin to appear in the
+workflow as their prerequisites get satisfied.
 
+:term:`Parentless` tasks will not be inserted into the workflow automatically
+as there is no upstream task to spawn them, so must be inserted manually.
+Trigger the first instance you would like to insert, and all subsequent
+instances will spawn naturally.
+
+.. rubric:: Removed Tasks:
+
+Active instances of tasks removed from the
+graph will be removed (by ``cylc remove``) from the workflow.
+Their active jobs, if they have any, will be killed.
+
+.. rubric:: Example
+
+This diff represents a graph change:
+
+.. code-block:: diff
+
+    [scheduling]
+        [[graph]]
+            R1 = """
+    -          a => b => c
+    +          a & d => b & e
+            """
+
+* ``c`` was removed - if it has a job active at the time of reload, it
+  will be killed.
+* ``d`` was added - however, it is parentless, so the first instance will
+  have to be manually triggered.
+* ``e`` was added - it will be appear in the workflow when the first
+ of its upstream dependencies (``a`` or ``d``) succeeds.
 
 .. _RemoteInit:
 
