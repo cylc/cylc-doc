@@ -28,7 +28,7 @@ tags:
 - automation
 affiliations:
 - index: 1
-  name: National Institute of Water and Atmospheric Research (NIWA), New Zealand
+  name: National Institute of Water and Atmospheric Research (Earth Sciences New Zealand), New Zealand
 - index: 2
   name: Met Office, UK
 - index: 3
@@ -42,7 +42,7 @@ inter-dependent cycling (repeating) tasks, as well as ordinary non-cycling
 workflows. It has been widely adopted for weather, climate, and related
 forecasting applications in research and production HPC environments, and it is
 now part of the official software infrastructure for the Unified Model
-atmospheric model. Cylc is written in Python and developed primarily by NIWA
+atmospheric model. Cylc is written in Python and developed primarily by Earth Sciences New Zealand
 (NZ) and Met Office (UK). It has strong support for large production systems,
 but ease of use for individuals with smaller workflow automation requirements
 remains a key priority. Despite its origins, Cylc is not in any way specialized

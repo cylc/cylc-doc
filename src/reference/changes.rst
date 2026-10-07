@@ -1,8 +1,33 @@
+.. _reference.changes:
+
 Changes
 =======
 
 This page contains a summary of significant changes across all Cylc components for each
 release.
+
+
+Cylc 8.7
+--------
+
+
+.. admonition:: Cylc Components
+   :class: hint
+
+   TODO!
+
+
+Cylc 7 Compatibility Mode
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Cylc 7 compatibility mode (which allowed workflows to run under both Cylc 7
+and 8) has now been removed.
+
+See :ref:`cylc_7_compat_mode` for more details.
+
+As part of this change, the version of Jinja2 that Cylc uses has increased From
+3.0 to 3.1+. As a result, any use of deprecated Jinja2 interfaces will likely
+break with this Cylc release.
 
 
 Cylc 8.6
@@ -835,13 +860,15 @@ from that workflow. Note that this only applies per browser session.
 .. image:: changes/ui-workspace-tabs.gif
    :width: 100%
 
+.. _changes.CYLC_PYTHONPATH:
+
 Cylc ignores ``$PYTHONPATH``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Cylc now ignores ``$PYTHONPATH`` to make it more robust to task
 environments which set this value. If you want to add to the Cylc
 environment itself, e.g. to install a Cylc extension,
-use a custom xtrigger, or event handler use ``$CYLC_PYTHONPATH``.
+use a custom xtrigger, or event handler use :envvar:`CYLC_PYTHONPATH`.
 
 Upgrade To The Latest Jupyter Releases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

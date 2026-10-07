@@ -188,7 +188,7 @@ mess) and it exposes all site configuration to all users:
    {% if SITE == 'niwa' %}
            platform = niwa_loadleveler_platform
            [[[directives]]]
-               # NIWA Loadleveler directives...
+               # Earth Sciences New Zealand Loadleveler directives...
    {% elif SITE == 'metoffice' %}
            platform = metoffice_pbs_platform
            [[[directives]]]
@@ -242,7 +242,7 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
    {% endif %}
    """
 
-where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
+where for ``SITE = niwa`` the file ``esnz-vars.cylc`` contains:
 
 .. code-block:: cylc
 
@@ -263,7 +263,7 @@ workflow config file to automatically set site-specific workflow inputs and ther
 avoid the need to make manual changes every time you check out and run a new
 version. The site switch itself has to be set of course, but there may be other
 settings too such as model parameters for a standard local test domain. Just
-put these settings in ``opt/rose-suite-niwa.conf`` (for site ``niwa``).
+put these settings in ``opt/rose-suite-niwa.conf`` (for site ``esnz``).
 
 
 Site-Agnostic File Paths in App Configs
@@ -304,9 +304,9 @@ An Example
 ----------
 
 The following small workflow is not portable because all of its tasks are
-submitted to a NIWA HPC host; two task are entirely NIWA-specific in that they
+submitted to a Earth Sciences New Zealand HPC host; two task are entirely Earth Sciences New Zealand-specific in that they
 respectively install files from a local database and upload products to a local
-distribution system; and one task runs a somewhat NIWA-specific configuration
+distribution system; and one task runs a somewhat Earth Sciences New Zealand-specific configuration
 of a model. The remaining tasks are site-agnostic apart from local job host
 and batch scheduler directives.
 
@@ -325,13 +325,13 @@ and batch scheduler directives.
    [runtime]
        [[root]]
            script = rose task-run -v
-       [[HPC]]  # NIWA job host and batch scheduler settings.
+       [[HPC]]  # Earth Sciences New Zealand job host and batch scheduler settings.
            platform = niwa_loadleveler_platform
            [[[directives]]]
                account_no = NWP1623
                class = General
                job_type = serial  # (most jobs in this workflow are serial)
-       [[install_niwa]]  # NIWA-specific file installation task.
+       [[install_niwa]]  # Earth Sciences New Zealand-specific file installation task.
            inherit = HPC
        [[preproc]]
            inherit = HPC
@@ -343,7 +343,7 @@ and batch scheduler directives.
                SPEED = fast
        [[postproc]]
            inherit = HPC
-       [[upload_niwa]]  # NIWA-specific product upload.
+       [[upload_niwa]]  # Earth Sciences New Zealand-specific product upload.
            inherit = HPC
 
 To make this portable, refactor it into a core :cylc:conf:`flow.cylc` file that
@@ -383,14 +383,14 @@ plus site files ``site/niwa-vars.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa-vars.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
+   # site/niwa-vars.cylc: Earth Sciences New Zealand SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
    {% set HAVE_IDL = True %}
 
 and ``site/niwa.cylc``:
 
 .. code-block:: cylc
 
-   # site/niwa.cylc: NIWA SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
+   # site/niwa.cylc: Earth Sciences New Zealand SITE SETTINGS FOR THE EXAMPLE WORKFLOW.
    [scheduling]
        [[graph]]
            R1 = install_niwa => preproc
@@ -402,18 +402,18 @@ and ``site/niwa.cylc``:
                account_no = NWP1623
                class = General
                job_type = serial  # (most jobs in this workflow are serial)
-       [[install_niwa]]  # NIWA-specific file installation.
+       [[install_niwa]]  # Earth Sciences New Zealand-specific file installation.
        [[model]]
            [[[directives]]]  # Override the serial job_type setting.
                job_type = parallel
-       [[upload_niwa]]  # NIWA-specific product upload.
+       [[upload_niwa]]  # Earth Sciences New Zealand-specific product upload.
 
 and finally, an optional app config file for the local model domain:
 
 .. code-block:: bash
 
    app/model/rose-app.conf  # Main app config.
-   app/model/opt/rose-app-niwa.conf  # NIWA site settings.
+   app/model/opt/rose-app-niwa.conf  # Earth Sciences New Zealand site settings.
 
 Some points to note:
 

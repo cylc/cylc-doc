@@ -43,14 +43,6 @@ suitable for a task. Such platforms can be set up to be ``platform groups``
    :ref:`AdminGuide.PlatformConfigs` for detailed examples of platform
    configurations.
 
-.. tip::
-
-   Cylc 8 contains upgrade logic (:ref:`see below <host-to-platform-logic>`)
-   which handles the deprecated Cylc 7 settings in most cases.
-   Unless you are in :ref:`backward compatibility mode <cylc_7_compat_mode>`,
-   you should upgrade to using platforms instead.
-   Deprecated settings will be removed in a later release of Cylc.
-
 
 What is a Platform?
 -------------------

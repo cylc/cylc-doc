@@ -67,10 +67,10 @@ Cylc can automatically:
 
 .. ifnotslides::
 
-   Cylc was originally developed at NIWA (The National Institute of Water and
+   Cylc was originally developed at Earth Sciences New Zealand (The National Institute of Water and
    Atmospheric Research, New Zealand) for running their weather forecasting
    workflows. It is now developed by an international partnership including
-   NIWA, the Met Office (UK), and members of the Unified Model Consortium.
+   Earth Sciences New Zealand, the Met Office (UK), and members of the Unified Model Consortium.
    Though initially developed for meteorological purposes Cylc is a general
    purpose tool as applicable in business as it is in scientific research.
 
@@ -78,7 +78,7 @@ Cylc can automatically:
 
 .. ifslides::
 
-   * Originally developed at NIWA (New Zealand)
+   * Originally developed at Earth Sciences New Zealand (New Zealand)
    * Now developed by an international partnership including the
      Met Office (UK).
    * General purpose tool as applicable in business as in

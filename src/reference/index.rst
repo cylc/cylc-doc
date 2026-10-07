@@ -9,7 +9,7 @@ Reference
 
    changes
    config/index
-   job-script-vars/index
+   env-vars
    architecture/index
    api/index
    environments/conda.rst

@@ -21,9 +21,6 @@ the need for suicide triggers). This is called :term:`graph branching`.
    :term:`suicide triggers <suicide trigger>` (marked by ``!`` before the
    task name in the graph, e.g. ``foo:fail => !foo``).
 
-   You should *not* perform this upgrade if still in :ref:`cylc_7_compat_mode`
-   (``suite.rc`` filename).
-
 
 Required Changes
 ^^^^^^^^^^^^^^^^

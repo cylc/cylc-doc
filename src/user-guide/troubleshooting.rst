@@ -555,11 +555,22 @@ For more information, see
 ``failed/XCPU``
 ^^^^^^^^^^^^^^^
 
-``XCPU`` is the signal that most batch systems will use when a job hits its
-execution time limit.
+:data:`XCPU <signal.SIGXCPU>` is the signal that most batch systems will use
+when a job hits its execution time limit.
 
 Use :cylc:conf:`flow.cylc[runtime][<namespace>]execution time limit` to
 increase this limit.
+
+
+``failed/TERM``
+^^^^^^^^^^^^^^^
+
+:data:`TERM <signal.SIGTERM>` is the signal that indicates a process was
+killed.
+
+The job may have been killed on request (i.e, via ``cylc kill``, the
+``job-activity.log`` file will record this), or due to an external factor#
+(e.g, ``kill <pid>``).
 
 
 ``Cannot determine whether workflow is running on <host>``
