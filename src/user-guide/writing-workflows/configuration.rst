@@ -81,7 +81,7 @@ Cylc uses the Jinja2 templating engine as a preprocessor, to allow
 programmatic generation of workflow configurations. The result
 after Jinja2 preprocessing must be a valid plain workflow
 configuration. Jinja2 preprocessing is done first by all file-parsing
-commands such as ``cylc validate``, and at scheduler start-up on
+commands such as ``cylc validate``, and at :term:`scheduler` start-up on
 the run host.
 
 To see the result of Jinja2 template preprocessing:
