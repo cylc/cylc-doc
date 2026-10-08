@@ -98,6 +98,13 @@ were dimmed. Now, the **tree**, **table** and **graph** views dim every task
 and family that is outside of the ``n=0`` window, i.e. everything that is not
 an :term:`active task`.
 
+.. image:: ../img/dimmed-tasks.png
+   :align: center
+   :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
+   :width: 55%
+
+|
+
 This means that the tasks displayed at full opacity are exactly the tasks that
 Cylc is currently working on; past and future tasks pulled into the view for
 context are dimmed.

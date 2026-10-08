@@ -175,6 +175,17 @@ than zero, are displayed dimmed (greyed out):
   The scheduler is not currently managing them, although you can still act on
   them, e.g. by triggering them.
 
+.. image:: ../../img/dimmed-tasks.png
+   :align: center
+   :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
+
+|
+
+In this example (the tree view), ``eventually_succeeded``, ``succeeded`` and
+``waiting`` lie outside of the active window so are dimmed. The tasks left at
+full opacity — ``failed``, ``retrying``, ``checkpoint`` and ``sleepy`` — are
+the ``n=0`` tasks that Cylc is actively managing.
+
 This makes it easy to see, at a glance, which part of the workflow Cylc is
 actually working on.
 
