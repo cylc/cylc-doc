@@ -221,9 +221,9 @@ that references a task environment variable:
         # ERROR: literal "${USER}-the-wizard" is not a valid task name:
         [[{{OWNER}}]]
 
-Finally, whether or not it makes sense to pass shell variables
-(or rather, strings containing them) to a Jinja2 macro depends on what
-the macro does with its arguments. As illustrated above, valid task
+Finally, whether or not it makes sense to pass shell variables (or rather,
+strings containing them) to a :ref:`Jinja2 macro <Jinja2 macro>` depends on
+what the macro does with its arguments. As illustrated above, valid task
 names can't be generated that way (because shell variables won't
 be evaluated in that context) but task scripting can be. If in doubt,
 view the processed result with ``cylc view -p``.
