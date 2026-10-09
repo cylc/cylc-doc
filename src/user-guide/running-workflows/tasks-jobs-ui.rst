@@ -133,8 +133,6 @@ colour coded according to their n-window value with the colours changing from
 .. image:: ../../img/n-window.gif
    :align: center
 
-|
-
 By default the GUI/Tui displays the ``n=1`` window. You can change this using
 the "Set Graph Window Extent" command which is currently only available in the
 GUI.
@@ -178,8 +176,6 @@ than zero, are displayed dimmed (greyed out):
 .. image:: ../../img/dimmed-tasks.png
    :align: center
    :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
-
-|
 
 In this example (the tree view), ``eventually_succeeded``, ``succeeded`` and
 ``waiting`` lie outside of the active window so are dimmed. The tasks left at

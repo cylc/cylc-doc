@@ -488,7 +488,7 @@ There is support for the ``.cylc`` file format in various text editors.
 
 See :ref:`syntax highlighting <SyntaxHighlighting>` for more details.
 
-|
+------------------------------------------------------------------------------
 
 .. rubric:: Footnotes
 
