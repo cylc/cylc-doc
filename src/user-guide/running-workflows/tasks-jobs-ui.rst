@@ -149,3 +149,52 @@ GUI.
 
    High "graph window extent" values can cause a Cylc scheduler and the GUI
    to run slowly.
+
+
+.. _n-window.dimming:
+
+Dimmed Tasks
+^^^^^^^^^^^^
+
+.. versionchanged:: cylc-ui 2.15.0
+
+   Previously only tasks in the ``none`` :term:`flow` were dimmed. Now *all*
+   tasks outside of the ``n=0`` window are dimmed.
+
+In the GUI's **tree**, **table** and **graph** views, tasks (and families)
+which are *not* in the ``n=0`` window, i.e. those with an ``n`` value greater
+than zero, are displayed dimmed (greyed out):
+
+* Tasks shown at **full opacity** are :term:`active tasks <active task>`
+  (``n=0``). These are the tasks the scheduler is currently managing, e.g.
+  running jobs, or tasks waiting on a prerequisite, :term:`xtrigger`,
+  :term:`internal queue`, the :term:`runahead limit`, or on being
+  :term:`resumed <held task>`.
+* Tasks shown **dimmed** are :term:`inactive tasks <active task>` (``n>0``).
+  These are past or future tasks, pulled into the view to provide context.
+  The scheduler is not currently managing them, although you can still act on
+  them, e.g. by triggering them.
+
+.. image:: ../../img/dimmed-tasks.png
+   :align: center
+   :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
+
+|
+
+In this example (the tree view), ``eventually_succeeded``, ``succeeded`` and
+``waiting`` lie outside of the active window so are dimmed. The tasks left at
+full opacity — ``failed``, ``retrying``, ``checkpoint`` and ``sleepy`` — are
+the ``n=0`` tasks that Cylc is actively managing.
+
+This makes it easy to see, at a glance, which part of the workflow Cylc is
+actually working on.
+
+.. note::
+
+   Dimming is based on a task's position in the :term:`n-window`, not on its
+   :term:`flow numbers <flow number>`. Tasks triggered in the ``none`` flow
+   are typically outside of the ``n=0`` window, so they will usually appear
+   dimmed too. To check a task's flows, click on it and look at the
+   "Flows" field in the info view.
+
+
