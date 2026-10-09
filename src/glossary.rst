@@ -1775,6 +1775,12 @@ Glossary
          * :ref:`Runahead Limiting`
          * :term:`active cycle`
 
+   run host
+   scheduler run host
+      If :cylc:conf:`global.cylc[scheduler][run hosts]` are defined, Cylc
+      will attempt to start new schedulers on an available run host, instead
+      of locally.
+
    skip mode
       A task run mode that skips execution but completes outputs as if the task had run.
       See :ref:`task-run-modes.skip`.

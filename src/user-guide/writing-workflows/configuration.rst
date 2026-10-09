@@ -65,20 +65,26 @@ these will be copied over to the :term:`run directory`.
 
 .. _UnderstandingCodeInCylcConfigurations:
 
-Understanding Code in Workflow Configurations
----------------------------------------------
+Understanding Variables and Code in Workflow Configurations
+-----------------------------------------------------------
 
-A workflow configuration is not executable code. It configures the scheduler
-program to run your workflow. A `flow.cylc` file may contain:
+The ``flow.cylc`` file is a static configuration file that configures
+an instance of the Cylc scheduler at startup, to manage your workflow.
 
-- Embedded Python-like Jinja2 templating code, such as
-  ``{% set PLANET = "earth" %}``
-- Bash shell variable assignments and scripting, such as
-  ``script = "run-model.exe /path/to/data"``
+The :ref:`.cylc file format <file-format>` itself does not support
+variables and loop constructs etc., but Jinja2 templating code can
+be embedded anywhere in the file, and string-valued ``script`` and
+``[environment]`` items, which are written to task job scripts,
+contain Bash code that will be evaluated when jobs run.
 
-Jinja2 templating code gets executed as a preprocessing step, to
-programmatically generate the workflow configuration for the scheduler.
-To see the result after template processing:
+Cylc uses the Jinja2 templating engine as a preprocessor, to allow
+programmatic generation of workflow configurations. The result
+after Jinja2 preprocessing must be a valid plain workflow
+configuration. Jinja2 preprocessing is done first by all file-parsing
+commands such as ``cylc validate``, and at :term:`scheduler` start-up on
+the :term:`run host`.
+
+To see the result of Jinja2 template preprocessing:
 
 .. code-block:: shell
 
@@ -88,23 +94,143 @@ To see the result after template processing:
     # print the workflow configuration, processed and parsed:
     $ cylc config <workflow-id>
 
+Here's an example of a simple Jinja2 template:
 
-The scheduler does not interpret shell syntax, but certain string-valued
-config items may contain shell code that gets written verbatim to job scripts,
-to be executed by the running job.
+.. code-block:: cylc
 
-Some things to be aware of:
+    #!Jinja2
+    {% set tasks = ["cat", "dog", "fish"] %}
+    [scheduling]
+        [[graph]]
+            R1 = """
+    {% for task in tasks %}
+               start => {{task}} 
+    {% endfor %}
+            """
+    [runtime]
+        [[start]]
+           script = "echo 'hello'"
+    {% for task in tasks %}
+        [[{{task}}]]
+            script = "echo 'I am a {{task}}'"
+    {% endfor %}
 
-- Jinja2 code is evaluated once when the workflow is started.
-- Jinja2 code can only reference Jinja2 variables, not Cylc config items.
-- Jinja2 (like Python) has its own syntax for reading environment variables.
-- Jinja2 code that reads the environment or the filesystem will do so
-  during config file parsing on the scheduler run host, not on job hosts.
-  Beware of doing this in task definitions - do you want the scheduler
-  environment to affect shell code that runs in the job environment?
-- Shell code destined for the job script can read the environment or
-  access the filesystem as the job runs on the job host, not on the
-  scheduler host.
+And the resulting workflow configuration:
+
+.. code-block:: cylc
+
+    [scheduling]
+        [[graph]]
+            R1 = """
+                start => cat
+                start => dog
+                start => fish
+            """
+    [runtime]
+        [[start]]
+            script = "echo 'hello'"
+        [[cat]]
+            script = "echo 'I am a cat'"
+        [[dog]]
+            script = "echo 'I am a dog'"
+        [[fish]]
+            script = "echo 'I am a fish'"
+
+
+These uses of a Jinja2 variable result in a valid configuration:
+
+.. code-block:: cylc
+
+    {% set TASK = "model" %}
+    [runtime]
+        # This generates a valid task definition heading "[[model]]":
+        [[{{TASK}}]]
+            # This generates: script = 'echo "I am a model"'
+            script = 'echo "I am a {{TASK}}"'
+
+
+This example shows valid use of shell variables:
+
+.. code-block:: cylc
+
+    [runtime]
+        [[model]]
+            # The "script" item gets written verbatim to job scripts so
+            # Bash will evaluate $OWNER (and $USER) when the job runs:
+            script = 'echo "I am $OWNER"'
+            [[[environment]]]
+                OWNER = "${USER}-the-wizard"
+
+
+And this shows bad use of a shell variable:
+
+.. code-block:: cylc
+
+    [runtime]
+        # ERROR: task definition headings are not evaluated by the shell
+        # and the literal "[[${USER}-the-wizard]]" is not valid as such.
+        [[${USER}-the-wizard]]
+
+
+Jinja2 code can read the local environment (or the local filesystem,
+via custom :ref:`Python functions <Jinja2Filters>`) during template
+processing - i.e., when and where the file is parsed.
+Jinja2 has its own syntax for reading environment variables:
+
+.. code-block:: cylc
+
+    {# This evaluates $USER when the file is parsed. #}
+    {% set OWNER = environ["USER"] ~ "-the-wizard" %}
+    [runtime]
+        # For Bob, this generates task definition "[[bob-the-wizard]]":
+        [[{{OWNER}}]]
+
+.. warning::
+
+    Jinja2 code gets evaluated when the file is parsed, so embedding it in
+    task scripting does not mean it will execute on the task job host at
+    task run time. Rather, the job will run the scripting that was
+    generated by template preprocessing at scheduler start-up on the
+    scheduler :term:`run host`.
+
+
+Here's an example of valid use of Jinja2 to generate a string
+that references an environment variable, for use in a task job
+script:
+
+.. code-block:: cylc
+
+    {# This defines a string literal "${USER}-the-wizard": #}
+    {% set OWNER = "${USER}-the-wizard" %}
+    [runtime]
+        [[model]]
+            # This generates:
+            #   script = 'echo "my owner is ${USER}-the-wizard"'
+            # which Bash will interpret when the job runs:
+            script = 'echo "my owner is {{OWNER}}"'
+
+
+And here's an example of bad use of a Jinja2-generated string
+that references a task environment variable:
+
+.. code-block:: cylc
+
+    {# This does not evaluate $USER, it's just a string literal #}
+    {% set OWNER = "${USER}-the-wizard" %}
+    [runtime]
+        # ERROR: literal "${USER}-the-wizard" is not a valid task name:
+        [[{{OWNER}}]]
+
+Finally, whether or not it makes sense to pass shell variables (or rather,
+strings containing them) to a :ref:`Jinja2 macro <Jinja2 macro>` depends on
+what the macro does with its arguments. As illustrated above, valid task
+names can't be generated that way (because shell variables won't
+be evaluated in that context) but task scripting can be. If in doubt,
+view the processed result with ``cylc view -p``.
+
+.. seealso::
+
+   :ref:`Jinja`
 
 
 .. _SyntaxHighlighting:
