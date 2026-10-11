@@ -1,0 +1,69 @@
+# THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# don't define [build-system] since this is a virtual package
+
+[project]
+name = "cylc-doc"
+version = "0"
+requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
+
+[dependency-groups]
+doc = [
+    "cylc-sphinx-extensions>=1.4.1",
+    "eralchemy>=1.2",
+    "hieroglyph>=2.1.0",
+    "packaging",
+    "sphinx>=7.1, !=7.4.4",
+    "sphinx-copybutton",
+    "sphinx-design>=0.5.0",
+    "sphinx_rtd_theme>=1.0.0",
+    "sphinxcontrib-svg2pdfconverter",
+    "sphinxcontrib-spelling>=8.0.2",
+]
+test = [
+    "flake8>=5.0",
+    "flake8-broken-line>=0.5.0",
+    "flake8-bugbear>=22.7.0",
+    "flake8-builtins>=1.5.0",
+    "flake8-comprehensions>=3.10.0",
+    "flake8-debugger>=4.1.0",
+    "flake8-mutable>=1.2.0",
+    "flake8-simplify>=0.19.0",
+]
+watch = [
+    "sphinx-autobuild",
+]
+dev = [
+    { include-group = "doc" },
+    { include-group = "test" },
+    { include-group = "watch" },
+]
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.poetry]
+package-mode = false
+
+[tool.uv]
+package = false
