@@ -14,7 +14,11 @@ Cylc 8.7
 .. admonition:: Cylc Components
    :class: hint
 
-   TODO!
+   :cylc-flow: `8.7 <https://github.com/cylc/cylc-flow/blob/8.7.x/CHANGES.md>`__
+   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
+   :cylc-rose: `1.8 <https://github.com/cylc/cylc-rose/blob/1.8.x/CHANGES.md>`__
+   :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
 
 
 Cylc 7 Compatibility Mode
@@ -28,6 +32,9 @@ See :ref:`cylc_7_compat_mode` for more details.
 As part of this change, the version of Jinja2 that Cylc uses has increased From
 3.0 to 3.1+. As a result, any use of deprecated Jinja2 interfaces will likely
 break with this Cylc release.
+
+Additionally, support has been removed for reading Cylc 7 workflow databases in
+the ``cylc workflow-state`` command and ``workflow_state`` xtrigger.
 
 Deprecated Cylc 7 configuration syntax remains supported, though deprecation messages have been
 updated to announce the intended removal of support in Cylc 8.9.
