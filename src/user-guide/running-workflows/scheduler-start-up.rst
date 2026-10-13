@@ -162,8 +162,9 @@ instances will spawn naturally.
 
 .. rubric:: Removed Tasks:
 
-If you remove tasks from the :term:`graph`, any active instances of those tasks
-will be killed and removed from the workflow when you reload or restart. 
+If you remove tasks from the :term:`graph`, any active instances of those tasks
+will be killed and removed from the workflow when you reload or restart.
+
 .. note::
    Cylc cannot track when you rename a task; it will consider the change
    as removal of one task and addition of another.
