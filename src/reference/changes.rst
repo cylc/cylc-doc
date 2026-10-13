@@ -33,7 +33,7 @@ break with this Cylc release.
 Tasks Removed By Reload/Restart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you remove tasks from the :term:`graph` when either restarting or
+If you delete tasks from the :term:`graph` when either restarting or
 reloading a workflow, any active instances of those tasks will be killed
 and removed from the workflow.
 
