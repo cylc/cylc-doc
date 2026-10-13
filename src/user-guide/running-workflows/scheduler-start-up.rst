@@ -187,7 +187,7 @@ This diff represents a graph change:
 * ``d`` was added - however, it is parentless, so the first instance will
   have to be manually triggered.
 * ``e`` was added - it will be appear in the workflow when the first
- of its upstream dependencies (``a`` or ``d``) succeeds.
+  of its upstream dependencies (``a`` or ``d``) succeeds.
 
 .. _RemoteInit:
 
