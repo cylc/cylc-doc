@@ -155,16 +155,18 @@ changes to the :cylc:conf:`[scheduling][graph]` section).
 Tasks added to the graph will begin to appear in the
 workflow as their prerequisites get satisfied.
 
-:term:`Parentless` tasks will not be inserted into the workflow automatically
-as there is no upstream task to spawn them, so must be inserted manually.
+:term:`Parentless` tasks will not appear in the workflow automatically
+as there is no upstream task to spawn them, so must be dealt with manually.
 Trigger the first instance you would like to insert, and all subsequent
 instances will spawn naturally.
 
 .. rubric:: Removed Tasks:
 
-Active instances of tasks removed from the
-graph will be removed (by ``cylc remove``) from the workflow.
-Their active jobs, if they have any, will be killed.
+If you remove tasks from the :term:`graph`, any active instances of those tasks
+will be killed and removed from the workflow when you reload or restart. 
+.. note::
+   Cylc cannot track when you rename a task; it will consider the change
+   as removal of one task and addition of another.
 
 .. rubric:: Example
 
