@@ -104,7 +104,7 @@ Here's an example of a simple Jinja2 template:
         [[graph]]
             R1 = """
     {% for task in tasks %}
-               start => {{task}} 
+               start => {{task}}
     {% endfor %}
             """
     [runtime]
@@ -383,10 +383,10 @@ Within the ``[tool.cylc.lint]`` section you may define the following:
 
 .. note::
 
-   .. versionchanged:: 8.3.0
+   .. versionchanged:: 8.8.0
 
-      The ``[cylc-lint]`` section has been deprecated in favour of
-      ``[tool.cylc.lint]``.
+      Support for the legacy ``[cylc-lint]`` section has been removed.
+      Use ``[tool.cylc.lint]`` instead.
 
 An example ``pyproject.toml`` might look like this:
 
