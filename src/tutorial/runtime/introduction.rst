@@ -327,7 +327,8 @@ Installing A Workflow
 
 .. ifnotslides::
 
-   This will install ``~/cylc-src/my_workflow`` to ``~/cylc-run/my_workflow/runN``.
+   This will install ``~/cylc-src/my_workflow`` to ``~/cylc-run/my_workflow/runN``,
+   creating any parent directories as needed.
 
 
 Running a workflow
