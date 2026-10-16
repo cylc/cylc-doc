@@ -2050,6 +2050,22 @@ see the
 :ref:`three-way switch example <user_guide.graph_branching.three_way_switch>`
 for more details.
 
+.. warning::
+
+   Optional branching can cause graph branches to dead-end silently, and even
+   workflow shutdown. Whether this is wrong (e.g. premature shutdown) or not
+   depends on your intention, but take care not to do it accidentally.
+
+   In the example above, if ``b:succeeded?`` remains optional and we delete the
+   dependency ``b:failed? => r``, then failure is allowed but no tasks trigger
+   from the failure. So if ``b`` fails the branch ends there, and if there is no
+   activity elsewhere in the graph the workflow will shut down as
+   :ref:`complete <workflow completion>`.
+
+   (If ``b:suceeded`` is not optional and the task fails, it will be retained in
+   the :term:`active window` as an :term:`incomplete <output completion>` task
+   requiring manual intervention.)
+
 
 Recovery Tasks
 ^^^^^^^^^^^^^^
