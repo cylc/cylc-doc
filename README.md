@@ -128,7 +128,7 @@ $ mamba install -c conda-forge graphviz enchant
 ```console
 $ git clone git@github.com:cylc/cylc-doc.git cylc-doc
 $ cd cylc-doc
-$ pip install -e .
+$ pip install -e . --group doc
 ```
 
 ### Simple Build
@@ -149,10 +149,10 @@ $ make clean html
 ### Automatic Build
 
 You can also get Sphinx to rebuild automatically when documentation files are
-modified. First install the optional dependency `watch`:
+modified. First install the `watch` dependency group:
 
 ```console
-$ pip install -e .[watch]
+$ pip install --group watch
 
 ```
 
