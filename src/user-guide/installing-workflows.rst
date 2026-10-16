@@ -461,6 +461,17 @@ There are some occasions when installation is expected to fail:
   ``~/different/my-flow``.
 
 
+Workflow IDs
+------------
+
+Cylc commands identify installed workflows via their :term:`workflow id`, which
+are relative paths under the cylc-run directory.
+For example, the workflow installed at ``~/cylc-run/my_workflow/run1`` would
+have the workflow id ``my_workflow/run1``.
+Optionally, just the :term:`workflow name` can be used (e.g. ``my_workflow``),
+which will automatically use the most recently installed run.
+
+
 .. _installing_workflows.compound_commands:
 
 Compound Commands
