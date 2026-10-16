@@ -1548,11 +1548,12 @@ In this example:
 
 So, in the cycle ``2000-01-01T00:00Z``:
 
-* ``foo`` would expire at ``2000-01-01T00:00Z``.
-* ``bar`` would expire at ``2000-01-01T01:00Z``.
+* ``foo`` would have an expiry time of 2000-01-01T**00**:00Z.
+* ``bar`` would have an expiry time of 2000-01-01T**01**:00Z.
 
-Only waiting tasks can expire, :term:`active tasks <active task>` will not be
-killed if they pass their configured ``clock-expire`` time.
+Only :term:`active <active task>` waiting tasks can expire, submitted or
+running tasks will not be killed, and tasks with a :term:`final status` will
+not be removed if they pass their configured ``clock-expire`` time.
 
 When a task expires, it produces the ``expired`` :term:`output`.
 This can be used to
