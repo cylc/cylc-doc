@@ -53,5 +53,8 @@
     ],
     "latest": [
         "html"
+    ],
+    "nightly_8.8": [
+        "html"
     ]
 }
