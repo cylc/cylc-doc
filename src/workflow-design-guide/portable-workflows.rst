@@ -42,8 +42,7 @@ Some institutions set a
 site(s).
 
 The purpose of this variable is to make inter-site portability easier by
-providing an easy mechanism for workflows to detect which site they are being
-run at.
+providing a mechanism for workflows to detect which site they are being run at.
 
 This may be used to load site-specific include files (see next section).
 
@@ -180,7 +179,7 @@ mess) and it exposes all site configuration to all users:
            platform = niwa_loadleveler_platform
            [[[directives]]]
                # NIWA Loadleveler directives...
-   {% elif CYLC_SITE == 'metoffice' %}
+   {% elif CYLC_SITE == 'meto' %}
            platform = metoffice_pbs_platform
            [[[directives]]]
                # Met Office PBS directives...
