@@ -51,8 +51,6 @@ command.
    :width: 65%
    :align: center
 
-|
-
 
 Tasks Removed By Reload/Restart
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -138,8 +136,6 @@ an :term:`active task`.
    :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
    :width: 55%
 
-|
-
 This means that the tasks displayed at full opacity are exactly the tasks that
 Cylc is currently working on; past and future tasks pulled into the view for
 context are dimmed.
@@ -191,8 +187,6 @@ have a short delay to avoid many popping up while moving the mouse around.
    :width: 90%
    :align: center
 
-|
-
 .. versionadded:: cylc-uiserver 1.8.2, cylc-flow=8.6.2
 
 Additionally, for workflows running with Cylc 8.6.2 or later, there is now a
@@ -203,7 +197,6 @@ the :term:`active window`.
    :width: 45%
    :align: center
 
-|
 
 UI Searching & Filtering
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -219,8 +212,6 @@ beginning with ``foo`` and ``*foo`` matches all tasks ending in ``foo``.
    :width: 55%
    :align: center
 
-|
-
 It is now possible to filter by
 :ref:`task modifiers <user_guide.task_modifiers>` as well as
 :ref:`task states <task-job-states>`. So, for example, we can now filter for
@@ -230,7 +221,6 @@ tasks which are :term:`held <held task>` or awaiting :term:`retry`.
    :width: 55%
    :align: center
 
-|
 
 Task Matching
 ^^^^^^^^^^^^^
@@ -414,7 +404,6 @@ shown in the information view:
    :align: center
    :width: 65%
 
-|
 
 .. _changes.8.5.0.triggering_multiple_tasks:
 
@@ -428,8 +417,6 @@ in order:
 .. image:: ../reference/changes/group-trigger.gif
    :align: center
    :width: 65%
-
-|
 
 This is generally easier than :ref:`using a new flow <interventions.reflow>`.
 
@@ -468,8 +455,6 @@ the workflow.
    :align: center
    :width: 95%
 
-|
-
 
 "Ghost" Tasks
 ^^^^^^^^^^^^^
@@ -479,8 +464,6 @@ The GUI and Tui now present some tasks in grey:
 .. image:: ../reference/changes/ghost-tasks.png
    :align: center
    :width: 65%
-
-|
 
 These are "ghost" tasks, they indicate something is that isn't presently there:
 
@@ -560,8 +543,6 @@ Cylc Tui
 .. image:: ../reference/changes/tui-external-editor.gif
    :align: center
    :width: 65%
-
-|
 
 Configure your ``$EDITOR``, ``$GEDITOR`` and ``$PAGER`` environment variables
 to change which tool is used.
