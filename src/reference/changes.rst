@@ -65,6 +65,8 @@ This automates the cleanup of unwanted tasks, and avoids some of the issues
 that tasks removed by graph changes could cause in running workflows.
 
 
+.. _changes.global_template_variables:
+
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -80,8 +82,10 @@ configured to facilitate workflow portability.
 This has overlap with the
 `rose.conf[rose-stem]automatic-options=SITE`_ Rose configuration
 which sets a template variable called ``SITE`` for use in rose-stem test
-suites. We would encourage all sites using this configuration to copy it
-over to the ``global.cylc`` file to facilitate rose-stem migration.
+suites. We would encourage all sites using this configuration to create a
+new Cylc global template variable called ``CYLC_SITE`` set to the same value
+to facilitate rose-stem migration and site-portability. Note the ``CYLC_`` prefix
+avoids conflicts with existing workflow design patterns.
 
 I.e, if you currently configure this:
 
@@ -99,7 +103,7 @@ Then additionally configure this:
    # global.cylc
 
    [template variables]
-       SITE = my-site
+       CYLC_SITE = "my-site"
 
 The Cylc configuration is more generic as it can be used in all workflows
 (not just rose-stem suites). The Rose configuration remains supported and may
