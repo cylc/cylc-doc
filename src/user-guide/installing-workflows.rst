@@ -7,7 +7,7 @@ This chapter will demonstrate how to install a workflow.
 
 Installing a workflow copies files from an arbitrary location, called a
 :term:`source directory`, into a new :term:`workflow run directory` under the
-:term:`cylc-run directory`, ``~/cylc-run/`` by default.
+:term:`cylc-run directory` (``~/cylc-run/``).
 The new directory (and any parent directories) will be created automatically.
 
 
