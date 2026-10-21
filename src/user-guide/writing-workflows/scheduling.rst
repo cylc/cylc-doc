@@ -341,7 +341,7 @@ inferred from context (rules below).
 
    Cycle points in Cylc are just task labels that anchor dependence on
    other tasks, and which tasks can use to determine their current cycle
-   point. **Datetime cycle points have no relation to wallclock (real) time**
+   point. **Datetime cycle points have no relation to wall-clock (real) time**
    except where specific tasks, if any, depend on :term:`clock triggers <clock
    trigger>`.
 
@@ -1490,7 +1490,7 @@ other tasks beyond the final point.
 Clock Triggers
 ^^^^^^^^^^^^^^
 
-By default, datetime cycle points are not connected to the :term:`wallclock time`.
+By default, datetime cycle points are not connected to the :term:`wall-clock time`.
 In real time cycling systems, however, some tasks may need to trigger at
 (or at some offset from) their cycle point in real time.
 This is achieved using the ``wall_clock`` xtrigger.
