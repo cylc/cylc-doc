@@ -2596,7 +2596,7 @@ control how many tasks can be ``submitted`` or ``running`` at once.
 
 Internal queues are non-overlapping (each task can only belong to one
 queue) and they release tasks in FIFO order (first in, first out) as the
-job count drops below the queue limit.
+:term:`active job` count drops below the queue limit.
 
 The predefined ``default`` queue has a 100 job limit, for all tasks that
 are not assigned to custom queues. Custom queues are unlimited by default.
@@ -2605,7 +2605,7 @@ are not assigned to custom queues. Custom queues are unlimited by default.
 
   * Assigning a family to a queue is equivalent to individually assigning all
     family member tasks.
-  * If a task is assigned to multiple queues only the last assignment sticks.
+  * If a task is assigned to multiple queues only the last assignment will take effect.
   * Tasks are shown as queued in the UI if they are ready to run but held back
     by a queue.
 
