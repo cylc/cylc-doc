@@ -2590,40 +2590,49 @@ The scheduler may automatically raise the runahead limit to accommodate
 Internal Queues
 ---------------
 
-Large workflows can potentially overwhelm the system by submitting too many
-jobs at once. Internal queues can prevent this by limiting the number of
-tasks that can be active (submitted or running) at the same time.
+If you need to limit simultaneous job activity to avoid overwhelming
+the system, use :cylc:conf:`[scheduling][queues]` to define queues that
+control how many tasks can be ``submitted`` or ``running`` at once.
 
-Internal queues are FIFO (first-in-first-out): tasks are released in the same
-order that they were queued. They are configured under
-:cylc:conf:`[scheduling][queues]` with a *name*; a list of *members* assigned
-by task or family name; and a *limit*, which is the maximum number of active
-members allowed.
+Internal queues are non-overlapping (each task can only belong to one
+queue) and they release tasks in FIFO order (first in, first out) as the
+job count drops below the queue limit.
 
-By default every task is assigned to the ``default`` queue, which by default
-has a zero limit (interpreted by Cylc as no limit). To use a single queue for
-the whole workflow just set the default queue limit:
+The predefined ``default`` queue has a 100 job limit, for all tasks that
+are not assigned to custom queues. Custom queues are unlimited by default.
+
+.. note::
+
+  * Assigning a family to a queue is equivalent to individually assigning all
+    family member tasks.
+  * If a task is assigned to multiple queues only the last assignment sticks.
+  * Tasks are shown as queued in the UI if they are ready to run but held back
+    by a queue.
+
+
+To restrict job activity for the workflow as a whole you can configure the
+``default`` queue limit:
 
 .. code-block:: cylc
 
    [scheduling]
        [[queues]]
-           # limit the entire workflow to 5 active tasks at once
+           # limit all (non custom-queued) tasks to 5 active jobs at once
            [[[default]]]
                limit = 5
 
-To use additional queues just name them, set limits, and assign members:
+This shows how to restrict job activity for a specific group of tasks:
 
 .. code-block:: cylc
 
    [scheduling]
        [[queues]]
-           [[[q_foo]]]
-               limit = 5
-               members = foo, bar, baz
+           # allow up to 3 pets to have active jobs at the same time
+           [[[pets]]]
+               limit = 3
+               members = dog, cat, fish, horse, rabbit, cow, elephant
 
-Any tasks not assigned to a particular queue will remain in the default
-queue. The following example illustrates how queues work by running two task
+The following example illustrates how queues work by running two task
 trees side by side, limited to 2 and 3 tasks respectively:
 
 .. literalinclude:: ../../workflows/queues/flow.cylc
