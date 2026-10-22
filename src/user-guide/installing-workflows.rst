@@ -283,6 +283,11 @@ option with ``cylc install``.
 For example, using the command line option
 ``--symlink-dirs="log=$DIR, run=/path/to/dir,..."`` will symlink:
 
+- ``~/cylc-run/workflow/run1/log -> $DIR/cylc-run/workflow/run1/log/``
+- ``~/cylc-run/workflow/run1 -> /path/to/dir/cylc-run/workflow/run1/``
+
+With when installed with ``--no-run-name`` the symlinks will be:
+
 - ``~/cylc-run/workflow/log -> $DIR/cylc-run/workflow/log/``
 - ``~/cylc-run/workflow -> /path/to/dir/cylc-run/workflow/``
 
