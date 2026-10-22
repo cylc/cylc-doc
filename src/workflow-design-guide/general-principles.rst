@@ -232,7 +232,7 @@ to delay job submission until the expected data arrival time:
    [scheduling]
        initial cycle point = now
        [[xtriggers]]
-           # Trigger 5 min after wallclock time is equal to cycle point.
+           # Trigger 5 min after wall-clock time is equal to cycle point.
            clock = wall_clock(offset=PT5M)
        [[graph]]
            T00 = @clock => get-data => process-data
@@ -274,7 +274,7 @@ so be sure to configure a reasonable interval between polls.
 Task Execution Time Limits
 --------------------------
 
-Instead of setting job wallclock limits directly in :term:`job runner`
+Instead of setting job wall-clock limits directly in :term:`job runner`
 directives, use
 :cylc:conf:`flow.cylc[runtime][<namespace>]execution time limit`.
 Cylc automatically derives the correct job runner directives from this,

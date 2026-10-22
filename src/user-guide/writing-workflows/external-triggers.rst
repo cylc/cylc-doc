@@ -14,7 +14,7 @@ events/outputs created within the workflow.
            P1D = foo:succeeded => bar
 
 External triggers allow us to trigger tasks off of events that are external
-to the workflow itself, for example the real-world time (aka wallclock time),
+to the workflow itself, for example the real-world time (aka wall-clock time),
 the arrival of a data set, or the completion of tasks in other workflows.
 
 .. code-block:: cylc
@@ -350,7 +350,7 @@ for :ref:`xtrigger results <user_guide.xtrigger.results>` in task scripting.
 Built-in Clock Triggers
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Clock xtriggers succeed when the real ("wall clock") time reaches some offset
+Clock xtriggers succeed when the real ("wall-clock") time reaches some offset
 from the task's cycle point value.
 
 The clock xtrigger function signature looks like this:

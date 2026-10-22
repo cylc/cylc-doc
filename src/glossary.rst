@@ -471,7 +471,7 @@ Glossary
          * :ref:`Cylc tutorial <tutorial-datetime-cycling>`
 
 
-   wallclock time
+   wall-clock time
       The actual time (in the real world).
 
       .. seealso::
@@ -570,7 +570,7 @@ Glossary
    clock expire
    expired task
       Tasks in :term:`datetime cycling` workflows can be configured to *expire*
-      if the :term:`wallclock time` exceeds some offset from the cycle point.
+      if the :term:`wall-clock time` exceeds some offset from the cycle point.
 
       Expired is a :term:`final status` - an expired task will not run
       even if its :term:`prerequisites <prerequisite>` get satisfied.
@@ -585,9 +585,9 @@ Glossary
 
 
    clock trigger
-      Clock triggers connect cycle points to the :term:`wallclock time`, in
+      Clock triggers connect cycle points to the :term:`wall-clock time`, in
       :term:`datetime cycling` workflows. Tasks that depend on a clock trigger
-      will not trigger until the wallclock time is equal to their cycle point
+      will not trigger until the wall-clock time is equal to their cycle point
       plus or minus some offset.
 
       .. seealso::
