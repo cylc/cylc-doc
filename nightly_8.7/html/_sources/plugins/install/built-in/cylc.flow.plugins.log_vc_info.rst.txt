@@ -1,0 +1,4 @@
+﻿cylc.flow.plugins.log\_vc\_info
+===============================
+
+.. automodule:: cylc.flow.plugins.log_vc_info
