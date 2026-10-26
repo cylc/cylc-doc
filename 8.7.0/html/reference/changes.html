@@ -224,9 +224,6 @@ restarting them as appropriate), matching the functionality of the <code class="
 command.</p>
 <a class="reference internal image-reference" href="../_images/ui-cylc-vr.png"><img alt="../_images/ui-cylc-vr.png" class="align-center" src="../_images/ui-cylc-vr.png" style="width: 65%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </section>
 <section id="tasks-removed-by-reload-restart">
 <h3>Tasks Removed By Reload/Restart<a class="headerlink" href="#tasks-removed-by-reload-restart" title="Link to this heading"></a></h3>
@@ -237,7 +234,7 @@ and removed from the workflow.</p>
 that tasks removed by graph changes could cause in running workflows.</p>
 </section>
 <section id="global-template-variables">
-<h3>“Global” Template Variables<a class="headerlink" href="#global-template-variables" title="Link to this heading"></a></h3>
+<span id="changes-global-template-variables"></span><h3>“Global” Template Variables<a class="headerlink" href="#global-template-variables" title="Link to this heading"></a></h3>
 <p>Template variables, aka Jinja2 variables for use in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file,
 may now be configured in the <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> file for automatic use in all
 workflows.</p>
@@ -246,8 +243,10 @@ configured to facilitate workflow portability.</p>
 <p>This has overlap with the
 <a class="reference external" href="https://metomi.github.io/rose/doc/html/api/configuration/site-and-user.html#rose:conf:rose.conf[rose-stem]automatic-options">rose.conf[rose-stem]automatic-options=SITE</a> Rose configuration
 which sets a template variable called <code class="docutils literal notranslate"><span class="pre">SITE</span></code> for use in rose-stem test
-suites. We would encourage all sites using this configuration to copy it
-over to the <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> file to facilitate rose-stem migration.</p>
+suites. We would encourage all sites using this configuration to create a
+new Cylc global template variable called <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span></code> set to the same value
+to facilitate rose-stem migration and site-portability. Note the <code class="docutils literal notranslate"><span class="pre">CYLC_</span></code> prefix
+avoids conflicts with existing workflow design patterns.</p>
 <p>I.e, if you currently configure this:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># rose.conf</span>
 
@@ -259,7 +258,7 @@ over to the <code class="docutils literal notranslate"><span class="pre">global.
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># global.cylc</span>
 
 <span class="nt">[template variables]</span>
-    <span class="nv">SITE </span><span class="o">=</span><span class="s"> my-site</span>
+    <span class="nv">CYLC_SITE </span><span class="o">=</span><span class="s"> "my-site"</span>
 </pre></div>
 </div>
 <p>The Cylc configuration is more generic as it can be used in all workflows
@@ -291,9 +290,6 @@ and family that is outside of the <code class="docutils literal notranslate"><sp
 an <a class="reference internal" href="../glossary.html#term-active-task"><span class="xref std std-term">active task</span></a>.</p>
 <a class="reference internal image-reference" href="../_images/dimmed-tasks.png"><img alt="Failed and running tasks fully visible while completed and waiting tasks are dimmed." class="align-center" src="../_images/dimmed-tasks.png" style="width: 55%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>This means that the tasks displayed at full opacity are exactly the tasks that
 Cylc is currently working on; past and future tasks pulled into the view for
 context are dimmed.</p>
@@ -348,9 +344,6 @@ have been added to indicate how many tasks are in each state. The tooltips now
 have a short delay to avoid many popping up while moving the mouse around.</p>
 <a class="reference internal image-reference" href="../_images/cylc-ui-dash.png"><img alt="../_images/cylc-ui-dash.png" class="align-center" src="../_images/cylc-ui-dash.png" style="width: 90%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.8.2, cylc-flow=8.6.2</p>
 </div>
@@ -359,9 +352,6 @@ top level icon which indicates whether there are any held or retrying tasks in
 the <a class="reference internal" href="../glossary.html#term-active-window"><span class="xref std std-term">active window</span></a>.</p>
 <a class="reference internal image-reference" href="../_images/workflows-view-held-and-retry-indicators.png"><img alt="../_images/workflows-view-held-and-retry-indicators.png" class="align-center" src="../_images/workflows-view-held-and-retry-indicators.png" style="width: 45%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </section>
 <section id="ui-searching-filtering">
 <h3>UI Searching &amp; Filtering<a class="headerlink" href="#ui-searching-filtering" title="Link to this heading"></a></h3>
@@ -373,18 +363,12 @@ the <a class="reference internal" href="../glossary.html#term-active-window"><sp
 beginning with <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">*foo</span></code> matches all tasks ending in <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
 <a class="reference internal image-reference" href="../_images/task-id-glob-filtering.png"><img alt="../_images/task-id-glob-filtering.png" class="align-center" src="../_images/task-id-glob-filtering.png" style="width: 55%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>It is now possible to filter by
 <a class="reference internal" href="../user-guide/running-workflows/tasks-jobs-ui.html#user-guide-task-modifiers"><span class="std std-ref">task modifiers</span></a> as well as
 <a class="reference internal" href="../user-guide/running-workflows/tasks-jobs-ui.html#task-job-states"><span class="std std-ref">task states</span></a>. So, for example, we can now filter for
 tasks which are <a class="reference internal" href="../glossary.html#term-held-task"><span class="xref std std-term">held</span></a> or awaiting <a class="reference internal" href="../glossary.html#term-retry"><span class="xref std std-term">retry</span></a>.</p>
 <a class="reference internal image-reference" href="../_images/task-modifier-filtering.png"><img alt="../_images/task-modifier-filtering.png" class="align-center" src="../_images/task-modifier-filtering.png" style="width: 55%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </section>
 <section id="task-matching">
 <h3>Task Matching<a class="headerlink" href="#task-matching" title="Link to this heading"></a></h3>
@@ -558,9 +542,6 @@ use the UI while preparing a command to submit.</p>
 shown in the information view:</p>
 <a class="reference internal image-reference" href="../_images/info-view.xtriggers.png"><img alt="../_images/info-view.xtriggers.png" class="align-center" src="../_images/info-view.xtriggers.png" style="width: 65%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </section>
 <section id="triggering-multiple-tasks">
 <span id="changes-8-5-0-triggering-multiple-tasks"></span><h3>Triggering Multiple Tasks<a class="headerlink" href="#triggering-multiple-tasks" title="Link to this heading"></a></h3>
@@ -569,9 +550,6 @@ tasks at the same time. This provides an easy way to re-run a group of tasks
 in order:</p>
 <a class="reference internal image-reference" href="../_images/group-trigger.gif"><img alt="../_images/group-trigger.gif" class="align-center" src="../_images/group-trigger.gif" style="width: 65%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>This is generally easier than <a class="reference internal" href="../user-guide/interventions/index.html#interventions-reflow"><span class="std std-ref">using a new flow</span></a>.</p>
 <p>Technical details:</p>
 <ul class="simple">
@@ -603,18 +581,12 @@ for each workflow).</p></li>
 </ul>
 <a class="reference internal image-reference" href="../_images/warning-triangles.gif"><img alt="../_images/warning-triangles.gif" class="align-center" src="../_images/warning-triangles.gif" style="width: 95%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </section>
 <section id="ghost-tasks">
 <h3>“Ghost” Tasks<a class="headerlink" href="#ghost-tasks" title="Link to this heading"></a></h3>
 <p>The GUI and Tui now present some tasks in grey:</p>
 <a class="reference internal image-reference" href="../_images/ghost-tasks.png"><img alt="../_images/ghost-tasks.png" class="align-center" src="../_images/ghost-tasks.png" style="width: 65%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>These are “ghost” tasks, they indicate something is that isn’t presently there:</p>
 <ul class="simple">
 <li><p>Waiting tasks that the scheduler hasn’t moved onto yet (i.e.
@@ -678,9 +650,6 @@ a scroll-to-top button.</p>
 <p><code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">tui</span></code> can now open log files in external tools.</p>
 <a class="reference internal image-reference" href="../_images/tui-external-editor.gif"><img alt="../_images/tui-external-editor.gif" class="align-center" src="../_images/tui-external-editor.gif" style="width: 65%;" />
 </a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p>Configure your <code class="docutils literal notranslate"><span class="pre">$EDITOR</span></code>, <code class="docutils literal notranslate"><span class="pre">$GEDITOR</span></code> and <code class="docutils literal notranslate"><span class="pre">$PAGER</span></code> environment variables
 to change which tool is used.</p>
 <div class="admonition note">

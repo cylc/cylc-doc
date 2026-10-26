@@ -390,11 +390,6 @@ for <a class="reference internal" href="#user-guide-xtrigger-results"><span clas
 <span id="id2"></span><h3>Built-in Clock Triggers<a class="headerlink" href="#built-in-clock-triggers" title="Link to this heading"></a></h3>
 <p>Clock xtriggers succeed when the real (“wall clock”) time reaches some offset
 from the task’s cycle point value.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These should be used instead of the older task clock triggers documented in
-<a class="reference internal" href="scheduling.html#clocktriggertasks"><span class="std std-ref">Clock Triggers</span></a>.</p>
-</div>
 <p>The clock xtrigger function signature looks like this:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="cylc.flow.xtriggers.wall_clock.wall_clock">
@@ -419,12 +414,6 @@ See <a class="reference internal" href="#sequential-xtriggers"><span class="std 
 </div>
 </dd></dl>
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Clock xtriggers are cycle-point specific by nature; you don’t need
-to <a class="reference internal" href="#user-guide-xtriggers-specificity"><span class="std std-ref">use function arguments</span></a>
-to achieve this.</p>
-</div>
 <p>In the following workflow, task <code class="docutils literal notranslate"><span class="pre">foo</span></code> has a daily cycle point sequence, and
 each task instance will trigger when the real time is one hour past its cycle
 point value.</p>

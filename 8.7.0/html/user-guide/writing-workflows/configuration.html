@@ -70,7 +70,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Workflow Configuration</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#the-flow-cylc-file">The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> File</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#workflow-configuration-directories">Workflow Configuration Directories</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#understanding-code-in-workflow-configurations">Understanding Code in Workflow Configurations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-variables-and-code-in-workflow-configurations">Understanding Variables and Code in Workflow Configurations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#syntax-highlighting-for-workflow-configuration">Syntax Highlighting For Workflow Configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#gross-file-structure">Gross File Structure</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#validation">Validation</a></li>
@@ -173,19 +173,22 @@ and you don’t want Cylc to delete them on re-installation, you can use
 equivalent directories in the <a class="reference internal" href="runtime.html#workflow-share-directories"><span class="std std-ref">Workflow Share Directories</span></a>.</p>
 </div>
 </section>
-<section id="understanding-code-in-workflow-configurations">
-<span id="understandingcodeincylcconfigurations"></span><h2>Understanding Code in Workflow Configurations<a class="headerlink" href="#understanding-code-in-workflow-configurations" title="Link to this heading"></a></h2>
-<p>A workflow configuration is not executable code. It configures the scheduler
-program to run your workflow. A <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file may contain:</p>
-<ul class="simple">
-<li><p>Embedded Python-like Jinja2 templating code, such as
-<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">set</span> <span class="pre">PLANET</span> <span class="pre">=</span> <span class="pre">&quot;earth&quot;</span> <span class="pre">%}</span></code></p></li>
-<li><p>Bash shell variable assignments and scripting, such as
-<code class="docutils literal notranslate"><span class="pre">script</span> <span class="pre">=</span> <span class="pre">&quot;run-model.exe</span> <span class="pre">/path/to/data&quot;</span></code></p></li>
-</ul>
-<p>Jinja2 templating code gets executed as a preprocessing step, to
-programmatically generate the workflow configuration for the scheduler.
-To see the result after template processing:</p>
+<section id="understanding-variables-and-code-in-workflow-configurations">
+<span id="understandingcodeincylcconfigurations"></span><h2>Understanding Variables and Code in Workflow Configurations<a class="headerlink" href="#understanding-variables-and-code-in-workflow-configurations" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file is a static configuration file that configures
+an instance of the Cylc scheduler at startup, to manage your workflow.</p>
+<p>The <a class="reference internal" href="../../reference/config/file-format.html#file-format"><span class="std std-ref">.cylc file format</span></a> itself does not support
+variables and loop constructs etc., but Jinja2 templating code can
+be embedded anywhere in the file, and string-valued <code class="docutils literal notranslate"><span class="pre">script</span></code> and
+<code class="docutils literal notranslate"><span class="pre">[environment]</span></code> items, which are written to task job scripts,
+contain Bash code that will be evaluated when jobs run.</p>
+<p>Cylc uses the Jinja2 templating engine as a preprocessor, to allow
+programmatic generation of workflow configurations. The result
+after Jinja2 preprocessing must be a valid plain workflow
+configuration. Jinja2 preprocessing is done first by all file-parsing
+commands such as <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">validate</span></code>, and at <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">scheduler</span></a> start-up on
+the <a class="reference internal" href="../../glossary.html#term-run-host"><span class="xref std std-term">run host</span></a>.</p>
+<p>To see the result of Jinja2 template preprocessing:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the workflow configuration, processed but not parsed:</span>
 $<span class="w"> </span>cylc<span class="w"> </span>view<span class="w"> </span>--process<span class="w"> </span>&lt;workflow-id&gt;
 
@@ -193,22 +196,121 @@ $<span class="w"> </span>cylc<span class="w"> </span>view<span class="w"> </span
 $<span class="w"> </span>cylc<span class="w"> </span>config<span class="w"> </span>&lt;workflow-id&gt;
 </pre></div>
 </div>
-<p>The scheduler does not interpret shell syntax, but certain string-valued
-config items may contain shell code that gets written verbatim to job scripts,
-to be executed by the running job.</p>
-<p>Some things to be aware of:</p>
-<ul class="simple">
-<li><p>Jinja2 code is evaluated once when the workflow is started.</p></li>
-<li><p>Jinja2 code can only reference Jinja2 variables, not Cylc config items.</p></li>
-<li><p>Jinja2 (like Python) has its own syntax for reading environment variables.</p></li>
-<li><p>Jinja2 code that reads the environment or the filesystem will do so
-during config file parsing on the scheduler run host, not on job hosts.
-Beware of doing this in task definitions - do you want the scheduler
-environment to affect shell code that runs in the job environment?</p></li>
-<li><p>Shell code destined for the job script can read the environment or
-access the filesystem as the job runs on the job host, not on the
-scheduler host.</p></li>
-</ul>
+<p>Here’s an example of a simple Jinja2 template:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
+<span class="cp">{% set tasks = ["cat", "dog", "fish"] %}</span>
+<span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">"""</span>
+<span class="cp">{% for task in tasks %}</span>
+           <span class="kd">start</span> <span class="o">=&gt;</span> <span class="cp">{{task}}</span>
+<span class="cp">{% endfor %}</span>
+        <span class="s2">"""</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[start]]</span>
+       <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'hello'"</span>
+<span class="cp">{% for task in tasks %}</span>
+    <span class="nt">[[</span><span class="cp">{{task}}</span><span class="nt">]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'I am a </span><span class="cp">{{task}}</span><span class="s">'"</span>
+<span class="cp">{% endfor %}</span>
+</pre></div>
+</div>
+<p>And the resulting workflow configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">R1 </span><span class="o">=</span> <span class="s2">"""</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">cat</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">dog</span>
+            <span class="kd">start</span> <span class="o">=&gt;</span> <span class="kd">fish</span>
+        <span class="s2">"""</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[start]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'hello'"</span>
+    <span class="nt">[[cat]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'I am a cat'"</span>
+    <span class="nt">[[dog]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'I am a dog'"</span>
+    <span class="nt">[[fish]]</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> "echo 'I am a fish'"</span>
+</pre></div>
+</div>
+<p>These uses of a Jinja2 variable result in a valid configuration:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="cp">{% set TASK = "model" %}</span>
+<span class="nt">[runtime]</span>
+    <span class="c1"># This generates a valid task definition heading "[[model]]":</span>
+    <span class="nt">[[</span><span class="cp">{{TASK}}</span><span class="nt">]]</span>
+        <span class="c1"># This generates: script = 'echo "I am a model"'</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> 'echo "I am a </span><span class="cp">{{TASK}}</span><span class="s">"'</span>
+</pre></div>
+</div>
+<p>This example shows valid use of shell variables:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="nt">[[model]]</span>
+        <span class="c1"># The "script" item gets written verbatim to job scripts so</span>
+        <span class="c1"># Bash will evaluate $OWNER (and $USER) when the job runs:</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> 'echo "I am $OWNER"'</span>
+        <span class="nt">[[[environment]]]</span>
+            <span class="nv">OWNER </span><span class="o">=</span><span class="s"> "${USER}-the-wizard"</span>
+</pre></div>
+</div>
+<p>And this shows bad use of a shell variable:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
+    <span class="c1"># ERROR: task definition headings are not evaluated by the shell</span>
+    <span class="c1"># and the literal "[[${USER}-the-wizard]]" is not valid as such.</span>
+    <span class="nt">[[${USER}-the-wizard]]</span>
+</pre></div>
+</div>
+<p>Jinja2 code can read the local environment (or the local filesystem,
+via custom <a class="reference internal" href="jinja2.html#jinja2filters"><span class="std std-ref">Python functions</span></a>) during template
+processing - i.e., when and where the file is parsed.
+Jinja2 has its own syntax for reading environment variables:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c c-Multi">{# This evaluates $USER when the file is parsed. #}</span>
+<span class="cp">{% set OWNER = environ["USER"] ~ "-the-wizard" %}</span>
+<span class="nt">[runtime]</span>
+    <span class="c1"># For Bob, this generates task definition "[[bob-the-wizard]]":</span>
+    <span class="nt">[[</span><span class="cp">{{OWNER}}</span><span class="nt">]]</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Jinja2 code gets evaluated when the file is parsed, so embedding it in
+task scripting does not mean it will execute on the task job host at
+task run time. Rather, the job will run the scripting that was
+generated by template preprocessing at scheduler start-up on the
+scheduler <a class="reference internal" href="../../glossary.html#term-run-host"><span class="xref std std-term">run host</span></a>.</p>
+</div>
+<p>Here’s an example of valid use of Jinja2 to generate a string
+that references an environment variable, for use in a task job
+script:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c c-Multi">{# This defines a string literal "${USER}-the-wizard": #}</span>
+<span class="cp">{% set OWNER = "${USER}-the-wizard" %}</span>
+<span class="nt">[runtime]</span>
+    <span class="nt">[[model]]</span>
+        <span class="c1"># This generates:</span>
+        <span class="c1">#   script = 'echo "my owner is ${USER}-the-wizard"'</span>
+        <span class="c1"># which Bash will interpret when the job runs:</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> 'echo "my owner is </span><span class="cp">{{OWNER}}</span><span class="s">"'</span>
+</pre></div>
+</div>
+<p>And here’s an example of bad use of a Jinja2-generated string
+that references a task environment variable:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c c-Multi">{# This does not evaluate $USER, it's just a string literal #}</span>
+<span class="cp">{% set OWNER = "${USER}-the-wizard" %}</span>
+<span class="nt">[runtime]</span>
+    <span class="c1"># ERROR: literal "${USER}-the-wizard" is not a valid task name:</span>
+    <span class="nt">[[</span><span class="cp">{{OWNER}}</span><span class="nt">]]</span>
+</pre></div>
+</div>
+<p>Finally, whether or not it makes sense to pass shell variables (or rather,
+strings containing them) to a <a class="reference internal" href="jinja2.html#jinja2-macro"><span class="std std-ref">Jinja2 macro</span></a> depends on
+what the macro does with its arguments. As illustrated above, valid task
+names can’t be generated that way (because shell variables won’t
+be evaluated in that context) but task scripting can be. If in doubt,
+view the processed result with <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">view</span> <span class="pre">-p</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="jinja2.html#jinja"><span class="std std-ref">Jinja2</span></a></p>
+</div>
 </section>
 <section id="syntax-highlighting-for-workflow-configuration">
 <span id="syntaxhighlighting"></span><h2>Syntax Highlighting For Workflow Configuration<a class="headerlink" href="#syntax-highlighting-for-workflow-configuration" title="Link to this heading"></a></h2>
@@ -484,8 +586,8 @@ It is good practice to specify specific errors you wish to ignore using
 <p>The following environment variables are obsolete:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_DEF_PATH_ON_SUITE_HOST</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_DEF_PATH</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CYLC_SUITE_DEF_PATH_ON_SUITE_HOST</span></code></p></li>
 </ul>
 </div></blockquote>
 </section>
@@ -621,8 +723,8 @@ Within the <code class="docutils literal notranslate"><span class="pre">[tool.cy
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 8.3.0: </span>The <code class="docutils literal notranslate"><span class="pre">[cylc-lint]</span></code> section has been deprecated in favour of
-<code class="docutils literal notranslate"><span class="pre">[tool.cylc.lint]</span></code>.</p>
+<p><span class="versionmodified changed">Changed in version 8.8.0: </span>Support for the legacy <code class="docutils literal notranslate"><span class="pre">[cylc-lint]</span></code> section has been removed.
+Use <code class="docutils literal notranslate"><span class="pre">[tool.cylc.lint]</span></code> instead.</p>
 </div>
 </div>
 <p>An example <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> might look like this:</p>

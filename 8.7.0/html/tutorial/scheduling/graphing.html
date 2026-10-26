@@ -292,10 +292,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9dea420ff1135d24aebf23add8fc0e27cb750fba.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9a94149249249659013f83847a6ab5fbdf22bd20.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough
 buy_ingredients -&gt; make_dough
+make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -303,11 +303,11 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-6322d7fe3e2c4692abe30ed259e43e2da8369051.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-7b2f3c5340734834e839536a74594eabde7826e5.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
+buy_ingredients -&gt; make_dough
 make_dough -&gt; bake_bread
 bake_bread -&gt; sell_bread
-buy_ingredients -&gt; make_dough
 sell_bread
 }</p></object></div>
 </div>
@@ -317,16 +317,16 @@ sell_bread
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9693cb7545e4705b584e6789df7eedb022a33214.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-6f5edde5636650eff7bc3654b2544423512bc741.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
 make_dough -&gt; bake_bread
+pre_heat_oven -&gt; bake_bread
 bake_bread -&gt; clean_oven
+clean_oven
 bake_bread
+sell_bread
 buy_ingredients -&gt; make_dough
 bake_bread -&gt; sell_bread
-clean_oven
-sell_bread
-pre_heat_oven -&gt; bake_bread
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).

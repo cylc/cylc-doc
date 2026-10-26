@@ -1419,30 +1419,42 @@ other tasks beyond the final point.</p>
 </section>
 <section id="clock-triggers">
 <span id="clocktriggertasks"></span><h3>Clock Triggers<a class="headerlink" href="#clock-triggers" title="Link to this heading"></a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This describes a deprecated syntax for defining clock triggers in task
-configuration. If used, it will be converted automatically to define
-new-style <a class="reference internal" href="external-triggers.html#built-in-clock-triggers"><span class="std std-ref">clock triggers</span></a>.
-Support for the old syntax will be removed in an upcoming release.</p>
-</div>
 <p>By default, datetime cycle points are not connected to the <a class="reference internal" href="../../glossary.html#term-wallclock-time"><span class="xref std std-term">wallclock time</span></a>.
 In real time cycling systems, however, some tasks may need to trigger at
-(or at some offset from) their cycle point in real time.</p>
-<p>Cylc points are full datetimes, not just times of the day, so clock-triggers
-provide no constraint if the workflow gets sufficiently far behind the clock,
-allowing maximum concurrency until the clock-triggered tasks catch up again.</p>
+(or at some offset from) their cycle point in real time.
+This is achieved using the <code class="docutils literal notranslate"><span class="pre">wall_clock</span></code> xtrigger.
+See <a class="reference internal" href="external-triggers.html#built-in-clock-triggers"><span class="std std-ref">Built-in Clock Triggers</span></a> for details.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Old-style clock triggers are deprecated. They are currently automatically
+upgraded to xtriggers, however support for the old syntax will be removed
+in Cylc 8.9.</p>
+<p>For example, you should replace these old-style clock triggers:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
     <span class="nt">[[special tasks]]</span>
-        <span class="nv">clock-trigger </span><span class="o">=</span><span class="s"> foo(PT2H)</span>
+        <span class="nv">clock-trigger </span><span class="o">=</span><span class="s"> foo(PT0H), bar(PT2H), baz(PT2H)</span>
     <span class="nt">[[graph]]</span>
         <span class="nv">T00 </span><span class="o">=</span> <span class="kd">foo</span>
+<span class="nv">        T12 </span><span class="o">=</span> <span class="kd">bar</span> <span class="o">&amp;</span> <span class="kd">baz</span>
 </pre></div>
 </div>
-<p>Here, <code class="docutils literal notranslate"><span class="pre">2025-08-23T00/foo</span></code> would trigger (other dependencies allowing)
-when the wallclock time reaches <code class="docutils literal notranslate"><span class="pre">2025-08-23T02</span></code>. Clock-trigger
-offsets are normally positive, to trigger <em>after</em> the wallclock time is equal
-to the task cycle point.</p>
+<p>with the <code class="docutils literal notranslate"><span class="pre">wall_clock</span></code> xtrigger like so:</p>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[scheduling]</span>
+    <span class="nt">[[xtriggers]]</span>
+        <span class="nv">after_2h_clock </span><span class="o">=</span><span class="s"> wall_clock(PT2H)</span>
+    <span class="nt">[[graph]]</span>
+        <span class="nv">T00 = @wall_clock </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">foo</span>
+<span class="nv">        T12 = @after_2h_clock </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">bar</span> <span class="o">&amp;</span> <span class="kd">baz</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li><p>Task <code class="docutils literal notranslate"><span class="pre">foo</span></code> does not need to declare an xtrigger definition as
+the offset is zero.</p></li>
+<li><p>The name given to declared xtriggers is up to you;
+<code class="docutils literal notranslate"><span class="pre">after_2h_clock</span></code> is just an example.</p></li>
+</ul>
+</div>
 </section>
 <section id="clock-expire-triggers">
 <span id="clockexpiretasks"></span><h3>Clock-Expire Triggers<a class="headerlink" href="#clock-expire-triggers" title="Link to this heading"></a></h3>

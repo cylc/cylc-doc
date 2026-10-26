@@ -716,7 +716,7 @@ the include-file:</p>
 you need to construct an include-file name from a variable (because Cylc
 include-files get inlined before Jinja2 processing is done):</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="cp">{% include 'inc/' ~ SITE ~ '.cylc' %}</span>
+<span class="cp">{% include 'inc/' ~ CYLC_SITE ~ '.cylc' %}</span>
 </pre></div>
 </div>
 </section>

@@ -1190,6 +1190,10 @@ directory from the environment variable <span class="target" id="index-5"></span
 </ul>
 </div>
 </dd>
+<dt id="term-run-host">run host<a class="headerlink" href="#term-run-host" title="Link to this term"></a></dt><dt id="term-scheduler-run-host">scheduler run host<a class="headerlink" href="#term-scheduler-run-host" title="Link to this term"></a></dt><dd><p>If <a class="reference internal" href="reference/config/global.html#global.cylc[scheduler][run hosts]" title="global.cylc[scheduler][run hosts]"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">global.cylc[scheduler][run</span> <span class="pre">hosts]</span></code></a> are defined, Cylc
+will attempt to start new schedulers on an available run host, instead
+of locally.</p>
+</dd>
 <dt id="term-runahead-limit">runahead limit<a class="headerlink" href="#term-runahead-limit" title="Link to this term"></a></dt><dt id="term-runahead">runahead<a class="headerlink" href="#term-runahead" title="Link to this term"></a></dt><dd><p>In a <a class="reference internal" href="#term-cycling-workflow"><span class="xref std std-term">cycling workflow</span></a> the runahead limit determines how
 far ahead, in <a class="reference internal" href="#term-cycle-point"><span class="xref std std-term">cycle points</span></a>, activity can
 extend beyond the earliest submitted or running tasks.</p>
@@ -1446,14 +1450,14 @@ inheritance</span></a> and templating with <a class="reference internal" href="u
         <span class="nv">R1 = bar&lt;m&gt; </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">baz</span>&lt;<span class="nb">m</span>&gt;
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-1fbc60c8c155b229446cd39be81ae39ef63af957.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="bar_m1 => baz_m1//bar_m2 => baz_m2//bar_m3 => baz_m3" data-theme="none" ><div class="graphviz"><object data="_images/graphviz-867e3ebb07832845b2ac3ec03071e7238730d4ea.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
 bar_m3 -&gt; baz_m3
-baz_m1
-baz_m2
 baz_m3
-bar_m1 -&gt; baz_m1
+baz_m2
 bar_m2 -&gt; baz_m2
+baz_m1
+bar_m1 -&gt; baz_m1
 }</p></object></div>
 </div><div class="admonition seealso">
 <p class="admonition-title">See also</p>

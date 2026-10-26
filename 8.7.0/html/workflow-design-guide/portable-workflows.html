@@ -71,7 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="general-principles.html">Basic Principles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="efficiency.html">Efficiency And Maintainability</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Portable Workflows</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#the-jinja2-site-variable">The Jinja2 SITE Variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-jinja2-cylc-site-variable">The Jinja2 <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span></code> Variable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#site-include-files">Site Include-Files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#site-specific-graphs">Site-Specific Graphs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#inlined-site-switching">Inlined Site-Switching</a></li>
@@ -142,24 +142,22 @@ use an install task to link external files in.</p></li>
 <p>The result should actually be tidier than the original in one respect: all
 the messy platform-specific resource directives etc., will be hidden away in
 the site include-files.</p>
-<section id="the-jinja2-site-variable">
-<h2>The Jinja2 SITE Variable<a class="headerlink" href="#the-jinja2-site-variable" title="Link to this heading"></a></h2>
-<p>First a workflow Jinja2 variable called <code class="docutils literal notranslate"><span class="pre">SITE</span></code> should be set to the site
-name, either in <code class="docutils literal notranslate"><span class="pre">rose-suite.conf</span></code>, or in the workflow definition itself
-(perhaps automatically, by querying the local environment in some way).</p>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="ch">#!Jinja2</span>
-<span class="cp">{% set SITE = "niwa" %}</span>
-<span class="c1">#...</span>
-</pre></div>
-</div>
-<p>This will be used to select site-specific configuration, as described below.</p>
+<section id="the-jinja2-cylc-site-variable">
+<h2>The Jinja2 <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span></code> Variable<a class="headerlink" href="#the-jinja2-cylc-site-variable" title="Link to this heading"></a></h2>
+<p>Some institutions set a
+<a class="reference internal" href="../reference/changes.html#changes-global-template-variables"><span class="std std-ref">global template variable</span></a> called
+<code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span></code> which is made available to all workflows running at their
+site(s).</p>
+<p>The purpose of this variable is to make inter-site portability easier by
+providing a mechanism for workflows to detect which site they are being run at.</p>
+<p>This may be used to load site-specific include files (see next section).</p>
 </section>
 <section id="site-include-files">
 <h2>Site Include-Files<a class="headerlink" href="#site-include-files" title="Link to this heading"></a></h2>
 <p>If a section heading in a <a class="reference internal" href="../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file is repeated the items
 under it simply add to or override those defined under the same section earlier
-in the file.
-For example, this task definition:</p>
+in the file.</p>
+<p>For example, this task definition:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[foo]]</span>
         <span class="nv">script </span><span class="o">=</span><span class="s"> run-foo.sh</span>
@@ -185,18 +183,13 @@ make it more difficult to determine the origin of affected values.</p>
 <p>In this way all site-specific <code class="docutils literal notranslate"><span class="pre">[runtime]</span></code> settings, with their
 respective sub-section headings, can be moved to the end of the file, and then
 out into an include-file (file inclusion is essentially just literal inlining):</p>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="cp">{% set SITE = "niwa" %}</span>
-
-<span class="c1"># Core site-agnostic settings:</span>
-<span class="c1">#...</span>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Core site-agnostic settings:</span>
 <span class="nt">[runtime]</span>
     <span class="nt">[[foo]]</span>
         <span class="nv">script </span><span class="o">=</span><span class="s"> run-foo.sh</span>
-<span class="c1">#...</span>
 
 <span class="c1"># Site-specific settings:</span>
-<span class="cp">{% include 'site/' ~ SITE ~ '.cylc' %}</span>
+<span class="cp">{% include 'site/' ~ CYLC_SITE ~ '.cylc' %}</span>
 </pre></div>
 </div>
 <p>where the site include-file <code class="docutils literal notranslate"><span class="pre">site/niwa.cylc</span></code> contains:</p>
@@ -227,10 +220,7 @@ override semantics). So, for instance, this graph:</p>
 </pre></div>
 </div>
 <p>and again, the site-specific part can be taken out to a site include-file:</p>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="cp">{% set SITE = "niwa" %}</span>
-
-<span class="c1"># Core site-agnostic settings.</span>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># Core site-agnostic settings.</span>
 <span class="c1">#...</span>
 <span class="nt">[scheduling]</span>
     <span class="nv">initial cycle point </span><span class="o">=</span><span class="s"> 2025</span>
@@ -238,7 +228,7 @@ override semantics). So, for instance, this graph:</p>
         <span class="nv">P1Y = "pre =&gt; model </span><span class="o">=</span><span class="c">&gt;</span> <span class="kd">post</span><span class="c">"</span>
 <span class="c1">#...</span>
 <span class="c1"># Site-specific settings:</span>
-<span class="cp">{% include 'site/' ~ SITE ~ '.cylc' %}</span>
+<span class="cp">{% include 'site/' ~ CYLC_SITE ~ '.cylc' %}</span>
 </pre></div>
 </div>
 <p>where the site include-file <code class="docutils literal notranslate"><span class="pre">site/niwa.cylc</span></code> contains:</p>
@@ -260,23 +250,22 @@ this site, they would also be in the site-file).</p>
 site include-files, but <em>this is not recommended</em> - it is verbose and
 untidy (the greater the number of supported sites, the bigger the
 mess) and it exposes all site configuration to all users:</p>
-<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="nt">[runtime]</span>
+<div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[model]]</span>
         <span class="nv">script </span><span class="o">=</span><span class="s"> run-model.sh</span>
 <span class="c c-Multi">{# Site switch blocks not recommended:#}</span>
-<span class="cp">{% if SITE == 'niwa' %}</span>
+<span class="cp">{% if CYLC_SITE == 'niwa' %}</span>
         <span class="nv">platform </span><span class="o">=</span><span class="s"> niwa_loadleveler_platform</span>
         <span class="nt">[[[directives]]]</span>
             <span class="c1"># NIWA Loadleveler directives...</span>
-<span class="cp">{% elif SITE == 'metoffice' %}</span>
+<span class="cp">{% elif CYLC_SITE == 'meto' %}</span>
         <span class="nv">platform </span><span class="o">=</span><span class="s"> metoffice_pbs_platform</span>
         <span class="nt">[[[directives]]]</span>
             <span class="c1"># Met Office PBS directives...</span>
-<span class="cp">{% elif SITE == ... %}</span>
+<span class="cp">{% elif CYLC _SITE == ... %}</span>
             <span class="c1">#...</span>
 <span class="cp">{% else %}</span>
-    <span class="cp">{{raise('Unsupported site: ' ~ SITE)}}</span>
+    <span class="cp">{{raise('Unsupported site: ' ~ CYLC_SITE)}}</span>
 <span class="cp">{% endif %}</span>
     <span class="c1">#...</span>
 </pre></div>
@@ -285,8 +274,7 @@ mess) and it exposes all site configuration to all users:</p>
 one site without requiring the other sites to duplicate the default behaviour.
 But be wary of accumulating too many of these switches:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># (core flow.cylc file)</span>
-<span class="c1">#...</span>
-<span class="cp">{% if SITE == 'small' %}</span>
+<span class="cp">{% if CYLC_SITE == 'small' %}</span>
    <span class="c c-Multi">{# We can't run 100 members... #}</span>
    <span class="cp">{% set ENSEMBLE_SIZE = 25 %}</span>
 <span class="cp">{% else %}</span>
@@ -308,7 +296,7 @@ aren’t exposed to users via <code class="docutils literal notranslate"><span c
 a workflow that can run a special post-processing workflow of some kind at sites
 where IDL is available. The IDL-dependence switch can be set per site like this:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1">#...</span>
-<span class="cp">{% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}</span>
+<span class="cp">{% from CYLC_SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}</span>
 <span class="nv">R1 </span><span class="o">=</span> <span class="s2">"""</span>
 <span class="s2">    pre =&gt; model =&gt; post</span>
 <span class="cp">{% if HAVE_IDL %}</span>
@@ -317,7 +305,7 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
 <span class="s2">"""</span>
 </pre></div>
 </div>
-<p>where for <code class="docutils literal notranslate"><span class="pre">SITE</span> <span class="pre">=</span> <span class="pre">niwa</span></code> the file <code class="docutils literal notranslate"><span class="pre">niwa-vars.cylc</span></code> contains:</p>
+<p>where for <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span> <span class="pre">=</span> <span class="pre">niwa</span></code> the file <code class="docutils literal notranslate"><span class="pre">niwa-vars.cylc</span></code> contains:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c c-Multi">{# niwa-vars.cylc #}</span>
 <span class="cp">{% set HAVE_IDL = True %}</span>
 <span class="cp">{% set OTHER_VAR = "the quick brown fox" %}</span>
@@ -354,14 +342,14 @@ explicit site-customization of individual task-run command lines use Rose’s
 built-in <em>optional app config</em> capability:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="nt">[runtime]</span>
     <span class="nt">[[root]]</span>
-        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v -O '(</span><span class="cp">{{SITE}}</span><span class="s">)'</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v -O '(</span><span class="cp">{{CYLC_SITE}}</span><span class="s">)'</span>
 </pre></div>
 </div>
 <p>Normally a missing optional app config is considered to be an error, but the
 round parentheses here mean the named optional config is optional - i.e.
 use it if it exists, otherwise ignore.</p>
 <p>With this setting in place we can simply add a <code class="docutils literal notranslate"><span class="pre">opt/rose-app-niwa.conf</span></code> to
-any app that needs customization at <code class="docutils literal notranslate"><span class="pre">SITE</span> <span class="pre">=</span> <span class="pre">niwa</span></code>.</p>
+any app that needs customization at <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span> <span class="pre">=</span> <span class="pre">niwa</span></code>.</p>
 </section>
 <section id="an-example">
 <h2>An Example<a class="headerlink" href="#an-example" title="Link to this heading"></a></h2>
@@ -410,8 +398,7 @@ and batch scheduler directives.</p>
 contains the clean site-independent workflow configuration and loads all
 site-specific settings from an include-file at the end:</p>
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.</span>
-<span class="cp">{% set SITE = 'niwa' %}</span>
-<span class="cp">{% from 'site/' ~ SITE ~ '-vars.cylc' import HAVE_IDL %}</span>
+<span class="cp">{% from 'site/' ~ CYLC_SITE ~ '-vars.cylc' import HAVE_IDL %}</span>
 <span class="nt">[scheduler]</span>
     <span class="nv">UTC mode </span><span class="o">=</span><span class="s"> True</span>
 <span class="nt">[scheduling]</span>
@@ -425,7 +412,7 @@ site-specific settings from an include-file at the end:</p>
         <span class="s2">"""</span>
 <span class="nt">[runtime]</span>
     <span class="nt">[[root]]</span>
-        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v -O '(</span><span class="cp">{{SITE}}</span><span class="s">)'</span>
+        <span class="nv">script </span><span class="o">=</span><span class="s"> rose task-run -v -O '(</span><span class="cp">{{CYLC_SITE}}</span><span class="s">)'</span>
     <span class="nt">[[preproc]]</span>
         <span class="nv">inherit </span><span class="o">=</span><span class="s"> HPC</span>
     <span class="nt">[[preproc]]</span>
@@ -434,7 +421,7 @@ site-specific settings from an include-file at the end:</p>
         <span class="nv">inherit </span><span class="o">=</span><span class="s"> HPC</span>
         <span class="nt">[[[environment]]]</span>
             <span class="nv">SPEED </span><span class="o">=</span><span class="s"> fast</span>
-<span class="cp">{% include 'site/' ~ SITE ~ '.cylc' %}</span>
+<span class="cp">{% include 'site/' ~ CYLC_SITE ~ '.cylc' %}</span>
 </pre></div>
 </div>
 <p>plus site files <code class="docutils literal notranslate"><span class="pre">site/niwa-vars.cylc</span></code>:</p>
