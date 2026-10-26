@@ -2598,8 +2598,9 @@ Internal queues are non-overlapping (each task can only belong to one
 queue) and they release tasks in first in, first out order as the
 :term:`active job` count drops below the queue limit.
 
-The predefined ``default`` queue has a 100 job limit, for all tasks that
-are not assigned to custom queues. Custom queues are unlimited by default.
+The predefined :cylc:conf:`default <flow.cylc[scheduling][queues][default]>`
+queue has a 100 job limit, for all tasks that are not assigned to custom
+queues. Custom queues are unlimited by default.
 
 .. note::
 
@@ -2611,7 +2612,7 @@ are not assigned to custom queues. Custom queues are unlimited by default.
 
 
 To restrict job activity for the workflow as a whole you can configure the
-``default`` queue limit:
+:cylc:conf:`default <flow.cylc[scheduling][queues][default]>` queue limit:
 
 .. code-block:: cylc
 
