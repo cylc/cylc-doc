@@ -2595,7 +2595,7 @@ the system, use :cylc:conf:`[scheduling][queues]` to define queues that
 control how many tasks can be ``submitted`` or ``running`` at once.
 
 Internal queues are non-overlapping (each task can only belong to one
-queue) and they release tasks in FIFO order (first in, first out) as the
+queue) and they release tasks in first in, first out order as the
 :term:`active job` count drops below the queue limit.
 
 The predefined ``default`` queue has a 100 job limit, for all tasks that
