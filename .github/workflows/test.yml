@@ -58,9 +58,6 @@ jobs:
       - name: install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: install cylc-doc
-        run: pip install .[all]
-
       - name: install libs
         uses: cylc/release-actions/install-cylc-components@v1
         with:
@@ -72,6 +69,7 @@ jobs:
           cylc_rose_opts: ''
           metomi_rose: true
           metomi_rose_opts: ''
+          local_source: '.[all]'
 
       - name: lint
         if: matrix.type == 'build'
