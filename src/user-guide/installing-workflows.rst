@@ -3,7 +3,7 @@
 Installing Workflows
 ====================
 
-This chapter will demonstrate how to install a workflow.
+This section will demonstrate how to install a workflow.
 
 Installing a workflow copies files from an arbitrary location, called a
 :term:`source directory`, into a new :term:`workflow run directory` under the
