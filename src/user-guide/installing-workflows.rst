@@ -469,12 +469,13 @@ There are some occasions when installation is expected to fail:
 Workflow IDs
 ------------
 
-Cylc commands identify installed workflows via their :term:`workflow id`, which
-are relative paths under the cylc-run directory.
+Cylc commands identify installed workflows via
+:term:`workflow IDs <workflow id>`,
+which correspond to relative paths under the :term:`cylc-run directory`.
 For example, the workflow installed at ``~/cylc-run/my_workflow/run1`` would
 have the workflow id ``my_workflow/run1``.
-Optionally, just the :term:`workflow name` can be used (e.g. ``my_workflow``),
-which will automatically use the most recently installed run.
+If you omit the run number and just give the :term:`workflow name`
+(e.g. ``my_workflow``) Cylc will infer the most recently installed run.
 
 
 .. _installing_workflows.compound_commands:
