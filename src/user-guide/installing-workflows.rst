@@ -94,8 +94,8 @@ the first match (into ``~/cylc-run/dogs/fido/run1``).
 Workflow Sub-Directories
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Workflows can be grouped together under sub-directories,
-which displays them as a nested hierarchy in the GUI and TUI.
+Workflows grouped under sub-directories
+will be displayed as a nested hierarchy in the GUI and TUI.
 The example below contains the three workflows
 ``nwp/oper/region1``, ``nwp/oper/region2`` and ``nwp/test/region1``.
 
