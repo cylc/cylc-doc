@@ -10,8 +10,6 @@ indefinitely.
    :width: 50%
    :target: https://cylc.discourse.group
 
-|
-
 .. toctree::
    :maxdepth: 2
 

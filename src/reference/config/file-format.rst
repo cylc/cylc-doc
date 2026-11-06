@@ -3,8 +3,13 @@
 The .cylc File Format
 =====================
 
-Cylc global and workflow configuration files are written in a nested
-`INI`_-based format.
+This section describes the nested `INI`_-based file format used for
+Cylc global and workflow configuration.
+
+See also
+:ref:`Understanding Variables and Code in Workflow Configurations <UnderstandingCodeInCylcConfigurations>`,
+for use of Bash code in string-valued task configuration items,
+and embedded Jinja2 templating code.
 
 .. _syntax:
 

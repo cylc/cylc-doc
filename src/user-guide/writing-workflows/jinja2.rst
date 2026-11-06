@@ -668,6 +668,9 @@ For better clarity and disambiguation Python modules can be prefixed with
    or the ``lib/python`` directory.
 
 
+
+.. _Jinja2 macro:
+
 Macros
 ------
 
