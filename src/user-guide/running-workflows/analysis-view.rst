@@ -122,6 +122,17 @@ On each poll the profiler reads this field and, if it is larger than any
 value seen previously, records it. The value reported as Max RSS is the
 largest value read.
 
+.. tip::
+
+   This is the same cgroup memory accounting which the kernel's Out Of
+   Memory (OOM) mechanism uses to enforce a job's memory limit, rather than
+   an estimate from a separate tool. Max RSS can therefore be used as a
+   reliable guide when reducing the amount of memory requested for a job,
+   without accidentally causing the job to be killed for running out of
+   memory. Leave some headroom above the Max RSS of previous runs to allow
+   for short spikes between samples and for the non-anonymous memory
+   described in the notes below.
+
 Both fields report the amount of *anonymous* memory which is resident in RAM
 and charged to the cgroup, including any child cgroups beneath it
 (``total_rss`` is the hierarchical version of the v1 ``rss`` field, and

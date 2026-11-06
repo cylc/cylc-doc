@@ -1127,6 +1127,13 @@ Glossary
       may not be captured. Kernel I/O buffers (the page cache), memory-mapped
       files, shared memory and kernel memory are not included.
 
+      This is the same cgroup memory accounting which the kernel's Out Of
+      Memory (OOM) mechanism uses to enforce a job's memory limit. Max RSS
+      can therefore be used as a reliable guide when reducing the amount of
+      memory requested for a job, without accidentally causing it to be
+      killed for running out of memory (leave some headroom for brief spikes
+      which may fall between samples).
+
       Max RSS is displayed in the Analysis View of the Cylc GUI.
 
       .. seealso::
