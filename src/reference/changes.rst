@@ -85,6 +85,32 @@ Cylc 8.6.
    ``cylc config --print-hierarchy``.
 
 
+Max RSS and CPU Time in the Analysis View
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Cylc now includes a job profiler which records the memory and CPU usage of
+jobs on platforms where jobs run in their own cgroup (e.g. Slurm or PBS
+configured to use cgroups).
+
+The following metrics are now available in the GUI's Analysis View (table,
+box plot and time series displays), alongside the existing queue, run and
+total times:
+
+* :term:`Max RSS <max RSS>` - the
+  highest amount of physical memory (RAM) used by the job at any point
+  during its run.
+* CPU time - the total processor time consumed by the job, summed across all
+  of its processes and CPU cores.
+
+The profiler can be configured, or disabled, per platform in
+:cylc:conf:`global.cylc[platforms][<platform name>][profiler]`.
+
+.. seealso::
+
+   * :ref:`user-guide.analysis-view`
+   * :ref:`ProfilingConfigurations`
+
+
 Cylc 8.6
 --------
 
@@ -483,10 +509,6 @@ Additionally, the log view now has an auto scroll feature which follows the
 end of the file (useful for viewing the file whilst it is being written), and
 a scroll-to-top button.
 
-Max RSS and CPU time in Analysis View
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Max RSS (Memory Usage) and CPU time are now available in the Analysis View.
 
 Cylc Tui
 ^^^^^^^^

@@ -1,4 +1,7 @@
 GUI
+GiB
+KiB
+MiB
 Popen
 app
 apps
@@ -73,6 +76,7 @@ inline
 inlined
 inlines
 inlining
+inode
 int
 integrations
 intercycle

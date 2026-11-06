@@ -1106,6 +1106,30 @@ Glossary
 
          * :ref:`Install Targets`
 
+   max RSS
+      Max RSS (maximum Resident Set Size) is the largest amount of physical
+      memory (RAM) used by a :term:`job` at any one time during its run.
+
+      RSS (Resident Set Size) is the portion of a job's memory which is held
+      in RAM; it excludes memory which has been swapped out to disk and
+      memory which has been allocated but not used.
+
+      Cylc measures max RSS using the Cylc job profiler, which periodically
+      samples the anonymous memory usage of all processes in the job's cgroup
+      (the ``anon`` field of the cgroup's ``memory.stat`` file for cgroups v2,
+      or ``total_rss`` for cgroups v1) and records the highest value seen.
+      Because the value is sampled, very brief memory spikes between samples
+      may not be captured. Kernel I/O buffers (the page cache), memory-mapped
+      files, shared memory and kernel memory are not included.
+
+      Max RSS is displayed in the Analysis View of the Cylc GUI.
+
+      .. seealso::
+
+         * :cylc:conf:`global.cylc[platforms][<platform name>][profiler]`
+         * :ref:`user-guide.analysis-view`
+         * :ref:`user-guide.analysis-view.max-rss.source`
+
    reinstall
    reinstallation
       The ``cylc reinstall`` command reinstalls workflow :term:`source files

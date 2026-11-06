@@ -446,28 +446,42 @@ task has started see
             ssh forward environment variables = PROJECT
             submit method = pbs
 
+.. _ProfilingConfigurations:
+
 Profiling Configurations
 ^^^^^^^^^^^^^^^^^^^^^^^^
-If you are running cylc on a supported platform, profiling is enabled by default.
-You will be able to see the profiling information in the analysis tab in the cylc GUI
-You can configure or disable profiling entirely, by setting the following in
-your workflow configuration:
+
+.. versionadded:: 8.7.0
+
+The Cylc job profiler records the :term:`max RSS` (maximum memory usage) and
+CPU time of each job by polling the job's cgroup. The results can be viewed
+in the Analysis View of the Cylc GUI, see :ref:`user-guide.analysis-view`.
+
+The profiler requires a job runner which places each job in its own cgroup
+(e.g. Slurm or PBS when configured to use cgroups).
+
+The profiler is active by default. It can be configured, or disabled, for
+each platform in the
+:cylc:conf:`global.cylc[platforms][<platform name>][profiler]` section:
 
  .. code-block:: cylc
-    :caption: part of a ``flow.cylc`` config file
+    :caption: part of a ``global.cylc`` config file
 
     [platforms]
-        [[profile]]
-            # Profiling can be turned off by setting activate = False
-            activate = True
-            # If your cgroups is not mounted at the default location on your platform
-            # you can set the cgroups path to the location of your cgroups mount point.
-            cgroups path = '/sys/fs/cgroup'
-            # The profiling interval can be set to a different value
-            # if you want to increase or decrease the frequency of profiling.
-            polling interval = 10
+        [[hpc]]
+            job runner = slurm
+            [[[profiler]]]
+                # The profiler is active by default (activate = True).
+                # Set this to False to turn profiling off for this platform.
+                activate = True
+                # If cgroups is not mounted at the default location on your
+                # platform, set this to the location of the cgroups mount point.
+                cgroups path = /sys/fs/cgroup
+                # The interval at which the profiler samples memory usage.
+                # Decrease this to capture shorter-lived memory spikes.
+                polling interval = PT10S
 
 .. note::
 
    The default configuration for profiling will be suitable for most users.
-   Profiling is enabled by default and has a negigible performance impact.
+   The profiler has a negligible performance impact.
