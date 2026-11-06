@@ -16,5 +16,6 @@ Running Workflows
    cylc-broadcast
    authentication-files
    workflow-databases
+   analysis-view
    advanced
    inter-version-compatibility
