@@ -341,7 +341,7 @@ inferred from context (rules below).
 
    Cycle points in Cylc are just task labels that anchor dependence on
    other tasks, and which tasks can use to determine their current cycle
-   point. **Datetime cycle points have no relation to wallclock (real) time**
+   point. **Datetime cycle points have no relation to wall-clock (real) time**
    except where specific tasks, if any, depend on :term:`clock triggers <clock
    trigger>`.
 
@@ -1490,7 +1490,7 @@ other tasks beyond the final point.
 Clock Triggers
 ^^^^^^^^^^^^^^
 
-By default, datetime cycle points are not connected to the :term:`wallclock time`.
+By default, datetime cycle points are not connected to the :term:`wall-clock time`.
 In real time cycling systems, however, some tasks may need to trigger at
 (or at some offset from) their cycle point in real time.
 This is achieved using the ``wall_clock`` xtrigger.
@@ -1537,21 +1537,23 @@ See :ref:`Built-in Clock Triggers` for details.
 Clock-Expire Triggers
 ^^^^^^^^^^^^^^^^^^^^^
 
-Tasks can be configured to :term:`expire <expired task>` if the real-world
-(wall clock) time exceeds some offset from their cycle point.
+Tasks can be configured to :term:`expire <expired task>`
+instead of running if the wall-clock time has advanced
+to the point that they are no longer needed.
 
-Task expiration is configured with
-:cylc:conf:`[scheduling][special tasks]clock-expire` using a syntax like
-:cylc:conf:`clock-trigger <[scheduling][special tasks]clock-trigger>`
-with a datetime offset relative to cycle point.
-The offset should be positive to make the task expire if the wallclock time
-has gone beyond the cycle point.
+For example, a task or sub-graph might generate products
+that are only needed if the workflow has not fallen too
+far behind the clock.
 
-In this example:
+Expiry time is expressed as an offset from task cycle point.
+A positive offset makes a task expire *after* its cycle point.
 
-* The task ``foo`` is configured to expire when the wall clock
-  time passes the cycle time:
-* Whereas ``bar`` is configured to expire one hour *after* the cycle time.
+In the following example:
+
+* Task ``foo`` will expire if the wall-clock
+  time exceeds its cycle time.
+* Task ``bar`` will expire if the wall-clock
+  time exceeds one hour past its cycle time.
 
 .. code-block:: cylc
 
@@ -1561,24 +1563,26 @@ In this example:
 
 So, in the cycle ``2000-01-01T00:00Z``:
 
-* ``foo`` would expire at ``2000-01-01T00:00Z``.
-* ``bar`` would expire at ``2000-01-01T01:00Z``.
+* ``foo`` has an expiry time of ``2000-01-01T00:00Z``.
+* ``bar`` has an expiry time of ``2000-01-01T01:00Z``.
 
-Only waiting tasks can expire, :term:`active tasks <active task>` will not be
-killed if they pass their configured ``clock-expire`` time.
+When a task expires it generates the ``expired`` :term:`output`,
+which can be used to trigger other tasks.
 
-When a task expires, it produces the ``expired`` :term:`output`.
-This can be used to
-trigger other tasks. It must be marked as an :term:`optional output`,
-i.e. expiry cannot be :term:`required <required output>`.
+Any ``expired`` output that appears in the graph must be
+marked as :term:`optional <optional output>` (it can't be
+required) so the task can expire without stalling the workflow.
+Otherwise (if it does not appear in the graph) the expired task
+will be retained in the :term:`active window` as
+:term:`incomplete <output completion>` pending operator
+intervention.
 
-In this example:
+In the next example:
 
-* ``foo`` will not run before the wall clock time.
-* ``foo`` will expire if it does not start running within 6 hours of the wall
-  clock time being reached.
-* If ``foo`` runs, the task ``bar`` will run after.
-* If ``foo`` expires, the task ``baz`` will run after.
+* ``foo`` will not run before the wall-clock time, because of the clock trigger.
+* ``foo`` will expire if it does not trigger within 6 hours of the wall-clock time.
+* If ``foo`` runs, ``bar`` will run after it.
+* If ``foo`` expires, ``baz`` will run after it.
 
 .. code-block:: cylc
 
@@ -1603,12 +1607,12 @@ Family triggers are also provided for task expiry:
 
 .. warning::
 
-   The scheduler can only determine that a task has expired once it
-   enters the :term:`n=0 window <n-window>` - i.e., after its first
-   prerequisite gets satisfied.
+   The scheduler can only detect expiry once the task enters the
+   :term:`n=0 window <n-window>`, which could be long after the
+   configured expiry time.
 
-   In the following example, task ``b`` will only expire **after**
-   ``a`` has succeeded, even though the expiry date is several
+   In the following example, task ``b`` will expire **after**
+   ``a`` has succeeded, even though the expiry date was several
    decades ago.
 
    .. code-block:: cylc
