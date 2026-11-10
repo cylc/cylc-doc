@@ -46,6 +46,11 @@ on:
         type: boolean
         default: true
         required: false
+      skip_linkcheck:
+        description: 'Skip linkcheck build'
+        type: boolean
+        default: false
+        required: false
       skip_conda_environment_check:
         description: "Skip creation of conda environments"
         type: boolean
@@ -132,10 +137,13 @@ jobs:
         run: |
           # NOTE: Doing a clean build allows up to update docs for a
           #       deployed version at a later date.
+          if ${{ inputs.skip_linkcheck }}; then
+            builds=(clean html)
+          else
+            builds=(clean html linkcheck)
+          fi
           make -C docs \
-            clean \
-            html \
-            linkcheck \
+            "${builds[@]}" \
             SPHINXOPTS='-Wn --keep-going' \
             FORCE_COLOR=true \
             STABLE=${{ inputs.set_stable }} \

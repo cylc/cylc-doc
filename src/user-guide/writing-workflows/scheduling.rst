@@ -1490,33 +1490,46 @@ other tasks beyond the final point.
 Clock Triggers
 ^^^^^^^^^^^^^^
 
-.. warning::
-
-   This describes a deprecated syntax for defining clock triggers in task
-   configuration. If used, it will be converted automatically to define
-   new-style :ref:`clock triggers <Built-in Clock Triggers>`.
-   Support for the old syntax will be removed in an upcoming release.
-
 By default, datetime cycle points are not connected to the :term:`wallclock time`.
 In real time cycling systems, however, some tasks may need to trigger at
 (or at some offset from) their cycle point in real time.
+This is achieved using the ``wall_clock`` xtrigger.
+See :ref:`Built-in Clock Triggers` for details.
 
-Cylc points are full datetimes, not just times of the day, so clock-triggers
-provide no constraint if the workflow gets sufficiently far behind the clock,
-allowing maximum concurrency until the clock-triggered tasks catch up again.
+.. warning::
 
-.. code-block:: cylc
+   Old-style clock triggers are deprecated. They are currently automatically
+   upgraded to xtriggers, however support for the old syntax will be removed
+   in Cylc 8.9.
 
-   [scheduling]
-       [[special tasks]]
-           clock-trigger = foo(PT2H)
-       [[graph]]
-           T00 = foo
+   For example, you should replace these old-style clock triggers:
 
-Here, ``2025-08-23T00/foo`` would trigger (other dependencies allowing)
-when the wallclock time reaches ``2025-08-23T02``. Clock-trigger
-offsets are normally positive, to trigger *after* the wallclock time is equal
-to the task cycle point.
+   .. code-block:: cylc
+
+      [scheduling]
+          [[special tasks]]
+              clock-trigger = foo(PT0H), bar(PT2H), baz(PT2H)
+          [[graph]]
+              T00 = foo
+              T12 = bar & baz
+
+   with the ``wall_clock`` xtrigger like so:
+
+   .. code-block:: cylc
+
+      [scheduling]
+          [[xtriggers]]
+              after_2h_clock = wall_clock(PT2H)
+          [[graph]]
+              T00 = @wall_clock => foo
+              T12 = @after_2h_clock => bar & baz
+
+   Note:
+
+   * Task ``foo`` does not need to declare an xtrigger definition as
+     the offset is zero.
+   * The name given to declared xtriggers is up to you;
+     ``after_2h_clock`` is just an example.
 
 
 .. _ClockExpireTasks:
@@ -2577,40 +2590,50 @@ The scheduler may automatically raise the runahead limit to accommodate
 Internal Queues
 ---------------
 
-Large workflows can potentially overwhelm the system by submitting too many
-jobs at once. Internal queues can prevent this by limiting the number of
-tasks that can be active (submitted or running) at the same time.
+If you need to limit simultaneous job activity to avoid overwhelming
+the system, use :cylc:conf:`[scheduling][queues]` to define queues that
+control how many tasks can be ``submitted`` or ``running`` at once.
 
-Internal queues are FIFO (first-in-first-out): tasks are released in the same
-order that they were queued. They are configured under
-:cylc:conf:`[scheduling][queues]` with a *name*; a list of *members* assigned
-by task or family name; and a *limit*, which is the maximum number of active
-members allowed.
+Internal queues are non-overlapping (each task can only belong to one
+queue) and they release tasks in first in, first out order as the
+:term:`active job` count drops below the queue limit.
 
-By default every task is assigned to the ``default`` queue, which by default
-has a zero limit (interpreted by Cylc as no limit). To use a single queue for
-the whole workflow just set the default queue limit:
+The predefined :cylc:conf:`default <flow.cylc[scheduling][queues][default]>`
+queue has a 100 job limit, for all tasks that are not assigned to custom
+queues. Custom queues are unlimited by default.
+
+.. note::
+
+  * Assigning a family to a queue is equivalent to individually assigning all
+    family member tasks.
+  * If a task is assigned to multiple queues only the last assignment will take effect.
+  * Tasks are shown as queued in the UI if they are ready to run but held back
+    by a queue.
+
+
+To restrict job activity for the workflow as a whole you can configure the
+:cylc:conf:`default <flow.cylc[scheduling][queues][default]>` queue limit:
 
 .. code-block:: cylc
 
    [scheduling]
        [[queues]]
-           # limit the entire workflow to 5 active tasks at once
+           # limit all (non custom-queued) tasks to 5 active jobs at once
            [[[default]]]
                limit = 5
 
-To use additional queues just name them, set limits, and assign members:
+This shows how to restrict job activity for a specific group of tasks:
 
 .. code-block:: cylc
 
    [scheduling]
        [[queues]]
-           [[[q_foo]]]
-               limit = 5
-               members = foo, bar, baz
+           # allow up to 3 pets to have active jobs at the same time
+           [[[pets]]]
+               limit = 3
+               members = dog, cat, fish, horse, rabbit, cow, elephant
 
-Any tasks not assigned to a particular queue will remain in the default
-queue. The following example illustrates how queues work by running two task
+The following example illustrates how queues work by running two task
 trees side by side, limited to 2 and 3 tasks respectively:
 
 .. literalinclude:: ../../workflows/queues/flow.cylc

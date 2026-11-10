@@ -86,12 +86,17 @@ Glossary
 
       - tasks that reached a :term:`final status` without completing their
         :term:`required outputs <required output>`
-        (e.g. a task failed where success was required).
+        (e.g. a task that failed when success was required).
 
       .. seealso::
 
          * :ref:`n-window`
 
+   active job
+      Active jobs are ``submitted`` or ``running`` :term:`jobs <job>`.
+      They belong to tasks with the equivalent :term:`status <task state>`
+      (but note that :term:`active task` has a wider definition than
+      just ``submitted`` or ``running``).
 
    n-window
       The GUI provides a view of the workflow extending ``n`` graph edges out
@@ -1774,6 +1779,12 @@ Glossary
          * :cylc:conf:`[scheduling]runahead limit`
          * :ref:`Runahead Limiting`
          * :term:`active cycle`
+
+   run host
+   scheduler run host
+      If :cylc:conf:`global.cylc[scheduler][run hosts]` are defined, Cylc
+      will attempt to start new schedulers on an available run host, instead
+      of locally.
 
    skip mode
       A task run mode that skips execution but completes outputs as if the task had run.

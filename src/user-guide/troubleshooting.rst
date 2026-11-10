@@ -336,7 +336,6 @@ have no satisfied prerequisites.
       :term:`active tasks <active task>`. Waiting tasks beyond the
       :term:`n=0 window <n-window>` have no satisfied prerequisites.
 
-|
 
 There are several reasons why a task might be held back from running:
 

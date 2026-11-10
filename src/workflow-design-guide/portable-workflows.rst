@@ -33,20 +33,18 @@ the messy platform-specific resource directives etc., will be hidden away in
 the site include-files.
 
 
-The Jinja2 SITE Variable
-------------------------
+The Jinja2 ``CYLC_SITE`` Variable
+---------------------------------
 
-First a workflow Jinja2 variable called ``SITE`` should be set to the site
-name, either in ``rose-suite.conf``, or in the workflow definition itself
-(perhaps automatically, by querying the local environment in some way).
+Some institutions set a
+:ref:`global template variable <changes.global_template_variables>` called
+``CYLC_SITE`` which is made available to all workflows running at their
+site(s).
 
-.. code-block:: cylc
+The purpose of this variable is to make inter-site portability easier by
+providing a mechanism for workflows to detect which site they are being run at.
 
-   #!Jinja2
-   {% set SITE = "niwa" %}
-   #...
-
-This will be used to select site-specific configuration, as described below.
+This may be used to load site-specific include files (see next section).
 
 
 Site Include-Files
@@ -55,6 +53,7 @@ Site Include-Files
 If a section heading in a :cylc:conf:`flow.cylc` file is repeated the items
 under it simply add to or override those defined under the same section earlier
 in the file.
+
 For example, this task definition:
 
 .. code-block:: cylc
@@ -88,18 +87,13 @@ out into an include-file (file inclusion is essentially just literal inlining):
 
 .. code-block:: cylc
 
-   #...
-   {% set SITE = "niwa" %}
-
    # Core site-agnostic settings:
-   #...
    [runtime]
        [[foo]]
            script = run-foo.sh
-   #...
 
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.cylc' %}
+   {% include 'site/' ~ CYLC_SITE ~ '.cylc' %}
 
 where the site include-file ``site/niwa.cylc`` contains:
 
@@ -139,9 +133,6 @@ and again, the site-specific part can be taken out to a site include-file:
 
 .. code-block:: cylc
 
-   #...
-   {% set SITE = "niwa" %}
-
    # Core site-agnostic settings.
    #...
    [scheduling]
@@ -150,7 +141,7 @@ and again, the site-specific part can be taken out to a site include-file:
            P1Y = "pre => model => post"
    #...
    # Site-specific settings:
-   {% include 'site/' ~ SITE ~ '.cylc' %}
+   {% include 'site/' ~ CYLC_SITE ~ '.cylc' %}
 
 where the site include-file ``site/niwa.cylc`` contains:
 
@@ -180,23 +171,22 @@ mess) and it exposes all site configuration to all users:
 
 .. code-block:: cylc
 
-   #...
    [runtime]
        [[model]]
            script = run-model.sh
    {# Site switch blocks not recommended:#}
-   {% if SITE == 'niwa' %}
+   {% if CYLC_SITE == 'niwa' %}
            platform = niwa_loadleveler_platform
            [[[directives]]]
                # NIWA Loadleveler directives...
-   {% elif SITE == 'metoffice' %}
+   {% elif CYLC_SITE == 'meto' %}
            platform = metoffice_pbs_platform
            [[[directives]]]
                # Met Office PBS directives...
-   {% elif SITE == ... %}
+   {% elif CYLC _SITE == ... %}
                #...
    {% else %}
-       {{raise('Unsupported site: ' ~ SITE)}}
+       {{raise('Unsupported site: ' ~ CYLC_SITE)}}
    {% endif %}
        #...
 
@@ -207,8 +197,7 @@ But be wary of accumulating too many of these switches:
 .. code-block:: cylc
 
    # (core flow.cylc file)
-   #...
-   {% if SITE == 'small' %}
+   {% if CYLC_SITE == 'small' %}
       {# We can't run 100 members... #}
       {% set ENSEMBLE_SIZE = 25 %}
    {% else %}
@@ -234,7 +223,7 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
 .. code-block:: cylc
 
    #...
-   {% from SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
+   {% from CYLC_SITE ~ '-vars.cylc' import HAVE_IDL, OTHER_VAR %}
    R1 = """
        pre => model => post
    {% if HAVE_IDL %}
@@ -242,7 +231,7 @@ where IDL is available. The IDL-dependence switch can be set per site like this:
    {% endif %}
    """
 
-where for ``SITE = niwa`` the file ``niwa-vars.cylc`` contains:
+where for ``CYLC_SITE = niwa`` the file ``niwa-vars.cylc`` contains:
 
 .. code-block:: cylc
 
@@ -290,14 +279,14 @@ built-in *optional app config* capability:
 
    [runtime]
        [[root]]
-           script = rose task-run -v -O '({{SITE}})'
+           script = rose task-run -v -O '({{CYLC_SITE}})'
 
 Normally a missing optional app config is considered to be an error, but the
 round parentheses here mean the named optional config is optional - i.e.
 use it if it exists, otherwise ignore.
 
 With this setting in place we can simply add a ``opt/rose-app-niwa.conf`` to
-any app that needs customization at ``SITE = niwa``.
+any app that needs customization at ``CYLC_SITE = niwa``.
 
 
 An Example
@@ -353,8 +342,7 @@ site-specific settings from an include-file at the end:
 .. code-block:: cylc
 
    # flow.cylc: CORE SITE-INDEPENDENT CONFIGURATION.
-   {% set SITE = 'niwa' %}
-   {% from 'site/' ~ SITE ~ '-vars.cylc' import HAVE_IDL %}
+   {% from 'site/' ~ CYLC_SITE ~ '-vars.cylc' import HAVE_IDL %}
    [scheduler]
        UTC mode = True
    [scheduling]
@@ -368,7 +356,7 @@ site-specific settings from an include-file at the end:
            """
    [runtime]
        [[root]]
-           script = rose task-run -v -O '({{SITE}})'
+           script = rose task-run -v -O '({{CYLC_SITE}})'
        [[preproc]]
            inherit = HPC
        [[preproc]]
@@ -377,7 +365,7 @@ site-specific settings from an include-file at the end:
            inherit = HPC
            [[[environment]]]
                SPEED = fast
-   {% include 'site/' ~ SITE ~ '.cylc' %}
+   {% include 'site/' ~ CYLC_SITE ~ '.cylc' %}
 
 plus site files ``site/niwa-vars.cylc``:
 

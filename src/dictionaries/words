@@ -96,6 +96,7 @@ linting
 localhost
 lowercase
 markup
+masse
 max
 metadata
 mineshafts
@@ -139,6 +140,7 @@ prepackaged
 prepend
 prepended
 preprocessing
+preprocessor
 preset
 proc
 profiler

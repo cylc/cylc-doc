@@ -72,6 +72,7 @@ jobs:
           cylc_rose_opts: ''
           metomi_rose: true
           metomi_rose_opts: ''
+          local_source: '.[all]'
 
       - name: lint
         if: matrix.type == 'build'

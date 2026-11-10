@@ -353,20 +353,9 @@ Built-in Clock Triggers
 Clock xtriggers succeed when the real ("wall clock") time reaches some offset
 from the task's cycle point value.
 
-.. note::
-
-   These should be used instead of the older task clock triggers documented in
-   :ref:`ClockTriggerTasks`.
-
 The clock xtrigger function signature looks like this:
 
 .. autofunction:: cylc.flow.xtriggers.wall_clock.wall_clock
-
-.. note::
-
-   Clock xtriggers are cycle-point specific by nature; you don't need
-   to :ref:`use function arguments <user_guide.xtriggers.specificity>`
-   to achieve this.
 
 In the following workflow, task ``foo`` has a daily cycle point sequence, and
 each task instance will trigger when the real time is one hour past its cycle

@@ -67,8 +67,6 @@ to the task:
    :width: 75%
    :align: center
 
-|
-
 
 .. _user_guide.broadcast.expiry:
 
