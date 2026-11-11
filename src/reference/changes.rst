@@ -10,6 +10,32 @@ release.
 Cylc 8.7
 --------
 
+Max RSS and CPU Time in the Analysis View
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionchanged:: cylc-uiserver 1.10.0
+
+Cylc now includes a job profiler which records the memory and CPU usage of
+jobs on platforms where jobs run in their own cgroup (e.g. Slurm or PBS
+configured to use cgroups).
+
+The following metrics are now available in the GUI's Analysis View (table,
+box plot and time series displays), alongside the existing queue, run and
+total times:
+
+* :term:`Max RSS <max RSS>` - the
+  highest amount of physical memory (RAM) used by the job at any point
+  during its run.
+* CPU time - the total processor time consumed by the job, summed across all
+  of its processes and CPU cores.
+
+The profiler can be configured, or disabled, per platform in
+:cylc:conf:`global.cylc[platforms][<platform name>][profiler]`.
+
+.. seealso::
+
+   * :ref:`user-guide.analysis-view`
+   * :ref:`ProfilingConfigurations`
 
 .. admonition:: Cylc Components
    :class: hint
@@ -120,32 +146,6 @@ Cylc 8.6.
 
    For more information, see `global.cylc` and
    ``cylc config --print-hierarchy``.
-
-
-Max RSS and CPU Time in the Analysis View
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Cylc now includes a job profiler which records the memory and CPU usage of
-jobs on platforms where jobs run in their own cgroup (e.g. Slurm or PBS
-configured to use cgroups).
-
-The following metrics are now available in the GUI's Analysis View (table,
-box plot and time series displays), alongside the existing queue, run and
-total times:
-
-* :term:`Max RSS <max RSS>` - the
-  highest amount of physical memory (RAM) used by the job at any point
-  during its run.
-* CPU time - the total processor time consumed by the job, summed across all
-  of its processes and CPU cores.
-
-The profiler can be configured, or disabled, per platform in
-:cylc:conf:`global.cylc[platforms][<platform name>][profiler]`.
-
-.. seealso::
-
-   * :ref:`user-guide.analysis-view`
-   * :ref:`ProfilingConfigurations`
 
 
 Tasks outside of the active window are dimmed
