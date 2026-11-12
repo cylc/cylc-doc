@@ -460,8 +460,7 @@ in the Analysis View of the Cylc GUI, see :ref:`user-guide.analysis-view`.
 The profiler requires a job runner which places each job in its own cgroup
 (e.g. Slurm or PBS when configured to use cgroups).
 
-The profiler is active by default. It can be configured, or disabled, for
-each platform in the
+The profiler can be enabled and configured in the
 :cylc:conf:`global.cylc[platforms][<platform name>][profiler]` section:
 
  .. code-block:: cylc
@@ -471,8 +470,6 @@ each platform in the
         [[hpc]]
             job runner = slurm
             [[[profiler]]]
-                # The profiler is active by default (activate = True).
-                # Set this to False to turn profiling off for this platform.
                 activate = True
                 # If cgroups is not mounted at the default location on your
                 # platform, set this to the location of the cgroups mount point.
