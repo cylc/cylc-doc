@@ -445,3 +445,40 @@ task has started see
             # Here qsub has been configured to read from $PROJECT
             ssh forward environment variables = PROJECT
             submit method = pbs
+
+.. _ProfilingConfigurations:
+
+Profiling Configurations
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionadded:: 8.7.0
+
+The Cylc job profiler records the :term:`max RSS` (maximum memory usage) and
+CPU time of each job by polling the job's cgroup. The results can be viewed
+in the Analysis View of the Cylc GUI, see :ref:`user-guide.analysis-view`.
+
+The profiler requires a job runner which places each job in its own cgroup
+(e.g. Slurm or PBS when configured to use cgroups).
+
+The profiler can be enabled and configured in the
+:cylc:conf:`global.cylc[platforms][<platform name>][profiler]` section:
+
+ .. code-block:: cylc
+    :caption: part of a ``global.cylc`` config file
+
+    [platforms]
+        [[hpc]]
+            job runner = slurm
+            [[[profiler]]]
+                activate = True
+                # If cgroups is not mounted at the default location on your
+                # platform, set this to the location of the cgroups mount point.
+                cgroups path = /sys/fs/cgroup
+                # The interval at which the profiler samples memory usage.
+                # Decrease this to capture shorter-lived memory spikes.
+                polling interval = PT10S
+
+.. note::
+
+   The default configuration for profiling will be suitable for most users.
+   The profiler has a negligible performance impact.
