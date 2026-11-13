@@ -17,7 +17,7 @@ Cylc 8.7
    :cylc-flow: `8.7 <https://github.com/cylc/cylc-flow/blob/8.7.x/CHANGES.md>`__
    :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
    :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
-   :cylc-rose: `1.8 <https://github.com/cylc/cylc-rose/blob/1.8.x/CHANGES.md>`__
+   :cylc-rose: `1.9 <https://github.com/cylc/cylc-rose/blob/1.9.x/CHANGES.md>`__
    :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
 
 
@@ -145,6 +145,42 @@ Cylc is currently working on; past and future tasks pulled into the view for
 context are dimmed.
 
 See :ref:`n-window.dimming` for more information.
+
+
+Configurable Default Workflow and Run Names
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _rose-suite.conf: https://metomi.github.io/rose/doc/html/api/configuration/suite.html
+.. _rose-suite.conf[install]: https://metomi.github.io/rose/doc/html/api/configuration/suite.html#rose:conf:rose-suite.conf[install]
+
+.. versionadded:: cylc-rose 1.9.0
+
+Workflows that use `rose-suite.conf`_ files can now define default
+workflow and run names to be used by ``cylc install``:
+
+.. code-block:: ini
+
+   [install]
+   workflow-name=my-default-workflow-name
+   run-name=my-default-run-name
+
+Subshells can be used in these configurations to make the values dynamic.
+
+For example, this configuration will use the Git commit hash as the default
+workflow run name (useful for test workflows):
+
+.. code-block:: ini
+
+   [install]
+   run-name=$(git rev-parse --verify HEAD)
+
+For more information, see the Rose documentation for the
+`rose-suite.conf[install]`_ configurations.
+
+.. note::
+
+   The :ref:`Cylc Rose` plugin must be installed to enable
+   `rose-suite.conf`_ support.
 
 
 Cylc 8.6
