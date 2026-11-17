@@ -3,27 +3,13 @@
 Installing Workflows
 ====================
 
-Cylc commands identify workflows via their names, which are relative path names
-under the :term:`cylc-run directory`, ``~/cylc-run/`` by default.
+This section will demonstrate how to install a workflow.
 
-Workflows can be grouped together under sub-directories. E.g. there are three
-workflows in the example below: ``nwp/oper/region1``, ``nwp/oper/region2`` and
-``nwp/test/region1``.
+Installing a workflow copies files from a :term:`source directory`
+into a new :term:`workflow run directory` under the
+:term:`cylc-run directory` (``~/cylc-run/``).
+The new directory (and any parent directories) will be created automatically.
 
-.. code-block:: console
-
-   $ cylc scan --state=all --name nwp --format=tree
-   nwp
-   ├─oper
-   │ ├─ region1
-   │ └─ region2
-   └─test
-      └─ region1
-
-This chapter will demonstrate how to install a workflow from an arbitrary
-location, called a :term:`source directory`.
-``cylc install`` will create a new run directory in the :term:`cylc-run directory`
-for each installation of a workflow.
 
 .. contents:: Contents
    :depth: 2
@@ -103,6 +89,25 @@ and the GUI will search for source directories inside, using
 then ``cylc install dogs/fido`` will search for a workflow source directory
 ``~/cylc-src/dogs/fido``, or, failing that, ``~/roses/dogs/fido``, and install
 the first match (into ``~/cylc-run/dogs/fido/run1``).
+
+
+Workflow Sub-Directories
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Workflows grouped under sub-directories
+will be displayed as a nested hierarchy in the GUI and TUI.
+The example below contains the three workflows
+``nwp/oper/region1``, ``nwp/oper/region2`` and ``nwp/test/region1``.
+
+.. code-block:: console
+
+   $ cylc scan --state=all --name nwp --format=tree
+   nwp
+   ├─oper
+   │ ├─ region1
+   │ └─ region2
+   └─test
+     └─ region1
 
 
 Numbered Runs
@@ -459,6 +464,18 @@ There are some occasions when installation is expected to fail:
   previous installation. i.e. running ``cylc install`` in
   ``~/cylc-src/my-flow``, followed by running ``cylc install`` from
   ``~/different/my-flow``.
+
+
+Workflow IDs
+------------
+
+Cylc commands identify installed workflows via
+:term:`workflow IDs <workflow id>`,
+which correspond to relative paths under the :term:`cylc-run directory`.
+For example, the workflow installed at ``~/cylc-run/my_workflow/run1`` would
+have the workflow id ``my_workflow/run1``.
+If you omit the run number and just give the :term:`workflow name`
+(e.g. ``my_workflow``) Cylc will infer the most recently installed run.
 
 
 .. _installing_workflows.compound_commands:
