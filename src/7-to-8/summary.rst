@@ -286,4 +286,5 @@ Remote usernames
    an SSH config file rather than the via Cylc 7 ``[remote]owner`` configuration.
    See :ref:`728.remote_owner`.
 Expire Trigger
-   The Suicide trigger feature had it's functioning replaced by the :ref:`expireTriggers`
+   The Suicide trigger feature had it's functioning replaced by the
+   :ref:`expireTriggers`
