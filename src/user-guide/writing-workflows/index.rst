@@ -11,5 +11,4 @@ Writing Workflows
    jinja2
    external-triggers
    expire-triggers
-   suicide-triggers
    scheduler

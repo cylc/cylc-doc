@@ -1998,14 +1998,6 @@ Cylc handles workflow :term:`graphs <graph>` in an event-driven way.  It can
 automatically follow different paths depending on events at runtime. This
 relies on :term:`optional outputs <optional output>` and is called *branching*.
 
-.. note::
-
-   In Cylc 7 and earlier, graphs were not event-driven and needed
-   :term:`suicide triggers <suicide trigger>` to clean up unused
-   branches at runtime.
-
-   Cylc 8 does not need suicide triggers for branching.
-
 Basic Example (A Switch)
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -2264,7 +2256,7 @@ However, there is a problem with this.
    cause the workflow to :term:`stall`.
 
 To prevent the workflow from stalling in the third case, it is necessary to use
-:term:`suicide triggers <suicide trigger>` to remove the task
+:term:`expire triggers <expire trigger>` to remove the task
 ``run_if_both_fail``.
 
 .. code-block:: cylc-graph
