@@ -7,6 +7,18 @@ This page contains a summary of significant changes across all Cylc components f
 release.
 
 
+Cylc 8.8
+--------
+
+
+
+Expire Triggers
+^^^^^^^^^^^^^^^
+
+Expire Triggers have replaced by :ref:`expireTriggers`.
+They have the same functioning but expire is now defaulted.
+
+
 Cylc 8.7
 --------
 

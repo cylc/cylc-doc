@@ -1,22 +1,36 @@
-.. _SuicideTriggers:
-
-Suicide Triggers
-================
-
+.. _expireTriggers:
+Expire Triggers
+=========================
 .. warning::
 
-   Suicided triggers were needed in Cylc 7 and earlier to remove pre-spawned
+   Suicide triggers were needed in Cylc 7 and earlier to remove pre-spawned
    waiting tasks from graph branches not taken at runtime, which would stall
    the workflow.
 
-   However, **Cylc 8 does not need suicide triggers for** :term:`graph
-   branching <branching>`.
+   However, **Cylc 8 replaced these with Expire triggers that
+   are always active.**
 
-   They remain supported, and documented, for backward compatibility and for
+   They remain supported, and documented, for
    a rare :ref:`edge case <remaining-use-cases>`.
 
 
-Suicide triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
+Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
+When the condition is met, the task will generate the ``expired`` output rather
+ than just being removed.
+The ``expired`` output will be marked as :term:`optional <optional output>` for
+ the triggered task, b
+ut a custom `flow.cylc[runtime][<namespace>]completion` condition will need to
+be modified accordingly.
+This should be functionally equivalent to "suicide triggers" in that the
+triggered task will not run.
+
+The triggered task will be left in the ``expired`` state making it clearer in
+the GUI/logs that the task has been triggered in this way.
+
+It is possible to trigger other tasks off of this ``expired`` output for more
+advanced failure recover.
+
+Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
 
 They are activated just like normal :term:`task triggers <task trigger>` but
 they remove the downstream task (prefixed with ``!``) instead of triggering it
@@ -28,7 +42,7 @@ Here, the task ``bar`` will be removed if ``foo`` succeeds:
 
    foo => !bar
 
-Suicide triggers combine in the same way as normal triggers, so this graph:
+Expire triggers combine in the same way as normal triggers, so this graph:
 
 .. code-block:: cylc-graph
 
@@ -60,14 +74,14 @@ To remove a task after any one of several events, use an OR operator:
 Remaining Use Case
 ------------------
 
-Suicide triggers may be needed to remove a waiting :term:`active task` when it
+Expire triggers may be needed to remove a waiting :term:`active task` when it
 can be inferred from the status of another task that the external trigger will
 never be satisfied.
 
 In the following example imagine that the two xtriggers watch two locations for
 the same file to appear. The file will be delivered to one location or the
 other but not to both, so if one xtrigger is satisfied the other will never be.
-The stuck waiting task can be removed with a suicide trigger, so that it
+The stuck waiting task can be removed with a Expire trigger, so that it
 doesn't stall the workflow:
 
 .. code-block:: cylc-graph
