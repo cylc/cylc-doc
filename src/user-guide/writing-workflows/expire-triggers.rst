@@ -18,7 +18,7 @@ The ``expired`` output will be marked as :term:`optional <optional output>` for 
 ut a custom `flow.cylc[runtime][<namespace>]completion` condition will need to be modified accordingly.
 This should be functionally equivalent to "suicide triggers" in that the triggered task will not run.
 
-The triggered task will now be left in the ``expired`` state making it clearer in the GUI/logs that the task has been triggered in this way.
+The triggered task will be left in the ``expired`` state making it clearer in the GUI/logs that the task has been triggered in this way.
 
 It is possible to trigger other tasks off of this ``expired`` output for more advanced failure recover.
 
