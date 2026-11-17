@@ -15,7 +15,7 @@ Expire Triggers
 
 
 Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
-The task will generate the ``expired`` output rather
+When the condition is met, the task will generate the ``expired`` output rather
  than just being removed.
 The ``expired`` output will be marked as :term:`optional <optional output>` for
  the triggered task, b
