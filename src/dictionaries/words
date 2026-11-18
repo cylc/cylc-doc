@@ -6,6 +6,7 @@ arg
 args
 auth
 authenticator
+authorisation
 authoriser
 backticks
 basename
@@ -19,10 +20,12 @@ cgroup
 cgroups
 changelog
 changelogs
+comprise
 conf
 config
 configargs
 configs
+containerised
 coroutine
 coroutines
 cprofile
@@ -182,6 +185,7 @@ runtime
 schd
 screenshot
 secs
+serialised
 setup
 setups
 shebang

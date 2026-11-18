@@ -168,7 +168,7 @@ scheduler stalls or shuts down for an unexpected reason.
 Email addresses and servers are configured by
 :cylc:conf:`global.cylc[scheduler][mail]`.
 
-Workflow event emails can be customised using
+Workflow event emails can be customized using
 :cylc:conf:`flow.cylc[scheduler][mail]footer`,
 :ref:`workflow_event_template_variables` can be used.
 

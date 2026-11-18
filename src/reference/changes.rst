@@ -1018,7 +1018,7 @@ Upgrade To The Latest Jupyter Releases
 The Cylc UI Server has been updated to work with the latest releases of
 `Jupyter Server`_ and `Jupyter Hub`_.
 
-If you are utilising Cylc's multi-user functionality then your configuration
+If you are utilizing Cylc's multi-user functionality then your configuration
 will require some changes to work with these releases.
 
 See :ref:`cylc.uiserver.multi-user` for more details
@@ -1084,7 +1084,7 @@ Graph View
 
 .. versionadded:: cylc-uiserver 1.2.0
 
-The web UI now has a graph view which displays a visualisation of a workflow's graph:
+The web UI now has a graph view which displays a visualization of a workflow's graph:
 
 .. image:: changes/cylc-graph.gif
    :width: 80%

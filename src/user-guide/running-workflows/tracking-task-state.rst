@@ -23,7 +23,7 @@ but be aware of scheduler resource requirements (which depend on workflow size
 and run duration).
 
 Port forwarding could potentially provide another solution, but the idea has
-been rejected at this stage. Organisations often disable port forwarding for
+been rejected at this stage. Organizations often disable port forwarding for
 security reasons.
 
 .. note::
