@@ -65,11 +65,6 @@ jobs:
     env:
       META_DICT: ${{ needs.set-meta-releases.outputs.dict }}
     steps:
-      - name: configure python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.x'
-
       - name: checkout cylc-doc
         uses: actions/checkout@v7
         with:
@@ -78,9 +73,6 @@ jobs:
 
       - name: install dependencies
         uses: ./docs/.github/actions/install-dependencies
-
-      - name: install cylc-doc
-        run: pip install ./docs/
 
       - name: install libs to document
         id: install-libs
@@ -95,6 +87,11 @@ jobs:
           cylc_rose_opts: ''
           metomi_rose: true
           metomi_rose_opts: ''
+          local_source: ./docs
+
+      - name: mamba list
+        if: always()
+        run: micromamba list
 
       - name: checkout gh-pages branch
         uses: actions/checkout@v7
@@ -153,10 +150,6 @@ jobs:
             LATEST=false \
             BUILDDIR="doc/$builddir"
           git -C gh-pages add "$builddir" 'versions.json'
-
-      - name: debug - pip list
-        if: failure()
-        run: pip list
 
       - name: push changes
         working-directory: gh-pages
