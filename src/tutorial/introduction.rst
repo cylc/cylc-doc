@@ -94,17 +94,17 @@ User Interface), web GUI, and CLI (Command Line Interface) are shown below.
 
    .. tab-item:: GUI
 
-      .. image:: ../../src/img/cylc-ui-dash.png
+      .. image:: ../../src/img/screenshots/ui-dash.png
          :alt: A screenshot of the Cylc GUI dashboard.
 
    .. tab-item:: Tui
 
-      .. image:: ../../src/img/tui-1.png
+      .. image:: ../../src/img/screenshots/tui-1.png
          :alt: A screenshot of the Cylc TUI.
 
    .. tab-item:: CLI
 
-      .. image:: ../../src/img/cylc-cli.png
+      .. image:: ../../src/img/screenshots/cli.png
          :alt: A screenshot of the Cylc CLI.
 
 .. nextslide::

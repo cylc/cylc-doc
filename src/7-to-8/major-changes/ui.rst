@@ -17,19 +17,19 @@ account, trigger tasks, access log files and perform other common activities.
 
 Start Tui by running the ``cylc tui`` command.
 
-.. figure:: ../../img/tui-1.png
+.. figure:: ../../img/screenshots/tui-1.png
    :figwidth: 80%
    :align: center
 
    Tui showing the details of a failed job.
 
-.. figure:: ../../img/tui-2.png
+.. figure:: ../../img/screenshots/tui-2.png
    :figwidth: 80%
    :align: center
 
    A list of actions that can be performed on the selected task.
 
-.. figure:: ../../img/tui-3.png
+.. figure:: ../../img/screenshots/tui-3.png
    :figwidth: 80%
    :align: center
 
@@ -49,13 +49,13 @@ separately from the core scheduler.
 Start the GUI server and open the web app in your browser by running
 ``cylc gui``.
 
-.. figure:: ../../img/cylc-ui-dash.png
+.. figure:: ../../img/screenshots/ui-dash.png
    :figwidth: 100%
    :align: center
 
    The GUI homepage.
 
-.. figure:: ../../img/cylc-ui-tree.png
+.. figure:: ../../img/screenshots/ui-tree.png
    :figwidth: 100%
    :align: center
 
@@ -79,7 +79,7 @@ authenticate when they open the GUI in the browser.
 
 The central server is started by the ``cylc hub`` command.
 
-.. figure:: ../../img/hub.png
+.. figure:: ../../img/screenshots/hub.png
    :figwidth: 80%
    :align: center
 

@@ -99,7 +99,7 @@ automatic retries or manual re-triggering.
 The 13 task/job states in Cylc 7 have been simplified to 8. Tasks and jobs have been
 separated and states of both can be viewed in the GUI.
 
-.. image:: ../img/task-job.png
+.. image:: ../img/screenshots/ui-task-job.png
    :align: center
 
 For more information, see :ref:`728.task_job_states`.

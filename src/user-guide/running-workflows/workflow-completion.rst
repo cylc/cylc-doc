@@ -70,7 +70,7 @@ Diagnosing Stalls
 
 A screenshot of the Cylc GUI displaying a stalled workflow:
 
-.. image:: ../../img/gui-stall.png
+.. image:: ../../img/screenshots/ui-stall.png
    :align: center
    :width: 90%
 
