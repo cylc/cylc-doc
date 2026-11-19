@@ -239,10 +239,10 @@ for monitoring / controlling running workflows:
 
          cylc hub
 
-Static Graph Visualisation
+Static Graph Visualization
 --------------------------
 
-Generate a visualisation for a workflow without running it:
+Generate a visualization for a workflow without running it:
 
 .. list-table::
    :class: grid-table

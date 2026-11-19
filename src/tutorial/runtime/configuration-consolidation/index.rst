@@ -125,7 +125,7 @@ The ``cylc config`` Command
 .. ifslides::
 
    Note that ``cylc config`` doesn't expand families or parameterizations
-   in the :term:`graph`. Use ``cylc graph`` to visualise these.
+   in the :term:`graph`. Use ``cylc graph`` to visualize these.
 
    .. TODO - Raise and issue for this, note cylc config and cylc view.
 
