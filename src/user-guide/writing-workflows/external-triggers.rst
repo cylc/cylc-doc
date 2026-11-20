@@ -55,7 +55,7 @@ Periodic Checking
 
 Xtrigger calls commence when the first dependent task enters the
 :term:`active window`, repeating at configurable intervals until success
-is achieved. The default call interval is 10 seconds.
+is achieved. The default call interval is 10 seconds unless specified.
 
 .. TODO -
 
@@ -77,8 +77,15 @@ Xtriggers must return quickly, or be killed by the
 
 .. warning::
 
-   Each xtrigger call is made in a new Python subprocess. Consider increasing the
-   call interval if you have many xtriggers, to reduce the associated system load.
+   Each xtrigger call is made in a new Python subprocess. If you have many
+   xtriggers consider increasing the call interval to reduce the associated
+   system load. For example, to check every 5 minutes:
+
+   .. code-block:: cylc
+
+      [scheduling]
+         [[xtriggers]]
+            x1 = check_data(loc="/path/to/data/source"):PT5M
 
 
 Declaring Xtriggers
@@ -86,7 +93,7 @@ Declaring Xtriggers
 
 Xtriggers are declared under :cylc:conf:`flow.cylc[scheduling][xtriggers]`
 by associating a short *label* with a function name, arguments, and optional
-custom check interval.
+custom call interval.
 
 The label must be prefixed by "@" for use in the graph, and must comply with
 basic naming rules:
