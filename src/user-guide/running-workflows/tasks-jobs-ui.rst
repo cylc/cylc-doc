@@ -93,7 +93,7 @@ given "modifier" icons which appear to the top-left of the task icon:
    * - |task-retry-large|
      - **Retry:** Task is waiting to :term:`retry`.
    * - |task-wallclock-large|
-     - **Wallclock:** Task is waiting for a :term:`clock trigger`.
+     - **Wall-clock:** Task is waiting for a :term:`clock trigger`.
    * - |task-xtriggered-large|
      - **Xtriggered:** Task is waiting for an :term:`xtrigger`.
 
