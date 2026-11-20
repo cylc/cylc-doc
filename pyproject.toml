@@ -1,0 +1,90 @@
+# THIS FILE IS PART OF THE CYLC WORKFLOW ENGINE.
+# Copyright (C) NIWA & British Crown (Met Office) & Contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+[build-system]
+requires = [
+  "setuptools >= 77.0.0",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cylc-doc"
+authors = [
+    {name = "Earth Sciences New Zealand & British Crown (Met Office) & Contributors"},
+]
+description = "Documentation for the Cylc workflow engine"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE", "CONTRIBUTING.md"]
+classifiers = [
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+]
+dependencies = [
+    "cylc-sphinx-extensions>=1.4.1",
+    "eralchemy>=1.2",
+    "hieroglyph>=2.1.0",
+    "packaging",
+    "sphinx>=7.1, !=7.4.4",
+    "sphinx-copybutton",
+    "sphinx-design>=0.5.0",
+    "sphinx_rtd_theme>=1.0.0",
+    "sphinxcontrib-svg2pdfconverter",
+    "sphinxcontrib-spelling>=8.0.2",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = [
+    "flake8>=5.0",
+    "flake8-broken-line>=0.5.0",
+    "flake8-bugbear>=22.7.0",
+    "flake8-builtins>=1.5.0",
+    "flake8-comprehensions>=3.10.0",
+    "flake8-debugger>=4.1.0",
+    "flake8-mutable>=1.2.0",
+    "flake8-simplify>=0.19.0",
+]
+watch = [
+    "sphinx-autobuild",
+]
+all = ["cylc-doc[test,watch]"]
+
+[project.urls]
+Home = "https://cylc.org/"
+Documentation = "https://cylc.github.io/cylc-doc/stable/html/index.html"
+Source = "https://github.com/cylc/cylc-doc"
+Tracker = "https://github.com/cylc/cylc-doc/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "cylc.doc.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["cylc*"]
+namespaces = true
+
