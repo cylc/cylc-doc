@@ -21,6 +21,9 @@ src/appendices/command-ref.rst
 *~
 .vscode
 
+# lock files
+*.lock
+
 # auto-generated documentation
 src/plugins/main-loop/built-in
 src/plugins/install/built-in
