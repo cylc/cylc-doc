@@ -13,7 +13,7 @@ Cylc 8.7
 Max RSS and CPU Time in the Analysis View
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: cylc-uiserver 1.10.0
+.. versionchanged:: cylc-uiserver 1.11.0
 
 Cylc now includes a job profiler which records the memory and CPU usage of
 jobs on platforms where jobs run in their own cgroup (e.g. Slurm or PBS
