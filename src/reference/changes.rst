@@ -15,7 +15,7 @@ Cylc 8.8
 Expire Triggers
 ^^^^^^^^^^^^^^^
 
-Suicide triggers have been replaced by:ref:`expireTriggers`.
+Suicide triggers have been replaced by :ref:`expireTriggers`.
 The ``!`` syntax will continue to work, but now tasks will be marked as
 :term:`expired <expired task>` rather than just being removed from the workflow.
 
