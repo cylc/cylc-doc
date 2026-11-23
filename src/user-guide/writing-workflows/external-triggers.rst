@@ -307,7 +307,7 @@ dependent task instance until the current one is satisfied. To do this
    The built in ``wall_clock`` xtrigger is sequential by default.
 
 
-.. TODO - update this once we have static visualisation
+.. TODO - update this once we have static visualization
 
    External triggers are visible in workflow visualizations as bare graph nodes
    (just the trigger names). They are plotted against all dependent tasks, not

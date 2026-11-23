@@ -69,11 +69,6 @@ jobs:
         # use login shell for conda activation
         shell: bash -leo pipefail {0}
     steps:
-      - name: configure python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.x'
-
       - name: configure git
         uses: cylc/release-actions/configure-git@v1
 
@@ -85,10 +80,6 @@ jobs:
 
       - name: install dependencies
         uses: cylc/cylc-doc/.github/actions/install-dependencies@master
-
-      - name: install cylc-doc
-        working-directory: docs
-        run: pip install ".[all]"
 
       - name: install libs
         uses: cylc/release-actions/install-cylc-components@v1
@@ -105,6 +96,11 @@ jobs:
           metomi_rose: true
           metomi_rose_opts: ''
           metomi_rose_tag: ${{ inputs.metomi-rose-tag }}
+          local_source: './docs[all]'
+
+      - name: mamba list
+        if: always()
+        run: micromamba list
 
       - name: create conda envs
         uses: ./docs/.github/actions/create-conda-envs
@@ -148,10 +144,6 @@ jobs:
             FORCE_COLOR=true \
             STABLE=${{ inputs.set_stable }} \
             LATEST=${{ inputs.set_latest }}
-
-      - name: debug - pip list
-        if: failure()
-        run: pip list
 
       - name: tidy old versions
         working-directory: docs

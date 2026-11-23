@@ -32,7 +32,7 @@ optionally control of other users workflows, each of these three components
 must be configured:
 
 1. `Jupyter Hub`_ must be configured to allow connections to other users servers.
-2. The `Jupyter Server`_ authorisation policy must be set.
+2. The `Jupyter Server`_ authorization policy must be set.
 3. Cylc must be configured with user permissions.
 
 This configuration can all be performed in the same Jupyter / Cylc UI Server
@@ -56,7 +56,7 @@ configuration file. See :ref:`UI_Server_config` for more details.
 
 
    # 2. Jupyter Server
-   #    Set a safe authorisation policy for multi-user setups
+   #    Set a safe authorization policy for multi-user setups
    #    Note: This is ONLY necessary if you are deploying the Cylc UI Server
    #          using commands other than `cylc hub` and `cylc hubapp`,
    #          otherwise, it is the default.
@@ -78,7 +78,7 @@ of the key options and how they relate to their respective systems.
 
 .. _jupyterhub.authorization:
 
-Jupyter Hub Authorisation
+Jupyter Hub Authorization
 -------------------------
 
 By default, `Jupyter Hub`_ only allows users to access their own servers.
@@ -114,7 +114,7 @@ Example:
 
 .. _jupyterserver.authorization:
 
-Jupyter Server Authorisation
+Jupyter Server Authorization
 ----------------------------
 
 .. tip::
@@ -129,10 +129,10 @@ Jupyter Server Authorisation
 
 .. _cylc.uiserver.user_authorization:
 
-Cylc User Authorisation
+Cylc User Authorization
 -----------------------
 
-Cylc Authorisation is configurable on a per-user and per-command basis but
+Cylc Authorization is configurable on a per-user and per-command basis but
 not on a per-workflow basis.
 
 By default users can only see and interact with their own workflows.
