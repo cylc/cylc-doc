@@ -10,6 +10,15 @@ release.
 Cylc 8.7
 --------
 
+.. admonition:: Cylc Components
+   :class: hint
+
+   :cylc-flow: `8.7 <https://github.com/cylc/cylc-flow/blob/8.7.x/CHANGES.md>`__
+   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
+   :cylc-rose: `1.8 <https://github.com/cylc/cylc-rose/blob/1.8.x/CHANGES.md>`__
+   :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
+
 Max RSS and CPU Time in the Analysis View
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -36,15 +45,6 @@ The profiler can be configured, or disabled, per platform in
 
    * :ref:`user-guide.analysis-view`
    * :ref:`ProfilingConfigurations`
-
-.. admonition:: Cylc Components
-   :class: hint
-
-   :cylc-flow: `8.7 <https://github.com/cylc/cylc-flow/blob/8.7.x/CHANGES.md>`__
-   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
-   :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
-   :cylc-rose: `1.8 <https://github.com/cylc/cylc-rose/blob/1.8.x/CHANGES.md>`__
-   :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
 
 
 Cylc 7 Compatibility Mode
