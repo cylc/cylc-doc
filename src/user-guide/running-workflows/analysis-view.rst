@@ -218,6 +218,16 @@ is not backed by a file, i.e. memory a program obtains for its own data.
 
 .. note::
 
+   If a job is killed by the OOM killer, its Max RSS may be *lower* than the
+   job's memory allocation. The profiler only records the value from its most
+   recent poll, and the job may have been killed before the next poll
+   captured the final rise in memory usage. Reducing the profiler's
+   :cylc:conf:`polling interval
+   <global.cylc[platforms][<platform name>][profiler]polling interval>`
+   makes this less likely, but it cannot be ruled out entirely.
+
+.. note::
+
    Max RSS is a measure of memory *used*, not memory *requested*.
    Job runners such as Slurm and PBS will typically kill a job which
    exceeds its memory request, so it is advisable to request somewhat more
