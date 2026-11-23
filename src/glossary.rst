@@ -495,7 +495,7 @@ Glossary
 
          * :term:`ISO 8601 datetime`
          * `Wikipedia (ISO 8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
-         * `International Organisation For Standardisation
+         * `International Organization For Standardization
            <https://www.iso.org/iso-8601-date-and-time-format.html>`_
          * `a summary of the international standard date and time notation
            <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_

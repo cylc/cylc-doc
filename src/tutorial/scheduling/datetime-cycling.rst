@@ -509,7 +509,7 @@ Putting It All Together
          * The ``post_process_exeter`` task depends on the ``forecast``
            task.
 
-         To visualise your workflow run the command:
+         To visualize your workflow run the command:
 
          .. code-block:: sub
 
@@ -572,7 +572,7 @@ Putting It All Together
 
       .. TODO - re-enable this: https://github.com/cylc/cylc-flow/issues/4638
 
-            Try adding this line to your workflow then visualising it with ``cylc
+            Try adding this line to your workflow then visualizing it with ``cylc
             graph``.
 
             .. hint::

@@ -1,20 +1,23 @@
 name: Install dependencies
 description: Install dependencies and setup + activate conda env
 
+inputs:
+  python-version:
+    required: false
+  apt:
+    required: false
+    description: 'Whether to install apt dependencies'
+    default: 'true'
+
 runs:
   using: composite
   steps:
-    - shell: bash
-      run: |
-        echo "[command]sudo apt-get update"
-        sudo apt-get update
-
     # Explanation of these dependencies:
     # - https://github.com/ImageMagick/ImageMagick/issues/374#issuecomment-279252866
-    # - aspell-en for spellchecking
     - shell: bash
+      if: ${{ inputs.apt == 'true' }}
       run: |
-        echo "[command]sudo apt-get install -y ..."
+        sudo apt-get update
         sudo apt-get install -y \
           librsvg2-bin \
           ghostscript \
@@ -22,17 +25,15 @@ runs:
           libgraphviz-dev \
           gsfonts \
           libfreetype6-dev \
-          libfontconfig1-dev \
-          aspell-en
+          libfontconfig1-dev
 
-    - uses: conda-incubator/setup-miniconda@3b0f2504dd76ef23b6d31f291f4913fb60ab5ff3 # v2.2.0
+    - uses: mamba-org/setup-micromamba@v3
       with:
-        channels: conda-forge
-        python-version: ${{ matrix.python-version || '' }}
-        miniforge-version: latest
-
-    # use login shell for conda activation
-    - shell: bash -leo pipefail {0}
-      run: |
-        echo "CONDA_PREFIX: ${CONDA_PREFIX}"
-        conda install -y graphviz
+        cache-environment: true
+        post-cleanup: 'all'
+        environment-name: cylc-test
+        create-args: >-
+          python=${{ inputs.python-version || '3' }}
+          graphviz
+          enchant
+          hunspell-en
