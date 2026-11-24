@@ -1647,7 +1647,7 @@ Glossary
          * :ref:`Cylc User Guide <scheduler stall>`
 
    suicide trigger
-      precursor to :ref:`expire triggers <ExpireTriggers>`
+      Replaced by :ref:`expire triggers <ExpireTriggers>`
 
    branching
    graph branching
