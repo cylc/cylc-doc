@@ -120,7 +120,7 @@
              
   <section id="data-flow">
 <h1>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h1>
-<p>This section looks at how Cylc synchronises data between its different
+<p>This section looks at how Cylc synchronizes data between its different
 components, the transports, security and formats used to do so.</p>
 <div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-d9c92551e8e5afcaf749d2ebc27bcda14e2fd3f8.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph _ {
@@ -139,7 +139,7 @@ UIS -&gt; UI [label=&quot; Websocket\n GraphQL&quot;]
 <p>Cylc uses <a class="reference external" href="https://zeromq.org/">ZMQ</a> over TCP for most server side interaction.</p>
 <p>All <a class="reference external" href="https://zeromq.org/">ZMQ</a> connections are secured by <a class="reference external" href="http://curvezmq.org/page:read-the-docs">CurveZMQ</a> which uses security keys
 which are stored on the filesystem with appropriate permissions.</p>
-<p>Where remote communication is involved Cylc synchronises the relevant keys
+<p>Where remote communication is involved Cylc synchronizes the relevant keys
 to the appropriate platforms.</p>
 <p>For more information on the key files see <a class="reference internal" href="../../user-guide/running-workflows/authentication-files.html#authentication-files"><span class="std std-ref">Authentication Files</span></a>.</p>
 </section>
@@ -165,7 +165,7 @@ connections are upgraded from HTTPS connections and share the same security.</p>
 <section id="protobuf">
 <span id="arch-protobuf"></span><h3>Protobuf<a class="headerlink" href="#protobuf" title="Link to this heading"></a></h3>
 <p>Protobuf is both a storage utility and transport.</p>
-<p>Protobuf is used for internal data stores and the synchronisation of those data
+<p>Protobuf is used for internal data stores and the synchronization of those data
 stores.</p>
 </section>
 <section id="graphql">
@@ -223,7 +223,7 @@ backed up by a SQLite3 database.</p>
 <p>The database provides crash resilience and restart capability.</p>
 <p>The <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> also maintains an in-memory <a class="reference external" href="https://protobuf.dev/">Protobuf</a> data store containing
 relevant data for the workflows it is actively monitoring.</p>
-<p>The synchronisation of the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a> and <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> data stores is
+<p>The synchronization of the <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a> and <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> data stores is
 done using one <a class="reference internal" href="#arch-zmq"><span class="std std-ref">ZMQ (Over TCP)</span></a> connection per <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Scheduler</span></a>.</p>
 <p>The <a class="reference internal" href="../../glossary.html#term-scheduler"><span class="xref std std-term">Schedulers</span></a> that the <a class="reference external" href="https://github.com/cylc/cylc-uiserver">UI Server</a> connects to are
 determined by the active subscriptions registered. If there are no active

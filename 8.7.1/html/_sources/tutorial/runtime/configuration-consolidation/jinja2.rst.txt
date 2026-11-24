@@ -21,7 +21,7 @@ In Jinja2 statements are wrapped with ``{%`` characters, i.e:
 
    {% ... %}
 
-Variables are initialised with the ``set`` statement, e.g:
+Variables are initialized with the ``set`` statement, e.g:
 
 .. code-block:: css+jinja
 

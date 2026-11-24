@@ -278,7 +278,7 @@ Platforms must be correctly configured to ensure authentication keys, which are
 responsible for secure communication between the :term:`scheduler` and the
 platform, are correctly in place.
 Sites can configure these platforms, insuring they match up with the correct
-install target. Cylc uses install targets as a way of recognising which platforms
+install target. Cylc uses install targets as a way of recognizing which platforms
 share the same file system. For more information, see :ref:`Install Targets`.
 
 

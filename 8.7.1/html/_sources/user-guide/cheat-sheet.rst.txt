@@ -294,7 +294,7 @@ Working With Cylc IDs
 Everything in a Cylc workflow has an ID. We use these IDs on the command line
 and in the GUI.
 
-Cylc Ids take the format::
+Cylc IDs take the format::
 
    <workflow-id>//<cycle>/<task>/<job>
 

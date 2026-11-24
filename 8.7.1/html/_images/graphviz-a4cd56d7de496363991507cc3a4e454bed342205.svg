@@ -9,17 +9,17 @@
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
 <title>Mini_Cylc</title>
 <polygon fill="none" stroke="none" points="-4,4 -4,-256 182.18,-256 182.18,4 -4,4"/>
-<!-- sell_bread -->
-<g id="node1" class="node">
-<title>sell_bread</title>
-<ellipse fill="none" stroke="black" cx="89.09" cy="-18" rx="60.15" ry="18"/>
-<text xml:space="preserve" text-anchor="middle" x="89.09" y="-13.32" font-family="sans" font-size="14.00">sell_bread</text>
-</g>
 <!-- bake_bread -->
-<g id="node2" class="node">
+<g id="node1" class="node">
 <title>bake_bread</title>
 <ellipse fill="none" stroke="black" cx="89.09" cy="-90" rx="66.99" ry="18"/>
 <text xml:space="preserve" text-anchor="middle" x="89.09" y="-85.33" font-family="sans" font-size="14.00">bake_bread</text>
+</g>
+<!-- sell_bread -->
+<g id="node2" class="node">
+<title>sell_bread</title>
+<ellipse fill="none" stroke="black" cx="89.09" cy="-18" rx="60.15" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="89.09" y="-13.32" font-family="sans" font-size="14.00">sell_bread</text>
 </g>
 <!-- bake_bread&#45;&gt;sell_bread -->
 <g id="edge1" class="edge">

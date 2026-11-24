@@ -235,7 +235,7 @@ and removed from the workflow.</p>
 that tasks removed by graph changes could cause in running workflows.</p>
 </section>
 <section id="global-template-variables">
-<h3>“Global” Template Variables<a class="headerlink" href="#global-template-variables" title="Link to this heading"></a></h3>
+<span id="changes-global-template-variables"></span><h3>“Global” Template Variables<a class="headerlink" href="#global-template-variables" title="Link to this heading"></a></h3>
 <p>Template variables, aka Jinja2 variables for use in the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file,
 may now be configured in the <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> file for automatic use in all
 workflows.</p>
@@ -244,8 +244,10 @@ configured to facilitate workflow portability.</p>
 <p>This has overlap with the
 <a class="reference external" href="https://metomi.github.io/rose/doc/html/api/configuration/site-and-user.html#rose:conf:rose.conf[rose-stem]automatic-options">rose.conf[rose-stem]automatic-options=SITE</a> Rose configuration
 which sets a template variable called <code class="docutils literal notranslate"><span class="pre">SITE</span></code> for use in rose-stem test
-suites. We would encourage all sites using this configuration to copy it
-over to the <code class="docutils literal notranslate"><span class="pre">global.cylc</span></code> file to facilitate rose-stem migration.</p>
+suites. We would encourage all sites using this configuration to create a
+new Cylc global template variable called <code class="docutils literal notranslate"><span class="pre">CYLC_SITE</span></code> set to the same value
+to facilitate rose-stem migration and site-portability. Note the <code class="docutils literal notranslate"><span class="pre">CYLC_</span></code> prefix
+avoids conflicts with existing workflow design patterns.</p>
 <p>I.e, if you currently configure this:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># rose.conf</span>
 
@@ -257,7 +259,7 @@ over to the <code class="docutils literal notranslate"><span class="pre">global.
 <div class="highlight-cylc notranslate"><div class="highlight"><pre><span></span><span class="c1"># global.cylc</span>
 
 <span class="nt">[template variables]</span>
-    <span class="nv">SITE </span><span class="o">=</span><span class="s"> my-site</span>
+    <span class="nv">CYLC_SITE </span><span class="o">=</span><span class="s"> "my-site"</span>
 </pre></div>
 </div>
 <p>The Cylc configuration is more generic as it can be used in all workflows
@@ -1070,7 +1072,7 @@ use a custom xtrigger, or event handler use <span class="target" id="index-1"></
 </div>
 <p>The Cylc UI Server has been updated to work with the latest releases of
 <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> and <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a>.</p>
-<p>If you are utilising Cylc’s multi-user functionality then your configuration
+<p>If you are utilizing Cylc’s multi-user functionality then your configuration
 will require some changes to work with these releases.</p>
 <p>See <a class="reference internal" href="config/sharing-access-to-workflows.html#cylc-uiserver-multi-user"><span class="std std-ref">Authorizing Others to Access Your Workflows</span></a> for more details</p>
 <div class="versionadded">
@@ -1134,7 +1136,7 @@ workflow status message which appears at the top of the GUI and Tui interfaces.<
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version cylc-uiserver: </span>1.2.0</p>
 </div>
-<p>The web UI now has a graph view which displays a visualisation of a workflow’s graph:</p>
+<p>The web UI now has a graph view which displays a visualization of a workflow’s graph:</p>
 <a class="reference internal image-reference" href="../_images/cylc-graph.gif"><img alt="../_images/cylc-graph.gif" src="../_images/cylc-graph.gif" style="width: 80%;" />
 </a>
 <p>Family &amp; cycle grouping as well as the ability to view graphs for stopped workflows

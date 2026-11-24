@@ -136,15 +136,15 @@ executes tasks according to schedules and dependencies.</p>
 <p>In a Cylc workflow each step is a computational task that runs a script or
 application of some kind. Cylc runs each task as soon as it is appropriate
 to do so.</p>
-<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-12e134eb7c6674303632ad26cb88cb46fef02ff2.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies=" a => b => c// b => d => f// e => f" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../_images/graphviz-a99065b41bd6c8ce0b002ac2a7404795bcfb4abd.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-d -&gt; f
-c
 b -&gt; d
-e -&gt; f
-b -&gt; c
-a -&gt; b
+c
 f
+b -&gt; c
+d -&gt; f
+e -&gt; f
+a -&gt; b
 }</p></object></div>
 </div>
 </div><p>Cylc can automatically:</p>
@@ -159,7 +159,7 @@ workflows. It is now developed by an international partnership including
 NIWA, the Met Office (UK), and members of the Unified Model Consortium.
 Though initially developed for meteorological purposes Cylc is a general
 purpose tool as applicable in business as it is in scientific research.</p>
-<p>Cylc provides a variety of command line and GUI tools for visualising,
+<p>Cylc provides a variety of command line and GUI tools for visualizing,
 monitoring, and controlling workflows. The Cylc TUI (Terminal
 User Interface), web GUI, and CLI (Command Line Interface) are shown below.</p>
 <div class="sd-tab-set docutils">

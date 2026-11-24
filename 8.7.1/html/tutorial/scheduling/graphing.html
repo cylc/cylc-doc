@@ -121,7 +121,7 @@
 <p class="admonition-title">Aims</p>
 <div class="line-block">
 <div class="line">You will be able to:</div>
-<div class="line">✅ Recognise the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file format.</div>
+<div class="line">✅ Recognize the <code class="docutils literal notranslate"><span class="pre">flow.cylc</span></code> file format.</div>
 <div class="line">✅ Write simple chains of dependencies.</div>
 </div>
 </div>
@@ -292,10 +292,10 @@ run after another task <code class="docutils literal notranslate"><span class="p
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9dea420ff1135d24aebf23add8fc0e27cb750fba.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-9a94149249249659013f83847a6ab5fbdf22bd20.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-make_dough
 buy_ingredients -&gt; make_dough
+make_dough
 }</p></object></div>
 </div>
 </div><p>These <a class="reference internal" href="../../glossary.html#term-dependency"><span class="xref std std-term">dependencies</span></a> can be chained together in
@@ -303,12 +303,12 @@ buy_ingredients -&gt; make_dough
 <div class="highlight-cylc-graph notranslate"><div class="highlight"><pre><span></span><span class="kd">buy_ingredients</span> <span class="o">=&gt;</span> <span class="kd">make_dough</span> <span class="o">=&gt;</span> <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">sell_bread</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-66e734c7e5d7ff5e48ae9510ec5d5ff123b4c08b.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-a4cd56d7de496363991507cc3a4e454bed342205.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-sell_bread
 bake_bread -&gt; sell_bread
 make_dough -&gt; bake_bread
 buy_ingredients -&gt; make_dough
+sell_bread
 }</p></object></div>
 </div>
 </div><p>Graph strings can be combined to form more complex graphs:</p>
@@ -317,16 +317,16 @@ buy_ingredients -&gt; make_dough
 <span class="kd">bake_bread</span> <span class="o">=&gt;</span> <span class="kd">clean_oven</span>
 </pre></div>
 </div>
-<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-6aa72548e78bdae58326767ff2dec0a5015a9942.svg" type="image/svg+xml" class="graphviz">
+<div class="minicylc" style="text-align: center;" data-dependencies="buy_ingredients => make_dough => bake_bread => sell_bread//pre_heat_oven => bake_bread//bake_bread => clean_oven" data-theme="demo" ><div align="center" class="align-center"><div class="graphviz"><object data="../../_images/graphviz-3601c0783e315f774cfc2ec25ee0e39f1899aac2.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph Mini_Cylc {
-clean_oven
-bake_bread -&gt; clean_oven
 make_dough -&gt; bake_bread
-bake_bread
-sell_bread
 bake_bread -&gt; sell_bread
-buy_ingredients -&gt; make_dough
 pre_heat_oven -&gt; bake_bread
+bake_bread
+clean_oven
+buy_ingredients -&gt; make_dough
+sell_bread
+bake_bread -&gt; clean_oven
 }</p></object></div>
 </div>
 </div><p>Graphs can also contain logical operators <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> (<em>and</em>) and <code class="docutils literal notranslate"><span class="pre">|</span></code> (<em>or</em>).
@@ -374,7 +374,7 @@ where <code class="docutils literal notranslate"><span class="pre">R1</span></co
 tasks to run, but does not yet say what scripts or applications to run
 for each task. We will cover that later in the <a class="reference internal" href="../runtime/index.html#tutorial-runtime"><span class="std std-ref">runtime tutorial</span></a>.</p>
 <p>Cylc provides a command line utility
-for visualising <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">&lt;path&gt;</span></code>, where
+for visualizing <a class="reference internal" href="../../glossary.html#term-graph"><span class="xref std std-term">graphs</span></a>, <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span> <span class="pre">&lt;path&gt;</span></code>, where
 <code class="docutils literal notranslate"><span class="pre">path</span></code> is the location of the <a class="reference internal" href="../../reference/config/workflow.html#flow.cylc" title="flow.cylc"><code class="xref cylc cylc-conf docutils literal notranslate"><span class="pre">flow.cylc</span></code></a> file.
 It generates diagrams similar to the ones you have seen so far. The number
 <code class="docutils literal notranslate"><span class="pre">1</span></code> below each task is the <a class="reference internal" href="../../glossary.html#term-cycle-point"><span class="xref std std-term">cycle point</span></a>. We will explain what this
@@ -429,7 +429,7 @@ c -&gt; b -&gt; f
 }</p></object></div>
 </div>
 </li>
-<li><p><strong>Visualise the workflow.</strong></p>
+<li><p><strong>Visualize the workflow.</strong></p>
 <p>Once you have written some graph strings try using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">graph</span></code> to
 display the workflow. Run the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cylc<span class="w"> </span>graph<span class="w"> </span>.

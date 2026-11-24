@@ -75,9 +75,9 @@
 <li class="toctree-l3"><a class="reference internal" href="global.html">Global Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ui-server.html">UI Server Configuration</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Authorizing Others to Access Your Workflows</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#jupyter-hub-authorisation">Jupyter Hub Authorisation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jupyter-server-authorisation">Jupyter Server Authorisation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#cylc-user-authorisation">Cylc User Authorisation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jupyter-hub-authorization">Jupyter Hub Authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jupyter-server-authorization">Jupyter Server Authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cylc-user-authorization">Cylc User Authorization</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#cylc-site-configuration">Cylc Site Configuration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#interacting-with-others-workflows">Interacting with Others’ Workflows</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#troubleshooting-authorization">Troubleshooting Authorization</a></li>
@@ -151,7 +151,7 @@ optionally control of other users workflows, each of these three components
 must be configured:</p>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> must be configured to allow connections to other users servers.</p></li>
-<li><p>The <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> authorisation policy must be set.</p></li>
+<li><p>The <a class="reference external" href="https://jupyter-server.readthedocs.io">Jupyter Server</a> authorization policy must be set.</p></li>
 <li><p>Cylc must be configured with user permissions.</p></li>
 </ol>
 <p>This configuration can all be performed in the same Jupyter / Cylc UI Server
@@ -171,7 +171,7 @@ configuration file. See <a class="reference internal" href="ui-server.html#ui-se
 
 
 <span class="c1"># 2. Jupyter Server</span>
-<span class="c1">#    Set a safe authorisation policy for multi-user setups</span>
+<span class="c1">#    Set a safe authorization policy for multi-user setups</span>
 <span class="c1">#    Note: This is ONLY necessary if you are deploying the Cylc UI Server</span>
 <span class="c1">#          using commands other than `cylc hub` and `cylc hubapp`,</span>
 <span class="c1">#          otherwise, it is the default.</span>
@@ -190,8 +190,8 @@ configuration file. See <a class="reference internal" href="ui-server.html#ui-se
 </div>
 <p>The rest of this document takes you through each of these configurations, some
 of the key options and how they relate to their respective systems.</p>
-<section id="jupyter-hub-authorisation">
-<span id="jupyterhub-authorization"></span><h2>Jupyter Hub Authorisation<a class="headerlink" href="#jupyter-hub-authorisation" title="Link to this heading"></a></h2>
+<section id="jupyter-hub-authorization">
+<span id="jupyterhub-authorization"></span><h2>Jupyter Hub Authorization<a class="headerlink" href="#jupyter-hub-authorization" title="Link to this heading"></a></h2>
 <p>By default, <a class="reference external" href="https://jupyterhub.readthedocs.io/en/stable/">Jupyter Hub</a> only allows users to access their own servers.</p>
 <p>In order to allow access to other users’ servers, two scopes must be configured:</p>
 <dl class="simple">
@@ -219,8 +219,8 @@ For more information see the
 </pre></div>
 </div>
 </section>
-<section id="jupyter-server-authorisation">
-<span id="jupyterserver-authorization"></span><h2>Jupyter Server Authorisation<a class="headerlink" href="#jupyter-server-authorisation" title="Link to this heading"></a></h2>
+<section id="jupyter-server-authorization">
+<span id="jupyterserver-authorization"></span><h2>Jupyter Server Authorization<a class="headerlink" href="#jupyter-server-authorization" title="Link to this heading"></a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can skip this section if you are starting Jupyter Hub using <code class="docutils literal notranslate"><span class="pre">cylc</span> <span class="pre">hub</span></code>
@@ -268,9 +268,9 @@ expose.</p>
 </dd></dl>
 
 </section>
-<section id="cylc-user-authorisation">
-<span id="cylc-uiserver-user-authorization"></span><h2>Cylc User Authorisation<a class="headerlink" href="#cylc-user-authorisation" title="Link to this heading"></a></h2>
-<p>Cylc Authorisation is configurable on a per-user and per-command basis but
+<section id="cylc-user-authorization">
+<span id="cylc-uiserver-user-authorization"></span><h2>Cylc User Authorization<a class="headerlink" href="#cylc-user-authorization" title="Link to this heading"></a></h2>
+<p>Cylc Authorization is configurable on a per-user and per-command basis but
 not on a per-workflow basis.</p>
 <p>By default users can only see and interact with their own workflows.</p>
 <p>Sites can restrict the permissions that users are allowed to grant each

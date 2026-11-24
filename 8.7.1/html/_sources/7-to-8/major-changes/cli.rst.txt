@@ -126,7 +126,7 @@ which automate common working practices, namely:
    ``rose suite-run --reload`` and ``rose suite-run --restart`` did.
 
 
-Cylc 8 Standardised IDs
+Cylc 8 Standardized IDs
 -----------------------
 
 In Cylc 7 there were two ways to specify a task:

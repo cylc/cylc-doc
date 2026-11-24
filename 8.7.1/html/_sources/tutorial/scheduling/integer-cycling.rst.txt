@@ -464,9 +464,9 @@ Recurrence Sections
                       d => e
                   """
 
-   #. **Visualise the workflow.**
+   #. **Visualize the workflow.**
 
-      Try visualising your workflow using ``cylc graph``.
+      Try visualizing your workflow using ``cylc graph``.
 
       .. code-block:: none
 

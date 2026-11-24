@@ -1,7 +1,7 @@
 Data Flow
 =========
 
-This section looks at how Cylc synchronises data between its different
+This section looks at how Cylc synchronizes data between its different
 components, the transports, security and formats used to do so.
 
 .. digraph:: _
@@ -32,7 +32,7 @@ Cylc uses `ZMQ`_ over TCP for most server side interaction.
 All `ZMQ`_ connections are secured by `CurveZMQ`_ which uses security keys
 which are stored on the filesystem with appropriate permissions.
 
-Where remote communication is involved Cylc synchronises the relevant keys
+Where remote communication is involved Cylc synchronizes the relevant keys
 to the appropriate platforms.
 
 For more information on the key files see :ref:`Authentication Files`.
@@ -74,7 +74,7 @@ Protobuf
 
 Protobuf is both a storage utility and transport.
 
-Protobuf is used for internal data stores and the synchronisation of those data
+Protobuf is used for internal data stores and the synchronization of those data
 stores.
 
 
@@ -133,7 +133,7 @@ The database provides crash resilience and restart capability.
 The `UI Server`_ also maintains an in-memory `Protobuf`_ data store containing
 relevant data for the workflows it is actively monitoring.
 
-The synchronisation of the :term:`Scheduler` and `UI Server`_ data stores is
+The synchronization of the :term:`Scheduler` and `UI Server`_ data stores is
 done using one :ref:`arch zmq` connection per :term:`Scheduler`.
 
 The :term:`Schedulers <scheduler>` that the `UI Server`_ connects to are
