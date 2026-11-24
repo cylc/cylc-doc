@@ -11,7 +11,7 @@ Expire Triggers
    are always active.**
 
    They remain supported, and documented, for
-   a rare :ref:`edge case <remaining-use-cases>`.
+   other :ref:`edge cases <remaining-use-cases>`.
 
 
 Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
