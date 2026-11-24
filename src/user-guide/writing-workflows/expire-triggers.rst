@@ -1,6 +1,11 @@
 .. _expireTriggers:
 Expire Triggers
 =========================
+
+.. versionchanged:: 8.8.0
+
+   Suicide triggers were replaced by expire triggers.
+
 .. warning::
 
    Suicide triggers were needed in Cylc 7 and earlier to remove pre-spawned
