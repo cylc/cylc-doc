@@ -32,7 +32,7 @@ Cylc 8 has a new scheduling algorithm that:
 - Distinguishes between :term:`optional <optional output>` and
   :term:`required <required output>` task outputs, to support:
 
-  - :term:`graph branching` without :term:`expire triggers <expire trigger>`
+  - :term:`graph branching` without :term:`suicide/expire triggers <expire trigger>`
   - correct diagnosis of :ref:`workflow completion`
 - Causes no implicit dependence on previous-instance job submit
 
