@@ -209,9 +209,9 @@ Glossary
 
          foo => ! bar
 
-      .. warning::
-         Expire triggers are not needed in Cylc 8 for :term:`graph branching`.
-         They are retained for backward compatibility and rare edge cases.
+      .. tip::
+         Expire triggers are not needed for :term:`graph branching`.
+         They are only needed for edge cases.
 
       .. seealso::
 
