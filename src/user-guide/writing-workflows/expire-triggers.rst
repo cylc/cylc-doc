@@ -74,7 +74,7 @@ To remove a task after any one of several events, use an OR operator:
 Remaining Use Case
 ------------------
 
-Expire triggers may be needed to remove a waiting :term:`active task` when it
+Expire triggers may be needed to dismiss a waiting :term:`active task` when it
 can be inferred from the status of another task that the external trigger will
 never be satisfied.
 
