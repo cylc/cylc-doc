@@ -2256,7 +2256,7 @@ However, there is a problem with this.
    cause the workflow to :term:`stall`.
 
 To prevent the workflow from stalling in the third case, it is necessary to use
-:term:`expire triggers <expire trigger>` to remove the task
+:term:`expire triggers <expire trigger>` to dismiss the task
 ``run_if_both_fail``.
 
 .. code-block:: cylc-graph
