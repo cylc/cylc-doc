@@ -199,7 +199,7 @@ Glossary
       :ref:`installation.setting-up-the-cylc-wrapper-script`.
 
    expire trigger
-      expire triggers remove tasks from the :term:`n=0 window <n-window>`.
+      Expire triggers remove tasks from the :term:`n=0 window <n-window>`.
 
       They are denoted by exclamation marks, and are triggered like normal
       dependencies. For instance, the following expire trigger will remove the
