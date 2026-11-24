@@ -25,6 +25,7 @@ manually specified for a suicide-triggered task -
 in which case ``or expired`` should be added to the end of the expression.
 
 The ``cylc graph --show-suicide`` option has been renamed to ``cylc graph --show-expire``.
+The previous spelling will be removed at Cylc 8.9.
 
 
 Cylc 8.7
