@@ -15,7 +15,7 @@ Expire Triggers
    However, Cylc 8 does not need their replacement, expire triggers, for
    :term:`graph branching <branching>` use cases.
 
-   They remain supported, and documented, for
+   They remain supported for
    other :ref:`edge cases <remaining-use-cases>`.
 
 
