@@ -297,7 +297,7 @@ If you specify an :cylc:conf:`execution time limit` the
 execution timeout event handler will only be called if the job has
 not completed after the final poll (by default, 10 min after the time limit).
 This should only happen if the submission method you are using is not enforcing
-wallclock limits (unlikely) or you are unable to contact the machine to confirm
+wall-clock limits (unlikely) or you are unable to contact the machine to confirm
 the job status.
 
 If you specify an :cylc:conf:`[events]execution timeout` and not an
