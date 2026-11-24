@@ -1,12 +1,13 @@
 .. _expireTriggers:
+
 Expire Triggers
-=========================
+===============
 
 .. versionchanged:: 8.8.0
 
    Suicide triggers were replaced by expire triggers.
 
-.. warning::
+.. tip::
 
    Suicide triggers were needed in Cylc 7 and earlier to remove pre-spawned
    waiting tasks from graph branches not taken at runtime, which would stall
@@ -19,25 +20,22 @@ Expire Triggers
    other :ref:`edge cases <remaining-use-cases>`.
 
 
-Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
-When the condition is met, the task will generate the ``expired`` output.
+Expire triggers effectively remove waiting tasks from the :term:`n=0 window <n-window>`.
+They are activated just like normal :term:`task triggers <task trigger>` but
+the downstream task (prefixed with ``!``) will generate the ``expired`` output
+instead of running.
+
 The ``expired`` output will be marked as :term:`optional <optional output>`
-for the triggered task, but a custom `flow.cylc[runtime][<namespace>]completion`
-condition will need to be modified accordingly.
+for the triggered task, but if a custom `flow.cylc[runtime][<namespace>]completion`
+condition is used, it will need to be updated to explicitly include ``or expired``.
 
 The triggered task will be left in the ``expired`` state making it clearer in
 the GUI/logs that the task has been triggered in this way.
 
-It is possible to trigger other tasks off of this ``expired`` output for more
-advanced failure recover.
+It is also possible to trigger other tasks off of this ``expired`` output for more
+advanced failure recovery.
 
-Expire triggers remove waiting tasks from the :term:`n=0 window <n-window>`.
-
-They are activated just like normal :term:`task triggers <task trigger>` but
-they remove the downstream task (prefixed with ``!``) instead of triggering it
-to run.
-
-Here, the task ``bar`` will be removed if ``foo`` succeeds:
+Here, the task ``bar`` will be expired if ``foo`` succeeds:
 
 .. code-block:: cylc-graph
 
@@ -56,18 +54,13 @@ is equivalent to this:
 
    foo & bar => !baz
 
-i.e. both ``foo`` and ``bar`` must succeed for ``baz`` to be removed.
+i.e. both ``foo`` and ``bar`` must succeed for ``baz`` to be expired.
 
-To remove a task after any one of several events, use an OR operator:
+To expire a task after any one of several events, use an OR operator:
 
 .. code-block:: cylc-graph
 
    foo | bar => !baz
-
-.. note::
-
-   At present, only :term:`active tasks <active task>` that are waiting
-   (e.g. queued tasks) can be removed by ``cylc remove``.
 
 
 .. _remaining-use-cases:
@@ -82,7 +75,7 @@ never be satisfied.
 In the following example imagine that the two xtriggers watch two locations for
 the same file to appear. The file will be delivered to one location or the
 other but not to both, so if one xtrigger is satisfied the other will never be.
-The stuck waiting task can be removed with a Expire trigger, so that it
+The stuck waiting task can be dismissed with an expire trigger, so that it
 doesn't stall the workflow:
 
 .. code-block:: cylc-graph
