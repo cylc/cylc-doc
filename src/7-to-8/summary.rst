@@ -285,6 +285,3 @@ Remote usernames
    If usernames differ on remote job hosts they must now be configured using
    an SSH config file rather than the via Cylc 7 ``[remote]owner`` configuration.
    See :ref:`728.remote_owner`.
-Expire Trigger
-   Suicide triggers have been replaced by
-   :ref:`expireTriggers`
