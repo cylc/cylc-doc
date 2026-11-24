@@ -7,8 +7,8 @@ Expire Triggers
    waiting tasks from graph branches not taken at runtime, which would stall
    the workflow.
 
-   However, **Cylc 8 replaced these with Expire triggers that
-   are always active.**
+   However, Cylc 8 does not need their replacement, expire triggers, for
+   :term:`graph branching <branching>` use cases.
 
    They remain supported, and documented, for
    other :ref:`edge cases <remaining-use-cases>`.
