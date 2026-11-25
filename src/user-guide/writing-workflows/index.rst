@@ -10,5 +10,5 @@ Writing Workflows
    parameterized-tasks
    jinja2
    external-triggers
-   suicide-triggers
+   expire-triggers
    scheduler

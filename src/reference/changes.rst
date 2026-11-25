@@ -7,6 +7,27 @@ This page contains a summary of significant changes across all Cylc components f
 release.
 
 
+Cylc 8.8
+--------
+
+
+
+Expire Triggers
+^^^^^^^^^^^^^^^
+
+Suicide triggers have been replaced by :ref:`expireTriggers`.
+The ``!`` syntax will continue to work, but now tasks will be marked as
+:term:`expired <expired task>` rather than just being removed from the workflow.
+
+This is breaking change in the niche situation where a
+:cylc:conf:`[runtime][<namespace>]completion` expression has been
+manually specified for a suicide-triggered task -
+in which case ``or expired`` should be added to the end of the expression.
+
+The ``cylc graph --show-suicide`` option has been renamed to ``cylc graph --show-expire``.
+The previous spelling will be removed at Cylc 8.9.
+
+
 Cylc 8.7
 --------
 

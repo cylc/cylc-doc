@@ -198,6 +198,25 @@ Glossary
       See :ref:`installation.what-are-wrapper-scripts` and
       :ref:`installation.setting-up-the-cylc-wrapper-script`.
 
+   expire trigger
+      Expire triggers remove tasks from the :term:`n=0 window <n-window>`.
+
+      They are denoted by exclamation marks, and are triggered like normal
+      dependencies. For instance, the following expire trigger will remove the
+      task ``bar`` if ``foo`` succeeds:
+
+      .. code-block:: cylc-graph
+
+         foo => ! bar
+
+      .. tip::
+         Expire triggers are not needed for :term:`graph branching`.
+         They are only needed for edge cases.
+
+      .. seealso::
+
+         * :ref:`Cylc User Guide <ExpireTriggers>`
+
    external trigger
    xtrigger
       External triggers allow :term:`tasks <task>` in the :term:`graph` to
@@ -1627,25 +1646,8 @@ Glossary
 
          * :ref:`Cylc User Guide <scheduler stall>`
 
-
    suicide trigger
-      Suicide triggers remove tasks from the :term:`n=0 window <n-window>`.
-
-      They are denoted by exclamation marks, and are triggered like normal
-      dependencies. For instance, the following suicide trigger will remove the
-      task ``bar`` if ``foo`` succeeds:
-
-      .. code-block:: cylc-graph
-
-         foo => ! bar
-
-      .. warning::
-         Suicide triggers are not needed in Cylc 8 for :term:`graph branching`.
-         They are retained for backward compatibility and rare edge cases.
-
-      .. seealso::
-
-         * :ref:`Cylc User Guide <SuicideTriggers>`
+      Replaced by :ref:`expire triggers <ExpireTriggers>`
 
    branching
    graph branching
