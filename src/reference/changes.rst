@@ -108,6 +108,12 @@ The Cylc configuration is more generic as it can be used in all workflows
 be left in place for back-compatibility with rose-stem workflows running under
 Cylc 8.6.
 
+.. note::
+
+   The UM/LFRic ``CYLC_SITE`` code conventions are listed in the
+   `Simulation Systems <https://metoffice.github.io/simulation-systems/Development/rose_stem.html#site-specific-configuration>`_
+   documentation.
+
 .. warning::
 
    The `global.cylc[template variables]` configuration was only added in
