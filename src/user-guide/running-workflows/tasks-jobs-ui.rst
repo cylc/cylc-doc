@@ -173,7 +173,7 @@ than zero, are displayed dimmed (greyed out):
   The scheduler is not currently managing them, although you can still act on
   them, e.g. by triggering them.
 
-.. image:: ../../img/dimmed-tasks.png
+.. image:: ../../img/screenshots/ui-dimmed-tasks.png
    :align: center
    :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
 
@@ -192,5 +192,3 @@ actually working on.
    are typically outside of the ``n=0`` window, so they will usually appear
    dimmed too. To check a task's flows, click on it and look at the
    "Flows" field in the info view.
-
-

@@ -141,7 +141,7 @@ were dimmed. Now, the **tree**, **table** and **graph** views dim every task
 and family that is outside of the ``n=0`` window, i.e. everything that is not
 an :term:`active task`.
 
-.. image:: ../img/dimmed-tasks.png
+.. image:: ./changes/ui-2-15-dimmed-tasks.png
    :align: center
    :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
    :width: 55%
@@ -229,7 +229,7 @@ The display of task states in the sidebar has been decluttered and numbers
 have been added to indicate how many tasks are in each state. The tooltips now
 have a short delay to avoid many popping up while moving the mouse around.
 
-.. image:: ../img/cylc-ui-dash.png
+.. image:: ./changes/uis-1-8-1-sidebar.png
    :width: 90%
    :align: center
 
@@ -446,7 +446,7 @@ Task now icons in the GUI and TUI have badges for tasks waiting for:
 Xtriggers, wallclock triggers, retry triggers and task run mode are now
 shown in the information view:
 
-.. image:: ../img/info-view.xtriggers.png
+.. image:: ./changes/8-5-info-view-xtrig.png
    :align: center
    :width: 65%
 
