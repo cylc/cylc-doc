@@ -184,7 +184,7 @@ mess) and it exposes all site configuration to all users:
            platform = niwa_loadleveler_platform
            [[[directives]]]
                # NIWA Loadleveler directives...
-   {% elif CYLC_SITE == 'metoffice' %}
+   {% elif CYLC_SITE == 'meto' %}
            platform = metoffice_pbs_platform
            [[[directives]]]
                # Met Office PBS directives...
