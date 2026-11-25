@@ -47,6 +47,10 @@ run at.
 
 This may be used to load site-specific include files (see next section).
 
+The UM/LFRic ``CYLC_SITE`` code conventions are listed in the
+`Simulation Systems <https://metoffice.github.io/simulation-systems/Development/rose_stem.html#site-specific-configuration>`_
+documentation.
+
 
 Site Include-Files
 ------------------
