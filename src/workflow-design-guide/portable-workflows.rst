@@ -42,9 +42,14 @@ Some institutions set a
 site(s).
 
 The purpose of this variable is to make inter-site portability easier by
-providing a mechanism for workflows to detect which site they are being run at.
+providing an easy mechanism for workflows to detect which site they are being
+run at.
 
 This may be used to load site-specific include files (see next section).
+
+The UM/LFRic ``CYLC_SITE`` code conventions are listed in the
+`Simulation Systems <https://metoffice.github.io/simulation-systems/Development/rose_stem.html#site-specific-configuration>`_
+documentation.
 
 
 Site Include-Files
