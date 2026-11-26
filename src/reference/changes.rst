@@ -7,6 +7,27 @@ This page contains a summary of significant changes across all Cylc components f
 release.
 
 
+Cylc 8.8
+--------
+
+
+
+Expire Triggers
+^^^^^^^^^^^^^^^
+
+Suicide triggers have been replaced by :ref:`expireTriggers`.
+The ``!`` syntax will continue to work, but now tasks will be marked as
+:term:`expired <expired task>` rather than just being removed from the workflow.
+
+This is breaking change in the niche situation where a
+:cylc:conf:`[runtime][<namespace>]completion` expression has been
+manually specified for a suicide-triggered task -
+in which case ``or expired`` should be added to the end of the expression.
+
+The ``cylc graph --show-suicide`` option has been renamed to ``cylc graph --show-expire``.
+The previous spelling will be removed at Cylc 8.9.
+
+
 Cylc 8.7
 --------
 
@@ -14,7 +35,11 @@ Cylc 8.7
 .. admonition:: Cylc Components
    :class: hint
 
-   TODO!
+   :cylc-flow: `8.7 <https://github.com/cylc/cylc-flow/blob/8.7.x/CHANGES.md>`__
+   :cylc-ui: `2.x <https://github.com/cylc/cylc-ui/blob/master/CHANGES.md>`__
+   :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
+   :cylc-rose: `1.9 <https://github.com/cylc/cylc-rose/blob/1.9.x/CHANGES.md>`__
+   :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
 
 
 Cylc 7 Compatibility Mode
@@ -28,6 +53,9 @@ See :ref:`cylc_7_compat_mode` for more details.
 As part of this change, the version of Jinja2 that Cylc uses has increased From
 3.0 to 3.1+. As a result, any use of deprecated Jinja2 interfaces will likely
 break with this Cylc release.
+
+Additionally, support has been removed for reading Cylc 7 workflow databases in
+the ``cylc workflow-state`` command and ``workflow_state`` xtrigger.
 
 Deprecated Cylc 7 configuration syntax remains supported, though deprecation messages have been
 updated to announce the intended removal of support in Cylc 8.9.
@@ -44,8 +72,19 @@ command.
    :width: 65%
    :align: center
 
-|
 
+Tasks Removed By Reload/Restart
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you delete tasks from the :term:`graph` when either restarting or
+reloading a workflow, any active instances of those tasks will be killed
+and removed from the workflow.
+
+This automates the cleanup of unwanted tasks, and avoids some of the issues
+that tasks removed by graph changes could cause in running workflows.
+
+
+.. _changes.global_template_variables:
 
 "Global" Template Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -62,8 +101,10 @@ configured to facilitate workflow portability.
 This has overlap with the
 `rose.conf[rose-stem]automatic-options=SITE`_ Rose configuration
 which sets a template variable called ``SITE`` for use in rose-stem test
-suites. We would encourage all sites using this configuration to copy it
-over to the ``global.cylc`` file to facilitate rose-stem migration.
+suites. We would encourage all sites using this configuration to create a
+new Cylc global template variable called ``CYLC_SITE`` set to the same value
+to facilitate rose-stem migration and site-portability. Note the ``CYLC_`` prefix
+avoids conflicts with existing workflow design patterns.
 
 I.e, if you currently configure this:
 
@@ -81,12 +122,18 @@ Then additionally configure this:
    # global.cylc
 
    [template variables]
-       SITE = my-site
+       CYLC_SITE = "my-site"
 
 The Cylc configuration is more generic as it can be used in all workflows
 (not just rose-stem suites). The Rose configuration remains supported and may
 be left in place for back-compatibility with rose-stem workflows running under
 Cylc 8.6.
+
+.. note::
+
+   The UM/LFRic ``CYLC_SITE`` code conventions are listed in the
+   `Simulation Systems <https://metoffice.github.io/simulation-systems/Development/rose_stem.html#site-specific-configuration>`_
+   documentation.
 
 .. warning::
 
@@ -100,6 +147,67 @@ Cylc 8.6.
 
    For more information, see `global.cylc` and
    ``cylc config --print-hierarchy``.
+
+
+Tasks outside of the active window are dimmed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionchanged:: cylc-ui 2.15.0
+
+The GUI dims (greys out) tasks to show that they are not presently being
+managed by the scheduler.
+
+Previously, only tasks in the ``none`` :term:`flow` (so called "ghost" tasks)
+were dimmed. Now, the **tree**, **table** and **graph** views dim every task
+and family that is outside of the ``n=0`` window, i.e. everything that is not
+an :term:`active task`.
+
+.. image:: ../img/dimmed-tasks.png
+   :align: center
+   :alt: Failed and running tasks fully visible while completed and waiting tasks are dimmed.
+   :width: 55%
+
+This means that the tasks displayed at full opacity are exactly the tasks that
+Cylc is currently working on; past and future tasks pulled into the view for
+context are dimmed.
+
+See :ref:`n-window.dimming` for more information.
+
+
+Configurable Default Workflow and Run Names
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _rose-suite.conf: https://metomi.github.io/rose/doc/html/api/configuration/suite.html
+.. _rose-suite.conf[install]: https://metomi.github.io/rose/doc/html/api/configuration/suite.html#rose:conf:rose-suite.conf[install]
+
+.. versionadded:: cylc-rose 1.9.0
+
+Workflows that use `rose-suite.conf`_ files can now define default
+workflow and run names to be used by ``cylc install``:
+
+.. code-block:: ini
+
+   [install]
+   workflow-name=my-default-workflow-name
+   run-name=my-default-run-name
+
+Subshells can be used in these configurations to make the values dynamic.
+
+For example, this configuration will use the Git commit hash as the default
+workflow run name (useful for test workflows):
+
+.. code-block:: ini
+
+   [install]
+   run-name=$(git rev-parse --verify HEAD)
+
+For more information, see the Rose documentation for the
+`rose-suite.conf[install]`_ configurations.
+
+.. note::
+
+   The :ref:`Cylc Rose` plugin must be installed to enable
+   `rose-suite.conf`_ support.
 
 
 Cylc 8.6
@@ -146,8 +254,6 @@ have a short delay to avoid many popping up while moving the mouse around.
    :width: 90%
    :align: center
 
-|
-
 .. versionadded:: cylc-uiserver 1.8.2, cylc-flow=8.6.2
 
 Additionally, for workflows running with Cylc 8.6.2 or later, there is now a
@@ -158,7 +264,6 @@ the :term:`active window`.
    :width: 45%
    :align: center
 
-|
 
 UI Searching & Filtering
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -174,8 +279,6 @@ beginning with ``foo`` and ``*foo`` matches all tasks ending in ``foo``.
    :width: 55%
    :align: center
 
-|
-
 It is now possible to filter by
 :ref:`task modifiers <user_guide.task_modifiers>` as well as
 :ref:`task states <task-job-states>`. So, for example, we can now filter for
@@ -185,7 +288,6 @@ tasks which are :term:`held <held task>` or awaiting :term:`retry`.
    :width: 55%
    :align: center
 
-|
 
 Task Matching
 ^^^^^^^^^^^^^
@@ -369,7 +471,6 @@ shown in the information view:
    :align: center
    :width: 65%
 
-|
 
 .. _changes.8.5.0.triggering_multiple_tasks:
 
@@ -383,8 +484,6 @@ in order:
 .. image:: ../reference/changes/group-trigger.gif
    :align: center
    :width: 65%
-
-|
 
 This is generally easier than :ref:`using a new flow <interventions.reflow>`.
 
@@ -423,8 +522,6 @@ the workflow.
    :align: center
    :width: 95%
 
-|
-
 
 "Ghost" Tasks
 ^^^^^^^^^^^^^
@@ -434,8 +531,6 @@ The GUI and Tui now present some tasks in grey:
 .. image:: ../reference/changes/ghost-tasks.png
    :align: center
    :width: 65%
-
-|
 
 These are "ghost" tasks, they indicate something is that isn't presently there:
 
@@ -456,6 +551,12 @@ for something, typically:
 * A task prerequisite to be satisfied.
 * An xtrigger or ext-trigger to be satisfied.
 * Someone to :term:`resume <held task>` them.
+
+.. note::
+
+   From Cylc 8.7 (``cylc-ui`` 2.15.0) this was extended so that *all* tasks
+   outside of the ``n=0`` window are dimmed, not just those in the ``none``
+   flow. See :ref:`n-window.dimming`.
 
 
 Compatibility Mode
@@ -509,8 +610,6 @@ Cylc Tui
 .. image:: ../reference/changes/tui-external-editor.gif
    :align: center
    :width: 65%
-
-|
 
 Configure your ``$EDITOR``, ``$GEDITOR`` and ``$PAGER`` environment variables
 to change which tool is used.
@@ -950,7 +1049,7 @@ Upgrade To The Latest Jupyter Releases
 The Cylc UI Server has been updated to work with the latest releases of
 `Jupyter Server`_ and `Jupyter Hub`_.
 
-If you are utilising Cylc's multi-user functionality then your configuration
+If you are utilizing Cylc's multi-user functionality then your configuration
 will require some changes to work with these releases.
 
 See :ref:`cylc.uiserver.multi-user` for more details
@@ -1016,7 +1115,7 @@ Graph View
 
 .. versionadded:: cylc-uiserver 1.2.0
 
-The web UI now has a graph view which displays a visualisation of a workflow's graph:
+The web UI now has a graph view which displays a visualization of a workflow's graph:
 
 .. image:: changes/cylc-graph.gif
    :width: 80%

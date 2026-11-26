@@ -414,14 +414,6 @@ Edit a Task's Configuration and Re-Run It
       .. image:: edit-a-tasks-configuration.gui.gif
          :width: 75%
 
-      .. note::
-
-         Any changes you make apply only to this one instance of the task, not
-         to any future instances.
-
-         To change future instances, either use "broadcast" or see
-         :ref:`interventions.edit-the-workflow-configuration`.
-
    .. tab-item:: CLI
       :sync: cli
 
@@ -430,9 +422,14 @@ Edit a Task's Configuration and Re-Run It
          $ cylc broadcast <workflow> -p <cycle> -n <task> -s 'script=true'
          $ cylc trigger <workflow>//<cycle>/<task>
 
-.. the "|" character adds some vertical whitespace
+.. note::
 
-|
+   Any changes you make apply only to this one instance of the task, not
+   to any future instances.
+
+   To change future instances, either use "broadcast" or see
+   :ref:`interventions.edit-the-workflow-configuration`.
+
 
 .. _interventions.edit-the-workflow-configuration:
 

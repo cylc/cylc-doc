@@ -86,12 +86,17 @@ Glossary
 
       - tasks that reached a :term:`final status` without completing their
         :term:`required outputs <required output>`
-        (e.g. a task failed where success was required).
+        (e.g. a task that failed when success was required).
 
       .. seealso::
 
          * :ref:`n-window`
 
+   active job
+      Active jobs are ``submitted`` or ``running`` :term:`jobs <job>`.
+      They belong to tasks with the equivalent :term:`status <task state>`
+      (but note that :term:`active task` has a wider definition than
+      just ``submitted`` or ``running``).
 
    n-window
       The GUI provides a view of the workflow extending ``n`` graph edges out
@@ -192,6 +197,25 @@ Glossary
 
       See :ref:`installation.what-are-wrapper-scripts` and
       :ref:`installation.setting-up-the-cylc-wrapper-script`.
+
+   expire trigger
+      Expire triggers remove tasks from the :term:`n=0 window <n-window>`.
+
+      They are denoted by exclamation marks, and are triggered like normal
+      dependencies. For instance, the following expire trigger will remove the
+      task ``bar`` if ``foo`` succeeds:
+
+      .. code-block:: cylc-graph
+
+         foo => ! bar
+
+      .. tip::
+         Expire triggers are not needed for :term:`graph branching`.
+         They are only needed for edge cases.
+
+      .. seealso::
+
+         * :ref:`Cylc User Guide <ExpireTriggers>`
 
    external trigger
    xtrigger
@@ -490,7 +514,7 @@ Glossary
 
          * :term:`ISO 8601 datetime`
          * `Wikipedia (ISO 8601) <https://en.wikipedia.org/wiki/ISO_8601>`_
-         * `International Organisation For Standardisation
+         * `International Organization For Standardization
            <https://www.iso.org/iso-8601-date-and-time-format.html>`_
          * `a summary of the international standard date and time notation
            <http://www.cl.cam.ac.uk/%7Emgk25/iso-time.html>`_
@@ -1622,25 +1646,8 @@ Glossary
 
          * :ref:`Cylc User Guide <scheduler stall>`
 
-
    suicide trigger
-      Suicide triggers remove tasks from the :term:`n=0 window <n-window>`.
-
-      They are denoted by exclamation marks, and are triggered like normal
-      dependencies. For instance, the following suicide trigger will remove the
-      task ``bar`` if ``foo`` succeeds:
-
-      .. code-block:: cylc-graph
-
-         foo => ! bar
-
-      .. warning::
-         Suicide triggers are not needed in Cylc 8 for :term:`graph branching`.
-         They are retained for backward compatibility and rare edge cases.
-
-      .. seealso::
-
-         * :ref:`Cylc User Guide <SuicideTriggers>`
+      Replaced by :ref:`expire triggers <ExpireTriggers>`
 
    branching
    graph branching
@@ -1774,6 +1781,12 @@ Glossary
          * :cylc:conf:`[scheduling]runahead limit`
          * :ref:`Runahead Limiting`
          * :term:`active cycle`
+
+   run host
+   scheduler run host
+      If :cylc:conf:`global.cylc[scheduler][run hosts]` are defined, Cylc
+      will attempt to start new schedulers on an available run host, instead
+      of locally.
 
    skip mode
       A task run mode that skips execution but completes outputs as if the task had run.

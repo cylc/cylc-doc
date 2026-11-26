@@ -42,11 +42,6 @@ jobs:
         # use login shell for conda activation
         shell: bash -leo pipefail {0}
     steps:
-      - name: configure python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.x'
-
       - name: configure node
         uses: actions/setup-node@v7
         with:
@@ -57,9 +52,8 @@ jobs:
 
       - name: install dependencies
         uses: ./.github/actions/install-dependencies
-
-      - name: install cylc-doc
-        run: pip install .[all]
+        with:
+          apt: ${{ matrix.type == 'build' }}
 
       - name: install libs
         uses: cylc/release-actions/install-cylc-components@v1
@@ -72,6 +66,11 @@ jobs:
           cylc_rose_opts: ''
           metomi_rose: true
           metomi_rose_opts: ''
+          local_source: '.[all]'
+
+      - name: mamba list
+        if: always()
+        run: micromamba list
 
       - name: lint
         if: matrix.type == 'build'
@@ -94,15 +93,9 @@ jobs:
         run: |
           cat /tmp/sphinx-err* || true  # sphinx traceback
 
-      - name: debug - pip list
-        if: failure() || runner.debug
-        run: pip list
-
       - name: debug - list language dictionaries
         if: failure() || runner.debug
-        shell: python
         env:
           PYENCHANT_VERBOSE_FIND: true
         run: |
-          import enchant
-          print(enchant.list_dicts())
+          python -c "import enchant, pprint; pprint.pprint(enchant.list_dicts())"

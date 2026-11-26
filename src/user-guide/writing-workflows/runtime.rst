@@ -293,8 +293,8 @@ The :term:`scheduler` provides a standard set of variables to
 
 .. seealso::
 
-    :ref:`job-script-environment-variables`
-       List of variables provided for job scripts.
+   :ref:`job-script-environment-variables` - list of variables provided for
+   job scripts.
 
 Some global shell variables are also defined in the job script, but not
 exported to subshells:

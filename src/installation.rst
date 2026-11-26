@@ -254,7 +254,7 @@ Cylc is split into a number of components providing different functionality:
 
             ``cylc-flow[graph]``
                Provides the ``cylc graph`` command for workflow graph
-               visualisation.
+               visualization.
             ``cylc-flow[report-timings]``
                Provides the ``cylc report-timings`` command for analysing
                job timing information.
@@ -488,7 +488,7 @@ There is support for the ``.cylc`` file format in various text editors.
 
 See :ref:`syntax highlighting <SyntaxHighlighting>` for more details.
 
-|
+------------------------------------------------------------------------------
 
 .. rubric:: Footnotes
 

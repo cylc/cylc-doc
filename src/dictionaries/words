@@ -6,6 +6,7 @@ arg
 args
 auth
 authenticator
+authorisation
 authoriser
 backticks
 basename
@@ -19,10 +20,12 @@ cgroup
 cgroups
 changelog
 changelogs
+comprise
 conf
 config
 configargs
 configs
+containerised
 coroutine
 coroutines
 cprofile
@@ -44,6 +47,7 @@ durations
 env
 etc
 executables
+expired
 facade
 fallback
 filename
@@ -96,6 +100,7 @@ linting
 localhost
 lowercase
 markup
+masse
 max
 metadata
 mineshafts
@@ -139,6 +144,7 @@ prepackaged
 prepend
 prepended
 preprocessing
+preprocessor
 preset
 proc
 profiler
@@ -181,6 +187,7 @@ runtime
 schd
 screenshot
 secs
+serialised
 setup
 setups
 shebang

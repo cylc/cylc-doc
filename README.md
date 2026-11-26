@@ -112,15 +112,14 @@ Some things to bear in mind when defining labels in cylc-doc e.g. `.. _my-label`
 
 ### Non Python Dependencies
 
-There are two non-Python dependencies which must be installed:
+Non-Python dependencies needed for development:
 
-* `graphviz`
-* `enchant`
+* Graphviz
 
 E.G. with Conda/Mamba:
 
 ```console
-$ mamba install -c conda-forge graphviz enchant
+$ mamba install -c conda-forge graphviz
 ```
 
 ### Checkout & Install

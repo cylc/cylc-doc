@@ -7,7 +7,7 @@ The :cylc:conf:`flow.cylc` File Format
    :class: aims
 
    | You will be able to:
-   | ✅ Recognise the ``flow.cylc`` file format.
+   | ✅ Recognize the ``flow.cylc`` file format.
    | ✅ Write simple chains of dependencies.
 
 
@@ -25,8 +25,8 @@ The :cylc:conf:`flow.cylc` File Format
 
    * :cylc:conf:`flow.cylc` files are divided into sections, written inside square
      brackets, i.e. ``[section-name]``.
-   * In this tutorial you will see ``[scheduler]`` and ``[scheduling]``. 
-   * Sections are nested by adding extra brackets: ``[[sub-section]]``, 
+   * In this tutorial you will see ``[scheduler]`` and ``[scheduling]``.
+   * Sections are nested by adding extra brackets: ``[[sub-section]]``,
      ``[[[sub-sub-section]]]``, etc.
    * Settings are written as ``key = value`` pairs within any section.
    * Comments start with a ``#`` character.
@@ -281,7 +281,7 @@ Cylc Graphs
    <tutorial-runtime>`.
 
    Cylc provides a command line utility
-   for visualising :term:`graphs <graph>`, ``cylc graph <path>``, where
+   for visualizing :term:`graphs <graph>`, ``cylc graph <path>``, where
    ``path`` is the location of the :cylc:conf:`flow.cylc` file.
    It generates diagrams similar to the ones you have seen so far. The number
    ``1`` below each task is the :term:`cycle point`. We will explain what this
@@ -370,7 +370,7 @@ Cylc Graphs
          a -> b -> d -> e
          c -> b -> f
 
-   #. **Visualise the workflow.**
+   #. **Visualize the workflow.**
 
       Once you have written some graph strings try using ``cylc graph`` to
       display the workflow. Run the following command:

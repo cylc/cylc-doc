@@ -3,6 +3,16 @@
 Graph branching, optional outputs and suicide triggers
 ======================================================
 
+.. note::
+
+   .. versionchanged:: 8.8.0
+
+      Suicide triggers have subsequently been replaced by :ref:`expire triggers <expireTriggers>`.
+
+      This section remains valid for understanding use cases where pre-existing
+      suicide triggers can be removed, and here we still largely refer to them as
+      suicide triggers to avoid confusion.
+
 Cylc 8 has a :ref:`new scheduling algorithm <728.scheduling_algorithm>` and
 a new syntax for dealing with tasks that may not necessarily complete.
 It handles :term:`graphs <graph>` in an event-driven manner which means
@@ -90,9 +100,9 @@ Also, the suicide triggers can be removed.
 
 In Cylc 7, suicide triggers were used to remove tasks that did not complete
 during runtime. Cylc 8's event-driven graph handling allows such graph
-branching using optional output syntax, without the need for suicide triggers.
-(Suicide triggers are still supported in Cylc 8; however, they are most
-likely unnecessary.)
+branching using optional output syntax, without the need for suicide triggers
+(or their replacement, expire triggers).
+Expire triggers are still supported for other edge cases.
 
 .. tip::
 

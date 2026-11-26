@@ -60,6 +60,7 @@ requests_).
  - James Frost
  - Samuel Denton
  - Mike Taves
+ - Scott Owen James
 <!-- end-shortlog -->
 
 (All contributors are identifiable with email addresses in the git version
