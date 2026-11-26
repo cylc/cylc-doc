@@ -1,7 +1,0 @@
-name: cylc-flow
-channels:
-  - defaults
-  - conda-forge
-dependencies:
-  - python
-  - cylc-flow =|version|
