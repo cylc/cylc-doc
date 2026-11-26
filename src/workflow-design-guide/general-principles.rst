@@ -323,7 +323,7 @@ Internal Queues
 ^^^^^^^^^^^^^^^
 
 Tasks can be assigned to named internal
-:cylc:conf`queues <[scheduling][queues]>` that limit the number of members
+:cylc:conf:`queues <[scheduling][queues]>` that limit the number of members
 that can be active (i.e. submitted or running) at the same time:
 
 .. code-block:: cylc
