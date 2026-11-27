@@ -31,7 +31,6 @@ The previous spelling will be removed at Cylc 8.9.
 Cylc 8.7
 --------
 
-
 .. admonition:: Cylc Components
    :class: hint
 
@@ -40,6 +39,33 @@ Cylc 8.7
    :cylc-uiserver: `1.10 <https://github.com/cylc/cylc-uiserver/blob/1.10.x/CHANGES.md>`__
    :cylc-rose: `1.9 <https://github.com/cylc/cylc-rose/blob/1.9.x/CHANGES.md>`__
    :rose: `2.8 <https://github.com/metomi/rose/blob/2.8.x/CHANGES.md>`__
+
+Max RSS and CPU Time in the Analysis View
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. versionchanged:: cylc-uiserver 1.11.0
+
+Cylc now includes a job profiler which records the memory and CPU usage of
+jobs on platforms where jobs run in their own cgroup (e.g. Slurm or PBS
+configured to use cgroups).
+
+The following metrics are now available in the GUI's Analysis View (table,
+box plot and time series displays), alongside the existing queue, run and
+total times:
+
+* :term:`Max RSS <max RSS>` - the
+  highest amount of physical memory (RAM) used by the job at any point
+  during its run.
+* CPU time - the total processor time consumed by the job, summed across all
+  of its processes and CPU cores.
+
+The profiler can be configured, or disabled, per platform in
+:cylc:conf:`global.cylc[platforms][<platform name>][profiler]`.
+
+.. seealso::
+
+   * :ref:`user-guide.analysis-view`
+   * :ref:`ProfilingConfigurations`
 
 
 Cylc 7 Compatibility Mode
