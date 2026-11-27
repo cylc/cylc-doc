@@ -1,9 +1,0 @@
-name: cylc-uiserver-with-traefik-proxy
-channels:
-  - conda-forge
-dependencies:
-  - cylc-flow =|version|
-  - cylc-uiserver-hub-base
-  - pip
-  - pip:
-      - jupyterhub-traefik-proxy

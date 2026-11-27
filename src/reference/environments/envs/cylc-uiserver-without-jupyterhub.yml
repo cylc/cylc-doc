@@ -1,6 +1,0 @@
-name: cylc-uiserver-without-jupyterhub
-channels:
-  - conda-forge
-dependencies:
-  - cylc-flow =|version|
-  - cylc-uiserver-base

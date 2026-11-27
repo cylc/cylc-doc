@@ -292,7 +292,8 @@ Cylc is split into a number of components providing different functionality:
             ``cylc-uiserver-hub-base``
                The base package with ``jupyterhub-base`` (a cut-down version
                of `Jupyter Hub`_). This may be useful if you want to install
-               `Jupyter Hub`_ with an alternative reverse proxy.
+               `Jupyter Hub`_ with an alternative reverse proxy
+               (e.g, `Traefik <https://github.com/jupyterhub/traefik-proxy>`_).
 
          .. tab-item:: Pip
             :sync: pip

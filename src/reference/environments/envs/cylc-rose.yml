@@ -1,7 +1,0 @@
-name: cylc-rose
-channels:
-  - conda-forge
-dependencies:
-  - cylc-flow =|version|
-  - cylc-rose
-  - metomi-rose

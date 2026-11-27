@@ -12,5 +12,4 @@ Reference
    env-vars
    architecture/index
    api/index
-   environments/conda.rst
    dev-history-major-changes
