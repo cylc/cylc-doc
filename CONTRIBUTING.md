@@ -59,6 +59,7 @@ requests_).
  - Mark Dawson
  - James Frost
  - Samuel Denton
+ - Mike Taves
  - Scott Owen James
 <!-- end-shortlog -->
 
